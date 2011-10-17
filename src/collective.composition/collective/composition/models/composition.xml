@@ -1,0 +1,17 @@
+<?xml version="1.0" ?>
+<model xmlns="http://namespaces.plone.org/supermodel/schema"
+       xmlns:form="http://namespaces.plone.org/supermodel/form">
+    
+    <schema>
+
+        <field name="composition_layout" type="zope.schema.Choice">
+            <description>
+                Arrangement of columns and rows for composable page
+            </description>
+            <title>Layout</title>
+            <vocabulary>collective.composition.vocabularies.layouts</vocabulary>
+        </field>
+
+    </schema>
+    
+</model>
