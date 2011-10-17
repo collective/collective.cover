@@ -18,7 +18,7 @@ setup(name='collective.composition',
       keywords='',
       author='Carlos de la Guardia',
       author_email='cguardia@yahoo.com',
-      url='http://svn.plone.org/svn/collective/',
+      url='https://github.com/cguardia/collective.composition',
       license='GPL version 2',
       packages=find_packages(exclude=['ez_setup']),
       namespace_packages=['collective'],
@@ -28,14 +28,14 @@ setup(name='collective.composition',
           'setuptools',
           'plone.app.dexterity',
           'collective.js.jqueryui',
-          # -*- Extra requirements: -*-
       ],
+      extras_require={
+        'test': ['plone.app.testing'],
+        },
       entry_points="""
-      # -*- Entry points: -*-
       [z3c.autoinclude.plugin]
       target = plone
       """,
       setup_requires=["PasteScript"],
-      paster_plugins = ["ZopeSkel"],
-
+      paster_plugins=["ZopeSkel"],
       )
