@@ -48,6 +48,9 @@ class CompositionLayout(grok.Adapter):
     def render(self):
         return self.LAYOUT
 
+    @property
+    def columns(self):
+        return ['column1']
 
 class TwoColumnLayout(CompositionLayout):
     grok.name(u'collective.composition.layouts.twocolumns')
@@ -57,12 +60,16 @@ class TwoColumnLayout(CompositionLayout):
 
     LAYOUT = """
     <div id="columns">
-      <ul id="column1" class="flex-third-column">
+      <ul id="column1" class="flex-half-column">
       </ul>
-      <ul id="column2" class="flex-third-column">
+      <ul id="column2" class="flex-half-column">
       </ul>
     </div>
     """
+
+    @property
+    def columns(self):
+        return ['column1', 'column2']
 
 
 class ThreeColumnLayout(CompositionLayout):
@@ -81,4 +88,8 @@ class ThreeColumnLayout(CompositionLayout):
       </ul>
     </div>
     """
+
+    @property
+    def columns(self):
+        return ['column1', 'column2', 'column3']
 
