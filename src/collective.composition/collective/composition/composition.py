@@ -11,6 +11,8 @@ from z3c.form import group, field
 from plone.app.z3cform.wysiwyg import WysiwygFieldWidget
 
 from Products.CMFCore.utils import getToolByName
+from Products.CMFCore.Expression import Expression
+from Products.CMFCore.Expression import getExprContext
 
 from collective.composition.layout import ICompositionLayout
 
@@ -40,10 +42,10 @@ class Composition(dexterity.Container):
         types = types_tool.listTypeInfo()
         available = []
         for type_info in types:
-            klass = getattr(type_info, 'klass', None)
-            if not klass:
+            dotted = getattr(type_info, 'klass', None)
+            if not dotted:
                 continue
-            package, klass = klass.rsplit('.', 1)
+            package, klass = dotted.rsplit('.', 1)
             try:
                 __import__(package)
             except ImportError:
@@ -51,8 +53,11 @@ class Composition(dexterity.Container):
             klass = getattr(sys.modules[package], klass, None)
             if not IPageFragment.implementedBy(klass):
                 continue
-            available.append({'portal_type': type_info.portal_type,
-                              'icon': type_info.icon,
+            expression = Expression(type_info.icon_expr)
+            expression_context = getExprContext(self)
+            icon = expression(expression_context)
+            available.append({'portal_type': dotted,
+                              'icon': icon,
                               'title': type_info.title,
                               'description': type_info.description})
         return available
