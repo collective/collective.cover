@@ -56,7 +56,7 @@ class Composition(dexterity.Container):
             expression = Expression(type_info.icon_expr)
             expression_context = getExprContext(self)
             icon = expression(expression_context)
-            available.append({'portal_type': dotted,
+            available.append({'portal_type': klass.__name__,
                               'icon': icon,
                               'title': type_info.title,
                               'description': type_info.description})
@@ -81,7 +81,7 @@ class Compose(grok.View):
         widget_template = """
                 {label:'%(title)s',
                  icon:'%(icon)s',
-                 action:function() { alert('Add %(portal_type)s'); }
+                 action:function() { Composition.addWidget('#*slot*', '%(title)s'); }
                 }"""
         widget_list = []
         for widget in self.context.available_widgets():
@@ -96,7 +96,9 @@ class Compose(grok.View):
         menus = """
             jQuery(function($) {"""
         for slot in self.context.current_layout.columns:
-            menus += menu_template % (slot, widgets)
+            menu = menu_template % (slot, widgets)
+            menu = menu.replace('*slot*', slot)
+            menus += menu
         menus += """
             })"""
         return menus

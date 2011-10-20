@@ -11,6 +11,9 @@
   <script type="text/javascript"
           tal:attributes="src string:${view/static}/jquery.contextmenu.js">
   </script>
+  <script type="text/javascript"
+          tal:attributes="src string:${view/static}/composition.js">
+  </script>
   <script tal:content="view/render_context_menus">
   </script>
 </metal:js>

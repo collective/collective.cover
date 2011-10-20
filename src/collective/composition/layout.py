@@ -40,7 +40,7 @@ class CompositionLayout(grok.Adapter):
 
     LAYOUT = """
     <div id="columns">
-      <ul id="column1" class="full-column">
+      <ul id="column1" class="column full-column">
       </ul>
     </div>
     """
@@ -60,9 +60,9 @@ class TwoColumnLayout(CompositionLayout):
 
     LAYOUT = """
     <div id="columns">
-      <ul id="column1" class="flex-half-column">
+      <ul id="column1" class="column flex-half-column">
       </ul>
-      <ul id="column2" class="flex-half-column">
+      <ul id="column2" class="column flex-half-column">
       </ul>
     </div>
     """
@@ -80,11 +80,11 @@ class ThreeColumnLayout(CompositionLayout):
 
     LAYOUT = """
     <div id="columns">
-      <ul id="column1" class="flex-third-column">
+      <ul id="column1" class="column flex-third-column">
       </ul>
-      <ul id="column2" class="flex-third-column">
+      <ul id="column2" class="column flex-third-column">
       </ul>
-      <ul id="column3" class="flex-third-column">
+      <ul id="column3" class="column flex-third-column">
       </ul>
     </div>
     """
