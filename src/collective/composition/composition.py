@@ -1,5 +1,7 @@
 import sys
 
+import json
+
 from five import grok
 from plone.directives import dexterity, form
 
@@ -13,6 +15,7 @@ from plone.app.z3cform.wysiwyg import WysiwygFieldWidget
 from Products.CMFCore.utils import getToolByName
 from Products.CMFCore.Expression import Expression
 from Products.CMFCore.Expression import getExprContext
+from plone.dexterity.utils import createContentInContainer
 
 from collective.composition.layout import ICompositionLayout
 
@@ -56,7 +59,7 @@ class Composition(dexterity.Container):
             expression = Expression(type_info.icon_expr)
             expression_context = getExprContext(self)
             icon = expression(expression_context)
-            available.append({'portal_type': klass.__name__,
+            available.append({'portal_type': type_info.id,
                               'icon': icon,
                               'title': type_info.title,
                               'description': type_info.description})
@@ -73,6 +76,26 @@ class View(grok.View):
     grok.name('view')
     
 
+class AddCompositionWidget(grok.View):
+    grok.context(IComposition)
+    grok.require('zope2.View')
+
+    def render(self):
+        widget_type = self.request.get('widget_type')
+        widget_title = self.request.get('widget_title')
+        column_id = self.request.get('column_id')
+        widget = createContentInContainer(self.context,
+                                          widget_type,
+                                          title=widget_title,
+                                          checkConstraints=False)
+        widget_url = widget.absolute_url()
+        return json.dumps({ 'column_id': column_id,
+                 'widget_type': widget_type,
+                 'widget_title': widget_title,
+                 'widget_id': widget.id,
+                 'widget_url': widget_url})
+
+
 class Compose(grok.View):
     grok.context(IComposition)
     grok.require('zope2.View')
@@ -81,7 +104,7 @@ class Compose(grok.View):
         widget_template = """
                 {label:'%(title)s',
                  icon:'%(icon)s',
-                 action:function() { Composition.addWidget('#*slot*', '%(title)s'); }
+                 action:function() { Composition.addWidget('#*slot*', '%(portal_type)s', '%(title)s'); }
                 }"""
         widget_list = []
         for widget in self.context.available_widgets():

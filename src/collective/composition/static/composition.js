@@ -26,53 +26,54 @@ var Composition = {
         return settings.widgetDefault;
     },
     
-    addWidget : function (column_id, widget_type) {
-        $(column_id).append('<div class="widget"><div class="widget-head"><h3>'+widget_type+'</h3></div><div class="widget-content"><p>Use the edit button to change widget settings.</p></div>');
-        this.addWidgetControls();
-        this.makeSortable();
+    addWidget : function (column_id, widget_type, widget_title) {
+        $.post("addcompositionwidget",
+            { column_id: column_id,
+              widget_title: widget_title,
+              widget_type: widget_type },
+            function(data) {
+		$(data.column_id).append('<div id="'+data.widget_id+'" class="widget"><div class="widget-head"><h3>'+data.widget_title+'</h3></div><div class="widget-content"><p>Use the edit button to change widget settings.</p></div>');
+		Composition.addWidgetControls(data.widget_id, data.widget_url);
+		Composition.makeSortable();
+            },
+            "json");
     },
 
-    addWidgetControls : function () {
+    addWidgetControls : function (widget_id, widget_url) {
         var Composition = this,
             $ = this.jQuery,
             settings = this.settings;
         $(settings.widgetSelector).each(function () {
             var thisWidgetSettings = Composition.getWidgetSettings(this.id);
             if ($(settings.handleSelector, this).has('a.remove').size()==0) {
-                $('<a href="#" class="remove">CLOSE</a>').mousedown(function (e) {
-                    e.stopPropagation();    
-                }).click(function () {
-                    if(confirm('Are you sure you want to remove this widget?')) {
-                        $(this).parents(settings.widgetSelector).animate({
+                $('<a href="'+widget_url+'/delete_confirmation" id="del_'+widget_id+'" class="remove">CLOSE</a>')
+                .appendTo($(settings.handleSelector, this));
+                jq('#del_'+widget_id).prepOverlay({
+                    subtype: 'ajax',
+                    filter: '#content>*',
+                    formselector: 'form',
+                    afterpost: function () {
+                        $('#'+widget_id).animate({
                             opacity: 0    
                         },function () {
-                            $(this).wrap('<div/>').parent().slideUp(function () {
-                                $(this).remove();
+                            $('#'+widget_id).wrap('<div/>').parent().slideUp(function () {
+                                $('#'+widget_id).remove();
                             });
                         });
-                    }
-                    return false;
-                }).appendTo($(settings.handleSelector, this));
+                    },
+                    closeselector: '[name=form.button.Cancel]'
+                 });
             }
 
             if ($(settings.handleSelector, this).has('a.edit').size()==0) {
-                $('<a href="#" class="edit">EDIT</a>').mousedown(function (e) {
-                    e.stopPropagation();    
-                }).toggle(function () {
-                    $(this).css({backgroundPosition: '-66px 0', width: '55px'})
-                        .parents(settings.widgetSelector)
-                            .find('.edit-box').show().find('input').focus();
-                    return false;
-                },function () {
-                    $(this).css({backgroundPosition: '', width: ''})
-                        .parents(settings.widgetSelector)
-                            .find('.edit-box').hide();
-                    return false;
-                }).appendTo($(settings.handleSelector,this));
-                $('<div class="edit-box" style="display:none;"/>')
-                    .append('<ul><li class="item"><label>Title</label><input value="' + $('h3',this).text() + '"/></li>')
-                    .append('</ul>')
-                    .insertAfter($(settings.handleSelector,this));
+                $('<a href="'+widget_url+'/edit" id="edit_'+widget_id+'" class="edit">EDIT</a>')
+                .appendTo($(settings.handleSelector,this));
+                jq('#edit_'+widget_id).prepOverlay({
+                    subtype: 'ajax',
+                    filter: '#content>*',
+                    formselector: 'form',
+                    closeselector: '[name=form.buttons.Cancel]'
+                    });
             }
 
             if ($(settings.handleSelector, this).has('a.collapse').size()==0) {
