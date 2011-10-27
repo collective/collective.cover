@@ -29,6 +29,7 @@ setup(name='collective.composition',
         'setuptools',
         'plone.app.dexterity>=1.0.3',
         'collective.js.jqueryui',
+        'zope.component>=3.8.0',
         ],
       extras_require={
         'test': ['plone.app.testing'],
