@@ -61,7 +61,8 @@ var Composition = {
                             });
                         });
                     },
-                    closeselector: '[name=form.button.Cancel]'
+                    closeselector: '[name=form.button.Cancel]',
+                    noform: 'close'
                  });
             }
 
@@ -72,7 +73,14 @@ var Composition = {
                     subtype: 'ajax',
                     filter: '#content>*',
                     formselector: 'form',
-                    closeselector: '[name=form.buttons.Cancel]'
+                    closeselector: '[name=form.buttons.Cancel]',
+                    noform: 'close',
+                    config: { onLoad: function () {
+                        $('textarea.mce_editable').each(function() {
+                            var config = new TinyMCEConfig($(this).attr('id'));
+                            config.init();
+                        });
+                    }}
                     });
             }
 

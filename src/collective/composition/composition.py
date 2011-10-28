@@ -5,6 +5,7 @@ import json
 from five import grok
 from plone.directives import dexterity, form
 
+from zope.interface import Interface
 from zope.component import getAdapter
 
 from zope import schema
@@ -19,8 +20,6 @@ from plone.dexterity.utils import createContentInContainer
 
 from collective.composition.layout import ICompositionLayout
 
-from collective.composition.page_fragment import IPageFragment
-
 from collective.composition import MessageFactory as _
 
 
@@ -29,6 +28,12 @@ class IComposition(form.Schema):
     Composable page
     """
     form.model("models/composition.xml")
+
+
+class ICompositionFragment(Interface):
+    """
+    Main interface for fragments
+    """
 
 
 class Composition(dexterity.Container):
@@ -54,7 +59,7 @@ class Composition(dexterity.Container):
             except ImportError:
                 continue
             klass = getattr(sys.modules[package], klass, None)
-            if not IPageFragment.implementedBy(klass):
+            if not ICompositionFragment.implementedBy(klass):
                 continue
             expression = Expression(type_info.icon_expr)
             expression_context = getExprContext(self)

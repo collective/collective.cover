@@ -6,6 +6,8 @@ from zope import schema
 from z3c.form import group, field
 from plone.app.z3cform.wysiwyg import WysiwygFieldWidget
 
+from collective.composition.composition import ICompositionFragment
+
 from collective.composition import MessageFactory as _
 
 
@@ -18,5 +20,5 @@ class IPageFragment(form.Schema):
 
 
 class PageFragment(dexterity.Item):
-    grok.implements(IPageFragment)
+    grok.implements(IPageFragment, ICompositionFragment)
     

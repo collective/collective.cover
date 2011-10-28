@@ -4,8 +4,12 @@
     
     <schema>
 
-        <!-- field definitions -->
-        
+        <field name="method" type="zope.schema.TextLine">
+            <description />
+            <title>Method to call from selected object</title>
+            <required>False</required>
+        </field>
+
     </schema>
     
 </model>

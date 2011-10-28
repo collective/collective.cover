@@ -4,7 +4,10 @@
     
     <schema>
 
-        <!-- field definitions -->
+        <field name="HTML" type="plone.app.textfield.RichText">
+            <description />
+            <title>HTML</title>
+        </field>
         
     </schema>
     

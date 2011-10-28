@@ -4,7 +4,16 @@
     
     <schema>
 
-        <!-- field definitions -->
+        <field name="url" type="zope.schema.URI">
+            <description />
+            <title>URL</title>
+        </field>
+        
+        <field name="selector" type="zope.schema.TextLine">
+            <description />
+            <title>Selector</title>
+            <required>False</required>
+        </field>
         
     </schema>
     
