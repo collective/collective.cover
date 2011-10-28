@@ -27,9 +27,9 @@ setup(name='collective.composition',
       zip_safe=False,
       install_requires=[
         'setuptools',
+        'zope.component>=3.8.0',
         'plone.app.dexterity>=1.0.3',
         'collective.js.jqueryui',
-        'zope.component>=3.8.0',
         ],
       extras_require={
         'test': ['plone.app.testing'],
@@ -38,6 +38,4 @@ setup(name='collective.composition',
       [z3c.autoinclude.plugin]
       target = plone
       """,
-      setup_requires=["PasteScript"],
-      paster_plugins=["ZopeSkel"],
       )
