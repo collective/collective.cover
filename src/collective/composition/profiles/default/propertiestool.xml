@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<object name="portal_properties">
+    <object name="navtree_properties">
+        <property name="metaTypesNotToList" type="lines" purge="false">
+            <element value="collective.composition.contentfragment"/>
+            <element value="collective.composition.pagefragment"/>
+            <element value="collective.composition.htmlfragment"/>
+        </property>
+    </object>
+    <object name="site_properties">
+        <property name="types_not_searched" type="lines" purge="false">
+            <element value="collective.composition.contentfragment"/>
+            <element value="collective.composition.pagefragment"/>
+            <element value="collective.composition.htmlfragment"/>
+        </property>
+    </object>
+</object>
+

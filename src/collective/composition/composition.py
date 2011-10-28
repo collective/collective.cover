@@ -83,7 +83,7 @@ class View(grok.View):
 
 class AddCompositionWidget(grok.View):
     grok.context(IComposition)
-    grok.require('zope2.View')
+    grok.require('cmf.ModifyPortalContent')
 
     def render(self):
         widget_type = self.request.get('widget_type')
@@ -103,7 +103,7 @@ class AddCompositionWidget(grok.View):
 
 class Compose(grok.View):
     grok.context(IComposition)
-    grok.require('zope2.View')
+    grok.require('cmf.ModifyPortalContent')
     
     def render_context_menus(self):
         widget_template = """
