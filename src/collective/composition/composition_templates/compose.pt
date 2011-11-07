@@ -26,7 +26,7 @@
 
 <metal:main fill-slot="main">
   <div id="edit-composition">
-    <div tal:replace="structure context/render"></div>
+    <div tal:replace="structure python:context.render(edit=True)"></div>
   </div>
 </metal:main>
 

@@ -31,3 +31,18 @@ class IContentFragment(form.Schema):
 class ContentFragment(dexterity.Item):
     grok.implements(IContentFragment, ICompositionFragment)
 
+    def render(self):
+        content = self.relation_field
+        if content is not None:
+            content = content.to_object
+        else:
+            return '<p>Please select a content item</p>'
+        method = getattr(content, str(self.method), None)
+        if method is not None:
+            return method()
+        else:
+            text = getattr(content, 'getText', None)
+            if text:
+                return content.getText().decode('UTF-8')
+            else:
+                return content.Description()

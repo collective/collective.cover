@@ -32,9 +32,11 @@ var Composition = {
               widget_title: widget_title,
               widget_type: widget_type },
             function(data) {
-		$(data.column_id).append('<div id="'+data.widget_id+'" class="widget"><div class="widget-head"><h3>'+data.widget_title+'</h3></div><div class="widget-content"><p>Use the edit button to change widget settings.</p></div>');
-		Composition.addWidgetControls(data.widget_id, data.widget_url);
-		Composition.makeSortable();
+                $(data.column_id).append('<div id="'+data.widget_id+'" class="widget"><div class="widget-head"><h3>'+data.widget_title+'</h3></div><div class="widget-content"><p>Use the edit button to change widget settings.</p></div>');
+                Composition.addWidgetControls(data.widget_id, data.widget_url);
+                Composition.makeSortable();
+                var widget_map = $('#columns ul div.widget').map(function(wid){return $(this).parent().attr('id')+':'+$(this).attr('id');}).get().join('&');
+                $.post("setwidgetmap", { widget_map: widget_map });
             },
             "json");
     },
@@ -60,6 +62,8 @@ var Composition = {
                                 $('#'+widget_id).remove();
                             });
                         });
+                        var widget_map = $('#columns ul div.widget').map(function(wid){return $(this).parent().attr('id')+':'+$(this).attr('id');}).get().join('&')
+                        $.post("setwidgetmap", { widget_map: widget_map });
                     },
                     closeselector: '[name=form.button.Cancel]',
                     noform: 'close'
@@ -144,6 +148,8 @@ var Composition = {
             stop: function (e,ui) {
                 $(ui.item).css({width:''}).removeClass('dragging');
                 $(settings.columns).sortable('enable');
+                var widget_map = $('#columns ul div.widget').map(function(wid){return $(this).parent().attr('id')+':'+$(this).attr('id');}).get().join('&')
+                $.post("setwidgetmap", { widget_map: widget_map });
             }
         });
     }

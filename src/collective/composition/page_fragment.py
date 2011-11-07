@@ -22,3 +22,7 @@ class IPageFragment(form.Schema):
 class PageFragment(dexterity.Item):
     grok.implements(IPageFragment, ICompositionFragment)
     
+    def render(self):
+        if not self.url:
+            return '<p>Please add an URL</p>'
+        return self.url
