@@ -16,6 +16,8 @@
   </script>
   <script tal:content="view/render_context_menus">
   </script>
+  <script tal:content="view/render_widget_initialization">
+  </script>
 </metal:js>
 <metal:styles fill-slot="style_slot">
   <link rel="stylesheet" type="text/css" media="screen" href=""

@@ -45,7 +45,7 @@ var Composition = {
         var Composition = this,
             $ = this.jQuery,
             settings = this.settings;
-        $(settings.widgetSelector).each(function () {
+        $('#'+widget_id).each(function () {
             var thisWidgetSettings = Composition.getWidgetSettings(this.id);
             if ($(settings.handleSelector, this).has('a.remove').size()==0) {
                 $('<a href="'+widget_url+'/delete_confirmation" id="del_'+widget_id+'" class="remove">CLOSE</a>')

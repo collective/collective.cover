@@ -181,8 +181,18 @@ class Compose(grok.View):
             menu = menu.replace('*slot*', column)
             menus += menu
         menus += """
-            Composition.addWidgetControls();
-            Composition.makeSortable();
             })"""
         return menus
 
+    def render_widget_initialization(self):
+        init = """
+            jQuery(function($) {"""
+        for column, addwidgets in self.context.widget_map.items():
+            for addwidget in addwidgets:
+                widget = self.context[addwidget]
+                init += "Composition.addWidgetControls('%s', '%s');\n" % (addwidget,
+                    widget.absolute_url())
+        init += """
+            Composition.makeSortable();
+            })"""
+        return init
