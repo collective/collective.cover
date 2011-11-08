@@ -1,6 +1,6 @@
 #columns .full-column {
     float: left;
-    width: 99%;
+    width: 98%;
     min-height: 400px;
     height: auto !important; 
     height: 400px;
@@ -8,7 +8,7 @@
 
 #columns .flex-half-column {
     float: left;
-    width: 48%;
+    width: 46%;
     min-height: 400px;
     height: auto !important; 
     height: 400px;
@@ -16,7 +16,7 @@
 
 #columns .flex-third-column {
     float: left;
-    width: 32%;
+    width: 31%;
     min-height: 400px;
     height: auto !important; 
     height: 400px;
