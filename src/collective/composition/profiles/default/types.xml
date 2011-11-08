@@ -11,5 +11,6 @@
   <object name="collective.composition.contentfragment" meta_type="Dexterity FTI" />
   <object name="collective.composition.htmlfragment" meta_type="Dexterity FTI" />
   <object name="collective.composition.pagefragment" meta_type="Dexterity FTI" />
+  <object name="collective.composition.portletfragment" meta_type="Dexterity FTI" />
   <object name="collective.composition.composition" meta_type="Dexterity FTI" />
 </object>
