@@ -76,7 +76,7 @@ class Composition(dexterity.Container):
                               'description': type_info.description})
         return available
 
-    def set_widget_map(self, widget_map):
+    def set_widget_map(self, widget_map, remove=None):
         layout = self.current_layout
         columns = layout.columns
         new_map = {}
@@ -85,6 +85,10 @@ class Composition(dexterity.Container):
         widget_map = widget_map.split('&')
         for widget in widget_map:
             key, value = widget.split(':')
+            if remove is not None:
+                remove_col, remove_val = remove.split(':')
+                if remove_col == key and remove_val == value:
+                    continue
             new_map[key].append(value)
         self.widget_map = new_map
 
@@ -107,7 +111,10 @@ class Composition(dexterity.Container):
         pq = PyQuery(rendered)
         for column, addwidgets in self.widget_map.items():
             for addwidget in addwidgets:
-                widget = self[addwidget]
+                try:
+                    widget = self[addwidget]
+                except KeyError:
+                    continue
                 widget_info = {'col': column,
                                'wid': addwidget,
                                'title': widget.title,
@@ -189,7 +196,10 @@ class Compose(grok.View):
             jQuery(function($) {"""
         for column, addwidgets in self.context.widget_map.items():
             for addwidget in addwidgets:
-                widget = self.context[addwidget]
+                try:
+                    widget = self.context[addwidget]
+                except KeyError:
+                    continue
                 init += "Composition.addWidgetControls('%s', '%s');\n" % (addwidget,
                     widget.absolute_url())
         init += """

@@ -63,7 +63,8 @@ var Composition = {
                             });
                         });
                         var widget_map = $('#columns ul div.widget').map(function(wid){return $(this).parent().attr('id')+':'+$(this).attr('id');}).get().join('&')
-                        $.post("setwidgetmap", { widget_map: widget_map });
+                        $.post("setwidgetmap", { widget_map: widget_map,
+                                                 remove: $('#'+widget_id).parent().attr('id')+':'+widget_id });
                     },
                     closeselector: '[name=form.button.Cancel]',
                     noform: 'close'
