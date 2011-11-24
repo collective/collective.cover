@@ -160,6 +160,16 @@ class SetWidgetMap(grok.View):
         self.context.set_widget_map(widget_map)
         return json.dumps('success')
 
+class UpdateWidget(grok.View):
+    grok.context(IComposition)
+    grok.require('cmf.ModifyPortalContent')
+    
+    def render(self):
+        widget_id = self.request.get('wid')
+        if widget_id in self.context:
+            return self.context[widget_id].render()
+        else:
+            return 'Widget does not exist'
 
 class Compose(grok.View):
     grok.context(IComposition)

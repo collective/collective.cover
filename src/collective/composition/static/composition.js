@@ -80,6 +80,10 @@ var Composition = {
                     formselector: 'form',
                     closeselector: '[name=form.buttons.Cancel]',
                     noform: 'close',
+                    afterpost: function(return_value, data_parent) {
+                        $('#'+widget_id+'>div.widget-content').empty()
+                            .load('updatewidget?wid='+widget_id);
+                    },
                     config: { onLoad: function () {
                         $('textarea.mce_editable').each(function() {
                             var config = new TinyMCEConfig($(this).attr('id'));
