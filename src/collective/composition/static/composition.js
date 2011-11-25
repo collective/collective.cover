@@ -32,9 +32,11 @@ var Composition = {
               widget_title: widget_title,
               widget_type: widget_type },
             function(data) {
-		$(data.column_id).append('<div id="'+data.widget_id+'" class="widget"><div class="widget-head"><h3>'+data.widget_title+'</h3></div><div class="widget-content"><p>Use the edit button to change widget settings.</p></div>');
-		Composition.addWidgetControls(data.widget_id, data.widget_url);
-		Composition.makeSortable();
+                $(data.column_id).append('<div id="'+data.widget_id+'" class="widget"><div class="widget-head"><h3>'+data.widget_title+'</h3></div><div class="widget-content"><p>Use the edit button to change widget settings.</p></div>');
+                Composition.addWidgetControls(data.widget_id, data.widget_url);
+                Composition.makeSortable();
+                var widget_map = $('#columns ul div.widget').map(function(wid){return $(this).parent().attr('id')+':'+$(this).attr('id');}).get().join('&');
+                $.post("setwidgetmap", { widget_map: widget_map });
             },
             "json");
     },
@@ -43,7 +45,7 @@ var Composition = {
         var Composition = this,
             $ = this.jQuery,
             settings = this.settings;
-        $(settings.widgetSelector).each(function () {
+        $('#'+widget_id).each(function () {
             var thisWidgetSettings = Composition.getWidgetSettings(this.id);
             if ($(settings.handleSelector, this).has('a.remove').size()==0) {
                 $('<a href="'+widget_url+'/delete_confirmation" id="del_'+widget_id+'" class="remove">CLOSE</a>')
@@ -60,6 +62,9 @@ var Composition = {
                                 $('#'+widget_id).remove();
                             });
                         });
+                        var widget_map = $('#columns ul div.widget').map(function(wid){return $(this).parent().attr('id')+':'+$(this).attr('id');}).get().join('&')
+                        $.post("setwidgetmap", { widget_map: widget_map,
+                                                 remove: $('#'+widget_id).parent().attr('id')+':'+widget_id });
                     },
                     closeselector: '[name=form.button.Cancel]',
                     noform: 'close'
@@ -75,6 +80,10 @@ var Composition = {
                     formselector: 'form',
                     closeselector: '[name=form.buttons.Cancel]',
                     noform: 'close',
+                    afterpost: function(return_value, data_parent) {
+                        $('#'+widget_id+'>div.widget-content').empty()
+                            .load('updatewidget?wid='+widget_id);
+                    },
                     config: { onLoad: function () {
                         $('textarea.mce_editable').each(function() {
                             var config = new TinyMCEConfig($(this).attr('id'));
@@ -144,6 +153,8 @@ var Composition = {
             stop: function (e,ui) {
                 $(ui.item).css({width:''}).removeClass('dragging');
                 $(settings.columns).sortable('enable');
+                var widget_map = $('#columns ul div.widget').map(function(wid){return $(this).parent().attr('id')+':'+$(this).attr('id');}).get().join('&')
+                $.post("setwidgetmap", { widget_map: widget_map });
             }
         });
     }

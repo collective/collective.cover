@@ -18,6 +18,8 @@ from Products.CMFCore.Expression import Expression
 from Products.CMFCore.Expression import getExprContext
 from plone.dexterity.utils import createContentInContainer
 
+from pyquery import PyQuery
+
 from collective.composition.layout import ICompositionLayout
 
 from collective.composition import MessageFactory as _
@@ -39,6 +41,10 @@ class ICompositionFragment(Interface):
 class Composition(dexterity.Container):
     grok.implements(IComposition)
     
+    def __init__(self):
+        super(Composition, self).__init__()
+        self.widget_map = {}
+
     @property
     def current_layout(self):
         layout_name = self.composition_layout
@@ -70,10 +76,54 @@ class Composition(dexterity.Container):
                               'description': type_info.description})
         return available
 
-    def render(self):
+    def set_widget_map(self, widget_map, remove=None):
         layout = self.current_layout
-        return layout.render()
+        columns = layout.columns
+        new_map = {}
+        for column in columns:
+            new_map[column] = []
+        widget_map = widget_map.split('&')
+        for widget in widget_map:
+            key, value = widget.split(':')
+            if remove is not None:
+                remove_col, remove_val = remove.split(':')
+                if remove_col == key and remove_val == value:
+                    continue
+            new_map[key].append(value)
+        self.widget_map = new_map
 
+    def render(self, edit=False):
+        layout = self.current_layout
+        rendered = layout.render()
+        if not edit:
+            widget_markup = """
+            <div id="%(wid)s" class="view-widget">
+              %(content)s
+            </div>
+            """
+        else:
+            widget_markup = """
+            <div id="%(wid)s" class="widget">
+              <div class="widget-head"><h3>%(title)s</h3></div>
+              <div class="widget-content">%(content)s</div>
+            </div>
+            """
+        pq = PyQuery(rendered)
+        for column, addwidgets in self.widget_map.items():
+            for addwidget in addwidgets:
+                try:
+                    widget = self[addwidget]
+                except KeyError:
+                    continue
+                widget_info = {'col': column,
+                               'wid': addwidget,
+                               'title': widget.title,
+                               'content': widget.render(),
+                               'url': widget.absolute_url()
+                              }
+                pq('#%s' % column).append(widget_markup % widget_info)
+        return pq.outerHtml()
+            
 
 class View(grok.View):
     grok.context(IComposition)
@@ -101,6 +151,26 @@ class AddCompositionWidget(grok.View):
                  'widget_url': widget_url})
 
 
+class SetWidgetMap(grok.View):
+    grok.context(IComposition)
+    grok.require('cmf.ModifyPortalContent')
+
+    def render(self):
+        widget_map = self.request.get('widget_map')
+        self.context.set_widget_map(widget_map)
+        return json.dumps('success')
+
+class UpdateWidget(grok.View):
+    grok.context(IComposition)
+    grok.require('cmf.ModifyPortalContent')
+    
+    def render(self):
+        widget_id = self.request.get('wid')
+        if widget_id in self.context:
+            return self.context[widget_id].render()
+        else:
+            return 'Widget does not exist'
+
 class Compose(grok.View):
     grok.context(IComposition)
     grok.require('cmf.ModifyPortalContent')
@@ -123,11 +193,26 @@ class Compose(grok.View):
               ]});"""
         menus = """
             jQuery(function($) {"""
-        for slot in self.context.current_layout.columns:
-            menu = menu_template % (slot, widgets)
-            menu = menu.replace('*slot*', slot)
+        for column in self.context.current_layout.columns:
+            menu = menu_template % (column, widgets)
+            menu = menu.replace('*slot*', column)
             menus += menu
         menus += """
             })"""
         return menus
 
+    def render_widget_initialization(self):
+        init = """
+            jQuery(function($) {"""
+        for column, addwidgets in self.context.widget_map.items():
+            for addwidget in addwidgets:
+                try:
+                    widget = self.context[addwidget]
+                except KeyError:
+                    continue
+                init += "Composition.addWidgetControls('%s', '%s');\n" % (addwidget,
+                    widget.absolute_url())
+        init += """
+            Composition.makeSortable();
+            })"""
+        return init

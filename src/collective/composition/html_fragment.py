@@ -22,3 +22,7 @@ class IHTMLFragment(form.Schema):
 class HTMLFragment(dexterity.Item):
     grok.implements(IHTMLFragment, ICompositionFragment)
     
+    def render(self):
+        if not self.HTML:
+            return '<p>Please edit the HTML</p>'
+        return self.HTML.output

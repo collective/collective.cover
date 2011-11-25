@@ -1,3 +1,5 @@
+import urllib2
+
 from five import grok
 from plone.directives import dexterity, form
 
@@ -10,6 +12,7 @@ from collective.composition.composition import ICompositionFragment
 
 from collective.composition import MessageFactory as _
 
+from pyquery import PyQuery
 
 class IPageFragment(form.Schema):
     """
@@ -22,3 +25,11 @@ class IPageFragment(form.Schema):
 class PageFragment(dexterity.Item):
     grok.implements(IPageFragment, ICompositionFragment)
     
+    def render(self):
+        if not self.url:
+            return '<p>Please add an URL</p>'
+        page = urllib2.urlopen(self.url).read()
+        pq = PyQuery(page)
+        fragment = pq(self.selector).html()
+        html = pq(fragment)
+        return html.html()

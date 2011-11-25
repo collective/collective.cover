@@ -5,6 +5,7 @@
             <element value="collective.composition.contentfragment"/>
             <element value="collective.composition.pagefragment"/>
             <element value="collective.composition.htmlfragment"/>
+            <element value="collective.composition.portletfragment"/>
         </property>
     </object>
     <object name="site_properties">
@@ -12,6 +13,7 @@
             <element value="collective.composition.contentfragment"/>
             <element value="collective.composition.pagefragment"/>
             <element value="collective.composition.htmlfragment"/>
+            <element value="collective.composition.portletfragment"/>
         </property>
     </object>
 </object>
