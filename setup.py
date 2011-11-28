@@ -31,7 +31,7 @@ setup(name='collective.composition',
       install_requires=[
         'setuptools',
         'zope.component>=3.8.0',
-        'plone.app.dexterity>=1.0.3',
+        'plone.app.dexterity>=1.1',
         'collective.js.jqueryui',
         ],
       extras_require={
