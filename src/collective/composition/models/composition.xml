@@ -1,14 +1,16 @@
 <?xml version="1.0" ?>
 <model xmlns="http://namespaces.plone.org/supermodel/schema"
-       xmlns:form="http://namespaces.plone.org/supermodel/form">
+       xmlns:form="http://namespaces.plone.org/supermodel/form"
+       xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+       i18n:domain="collective.composition">
     
     <schema>
 
         <field name="composition_layout" type="zope.schema.Choice">
-            <description>
+            <description i18n:translate="">
                 Arrangement of columns and rows for composable page
             </description>
-            <title>Layout</title>
+            <title i18n:translate="">Layout</title>
             <vocabulary>collective.composition.vocabularies.layouts</vocabulary>
         </field>
 

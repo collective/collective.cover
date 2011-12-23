@@ -1,0 +1,68 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2011-12-22 05:26+0000\n"
+"PO-Revision-Date: 2011-12-21 23:37-0600\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"Language-Code: en\n"
+"Language-Name: English\n"
+"Preferred-Encodings: utf-8 latin1\n"
+"Domain: DOMAIN\n"
+
+#: ./models/composition.xml
+msgid "Arrangement of columns and rows for composable page"
+msgstr "Disposición de filas y columnas para la página compuesta"
+
+#: ./profiles/default/types/collective.composition.pagefragment.xml
+msgid "Building block for composable page"
+msgstr "Bloque básico de una página compuesta"
+
+#: ./profiles/default/types/collective.composition.composition.xml
+msgid "Composable page"
+msgstr "Página compuesta"
+
+#: ./profiles/default/types/collective.composition.composition.xml
+msgid "Composition"
+msgstr "Composición"
+
+#: ./profiles/default/types/collective.composition.contentfragment.xml
+msgid "Content Fragment"
+msgstr "Fragmento de contenido"
+
+#: ./profiles/default/types/collective.composition.contentfragment.xml
+msgid "Content view fragment for composable page"
+msgstr ""
+
+#: ./profiles/default/types/collective.composition.htmlfragment.xml
+msgid "HTML Fragment"
+msgstr "Fragmento de tipo HTML"
+
+#: ./profiles/default/types/collective.composition.htmlfragment.xml
+msgid "HTML fragment for composable page"
+msgstr "Fragmento HTML para una página componible"
+
+#: ./models/composition.xml
+msgid "Layout"
+msgstr "Disposición"
+
+#: ./content_fragment.py:24
+msgid "My Related Page"
+msgstr "Página relacionada"
+
+#: ./profiles/default/types/collective.composition.pagefragment.xml
+msgid "Page Fragment"
+msgstr "Fragmento de tipo página"
+
+#: ./profiles/default/types/collective.composition.portletfragment.xml
+msgid "Portlet Fragment"
+msgstr "Fragmento de tipo portlet"
+
+#: ./profiles/default/types/collective.composition.portletfragment.xml
+msgid "Portlet view fragment for composable page"
+msgstr ""
+
