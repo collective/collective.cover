@@ -33,6 +33,7 @@ setup(name='collective.composition',
         'zope.component>=3.8.0',
         'plone.app.dexterity>=1.1',
         'collective.js.jqueryui',
+        'pyquery'
         ],
       extras_require={
         'test': ['plone.app.testing'],
