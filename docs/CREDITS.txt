@@ -1,7 +1,8 @@
 collective.composition contributors
-============================
+===================================
 
 - Carlos de la Guardia (cguardia@yahoo.com)
 
 - Héctor Velarde (hector.velarde@gmail.com)
 
+- Noé Nieto (nnieto@noenieto.com)
