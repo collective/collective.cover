@@ -41,9 +41,7 @@ class ICompositionFragment(Interface):
 class Composition(dexterity.Container):
     grok.implements(IComposition)
     
-    def __init__(self):
-        super(Composition, self).__init__()
-        self.widget_map = {}
+    widget_map = {}
 
     @property
     def current_layout(self):

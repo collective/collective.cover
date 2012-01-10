@@ -13,7 +13,7 @@ from collective.composition.composition import IComposition
 from collective.composition.testing import INTEGRATION_TESTING
 
 
-class IntegrationTest(unittest.TestCase):
+class CompositionIntegrationTestCase(unittest.TestCase):
 
     layer = INTEGRATION_TESTING
 
