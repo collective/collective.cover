@@ -13,6 +13,7 @@ from zope import schema
 from z3c.form import group, field
 from plone.app.z3cform.wysiwyg import WysiwygFieldWidget
 
+from Products.CMFPlone.interfaces import INonStructuralFolder
 from Products.CMFCore.utils import getToolByName
 from Products.CMFCore.Expression import Expression
 from Products.CMFCore.Expression import getExprContext
@@ -39,11 +40,9 @@ class ICompositionFragment(Interface):
 
 
 class Composition(dexterity.Container):
-    grok.implements(IComposition)
+    grok.implements(IComposition, INonStructuralFolder)
     
-    def __init__(self):
-        super(Composition, self).__init__()
-        self.widget_map = {}
+    widget_map = {}
 
     @property
     def current_layout(self):
