@@ -10,8 +10,14 @@
   <property name="icon_expr">string:${portal_url}/folder_icon.png</property>
   <property name="factory">collective.composition.composition</property>
   <property name="global_allow">True</property>
-  <property name="filter_content_types">False</property>  
-  <property name="allowed_content_types" />
+ <property name="filter_content_types">False</property>
+ <property name="allowed_content_types">
+  <element value="collective.composition.contentfragment"/>
+  <element value="collective.composition.htmlfragment"/>
+  <element value="collective.composition.pagefragment"/>
+  <element value="collective.composition.portletfragment"/>
+ </property>
+
   <property name="allow_discussion">False</property>
 
   <!-- schema and class used for content items -->
