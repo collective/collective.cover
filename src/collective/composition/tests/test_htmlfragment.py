@@ -13,7 +13,7 @@ from collective.composition.html_fragment import IHTMLFragment
 from collective.composition.testing import INTEGRATION_TESTING
 
 
-class IntegrationTest(unittest.TestCase):
+class HTMLFragmentIntegrationTestCase(unittest.TestCase):
 
     layer = INTEGRATION_TESTING
 
@@ -24,9 +24,28 @@ class IntegrationTest(unittest.TestCase):
         setRoles(self.portal, TEST_USER_ID, ['Member'])
         self.folder = self.portal['test-folder']
 
-    def test_adding(self):
-        self.folder.invokeFactory('collective.composition.htmlfragment', 'hf1')
-        hf1 = self.folder['hf1']
+    def test_adding(self): 
+        #Adding to self.portal and to self.folder raises ValueError
+        self.assertRaises(
+            ValueError,
+            self.portal.invokeFactory,
+            *('collective.composition.htmlfragment', 'hf1')
+        )
+        self.assertRaises(
+            ValueError,
+            self.folder.invokeFactory,
+           *('collective.composition.htmlfragment', 'hf1')
+        )
+
+        #So, first we need to add the the composition container
+        self.folder.invokeFactory('collective.composition.composition', 'c1')
+        c1 = self.folder['c1']
+
+        #Now we can add the htmlfragment to the composition
+        c1.invokeFactory('collective.composition.htmlfragment', 'hf1')
+        hf1 = c1['hf1']
+
+        #Now test
         self.failUnless(IHTMLFragment.providedBy(hf1))
 
     def test_fti(self):
