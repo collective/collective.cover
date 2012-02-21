@@ -1,0 +1,18 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:i18n="http://namespaces.zope.org/i18n"
+    xmlns:plone="http://namespaces.plone.org/plone"
+    i18n_domain="collective.composition">
+
+  <plone:tile
+      name="collective.composition.richtext"
+      title="Rich Text Tile"
+      description="A tile containing rich text"
+      add_permission="cmf.ModifyPortalContent"
+      schema=".richtext.IRichTextTileData"
+      class=".richtext.RichTextTile"
+      permission="zope2.View"
+      for="*"
+      />
+
+</configure>

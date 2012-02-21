@@ -16,7 +16,8 @@ var Composition = {
     },
 
     init : function () {
-        this.addWidgetControls();
+        this.addCTWidgetControls();
+        this.addTileWidgetControls();
         this.makeSortable();
     },
 
@@ -26,22 +27,37 @@ var Composition = {
         return settings.widgetDefault;
     },
     
-    addWidget : function (column_id, widget_type, widget_title) {
-        $.post("addcompositionwidget",
+    addCTWidget : function (column_id, widget_type, widget_title) {
+        $.post("addctwidget",
             { column_id: column_id,
               widget_title: widget_title,
               widget_type: widget_type },
             function(data) {
-                $(data.column_id).append('<div id="'+data.widget_id+'" class="widget"><div class="widget-head"><h3>'+data.widget_title+'</h3></div><div class="widget-content"><p>Use the edit button to change widget settings.</p></div>');
-                Composition.addWidgetControls(data.widget_id, data.widget_url);
+                $(data.column_id).append('<div id="'+data.widget_id+'" class="widget ct"><div class="widget-head"><h3>'+data.widget_title+'</h3></div><div class="widget-content"><p>Use the edit button to change widget settings.</p></div>');
+                Composition.addCTWidgetControls(data.widget_id, data.widget_url);
                 Composition.makeSortable();
                 var widget_map = $('#columns ul div.widget').map(function(wid){return $(this).parent().attr('id')+':'+$(this).attr('id');}).get().join('&');
                 $.post("setwidgetmap", { widget_map: widget_map });
             },
             "json");
     },
-
-    addWidgetControls : function (widget_id, widget_url) {
+    
+    addTileWidget : function (column_id, widget_type, widget_title) {
+        $.post("addtilewidget",
+            { column_id: column_id,
+              widget_title: widget_title,
+              widget_type: widget_type },
+            function(data) {
+                $(data.column_id).append('<div id="'+data.widget_id+'" class="widget tile"><div class="widget-head"><h3>'+data.widget_title+'</h3></div><div class="widget-content"><p>Use the edit button to change widget settings.</p></div>');
+                Composition.addTileWidgetControls(data.widget_id, data.widget_url);
+                Composition.makeSortable();
+                var widget_map = $('#columns ul div.widget').map(function(wid){return $(this).parent().attr('id')+':'+$(this).attr('id');}).get().join('&');
+                $.post("setwidgetmap", { widget_map: widget_map });
+            },
+            "json");
+    },
+    
+    addCTWidgetControls : function (widget_id, widget_url) {
         var Composition = this,
             $ = this.jQuery,
             settings = this.settings;
@@ -110,6 +126,80 @@ var Composition = {
             }
         });
 
+    },
+    
+    addTileWidgetControls : function (widget_id, widget_url) {
+        var Composition = this,
+            $ = this.jQuery,
+            settings = this.settings;
+        $('#'+widget_id).each(function () {
+            var thisWidgetSettings = Composition.getWidgetSettings(this.id);
+            if ($(settings.handleSelector, this).has('a.remove').size()==0) {
+                $('<a href="@@removetilewidget?wid='+widget_id+'" id="del_'+widget_id+'" class="remove">CLOSE</a>')
+                .appendTo($(settings.handleSelector, this));
+                jq('#del_'+widget_id).prepOverlay({
+                    subtype: 'ajax',
+                    filter: '#content>*',
+                    formselector: 'form',
+                    afterpost: function () {
+                        $('#'+widget_id).animate({
+                            opacity: 0
+                        },function () {
+                            $('#'+widget_id).wrap('<div/>').parent().slideUp(function () {
+                                $('#'+widget_id).remove();
+                            });
+                        });
+                        var widget_map = $('#columns ul div.widget').map(function(wid){return $(this).parent().attr('id')+':'+$(this).attr('id');}).get().join('&')
+                        $.post("setwidgetmap", { widget_map: widget_map,
+                                                 remove: $('#'+widget_id).parent().attr('id')+':'+widget_id });
+                    },
+                    closeselector: '[name=form.button.Cancel]',
+                    noform: 'close'
+                 });
+            }
+
+            if ($(settings.handleSelector, this).has('a.edit').size()==0) {
+                $('<a href="'+widget_url.replace(/@@/, '@@edit-tile/')+'" id="edit_'+widget_id+'" class="edit">EDIT</a>')
+                .appendTo($(settings.handleSelector,this));
+                jq('#edit_'+widget_id).prepOverlay({
+                    subtype: 'ajax',
+                    filter: '#content>*',
+                    formselector: 'form',
+                    closeselector: '[name=buttons.cancel]',
+                    noform: 'close',
+                    afterpost: function(return_value, data_parent) {
+                        location.reload();
+                    },
+                    config: { onLoad: function () {
+                        $('textarea.mce_editable').each(function() {
+                            var config = new TinyMCEConfig($(this).attr('id'));
+                            config.init();
+                        });
+                    },
+                    
+                    onClose: function() { location.reload(); }
+                        
+                    }
+                    });
+            }
+
+            if ($(settings.handleSelector, this).has('a.collapse').size()==0) {
+                $('<a href="#" class="collapse">COLLAPSE</a>').mousedown(function (e) {
+                    e.stopPropagation();
+                }).toggle(function () {
+                    $(this).css({backgroundPosition: '-38px 0'})
+                        .parents(settings.widgetSelector)
+                            .find(settings.contentSelector).hide();
+                    return false;
+                },function () {
+                    $(this).css({backgroundPosition: ''})
+                        .parents(settings.widgetSelector)
+                            .find(settings.contentSelector).show();
+                    return false;
+                }).prependTo($(settings.handleSelector,this));
+            }
+        });
+        
         $('.edit-box').each(function () {
             $('input',this).keyup(function () {
                 $(this).parents(settings.widgetSelector).find('h3').text( $(this).val().length>20 ? $(this).val().substr(0,20)+'...' : $(this).val() );

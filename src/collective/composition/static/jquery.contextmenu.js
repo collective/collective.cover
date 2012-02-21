@@ -29,8 +29,10 @@ jQuery.fn.contextPopup = function(menuData) {
 		gutterLineClass: 'gutterLine',
 		headerClass: 'header',
 		seperatorClass: 'divider',
-		title: '',
-		items: []
+		ct_title: '',
+        tile_title: '',
+		ct_items: [],
+		tile_items: []
 	};
 	
 	// merge them
@@ -40,10 +42,10 @@ jQuery.fn.contextPopup = function(menuData) {
   function createMenu(e) {
     var menu = $('<ul class="' + settings.contextMenuClass + '"><div class="' + settings.gutterLineClass + '"></div></ul>')
       .appendTo(document.body);
-    if (settings.title) {
-      $('<li class="' + settings.headerClass + '"></li>').text(settings.title).appendTo(menu);
+    if (settings.ct_title) {
+      $('<li class="' + settings.headerClass + '"></li>').text(settings.ct_title).appendTo(menu);
     }
-    settings.items.forEach(function(item) {
+    settings.ct_items.forEach(function(item) {
       if (item) {
         var rowCode = '<li><a href="#"><span></span></a></li>';
         // if(item.icon)
@@ -63,7 +65,30 @@ jQuery.fn.contextPopup = function(menuData) {
         $('<li class="' + settings.seperatorClass + '"></li>').appendTo(menu);
       }
     });
-    menu.find('.' + settings.headerClass ).text(settings.title);
+    if (settings.tile_title) {
+      $('<li class="' + settings.headerClass + '"></li>').text(settings.tile_title).appendTo(menu);
+    }
+    settings.tile_items.forEach(function(item) {
+      if (item) {
+        var rowCode = '<li><a href="#"><span></span></a></li>';
+        // if(item.icon)
+        //   rowCode += '<img>';
+        // rowCode +=  '<span></span></a></li>';
+        var row = $(rowCode).appendTo(menu);
+        if(item.icon){
+          var icon = $('<img>');
+          icon.attr('src', item.icon);
+          icon.insertBefore(row.find('span'));
+        }
+        row.find('span').text(item.label);
+        if (item.action) {
+          row.find('a').click(function(){ item.action(e);return false; });
+        }
+      } else {
+        $('<li class="' + settings.seperatorClass + '"></li>').appendTo(menu);
+      }
+    });
+//     menu.find('.' + settings.headerClass ).text(settings.ct_title);
     return menu;
   }
 

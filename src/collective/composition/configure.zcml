@@ -15,6 +15,9 @@
   
   <i18n:registerTranslations directory="locales" />
 
+  <!-- Include Tiles -->
+  <include package=".tiles" />
+  
   <!-- Register an extension profile to make the product installable
        in Plone -->
   <genericsetup:registerProfile

@@ -30,6 +30,7 @@
   <div id="edit-composition">
     <div tal:replace="structure python:context.render(edit=True)"></div>
   </div>
+  
 </metal:main>
 
 </body>
