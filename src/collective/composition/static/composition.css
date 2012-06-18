@@ -46,6 +46,11 @@
     -moz-border-radius: 4px;
     -webkit-border-radius: 4px;
 }
+
+.widget.tile {
+    background: #669900;
+}
+
 .widget .widget-head {
     color: #FFF;
     overflow: hidden;
