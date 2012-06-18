@@ -15,8 +15,9 @@ class IHTMLFragment(form.Schema):
     """
     HTML fragment for composable page
     """
-    
-    form.model("models/html_fragment.xml")
+    # FIXME: this is rising "Field type plone.app.textfield.RichText specified
+    # for field HTML is not supported"
+    #form.model("models/html_fragment.xml")
 
 
 class HTMLFragment(dexterity.Item):
