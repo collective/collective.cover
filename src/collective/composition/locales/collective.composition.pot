@@ -1,10 +1,7 @@
-# --- PLEASE EDIT THE LINES BELOW CORRECTLY ---
-# SOME DESCRIPTIVE TITLE.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2011-12-22 05:26+0000\n"
+"Project-Id-Version: collective.composition\n"
+"POT-Creation-Date: 2012-06-19 18:03+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,55 +14,55 @@ msgstr ""
 "Preferred-Encodings: utf-8 latin1\n"
 "Domain: collective.composition\n"
 
-#: ./models/composition.xml
+#: collective/composition/models/composition.xml
 msgid "Arrangement of columns and rows for composable page"
 msgstr ""
 
-#: ./profiles/default/types/collective.composition.pagefragment.xml
+#: collective/composition/profiles/default/types/collective.composition.pagefragment.xml
 msgid "Building block for composable page"
 msgstr ""
 
-#: ./profiles/default/types/collective.composition.composition.xml
+#: collective/composition/profiles/default/types/collective.composition.composition.xml
 msgid "Composable page"
 msgstr ""
 
-#: ./profiles/default/types/collective.composition.composition.xml
+#: collective/composition/profiles/default/types/collective.composition.composition.xml
 msgid "Composition"
 msgstr ""
 
-#: ./profiles/default/types/collective.composition.contentfragment.xml
+#: collective/composition/profiles/default/types/collective.composition.contentfragment.xml
 msgid "Content Fragment"
 msgstr ""
 
-#: ./profiles/default/types/collective.composition.contentfragment.xml
+#: collective/composition/profiles/default/types/collective.composition.contentfragment.xml
 msgid "Content view fragment for composable page"
 msgstr ""
 
-#: ./profiles/default/types/collective.composition.htmlfragment.xml
+#: collective/composition/profiles/default/types/collective.composition.htmlfragment.xml
 msgid "HTML Fragment"
 msgstr ""
 
-#: ./profiles/default/types/collective.composition.htmlfragment.xml
+#: collective/composition/profiles/default/types/collective.composition.htmlfragment.xml
 msgid "HTML fragment for composable page"
 msgstr ""
 
-#: ./models/composition.xml
+#: collective/composition/models/composition.xml
 msgid "Layout"
 msgstr ""
 
-#: ./content_fragment.py:24
+#: collective/composition/content_fragment.py:24
 msgid "My Related Page"
 msgstr ""
 
-#: ./profiles/default/types/collective.composition.pagefragment.xml
+#: collective/composition/profiles/default/types/collective.composition.pagefragment.xml
 msgid "Page Fragment"
 msgstr ""
 
-#: ./profiles/default/types/collective.composition.portletfragment.xml
+#: collective/composition/profiles/default/types/collective.composition.portletfragment.xml
 msgid "Portlet Fragment"
 msgstr ""
 
-#: ./profiles/default/types/collective.composition.portletfragment.xml
+#: collective/composition/profiles/default/types/collective.composition.portletfragment.xml
 msgid "Portlet view fragment for composable page"
 msgstr ""
 
