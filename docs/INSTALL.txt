@@ -1,17 +1,32 @@
-collective.composition Installation
------------------------------------
+Installation
+------------
 
-To install collective.composition using zc.buildout and the plone.recipe.zope2instance
-recipe to manage your project, you can do this:
+To enable this product in a buildout-based installation:
 
-* Add ``collective.composition`` to the list of eggs to install, e.g.:
+1. Edit your buildout.cfg and add ``collective.composition`` to the list of
+   eggs to install::
 
     [buildout]
     ...
     eggs =
-        ...
         collective.composition
-       
-* Re-run buildout, e.g. with:
 
-    $ ./bin/buildout
+2. You may need to extend a Dexterity known good set (KGS) to make sure that
+   you get the right versions of the packages that make up Dexterity::
+
+    [buildout]
+    ...
+    extends =
+        http://good-py.appspot.com/release/dexterity/1.2.1
+
+After updating the configuration you need to run ''bin/buildout'', which will
+take care of updating your system.
+
+Go to the 'Site Setup' page in a Plone site and click on the 'Add-ons' link.
+
+Check the box next to ``collective.composition`` and click the 'Activate'
+button.
+
+Note: You may have to empty your browser cache and save your resource
+registries in order to see the effects of the product installation.
+

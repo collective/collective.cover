@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from five import grok
 
 from zope.interface import Interface
@@ -8,14 +10,12 @@ from zope.schema.interfaces import IVocabularyFactory
 from zope.schema.vocabulary import SimpleTerm
 from zope.schema.vocabulary import SimpleVocabulary
 
-from collective.composition import MessageFactory as _
-
 
 class ICompositionLayout(Interface):
     """
     layout for composable page
     """
-    
+
 
 class LayoutVocabulary(grok.GlobalUtility):
     grok.implements(IVocabularyFactory)
@@ -23,7 +23,7 @@ class LayoutVocabulary(grok.GlobalUtility):
 
     def __call__(self, context):
         items = []
-        layouts = getAdapters([context],ICompositionLayout)
+        layouts = getAdapters([context], ICompositionLayout)
         items = [(l[1].description, l[0]) for l in layouts]
         items.sort()
         items = [SimpleTerm(i[1], i[1], i[0]) for i in items]
@@ -51,6 +51,7 @@ class CompositionLayout(grok.Adapter):
     @property
     def columns(self):
         return ['column1']
+
 
 class TwoColumnLayout(CompositionLayout):
     grok.name(u'collective.composition.layouts.twocolumns')
@@ -92,4 +93,3 @@ class ThreeColumnLayout(CompositionLayout):
     @property
     def columns(self):
         return ['column1', 'column2', 'column3']
-
