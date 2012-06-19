@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import sys
 
 import json
@@ -8,11 +10,6 @@ from plone.directives import dexterity, form
 from zope.interface import Interface
 from zope.component import getAdapter
 from zope.component import getUtility
-
-from zope import schema
-
-from z3c.form import group, field
-from plone.app.z3cform.wysiwyg import WysiwygFieldWidget
 
 from Products.CMFPlone.interfaces import INonStructuralFolder
 from zope.annotation.interfaces import IAnnotations
@@ -28,8 +25,6 @@ from collective.composition.layout import ICompositionLayout
 
 from plone.uuid.interfaces import IUUIDGenerator
 from plone.tiles.interfaces import ITileDataManager
-
-from collective.composition import MessageFactory as _
 
 
 class IComposition(form.Schema):
@@ -47,7 +42,7 @@ class ICompositionFragment(Interface):
 
 class Composition(dexterity.Container):
     grok.implements(IComposition, INonStructuralFolder)
-    
+
     widget_map = {}
 
     @property
@@ -82,7 +77,7 @@ class Composition(dexterity.Container):
         return available
 
     def get_tile_widgets(self):
-        
+
         available = []
         #TODO: Think of a way to register available tiles
         #      And from here, just ask which tiles are available for this
@@ -95,12 +90,11 @@ class Composition(dexterity.Container):
                                           "editor")})
         return available
 
-
     def available_widgets(self):
         available = []
         available += self.get_ct_widgets()
         available += self.get_tile_widgets()
-        
+
         return available
 
     def set_widget_map(self, widget_map, remove=None):
@@ -162,28 +156,27 @@ class Composition(dexterity.Container):
                         context_url = self.absolute_url()
                         widget_title = current_tiles[addwidget].get('title',
                                                                     '')
-                        widget_url = '%s/@@%s/%s'%(context_url,
-                                                   widget_type,
-                                                   addwidget)
-                        widget_render = '<div data-tile="%s" />'%widget_url
+                        widget_url = '%s/@@%s/%s' % (context_url,
+                                                     widget_type,
+                                                     addwidget)
+                        widget_render = '<div data-tile="%s" />' % widget_url
                         widget_info = {'col': column,
-                                    'wid': addwidget,
-                                    'title': widget_title,
-                                    'class': 'tile',
-                                    'content': widget_render,
-                                    'url': widget_url
-                                    }
+                                       'wid': addwidget,
+                                       'title': widget_title,
+                                       'class': 'tile',
+                                       'content': widget_render,
+                                       'url': widget_url}
 
                 pq('#%s' % column).append(widget_markup % widget_info)
-                
+
         return pq.outerHtml()
-            
+
 
 class View(grok.View):
     grok.context(IComposition)
     grok.require('zope2.View')
     grok.name('view')
-    
+
 
 class AddCTWidget(grok.View):
     grok.context(IComposition)
@@ -198,11 +191,12 @@ class AddCTWidget(grok.View):
                                           title=widget_title,
                                           checkConstraints=False)
         widget_url = widget.absolute_url()
-        return json.dumps({ 'column_id': column_id,
-                 'widget_type': widget_type,
-                 'widget_title': widget_title,
-                 'widget_id': widget.id,
-                 'widget_url': widget_url})
+        return json.dumps({'column_id': column_id,
+                           'widget_type': widget_type,
+                           'widget_title': widget_title,
+                           'widget_id': widget.id,
+                           'widget_url': widget_url})
+
 
 class AddTileWidget(grok.View):
     grok.context(IComposition)
@@ -216,7 +210,7 @@ class AddTileWidget(grok.View):
 
         id = uuid()
         context_url = self.context.absolute_url()
-        widget_url = '%s/@@%s/%s'%(context_url, widget_type, id)
+        widget_url = '%s/@@%s/%s' % (context_url, widget_type, id)
 
         # Let's store locally info regarding tiles
         annotations = IAnnotations(self.context)
@@ -226,11 +220,11 @@ class AddTileWidget(grok.View):
                              'title': widget_title}
         annotations['current_tiles'] = current_tiles
 
-        return json.dumps({ 'column_id': column_id,
-                 'widget_type': widget_type,
-                 'widget_title': widget_title,
-                 'widget_id': id,
-                 'widget_url': widget_url})
+        return json.dumps({'column_id': column_id,
+                           'widget_type': widget_type,
+                           'widget_title': widget_title,
+                           'widget_id': id,
+                           'widget_url': widget_url})
 
 
 class SetWidgetMap(grok.View):
@@ -243,16 +237,18 @@ class SetWidgetMap(grok.View):
         self.context.set_widget_map(widget_map, remove)
         return json.dumps('success')
 
+
 class UpdateWidget(grok.View):
     grok.context(IComposition)
     grok.require('cmf.ModifyPortalContent')
-    
+
     def render(self):
         widget_id = self.request.get('wid')
         if widget_id in self.context:
             return self.context[widget_id].render()
         else:
             return 'Widget does not exist'
+
 
 class RemoveTileWidget(grok.View):
     # XXX: This should be part of the plone.app.tiles package or similar
@@ -277,12 +273,12 @@ class RemoveTileWidget(grok.View):
 
             dataManager = ITileDataManager(tile)
             dataManager.delete()
-        
-        
+
+
 class Compose(grok.View):
     grok.context(IComposition)
     grok.require('cmf.ModifyPortalContent')
-    
+
     def render_context_menus(self):
         widget_template = """
                 {label:'%(title)s',
@@ -340,9 +336,9 @@ class Compose(grok.View):
                     if addwidget in current_tiles:
                         widget_type = current_tiles[addwidget]['type']
                         context_url = self.context.absolute_url()
-                        widget_url = '%s/@@%s/%s'%(context_url,
-                                                   widget_type,
-                                                   addwidget)
+                        widget_url = '%s/@@%s/%s' % (context_url,
+                                                     widget_type,
+                                                     addwidget)
                         init += ("Composition.addTileWidgetControls"
                                  "('%s', '%s');\n" %
                                  (addwidget, widget_url))
