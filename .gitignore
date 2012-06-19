@@ -4,6 +4,7 @@
 *.pyc
 .installed.cfg
 .mr.developer.cfg
+.*.kate-swp
 library-settings.txt
 log.html
 output.xml
@@ -17,3 +18,7 @@ parts/
 src/plone.app.blocks/
 src/plone.app.tiles/
 var/
+include/
+lib/
+src/plone.app.intid/
+src/plone.tiles/

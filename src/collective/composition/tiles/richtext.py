@@ -28,3 +28,6 @@ class RichTextTile(tiles.PersistentTile):
             if transformer is not None:
                 text = transformer(self.data['text'], 'text/x-html-safe')
         return text
+
+    #def __ac_local_roles__(self):
+        #import pdb;pdb.set_trace()

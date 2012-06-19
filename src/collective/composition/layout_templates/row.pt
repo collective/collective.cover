@@ -1,0 +1,22 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      i18n:domain="collective.composition"
+      tal:omit-tag="">
+<body tal:omit-tag="">
+
+    <div tal:define="section options/section | nothing;"
+         tal:condition="section"
+         tal:attributes="class python:'row %s' % section.get('class', '')">
+
+        <tal:children repeat="child python:section.get('children')">
+            <div tal:replace="structure python:view.render_section(child)" />
+        </tal:children>
+
+    </div>
+
+</body>
+</html>
+

@@ -2,12 +2,27 @@
 
 from five import grok
 
-from zope.component import getUtility, getMultiAdapter
-from zope.schema.interfaces import IVocabularyFactory
-from zope.schema.vocabulary import SimpleTerm, SimpleVocabulary
+from zope.interface import implements
+from zope.component import getUtility
+from zope.component import getMultiAdapter
 
-from plone.app.portlets.interfaces import IPortletManager, IPortletAssignmentMapping
+from zope.component.interfaces import IFactory
+
+from zope.app.container.interfaces import IAdding
+
+from zope.schema.interfaces import IVocabularyFactory
+from zope.schema.vocabulary import SimpleTerm
+from zope.schema.vocabulary import SimpleVocabulary
+
+from plone.app.portlets.interfaces import IPortletManager
+from plone.app.portlets.interfaces import IPortletAssignmentMapping
+
 from plone.portlets.interfaces import ILocalPortletAssignable
+
+from plone.registry.interfaces import IRegistry
+
+from collective.composition.controlpanel import ICompositionSettings
+from collective.composition import _
 
 
 class ContextPortlets(grok.GlobalUtility):
@@ -51,3 +66,16 @@ class ContextPortlets(grok.GlobalUtility):
             simpleterm = SimpleTerm(name, name, title)
             items.append((path, simpleterm))
         return items
+
+
+class LayoutVocabulary(grok.GlobalUtility):
+    grok.implements(IVocabularyFactory)
+    grok.name(u'collective.composition.vocabularies.layouts')
+
+    def __call__(self, context):
+
+        registry = getUtility(IRegistry)
+        settings = registry.forInterface(ICompositionSettings)
+
+        items = [SimpleTerm(value=i, title=i) for i in settings.layouts]
+        return SimpleVocabulary(items)

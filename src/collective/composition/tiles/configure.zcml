@@ -15,4 +15,15 @@
       for="*"
       />
 
+  <plone:tile
+      name="collective.composition.container"
+      title="Container Tile"
+      description="A tile that contains other tiles"
+      add_permission="cmf.ModifyPortalContent"
+      schema=".container.IContainerTile"
+      class=".container.ContainerTile"
+      permission="zope2.View"
+      for="*"
+      />
+
 </configure>

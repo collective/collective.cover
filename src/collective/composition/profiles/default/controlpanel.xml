@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<object name="portal_controlpanel"
+    xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+    i18n:domain="collective.composition"
+    purge="False">
+    <configlet title="Composition Settings"
+        action_id="composition"
+        appId="collective.composition"
+        category="Products"
+        condition_expr=""
+        url_expr="string:${portal_url}/@@composition-settings"
+        icon_expr="string:${portal_url}/++resource++collective.composition/composition_icon.png"
+        visible="True"
+        i18n:attributes="title">
+        <permission>Manage portal</permission>
+    </configlet>
+</object>

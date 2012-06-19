@@ -21,7 +21,7 @@
   <property name="allow_discussion">False</property>
 
   <!-- schema and class used for content items -->
-  <property name="schema">collective.composition.composition.IComposition</property> 
+  <property name="schema">collective.composition.composition.IComposition</property>
   <property name="klass">collective.composition.composition.Composition</property>
 
   <property name="behaviors">
@@ -31,11 +31,11 @@
 
   <!-- View information -->
   <property name="link_target"></property>
-  <property name="immediate_view">view</property>
-  <property name="default_view">view</property>
+  <property name="immediate_view">layout</property>
+  <property name="default_view">layout</property>
   <property name="view_methods">
    <element value="view"/>
-   <element value="compose"/>
+   <element value="layout"/>
   </property>
   <property name="default_view_fallback">False</property>
   <property name="add_permission">cmf.AddPortalContent</property>

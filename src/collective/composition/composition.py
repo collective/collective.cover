@@ -21,8 +21,6 @@ from plone.dexterity.utils import createContentInContainer
 
 from pyquery import PyQuery
 
-from collective.composition.layout import ICompositionLayout
-
 from plone.uuid.interfaces import IUUIDGenerator
 from plone.tiles.interfaces import ITileDataManager
 
@@ -88,6 +86,13 @@ class Composition(dexterity.Container):
                           'description': ("A persistent tile which allows to "
                                           "create content using a WYSIWYG "
                                           "editor")})
+
+        available.append({'tile_type': "collective.composition.container",
+                          'icon': '',
+                          'title': "Container tile",
+                          'description': ("A tile wich can contain other "
+                                          "tiles")})
+
         return available
 
     def available_widgets(self):
