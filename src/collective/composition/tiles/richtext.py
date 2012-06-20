@@ -8,6 +8,9 @@ from zope.interface import Interface
 from plone import tiles
 from plone.app.textfield import RichText
 from plone.app.textfield.interfaces import ITransformer
+from plone.app.textfield.value import RichTextValue
+
+from plone.tiles.interfaces import ITileDataManager
 
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
@@ -31,3 +34,9 @@ class RichTextTile(tiles.PersistentTile):
 
     #def __ac_local_roles__(self):
         #import pdb;pdb.set_trace()
+
+    def populate_with_object(self, obj):
+        value = RichTextValue(obj.getText())
+        data_mgr = ITileDataManager(self)
+
+        data_mgr.set({'text': value})

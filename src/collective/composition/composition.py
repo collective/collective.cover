@@ -352,3 +352,35 @@ class Compose(grok.View):
             Composition.makeSortable();
             })"""
         return init
+
+
+class UpdateTileContent(grok.View):
+    grok.context(IComposition)
+    grok.require('cmf.ModifyPortalContent')
+
+    def render(self):
+        pc = getToolByName(self.context, 'portal_catalog')
+
+        tile_type = self.request.form.get('tile-type')
+        tile_id = self.request.form.get('tile-id')
+        uuid = self.request.form.get('uuid')
+
+        if tile_type and tile_id and uuid:
+
+            tile = self.context.restrictedTraverse(tile_type)
+
+            tile_instance = tile[tile_id]
+
+            results = pc(UID=uuid)
+            if results:
+                obj = results[0].getObject()
+
+                try:
+                    tile_instance.populate_with_object(obj)
+                except:
+                    # XXX: Pass silently ?
+                    pass
+
+        # XXX: Calling the tile will return the HTML with the headers, need to
+        #      find out if this affects us in any way.
+        return tile_instance()
