@@ -31,8 +31,8 @@
 
   <!-- View information -->
   <property name="link_target"></property>
-  <property name="immediate_view">layout</property>
-  <property name="default_view">layout</property>
+  <property name="immediate_view">view</property>
+  <property name="default_view">view</property>
   <property name="view_methods">
    <element value="view"/>
    <element value="layout"/>
