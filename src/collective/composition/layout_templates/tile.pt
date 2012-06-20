@@ -18,8 +18,9 @@
                                 id tile_id" />
             <a href="#"
             class="edit-tile-link"
+            tal:condition="python:mode=='compose'"
             tal:attributes="href string:${context/absolute_url}/@@edit-tile/${tile_type}/${tile_id}">Edit</a>
-            <p tal:content="mode" />
+
         </div>
     </tal:mode>
 
