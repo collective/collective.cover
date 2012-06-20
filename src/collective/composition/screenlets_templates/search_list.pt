@@ -8,7 +8,7 @@
             tal:attributes="uid uid">
             <tal:level define="item_class string:contenttype-${node/normalized_portal_type} state-${node/normalized_review_state}">
               <tal:block>
-                <a tal:attributes="href item_token; rel level;
+                <a tal:attributes="rel level;
                                    title node/Description;
                                    class string:$item_class">
                     <img tal:replace="structure item_icon/html_tag|item_icon" />

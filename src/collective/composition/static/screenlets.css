@@ -8,6 +8,10 @@
     display: none;
 }
 
+#screenlet-content-search.right {
+    right:0;
+}
+
 #screenlet-content-search #item-list {
     border: 1px solid #CCCCCC;
     padding: 5px;
@@ -15,12 +19,13 @@
     margin-top: 10px;
     width: 300px;
     height: 250px;
-    overflow: scroll;
+    overflow: auto;
 }
 
 #screenlet-content-search #item-list li {
     list-style-image: none;
     list-style-type: none;
+    cursor: pointer;
 }
 
 #screenlet-content-search #item-list li:hover {
@@ -41,4 +46,17 @@
     z-index: 999;
     background: #FFF;
     cursor: pointer;
+}
+
+#screenlet-content-search .close {
+    cursor: pointer;
+    font-size: 12px;
+    padding: 5px;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.content-drop-hover {
+    background-color: #205C90;
 }

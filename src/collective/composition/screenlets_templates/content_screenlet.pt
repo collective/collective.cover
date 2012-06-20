@@ -1,7 +1,21 @@
-<div id="screenlet-content-search">   
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      i18n:domain="collective.composition"
+      tal:omit-tag="">
+<body tal:omit-tag="">
+
+<div id="screenlet-content-search" class="right"> 
+    <div class="close">X</div>
     <input id="screenlet-content-search-input" type="text" /> <input type="button" value="ok" id="screenlet-content-search-button"
      tal:attributes="data-url view/post_url" />
     <ul id="item-list">
         <li tal:replace="structure context/@@content-search" />
     </ul>
+    <div style="display: none;" i18n:translate=""
+     id="screenlet-content-search-compose-button">Add Content</div>
 </div>
+</body>
+</html>
