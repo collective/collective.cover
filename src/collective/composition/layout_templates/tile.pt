@@ -10,9 +10,12 @@
     <div tal:define="section options/section | nothing;
                      tile_type python:section.get('tile-type', '');
                      tile_id python:section.get('id', '');"
-         tal:condition="section"
-         tal:attributes="class python:'tile %s' % section.get('class', '');
-                         data-tile string:${context/absolute_url}/@@${tile_type}/${tile_id}">
+         tal:condition="section">
+         <div tal:attributes="class python:'tile %s' % section.get('class', '');
+                              data-tile string:${context/absolute_url}/@@${tile_type}/${tile_id}" />
+        <a href="#"
+           class="edit-tile-link"
+           tal:attributes="href string:${context/absolute_url}/@@edit-tile/${tile_type}/${tile_id}">Edit</a>
 
     </div>
 

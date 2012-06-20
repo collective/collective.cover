@@ -26,7 +26,7 @@ var Composition = {
             settings = this.settings;
         return settings.widgetDefault;
     },
-    
+
     addCTWidget : function (column_id, widget_type, widget_title) {
         $.post("addctwidget",
             { column_id: column_id,
@@ -41,7 +41,7 @@ var Composition = {
             },
             "json");
     },
-    
+
     addTileWidget : function (column_id, widget_type, widget_title) {
         $.post("addtilewidget",
             { column_id: column_id,
@@ -56,7 +56,7 @@ var Composition = {
             },
             "json");
     },
-    
+
     addCTWidgetControls : function (widget_id, widget_url) {
         var Composition = this,
             $ = this.jQuery,
@@ -72,7 +72,7 @@ var Composition = {
                     formselector: 'form',
                     afterpost: function () {
                         $('#'+widget_id).animate({
-                            opacity: 0    
+                            opacity: 0
                         },function () {
                             $('#'+widget_id).wrap('<div/>').parent().slideUp(function () {
                                 $('#'+widget_id).remove();
@@ -111,7 +111,7 @@ var Composition = {
 
             if ($(settings.handleSelector, this).has('a.collapse').size()==0) {
                 $('<a href="#" class="collapse">COLLAPSE</a>').mousedown(function (e) {
-                    e.stopPropagation();    
+                    e.stopPropagation();
                 }).toggle(function () {
                     $(this).css({backgroundPosition: '-38px 0'})
                         .parents(settings.widgetSelector)
@@ -127,7 +127,7 @@ var Composition = {
         });
 
     },
-    
+
     addTileWidgetControls : function (widget_id, widget_url) {
         var Composition = this,
             $ = this.jQuery,
@@ -176,9 +176,9 @@ var Composition = {
                             config.init();
                         });
                     },
-                    
+
                     onClose: function() { location.reload(); }
-                        
+
                     }
                     });
             }
@@ -199,7 +199,7 @@ var Composition = {
                 }).prependTo($(settings.handleSelector,this));
             }
         });
-        
+
         $('.edit-box').each(function () {
             $('input',this).keyup(function () {
                 $(this).parents(settings.widgetSelector).find('h3').text( $(this).val().length>20 ? $(this).val().substr(0,20)+'...' : $(this).val() );
@@ -250,4 +250,27 @@ var Composition = {
     }
 };
 
-Composition.init();
+/*Composition.init();*/
+
+$(document).ready(function() {
+    $('a.edit-tile-link').prepOverlay({
+        subtype: 'ajax',
+        filter: '#content>*',
+        formselector: 'form',
+        closeselector: '[name=buttons.cancel]',
+        noform: 'close',
+        afterpost: function(return_value, data_parent) {
+            location.reload();
+        },
+        config: { onLoad: function () {
+            $('textarea.mce_editable').each(function() {
+                var config = new TinyMCEConfig($(this).attr('id'));
+                config.init();
+            });
+        },
+
+        onClose: function() { location.reload(); }
+
+        }
+        });
+});

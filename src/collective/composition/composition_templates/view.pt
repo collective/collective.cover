@@ -5,6 +5,12 @@
       lang="en"
       metal:use-macro="context/main_template/macros/master"
       i18n:domain="collective.composition">
+<metal:js fill-slot="javascript_head_slot">
+  <script type="text/javascript"
+          tal:attributes="src string:${view/static}/composition.js">
+  </script>
+</metal:js>
+
 <metal:styles fill-slot="style_slot">
   <link rel="stylesheet" type="text/css" media="screen" href=""
         tal:attributes="href string:${view/static}/composition.css" />
@@ -14,7 +20,7 @@
 <body>
 
 <metal:main fill-slot="main">
-  <div tal:replace="structure context/render"></div>
+  <div tal:replace="structure context/@@layout" />
 </metal:main>
 
 </body>
