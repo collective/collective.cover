@@ -52,7 +52,10 @@ class RichTextTile(tiles.PersistentTile):
         #import pdb;pdb.set_trace()
 
     def populate_with_object(self, obj):
-        value = RichTextValue(obj.getText())
+        text = obj.getRawText().decode('utf-8')
+        value = RichTextValue(raw=text,
+                              mimeType='text/x-html-safe',
+                              outputMimeType='text/x-html-safe')
         data_mgr = ITileDataManager(self)
 
         data_mgr.set({'text': value})
