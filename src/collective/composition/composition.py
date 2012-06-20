@@ -295,75 +295,6 @@ class Compose(grok.View):
     grok.context(IComposition)
     grok.require('cmf.ModifyPortalContent')
 
-    def render_context_menus(self):
-        widget_template = """
-                {label:'%(title)s',
-                 icon:'%(icon)s',
-                 action:function() { Composition.addCTWidget('#*slot*', '%(portal_type)s', '%(title)s'); }
-                }"""
-        tile_widget_template = """
-                {label:'%(title)s',
-                 icon:'%(icon)s',
-                 action:function() { Composition.addTileWidget('#*slot*', '%(tile_type)s', '%(title)s'); }
-                }"""
-        widget_list = []
-        tile_widget_list = []
-        for widget in self.context.available_widgets():
-            if 'portal_type' in widget:
-                widget_list.append(widget_template % widget)
-            if 'tile_type' in widget:
-                tile_widget_list.append(tile_widget_template % widget)
-        ct_widgets = ",".join(widget_list)
-        tile_widgets = ",".join(tile_widget_list)
-        menu_template = """
-            $('#%s').contextPopup({
-              ct_title: 'Add CT Widgets',
-              ct_items: [
-              %s
-              ],
-              tile_title: 'Add Tile Widgets',
-              tile_items: [
-              %s
-              ]});"""
-        menus = """
-            jQuery(function($) {"""
-        for column in self.context.current_layout.columns:
-            menu = menu_template % (column, ct_widgets, tile_widgets)
-            menu = menu.replace('*slot*', column)
-            menus += menu
-        menus += """
-            })"""
-        return menus
-
-    def render_widget_initialization(self):
-        init = """
-            jQuery(function($) {"""
-        for column, addwidgets in self.context.widget_map.items():
-            for addwidget in addwidgets:
-                try:
-                    widget = self.context[addwidget]
-                    init += ("Composition.addCTWidgetControls('%s', '%s');\n" %
-                             (addwidget, widget.absolute_url()))
-                except KeyError:
-                    # If we are here, means either we have invalid data or
-                    # this might be a tile, let's see
-                    annotations = IAnnotations(self.context)
-                    current_tiles = annotations.get('current_tiles', {})
-                    if addwidget in current_tiles:
-                        widget_type = current_tiles[addwidget]['type']
-                        context_url = self.context.absolute_url()
-                        widget_url = '%s/@@%s/%s' % (context_url,
-                                                     widget_type,
-                                                     addwidget)
-                        init += ("Composition.addTileWidgetControls"
-                                 "('%s', '%s');\n" %
-                                 (addwidget, widget_url))
-
-        init += """
-            Composition.makeSortable();
-            })"""
-        return init
-
 
 class UpdateTileContent(grok.View):
     grok.context(IComposition)
@@ -374,15 +305,15 @@ class UpdateTileContent(grok.View):
 
         tile_type = self.request.form.get('tile-type')
         tile_id = self.request.form.get('tile-id')
-        uuid = self.request.form.get('uuid')
+        uid = self.request.form.get('uid')
 
-        if tile_type and tile_id and uuid:
+        if tile_type and tile_id and uid:
 
             tile = self.context.restrictedTraverse(tile_type)
 
             tile_instance = tile[tile_id]
 
-            results = pc(UID=uuid)
+            results = pc(UID=uid)
             if results:
                 obj = results[0].getObject()
 

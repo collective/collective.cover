@@ -10,7 +10,7 @@
     <tal:section repeat="section view/get_layout">
         <div tal:replace="structure python:view.render_section(section)" />
     </tal:section>
-
+    
 </body>
 </html>
 

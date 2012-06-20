@@ -5,6 +5,7 @@
     position: absolute;
     z-index: 9999;
     background-color:#FFFFFF;
+    display: none;
 }
 
 #screenlet-content-search #item-list {
@@ -14,6 +15,7 @@
     margin-top: 10px;
     width: 300px;
     height: 250px;
+    overflow: scroll;
 }
 
 #screenlet-content-search #item-list li {
@@ -28,4 +30,15 @@
 #content #screenlet-content-search #item-list li a:link {
     border-bottom: 0;
     display: block;
+}
+
+#screenlet-content-show-button {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #CCCCCC;
+    padding: 20px;
+    position: absolute;
+    right: 0;
+    z-index: 999;
+    background: #FFF;
+    cursor: pointer;
 }
