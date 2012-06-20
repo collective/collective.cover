@@ -1,0 +1,7 @@
+<div id="screenlet-content-search">   
+    <input id="screenlet-content-search-input" type="text" /> <input type="button" value="ok" id="screenlet-content-search-button"
+     tal:attributes="data-url view/post_url" />
+    <ul id="item-list">
+        <li tal:replace="structure context/@@content-search" />
+    </ul>
+</div>
