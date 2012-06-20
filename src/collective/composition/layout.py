@@ -55,3 +55,9 @@ class PageLayout(grok.View):
         # XXX: There *must* be a better way of doing this, maybe write it
         #      in the request ? sending it as parameter is way too ugly
         return self.pagelayout(mode="layout_edit")
+
+    def accepted_ct_for_tile(self, tile_type):
+        tile = self.context.restrictedTraverse(str(tile_type))
+        accepted_ct = tile.accepted_ct()
+
+        return json.dumps(accepted_ct)
