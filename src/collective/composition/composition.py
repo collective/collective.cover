@@ -384,3 +384,22 @@ class UpdateTileContent(grok.View):
         # XXX: Calling the tile will return the HTML with the headers, need to
         #      find out if this affects us in any way.
         return tile_instance()
+
+
+class DeleteTile(grok.View):
+    grok.context(IComposition)
+    grok.require('cmf.ModifyPortalContent')
+
+    def render(self):
+        pc = getToolByName(self.context, 'portal_catalog')
+
+        tile_type = self.request.form.get('tile-type')
+        tile_id = self.request.form.get('tile-id')
+
+        if tile_type and tile_id:
+
+            tile = self.context.restrictedTraverse(tile_type)
+
+            tile_instance = tile[tile_id]
+
+            tile_instance.delete()
