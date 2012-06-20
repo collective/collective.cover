@@ -7,15 +7,17 @@
       tal:omit-tag="">
 <body tal:omit-tag="">
 
-    <div tal:define="section options/section | nothing;"
-         tal:condition="section"
-         tal:attributes="class python:'row %s' % section.get('class', '')">
+    <tal:mode define="mode options/mode;">
+        <div tal:define="section options/section | nothing;"
+            tal:condition="section"
+            tal:attributes="class python:'row %s' % section.get('class', '')">
 
-        <tal:children repeat="child python:section.get('children')">
-            <div tal:replace="structure python:view.render_section(child)" />
-        </tal:children>
+            <tal:children repeat="child python:section.get('children')">
+                <div tal:replace="structure python:view.render_section(child, mode)" />
+            </tal:children>
 
-    </div>
+        </div>
+    </tal:mode>
 
 </body>
 </html>

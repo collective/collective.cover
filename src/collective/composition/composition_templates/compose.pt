@@ -14,7 +14,7 @@
   <script type="text/javascript"
           tal:attributes="src string:${view/static}/composition.js">
   </script>
-  
+
 </metal:js>
 <metal:styles fill-slot="style_slot">
   <link rel="stylesheet" type="text/css" media="screen" href=""
@@ -24,8 +24,9 @@
 </metal:styles>
 
 <metal:main fill-slot="main">
-<div tal:replace="structure context/@@layout" />
-<div class="content-screenlet" tal:replace="structure context/@@select-content-screenlet"></div>
+    <div tal:define="layout nocall:context/@@layout"
+         tal:replace="structure layout/render_compose" />
+        <div class="content-screenlet" tal:replace="structure context/@@select-content-screenlet"></div>
 </metal:main>
 
 </body>

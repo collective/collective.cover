@@ -20,6 +20,7 @@ class PageLayout(grok.View):
     grok.name('layout')
     grok.require('zope2.View')
 
+    pagelayout = ViewPageTemplateFile('layout_templates/pagelayout.pt')
     row = ViewPageTemplateFile('layout_templates/row.pt')
     group = ViewPageTemplateFile('layout_templates/group.pt')
     tile = ViewPageTemplateFile('layout_templates/tile.pt')
@@ -29,13 +30,28 @@ class PageLayout(grok.View):
 
         return layout
 
-    def render_section(self, section):
+    def render_section(self, section, mode):
         if section['type'] == u'row':
-            return self.row(section=section)
+            return self.row(section=section, mode=mode)
         if section['type'] == u'group':
-            return self.group(section=section)
+            return self.group(section=section, mode=mode)
         if section['type'] == u'tile':
-            return self.tile(section=section)
+            return self.tile(section=section, mode=mode)
 
     def is_user_allowed_in_group(self):
         return True
+
+    def render_view(self):
+        # XXX: There *must* be a better way of doing this, maybe write it
+        #      in the request ? sending it as parameter is way too ugly
+        return self.pagelayout(mode="view")
+
+    def render_compose(self):
+        # XXX: There *must* be a better way of doing this, maybe write it
+        #      in the request ? sending it as parameter is way too ugly
+        return self.pagelayout(mode="compose")
+
+    def render_layout_edit(self):
+        # XXX: There *must* be a better way of doing this, maybe write it
+        #      in the request ? sending it as parameter is way too ugly
+        return self.pagelayout(mode="layout_edit")
