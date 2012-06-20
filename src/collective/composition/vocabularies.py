@@ -2,13 +2,8 @@
 
 from five import grok
 
-from zope.interface import implements
 from zope.component import getUtility
 from zope.component import getMultiAdapter
-
-from zope.component.interfaces import IFactory
-
-from zope.app.container.interfaces import IAdding
 
 from zope.schema.interfaces import IVocabularyFactory
 from zope.schema.vocabulary import SimpleTerm
@@ -22,7 +17,6 @@ from plone.portlets.interfaces import ILocalPortletAssignable
 from plone.registry.interfaces import IRegistry
 
 from collective.composition.controlpanel import ICompositionSettings
-from collective.composition import _
 
 
 class ContextPortlets(grok.GlobalUtility):
