@@ -7,17 +7,18 @@
       tal:omit-tag="">
 <body tal:omit-tag="">
 
-    <div tal:define="section options/section | nothing;"
-         tal:condition="section"
-         tal:attributes="class python:'group %s %s' % (section.get('class', ''), view.is_user_allowed_in_group() and 'disabled');
-                         data-panel python: section.get('id', '')">
+    <tal:mode define="mode options/mode;">
+        <div tal:define="section options/section | nothing;"
+            tal:condition="section"
+            tal:attributes="class python:'group %s %s' % (section.get('class', ''), view.is_user_allowed_in_group() and 'disabled');
+                            data-panel python: section.get('id', '')">
 
-        <tal:children repeat="child python:section.get('children')">
-            <div tal:replace="structure python:view.render_section(child)" />
-        </tal:children>
+            <tal:children repeat="child python:section.get('children')">
+                <div tal:replace="structure python:view.render_section(child, mode)" />
+            </tal:children>
 
-    </div>
-
+        </div>
+    </tal:mode>
 </body>
 </html>
 

@@ -20,7 +20,8 @@
 <body>
 
 <metal:main fill-slot="main">
-  <div tal:replace="structure context/@@layout" />
+    <div tal:define="layout nocall:context/@@layout"
+         tal:replace="structure layout/render_view" />
 </metal:main>
 
 </body>
