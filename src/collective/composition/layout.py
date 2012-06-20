@@ -5,17 +5,8 @@ from five import grok
 
 from zope.app.pagetemplate.viewpagetemplatefile import ViewPageTemplateFile
 
-from zope.component import getUtility
-
-from zope.interface import Interface
-
-from plone.directives import dexterity
-
-from plone.registry.interfaces import IRegistry
-
 from collective.composition.composition import IComposition
 
-from collective.composition.controlpanel import ICompositionSettings
 from collective.composition import _
 
 #grok.templatedirs("layout_templates")
@@ -34,15 +25,7 @@ class PageLayout(grok.View):
     tile = ViewPageTemplateFile('layout_templates/tile.pt')
 
     def get_layout(self):
-        registry = getUtility(IRegistry)
-        settings = registry.forInterface(ICompositionSettings)
-
-        layout = settings.layouts[self.context.composition_layout]
-
-        try:
-            layout = json.loads(layout)
-        except ValueError:
-            layout = []
+        layout = json.loads(self.context.composition_layout)
 
         return layout
 

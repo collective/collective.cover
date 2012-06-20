@@ -6,12 +6,23 @@
 
     <schema>
 
-        <field name="composition_layout" type="zope.schema.Choice">
+        <field name="template_layout" type="zope.schema.Choice"
+               form:omitted="z3c.form.interfaces.IEditForm:true">
             <description i18n:translate="">
-                Arrangement of columns and rows for composable page
+                Choose one of the predefined layouts
             </description>
             <title i18n:translate="">Layout</title>
             <vocabulary>collective.composition.vocabularies.layouts</vocabulary>
+        </field>
+
+        <field name="composition_layout" type="zope.schema.Text"
+               form:omitted="z3c.form.interfaces.IForm:true
+                             z3c.form.interfaces.IAddForm:true
+                             z3c.form.interfaces.IEditForm:true">
+            <description i18n:translate="">
+                The layout to be used to render groups and tiles
+            </description>
+            <title i18n:translate="">Composition Layout</title>
         </field>
 
     </schema>
