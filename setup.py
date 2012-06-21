@@ -46,6 +46,8 @@ setup(name='collective.composition',
         'plone.tiles',
         'zope.component>=3.8.0',
         'plone.app.dexterity>=1.2.1',
+        'plone.app.jquery >= 1.7.2',
+        'plone.app.jquerytools >= 1.4',
         'collective.js.jqueryui',
         'pyquery'
         ],

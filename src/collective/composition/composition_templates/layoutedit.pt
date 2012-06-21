@@ -11,7 +11,6 @@
   <script type="text/javascript"
           tal:attributes="src string:${view/static}/layout_edit.js">
   </script>
-
   <script type="text/javascript">
     $(document).ready(function() {
       $('.layout').coverlayout();  
