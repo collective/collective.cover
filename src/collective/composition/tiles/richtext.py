@@ -5,7 +5,6 @@
 
 from zope.interface import Interface
 
-from plone import tiles
 from plone.app.textfield import RichText
 from plone.app.textfield.interfaces import ITransformer
 from plone.app.textfield.value import RichTextValue
@@ -14,8 +13,11 @@ from plone.tiles.interfaces import ITileDataManager
 
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
+from collective.composition.tiles.base import IPersistentCompositionTile
+from collective.composition.tiles.base import PersistentCompositionTile
 
-class IRichTextTileData(Interface):
+
+class IRichTextTileData(IPersistentCompositionTile):
 
     text = RichText(title=u'Text')
 
@@ -36,9 +38,11 @@ class IRichTextTileData(Interface):
         """
 
 
-class RichTextTile(tiles.PersistentTile):
+class RichTextTile(PersistentCompositionTile):
 
     index = ViewPageTemplateFile("templates/richtext.pt")
+
+    is_configurable = True
 
     def getText(self):
         text = ''

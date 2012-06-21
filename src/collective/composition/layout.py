@@ -41,6 +41,9 @@ class PageLayout(grok.View):
     def is_user_allowed_in_group(self):
         return True
 
+    def tile_is_configurable(self, tile_type):
+        return True
+
     def render_view(self):
         # XXX: There *must* be a better way of doing this, maybe write it
         #      in the request ? sending it as parameter is way too ugly
