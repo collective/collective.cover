@@ -13,6 +13,10 @@ of the following people:
 - Gonzalo Almeida
 - Juan A. Díaz
 - Davi Lima
+- Ricardo Bánffy
+- `Launched Pixels`_ (icon)
 
-Development sponsored by Open Multimedia, Simples Consultoria and Ravvit.
+Development sponsored by Open Multimedia, Ravvit and Simples Consultoria.
+
+.. _`Launched Pixels`: http://www.launchedpixels.com/
 
