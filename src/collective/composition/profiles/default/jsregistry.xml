@@ -1,6 +1,22 @@
 <?xml version="1.0"?>
 <object name="portal_javascripts">
+  <javascript bundle="jquerytools" id="++resource++plone.app.jquerytools.js" />
+  <javascript bundle="jquerytools" id="++resource++plone.app.jquerytools.form.js" />
+  <javascript bundle="jquerytools" id="++resource++plone.app.jquerytools.overlayhelpers.js" />
+  <javascript bundle="jquerytools" id="++resource++plone.app.jquerytools.plugins.js" />
+  <javascript bundle="jquerytools" id="++resource++plone.app.jquerytools.dateinput.js" />
+  <javascript bundle="jquerytools" id="++resource++plone.app.jquerytools.rangeinput.js" />
+  <javascript bundle="jquerytools" id="++resource++plone.app.jquerytools.validator.js" />
+
+  <!-- tiny bundle overrides -->
+  <javascript bundle="tinymce" id="tiny_mce.js" />
+  <javascript bundle="tinymce" id="tiny_mce_init.js" />
+
   <javascript id="++resource++collective.composition/screenlets.js"
       cacheable="True" compression="none" cookable="True" enabled="True"
-      expression="" inline="False" />    
+      expression="" inline="False" />
+  <javascript id="++resource++collective.composition/bootstrap.min.js"
+      cacheable="True" compression="none" cookable="True" enabled="True"
+      expression="" inline="False" /> 
 </object>
+

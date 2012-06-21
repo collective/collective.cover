@@ -3,4 +3,7 @@
  <stylesheet title="" cacheable="True" compression="safe" cookable="True"
     enabled="1" expression="" id="++resource++collective.composition/screenlets.css" media="screen"
     rel="stylesheet" rendering="import"/>
+ <stylesheet title="" cacheable="True" compression="safe" cookable="True"
+    enabled="1" expression="" id="++resource++collective.composition/bootstrap.min.css" media="screen"
+    rel="stylesheet" rendering="import"/>
 </object>

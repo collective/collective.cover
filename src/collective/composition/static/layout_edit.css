@@ -1,18 +1,29 @@
-#main-wrapper {
-    height: 960px;
+.layout {
+    width:90%;
+    float:left;
 }
+#sidebar {
+    float:right;
+    width:9%;
+}
+
 .layout .tile {
-    padding: 2px;
+    background-color: #F9F9F9;
+    margin: 5px;
+    min-height: 50px;
+    outline: 1px solid #999999;
+    position: relative;
 }
 .layout .row {
     outline: 1px dashed blue;
     min-height:100px;
     margin:10px 0;
-    padding:10px 0;
+    padding:15px 0;
 }
 .layout .column {
     outline: 1px dashed #ccc;
     min-height:100px;
+    padding:10px 0;
 }
 
 .layout .tile-wrapper {
@@ -25,18 +36,21 @@
 
 #sidebar {
     background-color: #FFFFFF;
-    border: 1px solid #000000;
-    padding: 10px;
-    position: absolute;
-    right: 10px;
+    padding: 0px;
+    position: relative;
     top: 10px;
-    box-shadow: 5px 5px 5px #888;    
 }
 
 #sidebar .btn {
-    border: 1px solid #ccc;
-    padding: 10px;
-    text-align: center;
+    background-color: #333333;
+    color: #FFFFFF;
+    cursor: move;
+    margin-bottom: 10px;
+    padding: 10px 10px 10px 35px;
+    text-align: left;
+}
+#sidebar .btn:hover {
+    background-color:#444;
 }
 
 #news img {
@@ -63,10 +77,22 @@
     min-width: 6em;
     position: absolute;
     text-align: center;
-    bottom:0px;
+    top:0px;
 }
 .layout .columnlabel {
     background-color: #E1E1E1;
     top: 0px;
     bottom:auto;
+}
+
+
+/*ACTION BUTTONS*/
+#btn-row {
+    background: url(/++resource++collective.composition/rows.png) no-repeat 10px center;
+}
+#btn-column {
+    background: url(/++resource++collective.composition/columns.png) no-repeat 10px center;
+}
+#btn-tile {
+    background: url(/++resource++collective.composition/tiles.png) no-repeat 10px center;
 }

@@ -29,9 +29,12 @@
                 
                 self.column_draggable($('#btn-column'));
                 self.column_droppable();
+
+                self.tile_draggable($('#btn-tile'));
+                self.tile_droppable();                
                 
                 le.find('.'+row_class).append('<span class="label rowlabel">row</span>');
-                $('.'+column_class).append('<span class="label columnlabel">column</span>');                
+                le.find('.'+column_class).append('<span class="label columnlabel">column</span>');                
             },
 
             grid_manager_init: function(children){
@@ -55,7 +58,6 @@
                 row.before(row_placeholder);
 
                 var droppable_elements = row.siblings('.row-droppable');
-                console.log(droppable_elements);
 
                 droppable_elements.droppable({
 			        activeClass: "ui-state-default",
@@ -67,7 +69,7 @@
                         $(this).before(new_row);
                         
                         self.row_droppable();
-                        self.column_droppable(new_row);                        
+                        self.column_droppable(new_row);
 			        }
 		        });
             },
@@ -107,6 +109,40 @@
                         var cells = $(this).find('.'+column_class);
 
                         self.grid_manager_init(cells);
+                        self.tile_droppable(new_column);                        
+			        }
+		        });
+            },
+
+            /**
+             * Tile Draggable
+             * @param draggable_element, the element to be dragged
+             */
+            tile_draggable: function(draggable_element) {
+                draggable_element.draggable({
+			        appendTo: "body",
+			        helper: "clone"
+		        });
+            },
+
+            /**
+             * Tile Droppable
+             * @param tile, if provided is going to only bind the event to 
+             * the dom or list of dom elements, if not, is going to do it in all
+             * the .cell elements
+             */
+            tile_droppable: function(tile) {
+                
+                var droppable_elements = tile ? tile : le.find('.'+column_class);
+
+                droppable_elements.droppable({
+			        activeClass: "ui-state-default",
+			        hoverClass: "ui-state-hover",
+			        accept: "#btn-tile",
+			        drop: function( event, ui ) {
+			            var default_class = 'tile';
+                        var new_tile = $( "<div class='"+default_class+"'><span class='label tilelabel'>tile</span></div>" );
+                        $(this).append(new_tile);
 			        }
 		        });
             },
@@ -151,7 +187,7 @@
             'columnclass': 'cell',
             'columnposition': 'position-',
             'columnwidth': 'width-',
-            'numberofcolumns': 12,
+            'numberofcolumns': 16,
             'rowclass': 'row',
             'gridmanager': grid_manager
         }
