@@ -22,5 +22,6 @@
         class=".controlpanel.CompositionSettingsControlPanel"
         permission="cmf.ManagePortal"
         />
+                
 
 </configure>

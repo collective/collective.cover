@@ -7,7 +7,7 @@
   <property name="title" i18n:translate="">Composition</property>
   <property name="description"
     i18n:translate="">Composable page</property>
-  <property name="icon_expr">string:${portal_url}/folder_icon.png</property>
+  <property name="content_icon">++resource++collective.composition/frontpage_icon.png</property>
   <property name="factory">collective.composition.composition</property>
   <property name="global_allow">True</property>
  <property name="filter_content_types">False</property>

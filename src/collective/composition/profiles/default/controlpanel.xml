@@ -9,7 +9,7 @@
         category="Products"
         condition_expr=""
         url_expr="string:${portal_url}/@@composition-settings"
-        icon_expr="string:${portal_url}/++resource++collective.composition/composition_icon.png"
+        icon_expr="string:++resource++collective.composition/frontpage_icon.png"
         visible="True"
         i18n:attributes="title">
         <permission>Manage portal</permission>

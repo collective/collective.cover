@@ -1,0 +1,12 @@
+<metal:block use-macro="context/@@tile-form-layout/macros/master">
+    <metal:block fill-slot="javascript_head_slot">
+        <script type="text/javascript" tal:content="python:'var tiledata = eval(\'(%s)\');' % (tiledata)"></script>
+    </metal:block>
+    <metal:block fill-slot="main">
+
+        <h1 class="documentFirstHeading" tal:content="view/form_instance/label | nothing" />
+
+        <span tal:replace="structure view/contents" />
+
+    </metal:block>
+</metal:block>

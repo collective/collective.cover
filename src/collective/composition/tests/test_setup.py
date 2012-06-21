@@ -9,9 +9,13 @@ from collective.composition.config import PROJECTNAME
 from collective.composition.testing import INTEGRATION_TESTING
 
 JS = [
+    '++resource++collective.composition/screenlets.js',
+    '++resource++collective.composition/bootstrap.min.js',
     ]
 
 CSS = [
+    '++resource++collective.composition/screenlets.css',
+    '++resource++collective.composition/bootstrap.min.css',
     ]
 
 
