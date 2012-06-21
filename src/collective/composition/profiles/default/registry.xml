@@ -25,22 +25,22 @@
           <!-- BBB: These bundle assignments should go into each theme's package -->
           <element key="Plone Classic Theme">
               <element>jquery</element>
-              <element>default</element>
               <element>jquerytools</element>
+              <element>default</element>
               <element>tinymce</element>
           </element>
 
           <element key="Plone Default">
               <element>jquery</element>
-              <element>default</element>
               <element>jquerytools</element>
+              <element>default</element>
               <element>tinymce</element>
           </element>
 
           <element key="Sunburst Theme">
               <element>jquery</element>
-              <element>default</element>
               <element>jquerytools</element>
+              <element>default</element>
               <element>tinymce</element>
           </element>
       </value>
