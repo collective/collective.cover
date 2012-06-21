@@ -253,7 +253,7 @@ var Composition = {
 /*Composition.init();*/
 
 $(document).ready(function() {
-    $('a.edit-tile-link').prepOverlay({
+    $('a.edit-tile-link, a.config-tile-link').prepOverlay({
         subtype: 'ajax',
         filter: '#content>*',
         formselector: 'form',
