@@ -9,10 +9,10 @@ long_description = open("README.txt").read() + "\n" + \
 
 setup(name='collective.composition',
       version=version,
-      description="Composable page",
+      description="An easy-to-use package to create complex front pages in Plone.",
       long_description=long_description,
       classifiers=[
-        "Development Status :: 3 - Alpha",
+        "Development Status :: 2 - Pre-Alpha",
         "Environment :: Web Environment",
         "Framework :: Plone",
         "Framework :: Plone :: 4.2",
