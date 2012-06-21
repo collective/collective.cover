@@ -7,15 +7,14 @@ from five import grok
 
 from Products.CMFCore.utils import getToolByName
 
-from collective.composition import _
-
 from Products.CMFPlone.browser.navtree import SitemapNavtreeStrategy
 
-from plone.app.layout.navigation.interfaces import INavtreeStrategy
+from collective.composition import _
 
 grok.templatedir("screenlets_templates")
 
-class TestContet(grok.View):
+
+class TestContent(grok.View):
     """
     test screenlet for selecting
     """
@@ -23,7 +22,7 @@ class TestContet(grok.View):
     grok.name('test-content-screenlet')
     grok.require('zope2.View')
     grok.template('test_content_screenlet')
-    
+
 
 class SelectContentScreenlet(grok.View):
     """
@@ -33,10 +32,14 @@ class SelectContentScreenlet(grok.View):
     grok.name('select-content-screenlet')
     grok.require('zope2.View')
     grok.template('content_screenlet')
-    
+
+    def update(self):
+        pass
+
     def post_url(self):
         return self.context.absolute_url() + "/@@content-search"
-    
+
+
 class ContentSearch(grok.View):
     """
     returns the html with the list of results and icons
@@ -45,35 +48,36 @@ class ContentSearch(grok.View):
     grok.name('content-search')
     grok.require('zope2.View')
     grok.template('search_list')
-    
+
     def update(self):
         query = self.request.get('q', None)
-        # if not query:
-        #             return ''
-        
-        result = self.search(query)
-        portal_state = getMultiAdapter((self.context, self.request),
-                                          name=u'plone_portal_state')
-        portal = portal_state.portal()
-
+        tab = self.request.get('tab', None)
+        uids = None
+        if tab == 'recent':
+            pass
+        elif tab == 'clipboard':
+            brains = list(self.search(''))[:2]
+            uids = [b.UID for b in brains]
+        elif tab == 'content-tree':
+            pass
+        result = self.search(query, uids=uids)
         strategy = SitemapNavtreeStrategy(self.context)
-        
-        result = [strategy.decoratorFactory({'item':node}) for node in result]
+        result = [strategy.decoratorFactory({'item': node}) for node in result]
         self.level = 1
         self.children = result
-    
-    def search(self, query=None, limit=None, portal_type=None):
+
+    def search(self, query=None, limit=None, portal_type=None, uids=None):
         pc = getToolByName(self.context, "portal_catalog")
         catalog_query = {}
-        
         if query:
             catalog_query = {'SearchableText': query}
-
         if limit:
             catalog_query['sort_limit'] = limit
         if portal_type:
             catalog_query['portal_type'] = portal_type
-        results =  pc(**catalog_query)
+        if uids:
+            catalog_query['UID'] = uids
+        results = pc(**catalog_query)
         return results
 
     def getTermByBrain(self, brain, real_value=True):
