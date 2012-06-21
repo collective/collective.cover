@@ -10,7 +10,7 @@
     <tal:mode define="mode options/mode;">
         <div tal:define="section options/section | nothing;"
             tal:condition="section"
-            tal:attributes="class python:'group %s %s' % (section.get('class', ''), view.is_user_allowed_in_group() and 'disabled');
+            tal:attributes="class python:'%s %s' % (section.get('class', ''), view.is_user_allowed_in_group() and 'disabled');
                             data-panel python: section.get('id', '')">
 
             <tal:children repeat="child python:section.get('children')">

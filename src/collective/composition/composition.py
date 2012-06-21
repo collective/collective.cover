@@ -36,6 +36,7 @@ from Products.CMFCore.Expression import getExprContext
 
 from collective.composition.controlpanel import ICompositionSettings
 
+
 class IComposition(form.Schema):
     """
     Composable page
@@ -292,6 +293,11 @@ class RemoveTileWidget(grok.View):
 
 
 class Compose(grok.View):
+    grok.context(IComposition)
+    grok.require('cmf.ModifyPortalContent')
+
+
+class LayoutEdit(grok.View):
     grok.context(IComposition)
     grok.require('cmf.ModifyPortalContent')
 

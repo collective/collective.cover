@@ -35,7 +35,6 @@
   <property name="default_view">view</property>
   <property name="view_methods">
    <element value="view"/>
-   <element value="layout"/>
   </property>
   <property name="default_view_fallback">False</property>
   <property name="add_permission">cmf.AddPortalContent</property>
@@ -58,6 +57,10 @@
   </action>
   <action title="Compose" action_id="compose" category="object" condition_expr=""
     url_expr="string:${object_url}/compose" visible="True">
+    <permission value="Modify portal content" />
+  </action>
+  <action title="Layout" action_id="layoutedit" category="object" condition_expr=""
+    url_expr="string:${object_url}/layoutedit" visible="True">
     <permission value="Modify portal content" />
   </action>
 </object>
