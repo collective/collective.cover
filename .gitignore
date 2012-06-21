@@ -14,11 +14,12 @@ bin/
 develop-eggs/
 downloads/
 eggs/
-parts/
-src/plone.app.blocks/
-src/plone.app.tiles/
-var/
 include/
 lib/
+parts/
+src/plone.app.blocks/
+src/plone.app.deco/
 src/plone.app.intid/
+src/plone.app.tiles/
 src/plone.tiles/
+var/
