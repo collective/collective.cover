@@ -68,6 +68,24 @@ Don't Panic
 
 TBA.
 
+How to develop a tile for collective.composition
+------------------------------------------------
+
+Follow instructions in http://davisagli.com/blog/using-tiles-to-provide-more-flexible-plone-layouts to understand how to develop tiles, and how they work.
+
+Instead of inheriting from plone.tiles.PersistentTile, inherit from collective.composition.tile.base.PersistentCompositionTile
+
+There are a couple of methods defined in this base class that provide additional functionality expected by the composition object, that you should override in your class:
+
+populate_with_object(obj): It takes a CT object as parameter, and it will store the content into the tile.
+
+delete(): It removes the persistent data created for the tile
+
+accepted_ct(): It returns a list of valid CT that this tile will accept, or None in case it doesn't accept any
+
+get_tile_configuration(): It returns the stored configuration options for this tile
+
+
 Mostly Harmless
 ---------------
 
