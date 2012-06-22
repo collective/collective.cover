@@ -28,6 +28,24 @@
     </class>
 
   <plone:tile
+      name="collective.composition.basic"
+      title="Basic Tile"
+      description="A tile with a title, decription and one image"
+      add_permission="cmf.ModifyPortalContent"
+      schema=".basic.IBasicTileData"
+      class=".basic.BasicTile"
+      permission="zope2.View"
+      for="*"
+      />
+
+  <browser:page
+      name="image"
+      for=".basic.BasicTile"
+      class=".basic.ImageView"
+      permission="zope2.View"
+  />
+
+  <plone:tile
       name="collective.composition.richtext"
       title="Rich Text Tile"
       description="A tile containing rich text"
