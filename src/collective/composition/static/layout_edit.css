@@ -1,29 +1,32 @@
 .layout {
-    width:90%;
-    float:left;
+    float: left;
+    width: 90%;
 }
+
 #sidebar {
-    float:right;
-    width:9%;
+    float: right;
+    width: 9%;
 }
 
 .layout .tile {
     background-color: #F9F9F9;
     margin: 5px;
     min-height: 50px;
-    outline: 1px solid #999999;
+    outline: 1px solid #999;
     position: relative;
 }
+
 .layout .row {
     outline: 1px dashed blue;
-    min-height:100px;
-    margin:10px 0;
-    padding:15px 0;
+    margin: 10px 0;
+    min-height: 100px;
+    padding: 15px 0;
 }
+
 .layout .column {
+    min-height: 100px;
     outline: 1px dashed #ccc;
-    min-height:100px;
-    padding:10px 0;
+    padding: 10px 0;
 }
 
 .layout .tile-wrapper {
@@ -35,22 +38,23 @@
 }
 
 #sidebar {
-    background-color: #FFFFFF;
-    padding: 0px;
+    background-color: #FFF;
+    padding: 0;
     position: relative;
     top: 10px;
 }
 
 #sidebar .btn {
-    background-color: #333333;
-    color: #FFFFFF;
+    background-color: #333;
+    color: #FFF;
     cursor: move;
     margin-bottom: 10px;
     padding: 10px 10px 10px 35px;
     text-align: left;
 }
+
 #sidebar .btn:hover {
-    background-color:#444;
+    background-color: #444;
 }
 
 #news img {
@@ -61,12 +65,13 @@
     clear: both;
 }
 .row-droppable {
-    width:100%;
-    clear:both;
+    clear: both;
+    width: 100%;
 }
+
 .row-droppable.ui-state-default {
-    min-height:10px;
-    display:block;
+    display: block;
+    min-height: 10px;
 }
 
 .layout .label {
@@ -76,22 +81,25 @@
     min-width: 6em;
     position: absolute;
     text-align: center;
-    top:0px;
+    top: 0;
 }
+
 .layout .columnlabel {
     background-color: #E1E1E1;
-    top: 0px;
-    bottom:auto;
+    bottom: auto;
+    top: 0;
 }
 
-
 /*ACTION BUTTONS*/
+
 #btn-row {
     background: url(/++resource++collective.composition/rows.png) no-repeat 10px center;
 }
+
 #btn-column {
     background: url(/++resource++collective.composition/columns.png) no-repeat 10px center;
 }
+
 #btn-tile {
     background: url(/++resource++collective.composition/tiles.png) no-repeat 10px center;
 }
