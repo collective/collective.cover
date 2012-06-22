@@ -1,0 +1,41 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="collective.composition">
+<body>
+
+<metal:js fill-slot="javascript_head_slot">
+  <script type="text/javascript"
+          tal:attributes="src string:${view/static}/layout_edit.js">
+  </script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('.layout').coverlayout();  
+    });
+  </script>
+
+</metal:js>
+<metal:styles fill-slot="style_slot">
+  <link rel="stylesheet" type="text/css" media="screen" href=""
+        tal:attributes="href string:${view/static}/layout_edit.css" />
+</metal:styles>
+
+<metal:main fill-slot="main">
+    <div class="layout">
+        <div tal:define="layout nocall:context/@@layout"
+             tal:replace="structure layout/render_layout_edit" />
+    <!--        <div class="content-screenlet" tal:replace="structure context/@@select-content-screenlet"></div>--> 
+    </div>
+    <div id="sidebar">
+       <div id="btn-row" class="btn">ROW</div>
+       <div id="btn-column" class="btn">COLUMN</div>
+       <div id="btn-tile" class="btn">TILE</div>
+    </div>    
+</metal:main>
+
+</body>
+</html>
+

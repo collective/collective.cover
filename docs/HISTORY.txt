@@ -1,17 +1,10 @@
 Changelog
-=========
+---------
+
+Because you have to know where your towel is.
 
 1.0 (unreleased)
-----------------
+^^^^^^^^^^^^^^^^^^
 
-- Fix packaging and list dependencies in setup.py
+- Initial release.
 
-- Spanish translations
-
-- Add testing
-
-
-1.0dev (unreleased)
--------------------
-
-- Initial release

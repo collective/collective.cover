@@ -7,7 +7,7 @@
   <property name="title" i18n:translate="">Composition</property>
   <property name="description"
     i18n:translate="">Composable page</property>
-  <property name="icon_expr">string:${portal_url}/folder_icon.png</property>
+  <property name="content_icon">++resource++collective.composition/frontpage_icon.png</property>
   <property name="factory">collective.composition.composition</property>
   <property name="global_allow">True</property>
  <property name="filter_content_types">False</property>
@@ -21,7 +21,7 @@
   <property name="allow_discussion">False</property>
 
   <!-- schema and class used for content items -->
-  <property name="schema">collective.composition.composition.IComposition</property> 
+  <property name="schema">collective.composition.composition.IComposition</property>
   <property name="klass">collective.composition.composition.Composition</property>
 
   <property name="behaviors">
@@ -35,7 +35,6 @@
   <property name="default_view">view</property>
   <property name="view_methods">
    <element value="view"/>
-   <element value="compose"/>
   </property>
   <property name="default_view_fallback">False</property>
   <property name="add_permission">cmf.AddPortalContent</property>
@@ -58,6 +57,10 @@
   </action>
   <action title="Compose" action_id="compose" category="object" condition_expr=""
     url_expr="string:${object_url}/compose" visible="True">
+    <permission value="Modify portal content" />
+  </action>
+  <action title="Layout" action_id="layoutedit" category="object" condition_expr=""
+    url_expr="string:${object_url}/layoutedit" visible="True">
     <permission value="Modify portal content" />
   </action>
 </object>

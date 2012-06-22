@@ -1,8 +1,49 @@
 <configure
     xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
     xmlns:i18n="http://namespaces.zope.org/i18n"
     xmlns:plone="http://namespaces.plone.org/plone"
     i18n_domain="collective.composition">
+
+    <browser:page
+        name="configure-tile"
+        for="zope.annotation.interfaces.IAnnotatable"
+        permission="cmf.ModifyPortalContent"
+        class=".configuration_view.ConfigureTile"
+        />
+
+    <adapter
+        for="zope.annotation.interfaces.IAnnotatable
+             zope.publisher.interfaces.browser.IDefaultBrowserLayer
+             plone.tiles.interfaces.ITileType"
+        provides=".configuration_view.ITileConfigureView"
+        factory=".configuration_view.DefaultConfigureView"
+        />
+
+    <class class=".configuration_view.DefaultConfigureView">
+        <require
+            permission="cmf.ModifyPortalContent"
+            interface="zope.publisher.interfaces.browser.IBrowserPage"
+            />
+    </class>
+
+  <plone:tile
+      name="collective.composition.basic"
+      title="Basic Tile"
+      description="A tile with a title, decription and one image"
+      add_permission="cmf.ModifyPortalContent"
+      schema=".basic.IBasicTileData"
+      class=".basic.BasicTile"
+      permission="zope2.View"
+      for="*"
+      />
+
+  <browser:page
+      name="image"
+      for=".basic.BasicTile"
+      class=".basic.ImageView"
+      permission="zope2.View"
+  />
 
   <plone:tile
       name="collective.composition.richtext"
@@ -14,5 +55,24 @@
       permission="zope2.View"
       for="*"
       />
+
+  <plone:tile
+      name="collective.composition.container"
+      title="Container Tile"
+      description="A tile that contains other tiles"
+      add_permission="cmf.ModifyPortalContent"
+      schema=".container.IContainerTile"
+      class=".container.ContainerTile"
+      permission="zope2.View"
+      for="*"
+      />
+
+
+
+    <adapter for="zope.interface.Interface
+                  zope.publisher.interfaces.browser.IBrowserRequest
+                  collective.composition.tiles.base.IPersistentCompositionTile"
+        provides="collective.composition.tiles.configuration.ITilesConfigurationScreen"
+        factory="collective.composition.tiles.configuration.TilesConfigurationScreen" />
 
 </configure>

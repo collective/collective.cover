@@ -1,8 +1,22 @@
-collective.composition contributors
-===================================
+Share and Enjoy
+---------------
 
-- Carlos de la Guardia (cguardia@yahoo.com)
+collective.composition would not have been possible without the contribution
+of the following people:
 
-- Héctor Velarde (hector.velarde@gmail.com)
+- Carlos de la Guardia
+- Héctor Velarde
+- Noé Nieto
+- André Nogueira
+- Franco Pellegrini
+- Silvestre Huens
+- Gonzalo Almeida
+- Juan A. Díaz
+- Davi Lima
+- Ricardo Bánffy
+- `Launched Pixels`_ (icon)
 
-- Noé Nieto (nnieto@noenieto.com)
+Development sponsored by Open Multimedia, Ravvit and Simples Consultoria.
+
+.. _`Launched Pixels`: http://www.launchedpixels.com/
+

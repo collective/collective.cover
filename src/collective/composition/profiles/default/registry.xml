@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<registry>
+    <records interface="collective.composition.controlpanel.ICompositionSettings" />
+
+    <record field="layouts"
+            interface="collective.composition.controlpanel.ICompositionSettings"
+            name="collective.composition.controlpanel.ICompositionSettings.layouts">
+    <field type="plone.registry.field.Dict">
+      <key_type type="plone.registry.field.TextLine">
+        <title>Name</title>
+      </key_type>
+      <title>Layouts</title>
+      <value_type type="plone.registry.field.TextLine">
+        <title>Layout</title>
+      </value_type>
+    </field>
+    <value>
+      <element key="Layout A">[{"type": "row", "children": [{"children": [{"tile-type": "collective.composition.richtext", "params": {"1": 1, "2": 2}, "type": "tile", "class": "otra-clase nada", "id": "mi-super-tile-1"}], "type": "group", "id": "group1", "roles": ["Manager"], "class": "group column cell position-0 width-12"}]}, {"type": "row", "children": [{"children": [{"tile-type": "collective.composition.richtext", "params": {"1": 1, "2": 2}, "type": "tile", "class": "otra-clase2 nada2", "id": "mi-super-tile-2"}], "type": "group", "id": "group2", "roles": ["Manager"], "class": "group column cell position-0 width-12"}]}]</element>
+      <element key="Layout B">[{"type": "row", "children": [{"children": [{"tile-type": "collective.composition.basic", "params": {"1": 1, "2": 2}, "type": "tile", "class": "otra-clase nada", "id": "mi-super-tile-1"}], "type": "group", "id": "group1", "roles": ["Manager"], "class": "group column cell position-0 width-12"}]}, {"type": "row", "children": [{"children": [{"tile-type": "collective.composition.richtext", "params": {"1": 1, "2": 2}, "type": "tile", "class": "otra-clase2 nada2", "id": "mi-super-tile-2"}], "type": "group", "id": "group2", "roles": ["Manager"], "class": "group column cell position-0 width-12"}]}]</element>
+    </value>
+  </record>
+
+  <record interface="Products.ResourceRegistries.interfaces.settings.IResourceRegistriesSettings"
+          field="resourceBundlesForThemes">
+      <value purge="false">
+          <!-- BBB: These bundle assignments should go into each theme's package -->
+          <element key="Plone Classic Theme">
+              <element>jquery</element>
+              <element>jquerytools</element>
+              <element>default</element>
+              <element>tinymce</element>
+          </element>
+
+          <element key="Plone Default">
+              <element>jquery</element>
+              <element>jquerytools</element>
+              <element>default</element>
+              <element>tinymce</element>
+          </element>
+
+          <element key="Sunburst Theme">
+              <element>jquery</element>
+              <element>jquerytools</element>
+              <element>default</element>
+              <element>tinymce</element>
+          </element>
+      </value>
+  </record>
+
+</registry>
