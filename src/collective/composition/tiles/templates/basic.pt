@@ -1,0 +1,20 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      i18n:domain="collective.composition">
+
+<body>
+    <tal:text define="title view/getTitle;
+                      description view/getDescription;
+                      image_tag view/image_tag;
+                      is_empty view/is_empty;">
+        <p tal:condition="is_empty">
+            Please edit the tile to enter some data.
+        </p>
+        <h1 tal:content="title">Title</h1>
+        <p tal:content="description">Description</p>
+        <tal:image replace="structure image_tag">Image</tal:image>
+    </tal:text>
+</body>
+</html>
