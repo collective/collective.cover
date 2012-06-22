@@ -3,6 +3,7 @@ from z3c.form import button
 from z3c.form import form
 
 from z3c.form.interfaces import IDataManager
+from z3c.form.interfaces import NO_VALUE
 
 from zope.component import getMultiAdapter
 
@@ -138,6 +139,9 @@ class DefaultConfigureForm(TileForm, form.Form):
     def getFieldConfiguration(self, widget):
         conf = getMultiAdapter((widget.context, widget.field),
                                IDataManager).query()
+
+        if conf == NO_VALUE:
+            conf = {}
 
         return conf
 
