@@ -3,45 +3,52 @@
 # Basic implementation taken from
 # http://davisagli.com/blog/using-tiles-to-provide-more-flexible-plone-layouts
 
-from zope.interface import Interface
-from zope.component import adapts
 from zope import schema
+
 from zope.publisher.browser import BrowserView
-from zope.publisher.interfaces.browser import IDefaultBrowserLayer
 
-from plone import tiles
-from plone.app.textfield import RichText
-from plone.app.textfield.interfaces import ITransformer
 from plone.namedfile.field import NamedImage
-
-from plone.tiles.interfaces import ITileDataManager
-from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-
 from plone.namedfile.utils import set_headers, stream_data
 
-class IBasicTileData(Interface):
+from plone.tiles.interfaces import ITileDataManager
 
-    title = schema.TextLine(title=u'Title',
-                            required=False,
-                            )
-    description = schema.Text(title=u'Descrition',
-                              required=False,
-                              )
-    image = NamedImage(title=u'Image',
-                       required=False,
-                       )
+from plone.app.textfield.interfaces import ITransformer
 
-    def getTitle():
+from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
+
+from collective.composition import _
+from collective.composition.tiles.base import IPersistentCompositionTile
+from collective.composition.tiles.base import PersistentCompositionTile
+
+
+class IBasicTileData(IPersistentCompositionTile):
+
+    title = schema.TextLine(
+        title=_(u'Title'),
+        required=False,
+        )
+
+    description = schema.Text(
+        title=_(u'Descrition'),
+        required=False,
+        )
+
+    image = NamedImage(
+        title=_(u'Image'),
+        required=False,
+        )
+
+    def get_title():
         """
         A method to return the title stored in the tile
         """
 
-    def getDescription():
+    def get_description():
         """
         A method to return the description stored in the tile
         """
 
-    def getImage():
+    def get_image():
         """
         A method to return the image stored in the tile
         """
@@ -58,9 +65,11 @@ class IBasicTileData(Interface):
         """
 
 
-class BasicTile(tiles.PersistentTile):
+class BasicTile(PersistentCompositionTile):
 
     index = ViewPageTemplateFile("templates/basic.pt")
+
+    is_configurable = True
 
     def getText(self):
         text = ''
@@ -70,35 +79,41 @@ class BasicTile(tiles.PersistentTile):
                 text = transformer(self.data['text'], 'text/x-html-safe')
         return text
 
-    def getTitle(self):
+    def get_title(self):
         return self.data['title']
 
-    def getDescription(self):
+    def get_description(self):
         return self.data['description']
 
-    def image_tag(self):
-        return '<img src="%s/@@image" />' % self.url
+    def get_image(self):
+        return self.data['image']
 
     def is_empty(self):
         return not(self.data['title'] or \
                    self.data['description'] or \
                    self.data['image'])
-        
+
     def populate_with_object(self, obj):
-        text = obj.getRawText().decode('utf-8')
-        value = RichTextValue(raw=text,
-                              mimeType='text/x-html-safe',
-                              outputMimeType='text/x-html-safe')
+
+        title = obj.title
+        description = obj.description
+
+        if hasattr(obj, 'image'):
+            image = obj.image
+
         data_mgr = ITileDataManager(self)
 
-        data_mgr.set({'text': value})
+        data_mgr.set({'title': title,
+                      'description': description,
+                      #'image': image,
+                      })
 
     def delete(self):
         data_mgr = ITileDataManager(self)
         data_mgr.delete()
 
     def accepted_ct(self):
-        valid_ct = ['Document',]
+        valid_ct = ['Document', 'File', 'Image', 'Link', 'News Item']
         return valid_ct
 
 
