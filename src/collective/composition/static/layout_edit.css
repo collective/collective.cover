@@ -1,0 +1,97 @@
+.layout {
+    width:90%;
+    float:left;
+}
+#sidebar {
+    float:right;
+    width:9%;
+}
+
+.layout .tile {
+    background-color: #F9F9F9;
+    margin: 5px;
+    min-height: 50px;
+    outline: 1px solid #999999;
+    position: relative;
+}
+.layout .row {
+    outline: 1px dashed blue;
+    min-height:100px;
+    margin:10px 0;
+    padding:15px 0;
+}
+.layout .column {
+    outline: 1px dashed #ccc;
+    min-height:100px;
+    padding:10px 0;
+}
+
+.layout .tile-wrapper {
+    padding: 10px;
+}
+
+.ui-resizable-helper {
+    border: 1px dotted #00F;
+}
+
+#sidebar {
+    background-color: #FFFFFF;
+    padding: 0px;
+    position: relative;
+    top: 10px;
+}
+
+#sidebar .btn {
+    background-color: #333333;
+    color: #FFFFFF;
+    cursor: move;
+    margin-bottom: 10px;
+    padding: 10px 10px 10px 35px;
+    text-align: left;
+}
+#sidebar .btn:hover {
+    background-color:#444;
+}
+
+#news img {
+    float: right;
+}
+
+#news p {
+    clear: both;
+}
+.row-droppable {
+    width:100%;
+    clear:both;
+}
+.row-droppable.ui-state-default {
+    min-height:10px;
+    display:block;
+}
+
+.layout .label {
+    font-size: 10px;
+    left: 0;
+    line-height: 1em;
+    min-width: 6em;
+    position: absolute;
+    text-align: center;
+    top:0px;
+}
+.layout .columnlabel {
+    background-color: #E1E1E1;
+    top: 0px;
+    bottom:auto;
+}
+
+
+/*ACTION BUTTONS*/
+#btn-row {
+    background: url(/++resource++collective.composition/rows.png) no-repeat 10px center;
+}
+#btn-column {
+    background: url(/++resource++collective.composition/columns.png) no-repeat 10px center;
+}
+#btn-tile {
+    background: url(/++resource++collective.composition/tiles.png) no-repeat 10px center;
+}

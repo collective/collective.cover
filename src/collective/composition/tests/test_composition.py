@@ -27,26 +27,22 @@ class CompositionIntegrationTestCase(unittest.TestCase):
     def test_adding(self):
         self.folder.invokeFactory('collective.composition.composition', 'c1')
         c1 = self.folder['c1']
-        self.failUnless(IComposition.providedBy(c1))
+        self.assertTrue(IComposition.providedBy(c1))
 
     def test_fti(self):
         fti = queryUtility(IDexterityFTI,
                            name='collective.composition.composition')
-        self.assertNotEquals(None, fti)
+        self.assertNotEqual(None, fti)
 
     def test_schema(self):
         fti = queryUtility(IDexterityFTI,
                            name='collective.composition.composition')
         schema = fti.lookupSchema()
-        self.assertEquals(IComposition, schema)
+        self.assertEqual(IComposition, schema)
 
     def test_factory(self):
         fti = queryUtility(IDexterityFTI,
                            name='collective.composition.composition')
         factory = fti.factory
         new_object = createObject(factory)
-        self.failUnless(IComposition.providedBy(new_object))
-
-
-def test_suite():
-    return unittest.defaultTestLoader.loadTestsFromName(__name__)
+        self.assertTrue(IComposition.providedBy(new_object))

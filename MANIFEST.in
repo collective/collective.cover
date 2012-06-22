@@ -1,3 +1,6 @@
-recursive-include docs *
+include *.txt
+
 recursive-include src *
-global-exclude *py[co], *mo, *~
+recursive-include docs *
+
+global-exclude *pyc

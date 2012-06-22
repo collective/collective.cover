@@ -1,35 +1,40 @@
-import sys
+# -*- coding: utf-8 -*-
 
 import json
+import sys
+import string
+
+from random import choice
+from sha import sha
+from pyquery import PyQuery
 
 from five import grok
-from plone.directives import dexterity, form
+
+from zope.annotation.interfaces import IAnnotations
+
+from zope.app.container.interfaces import IObjectAddedEvent
 
 from zope.interface import Interface
 from zope.component import getAdapter
 from zope.component import getUtility
 
-from zope import schema
+from plone.dexterity.utils import createContentInContainer
 
-from z3c.form import group, field
-from plone.app.z3cform.wysiwyg import WysiwygFieldWidget
+from plone.directives import dexterity, form
+
+from plone.registry.interfaces import IRegistry
+
+from plone.tiles.interfaces import ITileDataManager
+
+from plone.uuid.interfaces import IUUIDGenerator
 
 from Products.CMFPlone.interfaces import INonStructuralFolder
-from zope.annotation.interfaces import IAnnotations
 
 from Products.CMFCore.utils import getToolByName
 from Products.CMFCore.Expression import Expression
 from Products.CMFCore.Expression import getExprContext
-from plone.dexterity.utils import createContentInContainer
 
-from pyquery import PyQuery
-
-from collective.composition.layout import ICompositionLayout
-
-from plone.uuid.interfaces import IUUIDGenerator
-from plone.tiles.interfaces import ITileDataManager
-
-from collective.composition import MessageFactory as _
+from collective.composition.controlpanel import ICompositionSettings
 
 
 class IComposition(form.Schema):
@@ -47,7 +52,7 @@ class ICompositionFragment(Interface):
 
 class Composition(dexterity.Container):
     grok.implements(IComposition, INonStructuralFolder)
-    
+
     widget_map = {}
 
     @property
@@ -82,7 +87,7 @@ class Composition(dexterity.Container):
         return available
 
     def get_tile_widgets(self):
-        
+
         available = []
         #TODO: Think of a way to register available tiles
         #      And from here, just ask which tiles are available for this
@@ -93,14 +98,20 @@ class Composition(dexterity.Container):
                           'description': ("A persistent tile which allows to "
                                           "create content using a WYSIWYG "
                                           "editor")})
-        return available
 
+        available.append({'tile_type': "collective.composition.container",
+                          'icon': '',
+                          'title': "Container tile",
+                          'description': ("A tile wich can contain other "
+                                          "tiles")})
+
+        return available
 
     def available_widgets(self):
         available = []
         available += self.get_ct_widgets()
         available += self.get_tile_widgets()
-        
+
         return available
 
     def set_widget_map(self, widget_map, remove=None):
@@ -162,28 +173,27 @@ class Composition(dexterity.Container):
                         context_url = self.absolute_url()
                         widget_title = current_tiles[addwidget].get('title',
                                                                     '')
-                        widget_url = '%s/@@%s/%s'%(context_url,
-                                                   widget_type,
-                                                   addwidget)
-                        widget_render = '<div data-tile="%s" />'%widget_url
+                        widget_url = '%s/@@%s/%s' % (context_url,
+                                                     widget_type,
+                                                     addwidget)
+                        widget_render = '<div data-tile="%s" />' % widget_url
                         widget_info = {'col': column,
-                                    'wid': addwidget,
-                                    'title': widget_title,
-                                    'class': 'tile',
-                                    'content': widget_render,
-                                    'url': widget_url
-                                    }
+                                       'wid': addwidget,
+                                       'title': widget_title,
+                                       'class': 'tile',
+                                       'content': widget_render,
+                                       'url': widget_url}
 
                 pq('#%s' % column).append(widget_markup % widget_info)
-                
+
         return pq.outerHtml()
-            
+
 
 class View(grok.View):
     grok.context(IComposition)
     grok.require('zope2.View')
     grok.name('view')
-    
+
 
 class AddCTWidget(grok.View):
     grok.context(IComposition)
@@ -198,11 +208,12 @@ class AddCTWidget(grok.View):
                                           title=widget_title,
                                           checkConstraints=False)
         widget_url = widget.absolute_url()
-        return json.dumps({ 'column_id': column_id,
-                 'widget_type': widget_type,
-                 'widget_title': widget_title,
-                 'widget_id': widget.id,
-                 'widget_url': widget_url})
+        return json.dumps({'column_id': column_id,
+                           'widget_type': widget_type,
+                           'widget_title': widget_title,
+                           'widget_id': widget.id,
+                           'widget_url': widget_url})
+
 
 class AddTileWidget(grok.View):
     grok.context(IComposition)
@@ -216,7 +227,7 @@ class AddTileWidget(grok.View):
 
         id = uuid()
         context_url = self.context.absolute_url()
-        widget_url = '%s/@@%s/%s'%(context_url, widget_type, id)
+        widget_url = '%s/@@%s/%s' % (context_url, widget_type, id)
 
         # Let's store locally info regarding tiles
         annotations = IAnnotations(self.context)
@@ -226,11 +237,11 @@ class AddTileWidget(grok.View):
                              'title': widget_title}
         annotations['current_tiles'] = current_tiles
 
-        return json.dumps({ 'column_id': column_id,
-                 'widget_type': widget_type,
-                 'widget_title': widget_title,
-                 'widget_id': id,
-                 'widget_url': widget_url})
+        return json.dumps({'column_id': column_id,
+                           'widget_type': widget_type,
+                           'widget_title': widget_title,
+                           'widget_id': id,
+                           'widget_url': widget_url})
 
 
 class SetWidgetMap(grok.View):
@@ -243,16 +254,18 @@ class SetWidgetMap(grok.View):
         self.context.set_widget_map(widget_map, remove)
         return json.dumps('success')
 
+
 class UpdateWidget(grok.View):
     grok.context(IComposition)
     grok.require('cmf.ModifyPortalContent')
-    
+
     def render(self):
         widget_id = self.request.get('wid')
         if widget_id in self.context:
             return self.context[widget_id].render()
         else:
             return 'Widget does not exist'
+
 
 class RemoveTileWidget(grok.View):
     # XXX: This should be part of the plone.app.tiles package or similar
@@ -277,77 +290,95 @@ class RemoveTileWidget(grok.View):
 
             dataManager = ITileDataManager(tile)
             dataManager.delete()
-        
-        
+
+
 class Compose(grok.View):
     grok.context(IComposition)
     grok.require('cmf.ModifyPortalContent')
-    
-    def render_context_menus(self):
-        widget_template = """
-                {label:'%(title)s',
-                 icon:'%(icon)s',
-                 action:function() { Composition.addCTWidget('#*slot*', '%(portal_type)s', '%(title)s'); }
-                }"""
-        tile_widget_template = """
-                {label:'%(title)s',
-                 icon:'%(icon)s',
-                 action:function() { Composition.addTileWidget('#*slot*', '%(tile_type)s', '%(title)s'); }
-                }"""
-        widget_list = []
-        tile_widget_list = []
-        for widget in self.context.available_widgets():
-            if 'portal_type' in widget:
-                widget_list.append(widget_template % widget)
-            if 'tile_type' in widget:
-                tile_widget_list.append(tile_widget_template % widget)
-        ct_widgets = ",".join(widget_list)
-        tile_widgets = ",".join(tile_widget_list)
-        menu_template = """
-            $('#%s').contextPopup({
-              ct_title: 'Add CT Widgets',
-              ct_items: [
-              %s
-              ],
-              tile_title: 'Add Tile Widgets',
-              tile_items: [
-              %s
-              ]});"""
-        menus = """
-            jQuery(function($) {"""
-        for column in self.context.current_layout.columns:
-            menu = menu_template % (column, ct_widgets, tile_widgets)
-            menu = menu.replace('*slot*', column)
-            menus += menu
-        menus += """
-            })"""
-        return menus
 
-    def render_widget_initialization(self):
-        init = """
-            jQuery(function($) {"""
-        for column, addwidgets in self.context.widget_map.items():
-            for addwidget in addwidgets:
+
+class LayoutEdit(grok.View):
+    grok.context(IComposition)
+    grok.require('cmf.ModifyPortalContent')
+
+
+class UpdateTileContent(grok.View):
+    grok.context(IComposition)
+    grok.require('cmf.ModifyPortalContent')
+
+    def render(self):
+        pc = getToolByName(self.context, 'portal_catalog')
+
+        tile_type = self.request.form.get('tile-type')
+        tile_id = self.request.form.get('tile-id')
+        uid = self.request.form.get('uid')
+
+        if tile_type and tile_id and uid:
+
+            tile = self.context.restrictedTraverse(tile_type)
+
+            tile_instance = tile[tile_id]
+
+            results = pc(UID=uid)
+            if results:
+                obj = results[0].getObject()
+
                 try:
-                    widget = self.context[addwidget]
-                    init += ("Composition.addCTWidgetControls('%s', '%s');\n" %
-                             (addwidget, widget.absolute_url()))
-                except KeyError:
-                    # If we are here, means either we have invalid data or
-                    # this might be a tile, let's see
-                    annotations = IAnnotations(self.context)
-                    current_tiles = annotations.get('current_tiles', {})
-                    if addwidget in current_tiles:
-                        widget_type = current_tiles[addwidget]['type']
-                        context_url = self.context.absolute_url()
-                        widget_url = '%s/@@%s/%s'%(context_url,
-                                                   widget_type,
-                                                   addwidget)
-                        init += ("Composition.addTileWidgetControls"
-                                 "('%s', '%s');\n" %
-                                 (addwidget, widget_url))
+                    tile_instance.populate_with_object(obj)
+                except:
+                    # XXX: Pass silently ?
+                    pass
 
-        init += """
-            Composition.makeSortable();
-            })"""
-        return init
+        # XXX: Calling the tile will return the HTML with the headers, need to
+        #      find out if this affects us in any way.
+        return tile_instance()
+
+
+class DeleteTile(grok.View):
+    grok.context(IComposition)
+    grok.require('cmf.ModifyPortalContent')
+
+    def render(self):
+        pc = getToolByName(self.context, 'portal_catalog')
+
+        tile_type = self.request.form.get('tile-type')
+        tile_id = self.request.form.get('tile-id')
+
+        if tile_type and tile_id:
+
+            tile = self.context.restrictedTraverse(tile_type)
+
+            tile_instance = tile[tile_id]
+
+            tile_instance.delete()
+
+
+def assign_tile_ids(layout):
+    """
+    This function takes a dict, and it will recursively traverse it and assign
+    sha-hashed ids so we are pretty sure they are unique among them
+    """
+
+    for elem in layout:
+        if elem['type'] == u'tile':
+            random_string = ''
+            for i in xrange(100):
+                random_string += choice(string.letters)
+            elem['id'] = sha(random_string).hexdigest()
+        else:
+            children = elem['children']
+            assign_tile_ids(children)
+
+
+@grok.subscribe(IComposition, IObjectAddedEvent)
+def assign_id_for_tiles(composition, event):
+    registry = getUtility(IRegistry)
+    settings = registry.forInterface(ICompositionSettings)
+
+    layout = settings.layouts[composition.template_layout]
+
+    layout = json.loads(layout)
+
+    assign_tile_ids(layout)
+
+    composition.composition_layout = json.dumps(layout)

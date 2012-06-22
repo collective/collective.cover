@@ -1,95 +1,66 @@
+# -*- coding: utf-8 -*-
+import json
+
 from five import grok
 
-from zope.interface import Interface
+from zope.app.pagetemplate.viewpagetemplatefile import ViewPageTemplateFile
 
-from zope.component import getAdapters
+from collective.composition.composition import IComposition
 
-from zope.schema.interfaces import IVocabularyFactory
-from zope.schema.vocabulary import SimpleTerm
-from zope.schema.vocabulary import SimpleVocabulary
+from collective.composition import _
 
-from collective.composition import MessageFactory as _
+#grok.templatedirs("layout_templates")
 
 
-class ICompositionLayout(Interface):
+class PageLayout(grok.View):
     """
-    layout for composable page
+    Renders a layout for the composition object.
     """
-    
+    grok.context(IComposition)
+    grok.name('layout')
+    grok.require('zope2.View')
 
-class LayoutVocabulary(grok.GlobalUtility):
-    grok.implements(IVocabularyFactory)
-    grok.name(u'collective.composition.vocabularies.layouts')
+    pagelayout = ViewPageTemplateFile('layout_templates/pagelayout.pt')
+    row = ViewPageTemplateFile('layout_templates/row.pt')
+    group = ViewPageTemplateFile('layout_templates/group.pt')
+    tile = ViewPageTemplateFile('layout_templates/tile.pt')
 
-    def __call__(self, context):
-        items = []
-        layouts = getAdapters([context],ICompositionLayout)
-        items = [(l[1].description, l[0]) for l in layouts]
-        items.sort()
-        items = [SimpleTerm(i[1], i[1], i[0]) for i in items]
-        return SimpleVocabulary(items)
+    def get_layout(self):
+        layout = json.loads(self.context.composition_layout)
 
+        return layout
 
-class CompositionLayout(grok.Adapter):
-    grok.provides(ICompositionLayout)
-    grok.context(Interface)
-    grok.name(u'collective.composition.layouts.default')
+    def render_section(self, section, mode):
+        if section['type'] == u'row':
+            return self.row(section=section, mode=mode)
+        if section['type'] == u'group':
+            return self.group(section=section, mode=mode)
+        if section['type'] == u'tile':
+            return self.tile(section=section, mode=mode)
 
-    description = "Single column layout"
-    column_class = "full-column"
+    def is_user_allowed_in_group(self):
+        return True
 
-    LAYOUT = """
-    <div id="columns">
-      <ul id="column1" class="column full-column">
-      </ul>
-    </div>
-    """
+    def tile_is_configurable(self, tile_type):
+        return True
 
-    def render(self):
-        return self.LAYOUT
+    def render_view(self):
+        # XXX: There *must* be a better way of doing this, maybe write it
+        #      in the request ? sending it as parameter is way too ugly
+        return self.pagelayout(mode="view")
 
-    @property
-    def columns(self):
-        return ['column1']
+    def render_compose(self):
+        # XXX: There *must* be a better way of doing this, maybe write it
+        #      in the request ? sending it as parameter is way too ugly
+        return self.pagelayout(mode="compose")
 
-class TwoColumnLayout(CompositionLayout):
-    grok.name(u'collective.composition.layouts.twocolumns')
+    def render_layout_edit(self):
+        # XXX: There *must* be a better way of doing this, maybe write it
+        #      in the request ? sending it as parameter is way too ugly
+        return self.pagelayout(mode="layout_edit")
 
-    description = "Two column flexible layout"
-    column_class = "flex-half-column"
+    def accepted_ct_for_tile(self, tile_type):
+        tile = self.context.restrictedTraverse(str(tile_type))
+        accepted_ct = tile.accepted_ct()
 
-    LAYOUT = """
-    <div id="columns">
-      <ul id="column1" class="column flex-half-column">
-      </ul>
-      <ul id="column2" class="column flex-half-column">
-      </ul>
-    </div>
-    """
-
-    @property
-    def columns(self):
-        return ['column1', 'column2']
-
-
-class ThreeColumnLayout(CompositionLayout):
-    grok.name(u'collective.composition.layouts.threecolumns')
-
-    description = "Three column flexible layout"
-    column_class = "flex-third-column"
-
-    LAYOUT = """
-    <div id="columns">
-      <ul id="column1" class="column flex-third-column">
-      </ul>
-      <ul id="column2" class="column flex-third-column">
-      </ul>
-      <ul id="column3" class="column flex-third-column">
-      </ul>
-    </div>
-    """
-
-    @property
-    def columns(self):
-        return ['column1', 'column2', 'column3']
-
+        return json.dumps(accepted_ct)
