@@ -63,7 +63,7 @@ var Composition = {
             settings = this.settings;
         $('#' + widget_id).each(function() {
             var thisWidgetSettings = Composition.getWidgetSettings(this.id);
-            if ($(settings.handleSelector, this).has('a.remove').size() == 0) {
+            if ($(settings.handleSelector, this).has('a.remove').size() === 0) {
                 $('<a href="' + widget_url + '/delete_confirmation" id="del_' + widget_id + '" class="remove">CLOSE</a>')
                 .appendTo($(settings.handleSelector, this));
                 jq('#del_' + widget_id).prepOverlay({
@@ -78,7 +78,7 @@ var Composition = {
                                 $('#'+widget_id).remove();
                             });
                         });
-                        var widget_map = $('#columns ul div.widget').map(function(wid) { return $(this).parent().attr('id') + ':' + $(this).attr('id');}).get().join('&')
+                        var widget_map = $('#columns ul div.widget').map(function(wid) { return $(this).parent().attr('id') + ':' + $(this).attr('id');}).get().join('&');
                         $.post("setwidgetmap", { widget_map: widget_map,
                                                  remove: $('#' + widget_id).parent().attr('id') + ':' + widget_id });
                     },
@@ -87,7 +87,7 @@ var Composition = {
                  });
             }
 
-            if ($(settings.handleSelector, this).has('a.edit').size() == 0) {
+            if ($(settings.handleSelector, this).has('a.edit').size() === 0) {
                 $('<a href="' + widget_url + '/edit" id="edit_' + widget_id + '" class="edit">EDIT</a>')
                 .appendTo($(settings.handleSelector,this));
                 jq('#edit_' + widget_id).prepOverlay({
@@ -109,7 +109,7 @@ var Composition = {
                     });
             }
 
-            if ($(settings.handleSelector, this).has('a.collapse').size() == 0) {
+            if ($(settings.handleSelector, this).has('a.collapse').size() === 0) {
                 $('<a href="#" class="collapse">COLLAPSE</a>').mousedown(function(e) {
                     e.stopPropagation();
                 }).toggle(function() {
@@ -134,7 +134,7 @@ var Composition = {
             settings = this.settings;
         $('#' + widget_id).each(function() {
             var thisWidgetSettings = Composition.getWidgetSettings(this.id);
-            if ($(settings.handleSelector, this).has('a.remove').size() == 0) {
+            if ($(settings.handleSelector, this).has('a.remove').size() === 0) {
                 $('<a href="@@removetilewidget?wid=' + widget_id + '" id="del_' + widget_id + '" class="remove">CLOSE</a>')
                 .appendTo($(settings.handleSelector, this));
                 jq('#del_' + widget_id).prepOverlay({
@@ -158,7 +158,7 @@ var Composition = {
                  });
             }
 
-            if ($(settings.handleSelector, this).has('a.edit').size() == 0) {
+            if ($(settings.handleSelector, this).has('a.edit').size() === 0) {
                 $('<a href="' + widget_url.replace(/@@/, '@@edit-tile/') + '" id="edit_' + widget_id + '" class="edit">EDIT</a>')
                 .appendTo($(settings.handleSelector,this));
                 jq('#edit_' + widget_id).prepOverlay({
@@ -182,7 +182,7 @@ var Composition = {
                     });
             }
 
-            if ($(settings.handleSelector, this).has('a.collapse').size() == 0) {
+            if ($(settings.handleSelector, this).has('a.collapse').size() === 0) {
                 $('<a href="#" class="collapse">COLLAPSE</a>').mousedown(function(e) {
                     e.stopPropagation();
                 }).toggle(function() {
