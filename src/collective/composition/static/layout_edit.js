@@ -13,6 +13,15 @@
             number_of_columns = conf.numberofcolumns,
             grid_manager = conf.gridmanager,
             le = $('.layout');
+            row_dom = $('<span/>')
+                .addClass('label rowlabel')
+                .text('row');
+            column_dom = $('<span/>')
+                .addClass('label columnlabel label-info')
+                .text('column');
+            tile_dom = $('<span/>')
+                .addClass('label tilelabel label-important')
+                .text('tile');
 
         $.extend(self, {
             init: function() {
@@ -33,8 +42,8 @@
                 self.tile_draggable($('#btn-tile'));
                 self.tile_droppable();
 
-                le.find('.' + row_class).append('<span class="label rowlabel">row</span>');
-                le.find('.' + column_class).append('<span class="label columnlabel">column</span>');
+                le.find('.'+row_class).append(row_dom);
+                le.find('.'+column_class).append(column_dom);
             },
 
             grid_manager_init: function(children) {
@@ -43,16 +52,16 @@
 
             row_draggable: function(draggable_button) {
                 draggable_button.draggable({
-                    appendTo: "body",
-                    helper: "clone"
+                    appendTo: 'body',
+                    helper: 'clone'
                 });
             },
             row_droppable: function() {
                 //XXX there is a jquery ui bug in the event binding code,
                 //so that is why i'm deleting and rebinding droppables
-                $('.row-droppable').droppable("destroy");
+                $('.row-droppable').droppable('destroy');
                 $('.row-droppable').remove();
-                var row_placeholder = $('<div/>').addClass("row-droppable");
+                var row_placeholder = $('<div/>').addClass('row-droppable');
 
                 row = le.find('.' + row_class);
                 row.before(row_placeholder);
@@ -60,12 +69,12 @@
                 var droppable_elements = row.siblings('.row-droppable');
 
                 droppable_elements.droppable({
-                    activeClass: "ui-state-default",
-                    hoverClass: "ui-state-hover",
-                    accept: "#btn-row",
+                    activeClass: 'ui-state-default',
+                    hoverClass: 'ui-state-hover',
+                    accept: '#btn-row',
                     drop: function( event, ui ) {
-//                        $(this).find( ".placeholder" ).remove();
-                        var new_row = $("<div class='" + row_class + "'><span class='label rowlabel'>row</span></div>");
+                        var new_row = $('<div/>')
+                            .addClass(row_class).append(row_dom.clone());
                         $(this).before(new_row);
                         self.row_droppable();
                         self.column_droppable(new_row);
@@ -79,8 +88,8 @@
              */
             column_draggable: function(draggable_element) {
                 draggable_element.draggable({
-                    appendTo: "body",
-                    helper: "clone"
+                    appendTo: 'body',
+                    helper: 'clone'
                 });
             },
 
@@ -95,15 +104,16 @@
                 var droppable_elements = column ? column : le.find('.'+row_class);
 
                 droppable_elements.droppable({
-                    activeClass: "ui-state-default",
-                    hoverClass: "ui-state-hover",
-                    accept: "#btn-column",
+                    activeClass: 'ui-state-default',
+                    hoverClass: 'ui-state-hover',
+                    accept: '#btn-column',
                     drop: function( event, ui ) {
                         var default_class = 'column ' +
                                             column_class + ' ' +
                                             column_position + 0 + ' ' +
                                             column_width + number_of_columns;
-                        var new_column = $("<div class='" + default_class + "'><span class='label columnlabel'>column</span></div>");
+                        var new_column = $('<div/>')
+                            .addClass(default_class).append(column_dom.clone());
                         $(this).append(new_column);
                         var cells = $(this).find('.' + column_class);
                         self.grid_manager_init(cells);
@@ -130,16 +140,16 @@
              * the .cell elements
              */
             tile_droppable: function(tile) {
-
-                var droppable_elements = tile ? tile : le.find('.' + column_class);
+                var droppable_elements = tile ? tile : le.find('.'+column_class);
 
                 droppable_elements.droppable({
                     activeClass: "ui-state-default",
                     hoverClass: "ui-state-hover",
                     accept: "#btn-tile",
-                    drop: function(event, ui) {
+                    drop: function( event, ui ) {
                         var default_class = 'tile';
-                        var new_tile = $("<div class='" + default_class + "'><span class='label tilelabel'>tile</span></div>");
+                        var new_tile = $('<div/>')
+                            .addClass(default_class).append(tile_dom.clone());
                         $(this).append(new_tile);
                     }
                 });
@@ -156,14 +166,17 @@
                 $(node).find('> div').each(function(i, elem) {
                     if ($(this).not(excluded_elements)[0] !== undefined) {
                         $(this).removeClass(remove_classes);
-                        // TODO: remove console logging
-                        console.log($(this));
+
                         var entry = {};
 
                         var patt=new RegExp(/\bcolumn|\bcell|\brow|\btile/);
                         var node_type = patt.exec($(this).attr('class'));
                         if (node_type) {
                             entry.type = node_type[0];
+                        }
+                        if (node_type == 'column') {
+                            entry.roles = ['Manager'];
+                            entry.type = 'group';
                         }
                         entry.class = $(this).attr('class');
 

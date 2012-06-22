@@ -45,12 +45,21 @@
 }
 
 #sidebar .btn {
-    background-color: #333;
-    color: #FFF;
-    cursor: move;
+    background-color: #333333;
+    color: #FFFFFF;
+    cursor:pointer;
     margin-bottom: 10px;
     padding: 10px 10px 10px 35px;
     text-align: left;
+}
+
+.btn.ui-draggable-dragging {
+    background-color: #333333;
+    color: #FFFFFF;
+    padding:10px;
+}
+#sidebar .draggable {
+    cursor: move;
 }
 
 #sidebar .btn:hover {
@@ -85,9 +94,8 @@
 }
 
 .layout .columnlabel {
-    background-color: #E1E1E1;
-    bottom: auto;
-    top: 0;
+    top: 0px;
+    bottom:auto;
 }
 
 /*ACTION BUTTONS*/

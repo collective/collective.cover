@@ -64,3 +64,21 @@ class PageLayout(grok.View):
         accepted_ct = tile.accepted_ct()
 
         return json.dumps(accepted_ct)
+
+
+class LayoutSave(grok.View):
+    grok.context(IComposition)
+    grok.name('save_layout')
+    grok.require('zope2.View')
+
+    def save(self):
+        composition_layout = self.request.get('composition_layout')
+        self.context.composition_layout = composition_layout
+        self.context.reindexObject()
+
+        return composition_layout
+        
+    def render(self):
+        self.request.response.setHeader("Content-type","application/json")
+        save = self.save()
+        return 'json'
