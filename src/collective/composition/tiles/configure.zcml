@@ -5,6 +5,8 @@
     xmlns:plone="http://namespaces.plone.org/plone"
     i18n_domain="collective.composition">
 
+    <include package=".configuration_widgets" />
+
     <browser:page
         name="configure-tile"
         for="zope.annotation.interfaces.IAnnotatable"
