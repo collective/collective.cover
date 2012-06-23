@@ -85,13 +85,11 @@ class BasicTile(tiles.PersistentTile):
                    self.data['image'])
         
     def populate_with_object(self, obj):
-        text = obj.getRawText().decode('utf-8')
-        value = RichTextValue(raw=text,
-                              mimeType='text/x-html-safe',
-                              outputMimeType='text/x-html-safe')
         data_mgr = ITileDataManager(self)
 
-        data_mgr.set({'text': value})
+        data_mgr.set({'title': obj.Title(),
+                      'description': obj.Description(),
+                      })
 
     def delete(self):
         data_mgr = ITileDataManager(self)
