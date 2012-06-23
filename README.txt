@@ -46,7 +46,7 @@ front pages in Plone; we have used and are taking ideas from the following:
     types; you can drag&drop viewlets around the layout. Publishers love it.
 
 `CMFContentPanels`_
-    Very old, but still maintained.
+    Code is very old, but still maintained (at least works in Plone 4). Allows to create complex layouts TTW and use any layout as a template. Easy to extend and edit (but is terrible to find a content to use). Needs a lot of memory to work and aggressive cache settings.
 
 `Collage`_
     It allows to create layouts TTW but it has (arguably) the worst user
