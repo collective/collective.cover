@@ -9,7 +9,11 @@
         <p tal:condition="not:text">
             Please edit the tile to enter some text.
         </p>
-        <div tal:replace="structure text">Rich Text</div>
+        <tal:fields repeat="field view/get_configured_fields">
+            <tal:text condition="python:field['id'] == 'text'">
+                <div tal:replace="structure python:field['content']">Rich Text</div>
+            </tal:text>
+        </tal:fields>
     </tal:text>
 </body>
 </html>
