@@ -11,10 +11,8 @@
   <script type="text/javascript"
           tal:attributes="src string:${view/static}/layout_edit.js">
   </script>
-  <script type="text/javascript">
-    $(document).ready(function() {
-      $('.layout').coverlayout();  
-    });
+  <script type="text/javascript"
+          tal:attributes="src string:${view/static}/layout_base.js">
   </script>
 
 </metal:js>
@@ -30,9 +28,11 @@
     <!--        <div class="content-screenlet" tal:replace="structure context/@@select-content-screenlet"></div>--> 
     </div>
     <div id="sidebar">
-       <div id="btn-row" class="btn">ROW</div>
-       <div id="btn-column" class="btn">COLUMN</div>
-       <div id="btn-tile" class="btn">TILE</div>
+       <div id="btn-row" class="btn draggable">ROW</div>
+       <div id="btn-column" class="btn draggable">COLUMN</div>
+       <div id="btn-tile" class="btn draggable">TILE</div>
+       
+       <div id="btn-save" class="btn">SAVE</div>
     </div>    
 </metal:main>
 

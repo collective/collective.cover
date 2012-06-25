@@ -7,11 +7,11 @@ collective.composition
 Life, the Universe, and Everything
 ----------------------------------
 
-`Cafecito Sprint`_ is taking place right now in São Paulo to release a package
-to create front pages for sites running Plone 4.2 and above. Intended audience
-is mainly news sites and intranets.
+`Cafecito Sprint`_ is taking place right now in São Paulo to release an
+easy-to-use Plone package to create front pages. Intended audience is mainly
+news sites and intranets.
 
-You can `see and comment our mockups online`_. `Join us on IRC`_.
+You can `see and comment our mockups online`_. You can also `join us on IRC`_.
 
 We want to solve the following use cases:
 
@@ -46,7 +46,7 @@ front pages in Plone; we have used and are taking ideas from the following:
     types; you can drag&drop viewlets around the layout. Publishers love it.
 
 `CMFContentPanels`_
-    Very old, but still maintained.
+    Code is very old, but still maintained (at least works in Plone 4). Allows to create complex layouts TTW and use any layout as a template. Easy to extend and edit (but is terrible to find a content to use). Needs a lot of memory to work and aggressive cache settings.
 
 `Collage`_
     It allows to create layouts TTW but it has (arguably) the worst user
@@ -93,7 +93,7 @@ Have an idea? Found a bug? Let us know by `opening a support ticket`_.
 
 .. _`Cafecito Sprint`: https://plone.org/events/community/cafecito-sprint
 .. _`see and comment our mockups online`: https://simples.mybalsamiq.com/projects/capas/grid
-.. _`Join us on IRC`: irc://irc.freenode.net/cafecitosprint
+.. _`join us on IRC`: irc://irc.freenode.net/cafecitosprint
 .. _`CompositePack`: http://plone.org/products/compositepack
 .. _`CMFContentPanels`: http://plone.org/products/cmfcontentpanels
 .. _`Collage`: http://plone.org/products/collage
