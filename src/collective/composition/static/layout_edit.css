@@ -98,6 +98,26 @@
     bottom:auto;
 }
 
+.add-column {
+    background-color: blue;
+    height: 50%;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 10px;
+    cursor:pointer;
+}
+
+.remove-column {
+    background-color: red;
+    height: 50%;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    width: 10px;
+    cursor:pointer;
+}
+
 /*ACTION BUTTONS*/
 
 #btn-row {
