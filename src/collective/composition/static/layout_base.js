@@ -15,9 +15,11 @@ $(document).ready(function() {
                 'type':'POST',
                 success: function(data) {
                     $this.text('SAVED');
+                    $('#btn-save').addClass('saved');
                 },
                 error: function(jqXHR, textStatus, errorThrown){
                     $this.text('ERROR '+errorThrown);
+                    $('#btn-save').addClass('error');
                 }
             })
         });

@@ -26,6 +26,7 @@
         $.extend(self, {
             init: function() {
                 self.setup();
+                le.bind('modified.layout', self.layout_modified);                
             },
 
             /*
@@ -79,6 +80,7 @@
                         $(this).before(new_row);
                         self.row_droppable();
                         self.column_droppable(new_row);
+                        le.trigger('modified.layout');
                     }
                 });
             },
@@ -120,6 +122,7 @@
                         self.grid_manager_init(cells);
                         self.tile_droppable(new_column);
                         self.column_resizable(new_column);
+                        le.trigger('modified.layout');                        
                     }
                 });
             },
@@ -202,6 +205,7 @@
                         var new_tile = $('<div/>')
                             .addClass(default_class).append(tile_dom.clone());
                         $(this).append(new_tile);
+                        le.trigger('modified.layout');                        
                     }
                 });
             },
@@ -249,6 +253,18 @@
                     }
                 });
                 return data;
+            },
+
+            /**
+             * Layout Modified event
+             * XXX I can do an autocheck code, but doesn't worth it at this point
+             **/
+            layout_modified: function () {
+                var save_btn = $('#btn-save');
+                if (!save_btn.hasClass('saved')) {
+                    $('#btn-save').text('SAVE');
+                    $('#btn-save').addClass('modified');
+                }
             }
 
         });
