@@ -46,7 +46,10 @@ front pages in Plone; we have used and are taking ideas from the following:
     types; you can drag&drop viewlets around the layout. Publishers love it.
 
 `CMFContentPanels`_
-    Code is very old, but still maintained (at least works in Plone 4). Allows to create complex layouts TTW and use any layout as a template. Easy to extend and edit (but is terrible to find a content to use). Needs a lot of memory to work and aggressive cache settings.
+    Code is very old, but still maintained (at least works in Plone 4). Allows
+    to create complex layouts TTW and use any layout as a template. Easy to
+    extend and edit (but is terrible to find a content to use). Needs a lot of
+    memory to work and aggressive cache settings.
 
 `Collage`_
     It allows to create layouts TTW but it has (arguably) the worst user
@@ -71,20 +74,30 @@ TBA.
 How to develop a tile for collective.composition
 ------------------------------------------------
 
-Follow instructions in http://davisagli.com/blog/using-tiles-to-provide-more-flexible-plone-layouts to understand how to develop tiles, and how they work.
+Follow instructions in
+http://davisagli.com/blog/using-tiles-to-provide-more-flexible-plone-layouts
+to understand how to develop tiles, and how they work.
 
-Instead of inheriting from plone.tiles.PersistentTile, inherit from collective.composition.tile.base.PersistentCompositionTile
+Instead of inheriting from plone.tiles.PersistentTile, inherit from
+collective.composition.tile.base.PersistentCompositionTile.
 
-There are a couple of methods defined in this base class that provide additional functionality expected by the composition object, that you should override in your class:
+There are a couple of methods defined in this base class that provide
+additional functionality expected by the composition object, that you should
+override in your class:
 
-populate_with_object(obj): It takes a CT object as parameter, and it will store the content into the tile.
+populate_with_object(obj)
+    It takes a CT object as parameter, and it will store the content into the
+    tile.
 
-delete(): It removes the persistent data created for the tile
+delete()
+    It removes the persistent data created for the tile.
 
-accepted_ct(): It returns a list of valid CT that this tile will accept, or None in case it doesn't accept any
+accepted_ct()
+    It returns a list of valid CT that this tile will accept, or None in case
+    it doesn't accept any.
 
-get_tile_configuration(): It returns the stored configuration options for this tile
-
+get_tile_configuration()
+    It returns the stored configuration options for this tile.
 
 Mostly Harmless
 ---------------
