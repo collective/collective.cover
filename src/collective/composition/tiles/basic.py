@@ -216,7 +216,7 @@ class ImageScaling(BaseImageScaling):
     def modified(self):
         """ provide a callable to return the modification time of content
             items, so stored image scales can be invalidated """
-        import ipdb;ipdb.set_trace()
+        #import ipdb;ipdb.set_trace()
         return self.context.data['image'].getFirstBytes()
 
     def scale(self, fieldname=None, scale=None, height=None, width=None, **parameters):
