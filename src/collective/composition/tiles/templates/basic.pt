@@ -5,22 +5,39 @@
       i18n:domain="collective.composition">
 
 <body>
-    <tal:text define="title view/get_title;
-                      description view/get_description;
-                      image view/get_image;
-                      is_empty view/is_empty;">
+    <tal:text define="is_empty view/is_empty;">
         <p tal:condition="is_empty">
             Please edit the tile to enter some data.
         </p>
         <tal:empty tal:condition="python: not is_empty">
-            <h1 tal:content="title">Title</h1>
-            <p tal:content="description">Description</p>
-             <img tal:define="scales view/@@images;
-                              thumbnail python: scales.scale('image', width=200, height=200);"
-                  tal:condition="thumbnail"
-                  tal:attributes="src thumbnail/url;
-                                  width thumbnail/width;
-                                  height thumbnail/height" />
+            <tal:fields repeat="field view/get_configured_fields">
+                <tal:title condition="python:field['id'] == 'title'">
+                    <h1 tal:condition="python:field['htmltag'] == 'h1'"
+                        tal:content="python:field['content']"/>
+                    <h2 tal:condition="python:field['htmltag'] == 'h2'"
+                        tal:content="python:field['content']"/>
+                    <h3 tal:condition="python:field['htmltag'] == 'h3'"
+                        tal:content="python:field['content']"/>
+                    <h4 tal:condition="python:field['htmltag'] == 'h4'"
+                        tal:content="python:field['content']"/>
+                    <h5 tal:condition="python:field['htmltag'] == 'h5'"
+                        tal:content="python:field['content']"/>
+                </tal:title>
+
+                <tal:description condition="python:field['id'] == 'description'">
+                    <p tal:content="python:field['content']">Description</p>
+                </tal:description>
+
+                <tal:image condition="python:field['id'] == 'image'">
+                    <img tal:define="scales view/@@images;
+                                    thumbnail python: scales.scale('image', width=200, height=200);"
+                        tal:condition="thumbnail"
+                        tal:attributes="src thumbnail/url;
+                                        width thumbnail/width;
+                                        height thumbnail/height" />
+                </tal:image>
+
+            </tal:fields>
         </tal:empty>
     </tal:text>
 </body>
