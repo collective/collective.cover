@@ -14,7 +14,7 @@
         <tal:view tal:condition="python:mode == 'view'">
         <div tal:condition="section">
             <div tal:attributes="class python:'tile %s' % section.get('class', '');
-                                 data-tile string:${context/absolute_url}/@@ ${tile_type}/${tile_id};
+                                 data-tile string:${context/absolute_url}/@@${tile_type}/${tile_id};
                                  id tile_id" />
         </div>
         </tal:view>
