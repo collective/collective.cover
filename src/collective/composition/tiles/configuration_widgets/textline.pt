@@ -38,5 +38,22 @@
                             tabindex view/tabindex;
                             value python:stored_data.get('order', None);
                             accesskey view/accesskey;"/>
+
+        <span i18n:translate="">HTML tag</span>
+        <select id="" name="" class=""
+            tabindex="" accesskey=""
+            tal:attributes="id string:${view/id}-htmltag;
+                            name string:${view/name}.htmltag;
+                            class view/klass;
+                            tabindex view/tabindex;
+                            accesskey view/accesskey;"
+            tal:define="values python:['h1', 'h2', 'h3', 'h4', 'h5']">
+
+            <option tal:repeat="value values"
+                    tal:attributes="value value;
+                                    selected python:stored_data.get('htmltag', None) == value and 'selected' or None"
+                    tal:content="python:value.upper()">HTML TAG</option>
+        </select>
+
     </tal:stored_data>
 </html>
