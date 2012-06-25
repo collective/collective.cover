@@ -40,7 +40,7 @@ function screenletMaker(options) {
     scroll: false,
     helper: "clone"});
   $(droppable).droppable({
-    accept:draggable,
+    accept: draggable,
     hoverClass: "content-drop-hover",
     drop: dropped
     });
@@ -54,7 +54,7 @@ function screenletMaker(options) {
     return false;
   });
 
-  // create an if to see if we need tabs
+  // TODO: check if the current screenlet requires any tabs
   $(windowId + " ul.formTabs").tabs("div.panes > div");
 }
 
@@ -71,7 +71,7 @@ $(function() {
     return false;
   });
 
-  screenletMaker({draggable:'#screenlet-content-search #item-list li',
+  screenletMaker({draggable: '#screenlet-content-search #item-list li',
     windowId: '#screenlet-content-search',
     droppable: '.tile', dropped: function(event, ui) {
         var tile = $(this);
