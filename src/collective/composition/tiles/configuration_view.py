@@ -132,6 +132,8 @@ class DefaultConfigureForm(TileForm, form.Form):
                     field = data.get(name, {})
                     field[config_name] = value
                     data[name] = field
+                    if config_name == 'order':
+                        widget.field.order = int(value)
 
         # XXX: Implement error checking
         return data, errors
