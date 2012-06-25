@@ -66,7 +66,7 @@ collective.composition
     completely different and many things have become clearer. We are using
     some of the code, but we are going to replace old concepts with new ones.
 
-collective.panels
+`collective.panels`_
     A new package that tries to solve a similar problem on a different way
     using portlets. We don't want to use portlets at all.
 
