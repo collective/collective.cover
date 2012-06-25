@@ -145,6 +145,7 @@
                     var this_index = columns.index(column);
                     var next_index = this_index + 1;
                     var next_position_allowed = true;
+
                     if(next_index < columns.length) {
                         var next = $(columns[next_index]);
                         position = get_grid_position(next);
@@ -152,7 +153,10 @@
                             next_position_allowed = position[1] >= new_width + parseInt(this_position[1], 10);
                         }
                       }
-                      if(width && new_width <= parseInt(number_of_columns, 10) && next_position_allowed ) {
+                      var can_grow = new_width <= parseInt(number_of_columns, 10) 
+                          && parseInt(number_of_columns, 10) >= new_width + 
+                          parseInt(this_position[1], 10);
+                      if(width && can_grow && next_position_allowed ) {
                           set_grid_width(column, new_width);
                       }
                 });
