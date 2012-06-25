@@ -11,6 +11,7 @@ function contentSearchFilter(url, tab) {
     data: data,
     success: function(info) {
       $("#screenlet-content-search " + id + " #item-list").html(info);
+      $("#screenlet-content-search " + id + " #item-list li ul").css("display", "none");
       return false;
     }
   });
@@ -38,20 +39,22 @@ function screenletMaker(options) {
   $(draggable).liveDraggable({
     scroll: false,
     helper: "clone"});
-
   $(droppable).droppable({
-    accept:draggable,
+    accept: draggable,
     hoverClass: "content-drop-hover",
     drop: dropped
     });
 
-  $(windowId + " ul.formTabs a").click(function() {
-    var id = $(this).attr("href").split("#")[1];
+  $(windowId + " ul.formTabs li").click(function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    var id = $("a", this).attr("href").split("#")[1];
     var dataUrl = $('#' + id + '> input[type=button]').attr("data-url");
     contentSearchFilter(dataUrl, id);
+    return false;
   });
 
-  // create an if to see if we need tabs
+  // TODO: check if the current screenlet requires any tabs
   $(windowId + " ul.formTabs").tabs("div.panes > div");
 }
 
@@ -60,12 +63,15 @@ $(function() {
     var content_name = $("#screenlet-content-search-compose-button").text();
     $("#content").append("<div id='screenlet-content-show-button'>"+content_name+"</div>");
   }
-  $("#screenlet-content-search-button").click(function() {
+  $("#screenlet-content-search-button").click(function(e) {
+    e.preventDefault();
+    e.stopPropagation();
     var dataUrl = $(this).attr("data-url");
     contentSearchFilter(dataUrl);
+    return false;
   });
 
-  screenletMaker({draggable:'#screenlet-content-search #item-list li',
+  screenletMaker({draggable: '#screenlet-content-search #item-list li',
     windowId: '#screenlet-content-search',
     droppable: '.tile', dropped: function(event, ui) {
         var tile = $(this);
@@ -93,4 +99,14 @@ $(function() {
   $("#screenlet-content-search .close").click(function() {
     $("#screenlet-content-search").css("display", "none");
   });
+  $("#screenlet-content-search #content-tree #item-list li").live("click",function(e) {
+    e.stopPropagation();
+    var child = $(this).children("ul");
+    if (child.is(":visible")) {
+      child.css("display", "none");
+    } else {
+      child.css("display", "block");
+    }
+  })
+  
 });

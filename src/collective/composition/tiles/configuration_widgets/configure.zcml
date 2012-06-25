@@ -1,0 +1,11 @@
+
+<configure
+    xmlns:z3c="http://namespaces.zope.org/z3c">
+
+    <z3c:widgetTemplate
+        mode="configure"
+        widget="plone.app.textfield.widget.IRichTextWidget"
+        layer="z3c.form.interfaces.IFormLayer"
+        template="richtext.pt" />
+
+</configure>
