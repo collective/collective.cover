@@ -134,37 +134,41 @@
                     <div class='remove-column'>-</div>");
                 var addButton = $(".add-column", columns);
                 $(".add-column", columns).live("click", function (e) {
-                      e.stopPropagation();
-                      var column = $(this).parent();
-                      var row = column.parent();
-                      var columns = row.children(".column");
-                      var width = get_grid_width(column);
-                      var new_width = parseInt(width[1], 10) + 1;
-                      var next = column.next().next();
-                      var next_position_allowed = true
-                      if(next) {
-                          position = get_grid_position(next);
-                          if(position) {
-                              next_position_allowed = position[1] >= new_width;
-                          }
+                    e.stopPropagation();
+                    var column = $(this).parent();
+                    var row = column.parent();
+                    var columns = row.children(".column");
+                    var width = get_grid_width(column);
+                    var this_position = get_grid_position(column);
+                    var new_width = parseInt(width[1], 10) + 1;
+
+                    var next = column.next();
+                    var this_index = columns.index(column);
+                    var next_index = this_index + 1;
+                    var next_position_allowed = true;
+                    if(next_index < columns.length) {
+                        var next = $(columns[next_index]);
+                        position = get_grid_position(next);
+                        if(position) {
+                            next_position_allowed = position[1] >= new_width + parseInt(this_position[1], 10);
+                        }
                       }
                       if(width && new_width <= parseInt(number_of_columns, 10) && next_position_allowed ) {
-                        
                           set_grid_width(column, new_width);
                       }
                 });
                 
                 var removeButton = $(".remove-column", columns);
                 $(".remove-column", columns).live("click", function (e) {
-                      e.stopPropagation();
-                      var column = $(this).parent();
-                      var row = column.parent();
-                      var columns = row.children(".column");
-                      var width = get_grid_width(column);
-                      var new_width = parseInt(width[1], 10) - 1;
-                      if(width && new_width > 1) {
-                          set_grid_width(column, new_width);
-                      }
+                    e.stopPropagation();
+                    var column = $(this).parent();
+                    var row = column.parent();
+                    var columns = row.children(".column");
+                    var width = get_grid_width(column);
+                    var new_width = parseInt(width[1], 10) - 1;
+                    if(width && new_width > 1) {
+                        set_grid_width(column, new_width);
+                    }
                 });
                 
             },
