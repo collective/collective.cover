@@ -38,9 +38,9 @@
 
                 self.column_draggable($('#btn-column'));
                 self.column_droppable();
-
                 self.tile_draggable($('#btn-tile'));
                 self.tile_droppable();
+                self.column_resizable();
 
                 le.find('.'+row_class).append(row_dom);
                 le.find('.'+column_class).append(column_dom);
@@ -118,8 +118,54 @@
                         var cells = $(this).find('.' + column_class);
                         self.grid_manager_init(cells);
                         self.tile_droppable(new_column);
+                        self.column_resizable(new_column);
                     }
                 });
+            },
+            
+            /**
+             * Column Resizable
+             * @param column
+             */
+            column_resizable: function(column) {
+                var columns = column ? column : le.find('.column');
+                columns.append("<div class='add-column'>+</div>\
+                    <div class='remove-column'>-</div>");
+                var addButton = $(".add-column", columns);
+                $(".add-column", columns).live("click", function (e) {
+                      e.stopPropagation();
+                      var column = $(this).parent();
+                      var row = column.parent();
+                      var columns = row.children(".column");
+                      var width = get_grid_width(column);
+                      var new_width = parseInt(width[1], 10) + 1;
+                      var next = column.next().next();
+                      var next_position_allowed = true
+                      if(next) {
+                          position = get_grid_position(next);
+                          if(position) {
+                              next_position_allowed = position[1] >= new_width;
+                          }
+                      }
+                      if(width && new_width <= parseInt(number_of_columns, 10) && next_position_allowed ) {
+                        
+                          set_grid_width(column, new_width);
+                      }
+                });
+                
+                var removeButton = $(".remove-column", columns);
+                $(".remove-column", columns).live("click", function (e) {
+                      e.stopPropagation();
+                      var column = $(this).parent();
+                      var row = column.parent();
+                      var columns = row.children(".column");
+                      var width = get_grid_width(column);
+                      var new_width = parseInt(width[1], 10) - 1;
+                      if(width && new_width > 1) {
+                          set_grid_width(column, new_width);
+                      }
+                });
+                
             },
 
             /**
@@ -229,6 +275,31 @@
                 child.addClass(conf.columnposition + position);
             }
         });
+    }
+    
+    function get_grid_width(item) {
+      var itemClass = item.attr("class");
+      if (itemClass) {
+        var regex_match = itemClass.match(/\bwidth\-(\d+)/);
+        return regex_match
+      }
+    }
+    
+    function get_grid_position(item) {
+      var itemClass = item.attr("class");
+      if (itemClass) {
+        var regex_match = itemClass.match(/\bposition\-(\d+)/);
+        return regex_match
+      }
+    }
+    
+    function set_grid_width(item, newWidth) {
+      var itemClass = item.attr("class");
+      if (itemClass) {
+        var regex_match = itemClass.match(/\bwidth\-(\d+)/);
+        item.removeClass(regex_match[0]);
+        item.addClass('width-' + newWidth);
+      }
     }
 
     $.fn.coverlayout = function(options) {

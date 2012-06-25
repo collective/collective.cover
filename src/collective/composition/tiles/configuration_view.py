@@ -173,30 +173,32 @@ class DefaultConfigureForm(TileForm, form.Form):
         #dataManager = ITileDataManager(tile)
         #dataManager.set(data)
 
-        # Look up the URL - we need to do this after we've set the data to
-        # correctly account for transient tiles
-        tileURL = absoluteURL(tile, self.request)
+        # Look up the URL - We need to redirect to the layout view, since
+        # there's the only way from where a user would access the configuration
         contextURL = absoluteURL(tile.context, self.request)
-        tileRelativeURL = tileURL
 
-        if tileURL.startswith(contextURL):
-            tileRelativeURL = '.' + tileURL[len(contextURL):]
+        layoutURL = '%s/layoutedit' % contextURL
 
         # XXX: We need to fire a notification ?
         #notify(ObjectModifiedEvent(tile))
 
         # Get the tile URL, possibly with encoded data
-        IStatusMessage(self.request).addStatusMessage(_(u"Tile configuration saved",), type=u'info')
+        IStatusMessage(self.request).addStatusMessage(_(u"Tile configuration saved.",), type=u'info')
 
-        self.request.response.redirect(tileURL)
+        self.request.response.redirect(layoutURL)
 
     @button.buttonAndHandler(_(u'Cancel'), name='cancel')
     def handleCancel(self, action):
-        tileDataJson = {}
-        tileDataJson['action'] = "cancel"
-        url = self.request.getURL()
-        url = appendJSONData(url, 'tiledata', tileDataJson)
-        self.request.response.redirect(url)
+        contextURL = absoluteURL(self.context, self.request)
+        layoutURL = '%s/layoutedit' % contextURL
+
+        # XXX: We need to fire a notification ?
+        #notify(ObjectModifiedEvent(tile))
+
+        # Get the tile URL, possibly with encoded data
+        IStatusMessage(self.request).addStatusMessage(_(u"Tile configuration cancelled.",), type=u'info')
+
+        self.request.response.redirect(layoutURL)
 
     def updateActions(self):
         super(DefaultConfigureForm, self).updateActions()
