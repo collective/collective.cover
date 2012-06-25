@@ -2,6 +2,9 @@
 from z3c.form import button
 from z3c.form import form
 
+from z3c.form.interfaces import IDataManager
+from z3c.form.interfaces import NO_VALUE
+
 from zope.component import getMultiAdapter
 
 from zope.interface import implements
@@ -77,13 +80,18 @@ class DefaultConfigureForm(TileForm, form.Form):
     by an ITileType utility.
     """
 
+    mode = 'configure'
+
     name = "configure_tile"
 
     # Set during traversal
     tileType = None
     tileId = None
 
-    ignoreContext = False
+    # We need to ignore the context, because for the configuration we can have
+    # a lot of stuff stored, which may not be able to be converted to the
+    # format the widget expects
+    ignoreContext = True
 
     # Avoid the data to be extracted from the request directly by the form
     # instead of using the tile data manager.
@@ -112,6 +120,30 @@ class DefaultConfigureForm(TileForm, form.Form):
 
         configuration = tile_conf_adapter.get_configuration()
         return configuration
+
+    def extractData(self):
+        #XXX: Find a better way to implement this
+        data = {}
+        errors = {}
+        for name, widget in self.widgets.items():
+            for key, value in self.request.form.items():
+                if key.startswith(widget.name):
+                    config_name = key[len(widget.name)+1:]
+                    field = data.get(name, {})
+                    field[config_name] = value
+                    data[name] = field
+
+        # XXX: Implement error checking
+        return data, errors
+
+    def getFieldConfiguration(self, widget):
+        conf = getMultiAdapter((widget.context, widget.field),
+                               IDataManager).query()
+
+        if conf == NO_VALUE:
+            conf = {}
+
+        return conf
 
     # UI
 

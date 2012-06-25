@@ -26,7 +26,6 @@
         </ul>
       </div>
       <div id="clipboard" class="tab-pane">
-        CLIPBOARD
           <input id="screenlet-content-search-input" type="text" /> <input type="button" value="ok" id="screenlet-content-search-button"
            tal:attributes="data-url view/post_url" />
           <ul id="item-list">
@@ -34,9 +33,11 @@
           </ul>
       </div>
       <div id="content-tree" class="tab-pane">
-          <input id="screenlet-content-search-input" type="text" /> <input type="button" value="ok" id="screenlet-content-search-button"
-           tal:attributes="data-url view/post_url" />
-           CONTENT TREE
+        <input type="button" value="ok" id="screenlet-content-search-button"
+         tal:attributes="data-url view/post_url" style="display:none"/>
+          <ul id="item-list">
+              <li tal:replace="structure context/@@content-search" />
+          </ul>
       </div>
     </div>
 
