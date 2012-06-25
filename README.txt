@@ -66,6 +66,10 @@ collective.composition
     completely different and many things have become clearer. We are using
     some of the code, but we are going to replace old concepts with new ones.
 
+collective.panels
+    A new package that tries to solve a similar problem on a different way
+    using portlets. We don't want to use portlets at all.
+
 Don't Panic
 -----------
 
@@ -110,6 +114,7 @@ Have an idea? Found a bug? Let us know by `opening a support ticket`_.
 .. _`CompositePack`: http://plone.org/products/compositepack
 .. _`CMFContentPanels`: http://plone.org/products/cmfcontentpanels
 .. _`Collage`: http://plone.org/products/collage
+.. _`collective.panels`: https://github.com/collective/collective.panels
 .. _`Carlos de la Guardia`: https://github.com/cguardia
 .. _`opening a support ticket`: https://github.com/collective/collective.composition/issues
 
