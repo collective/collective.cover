@@ -138,17 +138,18 @@
                     var row = column.parent();
                     var columns = row.children(".column");
                     var width = get_grid_width(column);
+                    var this_position = get_grid_position(column);
                     var new_width = parseInt(width[1], 10) + 1;
-                    debugger;
+
                     var next = column.next();
                     var this_index = columns.index(column);
-                    next_index = 0;
-
-                    var next_position_allowed = true
-                    if(next) {
+                    var next_index = this_index + 1;
+                    var next_position_allowed = true;
+                    if(next_index < columns.length) {
+                        var next = $(columns[next_index]);
                         position = get_grid_position(next);
                         if(position) {
-                            next_position_allowed = position[1] >= new_width;
+                            next_position_allowed = position[1] >= new_width + parseInt(this_position[1], 10);
                         }
                       }
                       if(width && new_width <= parseInt(number_of_columns, 10) && next_position_allowed ) {
