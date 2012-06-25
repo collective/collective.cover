@@ -49,8 +49,8 @@
 
             },
 
-            grid_manager_init: function(children) {
-                grid_manager(children, conf);
+            grid_manager_init: function(children, child) {
+                grid_manager(children, child, conf);
             },
 
             row_draggable: function(draggable_button) {
@@ -121,7 +121,7 @@
                             .addClass(default_class).append(column_dom.clone());
                         $(this).append(new_column);
                         var cells = $(this).find('.' + column_class);
-                        self.grid_manager_init(cells);
+                        self.grid_manager_init(cells, new_column);
                         self.tile_droppable(new_column);
                         self.column_resizable(new_column);
                         le.trigger('modified.layout');                        
@@ -277,29 +277,56 @@
         self.init();
     }
 
-    function grid_manager(children, conf) {
+    function grid_manager(children, child, conf) {
         var len = children.length;
-        children.each(function(index) {
-            var child = $(this);
-            new_width = parseInt(conf.numberofcolumns / len, 10);
+        var equal_parts = true;
+        if(child) {
+            var this_index = children.index(child);
+            var len = children.length
+            if(len > 1) {
+                var prev = $(children[len-2]);
+                var grid_width_prev = get_grid_width(prev);
+                var grid_pos_prev = get_grid_position(prev);
+                if(grid_width_prev && grid_pos_prev) {
+                    
+                    equal_parts = parseInt(grid_width_prev[1], 10) + parseInt(grid_pos_prev[1], 10) === conf.numberofcolumns;
+                    child.removeClass(get_grid_width(child)[0]);
+                    child.removeClass(get_grid_position(child)[0]);
 
-            var tile_class = child.attr("class");
-
-            if (tile_class !== undefined) {
-                //TODO: fix width class
-                var regex_match = tile_class.match(/\bwidth\-(\d+)/);
-                var total_width = regex_match[1];
-                child.removeClass(regex_match[0]);
-                child.addClass(conf.columnwidth + new_width);
-
-                //TODO: fix position class
-                var regex_match = tile_class.match(/\bposition\-(\d+)/);
-                var total_width = regex_match[1];
-                child.removeClass(regex_match[0]);
-                var position = new_width*index;
-                child.addClass(conf.columnposition + position);
+                    var new_position = parseInt(grid_width_prev[1], 10) + parseInt(grid_pos_prev[1], 10);
+                    var new_width = conf.numberofcolumns - new_position;
+                    
+                    child.addClass(conf.columnwidth + new_width);
+                    child.addClass(conf.columnposition + new_position);
+                    //debugger;
+                }
             }
-        });
+                
+        }
+        
+        if(equal_parts) {
+            children.each(function(index) {
+                var child = $(this);
+                new_width = parseInt(conf.numberofcolumns / len, 10);
+
+                var tile_class = child.attr("class");
+
+                if (tile_class !== undefined) {
+                    //TODO: fix width class
+                    var regex_match = tile_class.match(/\bwidth\-(\d+)/);
+                    var total_width = regex_match[1];
+                    child.removeClass(regex_match[0]);
+                    child.addClass(conf.columnwidth + new_width);
+
+                    //TODO: fix position class
+                    var regex_match = tile_class.match(/\bposition\-(\d+)/);
+                    var total_width = regex_match[1];
+                    child.removeClass(regex_match[0]);
+                    var position = new_width*index;
+                    child.addClass(conf.columnposition + position);
+                }
+            });
+        }
     }
     
     function get_grid_width(item) {
