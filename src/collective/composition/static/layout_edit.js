@@ -159,7 +159,7 @@
              * Export html2json
              *
              **/
-            html2json: function html2json(node) {
+            html2json: function (node) {
                 var data = [];
                 var excluded_elements = '.row-droppable';
                 var remove_classes = 'ui-droppable';
@@ -182,6 +182,7 @@
 
                         var iterator = self.html2json($(this));
                         if (iterator[0] !== undefined) {
+                            console.log(iterator);
                             entry.children = iterator;
                         }
 

@@ -24,6 +24,7 @@ class PageLayout(grok.View):
     row = ViewPageTemplateFile('layout_templates/row.pt')
     group = ViewPageTemplateFile('layout_templates/group.pt')
     tile = ViewPageTemplateFile('layout_templates/tile.pt')
+    generalmarkup = ViewPageTemplateFile('layout_templates/generalmarkup.pt')
 
     def get_layout(self):
         layout = json.loads(self.context.composition_layout)
@@ -38,6 +39,8 @@ class PageLayout(grok.View):
                 return self.group(section=section, mode=mode)
             if section['type'] == u'tile':
                 return self.tile(section=section, mode=mode)
+        else:
+            return self.generalmarkup(section=section, mode=mode)
 
     def is_user_allowed_in_group(self):
         return True

@@ -35,11 +35,11 @@
         </div>
         </tal:compose>
         <tal:layoutedit tal:condition="python:mode == 'layout_edit'">
-        <div tal:define="section options/section | nothing;
+        <tal:block tal:define="section options/section | nothing;
                         tile_type python:section.get('tile-type', '');
                         tile_id python:section.get('id', '');"
              tal:condition="section">
-            <div tal:attributes="class python:'tile %s' % section.get('class', '');
+            <div tal:attributes="class python:'%s' % section.get('class', '');
                                  data-tile-type tile_type;
                                  id tile_id">
                 <a href="#"
@@ -48,7 +48,7 @@
                 tal:attributes="href string:${context/absolute_url}/@@configure-tile/${tile_type}/${tile_id}">Config</a>
             </div>
 
-        </div>
+        </tal:block>
         </tal:layoutedit>
     </tal:mode>
 
