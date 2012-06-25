@@ -31,12 +31,13 @@ class PageLayout(grok.View):
         return layout
 
     def render_section(self, section, mode):
-        if section['type'] == u'row':
-            return self.row(section=section, mode=mode)
-        if section['type'] == u'group':
-            return self.group(section=section, mode=mode)
-        if section['type'] == u'tile':
-            return self.tile(section=section, mode=mode)
+        if 'type' in section:
+            if section['type'] == u'row':
+                return self.row(section=section, mode=mode)
+            if section['type'] == u'group':
+                return self.group(section=section, mode=mode)
+            if section['type'] == u'tile':
+                return self.tile(section=section, mode=mode)
 
     def is_user_allowed_in_group(self):
         return True
