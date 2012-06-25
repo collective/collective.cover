@@ -26,6 +26,7 @@
         $.extend(self, {
             init: function() {
                 self.setup();
+                le.bind('modified.layout', self.layout_modified);                
             },
 
             /*
@@ -44,10 +45,12 @@
 
                 le.find('.'+row_class).append(row_dom);
                 le.find('.'+column_class).append(column_dom);
+                le.find('.tile').append(tile_dom);
+
             },
 
-            grid_manager_init: function(children) {
-                grid_manager(children, conf);
+            grid_manager_init: function(children, child) {
+                grid_manager(children, child, conf);
             },
 
             row_draggable: function(draggable_button) {
@@ -78,6 +81,8 @@
                         $(this).before(new_row);
                         self.row_droppable();
                         self.column_droppable(new_row);
+                        le.trigger('modified.layout');
+
                     }
                 });
             },
@@ -116,9 +121,10 @@
                             .addClass(default_class).append(column_dom.clone());
                         $(this).append(new_column);
                         var cells = $(this).find('.' + column_class);
-                        self.grid_manager_init(cells);
+                        self.grid_manager_init(cells, new_column);
                         self.tile_droppable(new_column);
                         self.column_resizable(new_column);
+                        le.trigger('modified.layout');                        
                     }
                 });
             },
@@ -138,20 +144,25 @@
                     var row = column.parent();
                     var columns = row.children(".column");
                     var width = get_grid_width(column);
+                    var this_position = get_grid_position(column);
                     var new_width = parseInt(width[1], 10) + 1;
-                    debugger;
+
                     var next = column.next();
                     var this_index = columns.index(column);
-                    next_index = 0;
+                    var next_index = this_index + 1;
+                    var next_position_allowed = true;
 
-                    var next_position_allowed = true
-                    if(next) {
+                    if(next_index < columns.length) {
+                        var next = $(columns[next_index]);
                         position = get_grid_position(next);
                         if(position) {
-                            next_position_allowed = position[1] >= new_width;
+                            next_position_allowed = position[1] >= new_width + parseInt(this_position[1], 10);
                         }
                       }
-                      if(width && new_width <= parseInt(number_of_columns, 10) && next_position_allowed ) {
+                      var can_grow = new_width <= parseInt(number_of_columns, 10) 
+                          && parseInt(number_of_columns, 10) >= new_width + 
+                          parseInt(this_position[1], 10);
+                      if(width && can_grow && next_position_allowed ) {
                           set_grid_width(column, new_width);
                       }
                 });
@@ -168,7 +179,6 @@
                         set_grid_width(column, new_width);
                     }
                 });
-                
             },
 
             /**
@@ -200,6 +210,8 @@
                         var new_tile = $('<div/>')
                             .addClass(default_class).append(tile_dom.clone());
                         $(this).append(new_tile);
+
+                        le.trigger('modified.layout');                        
                     }
                 });
             },
@@ -208,14 +220,13 @@
              * Export html2json
              *
              **/
-            html2json: function html2json(node) {
+            html2json: function (node) {
                 var data = [];
                 var excluded_elements = '.row-droppable';
                 var remove_classes = 'ui-droppable';
                 $(node).find('> div').each(function(i, elem) {
                     if ($(this).not(excluded_elements)[0] !== undefined) {
                         $(this).removeClass(remove_classes);
-
                         var entry = {};
 
                         var patt=new RegExp(/\bcolumn|\bcell|\brow|\btile/);
@@ -247,6 +258,18 @@
                     }
                 });
                 return data;
+            },
+
+            /**
+             * Layout Modified event
+             * XXX I can do an autocheck code, but doesn't worth it at this point
+             **/
+            layout_modified: function () {
+                var save_btn = $('#btn-save');
+                if (!save_btn.hasClass('saved')) {
+                    $('#btn-save').text('SAVE');
+                    $('#btn-save').addClass('modified');
+                }
             }
 
         });
@@ -254,29 +277,56 @@
         self.init();
     }
 
-    function grid_manager(children, conf) {
+    function grid_manager(children, child, conf) {
         var len = children.length;
-        children.each(function(index) {
-            var child = $(this);
-            new_width = parseInt(conf.numberofcolumns / len, 10);
+        var equal_parts = true;
+        if(child) {
+            var this_index = children.index(child);
+            var len = children.length
+            if(len > 1) {
+                var prev = $(children[len-2]);
+                var grid_width_prev = get_grid_width(prev);
+                var grid_pos_prev = get_grid_position(prev);
+                if(grid_width_prev && grid_pos_prev) {
+                    
+                    equal_parts = parseInt(grid_width_prev[1], 10) + parseInt(grid_pos_prev[1], 10) === conf.numberofcolumns;
+                    child.removeClass(get_grid_width(child)[0]);
+                    child.removeClass(get_grid_position(child)[0]);
 
-            var tile_class = child.attr("class");
-
-            if (tile_class !== undefined) {
-                //TODO: fix width class
-                var regex_match = tile_class.match(/\bwidth\-(\d+)/);
-                var total_width = regex_match[1];
-                child.removeClass(regex_match[0]);
-                child.addClass(conf.columnwidth + new_width);
-
-                //TODO: fix position class
-                var regex_match = tile_class.match(/\bposition\-(\d+)/);
-                var total_width = regex_match[1];
-                child.removeClass(regex_match[0]);
-                var position = new_width*index;
-                child.addClass(conf.columnposition + position);
+                    var new_position = parseInt(grid_width_prev[1], 10) + parseInt(grid_pos_prev[1], 10);
+                    var new_width = conf.numberofcolumns - new_position;
+                    
+                    child.addClass(conf.columnwidth + new_width);
+                    child.addClass(conf.columnposition + new_position);
+                    //debugger;
+                }
             }
-        });
+                
+        }
+        
+        if(equal_parts) {
+            children.each(function(index) {
+                var child = $(this);
+                new_width = parseInt(conf.numberofcolumns / len, 10);
+
+                var tile_class = child.attr("class");
+
+                if (tile_class !== undefined) {
+                    //TODO: fix width class
+                    var regex_match = tile_class.match(/\bwidth\-(\d+)/);
+                    var total_width = regex_match[1];
+                    child.removeClass(regex_match[0]);
+                    child.addClass(conf.columnwidth + new_width);
+
+                    //TODO: fix position class
+                    var regex_match = tile_class.match(/\bposition\-(\d+)/);
+                    var total_width = regex_match[1];
+                    child.removeClass(regex_match[0]);
+                    var position = new_width*index;
+                    child.addClass(conf.columnposition + position);
+                }
+            });
+        }
     }
     
     function get_grid_width(item) {
