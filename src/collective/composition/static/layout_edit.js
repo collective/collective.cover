@@ -44,6 +44,7 @@
 
                 le.find('.'+row_class).append(row_dom);
                 le.find('.'+column_class).append(column_dom);
+                le.find('.tile').append(tile_dom);
             },
 
             grid_manager_init: function(children) {
@@ -228,7 +229,6 @@
 
                         var iterator = self.html2json($(this));
                         if (iterator[0] !== undefined) {
-                            console.log(iterator);
                             entry.children = iterator;
                         }
 

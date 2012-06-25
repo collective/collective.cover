@@ -83,6 +83,5 @@ class LayoutSave(grok.View):
         return composition_layout
         
     def render(self):
-        self.request.response.setHeader("Content-type","application/json")
         save = self.save()
-        return 'json'
+        return 'saved'
