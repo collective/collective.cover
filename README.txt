@@ -67,16 +67,15 @@ collective.composition
     some of the code, but we are going to replace old concepts with new ones.
 
 `collective.panels`_
-    A new package that tries to solve a similar problem on a different way
-    using portlets. We don't want to use portlets at all.
+    A new package that tries to solve the front page use case (and many
+    others) using a different approach with portlets. We don't want to use
+    portlets at all.
 
 Don't Panic
 -----------
 
-TBA.
-
 How to develop a tile for collective.composition
-------------------------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Follow instructions in
 http://davisagli.com/blog/using-tiles-to-provide-more-flexible-plone-layouts
@@ -89,18 +88,18 @@ There are a couple of methods defined in this base class that provide
 additional functionality expected by the composition object, that you should
 override in your class:
 
-populate_with_object(obj)
+**populate_with_object(obj)**
     It takes a CT object as parameter, and it will store the content into the
     tile.
 
-delete()
+**delete()**
     It removes the persistent data created for the tile.
 
-accepted_ct()
+**accepted_ct()**
     It returns a list of valid CT that this tile will accept, or None in case
     it doesn't accept any.
 
-get_tile_configuration()
+**get_tile_configuration()**
     It returns the stored configuration options for this tile.
 
 Mostly Harmless
