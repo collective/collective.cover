@@ -1,0 +1,25 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      i18n:domain="collective.composition">
+
+<body>
+    <tal:has_no_data condition="not:view/has_data">
+        <div>
+           <p i18n:translate="">Select a Collection to fill this tile.</p>
+        </div>
+    </tal:has_no_data>
+
+    <tal:has_data condition="view/has_data">
+        <tal:results define="results view/results">
+            <div tal:condition="not:results">
+               <p i18n:translate="">The collections don't have any results.</p>
+            </div>
+            <div tal:repeat="obj results">
+                <p tal:content="obj/Title">
+            </div>
+        </tal:results>
+    </tal:has_data>
+</body>
+</html>

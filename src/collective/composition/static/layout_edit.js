@@ -46,6 +46,7 @@
                 le.find('.'+row_class).append(row_dom);
                 le.find('.'+column_class).append(column_dom);
                 le.find('.tile').append(tile_dom);
+
             },
 
             grid_manager_init: function(children) {
@@ -81,6 +82,7 @@
                         self.row_droppable();
                         self.column_droppable(new_row);
                         le.trigger('modified.layout');
+
                     }
                 });
             },
@@ -149,6 +151,7 @@
                     var this_index = columns.index(column);
                     var next_index = this_index + 1;
                     var next_position_allowed = true;
+
                     if(next_index < columns.length) {
                         var next = $(columns[next_index]);
                         position = get_grid_position(next);
@@ -156,7 +159,10 @@
                             next_position_allowed = position[1] >= new_width + parseInt(this_position[1], 10);
                         }
                       }
-                      if(width && new_width <= parseInt(number_of_columns, 10) && next_position_allowed ) {
+                      var can_grow = new_width <= parseInt(number_of_columns, 10) 
+                          && parseInt(number_of_columns, 10) >= new_width + 
+                          parseInt(this_position[1], 10);
+                      if(width && can_grow && next_position_allowed ) {
                           set_grid_width(column, new_width);
                       }
                 });
@@ -173,7 +179,6 @@
                         set_grid_width(column, new_width);
                     }
                 });
-                
             },
 
             /**
@@ -205,6 +210,7 @@
                         var new_tile = $('<div/>')
                             .addClass(default_class).append(tile_dom.clone());
                         $(this).append(new_tile);
+
                         le.trigger('modified.layout');                        
                     }
                 });
@@ -221,7 +227,6 @@
                 $(node).find('> div').each(function(i, elem) {
                     if ($(this).not(excluded_elements)[0] !== undefined) {
                         $(this).removeClass(remove_classes);
-
                         var entry = {};
 
                         var patt=new RegExp(/\bcolumn|\bcell|\brow|\btile/);
