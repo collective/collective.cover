@@ -9,20 +9,20 @@ from collective.composition.config import PROJECTNAME
 from collective.composition.testing import INTEGRATION_TESTING
 
 JS = [
-    'src/collective/composition/static/bootstrap.min.js',
-    'src/collective/composition/static/composition.js',
-    'src/collective/composition/static/jquery.contextmenu.js',
-    'src/collective/composition/static/layout_base.js',
-    'src/collective/composition/static/layout_edit.js',
-    'src/collective/composition/static/screenlets.js',
+    '++resource++collective.composition/bootstrap.min.js',
+#    '++resource++collective.composition/composition.js',
+#    '++resource++collective.composition/jquery.contextmenu.js',
+#    '++resource++collective.composition/layout_base.js',
+#    '++resource++collective.composition/layout_edit.js',
+    '++resource++collective.composition/screenlets.js',
     ]
 
 CSS = [
-    'src/collective/composition/static/bootstrap.min.css',
-    'src/collective/composition/static/composition.css',
-    'src/collective/composition/static/jquery.contextmenu.css',
-    'src/collective/composition/static/layout_edit.css',
-    'src/collective/composition/static/screenlets.css',
+    '++resource++collective.composition/bootstrap.min.css',
+#    '++resource++collective.composition/composition.css',
+#    '++resource++collective.composition/jquery.contextmenu.css',
+#    '++resource++collective.composition/layout_edit.css',
+    '++resource++collective.composition/screenlets.css',
     ]
 
 
