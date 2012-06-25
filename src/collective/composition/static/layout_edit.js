@@ -135,8 +135,8 @@
              */
             column_resizable: function(column) {
                 var columns = column ? column : le.find('.column');
-                columns.append("<div class='add-column'>+</div>\
-                    <div class='remove-column'>-</div>");
+                columns.append("<span class='add-column'></span>\
+                    <span class='remove-column'></span>");
                 var addButton = $(".add-column", columns);
                 $(".add-column", columns).live("click", function (e) {
                     e.stopPropagation();

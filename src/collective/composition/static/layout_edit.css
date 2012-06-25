@@ -10,7 +10,7 @@
 
 .layout .tile {
     background-color: #F9F9F9;
-    margin: 5px;
+    margin: 5px 15px 5px 5px;
     min-height: 50px;
     outline: 1px solid #999;
     position: relative;
@@ -27,6 +27,7 @@
     min-height: 100px;
     outline: 1px dashed #ccc;
     padding: 10px 0;
+    overflow:hidden;
 }
 
 .layout .tile-wrapper {
@@ -98,23 +99,26 @@
 }
 
 .add-column {
-    background-color: blue;
-    height: 50%;
+    height: 49%;
     position: absolute;
-    right: 0;
+    right: 0px;
     top: 0;
     width: 10px;
     cursor:pointer;
+    border-left:1px dashed #CCCCCC;
+    border-bottom:1px dashed #CCCCCC;    
+    background: #FFF url(/++resource++collective.composition/arrow-right.gif) no-repeat center center;
 }
 
 .remove-column {
-    background-color: red;
     height: 50%;
     position: absolute;
-    right: 0;
+    right: 0px;
     top: 50%;
     width: 10px;
     cursor:pointer;
+    border-left:1px dashed #CCCCCC;
+    background: #FFF url(/++resource++collective.composition/arrow-left.gif) no-repeat center center;
 }
 
 /*ACTION BUTTONS*/
