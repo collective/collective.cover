@@ -28,15 +28,5 @@
                             tabindex view/tabindex;
                             value python:stored_data.get('order', None);
                             accesskey view/accesskey;"/>
-
-        <span i18n:translate="">Text length</span>
-        <input type="text" id="" name="" class="" size="2"
-            tabindex="" accesskey=""
-            tal:attributes="id string:${view/id}-length;
-                            name string:${view/name}.length;
-                            class view/klass;
-                            tabindex view/tabindex;
-                            value python:stored_data.get('length', None);
-                            accesskey view/accesskey;"/>
     </tal:stored_data>
 </html>
