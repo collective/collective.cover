@@ -129,8 +129,21 @@
              */
             column_resizable: function(column) {
                 var columns = column ? column : le.find('.column');
-                columns.append("<div class='add-column'>+</div>\
-                    <div class='remove-column'>-</div>");
+                columns.each(function() {
+                    var col = $(this);
+                    var this_position = get_grid_position(col);
+                    var this_width = get_grid_width(col);
+                    col.append("<div class='add-column'>+</div>\
+                        <div class='remove-column'>-</div>");
+                    var addButton = $(".add-column", col);
+                    var removeButton = $(".remove-column", col);
+                    if(parseInt(this_width[1], 10) + parseInt(this_position[1], 10) === number_of_columns) {
+                          addButton.addClass("disabled");
+                      }
+                     if(parseInt(this_width[1], 10) === 1) {
+                            removeButton.addClass("disabled");
+                    }
+                });
                 var addButton = $(".add-column", columns);
                 $(".add-column", columns).live("click", function (e) {
                     e.stopPropagation();
@@ -158,6 +171,18 @@
                           parseInt(this_position[1], 10);
                       if(width && can_grow && next_position_allowed ) {
                           set_grid_width(column, new_width);
+                          remove = $(this).next()
+
+                          if(new_width + parseInt(this_position[1], 10) === number_of_columns) {
+                              $(this).addClass("disabled");
+                          } else {
+                              $(this).removeClass("disabled");
+                          }
+                          if(new_width === 1) {
+                                remove.addClass("disabled");
+                            } else {
+                                remove.removeClass("disabled");
+                            } 
                       }
                 });
                 
@@ -168,9 +193,21 @@
                     var row = column.parent();
                     var columns = row.children(".column");
                     var width = get_grid_width(column);
+                    var this_position = get_grid_position(column);
                     var new_width = parseInt(width[1], 10) - 1;
-                    if(width && new_width > 1) {
+                    if(width && new_width > 0 && this_position) {
+                        var prev = $(this).prev();
                         set_grid_width(column, new_width);
+                        if(new_width === 1) {
+                            $(this).addClass("disabled");
+                        } else {
+                            $(this).removeClass("disabled");
+                        }
+                        if(new_width + parseInt(this_position[1], 10) === number_of_columns) {
+                              prev.addClass("disabled");
+                          } else {
+                              prev.removeClass("disabled");
+                          }
                     }
                 });
                 
@@ -280,7 +317,6 @@
                     
                     child.addClass(conf.columnwidth + new_width);
                     child.addClass(conf.columnposition + new_position);
-                    //debugger;
                 }
             }
                 
