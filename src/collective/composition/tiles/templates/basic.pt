@@ -5,16 +5,23 @@
       i18n:domain="collective.composition">
 
 <body>
-    <tal:text define="title view/getTitle;
-                      description view/getDescription;
-                      image_tag view/image_tag;
+    <tal:text define="title view/get_title;
+                      description view/get_description;
+                      image view/get_image;
                       is_empty view/is_empty;">
         <p tal:condition="is_empty">
             Please edit the tile to enter some data.
         </p>
-        <h1 tal:content="title">Title</h1>
-        <p tal:content="description">Description</p>
-        <tal:image replace="structure image_tag">Image</tal:image>
+        <tal:empty tal:condition="python: not is_empty">
+            <h1 tal:content="title">Title</h1>
+            <p tal:content="description">Description</p>
+             <img tal:define="scales view/@@images;
+                              thumbnail python: scales.scale('image', width=200, height=200);"
+                  tal:condition="thumbnail"
+                  tal:attributes="src thumbnail/url;
+                                  width thumbnail/width;
+                                  height thumbnail/height" />
+        </tal:empty>
     </tal:text>
 </body>
 </html>

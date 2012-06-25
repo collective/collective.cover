@@ -41,9 +41,9 @@
       />
 
   <browser:page
-      name="image"
+      name="images"
       for=".basic.BasicTile"
-      class=".basic.ImageView"
+      class=".basic.ImageScaling"
       permission="zope2.View"
   />
 
