@@ -9,8 +9,7 @@
 
     <tal:mode define="mode options/mode;">
         <div tal:define="section options/section | nothing;"
-            tal:condition="section"
-            tal:attributes="class python:'%s' % section.get('class', '')">
+            tal:condition="section">
 
             <tal:children repeat="child python:section.get('children')">
                 <div tal:replace="structure python:view.render_section(child, mode)" />

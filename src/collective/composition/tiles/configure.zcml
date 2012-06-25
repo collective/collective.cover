@@ -69,7 +69,16 @@
       for="*"
       />
 
-
+  <plone:tile
+      name="collective.composition.collection"
+      title="Collection Tile"
+      description="A tile that containg a Collection"
+      add_permission="cmf.ModifyPortalContent"
+      schema=".collection.ICollectionTile"
+      class=".collection.CollectionTile"
+      permission="zope2.View"
+      for="*"
+      />
 
     <adapter for="zope.interface.Interface
                   zope.publisher.interfaces.browser.IBrowserRequest
