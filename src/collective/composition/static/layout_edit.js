@@ -238,7 +238,40 @@
              */
             tile_droppable: function(tile) {
                 var droppable_elements = tile ? tile : le.find('.'+column_class);
-
+                $("#configure_tile #buttons-save").live("click", function(e) {
+                    e.preventDefault();
+                    var url = $("#configure_tile").attr("action");
+                    var data = $("#configure_tile").serialize();
+                    data = data + '&buttons.save=Save';
+                    $.ajax({
+                      type: 'POST',
+                      url: url,
+                      data: data,
+                      success: function(e,v) {
+                          $('#tile-configure').html('');
+                          $('#tile-configure').modal('hide');
+                      }
+                    });
+                    return false;
+                });
+                $("#configure_tile #buttons-cancel").live("click", function(e) {
+                    e.preventDefault();
+                    $('#tile-configure').html('');
+                    $('#tile-configure').modal('hide');
+                    return false;
+                });
+                
+                $(".config-tile-link").live("click", function(e) {
+                      e.preventDefault();
+                      var url = $(this).attr("href");
+                      $.get(url, function(data) {
+                        $('#tile-configure').html(data);
+                        $('#tile-configure').modal();
+                        
+                        
+                      });
+                      return false;
+                  });
                 droppable_elements.droppable({
                     activeClass: "ui-state-default",
                     hoverClass: "ui-state-hover",
@@ -269,7 +302,6 @@
                         });
 
                         $(this).append(new_tile);
-
                         le.trigger('modified.layout');
 
                     }
