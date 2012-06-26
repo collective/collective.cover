@@ -8,6 +8,7 @@ from zope.component import queryUtility
 from plone.app.testing import TEST_USER_ID
 from plone.app.testing import setRoles
 from plone.dexterity.interfaces import IDexterityFTI
+from plone.app.lockingbehavior.behaviors import ILocking
 
 from collective.composition.composition import IComposition
 from collective.composition.testing import INTEGRATION_TESTING
@@ -25,7 +26,8 @@ class CompositionIntegrationTestCase(unittest.TestCase):
         self.folder = self.portal['test-folder']
 
     def test_adding(self):
-        self.folder.invokeFactory('collective.composition.composition', 'c1')
+        self.folder.invokeFactory('collective.composition.composition', 'c1',
+                                  template_layout='Layout A')
         c1 = self.folder['c1']
         self.assertTrue(IComposition.providedBy(c1))
 
@@ -46,3 +48,9 @@ class CompositionIntegrationTestCase(unittest.TestCase):
         factory = fti.factory
         new_object = createObject(factory)
         self.assertTrue(IComposition.providedBy(new_object))
+
+    def test_locking_behavior(self):
+        self.folder.invokeFactory('collective.composition.composition', 'c1',
+                                  template_layout='Layout A')
+        c1 = self.folder['c1']
+        self.assertTrue(ILocking.providedBy(c1))

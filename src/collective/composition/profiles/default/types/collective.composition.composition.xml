@@ -18,8 +18,9 @@
   <property name="klass">collective.composition.composition.Composition</property>
 
   <property name="behaviors">
-     <element value="plone.app.content.interfaces.INameFromTitle" />
-     <element value="plone.app.dexterity.behaviors.metadata.IBasic"/>
+    <element value="plone.app.content.interfaces.INameFromTitle" />
+    <element value="plone.app.dexterity.behaviors.metadata.IBasic" />
+    <element value="plone.app.lockingbehavior.behaviors.ILocking" />
    </property>
 
   <!-- View information -->
@@ -43,15 +44,18 @@
     url_expr="string:${object_url}/" visible="True">
     <permission value="View" />
   </action>
-  <action title="Edit" action_id="edit" category="object" condition_expr=""
+  <action title="Edit" action_id="edit" category="object"
+    condition_expr="not:object/@@plone_lock_info/is_locked_for_current_user|python:True"
     url_expr="string:${object_url}/edit" visible="True">
     <permission value="Modify portal content" />
   </action>
-  <action title="Compose" action_id="compose" category="object" condition_expr=""
+  <action title="Compose" action_id="compose" category="object"
+    condition_expr="not:object/@@plone_lock_info/is_locked_for_current_user|python:True"
     url_expr="string:${object_url}/compose" visible="True">
     <permission value="Modify portal content" />
   </action>
-  <action title="Layout" action_id="layoutedit" category="object" condition_expr=""
+  <action title="Layout" action_id="layoutedit" category="object"
+    condition_expr="not:object/@@plone_lock_info/is_locked_for_current_user|python:True"
     url_expr="string:${object_url}/layoutedit" visible="True">
     <permission value="Modify portal content" />
   </action>
