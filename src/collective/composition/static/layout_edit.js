@@ -29,7 +29,6 @@
                 le.bind('modified.layout', self.layout_modified); 
                 
                 le.find('.'+row_class).each(function(row){
-                    console.log(this);
                     self.grid_layout_guides($(this));
                 });
             },
@@ -251,7 +250,7 @@
                     e.preventDefault();
                     var url = $("#configure_tile").attr("action");
                     var data = $("#configure_tile").serialize();
-                    data = data + '&buttons.save=Save';
+                    data = data + '&buttons.save=Save&ajax_load=true';
                     $.ajax({
                       type: 'POST',
                       url: url,
@@ -276,8 +275,6 @@
                       $.get(url, function(data) {
                         $('#tile-configure').html(data);
                         $('#tile-configure').modal();
-                        
-                        
                       });
                       return false;
                   });
@@ -290,14 +287,15 @@
                         var new_tile = $('<div/>')
                             .addClass(default_class).append(tile_dom.clone());
                         $("#tile-select-list").modal();
-                        
                         $(".tile-select-button").click(function(e) {
+                            e.stopPropagation();
+                            e.preventDefault();
+                           $(".tile-select-button").unbind("click");
                            var tile_type = $(this).text();
                            new_tile.attr("data-tile-type", tile_type);
-                           
                            $.ajax({
                               url: "@@uid_getter",
-                              success: function(info) {
+                              success: function(info, la) {
                                new_tile.attr("id", info);
                                var url_config = "@@configure-tile/" + tile_type + "/" + info;
                                var config_link = $("<a />").addClass("config-tile-link")
@@ -410,14 +408,16 @@
                 if(grid_width_prev && grid_pos_prev) {
 
                     equal_parts = parseInt(grid_width_prev[1], 10) + parseInt(grid_pos_prev[1], 10) === conf.numberofcolumns;
-                    child.removeClass(get_grid_width(child)[0]);
-                    child.removeClass(get_grid_position(child)[0]);
+                    if(!equal_parts) {
+                        child.removeClass(get_grid_width(child)[0]);
+                        child.removeClass(get_grid_position(child)[0]);
 
-                    var new_position = parseInt(grid_width_prev[1], 10) + parseInt(grid_pos_prev[1], 10);
-                    var new_width = conf.numberofcolumns - new_position;
+                        var new_position = parseInt(grid_width_prev[1], 10) + parseInt(grid_pos_prev[1], 10);
+                        var new_width = conf.numberofcolumns - new_position;
 
-                    child.addClass(conf.columnwidth + new_width);
-                    child.addClass(conf.columnposition + new_position);
+                        child.addClass(conf.columnwidth + new_width);
+                        child.addClass(conf.columnposition + new_position);
+                    }
                 }
             }
 

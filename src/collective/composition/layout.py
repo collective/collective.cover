@@ -102,11 +102,7 @@ class TileSelect(grok.View):
     grok.require('zope2.View')
 
     def update(self):
-        self.tiles = ['collective.composition.basic',
-                    'collective.composition.richtext',
-                    'collective.composition.container',
-                    'collective.composition.collection']
-
+        self.tiles = self.context.get_tile_widgets()
 
 class UidGetter(grok.View):
     grok.context(IComposition)
