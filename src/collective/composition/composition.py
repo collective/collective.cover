@@ -95,33 +95,27 @@ class Composition(dexterity.Container):
         #TODO: Think of a way to register available tiles
         #      And from here, just ask which tiles are available for this
         #      context
-        available.append({'tile_type': "collective.composition.tiles.richtext",
+        available.append({'tile_type': "collective.composition.richtext",
                           'icon': '',
                           'title': "Rich text tile",
                           'description': ("A persistent tile which allows to "
                                           "create content using a WYSIWYG "
                                           "editor")})
 
-        available.append({'tile_type': "collective.composition.tiles.basic",
+        available.append({'tile_type': "collective.composition.basic",
                           'icon': '',
                           'title': "Container tile",
                           'description': ("A basic tile")})
 
-        available.append({'tile_type': "collective.composition.tiles.container",
+        available.append({'tile_type': "collective.composition.container",
                           'icon': '',
                           'title': "Container tile",
                           'description': ("A tile wich can contain other "
                                           "tiles")})
 
-        available.append({'tile_type': "collective.composition.tiles.collection",
+        available.append({'tile_type': "collective.composition.collection",
                           'icon': '',
                           'title': "Collection tile",
-                          'description': ("A tile wich can contain other "
-                                          "tiles")})
-
-        available.append({'tile_type': "collective.composition.tiles.container",
-                          'icon': '',
-                          'title': "Container tile",
                           'description': ("A tile wich can contain other "
                                           "tiles")})
 
