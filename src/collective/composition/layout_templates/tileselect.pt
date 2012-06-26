@@ -9,7 +9,7 @@
 
     <div id="tile-select-list" class="modal hide">
       <tal:tiles repeat="tile view/tiles">
-        <div class="tile-select-button" tal:content="tile" />
+        <div class="tile-select-button" tal:content="tile/tile_type" />
       </tal:tiles>
     </div>
 

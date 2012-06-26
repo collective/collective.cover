@@ -29,7 +29,6 @@
                 le.bind('modified.layout', self.layout_modified); 
                 
                 le.find('.'+row_class).each(function(row){
-                    console.log(this);
                     self.grid_layout_guides($(this));
                 });
             },
@@ -251,7 +250,7 @@
                     e.preventDefault();
                     var url = $("#configure_tile").attr("action");
                     var data = $("#configure_tile").serialize();
-                    data = data + '&buttons.save=Save';
+                    data = data + '&buttons.save=Save&ajax_load=true';
                     $.ajax({
                       type: 'POST',
                       url: url,
@@ -276,8 +275,6 @@
                       $.get(url, function(data) {
                         $('#tile-configure').html(data);
                         $('#tile-configure').modal();
-                        
-                        
                       });
                       return false;
                   });
