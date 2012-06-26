@@ -6,6 +6,8 @@
     i18n_domain="collective.composition">
 
     <include package=".configuration_widgets" />
+    <!-- Data manager for "our" tiles -->
+    <adapter factory=".data.PersistentCompositionTileDataManager" />
 
     <browser:page
         name="configure-tile"

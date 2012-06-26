@@ -26,6 +26,7 @@
         $.extend(self, {
             init: function() {
                 self.setup();
+                le.bind('modified.layout', self.layout_modified);                
             },
 
             /*
@@ -44,6 +45,8 @@
 
                 le.find('.'+row_class).append(row_dom);
                 le.find('.'+column_class).append(column_dom);
+                le.find('.tile').append(tile_dom);
+
             },
 
             grid_manager_init: function(children, child) {
@@ -78,6 +81,8 @@
                         $(this).before(new_row);
                         self.row_droppable();
                         self.column_droppable(new_row);
+                        le.trigger('modified.layout');
+
                     }
                 });
             },
@@ -119,6 +124,7 @@
                         self.grid_manager_init(cells, new_column);
                         self.tile_droppable(new_column);
                         self.column_resizable(new_column);
+                        le.trigger('modified.layout');                        
                     }
                 });
             },
@@ -129,12 +135,12 @@
              */
             column_resizable: function(column) {
                 var columns = column ? column : le.find('.column');
-                columns.each(function() {
+                columns.each(function(index) {
                     var col = $(this);
                     var this_position = get_grid_position(col);
                     var this_width = get_grid_width(col);
-                    col.append("<div class='add-column'>+</div>\
-                        <div class='remove-column'>-</div>");
+                    col.append("<span class='add-column'></span>\
+                        <span class='remove-column'></span>");
                     var addButton = $(".add-column", col);
                     var removeButton = $(".remove-column", col);
                     if(parseInt(this_width[1], 10) + parseInt(this_position[1], 10) === number_of_columns) {
@@ -144,6 +150,7 @@
                             removeButton.addClass("disabled");
                     }
                 });
+
                 var addButton = $(".add-column", columns);
                 $(".add-column", columns).live("click", function (e) {
                     e.stopPropagation();
@@ -210,7 +217,6 @@
                           }
                     }
                 });
-                
             },
 
             /**
@@ -242,6 +248,8 @@
                         var new_tile = $('<div/>')
                             .addClass(default_class).append(tile_dom.clone());
                         $(this).append(new_tile);
+
+                        le.trigger('modified.layout');                        
                     }
                 });
             },
@@ -250,14 +258,13 @@
              * Export html2json
              *
              **/
-            html2json: function html2json(node) {
+            html2json: function (node) {
                 var data = [];
                 var excluded_elements = '.row-droppable';
                 var remove_classes = 'ui-droppable';
                 $(node).find('> div').each(function(i, elem) {
                     if ($(this).not(excluded_elements)[0] !== undefined) {
                         $(this).removeClass(remove_classes);
-
                         var entry = {};
 
                         var patt=new RegExp(/\bcolumn|\bcell|\brow|\btile/);
@@ -289,6 +296,18 @@
                     }
                 });
                 return data;
+            },
+
+            /**
+             * Layout Modified event
+             * XXX I can do an autocheck code, but doesn't worth it at this point
+             **/
+            layout_modified: function () {
+                var save_btn = $('#btn-save');
+                if (!save_btn.hasClass('saved')) {
+                    $('#btn-save').text('SAVE');
+                    $('#btn-save').addClass('modified');
+                }
             }
 
         });
