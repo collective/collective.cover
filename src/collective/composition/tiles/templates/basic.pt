@@ -11,7 +11,7 @@
         </p>
         <tal:empty tal:condition="python: not is_empty">
             <tal:fields repeat="field view/get_configured_fields">
-                <tal:title condition="python:field['id'] == 'title'">
+                <tal:title condition="python:field['id'] == 'title' and field.has_key('htmltag')">
                     <h1 tal:condition="python:field['htmltag'] == 'h1'"
                         tal:content="python:field['content']"/>
                     <h2 tal:condition="python:field['htmltag'] == 'h2'"
