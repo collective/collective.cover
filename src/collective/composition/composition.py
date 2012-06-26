@@ -2,10 +2,7 @@
 
 import json
 import sys
-import string
 
-from random import choice
-from sha import sha
 from pyquery import PyQuery
 
 from five import grok
@@ -35,6 +32,7 @@ from Products.CMFCore.Expression import Expression
 from Products.CMFCore.Expression import getExprContext
 
 from collective.composition.controlpanel import ICompositionSettings
+from collective.composition.utils import assign_tile_ids
 
 
 class IComposition(form.Schema):
@@ -350,22 +348,6 @@ class DeleteTile(grok.View):
             tile = self.context.restrictedTraverse(tile_type)
             tile_instance = tile[tile_id]
             tile_instance.delete()
-
-
-def assign_tile_ids(layout):
-    """
-    This function takes a dict and recursively traverse it assigning
-    sha-hashed ids so we are pretty sure they are unique
-    """
-    for elem in layout:
-        if elem['type'] == u'tile':
-            random_string = ''
-            for i in xrange(100):
-                random_string += choice(string.letters)
-            elem['id'] = sha(random_string).hexdigest()
-        else:
-            children = elem['children']
-            assign_tile_ids(children)
 
 
 @grok.subscribe(IComposition, IObjectAddedEvent)

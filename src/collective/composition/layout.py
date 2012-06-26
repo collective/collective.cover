@@ -8,6 +8,8 @@ from zope.app.pagetemplate.viewpagetemplatefile import ViewPageTemplateFile
 
 from collective.composition.composition import IComposition
 
+from collective.composition.utils import assign_tile_ids
+
 from collective.composition import _
 
 #grok.templatedirs("layout_templates")
@@ -78,11 +80,18 @@ class LayoutSave(grok.View):
 
     def save(self):
         composition_layout = self.request.get('composition_layout')
+
+        layout = json.loads(composition_layout)
+
+        assign_tile_ids(layout, override=False)
+
+        composition_layout = json.dumps(layout)
+
         self.context.composition_layout = composition_layout
         self.context.reindexObject()
 
         return composition_layout
-        
+
     def render(self):
         save = self.save()
         return 'saved'
