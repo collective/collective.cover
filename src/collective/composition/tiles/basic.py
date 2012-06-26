@@ -3,6 +3,8 @@
 # Basic implementation taken from
 # http://davisagli.com/blog/using-tiles-to-provide-more-flexible-plone-layouts
 
+import time
+from datetime import datetime
 from logging import exception
 from Acquisition import aq_base
 from ZODB.POSException import ConflictError
@@ -42,7 +44,7 @@ class IBasicTileData(IPersistentCompositionTile):
         )
 
     description = schema.Text(
-        title=_(u'Descrition'),
+        title=_(u'Description'),
         required=False,
         )
 
@@ -124,7 +126,8 @@ class AnnotationStorage(BaseAnnotationStorage):
     def storage(self):
         tile = self.context
         composition = tile.context
-        return IAnnotations(composition).setdefault('plone.tiles.scale.%s' % tile.id,
+        return IAnnotations(composition).setdefault(
+            'plone.tiles.scale.%s' % tile.id,
             PersistentDict())
 
 
@@ -178,13 +181,15 @@ class ImageScaling(BaseImageScaling):
             if '.' in name:
                 name, ext = name.rsplit('.', 1)
             value = getattr(self.context, name)
-            scale_view = ImageScale(self.context, self.request, data=value, fieldname=name)
+            scale_view = ImageScale(self.context, self.request,
+                                    data=value, fieldname=name)
             return scale_view.__of__(self.context)
         if image is not None:
             return image
         raise NotFound(self, name, self.request)
 
-    def create(self, fieldname, direction='thumbnail', height=None, width=None, **parameters):
+    def create(self, fieldname, direction='thumbnail',
+               height=None, width=None, **parameters):
         """ factory for image scales, see `IImageScaleStorage.scale` """
         orig_value = self.context.data.get(fieldname)
         if orig_value is None:
@@ -199,7 +204,8 @@ class ImageScaling(BaseImageScaling):
         if not orig_data:
             return
         try:
-            result = scaleImage(orig_data, direction=direction, height=height, width=width, **parameters)
+            result = scaleImage(orig_data, direction=direction,
+                                height=height, width=width, **parameters)
         except (ConflictError, KeyboardInterrupt):
             raise
         except Exception:
@@ -209,17 +215,19 @@ class ImageScaling(BaseImageScaling):
         if result is not None:
             data, format, dimensions = result
             mimetype = 'image/%s' % format.lower()
-            value = orig_value.__class__(data, contentType=mimetype, filename=orig_value.filename)
+            value = orig_value.__class__(data, contentType=mimetype,
+                                         filename=orig_value.filename)
             value.fieldname = fieldname
             return value, format, dimensions
 
     def modified(self):
         """ provide a callable to return the modification time of content
             items, so stored image scales can be invalidated """
-        #import ipdb;ipdb.set_trace()
-        return self.context.data['image'].getFirstBytes()
+            
+        return time.mktime(datetime.now().timetuple())
 
-    def scale(self, fieldname=None, scale=None, height=None, width=None, **parameters):
+    def scale(self, fieldname=None, scale=None,
+              height=None, width=None, **parameters):
         if fieldname is None:
             fieldname = IPrimaryFieldInfo(self.context).fieldname
         if scale is not None:

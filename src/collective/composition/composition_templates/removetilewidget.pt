@@ -5,47 +5,42 @@
       lang="en"
       metal:use-macro="context/main_template/macros/master"
       i18n:domain="plone">
-<metal:styles fill-slot="style_slot">
-  <link rel="stylesheet" type="text/css" media="screen" href=""
-        tal:attributes="href string:${view/static}/composition.css" />
-  <link rel="stylesheet" type="text/css" media="screen" href=""
-        tal:attributes="href string:${view/static}/jquery.contextmenu.css" />
-</metal:styles>
-<body>
-<metal:main fill-slot="main">
-    <h1 class="documentFirstHeading"
-          i18n:translate="alert_really_delete">
-        Do you really want to delete this item?
-      </h1>
-      
-    <form method="POST"
-        action="#"
-        tal:attributes="action context_state/current_page_url"
-        id="delete_confirmation">
-    <div class="formControls">
 
-        <input type="hidden"
+<metal:styles fill-slot="style_slot">
+    <link rel="stylesheet" type="text/css" media="screen" href=""
+          tal:attributes="href string:${view/static}/composition.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href=""
+          tal:attributes="href string:${view/static}/jquery.contextmenu.css" />
+</metal:styles>
+
+<body>
+
+<metal:main fill-slot="main">
+    <h1 class="documentFirstHeading" i18n:translate="alert_really_delete">
+        Do you really want to delete this item?
+    </h1>
+    <form id="delete_confirmation" method="POST" action="#"
+        tal:attributes="action context_state/current_page_url">
+        <div class="formControls">
+            <input type="hidden"
                 name="form.submitted"
                 value="1"
                 />
-
-        <input class="destructive"
+            <input class="destructive"
                 type="submit"
                 value="Delete"
-                i18n:attributes="value;"
+                i18n:attributes="value"
                 />
-        <input class="standalone"
+            <input class="standalone"
                 type="submit"
                 value="Cancel"
                 name="form.button.Cancel"
-                i18n:attributes="value label_cancel;"
+                i18n:attributes="value label_cancel"
                 />
-    </div>
-
-    <input tal:replace="structure context/@@authenticator/authenticator" />
-
+        </div>
+        <input tal:replace="structure context/@@authenticator/authenticator" />
     </form>
 </metal:main>
+
 </body>
 </html>
-

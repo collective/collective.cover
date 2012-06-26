@@ -134,3 +134,7 @@
 #btn-tile {
     background: url(/++resource++collective.composition/tiles.png) no-repeat 10px center;
 }
+
+#tile-select-list {
+    display:none;
+}

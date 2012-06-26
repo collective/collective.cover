@@ -26,7 +26,7 @@
         $.extend(self, {
             init: function() {
                 self.setup();
-                le.bind('modified.layout', self.layout_modified);                
+                le.bind('modified.layout', self.layout_modified);
             },
 
             /*
@@ -124,19 +124,33 @@
                         self.grid_manager_init(cells, new_column);
                         self.tile_droppable(new_column);
                         self.column_resizable(new_column);
-                        le.trigger('modified.layout');                        
+                        le.trigger('modified.layout');
                     }
                 });
             },
-            
+
             /**
              * Column Resizable
              * @param column
              */
             column_resizable: function(column) {
                 var columns = column ? column : le.find('.column');
-                columns.append("<span class='add-column'></span>\
-                    <span class='remove-column'></span>");
+                columns.each(function(index) {
+                    var col = $(this);
+                    var this_position = get_grid_position(col);
+                    var this_width = get_grid_width(col);
+                    col.append("<span class='add-column'></span>\
+                        <span class='remove-column'></span>");
+                    var addButton = $(".add-column", col);
+                    var removeButton = $(".remove-column", col);
+                    if(parseInt(this_width[1], 10) + parseInt(this_position[1], 10) === number_of_columns) {
+                          addButton.addClass("disabled");
+                      }
+                     if(parseInt(this_width[1], 10) === 1) {
+                            removeButton.addClass("disabled");
+                    }
+                });
+
                 var addButton = $(".add-column", columns);
                 $(".add-column", columns).live("click", function (e) {
                     e.stopPropagation();
@@ -159,14 +173,26 @@
                             next_position_allowed = position[1] >= new_width + parseInt(this_position[1], 10);
                         }
                       }
-                      var can_grow = new_width <= parseInt(number_of_columns, 10) 
-                          && parseInt(number_of_columns, 10) >= new_width + 
+                      var can_grow = new_width <= parseInt(number_of_columns, 10)
+                          && parseInt(number_of_columns, 10) >= new_width +
                           parseInt(this_position[1], 10);
                       if(width && can_grow && next_position_allowed ) {
                           set_grid_width(column, new_width);
+                          remove = $(this).next();
+
+                          if(new_width + parseInt(this_position[1], 10) === number_of_columns) {
+                              $(this).addClass("disabled");
+                          } else {
+                              $(this).removeClass("disabled");
+                          }
+                          if(new_width === 1) {
+                                remove.addClass("disabled");
+                            } else {
+                                remove.removeClass("disabled");
+                            }
                       }
                 });
-                
+
                 var removeButton = $(".remove-column", columns);
                 $(".remove-column", columns).live("click", function (e) {
                     e.stopPropagation();
@@ -174,9 +200,21 @@
                     var row = column.parent();
                     var columns = row.children(".column");
                     var width = get_grid_width(column);
+                    var this_position = get_grid_position(column);
                     var new_width = parseInt(width[1], 10) - 1;
-                    if(width && new_width > 1) {
+                    if(width && new_width > 0 && this_position) {
+                        var prev = $(this).prev();
                         set_grid_width(column, new_width);
+                        if(new_width === 1) {
+                            $(this).addClass("disabled");
+                        } else {
+                            $(this).removeClass("disabled");
+                        }
+                        if(new_width + parseInt(this_position[1], 10) === number_of_columns) {
+                              prev.addClass("disabled");
+                          } else {
+                              prev.removeClass("disabled");
+                          }
                     }
                 });
             },
@@ -209,9 +247,31 @@
                         var default_class = 'tile';
                         var new_tile = $('<div/>')
                             .addClass(default_class).append(tile_dom.clone());
+                        $("#tile-select-list").modal();
+                        
+                        $(".tile-select-button").click(function(e) {
+                           var tile_type = $(this).text();
+                           new_tile.attr("data-tile-type", tile_type);
+                           
+                           $.ajax({
+                              url: "@@uid_getter",
+                              success: function(info) {
+                               new_tile.attr("id", info);
+                               var url_config = "@@configure-tile/" + tile_type + "/" + info;
+                               var config_link = $("<a />").addClass("config-tile-link")
+                                  .attr('href',url_config).text('Config');
+                                new_tile.append(config_link);
+                                return false;
+                              }
+                            });
+                            
+                           $("#tile-select-list").modal('hide');
+                        });
+
                         $(this).append(new_tile);
 
-                        le.trigger('modified.layout');                        
+                        le.trigger('modified.layout');
+
                     }
                 });
             },
@@ -282,28 +342,27 @@
         var equal_parts = true;
         if(child) {
             var this_index = children.index(child);
-            var len = children.length
+            var len = children.length;
             if(len > 1) {
                 var prev = $(children[len-2]);
                 var grid_width_prev = get_grid_width(prev);
                 var grid_pos_prev = get_grid_position(prev);
                 if(grid_width_prev && grid_pos_prev) {
-                    
+
                     equal_parts = parseInt(grid_width_prev[1], 10) + parseInt(grid_pos_prev[1], 10) === conf.numberofcolumns;
                     child.removeClass(get_grid_width(child)[0]);
                     child.removeClass(get_grid_position(child)[0]);
 
                     var new_position = parseInt(grid_width_prev[1], 10) + parseInt(grid_pos_prev[1], 10);
                     var new_width = conf.numberofcolumns - new_position;
-                    
+
                     child.addClass(conf.columnwidth + new_width);
                     child.addClass(conf.columnposition + new_position);
-                    //debugger;
                 }
             }
-                
+
         }
-        
+
         if(equal_parts) {
             children.each(function(index) {
                 var child = $(this);
@@ -328,23 +387,23 @@
             });
         }
     }
-    
+
     function get_grid_width(item) {
       var itemClass = item.attr("class");
       if (itemClass) {
         var regex_match = itemClass.match(/\bwidth\-(\d+)/);
-        return regex_match
+        return regex_match;
       }
     }
-    
+
     function get_grid_position(item) {
       var itemClass = item.attr("class");
       if (itemClass) {
         var regex_match = itemClass.match(/\bposition\-(\d+)/);
-        return regex_match
+        return regex_match;
       }
     }
-    
+
     function set_grid_width(item, newWidth) {
       var itemClass = item.attr("class");
       if (itemClass) {
