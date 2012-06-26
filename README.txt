@@ -15,26 +15,26 @@ You can `see and comment our mockups online`_. You can also `join us on IRC`_.
 
 We want to solve the following use cases:
 
-- a front page may have different layouts
-- layouts are created by a Site Administrator TTW
-- the package will provide some layouts by default
-- layouts are made of groups of tiles
-- groups of tiles may have different editing permissions
-- a Site Administrator can drag&drop tiles and groups of tiles around the
+- [X] a front page may have different layouts
+- [X] layouts are created by a Site Administrator TTW
+- [ ] the package will provide some layouts by default
+- [X] layouts are made of groups of tiles
+- [ ] groups of tiles may have different editing permissions
+- [X] a Site Administrator can drag&drop tiles and groups of tiles around the
   layout
-- some tiles could be configured by Site Administrators (fields shown, image
-  location, and so on…)
-- a Site Administrator will define which fields will be shown on each tile
-- tiles will be associated with different kind of objects: static text tiles,
-  content type tiles, collection tiles, portlet tiles, and so on…
-- only users with specific permissions can modify the content inside a group
-  of tiles
-- a user can associate content to a tile using a simple drag&drop metaphor (if
-  the content and the tile do match)
-- a user can easily edit the content of a tile in place
-- front page edition will take place on a working copy of the object
-- a front page may have versions
-- it will be easy to implement a responsive design for a front page
+- [ ] some tiles could be configured by Site Administrators (fields shown,
+  image location, and so on…)
+- [ ] a Site Administrator will define which fields will be shown on each tile
+- [ ] tiles will be associated with different kind of objects: static text
+  tiles, content type tiles, collection tiles, portlet tiles, and so on…
+- [ ] only users with specific permissions can modify the content inside a
+  group of tiles
+- [X] a user can associate content to a tile using a simple drag&drop metaphor
+  (if the content and the tile do match)
+- [ ] a user can easily edit the content of a tile in place
+- [ ] front page edition will take place on a working copy of the object
+- [ ] a front page may have versions
+- [ ] it will be easy to implement a responsive design for a front page
 
 Over the years there have been some packages to solve the problem of creating
 front pages in Plone; we have used and are taking ideas from the following:
@@ -74,9 +74,7 @@ collective.composition
     the nearest site object, to facilitate inheritance.
 
     In `collective.composition` (this package), we don't want to use
-    portlets at all, and layouts are created in advance (by a site
-    administrator).
-
+    portlets at all.
 
 Don't Panic
 -----------
