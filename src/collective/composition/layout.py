@@ -114,4 +114,4 @@ class UidGetter(grok.View):
     grok.require('zope2.View')
     
     def render(self):
-        return uuid.uuid4()
+        return uuid.uuid4().hex
