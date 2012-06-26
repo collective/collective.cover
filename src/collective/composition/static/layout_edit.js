@@ -248,10 +248,17 @@
                         var new_tile = $('<div/>')
                             .addClass(default_class).append(tile_dom.clone());
                         $("#tile-select-list").modal();
-
+                        
                         $(".tile-select-button").click(function(e) {
                            var tile_type = $(this).text();
                            new_tile.attr("data-tile-type", tile_type);
+                           $.ajax({
+                              url: "@@uid_getter",
+                              success: function(info) {
+                               new_tile.attr("id", info);
+                                return false;
+                              }
+                            });
                            $("#tile-select-list").modal('hide');
                         });
 

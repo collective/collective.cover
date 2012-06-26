@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import json
+import uuid
 
 from five import grok
 
@@ -97,3 +98,11 @@ class TileSelect(grok.View):
                     'collective.composition.container',
                     'collective.composition.collection']
 
+
+class UidGetter(grok.View):
+    grok.context(IComposition)
+    grok.name('uid_getter')
+    grok.require('zope2.View')
+    
+    def render(self):
+        return uuid.uuid4()
