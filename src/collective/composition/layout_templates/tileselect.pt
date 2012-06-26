@@ -1,0 +1,17 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      i18n:domain="collective.composition"
+      tal:omit-tag="">
+<body tal:omit-tag="">
+
+    <div id="tile-select-list" class="modal hide">
+      <tal:tiles repeat="tile view/tiles">
+        <div class="tile-select-button" tal:content="tile" />
+      </tal:tiles>
+    </div>
+
+</body>
+</html>

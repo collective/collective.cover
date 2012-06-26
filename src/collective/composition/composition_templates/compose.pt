@@ -8,27 +8,27 @@
 <body>
 
 <metal:js fill-slot="javascript_head_slot">
-  <script type="text/javascript"
-          tal:attributes="src string:${view/static}/jquery.contextmenu.js">
-  </script>
-  <script type="text/javascript"
-          tal:attributes="src string:${view/static}/composition.js">
-  </script>
-
+    <script type="text/javascript"
+        tal:attributes="src string:${view/static}/jquery.contextmenu.js">
+    </script>
+    <script type="text/javascript"
+        tal:attributes="src string:${view/static}/composition.js">
+    </script>
 </metal:js>
+
 <metal:styles fill-slot="style_slot">
-  <link rel="stylesheet" type="text/css" media="screen" href=""
-        tal:attributes="href string:${view/static}/composition.css" />
-  <link rel="stylesheet" type="text/css" media="screen" href=""
-        tal:attributes="href string:${view/static}/jquery.contextmenu.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href=""
+          tal:attributes="href string:${view/static}/composition.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href=""
+          tal:attributes="href string:${view/static}/jquery.contextmenu.css" />
 </metal:styles>
 
 <metal:main fill-slot="main">
     <div tal:define="layout nocall:context/@@layout"
-         tal:replace="structure layout/render_compose" />
-        <div class="content-screenlet" tal:replace="structure context/@@select-content-screenlet"></div>
+        tal:replace="structure layout/render_compose" />
+    <div class="content-screenlet"
+        tal:replace="structure context/@@select-content-screenlet" />
 </metal:main>
 
 </body>
 </html>
-

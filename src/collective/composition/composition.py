@@ -2,10 +2,7 @@
 
 import json
 import sys
-import string
 
-from random import choice
-from sha import sha
 from pyquery import PyQuery
 
 from five import grok
@@ -35,6 +32,7 @@ from Products.CMFCore.Expression import Expression
 from Products.CMFCore.Expression import getExprContext
 
 from collective.composition.controlpanel import ICompositionSettings
+from collective.composition.utils import assign_tile_ids
 
 
 class IComposition(form.Schema):
@@ -58,6 +56,7 @@ class Composition(dexterity.Container):
     @property
     def current_layout(self):
         layout_name = self.composition_layout
+        # XXX Undefined name ICompositionLayout
         layout = getAdapter((self,), ICompositionLayout, name=layout_name)
         return layout
 
@@ -339,35 +338,16 @@ class DeleteTile(grok.View):
     grok.require('cmf.ModifyPortalContent')
 
     def render(self):
+        ### XXX 'pc' variable assigned but never used
         pc = getToolByName(self.context, 'portal_catalog')
 
         tile_type = self.request.form.get('tile-type')
         tile_id = self.request.form.get('tile-id')
 
         if tile_type and tile_id:
-
             tile = self.context.restrictedTraverse(tile_type)
-
             tile_instance = tile[tile_id]
-
             tile_instance.delete()
-
-
-def assign_tile_ids(layout):
-    """
-    This function takes a dict, and it will recursively traverse it and assign
-    sha-hashed ids so we are pretty sure they are unique among them
-    """
-
-    for elem in layout:
-        if elem['type'] == u'tile':
-            random_string = ''
-            for i in xrange(100):
-                random_string += choice(string.letters)
-            elem['id'] = sha(random_string).hexdigest()
-        else:
-            children = elem['children']
-            assign_tile_ids(children)
 
 
 @grok.subscribe(IComposition, IObjectAddedEvent)
@@ -376,9 +356,7 @@ def assign_id_for_tiles(composition, event):
     settings = registry.forInterface(ICompositionSettings)
 
     layout = settings.layouts[composition.template_layout]
-
     layout = json.loads(layout)
-
     assign_tile_ids(layout)
 
     composition.composition_layout = json.dumps(layout)

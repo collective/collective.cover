@@ -7,8 +7,8 @@
       tal:omit-tag="">
 <body tal:omit-tag="">
 
-    <tal:mode define="mode options/mode;">
-        <div tal:define="section options/section | nothing;"
+    <tal:mode define="mode options/mode">
+        <div tal:define="section options/section | nothing"
             tal:condition="section"
             tal:attributes="class python:'%s %s' % (section.get('class', ''), '' if view.is_user_allowed_in_group() else 'disabled');
                             data-panel python: section.get('id', '')">
@@ -21,4 +21,3 @@
     </tal:mode>
 </body>
 </html>
-

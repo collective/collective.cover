@@ -67,9 +67,16 @@ collective.composition
     some of the code, but we are going to replace old concepts with new ones.
 
 `collective.panels`_
-    A new package that tries to solve the front page use case (and many
-    others) using a different approach with portlets. We don't want to use
-    portlets at all.
+    A new package that lets site editors add portlets to a set of new
+    locations: above and below page contents, portal top and
+    footer. The package comes with a number of flexible layouts that
+    are used to position the portlets, and locations can be fixed to
+    the nearest site object, to facilitate inheritance.
+
+    In `collective.composition` (this package), we don't want to use
+    portlets at all, and layouts are created in advance (by a site
+    administrator).
+
 
 Don't Panic
 -----------
