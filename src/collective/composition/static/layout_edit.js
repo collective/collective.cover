@@ -287,33 +287,35 @@
                     hoverClass: "ui-state-hover",
                     accept: "#btn-tile",
                     drop: function( event, ui ) {
+                        var can_drop = false;
                         var default_class = 'tile';
                         var new_tile = $('<div/>')
                             .addClass(default_class).append(tile_dom.clone());
                         $("#tile-select-list").modal();
+                        var that = this;
                         $(".tile-select-button").click(function(e) {
                             e.stopPropagation();
                             e.preventDefault();
-                           $(".tile-select-button").unbind("click");
-                           var tile_type = $(this).text();
-                           new_tile.attr("data-tile-type", tile_type);
-                           $.ajax({
-                              url: "@@uid_getter",
-                              success: function(info, la) {
-                               new_tile.attr("id", info);
-                               var url_config = "@@configure-tile/" + tile_type + "/" + info;
-                               var config_link = $("<a />").addClass("config-tile-link")
-                                  .attr('href',url_config).text('Config');
-                                new_tile.append(config_link);
-                                return false;
-                              }
+                            $(".tile-select-button").unbind("click");
+                            var tile_type = $(this).text();
+                            new_tile.attr("data-tile-type", tile_type);
+                            $.ajax({
+                                url: "@@uid_getter",
+                                success: function(info, la) {
+                                    new_tile.attr("id", info);
+                                    var url_config = "@@configure-tile/" + tile_type + "/" + info;
+                                    var config_link = $("<a />").addClass("config-tile-link")
+                                    .attr('href',url_config).text('Config');
+                                    new_tile.append(config_link);
+                                    can_drop = true;
+                                    $(that).append(new_tile);
+                                    le.trigger('modified.layout');
+                                    return false;
+                                }
                             });
-                            
                            $("#tile-select-list").modal('hide');
                         });
-
-                        $(this).append(new_tile);
-                        le.trigger('modified.layout');
+                        
 
                     }
                 });
@@ -421,12 +423,10 @@
                 var grid_width_prev = get_grid_width(prev);
                 var grid_pos_prev = get_grid_position(prev);
                 if(grid_width_prev && grid_pos_prev) {
-
                     equal_parts = parseInt(grid_width_prev[1], 10) + parseInt(grid_pos_prev[1], 10) === conf.numberofcolumns;
                     if(!equal_parts) {
                         child.removeClass(get_grid_width(child)[0]);
                         child.removeClass(get_grid_position(child)[0]);
-
                         var new_position = parseInt(grid_width_prev[1], 10) + parseInt(grid_pos_prev[1], 10);
                         var new_width = conf.numberofcolumns - new_position;
 
@@ -442,7 +442,6 @@
             children.each(function(index) {
                 var child = $(this);
                 new_width = parseInt(conf.numberofcolumns / len, 10);
-
                 var tile_class = child.attr("class");
 
                 if (tile_class !== undefined) {
