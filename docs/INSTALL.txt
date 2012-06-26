@@ -11,14 +11,6 @@ To enable this product in a buildout-based installation:
     eggs =
         collective.composition
 
-2. You may need to extend a Dexterity known good set (KGS) to make sure that
-   you get the right versions of the packages that make up Dexterity::
-
-    [buildout]
-    ...
-    extends =
-        http://good-py.appspot.com/release/dexterity/1.2.1
-
 After updating the configuration you need to run ''bin/buildout'', which will
 take care of updating your system.
 
