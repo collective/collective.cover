@@ -42,7 +42,7 @@ class IBasicTileData(IPersistentCompositionTile):
         )
 
     description = schema.Text(
-        title=_(u'Descrition'),
+        title=_(u'Description'),
         required=False,
         )
 
