@@ -8,12 +8,16 @@
     width: 9%;
 }
 
-.layout .tile {
+.layout .tile, 
+.tile-placeholder {
     background-color: #F9F9F9;
     margin: 5px 15px 5px 5px;
     min-height: 50px;
     outline: 1px solid #999;
     position: relative;
+}
+.tile-placeholder {
+    background-color: #DDD;
 }
 
 .layout .row {
@@ -27,7 +31,6 @@
     min-height: 100px;
     outline: 1px dashed #ccc;
     padding: 10px 0;
-    overflow:hidden;
 }
 
 .layout .tile-wrapper {
