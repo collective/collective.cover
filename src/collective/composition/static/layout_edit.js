@@ -26,7 +26,12 @@
         $.extend(self, {
             init: function() {
                 self.setup();
-                le.bind('modified.layout', self.layout_modified);
+                le.bind('modified.layout', self.layout_modified); 
+                
+                le.find('.'+row_class).each(function(row){
+                    console.log(this);
+                    self.grid_layout_guides($(this));
+                });
             },
 
             /*
@@ -82,7 +87,7 @@
                         self.row_droppable();
                         self.column_droppable(new_row);
                         le.trigger('modified.layout');
-
+                        self.grid_layout_guides(new_row);
                     }
                 });
             },
@@ -102,7 +107,7 @@
              * Column Droppable
              * @param column, if provided is going to only bind the event to
              * the dom or list of dom elements, if not, is going to do it in all
-             * the .row elements
+             * the columns elements
              */
             column_droppable: function(column) {
 
@@ -120,7 +125,11 @@
                         var new_column = $('<div/>')
                             .addClass(default_class).append(column_dom.clone());
                         $(this).append(new_column);
-                        var cells = $(this).find('.' + column_class);
+                        var cells = $(this)
+                                      .find('.' + column_class)
+                                      .not('.guides')
+                                      .not('.guides .row-guide');
+
                         self.grid_manager_init(cells, new_column);
                         self.tile_droppable(new_column);
                         self.column_resizable(new_column);
@@ -316,7 +325,8 @@
                 var data = [];
                 var excluded_elements = '.row-droppable';
                 var remove_classes = 'ui-droppable';
-                $(node).find('> div').each(function(i, elem) {
+
+                $(node).find('> div').not('.guides').each(function(i, elem) {
                     if ($(this).not(excluded_elements)[0] !== undefined) {
                         $(this).removeClass(remove_classes);
                         var entry = {};
@@ -351,6 +361,24 @@
                 });
                 return data;
             },
+            
+            /**
+             * Grid Layout Helpers
+             *
+             **/
+             grid_layout_guides: function(row) {
+                var base_column = $('<div/>')
+                                    .addClass(column_class)
+                                    .addClass(column_width+'1')
+                                    .addClass('row-guide');
+                row.append('<div class="guides"/>');
+                for (i = 0; i < number_of_columns; i++) {
+                    var column = base_column.clone()
+                                   .addClass(column_position+i);
+
+                    row.find('.guides').append(column);
+                }
+             },
 
             /**
              * Layout Modified event
