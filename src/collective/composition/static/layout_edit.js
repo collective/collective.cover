@@ -247,9 +247,18 @@
                         var default_class = 'tile';
                         var new_tile = $('<div/>')
                             .addClass(default_class).append(tile_dom.clone());
-                        $(this).append(new_tile);
+                        $("#tile-select-list").modal();
+                        
+                        $(".tile-select-button").click(function(e) {
+                           var tile_type = $(this).text();
+                           new_tile.attr("data-tile-type", tile_type);
+                           $("#tile-select-list").modal('hide');
+                        });
 
-                        le.trigger('modified.layout');                        
+                        $(this).append(new_tile);
+                        
+                        le.trigger('modified.layout');  
+                                         
                     }
                 });
             },

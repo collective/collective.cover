@@ -85,3 +85,15 @@ class LayoutSave(grok.View):
     def render(self):
         save = self.save()
         return 'saved'
+
+class TileSelect(grok.View):
+    grok.context(IComposition)
+    grok.name('tile_select')
+    grok.require('zope2.View')
+
+    def update(self):
+        self.tiles = ['collective.composition.basic',
+                    'collective.composition.richtext',
+                    'collective.composition.container',
+                    'collective.composition.collection']
+
