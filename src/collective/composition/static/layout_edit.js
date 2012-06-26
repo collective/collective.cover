@@ -51,6 +51,8 @@
                 le.find('.'+column_class).append(column_dom);
                 le.find('.tile').append(tile_dom);
 
+                self.sort_tiles(le.find('.'+column_class));
+
             },
 
             grid_manager_init: function(children, child) {
@@ -86,6 +88,8 @@
                         self.row_droppable();
                         self.column_droppable(new_row);
                         le.trigger('modified.layout');
+
+                        self.sort_tiles(new_row);
                         self.grid_layout_guides(new_row);
                     }
                 });
@@ -316,6 +320,18 @@
                     }
                 });
             },
+            /**
+             * Sort Tiles
+             *
+             **/
+            sort_tiles: function(tiles_container) {
+                $( tiles_container ).sortable({
+                    placeholder: 'tile-placeholder',
+                    appendTo:'.layout',
+                    helper:'clone',
+                    connectWith: '.layout .column'
+                });
+            },
 
             /**
              * Export html2json
@@ -369,7 +385,6 @@
              grid_layout_guides: function(row) {
                 var base_column = $('<div/>')
                                     .addClass(column_class)
-                                    .addClass(column_width+'1')
                                     .addClass('row-guide');
                 row.append('<div class="guides"/>');
                 for (i = 0; i < number_of_columns; i++) {

@@ -20,9 +20,11 @@ from plone.tiles.interfaces import ITileType
 
 from plone.tiles.interfaces import ITileDataManager
 
+from Products.CMFCore.utils import getToolByName
+
 from collective.composition.tiles.configuration import ITilesConfigurationScreen
 
-
+from collective.composition.tiles.permissions import ITilesPermissions
 
 
 class IPersistentCompositionTile(Interface):
@@ -60,6 +62,25 @@ class IPersistentCompositionTile(Interface):
         off, and in that case, fields will not be included in the returned
         dictionary from this method
         """
+
+    def setAllowedGroupsForEdit(groups):
+        """
+        This method assigns the groups that have edit permission to the tile
+        """
+
+    def getAllowedGroupsForEdit():
+        """
+        This method will return a list of groups that are allowed to edit the
+        contents of this tile
+        """
+
+    def isAllowedToEdit(user):
+        """
+        This method returns true if the given user is allowed to edit the
+        contents of the tile based on which group is he member of.
+        If no user is provided, it will check on the authenticated member.
+        """
+
 
 class PersistentCompositionTile(tiles.PersistentTile):
 
@@ -125,3 +146,34 @@ class PersistentCompositionTile(tiles.PersistentTile):
 
         return results
 
+    def setAllowedGroupsForEdit(self, groups):
+        permissions = getMultiAdapter((self.context, self.request, self),
+                                      ITilesPermissions)
+        permissions.set_allowed_edit(groups)
+
+    def getAllowedGroupsForEdit(self):
+        permissions = getMultiAdapter((self.context, self.request, self),
+                                      ITilesPermissions)
+        groups = permissions.get_allowed_edit()
+
+        return groups
+
+    def isAllowedToEdit(self, user=None):
+        allowed = True
+
+        pm = getToolByName(self.context, 'portal_membership')
+
+        if user:
+            if isinstance(user, basestring):
+                user = pm.getMemberById(user)
+        else:
+            user = pm.getAuthenticatedMember()
+
+        user_roles = user.getRoles()
+        groups = self.getAllowedGroupsForEdit()
+
+        if groups and 'Manager' not in user_roles:
+            if not set(user.getGroups()).intersection(set(groups)):
+                allowed = False
+
+        return allowed

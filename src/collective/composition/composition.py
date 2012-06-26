@@ -3,6 +3,7 @@
 import json
 import sys
 
+from Acquisition import aq_inner
 from pyquery import PyQuery
 
 from five import grok
@@ -14,9 +15,12 @@ from zope.app.container.interfaces import IObjectAddedEvent
 from zope.interface import Interface
 from zope.component import getAdapter
 from zope.component import getUtility
+from zope.event import notify
 
+from plone.dexterity.events import EditBegunEvent
+#from plone.dexterity.events import EditCancelledEvent
+#from plone.dexterity.events import EditFinishedEvent
 from plone.dexterity.utils import createContentInContainer
-
 from plone.directives import dexterity, form
 
 from plone.registry.interfaces import IRegistry
@@ -120,7 +124,6 @@ class Composition(dexterity.Container):
                           'title': "Container tile",
                           'description': ("A tile wich can contain other "
                                           "tiles")})
-
 
         return available
 
@@ -309,14 +312,28 @@ class RemoveTileWidget(grok.View):
             dataManager.delete()
 
 
+# TODO: implement EditCancelledEvent and EditFinishedEvent
+# XXX: we need to leave the view after saving or cancelling editing
 class Compose(grok.View):
     grok.context(IComposition)
     grok.require('cmf.ModifyPortalContent')
 
+    def update(self):
+        self.context = aq_inner(self.context)
+        # XXX: used to lock the object when someone is editing it
+        notify(EditBegunEvent(self.context))
 
+
+# TODO: implement EditCancelledEvent and EditFinishedEvent
+# XXX: we need to leave the view after saving or cancelling editing
 class LayoutEdit(grok.View):
     grok.context(IComposition)
     grok.require('cmf.ModifyPortalContent')
+
+    def update(self):
+        self.context = aq_inner(self.context)
+        # XXX: used to lock the object when someone is editing it
+        notify(EditBegunEvent(self.context))
 
 
 class UpdateTileContent(grok.View):

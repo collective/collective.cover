@@ -31,6 +31,30 @@
             />
     </class>
 
+    <!-- Override for the edit-tile view -->
+    <browser:page
+        name="edit-tile"
+        for="zope.annotation.interfaces.IAnnotatable"
+        permission="cmf.ModifyPortalContent"
+        class=".edit.CompositionTileEditView"
+        layer="collective.composition.interfaces.ICollectiveCompositionBrowserLayer"
+        />
+
+    <adapter
+        for="zope.annotation.interfaces.IAnnotatable
+             zope.publisher.interfaces.browser.IDefaultBrowserLayer
+             plone.tiles.interfaces.ITileType"
+        provides=".edit.ICompositionTileEditView"
+        factory=".edit.CustomTileEdit"
+        />
+
+    <class class=".edit.CustomTileEdit">
+        <require
+            permission="cmf.ModifyPortalContent"
+            interface="zope.publisher.interfaces.browser.IBrowserPage"
+            />
+    </class>
+
   <plone:tile
       name="collective.composition.basic"
       title="Basic Tile"
@@ -87,5 +111,11 @@
                   collective.composition.tiles.base.IPersistentCompositionTile"
         provides="collective.composition.tiles.configuration.ITilesConfigurationScreen"
         factory="collective.composition.tiles.configuration.TilesConfigurationScreen" />
+
+    <adapter for="zope.interface.Interface
+                  zope.publisher.interfaces.browser.IBrowserRequest
+                  collective.composition.tiles.base.IPersistentCompositionTile"
+        provides="collective.composition.tiles.permissions.ITilesPermissions"
+        factory="collective.composition.tiles.permissions.TilesPermissions" />
 
 </configure>
