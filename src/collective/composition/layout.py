@@ -104,7 +104,6 @@ class TileSelect(grok.View):
     def update(self):
         self.tiles = self.context.get_tile_widgets()
 
-
 class UidGetter(grok.View):
     grok.context(IComposition)
     grok.name('uid_getter')
