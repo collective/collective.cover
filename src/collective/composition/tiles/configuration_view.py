@@ -125,6 +125,7 @@ class DefaultConfigureForm(TileForm, form.Form):
         #XXX: Find a better way to implement this
         data = {}
         errors = {}
+        default_order = 0
         for name, widget in self.widgets.items():
             for key, value in self.request.form.items():
                 if key.startswith(widget.name):
@@ -133,7 +134,11 @@ class DefaultConfigureForm(TileForm, form.Form):
                     field[config_name] = value
                     data[name] = field
                     if config_name == 'order':
-                        widget.field.order = int(value)
+                        if value.isdigit():
+                            widget.field.order = int(value)
+                        else:
+                            widget.field.order = default_order
+                            default_order = default_order + 1
 
         # XXX: Implement error checking
         return data, errors
