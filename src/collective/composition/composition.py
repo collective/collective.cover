@@ -107,12 +107,6 @@ class Composition(dexterity.Container):
                           'title': "Container tile",
                           'description': ("A basic tile")})
 
-        available.append({'tile_type': "collective.composition.container",
-                          'icon': '',
-                          'title': "Container tile",
-                          'description': ("A tile wich can contain other "
-                                          "tiles")})
-
         available.append({'tile_type': "collective.composition.collection",
                           'icon': '',
                           'title': "Collection tile",
