@@ -22,3 +22,13 @@ class VocabulariesTestCase(unittest.TestCase):
         self.assertTrue(util is not None)
         layouts = util(self.portal)
         self.assertEqual(len(layouts), 3)
+
+    def test_tiles_vocabulary(self):
+        name = 'collective.composition.AvailableTiles'
+        util = queryUtility(IVocabularyFactory, name)
+        self.assertTrue(util is not None)
+        tiles = util(self.portal)
+        self.assertEqual(len(tiles), 3)
+        self.assertTrue(u'collective.composition.basic' in tiles)
+        self.assertTrue(u'collective.composition.collection' in tiles)
+        self.assertTrue(u'collective.composition.richtext' in tiles)

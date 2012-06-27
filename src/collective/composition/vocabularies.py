@@ -24,3 +24,19 @@ class LayoutVocabulary(grok.GlobalUtility):
 
         items = [SimpleTerm(value=i, title=i) for i in settings.layouts]
         return SimpleVocabulary(items)
+
+
+class AvailableTilesVocabulary(grok.GlobalUtility):
+    grok.implements(IVocabularyFactory)
+
+    def __call__(self, context):
+
+        registry = getUtility(IRegistry)
+        tiles = registry['plone.app.tiles']
+
+        # TODO: verify the tile implements IPersistentCompositionTile
+        items = [SimpleTerm(value=i, title=i) for i in tiles]
+        return SimpleVocabulary(items)
+
+grok.global_utility(AvailableTilesVocabulary,
+                    name=u'collective.composition.AvailableTiles')

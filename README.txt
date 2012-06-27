@@ -89,6 +89,14 @@ to understand how to develop tiles, and how they work.
 Instead of inheriting from plone.tiles.PersistentTile, inherit from
 collective.composition.tile.base.PersistentCompositionTile.
 
+Register your tile on the registry using the "plone.app.tiles" record::
+
+    <record name="plone.app.tiles">
+      <value purge="false">
+        <element>my.package.mytile</element>
+      </value>
+    </record>
+
 There are a couple of methods defined in this base class that provide
 additional functionality expected by the composition object, that you should
 override in your class:
