@@ -138,7 +138,7 @@ class DefaultConfigureForm(TileForm, form.Form):
                             widget.field.order = int(value)
                         else:
                             widget.field.order = default_order
-                            default_order = default_order + 1
+                        default_order = default_order + 1
 
         # XXX: Implement error checking
         return data, errors
