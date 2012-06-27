@@ -22,10 +22,3 @@ class VocabulariesTestCase(unittest.TestCase):
         self.assertTrue(util is not None)
         layouts = util(self.portal)
         self.assertEqual(len(layouts), 3)
-
-    def test_portlets_vocabulary(self):
-        name = 'collective.composition.vocabularies.portlets'
-        util = queryUtility(IVocabularyFactory, name)
-        self.assertTrue(util is not None)
-        portlets = util(self.portal)
-        self.assertEqual(len(portlets), 0)
