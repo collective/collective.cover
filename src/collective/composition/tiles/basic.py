@@ -12,6 +12,8 @@ from persistent.dict import PersistentDict
 from AccessControl.ZopeGuards import guarded_getattr
 from zope import schema
 from zope.annotation import IAnnotations
+from zope.interface import implements
+from zope.component import adapts
 
 from zope.publisher.browser import BrowserView
 
@@ -26,6 +28,7 @@ from plone.namedfile.scaling import ImageScale as BaseImageScale
 from plone.namedfile.scaling import ImageScaling as BaseImageScaling
 
 from plone.tiles.interfaces import ITileDataManager
+from plone.tiles.data import PersistentTileDataManager
 
 from plone.app.textfield.interfaces import ITransformer
 
@@ -80,8 +83,16 @@ class IBasicTileData(IPersistentCompositionTile):
         """
 
 
+class IPersistentCompositionBasicTile(IPersistentCompositionTile):
+    """
+    Interface for basic tiles that go into the composition object
+    """
+
+
 class BasicTile(PersistentCompositionTile):
 
+    implements(IPersistentCompositionBasicTile)
+    
     index = ViewPageTemplateFile("templates/basic.pt")
 
     is_configurable = True
@@ -223,8 +234,7 @@ class ImageScaling(BaseImageScaling):
     def modified(self):
         """ provide a callable to return the modification time of content
             items, so stored image scales can be invalidated """
-            
-        return time.mktime(datetime.now().timetuple())
+        return self.context.data.get('image_mtime', 0)
 
     def scale(self, fieldname=None, scale=None,
               height=None, width=None, **parameters):
@@ -242,3 +252,17 @@ class ImageScaling(BaseImageScaling):
             info['fieldname'] = fieldname
             scale_view = ImageScale(self.context, self.request, **info)
             return scale_view.__of__(self.context)
+
+
+class PersistentBasicTileDataManager(PersistentTileDataManager):
+    """A data reader for persistent tiles operating on annotatable contexts.
+    The data is retrieved from an annotation.
+    """
+
+    implements(ITileDataManager)
+    adapts(IPersistentCompositionBasicTile)
+
+    def set(self, data):
+        if data['image'] != self.annotations[self.key]['image']:
+            data['image_mtime'] = time.mktime(datetime.now().timetuple())
+        self.annotations[self.key] = PersistentDict(data)
