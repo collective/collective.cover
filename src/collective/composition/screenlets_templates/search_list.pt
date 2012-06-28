@@ -1,15 +1,17 @@
 <tal:master define="level view/level|python:0; children view/children | nothing;">
     <tal:navitem repeat="node children">
-        <li tal:define="uid                 node/UID;
-                        children            python: [];
-                        item_url            node/getURL;
-                        item_token          python:view.getTermByBrain(node['item']).token;
-                        item_icon           node/item_icon;"
+        <li tal:define="uid node/UID;
+                        children python: [];
+                        item_url node/getURL;
+                        item_token  python:view.getTermByBrain(node['item']).token;
+                        item_icon node/item_icon;
+                        content_type node/portal_type;"
             tal:attributes="uid uid">
             <tal:level define="item_class string:contenttype-${node/normalized_portal_type} state-${node/normalized_review_state}">
               <tal:block>
                 <a tal:attributes="rel level;
-                                   class string:$item_class">
+                                   class string:$item_class;
+                                   data-ct-type content_type">
                     <img tal:replace="structure item_icon/html_tag|item_icon" />
                     <span tal:content="node/Title">Selected Item Title</span>
                 </a>

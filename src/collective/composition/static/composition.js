@@ -254,9 +254,9 @@ var Composition = {
 $(document).ready(function() {
     $('a.edit-tile-link, a.config-tile-link').prepOverlay({
         subtype: 'ajax',
-        filter: '#content>*',
+        filter: '#visual-portal-wrapper',
         formselector: 'form',
-        closeselector: '[name=buttons.cancel]',
+        closeselector: 'name=buttons.cancel',
         noform: 'close',
         afterpost: function(return_value, data_parent) {
             location.reload();

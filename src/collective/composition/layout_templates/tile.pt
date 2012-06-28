@@ -19,7 +19,7 @@
         </div>
         </tal:view>
         <tal:compose tal:condition="python:mode == 'compose'">
-        <div tal:condition="section">
+        <div tal:condition="section" class="tile-container">
             <div tal:attributes="class python:'tile %s %s' % (section.get('class', ''), view.can_compose_tile_class(tile_type, tile_id));
                                  data-tile string:${context/absolute_url}/@@${tile_type}/${tile_id};
                                  data-tile-type tile_type;
