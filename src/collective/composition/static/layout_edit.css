@@ -42,12 +42,11 @@
     height:100%;
     top:0px;
     left:0px;
-    display:none;
+    visibility:hidden;
 }
 .layout .row-guide {
     border-left:1px dotted #333;
     height:100%;
-    width:1px;
 }
 
 .ui-resizable-helper {
