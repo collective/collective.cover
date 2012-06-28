@@ -3,6 +3,8 @@
 # Basic implementation taken from
 # http://davisagli.com/blog/using-tiles-to-provide-more-flexible-plone-layouts
 
+from AccessControl import Unauthorized
+
 from zope.component import getMultiAdapter
 from zope.component import queryUtility
 
@@ -25,6 +27,8 @@ from Products.CMFCore.utils import getToolByName
 from collective.composition.tiles.configuration import ITilesConfigurationScreen
 
 from collective.composition.tiles.permissions import ITilesPermissions
+
+from collective.composition import _
 
 
 class IPersistentCompositionTile(Interface):
@@ -89,7 +93,9 @@ class PersistentCompositionTile(tiles.PersistentTile):
     is_configurable = False
 
     def populate_with_object(self, obj):
-        raise NotImplemented
+        if not self.isAllowedToEdit():
+            raise Unauthorized(_("You are not allowed to add content to "
+                                 "this tile"))
 
     def delete(self):
         data_mgr = ITileDataManager(self)
