@@ -39,7 +39,6 @@ setup(name='collective.composition',
       zip_safe=False,
       install_requires=[
         'setuptools',
-        'pyquery',
         'collective.js.jqueryui',
         'plone.app.blocks',
         'plone.app.dexterity[grok]',

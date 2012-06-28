@@ -11,7 +11,6 @@ from collective.composition.testing import INTEGRATION_TESTING
 JS = [
     '++resource++collective.composition/bootstrap.min.js',
 #    '++resource++collective.composition/composition.js',
-#    '++resource++collective.composition/jquery.contextmenu.js',
 #    '++resource++collective.composition/layout_base.js',
 #    '++resource++collective.composition/layout_edit.js',
     '++resource++collective.composition/screenlets.js',
@@ -20,7 +19,6 @@ JS = [
 CSS = [
     '++resource++collective.composition/bootstrap.min.css',
 #    '++resource++collective.composition/composition.css',
-#    '++resource++collective.composition/jquery.contextmenu.css',
 #    '++resource++collective.composition/layout_edit.css',
     '++resource++collective.composition/screenlets.css',
     ]

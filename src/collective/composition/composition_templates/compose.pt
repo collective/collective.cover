@@ -9,9 +9,6 @@
 
 <metal:js fill-slot="javascript_head_slot">
     <script type="text/javascript"
-        tal:attributes="src string:${view/static}/jquery.contextmenu.js">
-    </script>
-    <script type="text/javascript"
         tal:attributes="src string:${view/static}/composition.js">
     </script>
 </metal:js>
@@ -19,8 +16,6 @@
 <metal:styles fill-slot="style_slot">
     <link rel="stylesheet" type="text/css" media="screen" href=""
           tal:attributes="href string:${view/static}/composition.css" />
-    <link rel="stylesheet" type="text/css" media="screen" href=""
-          tal:attributes="href string:${view/static}/jquery.contextmenu.css" />
 </metal:styles>
 
 <metal:main fill-slot="main">
