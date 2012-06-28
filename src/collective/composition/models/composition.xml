@@ -12,7 +12,7 @@
                 Choose one of the predefined layouts
             </description>
             <title i18n:translate="">Layout</title>
-            <vocabulary>collective.composition.vocabularies.layouts</vocabulary>
+            <vocabulary>collective.composition.AvailableLayouts</vocabulary>
         </field>
 
         <field name="composition_layout" type="zope.schema.Text"

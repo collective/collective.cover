@@ -46,12 +46,15 @@ setup(name='collective.composition',
         'plone.app.jquery>=1.7.2',
         'plone.app.jquerytools>=1.4',
         'plone.app.lockingbehavior',
+        'plone.app.stagingbehavior',
         'plone.app.tiles',
         'plone.tiles',
         'plone.principalsource',
+        'plone.namedfile',
         ],
       extras_require={
         'test': ['plone.app.testing'],
+        'blobs':  ['plone.namedfile[blobs]'],
         },
       entry_points="""
       [z3c.autoinclude.plugin]

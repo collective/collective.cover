@@ -66,6 +66,8 @@
       for="*"
       />
 
+  <adapter factory=".basic.PersistentBasicTileDataManager" />
+
   <browser:page
       name="images"
       for=".basic.BasicTile"
@@ -80,17 +82,6 @@
       add_permission="cmf.ModifyPortalContent"
       schema=".richtext.IRichTextTileData"
       class=".richtext.RichTextTile"
-      permission="zope2.View"
-      for="*"
-      />
-
-  <plone:tile
-      name="collective.composition.container"
-      title="Container Tile"
-      description="A tile that contains other tiles"
-      add_permission="cmf.ModifyPortalContent"
-      schema=".container.IContainerTile"
-      class=".container.ContainerTile"
       permission="zope2.View"
       for="*"
       />

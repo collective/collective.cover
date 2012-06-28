@@ -92,8 +92,6 @@
                         self.row_droppable();
                         self.column_droppable(new_row);
                         le.trigger('modified.layout');
-
-                        self.sort_tiles(new_row);
                         self.grid_layout_guides(new_row);
                     }
                 });
@@ -141,6 +139,7 @@
                         self.grid_manager_init(cells, new_column);
                         self.tile_droppable(new_column);
                         self.column_resizable(new_column);
+                        self.sort_tiles(new_column);                        
                         le.trigger('modified.layout');
                     }
                 });
