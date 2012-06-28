@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '1.0'
+version = '1.0a1'
 long_description = open("README.txt").read() + "\n" + \
                    open(os.path.join("docs", "INSTALL.txt")).read() + "\n" + \
                    open(os.path.join("docs", "CREDITS.txt")).read() + "\n" + \
@@ -48,13 +48,13 @@ setup(name='collective.composition',
         'plone.app.lockingbehavior',
         'plone.app.stagingbehavior',
         'plone.app.tiles',
-        'plone.tiles',
-        'plone.principalsource',
         'plone.namedfile',
+        'plone.principalsource',
+        'plone.tiles',
         ],
       extras_require={
         'test': ['plone.app.testing'],
-        'blobs':  ['plone.namedfile[blobs]'],
+        'blobs': ['plone.namedfile[blobs]'],
         },
       entry_points="""
       [z3c.autoinclude.plugin]
