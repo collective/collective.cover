@@ -3,15 +3,12 @@
 import json
 
 from Acquisition import aq_inner
-from pyquery import PyQuery
 
 from five import grok
 
 from zope.annotation.interfaces import IAnnotations
 from zope.app.container.interfaces import IObjectAddedEvent
 
-from zope.interface import Interface
-from zope.component import getAdapter
 from zope.component import getUtility
 from zope.event import notify
 
@@ -42,97 +39,8 @@ class IComposition(form.Schema):
     form.model("models/composition.xml")
 
 
-class ICompositionFragment(Interface):
-    """
-    Main interface for fragments
-    """
-
-
 class Composition(dexterity.Container):
     grok.implements(IComposition, INonStructuralFolder)
-
-    widget_map = {}
-
-    @property
-    def current_layout(self):
-        layout_name = self.composition_layout
-        # XXX Undefined name ICompositionLayout
-        layout = getAdapter((self,), ICompositionLayout, name=layout_name)
-        return layout
-
-    def set_widget_map(self, widget_map, remove=None):
-        layout = self.current_layout
-        columns = layout.columns
-        new_map = {}
-        for column in columns:
-            new_map[column] = []
-        widget_map = widget_map.split('&')
-        annotations = IAnnotations(self)
-        current_tiles = annotations.get('current_tiles', {})
-        for widget in widget_map:
-            key, value = widget.split(':')
-            if remove is not None:
-                remove_col, remove_val = remove.split(':')
-                if remove_col == key and remove_val == value:
-                    # If this was a tile, then remove it from the annotations
-                    if value in current_tiles:
-                        del current_tiles[value]
-                        annotations['current_tiles'] = current_tiles
-                    continue
-            new_map[key].append(value)
-        self.widget_map = new_map
-
-    def render(self, edit=False):
-        layout = self.current_layout
-        rendered = layout.render()
-        if not edit:
-            widget_markup = """
-            <div id="%(wid)s" class="view-widget %(class)s">
-              %(content)s
-            </div>
-            """
-        else:
-            widget_markup = """
-            <div id="%(wid)s" class="widget %(class)s">
-              <div class="widget-head"><h3>%(title)s</h3></div>
-              <div class="widget-content">%(content)s</div>
-            </div>
-            """
-        pq = PyQuery(rendered)
-        for column, addwidgets in self.widget_map.items():
-            for addwidget in addwidgets:
-                try:
-                    widget = self[addwidget]
-                    widget_info = {'col': column,
-                                   'wid': addwidget,
-                                   'title': widget.title,
-                                   'class': 'ct',
-                                   'content': widget.render(),
-                                   'url': widget.absolute_url()
-                                   }
-                except KeyError:
-                    # This might be a tile
-                    annotations = IAnnotations(self)
-                    current_tiles = annotations.get('current_tiles', {})
-                    if addwidget in current_tiles:
-                        widget_type = current_tiles[addwidget]['type']
-                        context_url = self.absolute_url()
-                        widget_title = current_tiles[addwidget].get('title',
-                                                                    '')
-                        widget_url = '%s/@@%s/%s' % (context_url,
-                                                     widget_type,
-                                                     addwidget)
-                        widget_render = '<div data-tile="%s" />' % widget_url
-                        widget_info = {'col': column,
-                                       'wid': addwidget,
-                                       'title': widget_title,
-                                       'class': 'tile',
-                                       'content': widget_render,
-                                       'url': widget_url}
-
-                pq('#%s' % column).append(widget_markup % widget_info)
-
-        return pq.outerHtml()
 
 
 class View(grok.View):
@@ -298,9 +206,6 @@ class DeleteTile(grok.View):
     grok.require('cmf.ModifyPortalContent')
 
     def render(self):
-        ### XXX 'pc' variable assigned but never used
-        pc = getToolByName(self.context, 'portal_catalog')
-
         tile_type = self.request.form.get('tile-type')
         tile_id = self.request.form.get('tile-id')
 

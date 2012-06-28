@@ -9,8 +9,6 @@
 <metal:styles fill-slot="style_slot">
     <link rel="stylesheet" type="text/css" media="screen" href=""
           tal:attributes="href string:${view/static}/composition.css" />
-    <link rel="stylesheet" type="text/css" media="screen" href=""
-          tal:attributes="href string:${view/static}/jquery.contextmenu.css" />
 </metal:styles>
 
 <body>
