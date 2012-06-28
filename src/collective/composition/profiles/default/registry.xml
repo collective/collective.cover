@@ -25,6 +25,7 @@
     <value purge="false">
       <element>collective.composition.basic</element>
       <element>collective.composition.collection</element>
+      <element>collective.composition.file</element>
       <element>collective.composition.richtext</element>
     </value>
   </record>

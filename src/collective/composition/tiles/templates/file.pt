@@ -1,0 +1,46 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      i18n:domain="collective.composition">
+
+<body>
+  <tal:text define="is_empty view/is_empty;">
+    <p tal:condition="is_empty">
+      Empty tile: please drag&amp;drop a file here to populate.
+    </p>
+
+    <tal:empty tal:condition="python: not is_empty">
+      <tal:fields repeat="field view/get_configured_fields">
+        <tal:title condition="python:field['id'] == 'title' and field.has_key('htmltag')">
+          <h1 tal:condition="python:field['htmltag'] == 'h1'"
+              tal:content="python:field['content']" />
+          <h2 tal:condition="python:field['htmltag'] == 'h2'"
+              tal:content="python:field['content']" />
+          <h3 tal:condition="python:field['htmltag'] == 'h3'"
+              tal:content="python:field['content']" />
+        </tal:title>
+
+        <tal:description condition="python:field['id'] == 'description'">
+          <p tal:content="python:field['content']">Description</p>
+        </tal:description>
+
+        <!-- TODO: implement image field -->
+        <!--tal:image condition="python:field['id'] == 'url'">
+            <img tal:define="scales view/@@images;
+                            thumbnail python: scales.scale('image', width=200, height=200);"
+                tal:condition="thumbnail"
+                tal:attributes="src thumbnail/url;
+                                width thumbnail/width;
+                                height thumbnail/height" />
+        </tal:image-->
+
+        <tal:download condition="python:field['id'] == 'download'">
+          <p tal:content="structure view/download_widget" />
+        </tal:download>
+
+      </tal:fields>
+    </tal:empty>
+  </tal:text>
+</body>
+</html>
