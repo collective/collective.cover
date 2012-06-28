@@ -263,6 +263,7 @@ class PersistentBasicTileDataManager(PersistentTileDataManager):
     adapts(IPersistentCompositionBasicTile)
 
     def set(self, data):
-        if data['image'] != self.annotations[self.key]['image']:
+        if not self.annotations.has_key(self.key) or \
+           (self.annotations.has_key(self.key) and data['image'] != self.annotations[self.key]['image']):
             data['image_mtime'] = time.mktime(datetime.now().timetuple())
         self.annotations[self.key] = PersistentDict(data)
