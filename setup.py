@@ -48,6 +48,7 @@ setup(name='collective.composition',
         'plone.app.lockingbehavior',
         'plone.app.tiles',
         'plone.tiles',
+        'plone.principalsource',
         ],
       extras_require={
         'test': ['plone.app.testing'],

@@ -114,6 +114,15 @@
     bottom:auto;
 }
 
+.layout .permitionbutton {
+    position: absolute;
+    right: 15px;
+    background-color: green;
+    top: 5px;
+    color: #FFFFFF;
+    cursor: pointer;
+}
+
 .add-column {
     height: 49%;
     position: absolute;
@@ -154,6 +163,7 @@
     background: url(/++resource++collective.composition/tiles.png) no-repeat 10px center;
 }
 
+#group-select-list,
 #tile-select-list {
     display:none;
 }
