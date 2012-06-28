@@ -21,6 +21,7 @@
     <element value="plone.app.content.interfaces.INameFromTitle" />
     <element value="plone.app.dexterity.behaviors.metadata.IBasic" />
     <element value="plone.app.lockingbehavior.behaviors.ILocking" />
+    <element value="plone.app.stagingbehavior.interfaces.IStagingSupport" />
    </property>
 
   <!-- View information -->

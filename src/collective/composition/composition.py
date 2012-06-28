@@ -313,11 +313,14 @@ class DeleteTile(grok.View):
 
 @grok.subscribe(IComposition, IObjectAddedEvent)
 def assign_id_for_tiles(composition, event):
-    registry = getUtility(IRegistry)
-    settings = registry.forInterface(ICompositionSettings)
+    if not composition.composition_layout:
+        # When versioning, a new composition gets created, so, if we already
+        # have a composition_layout stored, do not overwrite it
+        registry = getUtility(IRegistry)
+        settings = registry.forInterface(ICompositionSettings)
 
-    layout = settings.layouts[composition.template_layout]
-    layout = json.loads(layout)
-    assign_tile_ids(layout)
+        layout = settings.layouts[composition.template_layout]
+        layout = json.loads(layout)
+        assign_tile_ids(layout)
 
-    composition.composition_layout = json.dumps(layout)
+        composition.composition_layout = json.dumps(layout)
