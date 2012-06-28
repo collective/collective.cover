@@ -56,6 +56,8 @@ class RichTextTile(PersistentCompositionTile):
         #import pdb;pdb.set_trace()
 
     def populate_with_object(self, obj):
+        super(RichTextTile, self).populate_with_object(obj)
+
         text = obj.getRawText().decode('utf-8')
         value = RichTextValue(raw=text,
                               mimeType='text/x-html-safe',

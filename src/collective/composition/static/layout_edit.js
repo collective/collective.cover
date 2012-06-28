@@ -19,6 +19,9 @@
             column_dom = $('<span/>')
                 .addClass('label columnlabel label-info')
                 .text('column');
+            group_dom = $('<span/>')
+                    .addClass('permitionbutton')
+                    .text('groups');
             tile_dom = $('<span/>')
                 .addClass('label tilelabel label-important')
                 .text('tile');
@@ -26,8 +29,8 @@
         $.extend(self, {
             init: function() {
                 self.setup();
-                le.bind('modified.layout', self.layout_modified); 
-                
+                le.bind('modified.layout', self.layout_modified);
+
                 le.find('.'+row_class).each(function(row){
                     self.grid_layout_guides($(this));
                 });
@@ -43,12 +46,17 @@
 
                 self.column_draggable($('#btn-column'));
                 self.column_droppable();
-                self.tile_draggable($('#btn-tile'));
-                self.tile_droppable();
+//                self.column_sortable();
                 self.column_resizable();
 
+                self.tile_draggable($('#btn-tile'));
+                self.tile_droppable();
+
+                self.column_resizable();
+                self.column_permissions();
+
                 le.find('.'+row_class).append(row_dom);
-                le.find('.'+column_class).append(column_dom);
+                le.find('.'+column_class).append(column_dom).append(group_dom);
                 le.find('.tile').append(tile_dom);
 
                 self.sort_tiles(le.find('.'+column_class));
@@ -124,7 +132,8 @@
                                             column_position + 0 + ' ' +
                                             column_width + number_of_columns;
                         var new_column = $('<div/>')
-                            .addClass(default_class).append(column_dom.clone());
+                            .addClass(default_class).append(column_dom.clone())
+                            .append(group_dom.clone());
                         $(this).append(new_column);
                         var cells = $(this)
                                       .find('.' + column_class)
@@ -140,6 +149,50 @@
                 });
             },
 
+            /**
+             * Column sortable
+             * @param column/s
+             */
+            column_sortable: function(column) {
+                var sortable_elements = column ? column : le.find('.'+column_class);
+                flag = 1;            
+                sortable_elements.draggable({
+                    helper: 'original',
+                    axis: 'x',
+                    handle:'> .label',
+                    cancel:'> .tile',
+                    containment:'parent',
+                    start: function(event, ui) {
+                        $('.guides').css('visibility', 'visible');
+                        $('.row-guide').droppable( "option", "accept", ".column" );
+                        position = ui.originalPosition.left;
+                    },
+                    stop: function(event, ui) {
+                        $('.guides').css('visibility', 'hidden');
+                        ui.helper.removeAttr('style');
+                    },
+                    drag: function(event, ui) {
+                        var pos = get_grid_position(ui.helper);
+                        if ((position - ui.position.left) > 20) {
+                            if (pos[1]*1 !== 0) {
+                                set_grid_position(ui.helper, (pos[1]*1)-1);
+                                ui.helper.removeAttr('style');                                
+                                ui.position.left = $(ui.helper).position().left;
+                                position = ui.position.left;
+                            }
+                        } else {
+                            if (pos[1]*1 !== 16) {
+                                set_grid_position(ui.helper, pos[1]*1+1);
+                                ui.helper.removeAttr('style');
+                                ui.position.left = $(ui.helper).position().left;
+                                position = ui.position.left;                                
+                            }
+                        }
+                    }
+                    
+                });
+                
+            },
             /**
              * Column Resizable
              * @param column
@@ -161,7 +214,7 @@
                             removeButton.addClass("disabled");
                     }
                 });
-
+                //addcolumn button
                 var addButton = $(".add-column", columns);
                 $(".add-column", columns).live("click", function (e) {
                     e.stopPropagation();
@@ -203,7 +256,7 @@
                             }
                       }
                 });
-
+                //remove column button
                 var removeButton = $(".remove-column", columns);
                 $(".remove-column", columns).live("click", function (e) {
                     e.stopPropagation();
@@ -229,7 +282,62 @@
                     }
                 });
             },
-
+            
+            /**
+             * Column Permissions
+             */
+            column_permissions: function() {
+               $(".permitionbutton").live("click", function(e) {
+                   $("#group-select-list").modal();
+                   var column = $(this).parent();
+                   $("#group-select-list #group-select-button").click(function(e) {
+                       $(this).unbind("click");
+                       e.stopPropagation();
+                       e.preventDefault();
+                       var tiles = $(".tile", column);
+                       var groups_input = $(".group-select-input:checked", $(this).parent());
+                       data_tiles = [];
+                       data_groups = [];
+                       tiles.each(function(index) {
+                           data_tiles.push({"id":$(this).attr("id"), "type":$(this).attr("data-tile-type")});
+                       });
+                       groups_input.each(function(index) {
+                           data_groups.push($(this).val());
+                       });
+                       data = {tiles: data_tiles, groups: data_groups, tile_len:data_tiles.length}
+                       
+                       $.ajax({
+                             type: 'POST',
+                             url: 'group_select',
+                             data: data,
+                             success: function(e,v) {
+                                $("#group-select-list").modal('hide');
+                                groups_input.attr('checked', false);
+                                column.attr("data-permissions",data_groups);
+                             }
+                           });
+                   });
+               });
+            },
+            /**
+             * Tile Permissions
+             */
+            tile_permissions_update: function(tile) {
+                var column = tile.parent();
+                var tiles = tile;
+                var perms = column.attr("data-permissions");
+                if(perms) {
+                var groups = perms.split(",");
+                var data_tiles = [];
+                data_tiles.push({"id":tile.attr("id"), "type":tile.attr("data-tile-type")});
+                data = {tiles: data_tiles, groups: groups, tile_len:data_tiles.length}
+                $.ajax({
+                    type: 'POST',
+                    url: 'group_select',
+                    data: data,
+                });
+                }
+            },
             /**
              * Tile Draggable
              * @param draggable_element, the element to be dragged
@@ -248,6 +356,9 @@
              * the .cell elements
              */
             tile_droppable: function(tile) {
+                
+                //CONFIGURATION OF THE TILE
+                //when saving the configuration of the tile save it with ajax
                 var droppable_elements = tile ? tile : le.find('.'+column_class);
                 $("#configure_tile #buttons-save").live("click", function(e) {
                     e.preventDefault();
@@ -265,22 +376,24 @@
                     });
                     return false;
                 });
+                //when canceling the configuration of the tile
                 $("#configure_tile #buttons-cancel").live("click", function(e) {
                     e.preventDefault();
                     $('#tile-configure').html('');
                     $('#tile-configure').modal('hide');
                     return false;
                 });
-                
+                //config the tile
                 $(".config-tile-link").live("click", function(e) {
                       e.preventDefault();
                       var url = $(this).attr("href");
+                      $('#tile-configure').modal();
                       $.get(url, function(data) {
                         $('#tile-configure').html(data);
-                        $('#tile-configure').modal();
                       });
                       return false;
                   });
+
                 droppable_elements.droppable({
                     activeClass: "ui-state-default",
                     hoverClass: "ui-state-hover",
@@ -308,14 +421,13 @@
                                     new_tile.append(config_link);
                                     can_drop = true;
                                     $(that).append(new_tile);
+                                    self.tile_permissions_update(new_tile);
                                     le.trigger('modified.layout');
                                     return false;
                                 }
                             });
                            $("#tile-select-list").modal('hide');
                         });
-                        
-
                     }
                 });
             },
@@ -384,6 +496,7 @@
              grid_layout_guides: function(row) {
                 var base_column = $('<div/>')
                                     .addClass(column_class)
+                                    .addClass(column_width+'1')
                                     .addClass('row-guide');
                 row.append('<div class="guides"/>');
                 for (i = 0; i < number_of_columns; i++) {
@@ -407,7 +520,6 @@
             }
 
         });
-
         self.init();
     }
 
@@ -434,7 +546,6 @@
                     }
                 }
             }
-
         }
 
         if(equal_parts) {
@@ -476,6 +587,15 @@
         return regex_match;
       }
     }
+
+    function set_grid_position(item, new_position) {
+      var itemClass = item.attr("class");
+      if (itemClass) {
+        var regex_match = itemClass.match(/\bposition\-(\d+)/);
+        item.removeClass(regex_match[0]);
+        item.addClass('position-' + new_position);
+      }
+    }    
 
     function set_grid_width(item, newWidth) {
       var itemClass = item.attr("class");

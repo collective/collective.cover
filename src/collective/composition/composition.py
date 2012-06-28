@@ -276,7 +276,6 @@ class UpdateTileContent(grok.View):
         if tile_type and tile_id and uid:
 
             tile = self.context.restrictedTraverse(tile_type)
-
             tile_instance = tile[tile_id]
 
             results = pc(UID=uid)

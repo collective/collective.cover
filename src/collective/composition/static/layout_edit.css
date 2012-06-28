@@ -42,12 +42,11 @@
     height:100%;
     top:0px;
     left:0px;
-    display:none;
+    visibility:hidden;
 }
 .layout .row-guide {
     border-left:1px dotted #333;
     height:100%;
-    width:1px;
 }
 
 .ui-resizable-helper {
@@ -114,6 +113,15 @@
     bottom:auto;
 }
 
+.layout .permitionbutton {
+    position: absolute;
+    right: 15px;
+    background-color: green;
+    top: 5px;
+    color: #FFFFFF;
+    cursor: pointer;
+}
+
 .add-column {
     height: 49%;
     position: absolute;
@@ -154,6 +162,7 @@
     background: url(/++resource++collective.composition/tiles.png) no-repeat 10px center;
 }
 
+#group-select-list,
 #tile-select-list {
     display:none;
 }

@@ -60,6 +60,8 @@ class CollectionTile(PersistentCompositionTile):
             return obj.results(b_start=start, b_size=size)
 
     def populate_with_object(self, obj):
+        super(CollectionTile, self).populate_with_object(obj)
+
         uuid = IUUID(obj, None)
         data_mgr = ITileDataManager(self)
         data_mgr.set({'uuid': uuid})

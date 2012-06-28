@@ -12,6 +12,8 @@ from zope.schema.interfaces import IVocabularyFactory
 
 from zope.app.pagetemplate.viewpagetemplatefile import ViewPageTemplateFile
 
+from plone.principalsource.source import GroupsVocabularyFactory
+
 from collective.composition import _
 from collective.composition.composition import IComposition
 from collective.composition.utils import assign_tile_ids
@@ -54,6 +56,13 @@ class PageLayout(grok.View):
 
     def tile_is_configurable(self, tile_type):
         return True
+    
+    def can_compose_tile_class(self, tile_type, tile_id):
+        tile = self.context.restrictedTraverse("%s/%s" % (str(tile_type), str(tile_id)))
+        if not tile.isAllowedToEdit():
+            return "disabled"
+        else:
+            return ""
 
     def render_view(self):
         # XXX: There *must* be a better way of doing this, maybe write it
@@ -122,3 +131,21 @@ class UidGetter(grok.View):
 
     def render(self):
         return uuid.uuid4().hex
+
+class GroupSelect(grok.View):
+    grok.context(IComposition)
+    grok.name('group_select')
+    grok.require('zope2.View')
+    
+    def update(self):
+        self.groups =  GroupsVocabularyFactory(self.context)
+        if "groups[]" in self.request.keys():
+            groups = self.request["groups[]"]
+            tile_len = int(self.request["tile_len"])
+            i = 0
+            while(i<tile_len):
+                tile_type = self.request["tiles[%s][type]" % i]
+                tile_id = self.request["tiles[%s][id]" % i]
+                tile = self.context.restrictedTraverse("%s/%s" % (tile_type,tile_id))
+                tile.setAllowedGroupsForEdit(groups)
+                i+=1

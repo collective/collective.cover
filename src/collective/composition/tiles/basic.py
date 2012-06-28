@@ -92,7 +92,7 @@ class IPersistentCompositionBasicTile(IPersistentCompositionTile):
 class BasicTile(PersistentCompositionTile):
 
     implements(IPersistentCompositionBasicTile)
-    
+
     index = ViewPageTemplateFile("templates/basic.pt")
 
     is_configurable = True
@@ -112,6 +112,8 @@ class BasicTile(PersistentCompositionTile):
                    self.data['image'])
 
     def populate_with_object(self, obj):
+        super(BasicTile, self).populate_with_object(obj)
+
         data_mgr = ITileDataManager(self)
 
         data_mgr.set({'title': obj.Title(),
