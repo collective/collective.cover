@@ -104,6 +104,9 @@ override in your class:
 **populate_with_object(obj)**
     It takes a CT object as parameter, and it will store the content into the
     tile.
+    Make sure to call PersistentCompositionTile's populate_with_object to
+    check for permissions before adding content to the tile. Check existing
+    tiles on how they do it.
 
 **delete()**
     It removes the persistent data created for the tile.
