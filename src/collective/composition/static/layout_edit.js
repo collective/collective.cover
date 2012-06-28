@@ -29,8 +29,8 @@
         $.extend(self, {
             init: function() {
                 self.setup();
-                le.bind('modified.layout', self.layout_modified); 
-                
+                le.bind('modified.layout', self.layout_modified);
+
                 le.find('.'+row_class).each(function(row){
                     self.grid_layout_guides($(this));
                 });
@@ -46,8 +46,12 @@
 
                 self.column_draggable($('#btn-column'));
                 self.column_droppable();
+//                self.column_sortable();
+                self.column_resizable();
+
                 self.tile_draggable($('#btn-tile'));
                 self.tile_droppable();
+
                 self.column_resizable();
                 self.column_permissions();
 
@@ -145,6 +149,50 @@
                 });
             },
 
+            /**
+             * Column sortable
+             * @param column/s
+             */
+            column_sortable: function(column) {
+                var sortable_elements = column ? column : le.find('.'+column_class);
+                flag = 1;            
+                sortable_elements.draggable({
+                    helper: 'original',
+                    axis: 'x',
+                    handle:'> .label',
+                    cancel:'> .tile',
+                    containment:'parent',
+                    start: function(event, ui) {
+                        $('.guides').css('visibility', 'visible');
+                        $('.row-guide').droppable( "option", "accept", ".column" );
+                        position = ui.originalPosition.left;
+                    },
+                    stop: function(event, ui) {
+                        $('.guides').css('visibility', 'hidden');
+                        ui.helper.removeAttr('style');
+                    },
+                    drag: function(event, ui) {
+                        var pos = get_grid_position(ui.helper);
+                        if ((position - ui.position.left) > 20) {
+                            if (pos[1]*1 !== 0) {
+                                set_grid_position(ui.helper, (pos[1]*1)-1);
+                                ui.helper.removeAttr('style');                                
+                                ui.position.left = $(ui.helper).position().left;
+                                position = ui.position.left;
+                            }
+                        } else {
+                            if (pos[1]*1 !== 16) {
+                                set_grid_position(ui.helper, pos[1]*1+1);
+                                ui.helper.removeAttr('style');
+                                ui.position.left = $(ui.helper).position().left;
+                                position = ui.position.left;                                
+                            }
+                        }
+                    }
+                    
+                });
+                
+            },
             /**
              * Column Resizable
              * @param column
@@ -448,6 +496,7 @@
              grid_layout_guides: function(row) {
                 var base_column = $('<div/>')
                                     .addClass(column_class)
+                                    .addClass(column_width+'1')
                                     .addClass('row-guide');
                 row.append('<div class="guides"/>');
                 for (i = 0; i < number_of_columns; i++) {
@@ -538,6 +587,15 @@
         return regex_match;
       }
     }
+
+    function set_grid_position(item, new_position) {
+      var itemClass = item.attr("class");
+      if (itemClass) {
+        var regex_match = itemClass.match(/\bposition\-(\d+)/);
+        item.removeClass(regex_match[0]);
+        item.addClass('position-' + new_position);
+      }
+    }    
 
     function set_grid_width(item, newWidth) {
       var itemClass = item.attr("class");
