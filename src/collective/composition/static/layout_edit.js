@@ -12,16 +12,16 @@
             column_width = conf.columnwidth,
             number_of_columns = conf.numberofcolumns,
             grid_manager = conf.gridmanager,
-            le = $('.layout');
+            le = $('.layout'),
             row_dom = $('<span/>')
                 .addClass('label rowlabel')
-                .text('row');
+                .text('row'),
             column_dom = $('<span/>')
                 .addClass('label columnlabel label-info')
-                .text('column');
+                .text('column'),
             group_dom = $('<span/>')
                     .addClass('permitionbutton')
-                    .text('groups');
+                    .text('groups'),
             tile_dom = $('<span/>')
                 .addClass('label tilelabel label-important')
                 .text('tile');
@@ -60,11 +60,63 @@
                 le.find('.tile').append(tile_dom);
 
                 self.sort_tiles(le.find('.'+column_class));
+                
+                self.delete_manager();
 
             },
 
             grid_manager_init: function(children, child) {
                 grid_manager(children, child, conf);
+            },
+            
+            delete_manager: function(elements){
+                var button = $('<button class="close">&times;</button>').css({'line-height':'9px','position':'absolute', 'left':'0px', 'top':'0px'});
+                elements = elements !== undefined? elements : le.find('.row, .tile, .group');
+                
+                button.click(function(){
+                    var element = $(this).parent('div');
+                    var tiles_to_delete = [];
+
+                    if (element.hasClass('tile')) {
+                        tiles_to_delete = element;
+                    } else {
+                        tiles_to_delete = element.find('.tile');
+                    }
+                    
+
+                    var success = true;
+                    //XXX are you sure
+                    tiles_to_delete.each(function(){
+                        var $this = $(this);
+
+                        $.ajax({
+                            url: 'deletetile',
+                            data: {
+                                'tile-type':$this.data('tileType'),
+                                'tile-id':$(this).attr('id')
+                            },
+                            success: function(e,v) {
+                                $this.remove();
+                            },
+                            error: function(){
+                                success = false;
+                            }
+                        });
+                    });
+                    if (success) {
+                        element.remove();
+                        le.trigger('modified.layout');                        
+                    }
+                });
+                button.hover(
+                    function(){
+                        $(this).parent('div').addClass('to-delete');
+                    },
+                    function(){
+                        $(this).parent('div').removeClass('to-delete');
+                    }
+                );
+                elements.find('.label').after(button);
             },
 
             row_draggable: function(draggable_button) {
@@ -80,10 +132,17 @@
                 $('.row-droppable').remove();
                 var row_placeholder = $('<div/>').addClass('row-droppable');
 
-                row = le.find('.' + row_class);
-                row.before(row_placeholder);
+                var row = le.find('.' + row_class);
+                var droppable_elements = '';
 
-                var droppable_elements = row.siblings('.row-droppable');
+                if (row[0]) {
+                    row.before(row_placeholder);
+                    droppable_elements = row.siblings('.row-droppable');
+                } else {
+                    //if we delete all the rows, we need just 1 placeholder
+                    le.append(row_placeholder);
+                    droppable_elements = le.find('.row-droppable');
+                }
 
                 droppable_elements.droppable({
                     activeClass: 'ui-state-default',
@@ -95,8 +154,10 @@
                         $(this).before(new_row);
                         self.row_droppable();
                         self.column_droppable(new_row);
+
                         le.trigger('modified.layout');
                         self.grid_layout_guides(new_row);
+                        self.delete_manager(new_row);
                     }
                 });
             },
@@ -143,7 +204,8 @@
                         self.grid_manager_init(cells, new_column);
                         self.tile_droppable(new_column);
                         self.column_resizable(new_column);
-                        self.sort_tiles(new_column);                        
+                        self.sort_tiles(new_column);
+                        self.delete_manager(new_column);
                         le.trigger('modified.layout');
                     }
                 });
@@ -428,6 +490,7 @@
                             });
                            $("#tile-select-list").modal('hide');
                         });
+                        self.delete_manager(new_tile);
                     }
                 });
             },
@@ -513,7 +576,8 @@
              **/
             layout_modified: function () {
                 var save_btn = $('#btn-save');
-                if (!save_btn.hasClass('saved')) {
+
+                if (save_btn.hasClass('saved')) {
                     $('#btn-save').text('SAVE');
                     $('#btn-save').addClass('modified');
                 }

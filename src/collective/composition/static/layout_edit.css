@@ -102,10 +102,12 @@
     font-size: 10px;
     left: 0;
     line-height: 1em;
-    min-width: 6em;
+    min-width: 5em;
     position: absolute;
     text-align: center;
     top: 0;
+    padding-right:10px;
+    padding-left:10px;
 }
 
 .layout .columnlabel {
@@ -122,6 +124,9 @@
     cursor: pointer;
 }
 
+.layout .to-delete {
+    outline:1px solid red;
+}
 .add-column {
     height: 49%;
     position: absolute;
