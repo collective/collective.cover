@@ -66,6 +66,8 @@
       for="*"
       />
 
+  <adapter factory=".basic.PersistentBasicTileDataManager" />
+
   <browser:page
       name="images"
       for=".basic.BasicTile"

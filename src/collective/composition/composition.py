@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 import json
-import sys
 
 from Acquisition import aq_inner
 from pyquery import PyQuery
@@ -9,7 +8,6 @@ from pyquery import PyQuery
 from five import grok
 
 from zope.annotation.interfaces import IAnnotations
-
 from zope.app.container.interfaces import IObjectAddedEvent
 
 from zope.interface import Interface
@@ -32,8 +30,6 @@ from plone.uuid.interfaces import IUUIDGenerator
 from Products.CMFPlone.interfaces import INonStructuralFolder
 
 from Products.CMFCore.utils import getToolByName
-from Products.CMFCore.Expression import Expression
-from Products.CMFCore.Expression import getExprContext
 
 from collective.composition.controlpanel import ICompositionSettings
 from collective.composition.utils import assign_tile_ids
@@ -63,64 +59,6 @@ class Composition(dexterity.Container):
         # XXX Undefined name ICompositionLayout
         layout = getAdapter((self,), ICompositionLayout, name=layout_name)
         return layout
-
-    def get_ct_widgets(self):
-        types_tool = getToolByName(self, "portal_types")
-        types = types_tool.listTypeInfo()
-        available = []
-        for type_info in types:
-            dotted = getattr(type_info, 'klass', None)
-            if not dotted:
-                continue
-            package, klass = dotted.rsplit('.', 1)
-            try:
-                __import__(package)
-            except ImportError:
-                continue
-            klass = getattr(sys.modules[package], klass, None)
-            if not ICompositionFragment.implementedBy(klass):
-                continue
-            expression = Expression(type_info.icon_expr)
-            expression_context = getExprContext(self)
-            icon = expression(expression_context)
-            available.append({'portal_type': type_info.id,
-                              'icon': icon,
-                              'title': type_info.title,
-                              'description': type_info.description})
-        return available
-
-    def get_tile_widgets(self):
-
-        available = []
-        #TODO: Think of a way to register available tiles
-        #      And from here, just ask which tiles are available for this
-        #      context
-        available.append({'tile_type': "collective.composition.richtext",
-                          'icon': '',
-                          'title': "Rich text tile",
-                          'description': ("A persistent tile which allows to "
-                                          "create content using a WYSIWYG "
-                                          "editor")})
-
-        available.append({'tile_type': "collective.composition.basic",
-                          'icon': '',
-                          'title': "Container tile",
-                          'description': ("A basic tile")})
-
-        available.append({'tile_type': "collective.composition.collection",
-                          'icon': '',
-                          'title': "Collection tile",
-                          'description': ("A tile wich can contain other "
-                                          "tiles")})
-
-        return available
-
-    def available_widgets(self):
-        available = []
-        available += self.get_ct_widgets()
-        available += self.get_tile_widgets()
-
-        return available
 
     def set_widget_map(self, widget_map, remove=None):
         layout = self.current_layout
@@ -338,7 +276,6 @@ class UpdateTileContent(grok.View):
         if tile_type and tile_id and uid:
 
             tile = self.context.restrictedTraverse(tile_type)
-
             tile_instance = tile[tile_id]
 
             results = pc(UID=uid)
@@ -375,11 +312,14 @@ class DeleteTile(grok.View):
 
 @grok.subscribe(IComposition, IObjectAddedEvent)
 def assign_id_for_tiles(composition, event):
-    registry = getUtility(IRegistry)
-    settings = registry.forInterface(ICompositionSettings)
+    if not composition.composition_layout:
+        # When versioning, a new composition gets created, so, if we already
+        # have a composition_layout stored, do not overwrite it
+        registry = getUtility(IRegistry)
+        settings = registry.forInterface(ICompositionSettings)
 
-    layout = settings.layouts[composition.template_layout]
-    layout = json.loads(layout)
-    assign_tile_ids(layout)
+        layout = settings.layouts[composition.template_layout]
+        layout = json.loads(layout)
+        assign_tile_ids(layout)
 
-    composition.composition_layout = json.dumps(layout)
+        composition.composition_layout = json.dumps(layout)
