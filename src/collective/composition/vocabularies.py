@@ -13,9 +13,8 @@ from plone.registry.interfaces import IRegistry
 from collective.composition.controlpanel import ICompositionSettings
 
 
-class LayoutVocabulary(grok.GlobalUtility):
+class AvailableLayoutsVocabulary(object):
     grok.implements(IVocabularyFactory)
-    grok.name(u'collective.composition.vocabularies.layouts')
 
     def __call__(self, context):
 
@@ -25,8 +24,11 @@ class LayoutVocabulary(grok.GlobalUtility):
         items = [SimpleTerm(value=i, title=i) for i in settings.layouts]
         return SimpleVocabulary(items)
 
+grok.global_utility(AvailableLayoutsVocabulary,
+                    name=u'collective.composition.AvailableLayouts')
 
-class AvailableTilesVocabulary(grok.GlobalUtility):
+
+class AvailableTilesVocabulary(object):
     grok.implements(IVocabularyFactory)
 
     def __call__(self, context):

@@ -17,11 +17,14 @@ class VocabulariesTestCase(unittest.TestCase):
         self.portal = self.layer['portal']
 
     def test_layouts_vocabulary(self):
-        name = 'collective.composition.vocabularies.layouts'
+        name = 'collective.composition.AvailableLayouts'
         util = queryUtility(IVocabularyFactory, name)
         self.assertTrue(util is not None)
         layouts = util(self.portal)
         self.assertEqual(len(layouts), 3)
+        self.assertTrue(u'Layout A' in layouts)
+        self.assertTrue(u'Layout B' in layouts)
+        self.assertTrue(u'Layout C' in layouts)
 
     def test_tiles_vocabulary(self):
         name = 'collective.composition.AvailableTiles'
