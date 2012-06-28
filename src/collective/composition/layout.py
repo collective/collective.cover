@@ -59,7 +59,6 @@ class PageLayout(grok.View):
     
     def can_compose_tile_class(self, tile_type, tile_id):
         tile = self.context.restrictedTraverse("%s/%s" % (str(tile_type), str(tile_id)))
-        import pdb; pdb.set_trace()
         if not tile.isAllowedToEdit():
             return "disabled"
         else:
