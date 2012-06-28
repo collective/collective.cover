@@ -61,24 +61,23 @@
 }
 
 #sidebar .btn {
-    background-color: #333333;
-    color: #FFFFFF;
     cursor:pointer;
-    margin-bottom: 10px;
-    padding: 10px 10px 10px 35px;
-    text-align: left;
+    padding:9px;
+/*    margin-bottom: 10px;*/
+/*    padding: 10px 10px 10px 35px;*/
+/*    text-align: left;*/
 }
 
 .btn.ui-draggable-dragging {
-    background-color: #333333;
-    color: #FFFFFF;
-    padding:10px;
+/*    background-color: #333333;*/
+/*    color: #FFFFFF;*/
+/*    padding:10px;*/
 }
 #sidebar .draggable {
     cursor: move;
 }
 #sidebar .btn:hover {
-    background-color: #444;
+    color:#FFF !important;
 }
 
 #news img {
@@ -95,7 +94,7 @@
 
 .row-droppable.ui-state-default {
     display: block;
-    min-height: 10px;
+    min-height: 20px;
 }
 
 .layout .label {
@@ -155,16 +154,23 @@
 
 /*ACTION BUTTONS*/
 
-#btn-row {
-    background: url(/++resource++collective.composition/rows.png) no-repeat 10px center;
+.icon-white {
+    display: inline-block;
+    height: 14px;
+    line-height: 14px;
+    vertical-align: text-top;
+    width: 22px;
+}
+#btn-row .icon-white{
+    background: url(/++resource++collective.composition/rows.png) no-repeat 0 0;
 }
 
-#btn-column {
-    background: url(/++resource++collective.composition/columns.png) no-repeat 10px center;
+#btn-column .icon-white{
+    background: url(/++resource++collective.composition/columns.png) no-repeat 0 0;
 }
 
-#btn-tile {
-    background: url(/++resource++collective.composition/tiles.png) no-repeat 10px center;
+#btn-tile .icon-white{
+    background: url(/++resource++collective.composition/tiles.png) no-repeat 0 0;
 }
 
 #group-select-list,

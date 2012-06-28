@@ -28,10 +28,18 @@
         <!--div class="content-screenlet" tal:replace="structure context/@@select-content-screenlet"></div-->
     </div>
     <div id="sidebar">
-        <div id="btn-row" class="btn draggable">ROW</div>
-        <div id="btn-column" class="btn draggable">COLUMN</div>
-        <div id="btn-tile" class="btn draggable">TILE</div>
-        <div id="btn-save" class="btn">SAVE</div>
+        <p>
+            <a id="btn-row" class="btn btn-large btn-inverse draggable"><i class="icon-white"></i><span>Row</span></a>
+        </p>
+        <p>
+            <a id="btn-column" class="btn btn-large btn-inverse draggable"><i class="icon-white"></i><span>Column</span></a>
+        </p>
+        <p>
+            <a id="btn-tile" class="btn btn-large btn-inverse draggable"><i class="icon-white"></i><span>Title</span></a>
+        </p>
+        <p>
+            <a id="btn-save" class="btn btn-success saved"><i class="icon-white"></i><span>Saved</span></a>
+        </p>
     </div>
         <div id="tile-select-list" class="modal hide" tal:replace="structure context/@@tile_select"></div>
         <div id="group-select-list" class="modal hide" tal:replace="structure context/@@group_select"></div>
