@@ -18,6 +18,7 @@ from zope.schema import getFieldsInOrder
 
 from zope.annotation import IAnnotations
 from persistent.dict import PersistentDict
+from zope.publisher.interfaces import NotFound
 
 from plone import tiles
 
@@ -33,6 +34,7 @@ from plone.scale.storage import AnnotationStorage as BaseAnnotationStorage
 from plone.namedfile.scaling import ImageScale as BaseImageScale
 from plone.namedfile.scaling import ImageScaling as BaseImageScaling
 from plone.namedfile.utils import set_headers, stream_data
+from plone.rfc822.interfaces import IPrimaryFieldInfo
 
 from Products.CMFCore.utils import getToolByName
 

@@ -3,19 +3,9 @@
 # Basic implementation taken from
 # http://davisagli.com/blog/using-tiles-to-provide-more-flexible-plone-layouts
 
-import time
-from datetime import datetime
-from logging import exception
 from Acquisition import aq_base
-from ZODB.POSException import ConflictError
-from persistent.dict import PersistentDict
-from AccessControl.ZopeGuards import guarded_getattr
 from zope import schema
-from zope.annotation import IAnnotations
 from zope.interface import implements
-from zope.component import adapts
-
-from zope.publisher.browser import BrowserView
 
 from plone.namedfile.interfaces import HAVE_BLOBS
 from plone.namedfile.field import NamedImage
@@ -23,9 +13,6 @@ if HAVE_BLOBS:
     from plone.namedfile.field import NamedBlobImage as NamedImage
 
 from plone.tiles.interfaces import ITileDataManager
-from plone.tiles.data import PersistentTileDataManager
-
-from plone.app.textfield.interfaces import ITransformer
 
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
