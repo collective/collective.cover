@@ -58,7 +58,7 @@
     <!-- Image scale support for tile images -->
     <browser:page
         name="images"
-        for=".basic.BasicTile"
+        for=".base.IPersistentCompositionTile"
         class=".base.ImageScaling"
         permission="zope2.View"
     />
