@@ -107,17 +107,28 @@
       permission="zope2.View"
       for="*"
       />
+
+  <plone:tile
+      name="collective.composition.carousel"
+      title="Carousel Tile"
+      description="A Carousel Tile"
+      add_permission="cmf.ModifyPortalContent"
+      schema=".carousel.ICarouselTile"
+      class=".carousel.CarouselTile"
+      permission="zope2.View"
+      for="*"
+      />      
       
-      <plone:tile
-          name="collective.composition.file"
-          title="File Tile"
-          description="A tile that containg a File"
-          add_permission="cmf.ModifyPortalContent"
-          schema=".file.IFileTile"
-          class=".file.FileTile"
-          permission="zope2.View"
-          for="*"
-          />
+  <plone:tile
+      name="collective.composition.file"
+      title="File Tile"
+      description="A tile that containg a File"
+      add_permission="cmf.ModifyPortalContent"
+      schema=".file.IFileTile"
+      class=".file.FileTile"
+      permission="zope2.View"
+      for="*"
+    />
 
   <plone:tile
       name="collective.composition.link"
