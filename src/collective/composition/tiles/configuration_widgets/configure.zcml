@@ -29,12 +29,11 @@
         template="list.pt"
         />
 
-    <!-- XXX: Just for now -->
     <z3c:widgetTemplate
         mode="configure"
-        widget="z3c.form.interfaces.IImageWidget"
+        widget="plone.formwidget.namedfile.interfaces.INamedImageWidget"
         layer="z3c.form.interfaces.IFormLayer"
-        template="basewidget.pt"
+        template="namedimage.pt"
         />
 
 
