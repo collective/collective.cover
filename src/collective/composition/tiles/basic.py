@@ -11,6 +11,7 @@ from plone.namedfile.interfaces import HAVE_BLOBS
 from plone.namedfile.field import NamedImage
 if HAVE_BLOBS:
     from plone.namedfile.field import NamedBlobImage as NamedImage
+from plone.namedfile.file import NamedBlobImage as NamedImageFile
 
 from plone.tiles.interfaces import ITileDataManager
 
@@ -95,6 +96,8 @@ class BasicTile(PersistentCompositionTile):
         data_mgr.set({'title': obj.Title(),
                       'description': obj.Description(),
                       })
+        if obj.getField('image'):
+            data_mgr.set({'image': NamedImageFile(obj.getImage().data)})
 
     def delete(self):
         data_mgr = ITileDataManager(self)
