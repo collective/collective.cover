@@ -1,0 +1,34 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      i18n:domain="collective.composition">
+
+<body>
+  <div>
+    <tal:fields repeat="field view/get_configured_fields">
+      <tal:embed condition="python:field['id'] == 'embed'">
+        <div tal:replace="structure view/get_embedding_code" />
+      </tal:embed>
+
+      <tal:title define="htmltag python:field.get('htmltag', 'h1')"
+                 condition="python:field['id'] == 'title'">
+        <h1 tal:condition="python:htmltag == 'h1'"
+            tal:content="python:field['content']" />
+        <h2 tal:condition="python:htmltag == 'h2'"
+            tal:content="python:field['content']" />
+        <h3 tal:condition="python:htmltag == 'h3'"
+            tal:content="python:field['content']" />
+      </tal:title>
+
+      <tal:description condition="python:field['id'] == 'description'">
+        <p tal:content="python:field['content']">Description</p>
+      </tal:description>
+
+      <tal:last condition="repeat/field/end">
+        <div class="visualClear"><!-- --></div>
+      </tal:last>
+    </tal:fields>
+  </div>
+</body>
+</html>

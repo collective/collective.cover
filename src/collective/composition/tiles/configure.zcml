@@ -108,6 +108,17 @@
       for="*"
       />
       
+  <plone:tile
+      name="collective.composition.embed"
+      title="Embedding Tile"
+      description="A tile to embed content"
+      add_permission="cmf.ModifyPortalContent"
+      schema=".embed.IEmbedTile"
+      class=".embed.EmbedTile"
+      permission="zope2.View"
+      for="*"
+      />
+
       <plone:tile
           name="collective.composition.file"
           title="File Tile"
