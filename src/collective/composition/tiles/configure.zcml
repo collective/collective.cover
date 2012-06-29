@@ -98,15 +98,26 @@
       />
 
   <plone:tile
-      name="collective.composition.file"
-      title="File Tile"
-      description="A tile that containg a File"
+      name="collective.composition.list"
+      title="List Tile"
+      description="A tile that containg a List of Content Types"
       add_permission="cmf.ModifyPortalContent"
-      schema=".file.IFileTile"
-      class=".file.FileTile"
+      schema=".list.IListTile"
+      class=".list.ListTile"
       permission="zope2.View"
       for="*"
       />
+      
+      <plone:tile
+          name="collective.composition.file"
+          title="File Tile"
+          description="A tile that containg a File"
+          add_permission="cmf.ModifyPortalContent"
+          schema=".file.IFileTile"
+          class=".file.FileTile"
+          permission="zope2.View"
+          for="*"
+          />
 
     <adapter for="zope.interface.Interface
                   zope.publisher.interfaces.browser.IBrowserRequest

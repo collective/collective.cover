@@ -37,7 +37,6 @@ class IRichTextTileData(IPersistentCompositionTile):
         This method removes the persistent data created for this tile
         """
 
-
 class RichTextTile(PersistentCompositionTile):
 
     index = ViewPageTemplateFile("templates/richtext.pt")
