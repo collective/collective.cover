@@ -78,9 +78,12 @@ $(function() {
 
     screenletMaker({
         draggable: '#screenlet-content-search #item-list li',
-        draggable_acepted: function(e){
+        draggable_acepted: function(e) {
             var ct = $(this).data('tileValidCt');
             var valid = $.inArray($(e).find('a').data('ctType'), ct);
+            if(!ct && $($(e).context).parent().attr("id") === "item-list") {
+                return true;
+            }
             return valid !== -1? true : false;
         },
         windowId: '#screenlet-content-search',

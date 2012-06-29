@@ -106,6 +106,7 @@ class PersistentCompositionTile(tiles.PersistentTile):
     implements(IPersistentCompositionTile)
 
     is_configurable = False
+    is_editable = False
 
     def populate_with_object(self, obj):
         if not self.isAllowedToEdit():
