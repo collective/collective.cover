@@ -27,8 +27,8 @@
       <element>collective.composition.collection</element>
       <element>collective.composition.file</element>
       <element>collective.composition.link</element>
+      <element>collective.composition.list</element>
       <element>collective.composition.richtext</element>
-       <element>collective.composition.list</element>
     </value>
   </record>
 
