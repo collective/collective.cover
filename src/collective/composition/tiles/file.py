@@ -5,6 +5,11 @@ from zope.interface import implements
 
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
+from plone.namedfile.interfaces import HAVE_BLOBS
+from plone.namedfile.field import NamedImage
+if HAVE_BLOBS:
+    from plone.namedfile.field import NamedBlobImage as NamedImage
+
 from plone.tiles.interfaces import ITileDataManager
 from plone.uuid.interfaces import IUUID
 
@@ -50,10 +55,15 @@ class IFileTile(IPersistentCompositionTile):
         required=False,
         )
 
+    image = NamedImage(
+        title=_(u'Image'),
+        required=False,
+        )
+
     download = schema.TextLine(
         title=_(u'Download link'),
         required=False,
-        readonly=True,  # XXX: this avoids being shown on edit and configure
+        readonly=True,  # the field can not be edited or configured
         )
 
     uuid = schema.TextLine(
@@ -68,6 +78,10 @@ class IFileTile(IPersistentCompositionTile):
 
     def get_description():
         """ Returns the description stored in the tile.
+        """
+
+    def get_image():
+        """ Returns the image stored in the tile.
         """
 
     def download_widget():
@@ -103,6 +117,9 @@ class FileTile(PersistentCompositionTile):
     def get_description(self):
         return self.data['description']
 
+    def get_image(self):
+        return self.data['image']
+
     # XXX: can we do this without waking the object up?
     def download_widget(self):
         obj = uuidToObject(self.data['uuid'])
@@ -125,14 +142,23 @@ class FileTile(PersistentCompositionTile):
     def is_empty(self):
         return not(self.data['title'] or \
                    self.data['description'] or \
+                   self.data['image'] or \
                    self.data['uuid'])
 
     def populate_with_object(self, obj):
+        # check permissions
+        super(FileTile, self).populate_with_object(obj)
+
+        title = getattr(obj, 'title', None)
+        # FIXME: this is not getting the description, why?
+        description = getattr(obj, 'description', None)
+        uuid = IUUID(obj, None)
+
         data_mgr = ITileDataManager(self)
-        data_mgr.set({'title': obj.Title(),
-                      'description': obj.Description(),
+        data_mgr.set({'title': title,
+                      'description': description,
                       'download': True,
-                      'uuid': IUUID(obj, None),
+                      'uuid': uuid,
                       })
 
     def delete(self):
