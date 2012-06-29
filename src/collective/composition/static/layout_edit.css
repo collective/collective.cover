@@ -120,10 +120,28 @@
 .layout .permitionbutton {
     position: absolute;
     right: 15px;
-    background-color: green;
-    top: 5px;
+    background-color: #000;
     color: #FFFFFF;
     cursor: pointer;
+    font-size: 10px;
+    line-height: 1.5em;
+    min-width: 5em;
+    top: 0;
+    text-align: center;
+    padding-right:10px;
+    padding-left:10px;
+}
+
+#content .layout .config-tile-link:link {
+    position: absolute;
+    background-color: green;
+    color: #FFFFFF;
+    cursor: pointer;
+    left: 80px;
+    top: 0px !important;
+    font-size: 10px;
+    line-height: 1em;
+    min-width: 5em;
 }
 
 .layout .to-delete {
@@ -192,4 +210,11 @@
 #content #collective-composition-list-uuids-tiletitle {
     width: 100px;
     font-size: 1em;
+}
+
+.tile-name {
+    font-weight: bold;
+    position: relative;
+    text-align: center;
+    top: 10px;
 }

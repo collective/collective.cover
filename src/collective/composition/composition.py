@@ -24,8 +24,6 @@ from plone.tiles.interfaces import ITileDataManager
 
 from plone.uuid.interfaces import IUUIDGenerator
 
-from Products.CMFPlone.interfaces import INonStructuralFolder
-
 from Products.CMFCore.utils import getToolByName
 
 from collective.composition.controlpanel import ICompositionSettings
@@ -39,8 +37,9 @@ class IComposition(form.Schema):
     form.model("models/composition.xml")
 
 
-class Composition(dexterity.Container):
-    grok.implements(IComposition, INonStructuralFolder)
+class Composition(dexterity.Item):
+    """
+    """
 
 
 class View(grok.View):

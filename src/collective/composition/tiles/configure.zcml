@@ -55,14 +55,13 @@
             />
     </class>
 
-    <!-- Image scale support for tile images -->
-    <browser:page
-        name="images"
-        for=".base.IPersistentCompositionTile"
-        class=".base.ImageScaling"
-        permission="zope2.View"
-    />
-
+  <!-- Image scale support for tile images -->
+  <browser:page
+      name="images"
+      for=".base.IPersistentCompositionTile"
+      class=".base.ImageScaling"
+      permission="zope2.View"
+      />
 
   <plone:tile
       name="collective.composition.basic"
@@ -120,6 +119,17 @@
       />      
       
   <plone:tile
+      name="collective.composition.embed"
+      title="Embedding Tile"
+      description="A tile to embed content"
+      add_permission="cmf.ModifyPortalContent"
+      schema=".embed.IEmbedTile"
+      class=".embed.EmbedTile"
+      permission="zope2.View"
+      for="*"
+      />
+
+  <plone:tile
       name="collective.composition.file"
       title="File Tile"
       description="A tile that containg a File"
@@ -129,6 +139,7 @@
       permission="zope2.View"
       for="*"
     />
+
 
   <plone:tile
       name="collective.composition.link"
@@ -141,16 +152,18 @@
       for="*"
       />
 
-    <adapter for="zope.interface.Interface
-                  zope.publisher.interfaces.browser.IBrowserRequest
-                  collective.composition.tiles.base.IPersistentCompositionTile"
-        provides="collective.composition.tiles.configuration.ITilesConfigurationScreen"
-        factory="collective.composition.tiles.configuration.TilesConfigurationScreen" />
+  <adapter for="zope.interface.Interface
+                zope.publisher.interfaces.browser.IBrowserRequest
+                collective.composition.tiles.base.IPersistentCompositionTile"
+    provides="collective.composition.tiles.configuration.ITilesConfigurationScreen"
+    factory="collective.composition.tiles.configuration.TilesConfigurationScreen"
+    />
 
-    <adapter for="zope.interface.Interface
-                  zope.publisher.interfaces.browser.IBrowserRequest
-                  collective.composition.tiles.base.IPersistentCompositionTile"
-        provides="collective.composition.tiles.permissions.ITilesPermissions"
-        factory="collective.composition.tiles.permissions.TilesPermissions" />
+  <adapter for="zope.interface.Interface
+                zope.publisher.interfaces.browser.IBrowserRequest
+                collective.composition.tiles.base.IPersistentCompositionTile"
+    provides="collective.composition.tiles.permissions.ITilesPermissions"
+    factory="collective.composition.tiles.permissions.TilesPermissions"
+    />
 
 </configure>
