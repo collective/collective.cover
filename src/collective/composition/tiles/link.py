@@ -15,31 +15,8 @@ from collective.composition import _
 from collective.composition.tiles.base import IPersistentCompositionTile
 from collective.composition.tiles.base import PersistentCompositionTile
 
-HTML = """
-    <a href="%s/at_download/file">
-      <img src="%s/%s" alt="">
-         Download file
-    </a>
-    <span class="discreet">
-      &#8212;
-      %s,
-      %s
-    </span>
-"""
 
-
-def get_download_html(url, portal_url, icon, mime_type, size):
-    if size < 1024:
-        size_str = '%s bytes' % size
-    elif size >= 1024 and size <= 1048576:
-        size_str = '%s kB (%s bytes)' % (size / 1024, size)
-    else:
-        size_str = '%s MB (%s bytes)' % (size / 1048576, size)
-
-    return HTML % (url, portal_url, icon, mime_type, size_str)
-
-
-class IFileTile(IPersistentCompositionTile):
+class ILinkTile(IPersistentCompositionTile):
 
     title = schema.TextLine(
         title=_(u'Title'),
@@ -56,16 +33,15 @@ class IFileTile(IPersistentCompositionTile):
         required=False,
         )
 
-    download = schema.TextLine(
-        title=_(u'Download link'),
+    remote_url = schema.TextLine(
+        title=_(u'URL'),
         required=False,
-        readonly=True,  # the field can not be edited or configured
         )
 
     uuid = schema.TextLine(
         title=_(u'UUID'),
         required=False,
-        readonly=True,
+        readonly=True,  # the field can not be edited or configured
         )
 
     def get_title():
@@ -80,12 +56,8 @@ class IFileTile(IPersistentCompositionTile):
         """ Returns the image stored in the tile.
         """
 
-    def download_widget():
-        """ Returns a download link for the file associated with the tile.
-        """
-
-    def get_date():
-        """ Returns the date of the file associated with the tile.
+    def get_remote_url():
+        """ Returns the URL stored in the tile.
         """
 
     def populate_with_object(obj):
@@ -98,11 +70,11 @@ class IFileTile(IPersistentCompositionTile):
         """
 
 
-class FileTile(PersistentCompositionTile):
+class LinkTile(PersistentCompositionTile):
 
-    implements(IFileTile)
+    implements(ILinkTile)
 
-    index = ViewPageTemplateFile('templates/file.pt')
+    index = ViewPageTemplateFile('templates/link.pt')
 
     # TODO: make it configurable
     is_configurable = False
@@ -117,17 +89,6 @@ class FileTile(PersistentCompositionTile):
         return self.data['image']
 
     # XXX: can we do this without waking the object up?
-    def download_widget(self):
-        obj = uuidToObject(self.data['uuid'])
-        if obj:
-            url = obj.absolute_url()
-            icon = obj.getBestIcon()
-            portal_url = obj.portal_url()
-            mime = obj.lookupMime(obj.getField('file').getContentType(obj))
-            size = obj.get_size()
-            return get_download_html(url, portal_url, icon, mime, size)
-
-    # XXX: can we do this without waking the object up?
     def get_date(self):
         # TODO: we must support be able to select which date we want to
         # display
@@ -135,24 +96,29 @@ class FileTile(PersistentCompositionTile):
         if obj:
             return obj.Date()
 
+    def get_remote_url(self):
+        return self.data['remote_url']
+
     def is_empty(self):
         return not(self.data['title'] or \
                    self.data['description'] or \
                    self.data['image'] or \
+                   self.data['remote_url'] or \
                    self.data['uuid'])
 
     def populate_with_object(self, obj):
         # check permissions
-        super(FileTile, self).populate_with_object(obj)
+        super(LinkTile, self).populate_with_object(obj)
 
-        title = obj.Title() if hasattr(obj, 'Title') else None
-        description = obj.Description() if hasattr(obj, 'Description') else None
+        title = obj.Title()
+        description = obj.Description()
+        remote_url = obj.getRemoteUrl()
         uuid = IUUID(obj, None)
 
         data_mgr = ITileDataManager(self)
         data_mgr.set({'title': title,
                       'description': description,
-                      'download': True,
+                      'remote_url': remote_url,
                       'uuid': uuid,
                       })
 
@@ -161,5 +127,5 @@ class FileTile(PersistentCompositionTile):
         data_mgr.delete()
 
     def accepted_ct(self):
-        valid_ct = ['File']
+        valid_ct = ['Link']
         return valid_ct

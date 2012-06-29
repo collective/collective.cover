@@ -119,6 +119,17 @@
           for="*"
           />
 
+  <plone:tile
+      name="collective.composition.link"
+      title="Link Tile"
+      description="A tile that references a Link."
+      add_permission="cmf.ModifyPortalContent"
+      schema=".link.ILinkTile"
+      class=".link.LinkTile"
+      permission="zope2.View"
+      for="*"
+      />
+
     <adapter for="zope.interface.Interface
                   zope.publisher.interfaces.browser.IBrowserRequest
                   collective.composition.tiles.base.IPersistentCompositionTile"

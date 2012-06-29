@@ -1,17 +1,10 @@
 # -*- coding: utf-8 -*-
 
-# Basic implementation taken from
-# http://davisagli.com/blog/using-tiles-to-provide-more-flexible-plone-layouts
-
-from Acquisition import aq_base
 from zope import schema
 from zope.interface import implements
 
-from plone.namedfile.interfaces import HAVE_BLOBS
-from plone.namedfile.field import NamedImage
-if HAVE_BLOBS:
-    from plone.namedfile.field import NamedBlobImage as NamedImage
-
+from plone.namedfile.field import NamedBlobImage as NamedImage
+from plone.namedfile.file import NamedBlobImage as NamedImageFile
 from plone.tiles.interfaces import ITileDataManager
 
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
@@ -95,6 +88,8 @@ class BasicTile(PersistentCompositionTile):
         data_mgr.set({'title': obj.Title(),
                       'description': obj.Description(),
                       })
+        if obj.getField('image'):
+            data_mgr.set({'image': NamedImageFile(obj.getImage().data)})
 
     def delete(self):
         data_mgr = ITileDataManager(self)

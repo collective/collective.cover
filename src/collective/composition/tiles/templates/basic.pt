@@ -4,41 +4,41 @@
       xmlns:i18n="http://xml.zope.org/namespaces/i18n"
       i18n:domain="collective.composition">
 
-<body>
-    <tal:text define="is_empty view/is_empty;">
-        <p tal:condition="is_empty">
-            Please edit the tile to enter some data.
-        </p>
-        <tal:empty tal:condition="python: not is_empty">
-            <tal:fields repeat="field view/get_configured_fields">
-                <tal:title condition="python:field['id'] == 'title' and field.has_key('htmltag')">
-                    <h1 tal:condition="python:field['htmltag'] == 'h1'"
-                        tal:content="python:field['content']"/>
-                    <h2 tal:condition="python:field['htmltag'] == 'h2'"
-                        tal:content="python:field['content']"/>
-                    <h3 tal:condition="python:field['htmltag'] == 'h3'"
-                        tal:content="python:field['content']"/>
-                    <h4 tal:condition="python:field['htmltag'] == 'h4'"
-                        tal:content="python:field['content']"/>
-                    <h5 tal:condition="python:field['htmltag'] == 'h5'"
-                        tal:content="python:field['content']"/>
-                </tal:title>
+<body tal:define="is_empty view/is_empty">
+  <p tal:condition="is_empty">
+    Please drag&amp;drop some content here to populate the tile.
+  </p>
 
-                <tal:description condition="python:field['id'] == 'description'">
-                    <p tal:content="python:field['content']">Description</p>
-                </tal:description>
+  <div tal:condition="not: is_empty">
+    <tal:fields repeat="field view/get_configured_fields">
+      <tal:title define="htmltag python:field.get('htmltag', 'h1')"
+                 condition="python:field['id'] == 'title'">
+        <h1 tal:condition="python:htmltag == 'h1'"
+            tal:content="python:field['content']" />
+        <h2 tal:condition="python:htmltag == 'h2'"
+            tal:content="python:field['content']" />
+        <h3 tal:condition="python:htmltag == 'h3'"
+            tal:content="python:field['content']" />
+      </tal:title>
 
-                <tal:image condition="python:field['id'] == 'image'">
-                    <img tal:define="scales view/@@images;
-                                    thumbnail python: scales.scale('image', scale='mini');"
-                        tal:condition="thumbnail"
-                        tal:attributes="src thumbnail/url;
-                                        width thumbnail/width;
-                                        height thumbnail/height" />
-                </tal:image>
+      <tal:description condition="python:field['id'] == 'description'">
+        <p tal:content="python:field['content']">Description</p>
+      </tal:description>
 
-            </tal:fields>
-        </tal:empty>
-    </tal:text>
+      <tal:image condition="python:field['id'] == 'image'">
+        <img class="image-left"
+             tal:define="scales view/@@images;
+                         thumbnail python: scales.scale('image', scale='mini');"
+             tal:condition="thumbnail"
+             tal:attributes="src thumbnail/url;
+                             width thumbnail/width;
+                             height thumbnail/height" />
+      </tal:image>
+
+      <tal:last condition="repeat/field/end">
+        <div class="visualClear"><!-- --></div>
+      </tal:last>
+    </tal:fields>
+  </div>
 </body>
 </html>

@@ -118,6 +118,36 @@ override in your class:
 **get_tile_configuration()**
     It returns the stored configuration options for this tile.
 
+Image field and scales
+++++++++++++++++++++++
+
+To add an image field to your tile::
+
+    image = NamedImage(
+        title=_(u'Image'),
+        required=False,
+        )
+
+Then do you have several ways of using image scales in your tile templates.
+
+1. You can pass the ``scale`` method explicit width and height::
+
+     <img tal:define="scales view/@@images;
+                      thumbnail python: scales.scale('image', width=64, height=64);"
+          tal:condition="thumbnail"
+          tal:attributes="src thumbnail/url;
+                          width thumbnail/width;
+                          height thumbnail/height" />
+                          
+2. Or you can use Plone predefined scales::
+
+     <img tal:define="scales view/@@images;
+                      thumbnail python: scales.scale('image', scale='mini');"
+          tal:condition="thumbnail"
+          tal:attributes="src thumbnail/url;
+                          width thumbnail/width;
+                          height thumbnail/height" />
+                          
 Mostly Harmless
 ---------------
 
