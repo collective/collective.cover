@@ -20,21 +20,24 @@ from collective.composition.tiles.base import PersistentCompositionTile
 class IListTile(IPersistentCompositionTile):
 
     uuids = schema.List(title=u'Collection uuid',
-        value_type=schema.TextLine())
+        value_type=schema.TextLine(), readonly=True)
 
     title = schema.TextLine(
         title=_(u'Title'),
         required=False,
+        readonly=True
         )
 
     description = schema.Text(
         title=_(u'Description'),
         required=False,
+        readonly=True
         )
 
     image = NamedImage(
         title=_(u'Image'),
         required=False,
+        readonly=True
         )
 
     def results():

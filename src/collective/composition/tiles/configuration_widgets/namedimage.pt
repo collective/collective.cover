@@ -39,20 +39,36 @@
                             value python:stored_data.get('order', None);
                             accesskey view/accesskey;"/>
 
-        <span i18n:translate="">HTML tag</span>
+        <span i18n:translate="">Image size</span>
         <select id="" name="" class=""
             tabindex="" accesskey=""
-            tal:attributes="id string:${view/id}-htmltag;
-                            name string:${view/name}.htmltag;
+            tal:attributes="id string:${view/id}-imgsize;
+                            name string:${view/name}.imgsize;
                             class view/klass;
                             tabindex view/tabindex;
                             accesskey view/accesskey;"
-            tal:define="values python:['h1', 'h2', 'h3']">
+            tal:define="values python:['large', 'preview', 'mini', 'thumb', 'tile', 'icon', 'listing']">
 
             <option tal:repeat="value values"
                     tal:attributes="value value;
-                                    selected python:stored_data.get('htmltag', None) == value and 'selected' or None"
-                    tal:content="python:value.upper()">HTML TAG</option>
+                                    selected python:stored_data.get('imgsize', None) == value and 'selected' or None"
+                    tal:content="value">Image size</option>
+        </select>
+
+        <span i18n:translate="">Position</span>
+        <select id="" name="" class=""
+            tabindex="" accesskey=""
+            tal:attributes="id string:${view/id}-position;
+                            name string:${view/name}.position;
+                            class view/klass;
+                            tabindex view/tabindex;
+                            accesskey view/accesskey;"
+            tal:define="values python:['left', 'right', 'top', 'bottom']">
+
+            <option tal:repeat="value values"
+                    tal:attributes="value value;
+                                    selected python:stored_data.get('position', None) == value and 'selected' or None"
+                    tal:content="value">HTML TAG</option>
         </select>
 
     </tal:stored_data>
