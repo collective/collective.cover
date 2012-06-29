@@ -5,11 +5,7 @@ from zope.interface import implements
 
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
-from plone.namedfile.interfaces import HAVE_BLOBS
-from plone.namedfile.field import NamedImage
-if HAVE_BLOBS:
-    from plone.namedfile.field import NamedBlobImage as NamedImage
-
+from plone.namedfile.field import NamedBlobImage as NamedImage
 from plone.tiles.interfaces import ITileDataManager
 from plone.uuid.interfaces import IUUID
 
