@@ -110,10 +110,9 @@ class LinkTile(PersistentCompositionTile):
         # check permissions
         super(LinkTile, self).populate_with_object(obj)
 
-        title = getattr(obj, 'title', None)
-        # FIXME: this is not getting the description, why?
-        description = getattr(obj, 'description', None)
-        remote_url = getattr(obj, 'remoteUrl', None)
+        title = obj.Title()
+        description = obj.Description()
+        remote_url = obj.getRemoteUrl()
         uuid = IUUID(obj, None)
 
         data_mgr = ITileDataManager(self)

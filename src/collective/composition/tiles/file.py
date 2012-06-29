@@ -145,9 +145,8 @@ class FileTile(PersistentCompositionTile):
         # check permissions
         super(FileTile, self).populate_with_object(obj)
 
-        title = getattr(obj, 'title', None)
-        # FIXME: this is not getting the description, why?
-        description = getattr(obj, 'description', None)
+        title = obj.Title() if hasattr(obj, 'Title') else None
+        description = obj.Description() if hasattr(obj, 'Description') else None
         uuid = IUUID(obj, None)
 
         data_mgr = ITileDataManager(self)
