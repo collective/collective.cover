@@ -30,7 +30,7 @@
 
                 <tal:image condition="python:field['id'] == 'image'">
                     <img tal:define="scales view/@@images;
-                                    thumbnail python: scales.scale('image', width=200, height=200);"
+                                    thumbnail python: scales.scale('image', scale='mini');"
                         tal:condition="thumbnail"
                         tal:attributes="src thumbnail/url;
                                         width thumbnail/width;

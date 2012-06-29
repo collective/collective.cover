@@ -34,6 +34,7 @@ from plone.scale.storage import AnnotationStorage as BaseAnnotationStorage
 from plone.namedfile.scaling import ImageScale as BaseImageScale
 from plone.namedfile.scaling import ImageScaling as BaseImageScaling
 from plone.namedfile.utils import set_headers, stream_data
+from plone.namedfile.interfaces import INamedImage
 from plone.rfc822.interfaces import IPrimaryFieldInfo
 
 from Products.CMFCore.utils import getToolByName
@@ -105,6 +106,7 @@ class PersistentCompositionTile(tiles.PersistentTile):
     implements(IPersistentCompositionTile)
 
     is_configurable = False
+    is_editable = False
 
     def populate_with_object(self, obj):
         if not self.isAllowedToEdit():
@@ -308,7 +310,12 @@ class ImageScaling(BaseImageScaling):
     def modified(self):
         """ provide a callable to return the modification time of content
             items, so stored image scales can be invalidated """
-        return self.context.data.get('image_mtime', 0)
+        mtime = 0
+        for k, v in self.context.data.items():
+            if INamedImage.providedBy(v):
+                mtime += self.context.data.get('%s_mtime' % k, 0)
+                
+        return mtime
 
     def scale(self, fieldname=None, scale=None,
               height=None, width=None, **parameters):

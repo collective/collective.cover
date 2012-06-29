@@ -184,3 +184,12 @@
 #tile-configure  {
     display:none;
 }
+
+#collective-composition-list-uuids-size {
+    width: 25px;
+}
+
+#content #collective-composition-list-uuids-tiletitle {
+    width: 100px;
+    font-size: 1em;
+}
