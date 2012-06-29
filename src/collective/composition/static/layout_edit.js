@@ -578,8 +578,11 @@
                 var save_btn = $('#btn-save');
 
                 if (save_btn.hasClass('saved')) {
-                    $('#btn-save').text('SAVE');
-                    $('#btn-save').addClass('modified');
+                    $('#btn-save').find('span').text('Save');
+                    $('#btn-save').removeClass(function (index, css) {
+                        return (css.match (/\bbtn-\S+/g) || []).join(' ');
+                    });
+                    $('#btn-save').addClass('modified btn-warning');
                 }
             }
 

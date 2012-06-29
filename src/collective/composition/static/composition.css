@@ -1,11 +1,11 @@
-.tile {
+.template-compose .tile {
     border:1px dashed #999;
     padding-top:1em;
 }
-.tile-container {
+.template-compose .tile-container {
     position:relative;
 }
-.edit-tile-link {
+.template-compose .edit-tile-link {
     position:absolute;
     height:1em;
     line-height:1em;

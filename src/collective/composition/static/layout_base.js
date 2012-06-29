@@ -8,18 +8,21 @@ $(document).ready(function() {
             event.preventDefault();
             json = layout.coverlayout().html2json(layout);
             var $this = $(this);
-            $this.text('SAVING...');
+            $this.removeClass(function (index, css) {
+                return (css.match (/\bbtn-\S+/g) || []).join(' ');
+            });            
+            $this.find('span').text('Saving...');
             $.ajax({
                 'url':'@@save_layout',
                 'data': {'composition_layout':JSON.stringify(json)},
                 'type':'POST',
                 success: function(data) {
-                    $this.text('SAVED');
-                    $('#btn-save').addClass('saved');
+                    $this.find('span').text('Saved');
+                    $('#btn-save').addClass('saved btn-success');
                 },
                 error: function(jqXHR, textStatus, errorThrown){
-                    $this.text('ERROR '+errorThrown);
-                    $('#btn-save').addClass('error');
+                    $this.find('span').text('Error '+errorThrown);
+                    $('#btn-save').addClass('error btn-danger');           
                 }
             })
         });
