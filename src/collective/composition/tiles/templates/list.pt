@@ -7,7 +7,8 @@
 <body>
   <tal:items repeat="item view/results">
                 <p tal:content="item/Title" />
-                <tal:image condition="python:hasattr(item, 'image')">
+                <p tal:content="item/Description" />
+                <tal:image condition="python:hasattr(item, 'image') or hasattr(item,'Schema') and 'image' in item.Schema().keys()">
                     <img tal:define="scales view/@@images;
                                     thumbnail python: scales.scale('image', width=200, height=200);"
                         tal:condition="thumbnail"
