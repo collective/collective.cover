@@ -47,13 +47,12 @@ setup(name='collective.composition',
         'plone.app.lockingbehavior',
         'plone.app.stagingbehavior',
         'plone.app.tiles',
-        'plone.namedfile',
+        'plone.namedfile[blobs]',
         'plone.principalsource',
         'plone.tiles',
         ],
       extras_require={
         'test': ['plone.app.testing'],
-        'blobs': ['plone.namedfile[blobs]'],
         },
       entry_points="""
       [z3c.autoinclude.plugin]

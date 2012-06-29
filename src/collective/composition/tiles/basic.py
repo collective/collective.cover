@@ -38,11 +38,6 @@ class IBasicTileData(IPersistentCompositionTile):
         required=False,
         )
 
-    image2 = NamedImage(
-        title=_(u'Image2'),
-        required=False,
-        )
-
     def get_title():
         """
         A method to return the title stored in the tile

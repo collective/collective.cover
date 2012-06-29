@@ -5,6 +5,7 @@
     padding: 20px;
     position: fixed;
     z-index: 9999;
+    cursor: pointer;
 }
 
 #screenlet-content-search.right {
