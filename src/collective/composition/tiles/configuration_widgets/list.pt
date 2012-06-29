@@ -1,0 +1,42 @@
+<html lang="en"
+     xml:lang="en"
+     xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:tal="http://xml.zope.org/namespaces/tal"
+     xmlns:metal="http://xml.zope.org/namespaces/metal"
+     xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+     i18n:domain="collective.composition"
+     tal:omit-tag="">
+
+    <tal:stored_data define="stored_data python:view.form.getFieldConfiguration(view)">
+
+        <span i18n:translate="">Number of items</span>
+         <input type="text" id="" name="" class="" size="2"
+              tabindex="" accesskey=""
+              tal:attributes="id string:${view/id}-size;
+                              name string:${view/name}.size;
+                              class view/klass;
+                              tabindex view/tabindex;
+                              value python:stored_data.get('size', 5);
+                              accesskey view/accesskey;"/>
+        <br />
+        <input type="checkbox" id="" name="" class=""
+            tabindex="" accesskey=""
+            tal:attributes="id string:${view/id}-showtitle;
+                            name string:${view/name}.showtitle;
+                           
+                            tabindex view/tabindex;
+                            value python:stored_data.get('showtitle', None);
+                            accesskey view/accesskey;"/>
+        
+        <span i18n:translate="">Show List Title</span>
+          <input type="text" id="" name="" class="" size="100"
+              tabindex="" accesskey=""
+              tal:attributes="id string:${view/id}-tiletitle;
+                              name string:${view/name}.tiletitle;
+                             
+                              tabindex view/tabindex;
+                              value python:stored_data.get('tiletitle', None);
+                              accesskey view/accesskey;"/>
+
+    </tal:stored_data>
+</html>

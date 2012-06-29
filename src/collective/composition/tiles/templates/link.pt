@@ -7,18 +7,17 @@
 <body>
   <tal:text define="is_empty view/is_empty;">
     <p tal:condition="is_empty">
-      Empty tile: please drag&amp;drop a file here to populate.
+      Empty tile: please drag&amp;drop a link here to populate.
     </p>
 
     <tal:empty tal:condition="python: not is_empty">
       <tal:fields repeat="field view/get_configured_fields">
-        <tal:title condition="python:field['id'] == 'title'"
-                   define="htmltag python:field.get('htmltag', 'h1')">
-          <h1 tal:condition="python:htmltag == 'h1'"
+        <tal:title condition="python:field['id'] == 'title' and field.has_key('htmltag')">
+          <h1 tal:condition="python:field['htmltag'] == 'h1'"
               tal:content="python:field['content']" />
-          <h2 tal:condition="python:htmltag == 'h2'"
+          <h2 tal:condition="python:field['htmltag'] == 'h2'"
               tal:content="python:field['content']" />
-          <h3 tal:condition="python:htmltag == 'h3'"
+          <h3 tal:condition="python:field['htmltag'] == 'h3'"
               tal:content="python:field['content']" />
         </tal:title>
 
@@ -36,8 +35,11 @@
         </tal:image>
 
 
-        <tal:download condition="python:field['id'] == 'download'">
-          <p tal:content="structure view/download_widget" />
+        <tal:download condition="python:field['id'] == 'remote_url'">
+          <p>
+            <a href="" tal:attributes="href view/get_remote_url"
+               tal:content="view/get_remote_url" />
+          </p>
         </tal:download>
 
       </tal:fields>
