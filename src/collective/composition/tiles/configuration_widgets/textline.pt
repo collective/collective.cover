@@ -47,7 +47,7 @@
                             class view/klass;
                             tabindex view/tabindex;
                             accesskey view/accesskey;"
-            tal:define="values python:['h1', 'h2', 'h3', 'h4', 'h5']">
+            tal:define="values python:['h1', 'h2', 'h3']">
 
             <option tal:repeat="value values"
                     tal:attributes="value value;
