@@ -516,7 +516,7 @@
                 var excluded_elements = '.row-droppable';
                 var remove_classes = 'ui-droppable';
 
-                $(node).find('> div').not('.guides').each(function(i, elem) {
+                $(node).find('> div').not('.no-export').each(function(i, elem) {
                     if ($(this).not(excluded_elements)[0] !== undefined) {
                         $(this).removeClass(remove_classes);
                         var entry = {};
@@ -560,8 +560,8 @@
                 var base_column = $('<div/>')
                                     .addClass(column_class)
                                     .addClass(column_width+'1')
-                                    .addClass('row-guide');
-                row.append('<div class="guides"/>');
+                                    .addClass('row-guide no-export');
+                row.append('<div class="guides no-export"/>');
                 for (i = 0; i < number_of_columns; i++) {
                     var column = base_column.clone()
                                    .addClass(column_position+i);
