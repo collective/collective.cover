@@ -25,14 +25,14 @@
           <p tal:content="python:field['content']">Description</p>
         </tal:description>
 
-        <!--tal:image condition="python:field['id'] == 'image'">
+        <tal:image condition="python:field['id'] == 'image'">
             <img tal:define="scales view/@@images;
                             thumbnail python: scales.scale('image', width=200, height=200);"
                 tal:condition="thumbnail"
                 tal:attributes="src thumbnail/url;
                                 width thumbnail/width;
                                 height thumbnail/height" />
-        </tal:image-->
+        </tal:image>
 
 
         <tal:download condition="python:field['id'] == 'download'">
