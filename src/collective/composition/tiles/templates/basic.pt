@@ -11,16 +11,17 @@
         </p>
         <tal:empty tal:condition="python: not is_empty">
             <tal:fields repeat="field view/get_configured_fields">
-                <tal:title condition="python:field['id'] == 'title' and field.has_key('htmltag')">
-                    <h1 tal:condition="python:field['htmltag'] == 'h1'"
+                <tal:title condition="python:field['id'] == 'title'"
+                           define="htmltag python:field.get('htmltag', 'h1')">
+                    <h1 tal:condition="python:htmltag == 'h1'"
                         tal:content="python:field['content']"/>
-                    <h2 tal:condition="python:field['htmltag'] == 'h2'"
+                    <h2 tal:condition="python:htmltag == 'h2'"
                         tal:content="python:field['content']"/>
-                    <h3 tal:condition="python:field['htmltag'] == 'h3'"
+                    <h3 tal:condition="python:htmltag == 'h3'"
                         tal:content="python:field['content']"/>
-                    <h4 tal:condition="python:field['htmltag'] == 'h4'"
+                    <h4 tal:condition="python:htmltag == 'h4'"
                         tal:content="python:field['content']"/>
-                    <h5 tal:condition="python:field['htmltag'] == 'h5'"
+                    <h5 tal:condition="python:htmltag == 'h5'"
                         tal:content="python:field['content']"/>
                 </tal:title>
 
