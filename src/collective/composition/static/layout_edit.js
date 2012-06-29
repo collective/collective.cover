@@ -478,9 +478,11 @@
                                 success: function(info, la) {
                                     new_tile.attr("id", info);
                                     var url_config = "@@configure-tile/" + tile_type + "/" + info;
-                                    var config_link = $("<a />").addClass("config-tile-link")
+                                    var config_link = $("<a />").addClass("config-tile-link").addClass("label")
                                     .attr('href',url_config).text('Config');
+                                    var name_tag = $("<span />").addClass("tile-name").text(tile_type);
                                     new_tile.append(config_link);
+                                    new_tile.append(name_tag);
                                     can_drop = true;
                                     $(that).append(new_tile);
                                     self.tile_permissions_update(new_tile);
