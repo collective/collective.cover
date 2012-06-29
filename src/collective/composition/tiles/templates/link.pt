@@ -7,7 +7,7 @@
 <body>
   <tal:text define="is_empty view/is_empty;">
     <p tal:condition="is_empty">
-      Empty tile: please drag&amp;drop a file here to populate.
+      Empty tile: please drag&amp;drop a link here to populate.
     </p>
 
     <tal:empty tal:condition="python: not is_empty">
@@ -25,18 +25,21 @@
           <p tal:content="python:field['content']">Description</p>
         </tal:description>
 
-        <!--tal:image condition="python:field['id'] == 'image'">
+        <tal:image condition="python:field['id'] == 'image'">
             <img tal:define="scales view/@@images;
                             thumbnail python: scales.scale('image', width=200, height=200);"
                 tal:condition="thumbnail"
                 tal:attributes="src thumbnail/url;
                                 width thumbnail/width;
                                 height thumbnail/height" />
-        </tal:image-->
+        </tal:image>
 
 
-        <tal:download condition="python:field['id'] == 'download'">
-          <p tal:content="structure view/download_widget" />
+        <tal:download condition="python:field['id'] == 'remote_url'">
+          <p>
+            <a href="" tal:attributes="href view/get_remote_url"
+               tal:content="view/get_remote_url" />
+          </p>
         </tal:download>
 
       </tal:fields>

@@ -37,8 +37,8 @@ class ILinkTile(IPersistentCompositionTile):
         required=False,
         )
 
-    url = schema.TextLine(
-        title=_(u'Link'),
+    remote_url = schema.TextLine(
+        title=_(u'URL'),
         required=False,
         )
 
@@ -60,7 +60,7 @@ class ILinkTile(IPersistentCompositionTile):
         """ Returns the image stored in the tile.
         """
 
-    def get_url():
+    def get_remote_url():
         """ Returns the URL stored in the tile.
         """
 
@@ -100,19 +100,14 @@ class LinkTile(PersistentCompositionTile):
         if obj:
             return obj.Date()
 
-    # XXX: can we do this without waking the object up?
-    def get_url(self):
-        # TODO: we must support be able to select which date we want to
-        # display
-        obj = uuidToObject(self.data['url'])
-        if obj:
-            return obj.Date()
+    def get_remote_url(self):
+        return self.data['remote_url']
 
     def is_empty(self):
         return not(self.data['title'] or \
                    self.data['description'] or \
                    self.data['image'] or \
-                   self.data['link'] or \
+                   self.data['remote_url'] or \
                    self.data['uuid'])
 
     def populate_with_object(self, obj):
@@ -122,13 +117,13 @@ class LinkTile(PersistentCompositionTile):
         title = getattr(obj, 'title', None)
         # FIXME: this is not getting the description, why?
         description = getattr(obj, 'description', None)
-        url = getattr(obj, 'link', None)
+        remote_url = getattr(obj, 'remoteUrl', None)
         uuid = IUUID(obj, None)
 
         data_mgr = ITileDataManager(self)
         data_mgr.set({'title': title,
                       'description': description,
-                      'url': url,
+                      'remote_url': remote_url,
                       'uuid': uuid,
                       })
 

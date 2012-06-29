@@ -113,8 +113,8 @@
       title="Link Tile"
       description="A tile that references a Link."
       add_permission="cmf.ModifyPortalContent"
-      schema=".file.ILinkTile"
-      class=".file.LinkTile"
+      schema=".link.ILinkTile"
+      class=".link.LinkTile"
       permission="zope2.View"
       for="*"
       />
