@@ -1,3 +1,6 @@
+import time
+from datetime import datetime
+from persistent.dict import PersistentDict
 
 from zope.component import adapts
 
@@ -29,3 +32,12 @@ class PersistentCompositionTileDataManager(PersistentTileDataManager):
         for field_name, field_conf in conf.items():
             if 'order' in field_conf and field_conf['order']:
                 fields[field_name].order = int(field_conf['order'])
+
+    def set(self, data):
+        if data.has_key('image'):
+            if not self.annotations.has_key(self.key) or \
+               (self.annotations.has_key(self.key) and \
+                data['image'] != self.annotations[self.key]['image']):
+                # set modification time of the image
+                data['image_mtime'] = time.mktime(datetime.now().timetuple())
+        self.annotations[self.key] = PersistentDict(data)

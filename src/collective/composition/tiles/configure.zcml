@@ -55,6 +55,15 @@
             />
     </class>
 
+    <!-- Image scale support for tile images -->
+    <browser:page
+        name="images"
+        for=".basic.BasicTile"
+        class=".base.ImageScaling"
+        permission="zope2.View"
+    />
+
+
   <plone:tile
       name="collective.composition.basic"
       title="Basic Tile"
@@ -65,15 +74,6 @@
       permission="zope2.View"
       for="*"
       />
-
-  <adapter factory=".basic.PersistentBasicTileDataManager" />
-
-  <browser:page
-      name="images"
-      for=".basic.BasicTile"
-      class=".basic.ImageScaling"
-      permission="zope2.View"
-  />
 
   <plone:tile
       name="collective.composition.richtext"

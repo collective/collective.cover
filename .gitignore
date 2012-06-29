@@ -24,3 +24,9 @@ src/plone.app.tiles/
 src/plone.tiles/
 var/
 local.cfg
+.project
+.pydevproject
+.settings/
+src/plone.app.imaging/
+src/plone.app.stagingbehavior/
+src/plone.scale/
