@@ -24,12 +24,12 @@
   <record name="plone.app.tiles">
     <value purge="false">
       <element>collective.composition.basic</element>
+      <element>collective.composition.carousel</element>
       <element>collective.composition.collection</element>
       <element>collective.composition.embed</element>
       <element>collective.composition.file</element>
       <element>collective.composition.link</element>
       <element>collective.composition.list</element>
-      <element>collective.composition.carousel</element>
       <element>collective.composition.richtext</element>
     </value>
   </record>
