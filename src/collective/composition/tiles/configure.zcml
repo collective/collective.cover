@@ -106,6 +106,17 @@
       permission="zope2.View"
       for="*"
       />
+
+  <plone:tile
+      name="collective.composition.carousel"
+      title="Carousel Tile"
+      description="A Carousel Tile"
+      add_permission="cmf.ModifyPortalContent"
+      schema=".carousel.ICarouselTile"
+      class=".carousel.CarouselTile"
+      permission="zope2.View"
+      for="*"
+      />      
       
   <plone:tile
       name="collective.composition.embed"
@@ -127,7 +138,8 @@
       class=".file.FileTile"
       permission="zope2.View"
       for="*"
-      />
+    />
+
 
   <plone:tile
       name="collective.composition.link"

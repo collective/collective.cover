@@ -29,6 +29,7 @@
       <element>collective.composition.file</element>
       <element>collective.composition.link</element>
       <element>collective.composition.list</element>
+      <element>collective.composition.carousel</element>
       <element>collective.composition.richtext</element>
     </value>
   </record>

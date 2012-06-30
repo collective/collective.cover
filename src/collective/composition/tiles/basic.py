@@ -83,13 +83,14 @@ class BasicTile(PersistentCompositionTile):
     def populate_with_object(self, obj):
         super(BasicTile, self).populate_with_object(obj)
 
-        data_mgr = ITileDataManager(self)
+        data = {'title': obj.Title(),
+                'description': obj.Description()}
 
-        data_mgr.set({'title': obj.Title(),
-                      'description': obj.Description(),
-                      })
         if obj.getField('image'):
-            data_mgr.set({'image': NamedImageFile(obj.getImage().data)})
+            data['image'] = NamedImageFile(obj.getImage().data)
+
+        data_mgr = ITileDataManager(self)
+        data_mgr.set(data)
 
     def delete(self):
         data_mgr = ITileDataManager(self)
