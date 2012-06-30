@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<object name="collective.composition.composition" meta_type="Dexterity FTI"
+<object name="collective.composition.content" meta_type="Dexterity FTI"
    xmlns:i18n="http://xml.zope.org/namespaces/i18n"
    i18n:domain="collective.composition">
 
@@ -7,22 +7,22 @@
   <property name="title" i18n:translate="">Composition</property>
   <property name="description" i18n:translate="">Composable page</property>
   <property name="content_icon">++resource++collective.composition/frontpage_icon.png</property>
-  <property name="factory">collective.composition.composition</property>
+  <property name="factory">collective.composition.content</property>
   <property name="global_allow">True</property>
   <property name="filter_content_types">False</property>
   <property name="allowed_content_types" />
   <property name="allow_discussion">False</property>
 
   <!-- schema and class used for content items -->
-  <property name="schema">collective.composition.composition.IComposition</property>
-  <property name="klass">collective.composition.composition.Composition</property>
+  <property name="schema">collective.composition.content.IComposition</property>
+  <property name="klass">collective.composition.content.Composition</property>
 
   <property name="behaviors">
     <element value="plone.app.content.interfaces.INameFromTitle" />
     <element value="plone.app.dexterity.behaviors.metadata.IBasic" />
     <element value="plone.app.lockingbehavior.behaviors.ILocking" />
     <element value="plone.app.stagingbehavior.interfaces.IStagingSupport" />
-   </property>
+  </property>
 
   <!-- View information -->
   <property name="link_target"></property>

@@ -11,7 +11,7 @@ from plone.dexterity.interfaces import IDexterityFTI
 from plone.app.lockingbehavior.behaviors import ILocking
 from plone.app.stagingbehavior.interfaces import IStagingSupport
 
-from collective.composition.composition import IComposition
+from collective.composition.content import IComposition
 from collective.composition.testing import INTEGRATION_TESTING
 
 
@@ -25,7 +25,7 @@ class CompositionIntegrationTestCase(unittest.TestCase):
         self.portal.invokeFactory('Folder', 'test-folder')
         setRoles(self.portal, TEST_USER_ID, ['Member'])
         self.folder = self.portal['test-folder']
-        self.folder.invokeFactory('collective.composition.composition', 'c1',
+        self.folder.invokeFactory('collective.composition.content', 'c1',
                                   template_layout='Layout A')
         self.c1 = self.folder['c1']
 
@@ -34,18 +34,18 @@ class CompositionIntegrationTestCase(unittest.TestCase):
 
     def test_fti(self):
         fti = queryUtility(IDexterityFTI,
-                           name='collective.composition.composition')
+                           name='collective.composition.content')
         self.assertNotEqual(None, fti)
 
     def test_schema(self):
         fti = queryUtility(IDexterityFTI,
-                           name='collective.composition.composition')
+                           name='collective.composition.content')
         schema = fti.lookupSchema()
         self.assertEqual(IComposition, schema)
 
     def test_factory(self):
         fti = queryUtility(IDexterityFTI,
-                           name='collective.composition.composition')
+                           name='collective.composition.content')
         factory = fti.factory
         new_object = createObject(factory)
         self.assertTrue(IComposition.providedBy(new_object))

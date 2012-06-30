@@ -15,7 +15,7 @@ from zope.app.pagetemplate.viewpagetemplatefile import ViewPageTemplateFile
 from plone.principalsource.source import GroupsVocabularyFactory
 
 from collective.composition import _
-from collective.composition.composition import IComposition
+from collective.composition.content import IComposition
 from collective.composition.utils import assign_tile_ids
 
 #grok.templatedirs("layout_templates")

@@ -31,6 +31,8 @@ from Products.CMFCore.utils import getToolByName
 from collective.composition.controlpanel import ICompositionSettings
 from collective.composition.utils import assign_tile_ids
 
+grok.templatedir('templates')
+
 
 class IComposition(form.Schema):
     """
@@ -38,6 +40,8 @@ class IComposition(form.Schema):
     """
     form.model("models/composition.xml")
 
+
+# FIXME: we must inherit from dexterity.Item but we have to fix issue #48
 class Composition(dexterity.Container):
     """
     """

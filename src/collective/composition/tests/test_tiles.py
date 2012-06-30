@@ -26,6 +26,10 @@ class TilesTestCase(unittest.TestCase):
         qi.uninstallProducts(products=[PROJECTNAME])
         tiles = self.registry['plone.app.tiles']
         self.assertTrue(u'collective.composition.basic' not in tiles)
+        self.assertTrue(u'collective.composition.carousel' not in tiles)
         self.assertTrue(u'collective.composition.collection' not in tiles)
+        self.assertTrue(u'collective.composition.embed' not in tiles)
         self.assertTrue(u'collective.composition.file' not in tiles)
+        self.assertTrue(u'collective.composition.link' not in tiles)
+        self.assertTrue(u'collective.composition.list' not in tiles)
         self.assertTrue(u'collective.composition.richtext' not in tiles)
