@@ -4,7 +4,7 @@ from zope.annotation.interfaces import IAnnotations
 
 from plone.app.iterate.interfaces import ICheckinEvent
 
-from collective.composition.composition import IComposition
+from collective.composition.content import IComposition
 
 
 @grok.subscribe(IComposition, ICheckinEvent)

@@ -29,6 +29,8 @@ from Products.CMFCore.utils import getToolByName
 from collective.composition.controlpanel import ICompositionSettings
 from collective.composition.utils import assign_tile_ids
 
+grok.templatedir('templates')
+
 
 class IComposition(form.Schema):
     """
