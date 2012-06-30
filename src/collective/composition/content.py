@@ -39,7 +39,8 @@ class IComposition(form.Schema):
     form.model("models/composition.xml")
 
 
-class Composition(dexterity.Item):
+# FIXME: we must inherit from dexterity.Item but we have to fix issue #48
+class Composition(dexterity.Container):
     """
     """
 
