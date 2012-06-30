@@ -5,6 +5,7 @@
 .installed.cfg
 .mr.developer.cfg
 .*.kate-swp
+.DS_Store
 library-settings.txt
 log.html
 output.xml
