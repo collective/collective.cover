@@ -11,3 +11,7 @@
     line-height:1em;
     top:0px;
 }
+
+.tile-select-button {
+    cursor: pointer;
+}

@@ -9,7 +9,7 @@
                 <p tal:content="item/Title" />
                 <p tal:content="item/Description" />
                 <tal:image condition="python:hasattr(item, 'image') or hasattr(item,'Schema') and 'image' in item.Schema().keys()">
-                    <img tal:define="scales view/@@images;
+                    <img tal:define="scales item/@@images;
                                     thumbnail python: scales.scale('image', width=200, height=200);"
                         tal:condition="thumbnail"
                         tal:attributes="src thumbnail/url;
