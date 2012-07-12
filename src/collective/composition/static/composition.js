@@ -254,7 +254,7 @@ var Composition = {
 $(document).ready(function() {
     $('a.edit-tile-link, a.config-tile-link').prepOverlay({
         subtype: 'ajax',
-        filter: '#visual-portal-wrapper',
+        filter: '.tiles-edit',
         formselector: '#edit_tile',
         closeselector: 'name=buttons.cancel',
         noform: 'close',
