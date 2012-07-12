@@ -1,4 +1,4 @@
-<div class="tiles-configuration">
+<div class="tiles-edit">        
     <h1 class="documentFirstHeading" tal:content="view/form_instance/label | nothing" />
 
     <span tal:replace="structure view/contents" />

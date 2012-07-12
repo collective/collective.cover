@@ -1,6 +1,7 @@
 .layout {
     float: left;
     width: 90%;
+    position:relative;
 }
 
 #sidebar {
@@ -217,4 +218,7 @@
     position: relative;
     text-align: center;
     top: 10px;
+}
+.tiles-configuration {
+    padding:15px;
 }

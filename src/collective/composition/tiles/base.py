@@ -155,7 +155,8 @@ class PersistentCompositionTile(tiles.PersistentTile):
                 content = self.data[name]
 
             field = {'id': name,
-                     'content': content}
+                     'content': content,
+                     'title': obj.title}
             if name in conf:
                 field_conf = conf[name]
                 if ('visibility' in field_conf and

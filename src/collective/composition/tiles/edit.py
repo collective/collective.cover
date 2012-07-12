@@ -20,6 +20,7 @@ from plone.tiles.interfaces import ITileDataManager
 from plone.app.tiles.utils import appendJSONData
 
 from Products.statusmessages.interfaces import IStatusMessage
+from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
 from collective.composition import _
 
@@ -101,6 +102,7 @@ class CustomTileEdit(DefaultEditView):
     """
 
     form = CustomEditForm
+    index = ViewPageTemplateFile('templates/tileformlayout.pt')    
 
 
 class CompositionTileEditView(EditTile):

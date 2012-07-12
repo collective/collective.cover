@@ -450,8 +450,13 @@
                       e.preventDefault();
                       var url = $(this).attr("href");
                       $('#tile-configure').modal();
-                      $.get(url, function(data) {
-                        $('#tile-configure').html(data);
+                      $.ajax({
+                        type:'GET',
+                        url: url,
+                        data: {'ajax_load':true},
+                        success: function(data) {
+                            $('#tile-configure').html(data);
+                        }
                       });
                       return false;
                   });
