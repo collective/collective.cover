@@ -7,37 +7,56 @@ collective.cover
 Life, the Universe, and Everything
 ----------------------------------
 
-`Cafecito Sprint`_ is taking place right now in São Paulo to release an
-easy-to-use Plone package to create front pages. Intended audience is mainly
-news sites and intranets.
+An easy-to-use package to create complex covers for Plone sites. Under
+development (`see and comment our mockups online`_).
 
-You can `see and comment our mockups online`_. You can also `join us on IRC`_.
+Government, news sites, and intranets have special requirements on terms of
+permissions and versioning.
 
-We want to solve the following use cases:
+For instance, suppose you are running The Planet, a news site that has a bunch
+of editors focused on getting news on different topics like Economy, Health or
+Sports.
+
+If you are the main publisher of the site, you may want to leave people
+working on the Economy section to take care of their content published on the
+cover, but you don't want that same people messing around the Sports section.
+
+Also, suppose you have the final game of the World Cup and the match is going
+to be defined on penalties: you may want to prepare a couple of cover pages
+and publish the right one focused on the team that won at the end.
+
+This is the kind of issues we want to solve with this package; we are far from
+it, but that is the idea.
+
+Use cases
+^^^^^^^^^
 
 - [X] a front page may have different layouts
 - [X] layouts are created by a Site Administrator TTW
 - [ ] the package will provide some layouts by default
 - [X] layouts are made of groups of tiles
-- [ ] groups of tiles may have different editing permissions
+- [X] groups of tiles may have different editing permissions
 - [X] a Site Administrator can drag&drop tiles and groups of tiles around the
   layout
-- [ ] some tiles could be configured by Site Administrators (fields shown,
+- [X] some tiles could be configured by Site Administrators (fields shown,
   image location, and so on…)
-- [ ] a Site Administrator will define which fields will be shown on each tile
-- [ ] tiles will be associated with different kind of objects: static text
+- [X] a Site Administrator will define which fields will be shown on each tile
+- [X] tiles will be associated with different kind of objects: static text
   tiles, content type tiles, collection tiles, portlet tiles, and so on…
-- [ ] only users with specific permissions can modify the content inside a
+- [X] only users with specific permissions can modify the content inside a
   group of tiles
 - [X] a user can associate content to a tile using a simple drag&drop metaphor
   (if the content and the tile do match)
 - [ ] a user can easily edit the content of a tile in place
 - [ ] front page edition will take place on a working copy of the object
-- [ ] a front page may have versions
+- [X] a front page may have versions
 - [ ] it will be easy to implement a responsive design for a front page
 
+Alternate solutions
+^^^^^^^^^^^^^^^^^^^
+
 Over the years there have been some packages to solve the problem of creating
-front pages in Plone; we have used and are taking ideas from the following:
+covers in Plone; we have used and are taking ideas from the following:
 
 `CompositePack`_
     Very old; the legacy code is so complex that is not maintainable anymore.
@@ -56,25 +75,19 @@ front pages in Plone; we have used and are taking ideas from the following:
     interface of all. It is easily extended and there are several add-ons
     available that provide new functionality for it.
 
-collective.cover
-    This package. Some months ago `Carlos de la Guardia`_ was comisioned to
-    update `CompositePack`_ and make it run on Plone 4. He succeeded, but the
-    package proved to be hard to maintain and no further features could be
-    added. Carlos then started collective.cover implementing the best
-    ideas of `CompositePack`_ using new technologies like Dexterity. We ran
-    out of money and the work stopped for many months. Now the picture is
-    completely different and many things have become clearer. We are using
-    some of the code, but we are going to replace old concepts with new ones.
+Home Page Editor of the Brazilian Chamber of Deputies Site
+    Strongly based on `Collage`_, this package was presented at the `World
+    Plone Day 2012 Brasilia`_. It allows the edition of home pages and the
+    definition of permissions on blocks of content. Available only for Plone 3
+    and not openly published… yet.
 
 `collective.panels`_
     A new package that lets site editors add portlets to a set of new
-    locations: above and below page contents, portal top and
-    footer. The package comes with a number of flexible layouts that
-    are used to position the portlets, and locations can be fixed to
-    the nearest site object, to facilitate inheritance.
-
-    In `collective.cover` (this package), we don't want to use
-    portlets at all.
+    locations: above and below page contents, portal top and footer. The
+    package comes with a number of flexible layouts that are used to position
+    the portlets, and locations can be fixed to the nearest site object, to
+    facilitate inheritance. In `collective.cover` (this package), we don't
+    want to use portlets at all.
 
 Don't Panic
 -----------
@@ -138,7 +151,7 @@ Then do you have several ways of using image scales in your tile templates.
           tal:attributes="src thumbnail/url;
                           width thumbnail/width;
                           height thumbnail/height" />
-                          
+
 2. Or you can use Plone predefined scales::
 
      <img tal:define="scales view/@@images;
@@ -147,19 +160,17 @@ Then do you have several ways of using image scales in your tile templates.
           tal:attributes="src thumbnail/url;
                           width thumbnail/width;
                           height thumbnail/height" />
-                          
+
 Mostly Harmless
 ---------------
 
 Have an idea? Found a bug? Let us know by `opening a support ticket`_.
 
-.. _`Cafecito Sprint`: https://plone.org/events/community/cafecito-sprint
 .. _`see and comment our mockups online`: https://simples.mybalsamiq.com/projects/capas/grid
-.. _`join us on IRC`: irc://irc.freenode.net/cafecitosprint
 .. _`CompositePack`: http://plone.org/products/compositepack
 .. _`CMFContentPanels`: http://plone.org/products/cmfcontentpanels
 .. _`Collage`: http://plone.org/products/collage
+.. _`World Plone Day 2012 Brasilia`: http://colab.interlegis.leg.br/wiki/WorldPloneDay
 .. _`collective.panels`: https://github.com/collective/collective.panels
-.. _`Carlos de la Guardia`: https://github.com/cguardia
 .. _`opening a support ticket`: https://github.com/collective/collective.cover/issues
 
