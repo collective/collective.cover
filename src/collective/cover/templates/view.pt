@@ -4,7 +4,7 @@
       xmlns:i18n="http://xml.zope.org/namespaces/i18n"
       lang="en"
       metal:use-macro="context/main_template/macros/master"
-      i18n:domain="collective.composition">
+      i18n:domain="collective.cover">
 
 <metal:js fill-slot="javascript_head_slot">
  
@@ -12,7 +12,7 @@
 
 <metal:styles fill-slot="style_slot">
   <link rel="stylesheet" type="text/css" media="screen" href=""
-        tal:attributes="href string:${view/static}/composition.css" />
+        tal:attributes="href string:${view/static}/cover.css" />
 </metal:styles>
 <body>
 

@@ -39,16 +39,16 @@ from plone.rfc822.interfaces import IPrimaryFieldInfo
 
 from Products.CMFCore.utils import getToolByName
 
-from collective.composition.tiles.configuration import ITilesConfigurationScreen
+from collective.cover.tiles.configuration import ITilesConfigurationScreen
 
-from collective.composition.tiles.permissions import ITilesPermissions
+from collective.cover.tiles.permissions import ITilesPermissions
 
-from collective.composition import _
+from collective.cover import _
 
 
-class IPersistentCompositionTile(Interface):
+class IPersistentCoverTile(Interface):
     """
-    Base interface for tiles that go into the composition object
+    Base interface for tiles that go into the cover object
     """
 
     def populate_with_object(obj):
@@ -101,9 +101,9 @@ class IPersistentCompositionTile(Interface):
         """
 
 
-class PersistentCompositionTile(tiles.PersistentTile):
+class PersistentCoverTile(tiles.PersistentTile):
 
-    implements(IPersistentCompositionTile)
+    implements(IPersistentCoverTile)
 
     is_configurable = False
     is_editable = False
@@ -218,8 +218,8 @@ class AnnotationStorage(BaseAnnotationStorage):
     @property
     def storage(self):
         tile = self.context
-        composition = tile.context
-        return IAnnotations(composition).setdefault(
+        cover = tile.context
+        return IAnnotations(cover).setdefault(
             'plone.tiles.scale.%s' % tile.id,
             PersistentDict())
 

@@ -11,9 +11,9 @@ from plone.uuid.interfaces import IUUID
 
 from plone.app.uuid.utils import uuidToObject
 
-from collective.composition import _
-from collective.composition.tiles.base import IPersistentCompositionTile
-from collective.composition.tiles.base import PersistentCompositionTile
+from collective.cover import _
+from collective.cover.tiles.base import IPersistentCoverTile
+from collective.cover.tiles.base import PersistentCoverTile
 
 HTML = """
     <a href="%s/at_download/file">
@@ -39,7 +39,7 @@ def get_download_html(url, portal_url, icon, mime_type, size):
     return HTML % (url, portal_url, icon, mime_type, size_str)
 
 
-class IFileTile(IPersistentCompositionTile):
+class IFileTile(IPersistentCoverTile):
 
     title = schema.TextLine(
         title=_(u'Title'),
@@ -98,7 +98,7 @@ class IFileTile(IPersistentCompositionTile):
         """
 
 
-class FileTile(PersistentCompositionTile):
+class FileTile(PersistentCoverTile):
 
     implements(IFileTile)
 

@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: collective.composition\n"
+"Project-Id-Version: collective.cover\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"

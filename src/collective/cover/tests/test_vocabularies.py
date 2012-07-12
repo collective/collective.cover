@@ -6,7 +6,7 @@ from zope.component import queryUtility
 
 from zope.schema.interfaces import IVocabularyFactory
 
-from collective.composition.testing import INTEGRATION_TESTING
+from collective.cover.testing import INTEGRATION_TESTING
 
 
 class VocabulariesTestCase(unittest.TestCase):
@@ -17,7 +17,7 @@ class VocabulariesTestCase(unittest.TestCase):
         self.portal = self.layer['portal']
 
     def test_layouts_vocabulary(self):
-        name = 'collective.composition.AvailableLayouts'
+        name = 'collective.cover.AvailableLayouts'
         util = queryUtility(IVocabularyFactory, name)
         self.assertTrue(util is not None)
         layouts = util(self.portal)
@@ -27,16 +27,16 @@ class VocabulariesTestCase(unittest.TestCase):
         self.assertTrue(u'Layout C' in layouts)
 
     def test_tiles_vocabulary(self):
-        name = 'collective.composition.AvailableTiles'
+        name = 'collective.cover.AvailableTiles'
         util = queryUtility(IVocabularyFactory, name)
         self.assertTrue(util is not None)
         tiles = util(self.portal)
         self.assertEqual(len(tiles), 8)
-        self.assertTrue(u'collective.composition.basic' in tiles)
-        self.assertTrue(u'collective.composition.carousel' in tiles)
-        self.assertTrue(u'collective.composition.collection' in tiles)
-        self.assertTrue(u'collective.composition.embed' in tiles)
-        self.assertTrue(u'collective.composition.file' in tiles)
-        self.assertTrue(u'collective.composition.link' in tiles)
-        self.assertTrue(u'collective.composition.list' in tiles)
-        self.assertTrue(u'collective.composition.richtext' in tiles)
+        self.assertTrue(u'collective.cover.basic' in tiles)
+        self.assertTrue(u'collective.cover.carousel' in tiles)
+        self.assertTrue(u'collective.cover.collection' in tiles)
+        self.assertTrue(u'collective.cover.embed' in tiles)
+        self.assertTrue(u'collective.cover.file' in tiles)
+        self.assertTrue(u'collective.cover.link' in tiles)
+        self.assertTrue(u'collective.cover.list' in tiles)
+        self.assertTrue(u'collective.cover.richtext' in tiles)

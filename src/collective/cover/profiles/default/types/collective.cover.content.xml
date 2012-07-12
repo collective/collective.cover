@@ -1,21 +1,21 @@
 <?xml version="1.0"?>
-<object name="collective.composition.content" meta_type="Dexterity FTI"
+<object name="collective.cover.content" meta_type="Dexterity FTI"
    xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-   i18n:domain="collective.composition">
+   i18n:domain="collective.cover">
 
   <!-- Basic metadata -->
-  <property name="title" i18n:translate="">Composition</property>
+  <property name="title" i18n:translate="">cover</property>
   <property name="description" i18n:translate="">Composable page</property>
-  <property name="content_icon">++resource++collective.composition/frontpage_icon.png</property>
-  <property name="factory">collective.composition.content</property>
+  <property name="content_icon">++resource++collective.cover/frontpage_icon.png</property>
+  <property name="factory">collective.cover.content</property>
   <property name="global_allow">True</property>
   <property name="filter_content_types">False</property>
   <property name="allowed_content_types" />
   <property name="allow_discussion">False</property>
 
   <!-- schema and class used for content items -->
-  <property name="schema">collective.composition.content.IComposition</property>
-  <property name="klass">collective.composition.content.Composition</property>
+  <property name="schema">collective.cover.content.ICover</property>
+  <property name="klass">collective.cover.content.Cover</property>
 
   <property name="behaviors">
     <element value="plone.app.content.interfaces.INameFromTitle" />

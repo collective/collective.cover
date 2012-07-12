@@ -7,12 +7,12 @@ from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
 from plone.tiles.interfaces import ITileDataManager
 
-from collective.composition import _
-from collective.composition.tiles.base import IPersistentCompositionTile
-from collective.composition.tiles.base import PersistentCompositionTile
+from collective.cover import _
+from collective.cover.tiles.base import IPersistentCoverTile
+from collective.cover.tiles.base import PersistentCoverTile
 
 
-class IEmbedTile(IPersistentCompositionTile):
+class IEmbedTile(IPersistentCoverTile):
 
     embed = schema.Text(
         title=_(u'Embedding code'),
@@ -42,7 +42,7 @@ class IEmbedTile(IPersistentCompositionTile):
         """
 
 
-class EmbedTile(PersistentCompositionTile):
+class EmbedTile(PersistentCoverTile):
 
     implements(IEmbedTile)
 

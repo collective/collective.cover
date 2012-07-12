@@ -11,11 +11,11 @@ from plone.dexterity.interfaces import IDexterityFTI
 from plone.app.lockingbehavior.behaviors import ILocking
 from plone.app.stagingbehavior.interfaces import IStagingSupport
 
-from collective.composition.content import IComposition
-from collective.composition.testing import INTEGRATION_TESTING
+from collective.cover.content import ICover
+from collective.cover.testing import INTEGRATION_TESTING
 
 
-class CompositionIntegrationTestCase(unittest.TestCase):
+class CoverIntegrationTestCase(unittest.TestCase):
 
     layer = INTEGRATION_TESTING
 
@@ -25,30 +25,30 @@ class CompositionIntegrationTestCase(unittest.TestCase):
         self.portal.invokeFactory('Folder', 'test-folder')
         setRoles(self.portal, TEST_USER_ID, ['Member'])
         self.folder = self.portal['test-folder']
-        self.folder.invokeFactory('collective.composition.content', 'c1',
+        self.folder.invokeFactory('collective.cover.content', 'c1',
                                   template_layout='Layout A')
         self.c1 = self.folder['c1']
 
     def test_adding(self):
-        self.assertTrue(IComposition.providedBy(self.c1))
+        self.assertTrue(ICover.providedBy(self.c1))
 
     def test_fti(self):
         fti = queryUtility(IDexterityFTI,
-                           name='collective.composition.content')
+                           name='collective.cover.content')
         self.assertNotEqual(None, fti)
 
     def test_schema(self):
         fti = queryUtility(IDexterityFTI,
-                           name='collective.composition.content')
+                           name='collective.cover.content')
         schema = fti.lookupSchema()
-        self.assertEqual(IComposition, schema)
+        self.assertEqual(ICover, schema)
 
     def test_factory(self):
         fti = queryUtility(IDexterityFTI,
-                           name='collective.composition.content')
+                           name='collective.cover.content')
         factory = fti.factory
         new_object = createObject(factory)
-        self.assertTrue(IComposition.providedBy(new_object))
+        self.assertTrue(ICover.providedBy(new_object))
 
     def test_locking_behavior(self):
         self.assertTrue(ILocking.providedBy(self.c1))

@@ -2,7 +2,7 @@
 from zope.interface import Interface
 
 
-class ICollectiveCompositionBrowserLayer(Interface):
+class ICollectiveCoverBrowserLayer(Interface):
     """
-    collective.composition Browser Layer
+    collective.cover Browser Layer
     """

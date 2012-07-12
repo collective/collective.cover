@@ -12,7 +12,7 @@ from Products.CMFCore.utils import getToolByName
 
 from Products.CMFPlone.browser.navtree import SitemapNavtreeStrategy
 
-from collective.composition import _
+from collective.cover import _
 
 grok.templatedir("screenlets_templates")
 

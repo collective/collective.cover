@@ -27,8 +27,8 @@ from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
 from Products.statusmessages.interfaces import IStatusMessage
 
-from collective.composition.tiles.configuration import ITilesConfigurationScreen
-from collective.composition import _
+from collective.cover.tiles.configuration import ITilesConfigurationScreen
+from collective.cover import _
 
 
 class ITileConfigureView(IBrowserView):

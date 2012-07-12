@@ -12,12 +12,12 @@ from plone.namedfile.field import NamedImage
 
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
-from collective.composition import _
-from collective.composition.tiles.base import IPersistentCompositionTile
-from collective.composition.tiles.base import PersistentCompositionTile
+from collective.cover import _
+from collective.cover.tiles.base import IPersistentCoverTile
+from collective.cover.tiles.base import PersistentCoverTile
 
 
-class IListTile(IPersistentCompositionTile):
+class IListTile(IPersistentCoverTile):
 
     uuids = schema.List(title=u'Collection uuid',
         value_type=schema.TextLine(), readonly=True)
@@ -60,7 +60,7 @@ class IListTile(IPersistentCompositionTile):
         """
 
 
-class ListTile(PersistentCompositionTile):
+class ListTile(PersistentCoverTile):
 
     index = ViewPageTemplateFile("templates/list.pt")
 

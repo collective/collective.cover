@@ -3,7 +3,7 @@
       xmlns:metal="http://xml.zope.org/namespaces/metal"
       xmlns:i18n="http://xml.zope.org/namespaces/i18n"
       lang="en"
-      i18n:domain="collective.composition"
+      i18n:domain="collective.cover"
       tal:omit-tag="">
 <body tal:omit-tag="">
 

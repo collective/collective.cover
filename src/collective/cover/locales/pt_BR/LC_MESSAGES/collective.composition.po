@@ -1,7 +1,7 @@
 
 msgid ""
 msgstr ""
-"Project-Id-Version: collective.composition\n"
+"Project-Id-Version: collective.cover\n"
 "POT-Creation-Date: 2012-06-19 18:03+0000\n"
 "PO-Revision-Date: 2011-12-21 23:37-0600\n"
 "Last-Translator: André Nogueira<andre@simplesconsultoria.com.br>\n"
@@ -13,56 +13,56 @@ msgstr ""
 "Language-Code: pt_br\n"
 "Language-Name: Português brasileiro\n"
 "Preferred-Encodings: utf-8 latin1\n"
-"Domain: collective.composition\n"
+"Domain: collective.cover\n"
 
-#: collective/composition/models/composition.xml
+#: collective/cover/models/cover.xml
 msgid "Arrangement of columns and rows for composable page"
 msgstr "Disposição de linhas e colunas para a página composta"
 
-#: collective/composition/profiles/default/types/collective.composition.pagefragment.xml
+#: collective/cover/profiles/default/types/collective.cover.pagefragment.xml
 msgid "Building block for composable page"
 msgstr "Bloco básico de uma página composta"
 
-#: collective/composition/profiles/default/types/collective.composition.composition.xml
+#: collective/cover/profiles/default/types/collective.cover.cover.xml
 msgid "Composable page"
 msgstr "Página composta"
 
-#: collective/composition/profiles/default/types/collective.composition.composition.xml
-msgid "Composition"
+#: collective/cover/profiles/default/types/collective.cover.cover.xml
+msgid "cover"
 msgstr "Composição"
 
-#: collective/composition/profiles/default/types/collective.composition.contentfragment.xml
+#: collective/cover/profiles/default/types/collective.cover.contentfragment.xml
 msgid "Content Fragment"
 msgstr "Fragmento de conteúdo"
 
-#: collective/composition/profiles/default/types/collective.composition.contentfragment.xml
+#: collective/cover/profiles/default/types/collective.cover.contentfragment.xml
 msgid "Content view fragment for composable page"
 msgstr ""
 
-#: collective/composition/profiles/default/types/collective.composition.htmlfragment.xml
+#: collective/cover/profiles/default/types/collective.cover.htmlfragment.xml
 msgid "HTML Fragment"
 msgstr "Fragmento de HTML"
 
-#: collective/composition/profiles/default/types/collective.composition.htmlfragment.xml
+#: collective/cover/profiles/default/types/collective.cover.htmlfragment.xml
 msgid "HTML fragment for composable page"
 msgstr "Fragmento HTML para una página componible"
 
-#: collective/composition/models/composition.xml
+#: collective/cover/models/cover.xml
 msgid "Layout"
 msgstr "Layout"
 
-#: collective/composition/content_fragment.py:24
+#: collective/cover/content_fragment.py:24
 msgid "My Related Page"
 msgstr "Página relacionada"
 
-#: collective/composition/profiles/default/types/collective.composition.pagefragment.xml
+#: collective/cover/profiles/default/types/collective.cover.pagefragment.xml
 msgid "Page Fragment"
 msgstr "Fragmento de página"
 
-#: collective/composition/profiles/default/types/collective.composition.portletfragment.xml
+#: collective/cover/profiles/default/types/collective.cover.portletfragment.xml
 msgid "Portlet Fragment"
 msgstr "Fragmento de Portlet"
 
-#: collective/composition/profiles/default/types/collective.composition.portletfragment.xml
+#: collective/cover/profiles/default/types/collective.cover.portletfragment.xml
 msgid "Portlet view fragment for composable page"
 msgstr ""

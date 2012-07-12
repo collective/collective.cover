@@ -1,4 +1,4 @@
 <?xml version="1.0"?>
 <registry>
- <record name="collective.composition.controlpanel.ICompositionSettings.layouts" delete="true" />
+ <record name="collective.cover.controlpanel.ICoverSettings.layouts" delete="true" />
 </registry>

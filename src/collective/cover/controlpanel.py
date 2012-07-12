@@ -7,10 +7,10 @@ from zope.interface import Interface
 
 from plone.app.registry.browser import controlpanel
 
-from collective.composition import _
+from collective.cover import _
 
 
-class ICompositionSettings(Interface):
+class ICoverSettings(Interface):
     """
     Interface for the control panel form.
     """
@@ -21,20 +21,20 @@ class ICompositionSettings(Interface):
                     value_type=schema.TextLine(title=_(u'Layout')),)
 
 
-class CompositionSettingsEditForm(controlpanel.RegistryEditForm):
-    schema = ICompositionSettings
-    label = _(u'Composition Settings')
-    description = _(u'Settings for the collective.composition package')
+class CoverSettingsEditForm(controlpanel.RegistryEditForm):
+    schema = ICoverSettings
+    label = _(u'cover Settings')
+    description = _(u'Settings for the collective.cover package')
 
     #def updateFields(self):
-        #super(CompositionSettingsEditForm, self).updateFields()
+        #super(CoverSettingsEditForm, self).updateFields()
         #self.fields['layouts'].widgetFactory = TextLinesFieldWidget
 
     #def updateWidgets(self):
-        #super(CompositionSettingsEditForm, self).updateWidgets()
+        #super(CoverSettingsEditForm, self).updateWidgets()
         #self.widgets['layouts'].rows = 8
         #self.widgets['layouts'].style = u'width: 30%;'
 
 
-class CompositionSettingsControlPanel(controlpanel.ControlPanelFormWrapper):
-    form = CompositionSettingsEditForm
+class CoverSettingsControlPanel(controlpanel.ControlPanelFormWrapper):
+    form = CoverSettingsEditForm

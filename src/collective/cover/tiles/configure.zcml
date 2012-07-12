@@ -3,11 +3,11 @@
     xmlns:browser="http://namespaces.zope.org/browser"
     xmlns:i18n="http://namespaces.zope.org/i18n"
     xmlns:plone="http://namespaces.plone.org/plone"
-    i18n_domain="collective.composition">
+    i18n_domain="collective.cover">
 
     <include package=".configuration_widgets" />
     <!-- Data manager for "our" tiles -->
-    <adapter factory=".data.PersistentCompositionTileDataManager" />
+    <adapter factory=".data.PersistentCoverTileDataManager" />
 
     <browser:page
         name="configure-tile"
@@ -36,15 +36,15 @@
         name="edit-tile"
         for="zope.annotation.interfaces.IAnnotatable"
         permission="cmf.ModifyPortalContent"
-        class=".edit.CompositionTileEditView"
-        layer="collective.composition.interfaces.ICollectiveCompositionBrowserLayer"
+        class=".edit.CoverTileEditView"
+        layer="collective.cover.interfaces.ICollectiveCoverBrowserLayer"
         />
 
     <adapter
         for="zope.annotation.interfaces.IAnnotatable
              zope.publisher.interfaces.browser.IDefaultBrowserLayer
              plone.tiles.interfaces.ITileType"
-        provides=".edit.ICompositionTileEditView"
+        provides=".edit.ICoverTileEditView"
         factory=".edit.CustomTileEdit"
         />
 
@@ -58,13 +58,13 @@
   <!-- Image scale support for tile images -->
   <browser:page
       name="images"
-      for=".base.IPersistentCompositionTile"
+      for=".base.IPersistentCoverTile"
       class=".base.ImageScaling"
       permission="zope2.View"
       />
 
   <plone:tile
-      name="collective.composition.basic"
+      name="collective.cover.basic"
       title="Basic Tile"
       description="A tile with a title, decription and one image"
       add_permission="cmf.ModifyPortalContent"
@@ -75,7 +75,7 @@
       />
 
   <plone:tile
-      name="collective.composition.richtext"
+      name="collective.cover.richtext"
       title="Rich Text Tile"
       description="A tile containing rich text"
       add_permission="cmf.ModifyPortalContent"
@@ -86,7 +86,7 @@
       />
 
   <plone:tile
-      name="collective.composition.collection"
+      name="collective.cover.collection"
       title="Collection Tile"
       description="A tile that containg a Collection"
       add_permission="cmf.ModifyPortalContent"
@@ -97,7 +97,7 @@
       />
 
   <plone:tile
-      name="collective.composition.list"
+      name="collective.cover.list"
       title="List Tile"
       description="A tile that containg a List of Content Types"
       add_permission="cmf.ModifyPortalContent"
@@ -108,7 +108,7 @@
       />
 
   <plone:tile
-      name="collective.composition.carousel"
+      name="collective.cover.carousel"
       title="Carousel Tile"
       description="A Carousel Tile"
       add_permission="cmf.ModifyPortalContent"
@@ -116,10 +116,10 @@
       class=".carousel.CarouselTile"
       permission="zope2.View"
       for="*"
-      />      
-      
+      />
+
   <plone:tile
-      name="collective.composition.embed"
+      name="collective.cover.embed"
       title="Embedding Tile"
       description="A tile to embed content"
       add_permission="cmf.ModifyPortalContent"
@@ -130,7 +130,7 @@
       />
 
   <plone:tile
-      name="collective.composition.file"
+      name="collective.cover.file"
       title="File Tile"
       description="A tile that containg a File"
       add_permission="cmf.ModifyPortalContent"
@@ -142,7 +142,7 @@
 
 
   <plone:tile
-      name="collective.composition.link"
+      name="collective.cover.link"
       title="Link Tile"
       description="A tile that references a Link."
       add_permission="cmf.ModifyPortalContent"
@@ -154,16 +154,16 @@
 
   <adapter for="zope.interface.Interface
                 zope.publisher.interfaces.browser.IBrowserRequest
-                collective.composition.tiles.base.IPersistentCompositionTile"
-    provides="collective.composition.tiles.configuration.ITilesConfigurationScreen"
-    factory="collective.composition.tiles.configuration.TilesConfigurationScreen"
+                collective.cover.tiles.base.IPersistentCoverTile"
+    provides="collective.cover.tiles.configuration.ITilesConfigurationScreen"
+    factory="collective.cover.tiles.configuration.TilesConfigurationScreen"
     />
 
   <adapter for="zope.interface.Interface
                 zope.publisher.interfaces.browser.IBrowserRequest
-                collective.composition.tiles.base.IPersistentCompositionTile"
-    provides="collective.composition.tiles.permissions.ITilesPermissions"
-    factory="collective.composition.tiles.permissions.TilesPermissions"
+                collective.cover.tiles.base.IPersistentCoverTile"
+    provides="collective.cover.tiles.permissions.ITilesPermissions"
+    factory="collective.cover.tiles.permissions.TilesPermissions"
     />
 
 </configure>

@@ -9,12 +9,12 @@ from plone.tiles.interfaces import ITileDataManager
 
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
-from collective.composition import _
-from collective.composition.tiles.base import IPersistentCompositionTile
-from collective.composition.tiles.base import PersistentCompositionTile
+from collective.cover import _
+from collective.cover.tiles.base import IPersistentCoverTile
+from collective.cover.tiles.base import PersistentCoverTile
 
 
-class IBasicTileData(IPersistentCompositionTile):
+class IBasicTileData(IPersistentCoverTile):
 
     title = schema.TextLine(
         title=_(u'Title'),
@@ -58,9 +58,9 @@ class IBasicTileData(IPersistentCompositionTile):
         """
 
 
-class BasicTile(PersistentCompositionTile):
+class BasicTile(PersistentCoverTile):
 
-    implements(IPersistentCompositionTile)
+    implements(IPersistentCoverTile)
 
     index = ViewPageTemplateFile("templates/basic.pt")
 

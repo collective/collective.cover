@@ -13,11 +13,11 @@ from plone.tiles.interfaces import ITileDataManager
 
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
-from collective.composition.tiles.base import IPersistentCompositionTile
-from collective.composition.tiles.base import PersistentCompositionTile
+from collective.cover.tiles.base import IPersistentCoverTile
+from collective.cover.tiles.base import PersistentCoverTile
 
 
-class IRichTextTileData(IPersistentCompositionTile):
+class IRichTextTileData(IPersistentCoverTile):
 
     text = RichText(title=u'Text')
 
@@ -37,7 +37,7 @@ class IRichTextTileData(IPersistentCompositionTile):
         This method removes the persistent data created for this tile
         """
 
-class RichTextTile(PersistentCompositionTile):
+class RichTextTile(PersistentCoverTile):
 
     index = ViewPageTemplateFile("templates/richtext.pt")
 

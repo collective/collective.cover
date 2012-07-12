@@ -157,7 +157,7 @@
     cursor:pointer;
     border-left:1px dashed #CCCCCC;
     border-bottom:1px dashed #CCCCCC;    
-    background: #FFF url(/++resource++collective.composition/arrow-right.gif) no-repeat center center;
+    background: #FFF url(/++resource++collective.cover/arrow-right.gif) no-repeat center center;
 }
 
 .remove-column {
@@ -168,7 +168,7 @@
     width: 10px;
     cursor:pointer;
     border-left:1px dashed #CCCCCC;
-    background: #FFF url(/++resource++collective.composition/arrow-left.gif) no-repeat center center;
+    background: #FFF url(/++resource++collective.cover/arrow-left.gif) no-repeat center center;
 }
 .add-column.disabled {
     background-color:#eaeaea;
@@ -184,15 +184,15 @@
     width: 22px;
 }
 #btn-row .icon-white{
-    background: url(/++resource++collective.composition/rows.png) no-repeat 0 0;
+    background: url(/++resource++collective.cover/rows.png) no-repeat 0 0;
 }
 
 #btn-column .icon-white{
-    background: url(/++resource++collective.composition/columns.png) no-repeat 0 0;
+    background: url(/++resource++collective.cover/columns.png) no-repeat 0 0;
 }
 
 #btn-tile .icon-white{
-    background: url(/++resource++collective.composition/tiles.png) no-repeat 0 0;
+    background: url(/++resource++collective.cover/tiles.png) no-repeat 0 0;
 }
 
 #group-select-list,
@@ -204,11 +204,11 @@
     display:none;
 }
 
-#collective-composition-list-uuids-size {
+#collective-cover-list-uuids-size {
     width: 25px;
 }
 
-#content #collective-composition-list-uuids-tiletitle {
+#content #collective-cover-list-uuids-tiletitle {
     width: 100px;
     font-size: 1em;
 }

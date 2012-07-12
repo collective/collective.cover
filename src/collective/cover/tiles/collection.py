@@ -9,11 +9,11 @@ from plone.tiles.interfaces import ITileDataManager
 
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
-from collective.composition.tiles.base import IPersistentCompositionTile
-from collective.composition.tiles.base import PersistentCompositionTile
+from collective.cover.tiles.base import IPersistentCoverTile
+from collective.cover.tiles.base import PersistentCoverTile
 
 
-class ICollectionTile(IPersistentCompositionTile):
+class ICollectionTile(IPersistentCoverTile):
 
     uuid = TextLine(title=u'Collection uuid')
 
@@ -45,7 +45,7 @@ class ICollectionTile(IPersistentCompositionTile):
         """
 
 
-class CollectionTile(PersistentCompositionTile):
+class CollectionTile(PersistentCoverTile):
 
     index = ViewPageTemplateFile("templates/collection.pt")
 

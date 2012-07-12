@@ -10,7 +10,7 @@ from zope.schema.vocabulary import SimpleVocabulary
 
 from plone.registry.interfaces import IRegistry
 
-from collective.composition.controlpanel import ICompositionSettings
+from collective.cover.controlpanel import ICoverSettings
 
 
 class AvailableLayoutsVocabulary(object):
@@ -19,13 +19,13 @@ class AvailableLayoutsVocabulary(object):
     def __call__(self, context):
 
         registry = getUtility(IRegistry)
-        settings = registry.forInterface(ICompositionSettings)
+        settings = registry.forInterface(ICoverSettings)
 
         items = [SimpleTerm(value=i, title=i) for i in settings.layouts]
         return SimpleVocabulary(items)
 
 grok.global_utility(AvailableLayoutsVocabulary,
-                    name=u'collective.composition.AvailableLayouts')
+                    name=u'collective.cover.AvailableLayouts')
 
 
 class AvailableTilesVocabulary(object):
@@ -36,9 +36,9 @@ class AvailableTilesVocabulary(object):
         registry = getUtility(IRegistry)
         tiles = registry['plone.app.tiles']
 
-        # TODO: verify the tile implements IPersistentCompositionTile
+        # TODO: verify the tile implements IPersistentCoverTile
         items = [SimpleTerm(value=i, title=i) for i in tiles]
         return SimpleVocabulary(items)
 
 grok.global_utility(AvailableTilesVocabulary,
-                    name=u'collective.composition.AvailableTiles')
+                    name=u'collective.cover.AvailableTiles')

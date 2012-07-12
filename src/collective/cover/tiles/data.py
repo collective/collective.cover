@@ -9,20 +9,20 @@ from zope.schema import getFields
 from plone.tiles.data import PersistentTileDataManager
 from plone.namedfile.interfaces import INamedImage
 
-from collective.composition.tiles.base import IPersistentCompositionTile
+from collective.cover.tiles.base import IPersistentCoverTile
 
 
-class PersistentCompositionTileDataManager(PersistentTileDataManager):
+class PersistentCoverTileDataManager(PersistentTileDataManager):
     """
     A data reader for persistent tiles operating on annotatable contexts.
     The data is retrieved from an annotation.
     Specific configuration is applied
     """
 
-    adapts(IPersistentCompositionTile)
+    adapts(IPersistentCoverTile)
 
     def __init__(self, tile):
-        super(PersistentCompositionTileDataManager, self).__init__(tile)
+        super(PersistentCoverTileDataManager, self).__init__(tile)
         self.applyTileConfigurations()
 
 

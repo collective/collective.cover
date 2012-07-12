@@ -22,12 +22,13 @@ from plone.app.tiles.utils import appendJSONData
 from Products.statusmessages.interfaces import IStatusMessage
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
-from collective.composition import _
+from collective.cover import _
 
 
-class ICompositionTileEditView(IBrowserView):
+class ICoverTileEditView(IBrowserView):
     """
     """
+
 
 class CustomEditForm(DefaultEditForm):
     """Standard tile edit form, which is wrapped by DefaultEditView (see
@@ -102,13 +103,13 @@ class CustomTileEdit(DefaultEditView):
     """
 
     form = CustomEditForm
-    index = ViewPageTemplateFile('templates/tileformlayout.pt')    
+    index = ViewPageTemplateFile('templates/tileformlayout.pt')
 
 
-class CompositionTileEditView(EditTile):
+class CoverTileEditView(EditTile):
     """
     Implements the @@edit-tile namespace for our specific tiles, so we can
     check permissions.
     """
 
-    targetInterface = ICompositionTileEditView
+    targetInterface = ICoverTileEditView

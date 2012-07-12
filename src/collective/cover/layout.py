@@ -14,18 +14,18 @@ from zope.app.pagetemplate.viewpagetemplatefile import ViewPageTemplateFile
 
 from plone.principalsource.source import GroupsVocabularyFactory
 
-from collective.composition import _
-from collective.composition.content import IComposition
-from collective.composition.utils import assign_tile_ids
+from collective.cover import _
+from collective.cover.content import ICover
+from collective.cover.utils import assign_tile_ids
 
 #grok.templatedirs("layout_templates")
 
 
 class PageLayout(grok.View):
     """
-    Renders a layout for the composition object.
+    Renders a layout for the cover object.
     """
-    grok.context(IComposition)
+    grok.context(ICover)
     grok.name('layout')
     grok.require('zope2.View')
 
@@ -36,7 +36,7 @@ class PageLayout(grok.View):
     generalmarkup = ViewPageTemplateFile('layout_templates/generalmarkup.pt')
 
     def get_layout(self):
-        layout = json.loads(self.context.composition_layout)
+        layout = json.loads(self.context.cover_layout)
 
         return layout
 
@@ -87,23 +87,23 @@ class PageLayout(grok.View):
 
 
 class LayoutSave(grok.View):
-    grok.context(IComposition)
+    grok.context(ICover)
     grok.name('save_layout')
     grok.require('zope2.View')
 
     def save(self):
-        composition_layout = self.request.get('composition_layout')
+        cover_layout = self.request.get('cover_layout')
 
-        layout = json.loads(composition_layout)
+        layout = json.loads(cover_layout)
 
         assign_tile_ids(layout, override=False)
 
-        composition_layout = json.dumps(layout)
+        cover_layout = json.dumps(layout)
 
-        self.context.composition_layout = composition_layout
+        self.context.cover_layout = cover_layout
         self.context.reindexObject()
 
-        return composition_layout
+        return cover_layout
 
     def render(self):
         save = self.save()
@@ -111,13 +111,13 @@ class LayoutSave(grok.View):
 
 
 class TileSelect(grok.View):
-    grok.context(IComposition)
+    grok.context(ICover)
     grok.name('tile_select')
     grok.require('zope2.View')
 
     def update(self):
         self.context = aq_inner(self.context)
-        name = 'collective.composition.AvailableTiles'
+        name = 'collective.cover.AvailableTiles'
         available_tiles = queryUtility(IVocabularyFactory, name)
         # the view is expecting a dictionary of "tile types"
         self.tiles = [{'tile_type': name.value}
@@ -125,7 +125,7 @@ class TileSelect(grok.View):
 
 
 class UidGetter(grok.View):
-    grok.context(IComposition)
+    grok.context(ICover)
     grok.name('uid_getter')
     grok.require('zope2.View')
 
@@ -133,7 +133,7 @@ class UidGetter(grok.View):
         return uuid.uuid4().hex
 
 class GroupSelect(grok.View):
-    grok.context(IComposition)
+    grok.context(ICover)
     grok.name('group_select')
     grok.require('zope2.View')
     

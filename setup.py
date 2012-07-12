@@ -7,7 +7,7 @@ long_description = open("README.txt").read() + "\n" + \
                    open(os.path.join("docs", "CREDITS.txt")).read() + "\n" + \
                    open(os.path.join("docs", "HISTORY.txt")).read()
 
-setup(name='collective.composition',
+setup(name='collective.cover',
       version=version,
       description="An easy-to-use package to create complex front pages in Plone.",
       long_description=long_description,
@@ -27,10 +27,10 @@ setup(name='collective.composition',
         "Topic :: Office/Business :: News/Diary",
         "Topic :: Software Development :: Libraries :: Python Modules",
         ],
-      keywords='plone composition javascript',
+      keywords='plone cover javascript',
       author='Carlos de la Guardia',
       author_email='cguardia@yahoo.com',
-      url='https://github.com/collective/collective.composition',
+      url='https://github.com/collective/collective.cover',
       license='GPLv2',
       packages=find_packages('src'),
       package_dir={'': 'src'},

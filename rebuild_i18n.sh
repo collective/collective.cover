@@ -1,7 +1,7 @@
 #! /bin/sh
 
-I18NDOMAIN="collective.composition"
-BASE_DIRECTORY="src/collective/composition"
+I18NDOMAIN="collective.cover"
+BASE_DIRECTORY="src/collective/cover"
 
 # Synchronise the templates and scripts with the .pot.
 i18ndude rebuild-pot --pot ${BASE_DIRECTORY}/locales/${I18NDOMAIN}.pot \

@@ -28,34 +28,34 @@ from Products.CMFPlone.interfaces import INonStructuralFolder
 
 from Products.CMFCore.utils import getToolByName
 
-from collective.composition.controlpanel import ICompositionSettings
-from collective.composition.utils import assign_tile_ids
+from collective.cover.controlpanel import ICoverSettings
+from collective.cover.utils import assign_tile_ids
 
 grok.templatedir('templates')
 
 
-class IComposition(form.Schema):
+class ICover(form.Schema):
     """
     Composable page
     """
-    form.model("models/composition.xml")
+    form.model("models/cover.xml")
 
 
 # FIXME: we must inherit from dexterity.Item but we have to fix issue #48
-class Composition(dexterity.Container):
+class Cover(dexterity.Container):
     """
     """
-    grok.implements(IComposition, INonStructuralFolder)
+    grok.implements(ICover, INonStructuralFolder)
 
 
 class View(grok.View):
-    grok.context(IComposition)
+    grok.context(ICover)
     grok.require('zope2.View')
     grok.name('view')
 
 
 class AddCTWidget(grok.View):
-    grok.context(IComposition)
+    grok.context(ICover)
     grok.require('cmf.ModifyPortalContent')
 
     def render(self):
@@ -75,7 +75,7 @@ class AddCTWidget(grok.View):
 
 
 class AddTileWidget(grok.View):
-    grok.context(IComposition)
+    grok.context(ICover)
     grok.require('cmf.ModifyPortalContent')
 
     def render(self):
@@ -104,7 +104,7 @@ class AddTileWidget(grok.View):
 
 
 class SetWidgetMap(grok.View):
-    grok.context(IComposition)
+    grok.context(ICover)
     grok.require('cmf.ModifyPortalContent')
 
     def render(self):
@@ -115,7 +115,7 @@ class SetWidgetMap(grok.View):
 
 
 class UpdateWidget(grok.View):
-    grok.context(IComposition)
+    grok.context(ICover)
     grok.require('cmf.ModifyPortalContent')
 
     def render(self):
@@ -128,7 +128,7 @@ class UpdateWidget(grok.View):
 
 class RemoveTileWidget(grok.View):
     # XXX: This should be part of the plone.app.tiles package or similar
-    grok.context(IComposition)
+    grok.context(ICover)
     grok.require('cmf.ModifyPortalContent')
     grok.name("removetilewidget")
 
@@ -154,7 +154,7 @@ class RemoveTileWidget(grok.View):
 # TODO: implement EditCancelledEvent and EditFinishedEvent
 # XXX: we need to leave the view after saving or cancelling editing
 class Compose(grok.View):
-    grok.context(IComposition)
+    grok.context(ICover)
     grok.require('cmf.ModifyPortalContent')
 
     def update(self):
@@ -166,7 +166,7 @@ class Compose(grok.View):
 # TODO: implement EditCancelledEvent and EditFinishedEvent
 # XXX: we need to leave the view after saving or cancelling editing
 class LayoutEdit(grok.View):
-    grok.context(IComposition)
+    grok.context(ICover)
     grok.require('cmf.ModifyPortalContent')
 
     def update(self):
@@ -176,7 +176,7 @@ class LayoutEdit(grok.View):
 
 
 class UpdateTileContent(grok.View):
-    grok.context(IComposition)
+    grok.context(ICover)
     grok.require('cmf.ModifyPortalContent')
 
     def render(self):
@@ -206,7 +206,7 @@ class UpdateTileContent(grok.View):
         return tile_instance()
 
 class UpdateListTileContent(grok.View):
-    grok.context(IComposition)
+    grok.context(ICover)
     grok.require('cmf.ModifyPortalContent')
 
     def render(self):
@@ -231,7 +231,7 @@ class UpdateListTileContent(grok.View):
         return html
  
 class DeleteTile(grok.View):
-    grok.context(IComposition)
+    grok.context(ICover)
     grok.require('cmf.ModifyPortalContent')
 
     def render(self):
@@ -244,16 +244,16 @@ class DeleteTile(grok.View):
             tile_instance.delete()
 
 
-@grok.subscribe(IComposition, IObjectAddedEvent)
-def assign_id_for_tiles(composition, event):
-    if not composition.composition_layout:
-        # When versioning, a new composition gets created, so, if we already
-        # have a composition_layout stored, do not overwrite it
+@grok.subscribe(ICover, IObjectAddedEvent)
+def assign_id_for_tiles(cover, event):
+    if not cover.cover_layout:
+        # When versioning, a new cover gets created, so, if we already
+        # have a cover_layout stored, do not overwrite it
         registry = getUtility(IRegistry)
-        settings = registry.forInterface(ICompositionSettings)
+        settings = registry.forInterface(ICoverSettings)
 
-        layout = settings.layouts[composition.template_layout]
+        layout = settings.layouts[cover.template_layout]
         layout = json.loads(layout)
         assign_tile_ids(layout)
 
-        composition.composition_layout = json.dumps(layout)
+        cover.cover_layout = json.dumps(layout)

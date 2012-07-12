@@ -4,11 +4,11 @@ from zope.annotation.interfaces import IAnnotations
 
 from plone.app.iterate.interfaces import ICheckinEvent
 
-from collective.composition.content import IComposition
+from collective.cover.content import ICover
 
 
-@grok.subscribe(IComposition, ICheckinEvent)
-def override_object_annotations(composition, event):
+@grok.subscribe(ICover, ICheckinEvent)
+def override_object_annotations(cover, event):
     """
     We need to override the annotations stored in the old object with the
     ones in the working copy, and to do that, we first need to remove

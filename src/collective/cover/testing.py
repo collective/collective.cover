@@ -12,20 +12,20 @@ class Fixture(PloneSandboxLayer):
 
     def setUpZope(self, app, configurationContext):
         # Load ZCML
-        import collective.composition
-        self.loadZCML(package=collective.composition)
+        import collective.cover
+        self.loadZCML(package=collective.cover)
 
     def setUpPloneSite(self, portal):
         # Install into Plone site using portal_setup
-        self.applyProfile(portal, 'collective.composition:default')
+        self.applyProfile(portal, 'collective.cover:default')
 
 
 FIXTURE = Fixture()
 INTEGRATION_TESTING = IntegrationTesting(
     bases=(FIXTURE,),
-    name='collective.composition:Integration',
+    name='collective.cover:Integration',
     )
 FUNCTIONAL_TESTING = FunctionalTesting(
     bases=(FIXTURE,),
-    name='collective.composition:Functional',
+    name='collective.cover:Functional',
     )

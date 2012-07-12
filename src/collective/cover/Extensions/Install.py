@@ -2,7 +2,7 @@
 
 from Products.CMFCore.utils import getToolByName
 
-from collective.composition.config import PROJECTNAME
+from collective.cover.config import PROJECTNAME
 
 
 def uninstall(portal, reinstall=False):

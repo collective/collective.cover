@@ -5,17 +5,17 @@ import unittest2 as unittest
 from plone.app.testing import TEST_USER_ID
 from plone.app.testing import setRoles
 
-from collective.composition.config import PROJECTNAME
-from collective.composition.testing import INTEGRATION_TESTING
+from collective.cover.config import PROJECTNAME
+from collective.cover.testing import INTEGRATION_TESTING
 
 JS = [
-    '++resource++collective.composition/bootstrap.min.js',
-    '++resource++collective.composition/screenlets.js',
+    '++resource++collective.cover/bootstrap.min.js',
+    '++resource++collective.cover/screenlets.js',
     ]
 
 CSS = [
-    '++resource++collective.composition/bootstrap.min.css',
-    '++resource++collective.composition/screenlets.css',
+    '++resource++collective.cover/bootstrap.min.css',
+    '++resource++collective.cover/screenlets.css',
     ]
 
 

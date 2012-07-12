@@ -11,12 +11,12 @@ from plone.uuid.interfaces import IUUID
 
 from plone.app.uuid.utils import uuidToObject
 
-from collective.composition import _
-from collective.composition.tiles.base import IPersistentCompositionTile
-from collective.composition.tiles.base import PersistentCompositionTile
+from collective.cover import _
+from collective.cover.tiles.base import IPersistentCoverTile
+from collective.cover.tiles.base import PersistentCoverTile
 
 
-class ILinkTile(IPersistentCompositionTile):
+class ILinkTile(IPersistentCoverTile):
 
     title = schema.TextLine(
         title=_(u'Title'),
@@ -70,7 +70,7 @@ class ILinkTile(IPersistentCompositionTile):
         """
 
 
-class LinkTile(PersistentCompositionTile):
+class LinkTile(PersistentCoverTile):
 
     implements(ILinkTile)
 

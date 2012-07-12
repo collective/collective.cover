@@ -14,7 +14,7 @@ $(document).ready(function() {
             $this.find('span').text('Saving...');
             $.ajax({
                 'url':'@@save_layout',
-                'data': {'composition_layout':JSON.stringify(json)},
+                'data': {'cover_layout':JSON.stringify(json)},
                 'type':'POST',
                 success: function(data) {
                     $this.find('span').text('Saved');

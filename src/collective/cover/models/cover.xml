@@ -2,7 +2,7 @@
 <model xmlns="http://namespaces.plone.org/supermodel/schema"
        xmlns:form="http://namespaces.plone.org/supermodel/form"
        xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-       i18n:domain="collective.composition">
+       i18n:domain="collective.cover">
 
     <schema>
 
@@ -12,17 +12,17 @@
                 Choose one of the predefined layouts
             </description>
             <title i18n:translate="">Layout</title>
-            <vocabulary>collective.composition.AvailableLayouts</vocabulary>
+            <vocabulary>collective.cover.AvailableLayouts</vocabulary>
         </field>
 
-        <field name="composition_layout" type="zope.schema.Text"
+        <field name="cover_layout" type="zope.schema.Text"
                form:omitted="z3c.form.interfaces.IForm:true
                              z3c.form.interfaces.IAddForm:true
                              z3c.form.interfaces.IEditForm:true">
             <description i18n:translate="">
                 The layout to be used to render groups and tiles
             </description>
-            <title i18n:translate="">Composition Layout</title>
+            <title i18n:translate="">cover Layout</title>
         </field>
 
     </schema>

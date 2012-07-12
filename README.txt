@@ -1,6 +1,6 @@
-**********************
-collective.composition
-**********************
+****************
+collective.cover
+****************
 
 .. contents:: Table of Contents
 
@@ -56,11 +56,11 @@ front pages in Plone; we have used and are taking ideas from the following:
     interface of all. It is easily extended and there are several add-ons
     available that provide new functionality for it.
 
-collective.composition
+collective.cover
     This package. Some months ago `Carlos de la Guardia`_ was comisioned to
     update `CompositePack`_ and make it run on Plone 4. He succeeded, but the
     package proved to be hard to maintain and no further features could be
-    added. Carlos then started collective.composition implementing the best
+    added. Carlos then started collective.cover implementing the best
     ideas of `CompositePack`_ using new technologies like Dexterity. We ran
     out of money and the work stopped for many months. Now the picture is
     completely different and many things have become clearer. We are using
@@ -73,21 +73,21 @@ collective.composition
     are used to position the portlets, and locations can be fixed to
     the nearest site object, to facilitate inheritance.
 
-    In `collective.composition` (this package), we don't want to use
+    In `collective.cover` (this package), we don't want to use
     portlets at all.
 
 Don't Panic
 -----------
 
-How to develop a tile for collective.composition
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+How to develop a tile for collective.cover
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Follow instructions in
 http://davisagli.com/blog/using-tiles-to-provide-more-flexible-plone-layouts
 to understand how to develop tiles, and how they work.
 
 Instead of inheriting from plone.tiles.PersistentTile, inherit from
-collective.composition.tile.base.PersistentCompositionTile.
+collective.cover.tile.base.PersistentCoverTile.
 
 Register your tile on the registry using the "plone.app.tiles" record::
 
@@ -98,13 +98,13 @@ Register your tile on the registry using the "plone.app.tiles" record::
     </record>
 
 There are a couple of methods defined in this base class that provide
-additional functionality expected by the composition object, that you should
+additional functionality expected by the cover object, that you should
 override in your class:
 
 **populate_with_object(obj)**
     It takes a CT object as parameter, and it will store the content into the
     tile.
-    Make sure to call PersistentCompositionTile's populate_with_object to
+    Make sure to call PersistentCoverTile's populate_with_object to
     check for permissions before adding content to the tile. Check existing
     tiles on how they do it.
 
@@ -161,5 +161,5 @@ Have an idea? Found a bug? Let us know by `opening a support ticket`_.
 .. _`Collage`: http://plone.org/products/collage
 .. _`collective.panels`: https://github.com/collective/collective.panels
 .. _`Carlos de la Guardia`: https://github.com/cguardia
-.. _`opening a support ticket`: https://github.com/collective/collective.composition/issues
+.. _`opening a support ticket`: https://github.com/collective/collective.cover/issues
 
