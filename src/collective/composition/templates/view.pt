@@ -7,9 +7,7 @@
       i18n:domain="collective.composition">
 
 <metal:js fill-slot="javascript_head_slot">
-  <script type="text/javascript"
-          tal:attributes="src string:${view/static}/composition.js">
-  </script>
+ 
 </metal:js>
 
 <metal:styles fill-slot="style_slot">

@@ -112,6 +112,11 @@ class PersistentCompositionTile(tiles.PersistentTile):
         if not self.isAllowedToEdit():
             raise Unauthorized(_("You are not allowed to add content to "
                                  "this tile"))
+    
+    def replace_with_objects(self, obj):
+        if not self.isAllowedToEdit():
+            raise Unauthorized(_("You are not allowed to add content to "
+                                  "this tile"))
 
     def delete(self):
         data_mgr = ITileDataManager(self)
