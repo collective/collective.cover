@@ -22,6 +22,15 @@
 </metal:styles>
 
 <metal:main fill-slot="main">
+    <form action="." tal:attributes="action request/URL" method="post"
+          enctype="multipart/form-data">
+          
+      <label for='layout-name' i18n:translate=''>Layout name</label>
+      <input type='text' name='layout-name' value='' />
+      <input type='submit' value='Export layout' name='export-layout'
+             i18n:attributes='value' />
+    </form>
+
     <div class="layout">
         <div tal:define="layout nocall:context/@@layout"
              tal:replace="structure layout/render_layout_edit" />

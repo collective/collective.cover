@@ -17,7 +17,7 @@
                <p i18n:translate="">The collections don't have any results.</p>
             </div>
             <div tal:repeat="obj results">
-                <p tal:content="obj/Title">
+                <p tal:content="obj/Title" />
             </div>
         </tal:results>
     </tal:has_data>

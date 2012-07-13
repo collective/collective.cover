@@ -1,0 +1,210 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: collective.cover\n"
+"POT-Creation-Date: 2012-07-13 22:48+0000\n"
+"PO-Revision-Date: 2011-12-21 23:37-0600\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"Language-Code: en\n"
+"Language-Name: English\n"
+"Preferred-Encodings: utf-8 latin1\n"
+"Domain: collective.cover\n"
+
+#: collective/cover/screenlets_templates/content_screenlet.pt:44
+msgid "Add Content"
+msgstr "Agregar Contenido"
+
+#: collective/cover/tiles/configuration_view.py:197
+#: collective/cover/tiles/edit.py:90
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: collective/cover/models/cover.xml
+msgid "Choose one of the predefined layouts"
+msgstr "Elija uno de los diseños predefinidos"
+
+#: collective/cover/screenlets_templates/content_screenlet.pt:16
+msgid "Clipboard"
+msgstr "Portapapeles"
+
+#: collective/cover/profiles/default/types/collective.cover.content.xml
+msgid "Composable page"
+msgstr "Página compuesta"
+
+#: collective/cover/tiles/configuration_view.py:159
+msgid "Configure ${name}"
+msgstr "Configurar ${name}"
+
+#: collective/cover/screenlets_templates/content_screenlet.pt:17
+msgid "Content tree"
+msgstr "Árbol de contenido"
+
+#: collective/cover/profiles/default/controlpanel.xml
+msgid "Cover Settings"
+msgstr "Configuraciones de portada"
+
+#: collective/cover/tiles/basic.py:25
+#: collective/cover/tiles/carousel.py:32
+#: collective/cover/tiles/embed.py:28
+msgid "Description"
+msgstr "Descripción"
+
+#: collective/cover/tiles/file.py:60
+msgid "Download link"
+msgstr "Link de descarga"
+
+#: collective/cover/tiles/embed.py:18
+msgid "Embedding code"
+msgstr "Código a integrar"
+
+#: collective/cover/templates/layoutedit.pt:30
+msgid "Export layout"
+msgstr "Exportar diseño"
+
+#: collective/cover/tiles/configuration_widgets/textline.pt:42
+msgid "HTML tag"
+msgstr "Tag HTML"
+
+#: collective/cover/tiles/basic.py:30
+#: collective/cover/tiles/carousel.py:38
+#: collective/cover/tiles/file.py:55
+msgid "Image"
+msgstr "Imagen"
+
+#: collective/cover/tiles/configuration_widgets/namedimage.pt:42
+msgid "Image size"
+msgstr "Tamaño de imagen"
+
+#: collective/cover/controlpanel.py:21
+#: collective/cover/models/cover.xml
+msgid "Layout"
+msgstr "Diseño"
+
+#: collective/cover/templates/layoutedit.pt:28
+msgid "Layout name"
+msgstr "Nombre de diseño"
+
+#: collective/cover/controlpanel.py:19
+msgid "Layouts"
+msgstr "Diseños"
+
+#: collective/cover/controlpanel.py:20
+msgid "Name"
+msgstr "Nombre"
+
+#: collective/cover/tiles/configuration_widgets/basewidget.pt:30
+#: collective/cover/tiles/configuration_widgets/namedimage.pt:30
+#: collective/cover/tiles/configuration_widgets/richtext.pt:30
+msgid "No"
+msgstr "No"
+
+#: collective/cover/tiles/configuration_widgets/list.pt:12
+msgid "Number of items"
+msgstr "Número de elementos"
+
+#: collective/cover/tiles/configuration_widgets/basewidget.pt:32
+#: collective/cover/tiles/configuration_widgets/namedimage.pt:32
+#: collective/cover/tiles/configuration_widgets/richtext.pt:32
+msgid "Order"
+msgstr "Orden"
+
+#: collective/cover/tiles/configuration_widgets/namedimage.pt:58
+msgid "Position"
+msgstr "Posición"
+
+#: collective/cover/screenlets_templates/content_screenlet.pt:15
+msgid "Recent items"
+msgstr "Elementos recientes"
+
+#: collective/cover/tiles/configuration_view.py:163
+#: collective/cover/tiles/edit.py:52
+msgid "Save"
+msgstr "Guardar"
+
+#: collective/cover/tiles/templates/collection.pt:10
+msgid "Select a Collection to fill this tile."
+msgstr "Seleccione una colección para llenar este tile"
+
+#: collective/cover/controlpanel.py:27
+msgid "Settings for the collective.cover package"
+msgstr "Preferencias para el paquete collective.cover"
+
+#: collective/cover/tiles/configuration_widgets/list.pt:31
+msgid "Show List Title"
+msgstr "Mostrar título de la lista"
+
+#: collective/cover/tiles/configuration_widgets/richtext.pt:42
+msgid "Text length"
+msgstr "Longitud del texto"
+
+#: collective/cover/tiles/templates/collection.pt:17
+msgid "The collections don't have any results."
+msgstr "Las colecciones no tienen ningún resultado."
+
+#: collective/cover/models/cover.xml
+msgid "The layout to be used to render groups and tiles"
+msgstr "El diseño para ser usado para mostrar grupos y tiles"
+
+#: collective/cover/tiles/configuration_view.py:206
+msgid "Tile configuration cancelled."
+msgstr "Configuración del tile cancelado"
+
+#: collective/cover/tiles/configuration_view.py:193
+msgid "Tile configuration saved."
+msgstr "Configuración del tile guardada."
+
+#: collective/cover/tiles/edit.py:86
+msgid "Tile saved"
+msgstr "Tile guardado"
+
+#: collective/cover/tiles/basic.py:20
+#: collective/cover/tiles/carousel.py:26
+#: collective/cover/tiles/embed.py:23
+msgid "Title"
+msgstr "Titulo"
+
+#: collective/cover/tiles/link.py:37
+msgid "URL"
+msgstr "URL"
+
+#: collective/cover/tiles/file.py:66
+#: collective/cover/tiles/link.py:42
+msgid "UUID"
+msgstr "UUID"
+
+#: collective/cover/tiles/configuration_widgets/basewidget.pt:12
+#: collective/cover/tiles/configuration_widgets/namedimage.pt:12
+#: collective/cover/tiles/configuration_widgets/richtext.pt:12
+msgid "Visible"
+msgstr "Visible"
+
+#: collective/cover/tiles/configuration_widgets/basewidget.pt:21
+#: collective/cover/tiles/configuration_widgets/namedimage.pt:21
+#: collective/cover/tiles/configuration_widgets/richtext.pt:21
+msgid "Yes"
+msgstr "Si"
+
+#: collective/cover/tiles/base.py:113
+msgid "You are not allowed to add content to this tile"
+msgstr "No tiene permitido agregar contenido a este tile"
+
+#: collective/cover/tiles/base.py:123
+msgid "You are not allowed to remove content of this tile"
+msgstr "No tiene permitido remover contenido de este tile"
+
+#: collective/cover/profiles/default/types/collective.cover.content.xml
+msgid "cover"
+msgstr "Portada"
+
+#: collective/cover/models/cover.xml
+msgid "cover Layout"
+msgstr "diseño de portada"
+
+#: collective/cover/controlpanel.py:26
+msgid "cover Settings"
+msgstr "Preferencias de portada"
+
