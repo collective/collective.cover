@@ -11,7 +11,7 @@
             column_position = conf.columnposition,
             column_width = conf.columnwidth,
             number_of_columns = conf.numberofcolumns,
-            grid_manager = conf.gridmanager,
+            grid_manager = new conf.gridmanager(),
             le = $('.layout'),
             row_dom = $('<span/>')
                 .addClass('label rowlabel')
@@ -66,7 +66,7 @@
             },
 
             grid_manager_init: function(children, child) {
-                grid_manager(children, child, conf);
+                grid_manager.grid_handler(children, child, conf);
             },
             
             delete_manager: function(elements){
@@ -234,17 +234,17 @@
                         ui.helper.removeAttr('style');
                     },
                     drag: function(event, ui) {
-                        var pos = get_grid_position(ui.helper);
+                        var pos = grid_manager.get_grid_position(ui.helper);
                         if ((position - ui.position.left) > 20) {
                             if (pos[1]*1 !== 0) {
-                                set_grid_position(ui.helper, (pos[1]*1)-1);
+                                grid_manager.set_grid_position(ui.helper, (pos[1]*1)-1);
                                 ui.helper.removeAttr('style');                                
                                 ui.position.left = $(ui.helper).position().left;
                                 position = ui.position.left;
                             }
                         } else {
                             if (pos[1]*1 !== 16) {
-                                set_grid_position(ui.helper, pos[1]*1+1);
+                                grid_manager.set_grid_position(ui.helper, pos[1]*1+1);
                                 ui.helper.removeAttr('style');
                                 ui.position.left = $(ui.helper).position().left;
                                 position = ui.position.left;                                
@@ -263,17 +263,19 @@
                 var columns = column ? column : le.find('.column');
                 columns.each(function(index) {
                     var col = $(this);
-                    var this_position = get_grid_position(col);
-                    var this_width = get_grid_width(col);
+                    var this_position = grid_manager.get_grid_position(col);
+                    var this_width = grid_manager.get_grid_width(col);
                     col.append("<span class='add-column'></span>\
                         <span class='remove-column'></span>");
                     var addButton = $(".add-column", col);
                     var removeButton = $(".remove-column", col);
-                    if(parseInt(this_width[1], 10) + parseInt(this_position[1], 10) === number_of_columns) {
-                          addButton.addClass("disabled");
-                      }
-                     if(parseInt(this_width[1], 10) === 1) {
-                            removeButton.addClass("disabled");
+                    if (this_width && this_position) {
+                        if(parseInt(this_width[1], 10) + parseInt(this_position[1], 10) === number_of_columns) {
+                              addButton.addClass("disabled");
+                          }
+                         if(parseInt(this_width[1], 10) === 1) {
+                                removeButton.addClass("disabled");
+                        }
                     }
                 });
                 //addcolumn button
@@ -283,8 +285,8 @@
                     var column = $(this).parent();
                     var row = column.parent();
                     var columns = row.children(".column");
-                    var width = get_grid_width(column);
-                    var this_position = get_grid_position(column);
+                    var width = grid_manager.get_grid_width(column);
+                    var this_position = grid_manager.get_grid_position(column);
                     var new_width = parseInt(width[1], 10) + 1;
 
                     var next = column.next();
@@ -294,7 +296,7 @@
 
                     if(next_index < columns.length) {
                         var next = $(columns[next_index]);
-                        position = get_grid_position(next);
+                        position = grid_manager.get_grid_position(next);
                         if(position) {
                             next_position_allowed = position[1] >= new_width + parseInt(this_position[1], 10);
                         }
@@ -303,7 +305,7 @@
                           && parseInt(number_of_columns, 10) >= new_width +
                           parseInt(this_position[1], 10);
                       if(width && can_grow && next_position_allowed ) {
-                          set_grid_width(column, new_width);
+                          grid_manager.set_grid_width(column, new_width);
                           remove = $(this).next();
 
                           if(new_width + parseInt(this_position[1], 10) === number_of_columns) {
@@ -325,12 +327,12 @@
                     var column = $(this).parent();
                     var row = column.parent();
                     var columns = row.children(".column");
-                    var width = get_grid_width(column);
-                    var this_position = get_grid_position(column);
+                    var width = grid_manager.get_grid_width(column);
+                    var this_position = grid_manager.get_grid_position(column);
                     var new_width = parseInt(width[1], 10) - 1;
                     if(width && new_width > 0 && this_position) {
                         var prev = $(this).prev();
-                        set_grid_width(column, new_width);
+                        grid_manager.set_grid_width(column, new_width);
                         if(new_width === 1) {
                             $(this).addClass("disabled");
                         } else {
@@ -597,87 +599,88 @@
         self.init();
     }
 
-    function grid_manager(children, child, conf) {
-        var len = children.length;
-        var equal_parts = true;
-        if(child) {
-            var this_index = children.index(child);
-            var len = children.length;
-            if(len > 1) {
-                var prev = $(children[len-2]);
-                var grid_width_prev = get_grid_width(prev);
-                var grid_pos_prev = get_grid_position(prev);
-                if(grid_width_prev && grid_pos_prev) {
-                    equal_parts = parseInt(grid_width_prev[1], 10) + parseInt(grid_pos_prev[1], 10) === conf.numberofcolumns;
-                    if(!equal_parts) {
-                        child.removeClass(get_grid_width(child)[0]);
-                        child.removeClass(get_grid_position(child)[0]);
-                        var new_position = parseInt(grid_width_prev[1], 10) + parseInt(grid_pos_prev[1], 10);
-                        var new_width = conf.numberofcolumns - new_position;
+    function GridManager(){
+        var self = this;
+        $.extend(self, {
+            grid_handler: function(children, child, conf){
+                var len = children.length;
+                var equal_parts = true;
+                if(child) {
+                    var this_index = children.index(child);
+                    var len = children.length;
+                    if(len > 1) {
+                        var prev = $(children[len-2]);
+                        var grid_width_prev = self.get_grid_width(prev);
+                        var grid_pos_prev = self.get_grid_position(prev);
+                        if(grid_width_prev && grid_pos_prev) {
+                            equal_parts = parseInt(grid_width_prev[1], 10) + parseInt(grid_pos_prev[1], 10) === conf.numberofcolumns;
+                            if(!equal_parts) {
+                                child.removeClass(self.get_grid_width(child)[0]);
+                                child.removeClass(self.get_grid_position(child)[0]);
+                                var new_position = parseInt(grid_width_prev[1], 10) + parseInt(grid_pos_prev[1], 10);
+                                var new_width = conf.numberofcolumns - new_position;
 
-                        child.addClass(conf.columnwidth + new_width);
-                        child.addClass(conf.columnposition + new_position);
+                                child.addClass(conf.columnwidth + new_width);
+                                child.addClass(conf.columnposition + new_position);
+                            }
+                        }
                     }
                 }
-            }
-        }
 
-        if(equal_parts) {
-            children.each(function(index) {
-                var child = $(this);
-                new_width = parseInt(conf.numberofcolumns / len, 10);
-                var tile_class = child.attr("class");
+                if(equal_parts) {
+                    children.each(function(index) {
+                        var child = $(this);
+                        new_width = parseInt(conf.numberofcolumns / len, 10);
+                        var tile_class = child.attr("class");
 
-                if (tile_class !== undefined) {
-                    //TODO: fix width class
-                    var regex_match = tile_class.match(/\bwidth\-(\d+)/);
-                    var total_width = regex_match[1];
-                    child.removeClass(regex_match[0]);
-                    child.addClass(conf.columnwidth + new_width);
+                        if (tile_class !== undefined) {
+                            //TODO: fix width class
+                            var regex_match = tile_class.match(/\bwidth\-(\d+)/);
+                            var total_width = regex_match[1];
+                            child.removeClass(regex_match[0]);
+                            child.addClass(conf.columnwidth + new_width);
 
-                    //TODO: fix position class
-                    var regex_match = tile_class.match(/\bposition\-(\d+)/);
-                    var total_width = regex_match[1];
-                    child.removeClass(regex_match[0]);
-                    var position = new_width*index;
-                    child.addClass(conf.columnposition + position);
+                            //TODO: fix position class
+                            var regex_match = tile_class.match(/\bposition\-(\d+)/);
+                            var total_width = regex_match[1];
+                            child.removeClass(regex_match[0]);
+                            var position = new_width*index;
+                            child.addClass(conf.columnposition + position);
+                        }
+                    });
+                }            
+            },
+            get_grid_width: function(item){
+              var itemClass = item.attr("class");
+              if (itemClass) {
+                var regex_match = itemClass.match(/\bwidth\-(\d+)/);
+                return regex_match;
+              }            
+            },
+            get_grid_position: function(item) {
+                var itemClass = item.attr("class");
+                if (itemClass) {
+                var regex_match = itemClass.match(/\bposition\-(\d+)/);
+                    return regex_match;
+                }            
+            },
+            set_grid_position: function(item, new_position) {
+                var itemClass = item.attr("class");
+                if (itemClass) {
+                    var regex_match = itemClass.match(/\bposition\-(\d+)/);
+                    item.removeClass(regex_match[0]);
+                    item.addClass('position-' + new_position);
+                }            
+            },
+            set_grid_width: function(item, new_width) {
+                var itemClass = item.attr("class");
+                if (itemClass) {
+                    var regex_match = itemClass.match(/\bwidth\-(\d+)/);
+                    item.removeClass(regex_match[0]);
+                    item.addClass('width-' + newWidth);
                 }
-            });
-        }
-    }
-
-    function get_grid_width(item) {
-      var itemClass = item.attr("class");
-      if (itemClass) {
-        var regex_match = itemClass.match(/\bwidth\-(\d+)/);
-        return regex_match;
-      }
-    }
-
-    function get_grid_position(item) {
-      var itemClass = item.attr("class");
-      if (itemClass) {
-        var regex_match = itemClass.match(/\bposition\-(\d+)/);
-        return regex_match;
-      }
-    }
-
-    function set_grid_position(item, new_position) {
-      var itemClass = item.attr("class");
-      if (itemClass) {
-        var regex_match = itemClass.match(/\bposition\-(\d+)/);
-        item.removeClass(regex_match[0]);
-        item.addClass('position-' + new_position);
-      }
-    }    
-
-    function set_grid_width(item, newWidth) {
-      var itemClass = item.attr("class");
-      if (itemClass) {
-        var regex_match = itemClass.match(/\bwidth\-(\d+)/);
-        item.removeClass(regex_match[0]);
-        item.addClass('width-' + newWidth);
-      }
+            }
+        });
     }
 
     $.fn.coverlayout = function(options) {
@@ -686,15 +689,22 @@
         var el = this.data("coverlayout");
         if (el) { return el; }
 
+
+        var default_settings = this.data('coverlayout-settings');
+        var settings = '';
         //default settings
-        var settings = {
-            'columnclass': 'cell',
-            'columnposition': 'position-',
-            'columnwidth': 'width-',
-            'numberofcolumns': 16,
-            'rowclass': 'row',
-            'gridmanager': grid_manager
-        };
+        if (default_settings) {
+            settings = default_settings;
+        } else {
+            settings = {
+                'columnclass': 'cell',
+                'columnposition': 'position-',
+                'columnwidth': 'width-',
+                'numberofcolumns': 16,
+                'rowclass': 'row',
+                'gridmanager': GridManager
+            }
+        }
 
         if (options) {
             $.extend(settings, options);
