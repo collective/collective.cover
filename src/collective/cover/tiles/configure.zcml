@@ -37,7 +37,7 @@
         for="zope.annotation.interfaces.IAnnotatable"
         permission="cmf.ModifyPortalContent"
         class=".edit.CoverTileEditView"
-        layer="collective.cover.interfaces.ICollectiveCoverBrowserLayer"
+        layer="collective.cover.interfaces.IAddOnInstalled"
         />
 
     <adapter
