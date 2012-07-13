@@ -34,7 +34,7 @@ class InstallTestCase(unittest.TestCase):
 
     def test_addon_layer(self):
         layers = [l.getName() for l in registered_layers()]
-        self.assertTrue('IAddOnInstalled' in layers,
+        self.assertTrue('ICoverLayer' in layers,
                         'add-on layer was not installed')
 
     def test_jsregistry(self):
@@ -63,7 +63,7 @@ class UninstallTestCase(unittest.TestCase):
 
     def test_addon_layer_removed(self):
         layers = [l.getName() for l in registered_layers()]
-        self.assertTrue('IAddOnInstalled' not in layers,
+        self.assertTrue('ICoverLayer' not in layers,
                         'add-on layer was not removed')
 
     def test_jsregistry_removed(self):
