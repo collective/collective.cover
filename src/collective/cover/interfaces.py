@@ -2,7 +2,6 @@
 from zope.interface import Interface
 
 
-class ICollectiveCoverBrowserLayer(Interface):
-    """
-    collective.cover Browser Layer
+class ICoverLayer(Interface):
+    """ A layer specific for this add-on product.
     """
