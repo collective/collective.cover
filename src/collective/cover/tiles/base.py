@@ -117,6 +117,11 @@ class PersistentCoverTile(tiles.PersistentTile):
         if not self.isAllowedToEdit():
             raise Unauthorized(_("You are not allowed to add content to "
                                   "this tile"))
+    
+    def remove_item(self, uid):
+        if not self.isAllowedToEdit():
+            raise Unauthorized(_("You are not allowed to remove content of "
+                                "this tile"))
 
     def delete(self):
         data_mgr = ITileDataManager(self)

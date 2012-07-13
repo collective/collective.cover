@@ -15,3 +15,12 @@
 .tile-select-button {
     cursor: pointer;
 }
+
+.tile-remove-item {
+    position:absolute;
+    position: absolute;
+    right: 10px;
+    top: 0;
+    font-size: 15px;
+    cursor: pointer;
+}

@@ -98,6 +98,7 @@ $(function() {
                 data: {'tile-type': tile_type, 'tile-id': tile_id, 'uid': ct_uid},
                 success: function(info) {
                     tile.html(info);
+                    removeObjFromTile();
                     return false;
                 }
             });
