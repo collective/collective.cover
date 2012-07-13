@@ -2,6 +2,8 @@
 
 import unittest2 as unittest
 
+from plone.browserlayer.utils import registered_layers
+
 from plone.app.testing import TEST_USER_ID
 from plone.app.testing import setRoles
 
@@ -30,6 +32,11 @@ class InstallTestCase(unittest.TestCase):
         qi = getattr(self.portal, 'portal_quickinstaller')
         self.assertTrue(qi.isProductInstalled(PROJECTNAME))
 
+    def test_addon_layer(self):
+        layers = [l.getName() for l in registered_layers()]
+        self.assertTrue('IAddOnInstalled' in layers,
+                        'add-on layer was not installed')
+
     def test_jsregistry(self):
         resource_ids = self.portal.portal_javascripts.getResourceIds()
         for id in JS:
@@ -53,6 +60,11 @@ class UninstallTestCase(unittest.TestCase):
 
     def test_uninstalled(self):
         self.assertFalse(self.qi.isProductInstalled(PROJECTNAME))
+
+    def test_addon_layer_removed(self):
+        layers = [l.getName() for l in registered_layers()]
+        self.assertTrue('IAddOnInstalled' not in layers,
+                        'add-on layer was not removed')
 
     def test_jsregistry_removed(self):
         resource_ids = self.portal.portal_javascripts.getResourceIds()
