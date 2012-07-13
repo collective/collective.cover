@@ -1,0 +1,210 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: collective.cover\n"
+"POT-Creation-Date: 2012-07-13 22:48+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"Language-Code: en\n"
+"Language-Name: English\n"
+"Preferred-Encodings: utf-8 latin1\n"
+"Domain: collective.cover\n"
+
+#: collective/cover/screenlets_templates/content_screenlet.pt:44
+msgid "Add Content"
+msgstr ""
+
+#: collective/cover/tiles/configuration_view.py:197
+#: collective/cover/tiles/edit.py:90
+msgid "Cancel"
+msgstr ""
+
+#: collective/cover/models/cover.xml
+msgid "Choose one of the predefined layouts"
+msgstr ""
+
+#: collective/cover/screenlets_templates/content_screenlet.pt:16
+msgid "Clipboard"
+msgstr ""
+
+#: collective/cover/profiles/default/types/collective.cover.content.xml
+msgid "Composable page"
+msgstr ""
+
+#: collective/cover/tiles/configuration_view.py:159
+msgid "Configure ${name}"
+msgstr ""
+
+#: collective/cover/screenlets_templates/content_screenlet.pt:17
+msgid "Content tree"
+msgstr ""
+
+#: collective/cover/profiles/default/controlpanel.xml
+msgid "Cover Settings"
+msgstr ""
+
+#: collective/cover/tiles/basic.py:25
+#: collective/cover/tiles/carousel.py:32
+#: collective/cover/tiles/embed.py:28
+msgid "Description"
+msgstr ""
+
+#: collective/cover/tiles/file.py:60
+msgid "Download link"
+msgstr ""
+
+#: collective/cover/tiles/embed.py:18
+msgid "Embedding code"
+msgstr ""
+
+#: collective/cover/templates/layoutedit.pt:30
+msgid "Export layout"
+msgstr ""
+
+#: collective/cover/tiles/configuration_widgets/textline.pt:42
+msgid "HTML tag"
+msgstr ""
+
+#: collective/cover/tiles/basic.py:30
+#: collective/cover/tiles/carousel.py:38
+#: collective/cover/tiles/file.py:55
+msgid "Image"
+msgstr ""
+
+#: collective/cover/tiles/configuration_widgets/namedimage.pt:42
+msgid "Image size"
+msgstr ""
+
+#: collective/cover/controlpanel.py:21
+#: collective/cover/models/cover.xml
+msgid "Layout"
+msgstr ""
+
+#: collective/cover/templates/layoutedit.pt:28
+msgid "Layout name"
+msgstr ""
+
+#: collective/cover/controlpanel.py:19
+msgid "Layouts"
+msgstr ""
+
+#: collective/cover/controlpanel.py:20
+msgid "Name"
+msgstr ""
+
+#: collective/cover/tiles/configuration_widgets/basewidget.pt:30
+#: collective/cover/tiles/configuration_widgets/namedimage.pt:30
+#: collective/cover/tiles/configuration_widgets/richtext.pt:30
+msgid "No"
+msgstr ""
+
+#: collective/cover/tiles/configuration_widgets/list.pt:12
+msgid "Number of items"
+msgstr ""
+
+#: collective/cover/tiles/configuration_widgets/basewidget.pt:32
+#: collective/cover/tiles/configuration_widgets/namedimage.pt:32
+#: collective/cover/tiles/configuration_widgets/richtext.pt:32
+msgid "Order"
+msgstr ""
+
+#: collective/cover/tiles/configuration_widgets/namedimage.pt:58
+msgid "Position"
+msgstr ""
+
+#: collective/cover/screenlets_templates/content_screenlet.pt:15
+msgid "Recent items"
+msgstr ""
+
+#: collective/cover/tiles/configuration_view.py:163
+#: collective/cover/tiles/edit.py:52
+msgid "Save"
+msgstr ""
+
+#: collective/cover/tiles/templates/collection.pt:10
+msgid "Select a Collection to fill this tile."
+msgstr ""
+
+#: collective/cover/controlpanel.py:27
+msgid "Settings for the collective.cover package"
+msgstr ""
+
+#: collective/cover/tiles/configuration_widgets/list.pt:31
+msgid "Show List Title"
+msgstr ""
+
+#: collective/cover/tiles/configuration_widgets/richtext.pt:42
+msgid "Text length"
+msgstr ""
+
+#: collective/cover/tiles/templates/collection.pt:17
+msgid "The collections don't have any results."
+msgstr ""
+
+#: collective/cover/models/cover.xml
+msgid "The layout to be used to render groups and tiles"
+msgstr ""
+
+#: collective/cover/tiles/configuration_view.py:206
+msgid "Tile configuration cancelled."
+msgstr ""
+
+#: collective/cover/tiles/configuration_view.py:193
+msgid "Tile configuration saved."
+msgstr ""
+
+#: collective/cover/tiles/edit.py:86
+msgid "Tile saved"
+msgstr ""
+
+#: collective/cover/tiles/basic.py:20
+#: collective/cover/tiles/carousel.py:26
+#: collective/cover/tiles/embed.py:23
+msgid "Title"
+msgstr ""
+
+#: collective/cover/tiles/link.py:37
+msgid "URL"
+msgstr ""
+
+#: collective/cover/tiles/file.py:66
+#: collective/cover/tiles/link.py:42
+msgid "UUID"
+msgstr ""
+
+#: collective/cover/tiles/configuration_widgets/basewidget.pt:12
+#: collective/cover/tiles/configuration_widgets/namedimage.pt:12
+#: collective/cover/tiles/configuration_widgets/richtext.pt:12
+msgid "Visible"
+msgstr ""
+
+#: collective/cover/tiles/configuration_widgets/basewidget.pt:21
+#: collective/cover/tiles/configuration_widgets/namedimage.pt:21
+#: collective/cover/tiles/configuration_widgets/richtext.pt:21
+msgid "Yes"
+msgstr ""
+
+#: collective/cover/tiles/base.py:113
+msgid "You are not allowed to add content to this tile"
+msgstr ""
+
+#: collective/cover/tiles/base.py:123
+msgid "You are not allowed to remove content of this tile"
+msgstr ""
+
+#: collective/cover/profiles/default/types/collective.cover.content.xml
+msgid "cover"
+msgstr ""
+
+#: collective/cover/models/cover.xml
+msgid "cover Layout"
+msgstr ""
+
+#: collective/cover/controlpanel.py:26
+msgid "cover Settings"
+msgstr ""
+

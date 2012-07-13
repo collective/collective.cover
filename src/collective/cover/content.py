@@ -174,6 +174,20 @@ class LayoutEdit(grok.View):
         # XXX: used to lock the object when someone is editing it
         notify(EditBegunEvent(self.context))
 
+    def __call__(self):
+        if 'export-layout' in self.request:
+            name = self.request.get('layout-name', None)
+            if name:
+                layout = self.context.cover_layout
+
+                registry = getUtility(IRegistry)
+                
+                settings = registry.forInterface(ICoverSettings)
+
+                settings.layouts[name] = unicode(layout)
+
+
+        return super(LayoutEdit, self).__call__()
 
 class UpdateTileContent(grok.View):
     grok.context(ICover)
