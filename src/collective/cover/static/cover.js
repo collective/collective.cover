@@ -14,8 +14,8 @@
 function removeObjFromTile() {
     $(".tile-remove-item").remove()
     $(".sortable-tile").each(function() {
-     var child = $(this).children('div[data-uid]');
-     child.append("<span class='tile-remove-item'>X</span>");
+        var child = $(this).children('div[data-uid]');
+        child.append("<span class='tile-remove-item'>X</span>");
     });
     $(".tile-remove-item").unbind("click");
     $(".tile-remove-item").click(function(e) {
@@ -44,7 +44,7 @@ $(document).ready(function() {
     $(".sortable-tile").liveSortable({
         stop:function(event, ui) {
             var uids = [];
-            $("."+ui.item.attr("class")).each(function(index) {
+            $(this).children().each(function(index) {
                 uids.push($(this).attr("data-uid"));
             });
             var tile = $(this).parent();
