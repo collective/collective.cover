@@ -291,8 +291,9 @@ def assign_id_for_tiles(cover, event):
         registry = getUtility(IRegistry)
         settings = registry.forInterface(ICoverSettings)
 
-        layout = settings.layouts[cover.template_layout]
-        layout = json.loads(layout)
-        assign_tile_ids(layout)
+        layout = settings.layouts.get(cover.template_layout)
+        if layout:
+            layout = json.loads(layout)
+            assign_tile_ids(layout)
 
-        cover.cover_layout = json.dumps(layout)
+            cover.cover_layout = json.dumps(layout)
