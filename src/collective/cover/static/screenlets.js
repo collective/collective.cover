@@ -109,7 +109,9 @@ $(function() {
     $(this).removeClass("right");
   }});
   $("#screenlet-content-show-button").click(function() {
+    var offset = $(this).offset();
     $("#screenlet-content-search").css("display", "block");
+    $("#screenlet-content-search").offset({'top':offset.top});
   });
 
   $("#screenlet-content-search .close").click(function() {
