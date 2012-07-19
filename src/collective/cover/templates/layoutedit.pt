@@ -24,11 +24,11 @@
 <metal:main fill-slot="main">
     <form action="." tal:attributes="action request/URL" method="post"
           enctype="multipart/form-data">
-          
-      <label for='layout-name' i18n:translate=''>Layout name</label>
-      <input type='text' name='layout-name' value='' />
-      <input type='submit' value='Export layout' name='export-layout'
-             i18n:attributes='value' />
+
+      <label for="layout-name" i18n:translate="">Layout name</label>
+      <input type="text" name="layout-name" value="" />
+      <input type="submit" value="Export layout" name="export-layout"
+             i18n:attributes="value" />
     </form>
 
     <div class="layout">
@@ -38,16 +38,16 @@
     </div>
     <div id="sidebar">
         <p>
-            <a id="btn-row" class="btn btn-large btn-inverse draggable"><i class="icon-white"></i><span>Row</span></a>
+            <a id="btn-row" class="btn btn-large btn-inverse draggable"><i class="icon-white"></i><span i18n:translate="">Row</span></a>
         </p>
         <p>
-            <a id="btn-column" class="btn btn-large btn-inverse draggable"><i class="icon-white"></i><span>Column</span></a>
+            <a id="btn-column" class="btn btn-large btn-inverse draggable"><i class="icon-white"></i><span i18n:translate="">Column</span></a>
         </p>
         <p>
-            <a id="btn-tile" class="btn btn-large btn-inverse draggable"><i class="icon-white"></i><span>Title</span></a>
+            <a id="btn-tile" class="btn btn-large btn-inverse draggable"><i class="icon-white"></i><span i18n:translate="">Title</span></a>
         </p>
         <p>
-            <a id="btn-save" class="btn btn-success saved"><i class="icon-white"></i><span>Saved</span></a>
+            <a id="btn-save" class="btn btn-success saved"><i class="icon-white"></i><span i18n:translate="">Saved</span></a>
         </p>
     </div>
         <div id="tile-select-list" class="modal hide" tal:replace="structure context/@@tile_select"></div>

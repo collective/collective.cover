@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: collective.cover\n"
-"POT-Creation-Date: 2012-07-13 22:48+0000\n"
+"POT-Creation-Date: 2012-07-19 00:38+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -14,7 +14,11 @@ msgstr ""
 "Preferred-Encodings: utf-8 latin1\n"
 "Domain: collective.cover\n"
 
-#: collective/cover/screenlets_templates/content_screenlet.pt:44
+#: collective/cover/profiles/default/types/collective.cover.content.xml
+msgid "A cover page."
+msgstr ""
+
+#: collective/cover/screenlets_templates/content_screenlet.pt:49
 msgid "Add Content"
 msgstr ""
 
@@ -31,8 +35,12 @@ msgstr ""
 msgid "Clipboard"
 msgstr ""
 
-#: collective/cover/profiles/default/types/collective.cover.content.xml
-msgid "Composable page"
+#: collective/cover/templates/layoutedit.pt:44
+msgid "Column"
+msgstr ""
+
+#: collective/cover/layout_templates/tile.pt:41
+msgid "Config"
 msgstr ""
 
 #: collective/cover/tiles/configuration_view.py:159
@@ -43,6 +51,15 @@ msgstr ""
 msgid "Content tree"
 msgstr ""
 
+#: collective/cover/profiles/default/types/collective.cover.content.xml
+msgid "Cover"
+msgstr ""
+
+#: collective/cover/models/cover.xml
+msgid "Cover Layout"
+msgstr ""
+
+#: collective/cover/controlpanel.py:38
 #: collective/cover/profiles/default/controlpanel.xml
 msgid "Cover Settings"
 msgstr ""
@@ -55,6 +72,10 @@ msgstr ""
 
 #: collective/cover/tiles/file.py:60
 msgid "Download link"
+msgstr ""
+
+#: collective/cover/layout_templates/tile.pt:28
+msgid "Edit"
 msgstr ""
 
 #: collective/cover/tiles/embed.py:18
@@ -88,7 +109,7 @@ msgstr ""
 msgid "Layout name"
 msgstr ""
 
-#: collective/cover/controlpanel.py:19
+#: collective/cover/controlpanel.py:18
 msgid "Layouts"
 msgstr ""
 
@@ -106,6 +127,10 @@ msgstr ""
 msgid "Number of items"
 msgstr ""
 
+#: collective/cover/controlpanel.py:27
+msgid "Only objects of these content types will be searched on the screenlet."
+msgstr ""
+
 #: collective/cover/tiles/configuration_widgets/basewidget.pt:32
 #: collective/cover/tiles/configuration_widgets/namedimage.pt:32
 #: collective/cover/tiles/configuration_widgets/richtext.pt:32
@@ -120,16 +145,28 @@ msgstr ""
 msgid "Recent items"
 msgstr ""
 
+#: collective/cover/templates/layoutedit.pt:41
+msgid "Row"
+msgstr ""
+
 #: collective/cover/tiles/configuration_view.py:163
 #: collective/cover/tiles/edit.py:52
 msgid "Save"
+msgstr ""
+
+#: collective/cover/templates/layoutedit.pt:50
+msgid "Saved"
+msgstr ""
+
+#: collective/cover/controlpanel.py:26
+msgid "Searchable Content Types"
 msgstr ""
 
 #: collective/cover/tiles/templates/collection.pt:10
 msgid "Select a Collection to fill this tile."
 msgstr ""
 
-#: collective/cover/controlpanel.py:27
+#: collective/cover/controlpanel.py:39
 msgid "Settings for the collective.cover package"
 msgstr ""
 
@@ -161,9 +198,9 @@ msgstr ""
 msgid "Tile saved"
 msgstr ""
 
+#: collective/cover/templates/layoutedit.pt:47
 #: collective/cover/tiles/basic.py:20
 #: collective/cover/tiles/carousel.py:26
-#: collective/cover/tiles/embed.py:23
 msgid "Title"
 msgstr ""
 
@@ -182,6 +219,10 @@ msgstr ""
 msgid "Visible"
 msgstr ""
 
+#: collective/cover/screenlets_templates/content_screenlet.pt:12
+msgid "X"
+msgstr ""
+
 #: collective/cover/tiles/configuration_widgets/basewidget.pt:21
 #: collective/cover/tiles/configuration_widgets/namedimage.pt:21
 #: collective/cover/tiles/configuration_widgets/richtext.pt:21
@@ -196,15 +237,11 @@ msgstr ""
 msgid "You are not allowed to remove content of this tile"
 msgstr ""
 
-#: collective/cover/profiles/default/types/collective.cover.content.xml
-msgid "cover"
+#: collective/cover/screenlets_templates/content_screenlet.pt:23
+msgid "ok"
 msgstr ""
 
-#: collective/cover/models/cover.xml
-msgid "cover Layout"
-msgstr ""
-
-#: collective/cover/controlpanel.py:26
-msgid "cover Settings"
+#: collective/cover/layout_templates/groupselect.pt:18
+msgid "save"
 msgstr ""
 
