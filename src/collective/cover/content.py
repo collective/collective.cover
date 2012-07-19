@@ -215,13 +215,25 @@ class UpdateTileContent(grok.View):
         return tile_instance()
 
 
+class UpdateTile(grok.View):
+    grok.context(ICover)
+    grok.require('cmf.ModifyPortalContent')
+
+    def render(self):
+        tile_type = self.request.form.get('tile-type')
+        tile_id = self.request.form.get('tile-id')
+
+        if tile_type and tile_id:
+            tile = self.context.restrictedTraverse(tile_type)
+            tile_instance = tile[tile_id]
+        return tile_instance()
+
+
 class UpdateListTileContent(grok.View):
     grok.context(ICover)
     grok.require('cmf.ModifyPortalContent')
 
     def render(self):
-        pc = getToolByName(self.context, 'portal_catalog')
-
         tile_type = self.request.form.get('tile-type')
         tile_id = self.request.form.get('tile-id')
         uids = self.request.form.get('uids[]')
@@ -246,8 +258,6 @@ class RemoveItemFromListTile(grok.View):
     grok.require('cmf.ModifyPortalContent')
 
     def render(self):
-        pc = getToolByName(self.context, 'portal_catalog')
-
         tile_type = self.request.form.get('tile-type')
         tile_id = self.request.form.get('tile-id')
         uid = self.request.form.get('uid')
