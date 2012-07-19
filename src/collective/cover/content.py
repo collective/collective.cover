@@ -4,29 +4,24 @@ import json
 
 from Acquisition import aq_inner
 
-from five import grok
-
 from zope.annotation.interfaces import IAnnotations
-from zope.app.container.interfaces import IObjectAddedEvent
-
 from zope.component import getUtility
 from zope.event import notify
+
+from five import grok
+from zope.app.container.interfaces import IObjectAddedEvent
+
+from Products.CMFCore.utils import getToolByName
+from Products.CMFPlone.interfaces import INonStructuralFolder
 
 from plone.dexterity.events import EditBegunEvent
 #from plone.dexterity.events import EditCancelledEvent
 #from plone.dexterity.events import EditFinishedEvent
 from plone.dexterity.utils import createContentInContainer
 from plone.directives import dexterity, form
-
 from plone.registry.interfaces import IRegistry
-
 from plone.tiles.interfaces import ITileDataManager
-
 from plone.uuid.interfaces import IUUIDGenerator
-
-from Products.CMFPlone.interfaces import INonStructuralFolder
-
-from Products.CMFCore.utils import getToolByName
 
 from collective.cover.controlpanel import ICoverSettings
 from collective.cover.utils import assign_tile_ids
@@ -181,13 +176,13 @@ class LayoutEdit(grok.View):
                 layout = self.context.cover_layout
 
                 registry = getUtility(IRegistry)
-                
+
                 settings = registry.forInterface(ICoverSettings)
 
                 settings.layouts[name] = unicode(layout)
 
-
         return super(LayoutEdit, self).__call__()
+
 
 class UpdateTileContent(grok.View):
     grok.context(ICover)
@@ -219,6 +214,7 @@ class UpdateTileContent(grok.View):
         #      find out if this affects us in any way.
         return tile_instance()
 
+
 class UpdateListTileContent(grok.View):
     grok.context(ICover)
     grok.require('cmf.ModifyPortalContent')
@@ -231,18 +227,19 @@ class UpdateListTileContent(grok.View):
         uids = self.request.form.get('uids[]')
         html = ""
         if tile_type and tile_id and uids:
-             tile = self.context.restrictedTraverse(tile_type)
-             tile_instance = tile[tile_id]
-             try:
-                 tile_instance.replace_with_objects(uids)
-                 html = tile_instance()
-             except:
-                 # XXX: Pass silently ?
-                 pass
-        
+            tile = self.context.restrictedTraverse(tile_type)
+            tile_instance = tile[tile_id]
+            try:
+                tile_instance.replace_with_objects(uids)
+                html = tile_instance()
+            except:
+                # XXX: Pass silently ?
+                pass
+
         # XXX: Calling the tile will return the HTML with the headers, need to
         #      find out if this affects us in any way.
         return html
+
 
 class RemoveItemFromListTile(grok.View):
     grok.context(ICover)
@@ -256,18 +253,19 @@ class RemoveItemFromListTile(grok.View):
         uid = self.request.form.get('uid')
         html = ""
         if tile_type and tile_id and uid:
-             tile = self.context.restrictedTraverse(tile_type)
-             tile_instance = tile[tile_id]
-             try:
-                 tile_instance.remove_item(uid)
-                 html = tile_instance()
-             except:
-                 # XXX: Pass silently ?
-                 pass
+            tile = self.context.restrictedTraverse(tile_type)
+            tile_instance = tile[tile_id]
+            try:
+                tile_instance.remove_item(uid)
+                html = tile_instance()
+            except:
+                # XXX: Pass silently ?
+                pass
 
         # XXX: Calling the tile will return the HTML with the headers, need to
         #      find out if this affects us in any way.
         return html
+
 
 class DeleteTile(grok.View):
     grok.context(ICover)
