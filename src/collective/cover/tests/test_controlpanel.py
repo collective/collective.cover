@@ -10,6 +10,7 @@ from plone.app.testing import logout
 from plone.app.testing import setRoles
 from plone.registry.interfaces import IRegistry
 
+from collective.cover.config import DEFAULT_SEARCHABLE_CONTENT_TYPES
 from collective.cover.config import PROJECTNAME
 from collective.cover.controlpanel import ICoverSettings
 from collective.cover.testing import INTEGRATION_TESTING
@@ -66,6 +67,11 @@ class RegistryTestCase(unittest.TestCase):
         self.assertTrue(hasattr(self.settings, 'layouts'))
         self.assertNotEqual(self.settings.layouts, None)
 
+    def test_searchable_content_types_record_in_registry(self):
+        self.assertTrue(hasattr(self.settings, 'searchable_content_types'))
+        self.assertListEqual(self.settings.searchable_content_types,
+                             DEFAULT_SEARCHABLE_CONTENT_TYPES)
+
     def get_record(self, record):
         """ Helper function; it raises KeyError if the record is not in the
         registry.
@@ -78,3 +84,4 @@ class RegistryTestCase(unittest.TestCase):
         qi = self.portal['portal_quickinstaller']
         qi.uninstallProducts(products=[PROJECTNAME])
         self.assertRaises(KeyError, self.get_record, 'layouts')
+        self.assertRaises(KeyError, self.get_record, 'searchable_content_types')
