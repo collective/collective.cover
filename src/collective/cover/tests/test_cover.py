@@ -55,3 +55,7 @@ class CoverIntegrationTestCase(unittest.TestCase):
 
     def test_staging_behavior(self):
         self.assertTrue(IStagingSupport.providedBy(self.c1))
+
+    def test_cover_selectable_as_folder_default_view(self):
+        self.folder.setDefaultPage('c1')
+        self.assertEqual(self.folder.default_page, 'c1')
