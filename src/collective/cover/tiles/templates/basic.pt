@@ -35,6 +35,18 @@
                              height thumbnail/height" />
       </tal:image>
 
+      <tal:description condition="python:field['id'] == 'date'">
+        <p tal:content="view/get_date">Date</p>
+      </tal:description>
+
+      <tal:description condition="python:field['id'] == 'subjects'">
+        <tal:subjects repeat="subject python:field['content']">
+        	<span>
+        		<tal:subject replace="subject"/><tal:notlast condition="not:repeat/subject/end">, </tal:notlast>
+	      	</span>
+       	</tal:subjects>
+      </tal:description>
+
       <tal:last condition="repeat/field/end">
         <div class="visualClear"><!-- --></div>
       </tal:last>
