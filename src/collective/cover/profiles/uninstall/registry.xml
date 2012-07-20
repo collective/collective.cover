@@ -1,4 +1,5 @@
 <?xml version="1.0"?>
 <registry>
  <record name="collective.cover.controlpanel.ICoverSettings.layouts" delete="true" />
+ <record name="collective.cover.controlpanel.ICoverSettings.searchable_content_types" delete="true"/>
 </registry>

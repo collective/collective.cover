@@ -1,5 +1,5 @@
 .template-compose .tile {
-    border:1px dashed #999;
+    outline:1px dotted #999;
     padding-top:1em;
 }
 .template-compose .tile-container {
@@ -23,4 +23,17 @@
     top: 0;
     font-size: 15px;
     cursor: pointer;
+}
+
+/*drag and drop*/
+
+.ui-sortable-placeholder {
+    background-color:#9ad39d !important;
+    visibility:visible !important;
+    outline:1px dashed green;
+}
+.ui-sortable-helper {
+	opacity:0.5;
+	outline:1px solid #333;
+	cursor:move;
 }

@@ -9,7 +9,7 @@
 
 <div id="screenlet-content-search" class="right">
 
-    <div class="close">X</div>
+    <div class="close" i18n:translate="">X</div>
 
     <ul class="formTabs">
       <li class="formTab"><a href="#recent" i18n:translate="">Recent items</a></li>
@@ -19,29 +19,35 @@
 
     <div class="panes">
       <div id="recent" class="tab-pane active">
-        <input id="screenlet-content-search-input" type="text" /> <input type="button" value="ok" id="screenlet-content-search-button"
-         tal:attributes="data-url view/post_url" />
+        <input id="screenlet-content-search-input" type="text" />
+        <input type="button" value="ok" id="screenlet-content-search-button"
+         tal:attributes="data-url view/post_url"
+         i18n:attributes="value" />
         <ul id="item-list">
             <li tal:replace="structure context/@@content-search" />
         </ul>
       </div>
       <div id="clipboard" class="tab-pane">
-          <input id="screenlet-content-search-input" type="text" /> <input type="button" value="ok" id="screenlet-content-search-button"
-           tal:attributes="data-url view/post_url" />
-          <ul id="item-list">
-              <li tal:replace="structure context/@@content-search" />
-          </ul>
+        <input id="screenlet-content-search-input" type="text" />
+        <input type="button" value="ok" id="screenlet-content-search-button"
+            tal:attributes="data-url view/post_url"
+            i18n:attributes="value" />
+        <ul id="item-list">
+          <li tal:replace="structure context/@@content-search" />
+        </ul>
       </div>
       <div id="content-tree" class="tab-pane">
         <input type="button" value="ok" id="screenlet-content-search-button"
-         tal:attributes="data-url view/post_url" style="display:none"/>
+            tal:attributes="data-url view/post_url" style="display:none"
+            i18n:attributes="value" />
           <ul id="item-list">
-              <li tal:replace="structure context/@@content-search" />
+            <li tal:replace="structure context/@@content-search" />
           </ul>
       </div>
     </div>
 
-    <div id="screenlet-content-search-compose-button" style="display: none;" i18n:translate="">Add Content</div>
+    <div id="screenlet-content-search-compose-button" style="display: none;"
+        i18n:translate="">Add Content</div>
 
 </div>
 </body>

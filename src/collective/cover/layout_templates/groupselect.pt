@@ -7,13 +7,16 @@
       tal:omit-tag="">
 <body tal:omit-tag="">
 
-    <div id="group-select-list" class="modal hide">
+  <div id="group-select-list" class="modal hide">
 
-        <tal:groupselect repeat="group view/groups">
-          <input class="group-select-input" name="groups" type="checkbox" value="o1" tal:attributes="value group/value" /><span tal:content="group/title"> Option 1 </span><br />
-        </tal:groupselect>
-       <input id="group-select-button" type="submit" value="save"><br />
-    </div>
+    <tal:groupselect repeat="group view/groups">
+      <input class="group-select-input" name="groups" type="checkbox" value="o1"
+          tal:attributes="value group/value" />
+      <span tal:content="group/title">Option 1</span><br />
+    </tal:groupselect>
 
+    <input id="group-select-button" type="submit" value="save"
+        i18n:attributes="value" /><br />
+  </div>
 </body>
 </html>
