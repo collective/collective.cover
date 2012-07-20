@@ -48,7 +48,7 @@ grok.global_utility(AvailableTilesVocabulary,
                     name=u'collective.cover.AvailableTiles')
 
 
-class UserFriendlyTypesVocabulary(object):
+class AvailableContentTypesVocabulary(object):
     """ Customized version of plone.app.vocabularies.UserFriendlyTypes; we
     don't want covers to be listed.
     """
@@ -70,5 +70,5 @@ class UserFriendlyTypesVocabulary(object):
         return SimpleVocabulary(items)
 
 
-grok.global_utility(UserFriendlyTypesVocabulary,
-                    name=u'collective.cover.UserFriendlyTypes')
+grok.global_utility(AvailableContentTypesVocabulary,
+                    name=u'collective.cover.AvailableContentTypes')

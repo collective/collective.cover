@@ -42,7 +42,7 @@ class VocabulariesTestCase(unittest.TestCase):
         self.assertTrue(u'collective.cover.richtext' in tiles)
 
     def test_user_friendly_types_vocabulary(self):
-        name = u'collective.cover.UserFriendlyTypes'
+        name = u'collective.cover.AvailableContentTypes'
         vocabulary = queryUtility(IVocabularyFactory, name)
         self.assertTrue(vocabulary is not None)
         friendly_types = vocabulary(self.portal)
