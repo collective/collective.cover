@@ -94,10 +94,12 @@ class ContentSearch(grok.View):
         registry = getUtility(IRegistry)
         settings = registry.forInterface(ICoverSettings)
         searchable_types = settings.searchable_content_types
-
-        catalog_query = {}
+        
+        #temporary we'll only list published elements
+        catalog_query = {'sort_on':'effective', 'sort_order':'descending',
+        'review_state':'published'}
         catalog_query['portal_type'] = searchable_types
-
+        
         if query:
             catalog_query = {'SearchableText': query}
         if limit:
