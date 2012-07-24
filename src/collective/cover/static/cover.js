@@ -47,7 +47,7 @@ $(document).ready(function() {
             $(this).children().each(function(index) {
                 uids.push($(this).attr("data-uid"));
             });
-            var tile = $(this).parent();
+            var tile = $(this).closest('.tile');
             var tile_type = tile.attr("data-tile-type");
             var tile_id = tile.attr("id");
             $.ajax({
