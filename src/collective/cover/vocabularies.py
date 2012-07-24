@@ -14,6 +14,8 @@ from Products.CMFCore.utils import getToolByName
 from five import grok
 from plone.registry.interfaces import IRegistry
 
+from plone.app.vocabularies.types import ReallyUserFriendlyTypesVocabulary
+
 from collective.cover.controlpanel import ICoverSettings
 
 
@@ -48,25 +50,16 @@ grok.global_utility(AvailableTilesVocabulary,
                     name=u'collective.cover.AvailableTiles')
 
 
-class AvailableContentTypesVocabulary(object):
-    """ Customized version of plone.app.vocabularies.UserFriendlyTypes; we
-    don't want covers to be listed.
+class AvailableContentTypesVocabulary(ReallyUserFriendlyTypesVocabulary):
+    """ 
+    Inherit from plone.app.vocabularies.ReallyUserFriendlyTypes; and filter
+    the results. We don't want covers to be listed.
     """
     grok.implements(IVocabularyFactory)
 
     def __call__(self, context):
-        site = getSite()
-        ptool = getToolByName(site, 'plone_utils', None)
-        ttool = getToolByName(site, 'portal_types', None)
-        if ptool is None or ttool is None:
-            return SimpleVocabulary([])
-
-        request = aq_get(ttool, 'REQUEST', None)
-        items = [(translate(ttool[t].Title(), context=request), t)
-                 for t in ptool.getUserFriendlyTypes()]
-        items.sort()
-        items = [SimpleTerm(i[1], i[1], i[0]) for i in items
-                 if i[1] != u'collective.cover.content']
+        items = super(AvailableContentTypesVocabulary, self).__call__(context)
+        items = [i for i in items if i.token != 'collective.cover.content']
         return SimpleVocabulary(items)
 
 
