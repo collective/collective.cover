@@ -164,6 +164,8 @@ Then do you have several ways of using image scales in your tile templates.
 Mostly Harmless
 ---------------
 
+.. image:: https://secure.travis-ci.org/collective/collective.cover.png
+
 Have an idea? Found a bug? Let us know by `opening a support ticket`_.
 
 .. _`see and comment our mockups online`: https://simples.mybalsamiq.com/projects/capas/grid

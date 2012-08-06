@@ -1,0 +1,6 @@
+language: python
+python: "2.7"
+install:
+  - python bootstrap.py -c travis.cfg
+  - bin/buildout -c travis.cfg
+script: bin/test
