@@ -165,6 +165,7 @@ Mostly Harmless
 ---------------
 
 .. image:: https://secure.travis-ci.org/collective/collective.cover.png
+    :target: http://travis-ci.org/collective/collective.cover
 
 Have an idea? Found a bug? Let us know by `opening a support ticket`_.
 
