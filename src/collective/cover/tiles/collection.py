@@ -14,8 +14,10 @@ from collective.cover.tiles.base import PersistentCoverTile
 
 
 class ICollectionTile(IPersistentCoverTile):
+    
+    title = TextLine(title=u'Title')
 
-    uuid = TextLine(title=u'Collection uuid')
+    uuid = TextLine(title=u'Collection uuid', readonly=True)
 
     def results():
         """
@@ -50,6 +52,9 @@ class CollectionTile(PersistentCoverTile):
     index = ViewPageTemplateFile("templates/collection.pt")
 
     is_configurable = True
+    
+    def get_title(self):
+        return self.data['title']
 
     def results(self):
         start=0

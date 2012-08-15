@@ -24,6 +24,7 @@
                                  data-tile string:${context/absolute_url}/@@${tile_type}/${tile_id};
                                  data-tile-type tile_type;
                                  data-tile-valid-ct python:view.accepted_ct_for_tile(tile_type);
+                                 data-is-droppable python:view.tile_is_droppable(tile_type);
                                  id tile_id" />
             <a href="#" class="edit-tile-link"
                 tal:attributes="href string:${context/absolute_url}/@@edit-tile/${tile_type}/${tile_id}"

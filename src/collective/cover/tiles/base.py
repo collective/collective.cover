@@ -107,6 +107,7 @@ class PersistentCoverTile(tiles.PersistentTile):
 
     is_configurable = False
     is_editable = False
+    is_droppable = True
 
     def populate_with_object(self, obj):
         if not self.isAllowedToEdit():
