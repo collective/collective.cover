@@ -19,7 +19,7 @@ from collective.cover.tiles.base import PersistentCoverTile
 
 class IListTile(IPersistentCoverTile):
 
-    uuids = schema.List(title=u'Collection uuid',
+    uuids = schema.List(title=u'Item uuids',
         value_type=schema.TextLine(), readonly=True)
 
     title = schema.TextLine(
@@ -68,13 +68,14 @@ class ListTile(PersistentCoverTile):
 
     def results(self):
         start=0
-        size=6
+        size=4
         uuids = self.data.get('uuids', None)
         result = []
         if uuids:
             for uid in uuids:
                 obj = uuidToObject(uid)
                 result.append(obj)
+
         return result
 
     def populate_with_object(self, obj):
@@ -83,14 +84,32 @@ class ListTile(PersistentCoverTile):
         data_mgr = ITileDataManager(self)
         if data_mgr.get()['uuids']:
             uuids = data_mgr.get()['uuids']
-            uuids.append(uuid)
+            if uuid not in uuids:
+                uuids.append(uuid)
             data_mgr.set({'uuids':uuids})
         else:
             data_mgr.set({'uuids':[uuid]})
 
+    def replace_with_objects(self, objs):
+        super(ListTile, self).replace_with_objects(objs)
+        data_mgr = ITileDataManager(self)
+        data_mgr.set({'uuids':objs})
+
+    def remove_item(self, uid):
+        super(ListTile, self).remove_item(uid)
+        data_mgr = ITileDataManager(self)
+        uids = data_mgr.get()['uuids']
+        if uid in uids:
+            del uids[uids.index(uid)]
+        data_mgr.set({'uuids':uids})
+
     def delete(self):
         data_mgr = ITileDataManager(self)
         data_mgr.delete()
+
+    def get_uid(self, obj):
+        return IUUID(obj, None)
+
     
     def accepted_ct(self):
         return None
