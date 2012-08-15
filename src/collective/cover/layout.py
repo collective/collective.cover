@@ -57,11 +57,11 @@ class PageLayout(grok.View):
     def tile_is_configurable(self, tile_type):
         tile = self.context.restrictedTraverse(str(tile_type))
         return tile.is_configurable
-    
+
     def tile_is_droppable(self, tile_type):
         tile = self.context.restrictedTraverse(str(tile_type))
         return tile.is_droppable
-    
+
     def can_compose_tile_class(self, tile_type, tile_id):
         tile = self.context.restrictedTraverse("%s/%s" % (str(tile_type), str(tile_id)))
         if not tile.isAllowedToEdit():
@@ -137,20 +137,21 @@ class UidGetter(grok.View):
     def render(self):
         return uuid.uuid4().hex
 
+
 class GroupSelect(grok.View):
     grok.context(ICover)
     grok.name('group_select')
     grok.require('zope2.View')
-    
+
     def update(self):
-        self.groups =  GroupsVocabularyFactory(self.context)
+        self.groups = GroupsVocabularyFactory(self.context)
         if "groups[]" in self.request.keys():
             groups = self.request["groups[]"]
             tile_len = int(self.request["tile_len"])
             i = 0
-            while(i<tile_len):
+            while(i < tile_len):
                 tile_type = self.request["tiles[%s][type]" % i]
                 tile_id = self.request["tiles[%s][id]" % i]
-                tile = self.context.restrictedTraverse("%s/%s" % (tile_type,tile_id))
+                tile = self.context.restrictedTraverse("%s/%s" % (tile_type, tile_id))
                 tile.setAllowedGroupsForEdit(groups)
-                i+=1
+                i += 1
