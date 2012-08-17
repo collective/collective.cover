@@ -81,6 +81,10 @@ $(function() {
         draggable_acepted: function(e) {
             var ct = $(this).data('tileValidCt');
             var valid = $.inArray($(e).find('a').data('ctType'), ct);
+            var isDroppable = $(this).attr("data-is-droppable");
+            if(isDroppable === "False") {
+                return false;
+            }
             if(!ct && $($(e).context).parent().attr("id") === "item-list") {
                 return true;
             }

@@ -16,8 +16,25 @@
             <div tal:condition="not:results">
                <p i18n:translate="">The collections don't have any results.</p>
             </div>
-            <div tal:repeat="obj results">
-                <p tal:content="obj/Title" />
+            <div class="collection-item" tal:repeat="brain results">
+                <tal:obj define="obj brain/getObject">
+                <div class="image">
+                    <tal:image condition="python:hasattr(obj, 'image') or hasattr(obj,'Schema') and 'image' in obj.Schema().keys()">
+                        <img tal:define="scales obj/@@images;
+                                        thumbnail python: scales.scale('image', width=200, height=200);"
+                            tal:condition="thumbnail"
+                            tal:attributes="src thumbnail/url;
+                                            width thumbnail/width;
+                                            height thumbnail/height" />
+                    </tal:image>
+                </div>
+                <div class="title">
+                    <p tal:content="obj/Title" />
+                </div>
+                <div class="description">
+                    <p tal:content="obj/Description" />
+                </div>
+                </tal:obj>
             </div>
         </tal:results>
     </tal:has_data>
