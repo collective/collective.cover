@@ -67,8 +67,8 @@ class ListTile(PersistentCoverTile):
     is_configurable = False
 
     def results(self):
-        start=0
-        size=4
+        start= 0
+        size= 4
         uuids = self.data.get('uuids', None)
         result = []
         if uuids:
@@ -84,24 +84,28 @@ class ListTile(PersistentCoverTile):
         data_mgr = ITileDataManager(self)
         if data_mgr.get()['uuids']:
             uuids = data_mgr.get()['uuids']
-            if uuid not in uuids:
+            if type(uuids) != list:
+                uuids = [uuid]
+            elif uuid not in uuids:
                 uuids.append(uuid)
-            data_mgr.set({'uuids':uuids})
+
+            data_mgr.set({'uuids': uuids})
         else:
-            data_mgr.set({'uuids':[uuid]})
+            data_mgr.set({'uuids': [uuid]})
 
     def replace_with_objects(self, objs):
         super(ListTile, self).replace_with_objects(objs)
         data_mgr = ITileDataManager(self)
-        data_mgr.set({'uuids':objs})
+        data_mgr.set({'uuids': objs})
 
     def remove_item(self, uid):
         super(ListTile, self).remove_item(uid)
         data_mgr = ITileDataManager(self)
+
         uids = data_mgr.get()['uuids']
         if uid in uids:
             del uids[uids.index(uid)]
-        data_mgr.set({'uuids':uids})
+        data_mgr.set({'uuids': uids})
 
     def delete(self):
         data_mgr = ITileDataManager(self)
@@ -110,9 +114,5 @@ class ListTile(PersistentCoverTile):
     def get_uid(self, obj):
         return IUUID(obj, None)
 
-    
     def accepted_ct(self):
         return None
-    
-
-    
