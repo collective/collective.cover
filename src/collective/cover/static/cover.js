@@ -10,22 +10,21 @@
     };
 }(jQuery));
 
-
+//XXX stupid method and stupid way of coding... XXXXXXX 
 function removeObjFromTile() {
     $(".tile-remove-item").remove()
     $(".sortable-tile").each(function() {
         var child = $(this).children('div[data-uid]');
-        child.append("<span class='tile-remove-item'>X</span>");
+        child.append("<i class='tile-remove-item'><span class='text'>remove</span></i>");
     });
     $(".tile-remove-item").unbind("click");
     $(".tile-remove-item").click(function(e) {
         e.preventDefault();
         var obj = $(this).parent();
         uid = obj.attr("data-uid");
-        var tile = obj.parent();
-        while(!tile.hasClass('tile')) {
-            tile = tile.parent();
-        }
+        var tile = obj.parents('.tile');
+
+        tile.find('.loading-mask').addClass('show remove-tile');
         var tile_type = tile.attr("data-tile-type");
         var tile_id = tile.attr("id");
         $.ajax({
@@ -33,14 +32,25 @@ function removeObjFromTile() {
              data: {'tile-type': tile_type, 'tile-id': tile_id, 'uid': uid},
              success: function(info) {
                  tile.html(info);
-                 removeObjFromTile();
+                 TitleMarkupSetup();
+                 tile.find('.loading-mask').removeClass('show remove-tile');
                  return false;
              }
          });
     });
 }
 
+function TitleMarkupSetup(){
+    $('.tile').each(function(){
+        if ($(this).find('.loading-mask')[0] === undefined) {
+            $(this).append('<div class="loading-mask"/>');
+        }
+    });
+    removeObjFromTile();
+}
+
 $(document).ready(function() {
+
     $(".sortable-tile").liveSortable({
         stop:function(event, ui) {
             var uids = [];
@@ -55,13 +65,15 @@ $(document).ready(function() {
                  data: {'tile-type': tile_type, 'tile-id': tile_id, 'uids': uids},
                  success: function(info) {
                      tile.html(info);
-                     removeObjFromTile();
+                     TitleMarkupSetup();
                      return false;
                  }
              });
         }
     });
-    removeObjFromTile();
+
+    TitleMarkupSetup();
+
     $('a.edit-tile-link, a.config-tile-link').prepOverlay({
         subtype: 'ajax',
         filter: '.tiles-edit',

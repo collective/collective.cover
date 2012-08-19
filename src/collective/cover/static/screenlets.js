@@ -97,12 +97,14 @@ $(function() {
             var tile_type = tile.attr("data-tile-type");
             var tile_id = tile.attr("id");
             var ct_uid = ui.draggable.attr("uid");
+            tile.find('.loading-mask').addClass('show');
             $.ajax({
                 url: "@@updatetilecontent",
                 data: {'tile-type': tile_type, 'tile-id': tile_id, 'uid': ct_uid},
                 success: function(info) {
                     tile.html(info);
-                    removeObjFromTile();
+                    tile.find('.loading-mask').removeClass('show');
+                    TitleMarkupSetup();
                     return false;
                 }
             });
