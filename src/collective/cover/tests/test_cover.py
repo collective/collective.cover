@@ -8,6 +8,7 @@ from zope.component import queryUtility
 from plone.app.testing import TEST_USER_ID
 from plone.app.testing import setRoles
 from plone.dexterity.interfaces import IDexterityFTI
+from plone.app.dexterity.behaviors.exclfromnav import IExcludeFromNavigation
 from plone.app.lockingbehavior.behaviors import ILocking
 from plone.app.stagingbehavior.interfaces import IStagingSupport
 
@@ -49,6 +50,9 @@ class CoverIntegrationTestCase(unittest.TestCase):
         factory = fti.factory
         new_object = createObject(factory)
         self.assertTrue(ICover.providedBy(new_object))
+
+    def test_exclude_from_navigation_behavior(self):
+        self.assertTrue(IExcludeFromNavigation.providedBy(self.c1))
 
     def test_locking_behavior(self):
         self.assertTrue(ILocking.providedBy(self.c1))
