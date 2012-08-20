@@ -65,16 +65,18 @@ class ListTile(PersistentCoverTile):
     index = ViewPageTemplateFile("templates/list.pt")
 
     is_configurable = False
+    limit = 4
 
     def results(self):
-        start= 0
-        size= 4
+        start = 0
         uuids = self.data.get('uuids', None)
         result = []
         if uuids:
+            uuids = [uuids] if type(uuids) == str else uuids
             for uid in uuids:
                 obj = uuidToObject(uid)
-                result.append(obj)
+                if obj:
+                    result.append(obj)
 
         return result
 
@@ -89,13 +91,18 @@ class ListTile(PersistentCoverTile):
             elif uuid not in uuids:
                 uuids.append(uuid)
 
-            data_mgr.set({'uuids': uuids})
+            data_mgr.set({'uuids': uuids[:self.limit]})
         else:
             data_mgr.set({'uuids': [uuid]})
 
     def replace_with_objects(self, objs):
         super(ListTile, self).replace_with_objects(objs)
         data_mgr = ITileDataManager(self)
+        if type(objs) == list:
+            objs = objs[:self.limit]
+        else:
+            objs = [objs]
+
         data_mgr.set({'uuids': objs})
 
     def remove_item(self, uid):

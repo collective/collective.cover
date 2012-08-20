@@ -113,16 +113,16 @@ class PersistentCoverTile(tiles.PersistentTile):
         if not self.isAllowedToEdit():
             raise Unauthorized(_("You are not allowed to add content to "
                                  "this tile"))
-    
+
     def replace_with_objects(self, obj):
         if not self.isAllowedToEdit():
             raise Unauthorized(_("You are not allowed to add content to "
-                                  "this tile"))
-    
+                                 "this tile"))
+
     def remove_item(self, uid):
         if not self.isAllowedToEdit():
             raise Unauthorized(_("You are not allowed to remove content of "
-                                "this tile"))
+                                 "this tile"))
 
     def delete(self):
         data_mgr = ITileDataManager(self)
@@ -134,7 +134,7 @@ class PersistentCoverTile(tiles.PersistentTile):
 
     def get_tile_configuration(self):
         tile_conf_adapter = getMultiAdapter((self.context, self.request, self),
-                                             ITilesConfigurationScreen)
+                                            ITilesConfigurationScreen)
 
         configuration = tile_conf_adapter.get_configuration()
 
@@ -153,7 +153,7 @@ class PersistentCoverTile(tiles.PersistentTile):
                 # If there's no data for this field, ignore it
                 continue
 
-            if isinstance(self.data[name],RichTextValue):
+            if isinstance(self.data[name], RichTextValue):
                 transformer = ITransformer(self.context, None)
                 if transformer is not None:
                     content = transformer(self.data[name], 'text/x-html-safe')
@@ -165,8 +165,7 @@ class PersistentCoverTile(tiles.PersistentTile):
                      'title': obj.title}
             if name in conf:
                 field_conf = conf[name]
-                if ('visibility' in field_conf and
-                    field_conf['visibility'] == u'off'):
+                if ('visibility' in field_conf and field_conf['visibility'] == u'off'):
                     # If the field was configured to be invisible, then just
                     # ignore it
                     continue
@@ -309,7 +308,7 @@ class ImageScaling(BaseImageScaling):
             raise
         except Exception:
             exception('could not scale "%r" of %r',
-                orig_value, self.context.context.absolute_url())
+                      orig_value, self.context.context.absolute_url())
             return
         if result is not None:
             data, format, dimensions = result
@@ -326,7 +325,7 @@ class ImageScaling(BaseImageScaling):
         for k, v in self.context.data.items():
             if INamedImage.providedBy(v):
                 mtime += self.context.data.get('%s_mtime' % k, 0)
-                
+
         return mtime
 
     def scale(self, fieldname=None, scale=None,
@@ -340,7 +339,7 @@ class ImageScaling(BaseImageScaling):
             width, height = available[scale]
         storage = AnnotationStorage(self.context, self.modified)
         info = storage.scale(factory=self.create,
-            fieldname=fieldname, height=height, width=width, **parameters)
+                             fieldname=fieldname, height=height, width=width, **parameters)
         if info is not None:
             info['fieldname'] = fieldname
             scale_view = ImageScale(self.context, self.request, **info)
