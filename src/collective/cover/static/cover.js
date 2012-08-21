@@ -80,17 +80,29 @@ $(document).ready(function() {
         formselector: '#edit_tile',
         closeselector: 'name=buttons.cancel',
         noform: 'close',
+        beforepost: function(return_value, data_parent){
+            // Before post data, populate the textarea (textarea.mce_editable) with the contents of  iframe created by TinyMCE call.
+            // TODO: This does not solves, if we have more of a textarea widget in tiles. What's the solution?
+            var newlist = $.map(data_parent, function(value, i) {
+                                if (data_parent[i].type == "textarea") {
+                                    value.value = jQuery('#edit_tile iframe:only-child').contents().find('body').html();
+                                }
+                                return value
+                            });
+
+        },
         afterpost: function(return_value, data_parent) {
             location.reload();
         },
-        config: { onLoad: function() {
-            $('textarea.mce_editable').each(function() {
-                var config = new TinyMCEConfig($(this).attr('id'));
-                config.init();
-            });
-        },
-        onClose: function() { location.reload(); }
+        config: {
+            onLoad: function() {
+                $('textarea.mce_editable').each(function() {
+                    var config = new TinyMCEConfig($(this).attr('id'));
+                    config.init();
+                });
+            },
+            onClose: function() { location.reload(); }
 
         }
-        });
+    });
 });
