@@ -99,6 +99,10 @@ $(document).ready(function() {
                 $('textarea.mce_editable').each(function() {
                     var config = new TinyMCEConfig($(this).attr('id'));
                     config.init();
+
+                    // Remove unecessary link, use HTML button of editor
+                    $('div.suppressVisualEditor').remove()
+
                 });
             },
             onClose: function() { location.reload(); }
