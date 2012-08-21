@@ -15,6 +15,7 @@ of the following people:
 - Ricardo Bánffy
 - Juan Pablo Giménez
 - `Launched Pixels`_ (icon)
+- Cleber J Santos
 
 Development sponsored by Open Multimedia, Ravvit and Simples Consultoria.
 
