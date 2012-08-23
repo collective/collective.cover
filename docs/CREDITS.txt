@@ -17,7 +17,8 @@ of the following people:
 - `Launched Pixels`_ (icon)
 - Cleber J Santos
 
-Development sponsored by Open Multimedia, Ravvit and Simples Consultoria.
+Development sponsored by Open Multimedia, Ravvit and `Simples Consultoria`_.
 
 .. _`Launched Pixels`: http://www.launchedpixels.com/
 
+.. _`Simples Consultoria`: http://www.simplesconsultoria.com.br/
