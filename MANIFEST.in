@@ -3,4 +3,4 @@ include *.txt
 recursive-include src *
 recursive-include docs *
 
-global-exclude *pyc
+global-exclude *.pyc
