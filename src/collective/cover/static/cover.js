@@ -14,7 +14,7 @@
 function removeObjFromTile() {
     $(".tile-remove-item").remove()
     $(".sortable-tile").each(function() {
-        var child = $(this).children('div[data-uid]');
+        var child = $(this).children('*[data-uid]');
         child.append("<i class='tile-remove-item'><span class='text'>remove</span></i>");
     });
     $(".tile-remove-item").unbind("click");
