@@ -4,3 +4,5 @@ install:
   - python bootstrap.py -c travis.cfg
   - bin/buildout -c travis.cfg -q
 script: bin/test
+notifications:
+  irc: "irc.freenode.org#simplesconsultoria"
