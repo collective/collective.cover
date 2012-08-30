@@ -6,9 +6,9 @@
 
   <genericsetup:registerProfile
       name="default"
-      title="Composable page"
+      title="collective.cover"
       directory="profiles/default"
-      description="Extension profile for Composable page"
+      description="An easy-to-use package to create complex cover pages for Plone sites."
       provides="Products.GenericSetup.interfaces.EXTENSION" />
 
   <genericsetup:registerProfile
