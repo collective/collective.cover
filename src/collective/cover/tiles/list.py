@@ -84,6 +84,8 @@ class ListTile(PersistentCoverTile):
         super(ListTile, self).populate_with_object(obj)
         uuid = IUUID(obj, None)
         data_mgr = ITileDataManager(self)
+
+        old_data = data_mgr.get()
         if data_mgr.get()['uuids']:
             uuids = data_mgr.get()['uuids']
             if type(uuids) != list:
@@ -91,28 +93,31 @@ class ListTile(PersistentCoverTile):
             elif uuid not in uuids:
                 uuids.append(uuid)
 
-            data_mgr.set({'uuids': uuids[:self.limit]})
+            old_data['uuids'] = uuids[:self.limit]
         else:
-            data_mgr.set({'uuids': [uuid]})
+            old_data['uuids'] = [uuid]
+        data_mgr.set(old_data)
 
     def replace_with_objects(self, objs):
         super(ListTile, self).replace_with_objects(objs)
         data_mgr = ITileDataManager(self)
+        old_data = data_mgr.get()
         if type(objs) == list:
-            objs = objs[:self.limit]
+            old_data['uuids'] = objs[:self.limit]
         else:
-            objs = [objs]
+            old_data['uuids'] = [objs]
 
-        data_mgr.set({'uuids': objs})
+        data_mgr.set(old_data)
 
     def remove_item(self, uid):
         super(ListTile, self).remove_item(uid)
         data_mgr = ITileDataManager(self)
-
+        old_data = data_mgr.get()
         uids = data_mgr.get()['uuids']
         if uid in uids:
             del uids[uids.index(uid)]
-        data_mgr.set({'uuids': uids})
+        old_data['uuids'] = uids
+        data_mgr.set(old_data)
 
     def delete(self):
         data_mgr = ITileDataManager(self)
