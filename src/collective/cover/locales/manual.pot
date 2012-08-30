@@ -14,3 +14,18 @@ msgstr ""
 "Preferred-Encodings: utf-8 latin1\n"
 "Domain: collective.cover\n"
 
+#: profiles.zcml
+msgid "collective.cover"
+msgstr ""
+
+#: profiles.zcml
+msgid "An easy-to-use package to create complex cover pages for Plone sites."
+msgstr ""
+
+#: profiles.zcml
+msgid "collective.cover uninstall"
+msgstr ""
+
+#: profiles.zcml
+msgid "Uninstall profile for the collective.cover package."
+msgstr ""

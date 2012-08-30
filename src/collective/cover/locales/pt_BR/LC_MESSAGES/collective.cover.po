@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: collective.cover\n"
-"POT-Creation-Date: 2012-07-19 00:38+0000\n"
-"PO-Revision-Date: 2011-12-21 23:37-0600\n"
-"Last-Translator: André Nogueira<andre@simplesconsultoria.com.br>\n"
+"POT-Creation-Date: 2012-08-30 21:53+0000\n"
+"PO-Revision-Date: 2012-08-30 19:28-0300\n"
+"Last-Translator: Héctor Velarde <hector.velarde@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -16,89 +16,97 @@ msgstr ""
 
 #: collective/cover/profiles/default/types/collective.cover.content.xml
 msgid "A cover page."
-msgstr ""
+msgstr "Uma capa."
 
 #: collective/cover/screenlets_templates/content_screenlet.pt:49
 msgid "Add Content"
-msgstr ""
+msgstr "Adicionar conteúdo"
+
+#: profiles.zcml
+msgid "An easy-to-use package to create complex cover pages for Plone sites."
+msgstr "Um produto para criar capas complexas fácil de usar."
 
 #: collective/cover/tiles/configuration_view.py:197
 #: collective/cover/tiles/edit.py:90
 msgid "Cancel"
-msgstr ""
+msgstr "Cancelar"
 
 #: collective/cover/models/cover.xml
 msgid "Choose one of the predefined layouts"
-msgstr ""
+msgstr "Escolha um dos layouts pré-definidos"
 
 #: collective/cover/screenlets_templates/content_screenlet.pt:16
 msgid "Clipboard"
-msgstr ""
+msgstr "Clipboard"
 
 #: collective/cover/templates/layoutedit.pt:44
 msgid "Column"
-msgstr ""
+msgstr "Coluna"
 
-#: collective/cover/layout_templates/tile.pt:41
+#: collective/cover/layout_templates/tile.pt:42
 msgid "Config"
-msgstr ""
+msgstr "Configuração"
 
 #: collective/cover/tiles/configuration_view.py:159
 msgid "Configure ${name}"
-msgstr ""
+msgstr "Configurar ${name}"
 
 #: collective/cover/screenlets_templates/content_screenlet.pt:17
 msgid "Content tree"
-msgstr ""
+msgstr "Árvore de conteúdo"
 
 #: collective/cover/profiles/default/types/collective.cover.content.xml
 msgid "Cover"
-msgstr ""
+msgstr "Capa"
 
 #: collective/cover/models/cover.xml
 msgid "Cover Layout"
-msgstr ""
+msgstr "Layout da capa"
 
 #: collective/cover/controlpanel.py:38
 #: collective/cover/profiles/default/controlpanel.xml
 msgid "Cover Settings"
-msgstr ""
+msgstr "Configurações da capa"
 
-#: collective/cover/tiles/basic.py:25
-#: collective/cover/tiles/carousel.py:32
+#: collective/cover/tiles/basic.py:42
+msgid "Date"
+msgstr "Data"
+
+#: collective/cover/tiles/basic.py:32
 #: collective/cover/tiles/embed.py:28
+#: collective/cover/tiles/file.py:50
 msgid "Description"
-msgstr ""
+msgstr "Descripção"
 
 #: collective/cover/tiles/file.py:60
 msgid "Download link"
-msgstr ""
+msgstr "Link para download"
 
-#: collective/cover/layout_templates/tile.pt:28
+#: collective/cover/layout_templates/tile.pt:29
 msgid "Edit"
-msgstr ""
+msgstr "Editar"
 
 #: collective/cover/tiles/embed.py:18
 msgid "Embedding code"
-msgstr ""
+msgstr "Código de embedding"
 
 #: collective/cover/templates/layoutedit.pt:30
 msgid "Export layout"
-msgstr ""
+msgstr "Exportar o layout"
 
 #: collective/cover/tiles/configuration_widgets/textline.pt:42
 msgid "HTML tag"
-msgstr ""
+msgstr "Etiqueta HTML"
 
-#: collective/cover/tiles/basic.py:30
-#: collective/cover/tiles/carousel.py:38
+#: collective/cover/tiles/basic.py:37
 #: collective/cover/tiles/file.py:55
+#: collective/cover/tiles/link.py:32
 msgid "Image"
-msgstr ""
+msgstr "Imagem"
 
 #: collective/cover/tiles/configuration_widgets/namedimage.pt:42
 msgid "Image size"
-msgstr ""
+msgstr "Tamanho da imagem"
 
 #: collective/cover/controlpanel.py:21
 #: collective/cover/models/cover.xml
@@ -107,141 +115,167 @@ msgstr "Layout"
 
 #: collective/cover/templates/layoutedit.pt:28
 msgid "Layout name"
-msgstr ""
+msgstr "Nome do layout"
 
 #: collective/cover/controlpanel.py:18
 msgid "Layouts"
-msgstr ""
+msgstr "Layouts"
 
 #: collective/cover/controlpanel.py:20
 msgid "Name"
-msgstr ""
+msgstr "Nome"
 
 #: collective/cover/tiles/configuration_widgets/basewidget.pt:30
 #: collective/cover/tiles/configuration_widgets/namedimage.pt:30
 #: collective/cover/tiles/configuration_widgets/richtext.pt:30
 msgid "No"
-msgstr ""
+msgstr "Não"
 
 #: collective/cover/tiles/configuration_widgets/list.pt:12
 msgid "Number of items"
-msgstr ""
+msgstr "Número de itens"
 
 #: collective/cover/controlpanel.py:27
 msgid "Only objects of these content types will be searched on the screenlet."
-msgstr ""
+msgstr "Só os tipos de conteúdo listados seram procurados pelo screenlet."
 
 #: collective/cover/tiles/configuration_widgets/basewidget.pt:32
 #: collective/cover/tiles/configuration_widgets/namedimage.pt:32
 #: collective/cover/tiles/configuration_widgets/richtext.pt:32
 msgid "Order"
-msgstr ""
+msgstr "Ordem"
 
 #: collective/cover/tiles/configuration_widgets/namedimage.pt:58
 msgid "Position"
-msgstr ""
+msgstr "Posição"
 
 #: collective/cover/screenlets_templates/content_screenlet.pt:15
 msgid "Recent items"
-msgstr ""
+msgstr "Itens recientes"
 
 #: collective/cover/templates/layoutedit.pt:41
 msgid "Row"
-msgstr ""
+msgstr "Fila"
 
 #: collective/cover/tiles/configuration_view.py:163
 #: collective/cover/tiles/edit.py:52
 msgid "Save"
-msgstr ""
+msgstr "Salvar"
 
 #: collective/cover/templates/layoutedit.pt:50
 msgid "Saved"
-msgstr ""
+msgstr "Salvado"
 
 #: collective/cover/controlpanel.py:26
 msgid "Searchable Content Types"
-msgstr ""
+msgstr "Tipos de conteúdo buscaveis"
 
 #: collective/cover/tiles/templates/collection.pt:10
 msgid "Select a Collection to fill this tile."
-msgstr ""
+msgstr "Selecione uma coleção para o tile."
 
 #: collective/cover/controlpanel.py:39
 msgid "Settings for the collective.cover package"
-msgstr ""
+msgstr "Configurações do produto collective.cover"
 
 #: collective/cover/tiles/configuration_widgets/list.pt:31
 msgid "Show List Title"
-msgstr ""
+msgstr "Mostrar título da lista"
 
 #: collective/cover/tiles/configuration_widgets/richtext.pt:42
 msgid "Text length"
-msgstr ""
+msgstr "Comprimento do texto"
 
 #: collective/cover/tiles/templates/collection.pt:17
 msgid "The collections don't have any results."
-msgstr ""
+msgstr "La coleção não tem resultados."
 
 #: collective/cover/models/cover.xml
 msgid "The layout to be used to render groups and tiles"
-msgstr ""
+msgstr "O layout a utilizar"
+
+#: collective/cover/templates/layoutedit.pt:47
+msgid "Tile"
+msgstr "Tile"
 
 #: collective/cover/tiles/configuration_view.py:206
 msgid "Tile configuration cancelled."
-msgstr ""
+msgstr "Configuração do tile cancelada."
 
 #: collective/cover/tiles/configuration_view.py:193
 msgid "Tile configuration saved."
-msgstr ""
+msgstr "Configuração do tile guardada."
 
 #: collective/cover/tiles/edit.py:86
 msgid "Tile saved"
-msgstr ""
+msgstr "Tile guardado"
 
-#: collective/cover/templates/layoutedit.pt:47
-#: collective/cover/tiles/basic.py:20
-#: collective/cover/tiles/carousel.py:26
+#: collective/cover/tiles/basic.py:27
+#: collective/cover/tiles/embed.py:23
+#: collective/cover/tiles/file.py:45
 msgid "Title"
-msgstr ""
+msgstr "Título"
 
 #: collective/cover/tiles/link.py:37
 msgid "URL"
-msgstr ""
+msgstr "URL"
 
 #: collective/cover/tiles/file.py:66
 #: collective/cover/tiles/link.py:42
 msgid "UUID"
-msgstr ""
+msgstr "UUID"
+
+#: profiles.zcml
+msgid "Uninstall profile for the collective.cover package."
+msgstr "Perfil de desintalação do produto collective.cover."
 
 #: collective/cover/tiles/configuration_widgets/basewidget.pt:12
 #: collective/cover/tiles/configuration_widgets/namedimage.pt:12
 #: collective/cover/tiles/configuration_widgets/richtext.pt:12
 msgid "Visible"
-msgstr ""
+msgstr "Visível"
 
 #: collective/cover/screenlets_templates/content_screenlet.pt:12
 msgid "X"
-msgstr ""
+msgstr "X"
 
 #: collective/cover/tiles/configuration_widgets/basewidget.pt:21
 #: collective/cover/tiles/configuration_widgets/namedimage.pt:21
 #: collective/cover/tiles/configuration_widgets/richtext.pt:21
 msgid "Yes"
-msgstr ""
+msgstr "Sim"
 
-#: collective/cover/tiles/base.py:113
+#: collective/cover/tiles/base.py:114
 msgid "You are not allowed to add content to this tile"
+msgstr "Você não tem permissão para adicionar conteúdo neste tile"
+
+#: collective/cover/tiles/base.py:124
+msgid "You are not allowed to remove content of this tile"
+msgstr "Você não tem permissão para apagar conteúdo neste tile"
+
+#: profiles.zcml
+msgid "collective.cover"
+msgstr "Capa"
+
+#: profiles.zcml
+msgid "collective.cover uninstall"
+msgstr "Desintalação do collective.cover"
+
+#. Default: "Also known as keywords, tags or labels, these help you categorize your content."
+#: collective/cover/tiles/basic.py:48
+msgid "help_categories"
 msgstr ""
 
-#: collective/cover/tiles/base.py:123
-msgid "You are not allowed to remove content of this tile"
+#. Default: "Categories"
+#: collective/cover/tiles/basic.py:47
+msgid "label_categories"
 msgstr ""
 
 #: collective/cover/screenlets_templates/content_screenlet.pt:23
 msgid "ok"
-msgstr ""
+msgstr "aceitar"
 
 #: collective/cover/layout_templates/groupselect.pt:18
 msgid "save"
-msgstr ""
+msgstr "salvar"
 
