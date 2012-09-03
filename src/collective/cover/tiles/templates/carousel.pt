@@ -7,9 +7,10 @@
 <body>
     <div id="CarouselTile" class="carousel slide">
         <!-- Carousel items -->
-        <div class="carousel-inner">
+        <div class="carousel-inner sortable-tile">
             <tal:items repeat="item view/results">
-                <div class="item" tal:attributes="class python:'item' + (' active' if repeat['item'].start else '')">
+                <div class="item" tal:attributes="class python:'item' + (' active' if repeat['item'].start else '');
+                                                data-uid python:view.get_uid(item);">
                     <tal:image condition="python:hasattr(item, 'image') or hasattr(item,'Schema') and 'image' in item.Schema().keys()">
                         <img tal:define="scales item/@@images;
                                         thumbnail python: scales.scale('image', width=1000, height=1000);"
@@ -31,11 +32,27 @@
     </div>
     <script>
 $(document).ready(function() {    
-    $('#CarouselTile').carousel({
-        interval: 2000
+    $('#CarouselTile').carousel();
+    $("#CarouselTile .carousel-control.left").live("click", function(e) {
+        var actual = $("#CarouselTile .item.active");
+        var prev = actual.prev();
+        if(prev.length) {
+            actual.removeClass('active');
+            prev.addClass('active');
+        }
+        e.preventDefault();
+        return false;
     });
-    console.log('test');
-  // Handler for .ready() called.
+    $("#CarouselTile .carousel-control.right").live("click", function(e) {
+        var actual = $("#CarouselTile .item.active");
+          var next = actual.next();
+          if(next.length) {
+              actual.removeClass('active');
+              next.addClass('active');
+          }
+          e.preventDefault();
+          return false;
+    });
 });
     </script>    
 </body>

@@ -147,7 +147,6 @@ class PersistentCoverTile(tiles.PersistentTile):
         fields = getFieldsInOrder(tileType.schema)
 
         results = []
-
         for name, obj in fields:
             if not self.data[name]:
                 # If there's no data for this field, ignore it
