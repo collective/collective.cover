@@ -14,14 +14,14 @@
         <tal:view tal:condition="python:mode == 'view'">
         <div tal:condition="section">
             <div tal:attributes="class python:'%s' % section.get('class', '');
-                                 data-tile string:${context/absolute_url}/@@${tile_type}/${tile_id};
+                                 data-tile python:'/%s/@@%s/%s' %(context.absolute_url(relative=1), tile_type,tile_id);
                                  id tile_id" />
         </div>
         </tal:view>
         <tal:compose tal:condition="python:mode == 'compose'">
         <div tal:condition="section" class="tile-container">
             <div tal:attributes="class python:'%s %s' % (section.get('class', ''), view.can_compose_tile_class(tile_type, tile_id));
-                                 data-tile string:${context/absolute_url}/@@${tile_type}/${tile_id};
+                                 data-tile python:'/%s/@@%s/%s' %(context.absolute_url(relative=1), tile_type,tile_id);
                                  data-tile-type tile_type;
                                  data-tile-valid-ct python:view.accepted_ct_for_tile(tile_type);
                                  data-is-droppable python:view.tile_is_droppable(tile_type);
