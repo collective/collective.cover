@@ -14,7 +14,7 @@ from collective.cover.tiles.base import PersistentCoverTile
 
 
 class ICollectionTile(IPersistentCoverTile):
-    
+
     title = TextLine(title=u'Title')
 
     uuid = TextLine(title=u'Collection uuid', readonly=True)
@@ -52,13 +52,13 @@ class CollectionTile(PersistentCoverTile):
     index = ViewPageTemplateFile("templates/collection.pt")
 
     is_configurable = True
-    
+
     def get_title(self):
         return self.data['title']
 
     def results(self):
-        start=0
-        size=6
+        start = 0
+        size = 6
         uuid = self.data.get('uuid', None)
         if uuid is not None:
             obj = uuidToObject(uuid)
@@ -67,16 +67,23 @@ class CollectionTile(PersistentCoverTile):
     def populate_with_object(self, obj):
         super(CollectionTile, self).populate_with_object(obj)
 
+        title = obj.Title() or None
+        description = obj.Description() or None
         uuid = IUUID(obj, None)
+
         data_mgr = ITileDataManager(self)
-        data_mgr.set({'uuid': uuid})
+
+        data_mgr.set({'title': title,
+                      'description': description,
+                      'uuid': uuid,
+                      })
 
     def delete(self):
         data_mgr = ITileDataManager(self)
         data_mgr.delete()
 
     def accepted_ct(self):
-        valid_ct = ['Collection',]
+        valid_ct = ['Collection', ]
         return valid_ct
 
     def has_data(self):
