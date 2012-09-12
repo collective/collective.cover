@@ -13,6 +13,22 @@
                       tile_id python:section.get('id', '')">
         <tal:view tal:condition="python:mode == 'view'">
         <div tal:condition="section">
+            <span tal:replace="nothing">
+                **************************************************************************************************************
+                data-tile is an attribute HTML 5 used to provide the url the tile, then some machinery
+                in the publisher provided by plone.app.blocks performs the following steps:
+
+                1. It finds all the divs with a data-tile attribute (let's call them tile placeholders).
+
+                2. For each one, it performs a subrequest to fetch the contents of the tile. Using a URI
+                   makes tiles very flexible: a tile could be a browser view, or it could come from some external system.
+
+                3. The tile placeholder is replaced with the contents of the tile's body tag.
+
+                Here we used relative url, avoiding a bug when we are behind a server proxy "context.absolute_url(relative=1)"
+                ***************************************************************************************************************
+            </span>
+
             <div tal:attributes="class python:'%s' % section.get('class', '');
                                  data-tile python:'/%s/@@%s/%s' %(context.absolute_url(relative=1), tile_type,tile_id);
                                  id tile_id" />
