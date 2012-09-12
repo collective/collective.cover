@@ -77,6 +77,8 @@ class ListTile(PersistentCoverTile):
                 obj = uuidToObject(uid)
                 if obj:
                     result.append(obj)
+                else:
+                    self.remove_item(uid)
 
         return result
 
