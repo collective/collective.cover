@@ -8,6 +8,8 @@
     <div class="sortable-tile cover-list-tile">
   <tal:items repeat="item view/results">
   <div style="position:relative" tal:attributes="data-uid python:view.get_uid(item)">
+      <a tal:attributes="href item/absolute_url; title item/Description; alt
+          item/Description">
                 <p tal:content="item/Title" />
                 <p tal:content="item/Description" />
                 <tal:image condition="python:hasattr(item, 'image') or hasattr(item,'Schema') and 'image' in item.Schema().keys()">
@@ -18,6 +20,7 @@
                                         width thumbnail/width;
                                         height thumbnail/height" />
                 </tal:image>
+      </a>
   </div>
   </tal:items>
  </div>

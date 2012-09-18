@@ -37,6 +37,7 @@ class IRichTextTileData(IPersistentCoverTile):
         This method removes the persistent data created for this tile
         """
 
+
 class RichTextTile(PersistentCoverTile):
 
     index = ViewPageTemplateFile("templates/richtext.pt")
@@ -70,5 +71,5 @@ class RichTextTile(PersistentCoverTile):
         data_mgr.delete()
 
     def accepted_ct(self):
-        valid_ct = ['Document',]
+        valid_ct = ['Document', ]
         return valid_ct
