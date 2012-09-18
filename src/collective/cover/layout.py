@@ -61,6 +61,10 @@ class PageLayout(grok.View):
     def tile_is_droppable(self, tile_type):
         tile = self.context.restrictedTraverse(str(tile_type))
         return tile.is_droppable
+    
+    def tile_is_editable(self, tile_type):
+        tile = self.context.restrictedTraverse(str(tile_type))
+        return tile.is_editable
 
     def can_compose_tile_class(self, tile_type, tile_id):
         tile = self.context.restrictedTraverse("%s/%s" % (str(tile_type), str(tile_id)))

@@ -18,25 +18,6 @@
                               tabindex view/tabindex;
                               value python:stored_data.get('size', 5);
                               accesskey view/accesskey;"/>
-        <br />
-        <input type="checkbox" id="" name="" class=""
-            tabindex="" accesskey=""
-            tal:attributes="id string:${view/id}-showtitle;
-                            name string:${view/name}.showtitle;
-                           
-                            tabindex view/tabindex;
-                            value python:stored_data.get('showtitle', None);
-                            accesskey view/accesskey;"/>
-        
-        <span i18n:translate="">Show List Title</span>
-          <input type="text" id="" name="" class="" size="100"
-              tabindex="" accesskey=""
-              tal:attributes="id string:${view/id}-tiletitle;
-                              name string:${view/name}.tiletitle;
-                             
-                              tabindex view/tabindex;
-                              value python:stored_data.get('tiletitle', None);
-                              accesskey view/accesskey;"/>
 
     </tal:stored_data>
 </html>

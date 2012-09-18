@@ -1,23 +1,54 @@
 # -*- coding: utf-8 -*-
 
 from zope.interface import Interface
-from zope.schema import TextLine
+from zope import schema
 
 from plone.uuid.interfaces import IUUID
 from plone.app.uuid.utils import uuidToObject
+from plone.namedfile.field import NamedBlobImage as NamedImage
 from plone.tiles.interfaces import ITileDataManager
+from plone.directives import form
 
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
+
+from z3c.form.interfaces import IDisplayForm
+from z3c.form.interfaces import IEditForm
 
 from collective.cover.tiles.base import IPersistentCoverTile
 from collective.cover.tiles.base import PersistentCoverTile
 
+from collective.cover.tiles.edit import ICoverTileEditView
 
-class ICollectionTile(IPersistentCoverTile):
+class ICollectionTile(IPersistentCoverTile, form.Schema):
 
-    title = TextLine(title=u'Title')
+    title = schema.TextLine(title=u'Title')
+    
+    form.omitted(ICoverTileEditView, 'description')
+    description = schema.Text(
+        title=u'Description',
+        required=False,
+        )
+      
+    form.omitted(ICoverTileEditView, 'date')  
+    date = schema.Datetime(
+        title=u'Date',
+        required=False,
+        )
 
-    uuid = TextLine(title=u'Collection uuid', readonly=True)
+    form.omitted(ICoverTileEditView, 'image')
+    image = NamedImage(
+        title=u'Image',
+        required=False,
+        )
+        
+    form.omitted(ICoverTileEditView, 'number_to_show')
+    number_to_show = schema.List(
+        title=u'number of elements to show',
+        value_type=schema.TextLine(),
+        required=False,
+        )
+
+    uuid = schema.TextLine(title=u'Collection uuid', readonly=True)
 
     def results():
         """
@@ -52,6 +83,7 @@ class CollectionTile(PersistentCoverTile):
     index = ViewPageTemplateFile("templates/collection.pt")
 
     is_configurable = True
+    is_editable = False
 
     def get_title(self):
         return self.data['title']
@@ -87,5 +119,6 @@ class CollectionTile(PersistentCoverTile):
         return valid_ct
 
     def has_data(self):
+        self.get_configured_fields()
         uuid = self.data.get('uuid', None)
         return uuid is not None
