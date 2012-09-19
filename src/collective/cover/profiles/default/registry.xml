@@ -31,6 +31,8 @@
           field="resourceBundlesForThemes">
       <value purge="false">
           <!-- BBB: These bundle assignments should go into each theme's package -->
+          <!-- XXX: previous comment is causing AttributeError on Plone 4.3
+                    see https://dev.plone.org/ticket/13181 -->
           <element key="Plone Classic Theme">
               <element>jquery</element>
               <element>jquerytools</element>
