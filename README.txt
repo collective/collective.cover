@@ -10,7 +10,7 @@ Life, the Universe, and Everything
 An easy-to-use package to create complex covers for Plone sites. Under
 development (`see and comment our mockups online`_).
 
-Government, news sites, and intranets have special requirements on terms of
+Government, news sites, and intranets have special requirements in terms of
 permissions and versioning.
 
 For instance, suppose you are running The Planet, a news site that has a bunch
