@@ -3,10 +3,17 @@
 from zope.interface import Interface
 from zope import schema
 
+from zope.component import queryUtility
+
+from zope.schema import getFieldsInOrder
+
 from plone.uuid.interfaces import IUUID
 from plone.app.uuid.utils import uuidToObject
 from plone.namedfile.field import NamedBlobImage as NamedImage
+
 from plone.tiles.interfaces import ITileDataManager
+from plone.tiles.interfaces import ITileType
+
 from plone.directives import form
 
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
@@ -84,17 +91,24 @@ class CollectionTile(PersistentCoverTile):
 
     is_configurable = True
     is_editable = False
+    configured_fields = []
 
     def get_title(self):
         return self.data['title']
 
     def results(self):
+        self.configured_fields = self.get_configured_fields()
         start = 0
-        size = 6
+        size_conf = [i for i in self.configured_fields if i['id'] == 'number_to_show']
+        if size_conf:
+            size = int(size_conf[0]['size'])
+        else:
+            size = 6
+
         uuid = self.data.get('uuid', None)
         if uuid is not None:
             obj = uuidToObject(uuid)
-            return obj.results(b_start=start, b_size=size)
+            return obj.results(batch=False)[:size]
 
     def populate_with_object(self, obj):
         super(CollectionTile, self).populate_with_object(obj)
@@ -119,6 +133,39 @@ class CollectionTile(PersistentCoverTile):
         return valid_ct
 
     def has_data(self):
-        self.get_configured_fields()
         uuid = self.data.get('uuid', None)
         return uuid is not None
+
+    def get_configured_fields(self):
+        # Override this method, since we are not storing anything
+        # in the fields, we just use them for configuration
+        tileType = queryUtility(ITileType, name=self.__name__)
+        conf = self.get_tile_configuration()
+
+        fields = getFieldsInOrder(tileType.schema)
+
+        results = []
+        for name, obj in fields:
+            field = {'id': name,
+                     'title': obj.title}
+            if name in conf:
+                field_conf = conf[name]
+                if ('visibility' in field_conf and field_conf['visibility'] == u'off'):
+                    # If the field was configured to be invisible, then just
+                    # ignore it
+                    continue
+
+                if 'htmltag' in field_conf:
+                    # If this field has the capability to change its html tag
+                    # render, save it here
+                    field['htmltag'] = field_conf['htmltag']
+
+                if 'imgsize' in field_conf:
+                    field['scale'] = field_conf['imgsize']
+
+                if 'size' in field_conf:
+                    field['size'] = field_conf['size']
+
+            results.append(field)
+
+        return results
