@@ -141,7 +141,7 @@ To add an image field to your tile::
         required=False,
         )
 
-Then do you have several ways of using image scales in your tile templates.
+Then, you have several ways of using image scales in your tile templates.
 
 1. You can pass the ``scale`` method explicit width and height::
 
