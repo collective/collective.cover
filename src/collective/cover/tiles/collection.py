@@ -100,15 +100,18 @@ class CollectionTile(PersistentCoverTile):
         self.configured_fields = self.get_configured_fields()
         start = 0
         size_conf = [i for i in self.configured_fields if i['id'] == 'number_to_show']
-        if size_conf:
+
+        if size_conf and hasattr(size_conf[0], 'size'):
             size = int(size_conf[0]['size'])
         else:
-            size = 6
+            size = 4
 
         uuid = self.data.get('uuid', None)
         if uuid is not None:
             obj = uuidToObject(uuid)
             return obj.results(batch=False)[:size]
+        else:
+            return []
 
     def populate_with_object(self, obj):
         super(CollectionTile, self).populate_with_object(obj)
