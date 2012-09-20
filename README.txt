@@ -10,7 +10,7 @@ Life, the Universe, and Everything
 An easy-to-use package to create complex covers for Plone sites. Under
 development (`see and comment our mockups online`_).
 
-Government, news sites, and intranets have special requirements on terms of
+Government, news sites, and intranets have special requirements in terms of
 permissions and versioning.
 
 For instance, suppose you are running The Planet, a news site that has a bunch
@@ -92,6 +92,56 @@ Home Page Editor of the Brazilian Chamber of Deputies Site
 Don't Panic
 -----------
 
+Views
+^^^^^
+
+Tiles for the collective.cover package provide 3 different views:
+
+Rendered view
++++++++++++++
+
+This is the view that will be rendered for anyone that has view permission.
+It will render all fields defined in the schema of the tile, based on their
+configuration saved from the configuration view.
+
+Edition view
+++++++++++++
+
+This view is a common edit view, where all fields from the schema definition
+of the tile will be rendered in an "edit" mode. Data enterd here will persist
+in the tile itself.
+All fields from the schema will get rendered, no matter their configuration
+from the configure view.
+This view is accessed through the "Compose" view of the cover. You should see
+an "edit" button for each tile.
+If you don't want your tile to be able to be editable, you should override
+the "is_editable" attribute of your tile base class and set it to False
+
+Configuration view
+++++++++++++++++++
+
+This view is similar to the edit one, except it is intended for configuring
+different aspects of the tile. From here you can specify which fields get
+rendered when viewing the tile, or the order in which they show up.
+In addition, each field widget can provide specific configuration options. 
+For instance, an ITextLinesWidget will provide an extra configuration 
+option, "HTML tag", which allows to specify the HTML tag to be used when
+rendering data saved in this field.
+This view is accessed through the "Layout" view of the cover. You should see
+a "configuration" button for each tile.
+If you don't want your tile to be configurable, you should override
+the "is_configurable" attribute of your tile base class and set it to False
+
+
+Writing a custom widget in "configure" mode for a field
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The configuration view utilizes z3c.form to be automatically generated based on
+the tile's schema definition. For that, it renders widgets in a "configure" 
+mode. You can see how existing ones are defined, checking the configure.zcml
+file under tiles/configuration_widgets
+
+
 How to develop a tile for collective.cover
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -131,6 +181,36 @@ override in your class:
 **get_tile_configuration()**
     It returns the stored configuration options for this tile.
 
+Storage
++++++++
+
+Data and configuration for tiles are stored in an annotation of the context
+where the tile is being shown.
+You can see how this works by looking into data.py and configuration.py under 
+the tiles directory.
+
+Render view
++++++++++++
+
+In order to visualize the tile's content, you need to write a view that will
+render it. For that, you need to get some things into consideration.
+
+1. The view will get rendered always, so you need to add conditions to show
+   specific content based on what data the tile has, if any.
+
+2. You need to render content based on the tile's fields configurations.
+   For that, there's a helper method provided with every tile called
+   "get_configured_fields". This will iterate over all fields, and will
+   get the configuration and data for each, and also in the order that 
+   they should be rendered. If the field has no data stored, then it will 
+   not get included in the returned values.
+   You can override this, in case you need a different behavior, check
+   collection.py under the tiles directory and collection.pt under the
+   tiles/templates directory for an example. 
+
+For additional hints on how to create a template for your tile and make it
+work, check all tiles provided by this package, under the tiles directory.
+
 Image field and scales
 ++++++++++++++++++++++
 
@@ -141,7 +221,7 @@ To add an image field to your tile::
         required=False,
         )
 
-Then do you have several ways of using image scales in your tile templates.
+Then, you have several ways of using image scales in your tile templates.
 
 1. You can pass the ``scale`` method explicit width and height::
 
@@ -160,6 +240,10 @@ Then do you have several ways of using image scales in your tile templates.
           tal:attributes="src thumbnail/url;
                           width thumbnail/width;
                           height thumbnail/height" />
+
+Recommendation:: Use the scale saved from the configuration. Check lines 26 through
+34 from the collection.pt file under tiles/templates directory to get the idea.
+
 
 Mostly Harmless
 ---------------
