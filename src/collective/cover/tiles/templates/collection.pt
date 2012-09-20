@@ -19,9 +19,6 @@
             </div>
             <div class="collection-item" tal:repeat="brain results">
                 <tal:obj define="obj brain/getObject">
-                    <a tal:attributes="href obj/absolute_url; 
-                                       title obj/Description; 
-                                       alt obj/Description">
                         <tal:fields repeat="field view/configured_fields">
                             <div class="image" 
                                  tal:condition="python:field['id'] == 'image' and (hasattr(obj, 'image') or hasattr(obj,'Schema') and 'image' in obj.Schema().keys())">
@@ -35,12 +32,16 @@
 
                             <div class="title"
                                  tal:condition="python:field['id'] == 'title'">
+                                 <a tal:attributes="href obj/absolute_url; 
+                                                title obj/Title; 
+                                                alt obj/Title">
                                 <h1 tal:condition="python:field['htmltag'] == 'h1'"
                                     tal:content="obj/Title" />
                                 <h2 tal:condition="python:field['htmltag'] == 'h2'"
                                     tal:content="obj/Title" />
                                 <h3 tal:condition="python:field['htmltag'] == 'h3'"
                                     tal:content="obj/Title" />
+                                 </a>
                             </div>
 
                             <div class="description"
@@ -54,7 +55,6 @@
                             </div>
 
                         </tal:fields>
-                    </a>
                 </tal:obj>
             </div>
         </tal:results>
