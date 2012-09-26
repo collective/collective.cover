@@ -9,19 +9,24 @@
         <!-- Carousel items -->
         <div class="carousel-inner sortable-tile">
             <tal:items repeat="item view/results">
-                <div class="item" tal:attributes="class python:'item' + (' active' if repeat['item'].start else '');
-                                                data-uid python:view.get_uid(item);">
+                <div class="item"
+                     tal:attributes="class python:'item' + (' active' if repeat['item'].start else '');
+                                     data-uid python:view.get_uid(item);">
                     <tal:image condition="python:hasattr(item, 'image') or hasattr(item,'Schema') and 'image' in item.Schema().keys()">
                         <img tal:define="scales item/@@images;
-                                        thumbnail python: scales.scale('image', width=1000, height=1000);"
-                            tal:condition="thumbnail"
-                            tal:attributes="src thumbnail/url;
-                                            width thumbnail/width;
-                                            height thumbnail/height" />
+                                         thumbnail python: scales.scale('image', width=1000, height=1000);"
+                             tal:condition="thumbnail"
+                             tal:attributes="src thumbnail/url;
+                                             width thumbnail/width;
+                                             height thumbnail/height" />
                     </tal:image>
                     <div class="carousel-caption">
-                        <h4 tal:content="item/Title">First Thumbnail label</h4>
-                        <p tal:content="item/Description">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+                      <a tal:attributes="href item/absolute_url;
+                                         title item/Title;
+                                         alt item/Description">
+                        <h4 tal:content="item/Title">Title</h4>
+                      </a>
+                        <p tal:content="item/Description">Summary</p>
                     </div>                    
                 </div>
             </tal:items>
