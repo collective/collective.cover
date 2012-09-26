@@ -19,40 +19,42 @@
       </div>
 
       <div class="collection-item" tal:repeat="brain results">
-        <tal:obj define="obj brain/getObject">
+        <tal:obj define="obj brain/getObject;
+                         title obj/Title;
+                         resume obj/Description">
           <tal:fields repeat="field view/configured_fields">
-            <div class="image" 
+            <div class="image"
                  tal:condition="python:field['id'] == 'image' and (hasattr(obj, 'image') or hasattr(obj,'Schema') and 'image' in obj.Schema().keys())">
               <img tal:define="scales obj/@@images;
-                               thumbnail python: scales.scale('image', scale=field['scale']);"
+                               thumbnail python:scales.scale('image', scale=field.get('scale', 'mini'));"
                    tal:condition="thumbnail"
                    tal:attributes="src thumbnail/url;
                                    width thumbnail/width;
                                    height thumbnail/height" />
             </div>
 
-            <div class="title"
-                 tal:condition="python:field['id'] == 'title'">
+            <tal:title define="htmltag python:field.get('htmltag', 'h1')"
+                       condition="python:field['id'] == 'title'">
+              <!-- FIXME: a tag should be inside h tag -->
               <a tal:attributes="href obj/absolute_url; 
-                                 title obj/Title; 
-                                 alt obj/Title">
-                <h1 tal:condition="python:field['htmltag'] == 'h1'"
-                    tal:content="obj/Title" />
-                <h2 tal:condition="python:field['htmltag'] == 'h2'"
-                    tal:content="obj/Title" />
-                <h3 tal:condition="python:field['htmltag'] == 'h3'"
-                    tal:content="obj/Title" />
+                                 title resume">
+                <h1 tal:condition="python:htmltag == 'h1'"
+                    tal:content="title" />
+                <h2 tal:condition="python:htmltag == 'h2'"
+                    tal:content="title" />
+                <h3 tal:condition="python:htmltag == 'h3'"
+                    tal:content="title" />
               </a>
-            </div>
+            </tal:title>
 
             <div class="description"
                  tal:condition="python:field['id'] == 'description'">
-              <p tal:content="structure obj/Description" />
+              <p tal:content="resume" />
             </div>
 
             <div class="collection-obj-date"
                  tal:condition="python:field['id'] == 'date' and (hasattr(obj, 'Date') or hasattr(obj,'Schema') and 'Date' in obj.Schema().keys())">
-              <p tal:content="python:toLocalizedTime(obj.Date(),long_format=1)" />
+              <p tal:content="python:toLocalizedTime(obj.Date())" />
             </div>
           </tal:fields>
         </tal:obj>
