@@ -5,60 +5,63 @@
       i18n:domain="collective.cover">
 
 <body>
-    <div id="CarouselTile" class="carousel slide">
-        <!-- Carousel items -->
-        <div class="carousel-inner sortable-tile">
-            <tal:items repeat="item view/results">
-                <div class="item"
-                     tal:attributes="class python:'item' + (' active' if repeat['item'].start else '');
-                                     data-uid python:view.get_uid(item);">
-                    <tal:image condition="python:hasattr(item, 'image') or hasattr(item,'Schema') and 'image' in item.Schema().keys()">
-                        <img tal:define="scales item/@@images;
-                                         thumbnail python: scales.scale('image', width=1000, height=1000);"
-                             tal:condition="thumbnail"
-                             tal:attributes="src thumbnail/url;
-                                             width thumbnail/width;
-                                             height thumbnail/height" />
-                    </tal:image>
-                    <div class="carousel-caption">
-                      <a tal:attributes="href item/absolute_url;
-                                         title item/Title;
-                                         alt item/Description">
-                        <h4 tal:content="item/Title">Title</h4>
-                      </a>
-                        <p tal:content="item/Description">Summary</p>
-                    </div>                    
-                </div>
-            </tal:items>
+  <div id="CarouselTile" class="carousel slide">
+    <!-- Carousel items -->
+    <div class="carousel-inner sortable-tile">
+      <tal:items repeat="item view/results">
+        <div class="item"
+             tal:attributes="class python:'item' + (' active' if repeat['item'].start else '');
+                             data-uid python:view.get_uid(item);">
+          <tal:image condition="python:hasattr(item, 'image') or hasattr(item,'Schema') and 'image' in item.Schema().keys()">
+            <img tal:define="scales item/@@images;
+                             thumbnail python:scales.scale('image', width=1000, height=1000);"
+                 tal:condition="thumbnail"
+                 tal:attributes="src thumbnail/url;
+                                 width thumbnail/width;
+                                 height thumbnail/height" />
+          </tal:image>
+
+          <div class="carousel-caption">
+            <a tal:attributes="href item/absolute_url;
+                               title item/Title;
+                               alt item/Description">
+              <h4 tal:content="item/Title">Title</h4>
+            </a>
+            <p tal:content="item/Description">Summary</p>
+          </div>
         </div>
-        <!-- Carousel nav -->
-        <a class="carousel-control left" href="#article-carousel" data-slide="prev">&lsaquo;</a>
-        <a class="carousel-control right" href="#article-carousel" data-slide="next">&rsaquo;</a>
+      </tal:items>
     </div>
-    <script>
-$(document).ready(function() {    
-    $('#CarouselTile').carousel();
-    $("#CarouselTile .carousel-control.left").live("click", function(e) {
-        var actual = $("#CarouselTile .item.active");
-        var prev = actual.prev();
-        if(prev.length) {
-            actual.removeClass('active');
-            prev.addClass('active');
-        }
-        e.preventDefault();
-        return false;
+
+    <!-- Carousel nav -->
+    <a class="carousel-control left" href="#article-carousel" data-slide="prev">&lsaquo;</a>
+    <a class="carousel-control right" href="#article-carousel" data-slide="next">&rsaquo;</a>
+  </div>
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+        $('#CarouselTile').carousel();
+        $("#CarouselTile .carousel-control.left").live("click", function(e) {
+            var actual = $("#CarouselTile .item.active");
+            var prev = actual.prev();
+            if(prev.length) {
+                actual.removeClass('active');
+                prev.addClass('active');
+            }
+            e.preventDefault();
+            return false;
+        });
+        $("#CarouselTile .carousel-control.right").live("click", function(e) {
+            var actual = $("#CarouselTile .item.active");
+              var next = actual.next();
+              if(next.length) {
+                  actual.removeClass('active');
+                  next.addClass('active');
+              }
+              e.preventDefault();
+              return false;
+        });
     });
-    $("#CarouselTile .carousel-control.right").live("click", function(e) {
-        var actual = $("#CarouselTile .item.active");
-          var next = actual.next();
-          if(next.length) {
-              actual.removeClass('active');
-              next.addClass('active');
-          }
-          e.preventDefault();
-          return false;
-    });
-});
-    </script>    
+  </script>
 </body>
 </html>
