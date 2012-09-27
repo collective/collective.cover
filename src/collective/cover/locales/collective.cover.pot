@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: collective.cover\n"
-"POT-Creation-Date: 2012-08-30 21:53+0000\n"
+"POT-Creation-Date: 2012-09-26 23:12+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -43,7 +43,7 @@ msgstr ""
 msgid "Column"
 msgstr ""
 
-#: collective/cover/layout_templates/tile.pt:42
+#: collective/cover/layout_templates/tile.pt:59
 msgid "Config"
 msgstr ""
 
@@ -82,8 +82,12 @@ msgstr ""
 msgid "Download link"
 msgstr ""
 
-#: collective/cover/layout_templates/tile.pt:29
+#: collective/cover/layout_templates/tile.pt:45
 msgid "Edit"
+msgstr ""
+
+#: collective/cover/tiles/list.py:24
+msgid "Elements"
 msgstr ""
 
 #: collective/cover/tiles/embed.py:18
@@ -178,15 +182,11 @@ msgstr ""
 msgid "Settings for the collective.cover package"
 msgstr ""
 
-#: collective/cover/tiles/configuration_widgets/list.pt:31
-msgid "Show List Title"
-msgstr ""
-
 #: collective/cover/tiles/configuration_widgets/richtext.pt:42
 msgid "Text length"
 msgstr ""
 
-#: collective/cover/tiles/templates/collection.pt:17
+#: collective/cover/tiles/templates/collection.pt:18
 msgid "The collections don't have any results."
 msgstr ""
 
