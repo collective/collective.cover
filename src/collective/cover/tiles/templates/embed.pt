@@ -8,7 +8,8 @@
   <div>
     <tal:fields repeat="field view/get_configured_fields">
       <tal:embed condition="python:field['id'] == 'embed'">
-        <div tal:replace="structure view/get_embedding_code" />
+        <!-- FIXME -->
+        <div tal:replace="structure python:field['content']" />
       </tal:embed>
 
       <tal:title define="htmltag python:field.get('htmltag', 'h1')"
@@ -22,7 +23,8 @@
       </tal:title>
 
       <tal:description condition="python:field['id'] == 'description'">
-        <p tal:content="python:field['content']">Description</p>
+        <!-- FIXME -->
+        <p tal:content="python:field['content']">Summary</p>
       </tal:description>
 
       <tal:last condition="repeat/field/end">

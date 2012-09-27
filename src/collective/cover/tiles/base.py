@@ -161,7 +161,7 @@ class PersistentCoverTile(tiles.PersistentTile):
 
             field = {'id': name,
                      'content': content,
-                     'title': obj.title}
+                     'title': obj.title}  # XXX: object's title?
             if name in conf:
                 field_conf = conf[name]
                 if ('visibility' in field_conf and field_conf['visibility'] == u'off'):
