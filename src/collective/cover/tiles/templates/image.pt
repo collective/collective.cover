@@ -1,0 +1,31 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      i18n:domain="collective.cover">
+
+<body tal:define="is_empty view/is_empty">
+  <p tal:condition="is_empty">
+    Please drag&amp;drop an image here to populate the tile.
+  </p>
+
+  <div tal:condition="not: is_empty">
+    <tal:fields repeat="field view/get_configured_fields">
+
+      <tal:image condition="python:field['id'] == 'image'">
+        <img class="image-left"
+             tal:define="scales view/@@images;
+                         thumbnail python: scales.scale('image', scale=field.get('scale', 'mini'));"
+             tal:condition="thumbnail"
+             tal:attributes="src thumbnail/url;
+                             width thumbnail/width;
+                             height thumbnail/height" />
+      </tal:image>
+
+      <tal:last condition="repeat/field/end">
+        <div class="visualClear"><!-- --></div>
+      </tal:last>
+    </tal:fields>
+  </div>
+</body>
+</html>
