@@ -140,6 +140,16 @@
       for="*"
     />
 
+  <plone:tile
+      name="collective.cover.image"
+      title="Image Tile"
+      description="A tile that contains an image"
+      add_permission="cmf.ModifyPortalContent"
+      schema=".image.IImageTile"
+      class=".image.ImageTile"
+      permission="zope2.View"
+      for="*"
+    />
 
   <plone:tile
       name="collective.cover.link"
