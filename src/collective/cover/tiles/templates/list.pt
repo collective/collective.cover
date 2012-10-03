@@ -5,24 +5,43 @@
       i18n:domain="collective.cover">
 
 <body>
-    <div class="sortable-tile cover-list-tile">
-  <tal:items repeat="item view/results">
-  <div style="position:relative" tal:attributes="data-uid python:view.get_uid(item)">
-      <a tal:attributes="href item/absolute_url; title item/Description; alt
-          item/Description">
-                <p tal:content="item/Title" />
-                <p tal:content="item/Description" />
-                <tal:image condition="python:hasattr(item, 'image') or hasattr(item,'Schema') and 'image' in item.Schema().keys()">
-                    <img tal:define="scales item/@@images;
-                                    thumbnail python: scales.scale('image', width=200, height=200);"
-                        tal:condition="thumbnail"
-                        tal:attributes="src thumbnail/url;
-                                        width thumbnail/width;
-                                        height thumbnail/height" />
-                </tal:image>
-      </a>
+  <!-- FIXME: this should be configurable -->
+  <div class="sortable-tile cover-list-tile">
+    <tal:items repeat="item view/results"
+               define="toLocalizedTime nocall:context/@@plone/toLocalizedTime">
+      <div style="position:relative"
+           tal:attributes="data-uid python:view.get_uid(item)">
+        <tal:image condition="python:hasattr(item, 'image') or hasattr(item,'Schema') and 'image' in item.Schema().keys()">
+          <a tal:attributes="href item/absolute_url;
+                             title item/Description;
+                             alt item/Description">
+            <!-- XXX -->
+            <img style="float: left; margin: 0 1em 0.5em 0;"
+                 tal:define="scales item/@@images;
+                             thumbnail python: scales.scale('image', 'mini');"
+                 tal:condition="thumbnail"
+                 tal:attributes="src thumbnail/url;
+                                 width thumbnail/width;
+                                 height thumbnail/height" />
+          </a>
+        </tal:image>
+
+        <tal:title>
+          <!-- FIXME: a tag should be inside h tag -->
+          <a tal:attributes="href item/absolute_url;
+                             title item/Description">
+            <h1 tal:content="item/Title" />
+          </a>
+        </tal:title>
+
+        <p tal:content="item/Description" />
+
+        <p tal:content="python:toLocalizedTime(item.Date())" />
+
+      </div>
+
+      <div class="visualClear"><!-- --></div>
+    </tal:items>
   </div>
-  </tal:items>
- </div>
 </body>
 </html>
