@@ -27,7 +27,9 @@
                  tal:condition="python:field['id'] == 'image' and (hasattr(obj, 'image') or hasattr(obj,'Schema') and 'image' in obj.Schema().keys())">
               <a tal:attributes="href obj/absolute_url; 
                                  title summary">
-                <img tal:define="scales obj/@@images;
+                <!-- XXX -->
+                <img style="float: left; margin: 0 1em 0.5em 0;"
+                     tal:define="scales obj/@@images;
                                  thumbnail python:scales.scale('image', scale=field.get('scale', 'mini'));"
                      tal:condition="thumbnail"
                      tal:attributes="src thumbnail/url;
@@ -61,6 +63,7 @@
             </div>
           </tal:fields>
         </tal:obj>
+        <div class="visualClear"><!-- --></div>
       </div>
     </tal:results>
   </tal:has_data>
