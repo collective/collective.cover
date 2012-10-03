@@ -25,12 +25,15 @@
           <tal:fields repeat="field view/configured_fields">
             <div class="image"
                  tal:condition="python:field['id'] == 'image' and (hasattr(obj, 'image') or hasattr(obj,'Schema') and 'image' in obj.Schema().keys())">
-              <img tal:define="scales obj/@@images;
-                               thumbnail python:scales.scale('image', scale=field.get('scale', 'mini'));"
-                   tal:condition="thumbnail"
-                   tal:attributes="src thumbnail/url;
-                                   width thumbnail/width;
-                                   height thumbnail/height" />
+              <a tal:attributes="href obj/absolute_url; 
+                                 title summary">
+                <img tal:define="scales obj/@@images;
+                                 thumbnail python:scales.scale('image', scale=field.get('scale', 'mini'));"
+                     tal:condition="thumbnail"
+                     tal:attributes="src thumbnail/url;
+                                     width thumbnail/width;
+                                     height thumbnail/height" />
+              </a>
             </div>
 
             <tal:title define="htmltag python:field.get('htmltag', 'h1')"
