@@ -22,7 +22,7 @@ from collective.cover.tiles.base import PersistentCoverTile
 class IListTile(IPersistentCoverTile):
 
     uuids = schema.List(title=_(u'Elements'),
-        value_type=schema.TextLine())
+        value_type=schema.TextLine(), required=False)
 
     title = schema.TextLine(
         title=_(u'Title'),

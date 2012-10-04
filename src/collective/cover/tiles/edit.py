@@ -62,12 +62,12 @@ class CustomEditForm(DefaultEditForm):
         tile = self.context.restrictedTraverse('@@%s/%s' % (typeName, self.tileId,))
 
         dataManager = ITileDataManager(tile)
-
         # We need to check first for existing content in order to not loose
         # fields that weren't sent with the form.
         old_data = dataManager.get()
         for item in data:
-            old_data[item] = data[item]
+            if data[item] != None:
+                old_data[item] = data[item]
 
         dataManager.set(old_data)
 
