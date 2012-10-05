@@ -7,8 +7,12 @@ from z3c.form.interfaces import NO_VALUE
 
 from zope.component import getMultiAdapter
 
+from zope.event import notify
+
 from zope.interface import implements
 from zope.interface import Interface
+
+from zope.lifecycleevent import ObjectModifiedEvent
 
 from zope.publisher.interfaces import IPublishTraverse
 from zope.publisher.interfaces.browser import IBrowserView
@@ -186,8 +190,7 @@ class DefaultConfigureForm(TileForm, form.Form):
 
         layoutURL = '%s/layoutedit' % contextURL
 
-        # XXX: We need to fire a notification ?
-        #notify(ObjectModifiedEvent(tile))
+        notify(ObjectModifiedEvent(tile))
 
         # Get the tile URL, possibly with encoded data
         IStatusMessage(self.request).addStatusMessage(_(u"Tile configuration saved.",), type=u'info')
