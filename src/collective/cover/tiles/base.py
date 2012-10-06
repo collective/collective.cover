@@ -11,8 +11,12 @@ from ZODB.POSException import ConflictError
 from zope.component import getMultiAdapter
 from zope.component import queryUtility
 
+from zope.event import notify
+
 from zope.interface import implements
 from zope.interface import Interface
+
+from zope.lifecycleevent import ObjectModifiedEvent
 
 from zope.schema import getFieldsInOrder
 
@@ -114,10 +118,14 @@ class PersistentCoverTile(tiles.PersistentTile):
             raise Unauthorized(_("You are not allowed to add content to "
                                  "this tile"))
 
+        notify(ObjectModifiedEvent(self))
+
     def replace_with_objects(self, obj):
         if not self.isAllowedToEdit():
             raise Unauthorized(_("You are not allowed to add content to "
                                  "this tile"))
+
+        notify(ObjectModifiedEvent(self))
 
     def remove_item(self, uid):
         if not self.isAllowedToEdit():
