@@ -25,6 +25,7 @@ from persistent.dict import PersistentDict
 from zope.publisher.interfaces import NotFound
 
 from plone import tiles
+from plone.tiles.esi import ESITile
 
 from plone.app.textfield.interfaces import ITransformer
 from plone.app.textfield.value import RichTextValue
@@ -105,7 +106,7 @@ class IPersistentCoverTile(Interface):
         """
 
 
-class PersistentCoverTile(tiles.PersistentTile):
+class PersistentCoverTile(tiles.PersistentTile, ESITile):
 
     implements(IPersistentCoverTile)
 
