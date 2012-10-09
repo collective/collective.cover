@@ -8,6 +8,13 @@
   <javascript bundle="jquerytools" id="++resource++plone.app.jquerytools.rangeinput.js" />
   <javascript bundle="jquerytools" id="++resource++plone.app.jquerytools.validator.js" />
 
+  <!-- jQuery-ui Custom Events of interactions:
+  Draggable,Droppable,Resizable,Selectable and Sortable -->
+  <javascript bundle="jquery"
+      id="++resource++collective.cover/jquery-ui-1.9.0.custom.min.js"
+      cacheable="True" compression="none" cookable="True" enabled="True" expression=""
+      inline="False" authenticated="True" />
+
   <!-- tiny bundle overrides -->
   <javascript bundle="tinymce" id="tiny_mce.js" />
   <javascript bundle="tinymce" id="tiny_mce_init.js" />
