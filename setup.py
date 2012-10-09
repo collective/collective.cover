@@ -41,7 +41,6 @@ setup(name='collective.cover',
       install_requires=[
         'setuptools',
         'Plone>=4.2',
-        'collective.js.jqueryui',
         'plone.app.blocks',
         'plone.app.dexterity[grok]',
         'plone.app.jquery>=1.7.2',
