@@ -21,10 +21,11 @@ class VocabulariesTestCase(unittest.TestCase):
         vocabulary = queryUtility(IVocabularyFactory, name)
         self.assertTrue(vocabulary is not None)
         layouts = vocabulary(self.portal)
-        self.assertEqual(len(layouts), 3)
+        self.assertEqual(len(layouts), 4)
         self.assertTrue(u'Layout A' in layouts)
         self.assertTrue(u'Layout B' in layouts)
         self.assertTrue(u'Layout C' in layouts)
+        self.assertTrue(u'Empty layout' in layouts)
 
     def test_tiles_vocabulary(self):
         name = u'collective.cover.AvailableTiles'
