@@ -21,6 +21,7 @@ from collective.cover.tiles.base import IPersistentCoverTile
 from collective.cover.tiles.base import PersistentCoverTile
 
 
+# FIXME: basic tile is not storing the object URL
 class IBasicTileData(IPersistentCoverTile):
 
     title = schema.TextLine(
