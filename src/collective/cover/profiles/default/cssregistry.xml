@@ -6,4 +6,10 @@
  <stylesheet title="" cacheable="True" compression="safe" cookable="True"
     enabled="1" expression="" id="++resource++collective.cover/bootstrap.min.css" media="screen"
     rel="stylesheet" rendering="import"/>
+
+  <!-- CSS jQuery-ui Custom for events of interactions:
+  Draggable,Droppable,Resizable,Selectable and Sortable -->
+ <stylesheet title="" cacheable="True" compression="safe" cookable="True"
+    enabled="1" expression="" id="++resource++collective.cover/jquery-ui-1.9.0.custom.min.css" media="all"
+    rel="stylesheet" rendering="import" bundle="default" />
 </object>
