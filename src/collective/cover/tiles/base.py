@@ -182,7 +182,7 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
                     # If this field has the capability to change its html tag
                     # render, save it here
                     field['htmltag'] = field_conf['htmltag']
-                    
+
                 if 'imgsize' in field_conf:
                     field['scale'] = field_conf['imgsize']
 

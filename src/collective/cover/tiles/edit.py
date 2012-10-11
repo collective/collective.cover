@@ -78,7 +78,7 @@ class CustomEditForm(DefaultEditForm):
         tileRelativeURL = tileURL
 
         if tileURL.startswith(contextURL):
-            tileRelativeURL = '.' + tileURL[len(contextURL):]
+            tileRelativeURL = '.' + tileURL[len(contextURL):]  # XXX: variable never used
 
         notify(ObjectModifiedEvent(tile))
 

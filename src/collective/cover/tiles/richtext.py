@@ -3,8 +3,6 @@
 # Basic implementation taken from
 # http://davisagli.com/blog/using-tiles-to-provide-more-flexible-plone-layouts
 
-from zope.interface import Interface
-
 from plone.app.textfield import RichText
 from plone.app.textfield.interfaces import ITransformer
 from plone.app.textfield.value import RichTextValue

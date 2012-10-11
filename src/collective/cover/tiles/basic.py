@@ -1,17 +1,18 @@
 # -*- coding: utf-8 -*-
 
-from datetime import datetime
 from zope import schema
 from zope.interface import implements
 
 from plone.namedfile.field import NamedBlobImage as NamedImage
 from plone.namedfile.file import NamedBlobImage as NamedImageFile
 from plone.tiles.interfaces import ITileDataManager
+
+# XXX: why do we need this?
 try:
     from z3c.form.browser.textlines import TextLinesFieldWidget
 except ImportError:
     from plone.z3cform.textlines.textlines import TextLinesFieldWidget
-from collective.z3cform.datetimewidget.widget_datetime import DatetimeWidget
+
 from plone.autoform import directives as form
 
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
@@ -46,14 +47,14 @@ class IBasicTileData(IPersistentCoverTile):
 
     subjects = schema.Tuple(
         title=_(u'label_categories', default=u'Categories'),
-        description = _(u'help_categories', 
-                        default=u'Also known as keywords, tags or labels, these help you categorize your content.'),
+        description=_(u'help_categories',
+                       default=u'Also known as keywords, tags or labels, these help you categorize your content.'),
         required=False,
-        value_type = schema.TextLine(),
-        missing_value = (),
+        value_type=schema.TextLine(),
+        missing_value=(),
         )
 
-    form.widget(tags = TextLinesFieldWidget)
+    form.widget(tags=TextLinesFieldWidget)
 
     def get_title():
         """

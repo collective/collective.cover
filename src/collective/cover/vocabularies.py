@@ -1,15 +1,9 @@
 # -*- coding: utf-8 -*-
 
-from Acquisition import aq_get
-
 from zope.component import getUtility
 
 from zope.schema.interfaces import IVocabularyFactory
 from zope.schema.vocabulary import SimpleTerm, SimpleVocabulary
-from zope.site.hooks import getSite
-from zope.i18n import translate
-
-from Products.CMFCore.utils import getToolByName
 
 from five import grok
 from plone.registry.interfaces import IRegistry
@@ -51,7 +45,7 @@ grok.global_utility(AvailableTilesVocabulary,
 
 
 class AvailableContentTypesVocabulary(ReallyUserFriendlyTypesVocabulary):
-    """ 
+    """
     Inherit from plone.app.vocabularies.ReallyUserFriendlyTypes; and filter
     the results. We don't want covers to be listed.
     """

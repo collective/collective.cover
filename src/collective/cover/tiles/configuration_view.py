@@ -9,21 +9,14 @@ from zope.component import getMultiAdapter
 
 from zope.event import notify
 
-from zope.interface import implements
-from zope.interface import Interface
-
 from zope.lifecycleevent import ObjectModifiedEvent
 
-from zope.publisher.interfaces import IPublishTraverse
 from zope.publisher.interfaces.browser import IBrowserView
 
 from zope.traversing.browser.absoluteurl import absoluteURL
-
 from plone.app.tiles.browser.base import TileForm
-
 from plone.app.tiles.browser.traversal import TileTraverser
 
-from plone.app.tiles.utils import appendJSONData
 
 from plone.z3cform import layout
 
@@ -133,7 +126,7 @@ class DefaultConfigureForm(TileForm, form.Form):
         for name, widget in self.widgets.items():
             for key, value in self.request.form.items():
                 if key.startswith(widget.name):
-                    config_name = key[len(widget.name)+1:]
+                    config_name = key[len(widget.name) + 1:]
                     field = data.get(name, {})
                     field[config_name] = value
                     data[name] = field

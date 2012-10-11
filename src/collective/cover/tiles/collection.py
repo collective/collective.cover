@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from zope.interface import Interface
 from zope import schema
 
 from zope.component import queryUtility
@@ -18,25 +17,23 @@ from plone.directives import form
 
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
-from z3c.form.interfaces import IDisplayForm
-from z3c.form.interfaces import IEditForm
-
 from collective.cover.tiles.base import IPersistentCoverTile
 from collective.cover.tiles.base import PersistentCoverTile
 
 from collective.cover.tiles.edit import ICoverTileEditView
 
+
 class ICollectionTile(IPersistentCoverTile, form.Schema):
 
     title = schema.TextLine(title=u'Title')
-    
+
     form.omitted(ICoverTileEditView, 'description')
     description = schema.Text(
         title=u'Description',
         required=False,
         )
-      
-    form.omitted(ICoverTileEditView, 'date')  
+
+    form.omitted(ICoverTileEditView, 'date')
     date = schema.Datetime(
         title=u'Date',
         required=False,
@@ -47,7 +44,7 @@ class ICollectionTile(IPersistentCoverTile, form.Schema):
         title=u'Image',
         required=False,
         )
-        
+
     form.omitted(ICoverTileEditView, 'number_to_show')
     number_to_show = schema.List(
         title=u'number of elements to show',
@@ -98,9 +95,9 @@ class CollectionTile(PersistentCoverTile):
 
     def results(self):
         self.configured_fields = self.get_configured_fields()
-        start = 0
+        start = 0  # XXX: variable never used
         size_conf = [i for i in self.configured_fields if i['id'] == 'number_to_show']
-        
+
         if size_conf and 'size' in size_conf[0].keys():
             size = int(size_conf[0]['size'])
         else:

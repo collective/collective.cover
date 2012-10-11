@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from zope.interface import Interface
 from zope import schema
 from zope.component import queryUtility
-from plone.app.textfield.interfaces import ITransformer
 
 from plone.uuid.interfaces import IUUID
 from plone.app.uuid.utils import uuidToObject
@@ -72,7 +70,7 @@ class ListTile(PersistentCoverTile):
 
     def results(self):
         self.set_limit()
-        start = 0
+        start = 0  # XXX: variable never used
         uuids = self.data.get('uuids', None)
         result = []
         if uuids:
@@ -84,7 +82,7 @@ class ListTile(PersistentCoverTile):
                 else:
                     self.remove_item(uid)
         return result[:self.limit]
-    
+
     def set_limit(self):
         for field in self.get_configured_fields():
             if field and 'id' in field.keys() and 'size' in field.keys() \

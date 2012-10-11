@@ -14,11 +14,8 @@ from zope.app.pagetemplate.viewpagetemplatefile import ViewPageTemplateFile
 
 from plone.principalsource.source import GroupsVocabularyFactory
 
-from collective.cover import _
 from collective.cover.content import ICover
 from collective.cover.utils import assign_tile_ids
-
-#grok.templatedirs("layout_templates")
 
 
 class PageLayout(grok.View):
@@ -61,7 +58,7 @@ class PageLayout(grok.View):
     def tile_is_droppable(self, tile_type):
         tile = self.context.restrictedTraverse(str(tile_type))
         return tile.is_droppable
-    
+
     def tile_is_editable(self, tile_type):
         tile = self.context.restrictedTraverse(str(tile_type))
         return tile.is_editable
@@ -115,7 +112,7 @@ class LayoutSave(grok.View):
         return cover_layout
 
     def render(self):
-        save = self.save()
+        save = self.save()  # XXX: variable never used
         return 'saved'
 
 
