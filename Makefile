@@ -4,11 +4,11 @@
 pep8_ignores = E501
 options = -N -q -t 3
 
-prerequisite:
+prerequisites:
 	sudo apt-get install -qq pep8 pyflakes
 	mkdir -p buildout-cache/downloads
 
-install: prerequisite
+install: prerequisites
 	python bootstrap.py -c travis.cfg
 	bin/buildout -c travis.cfg $(options)
 
