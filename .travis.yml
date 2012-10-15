@@ -3,7 +3,7 @@ python: "2.7"
 before_install:
   - mkdir -p buildout-cache/eggs
   - mkdir -p buildout-cache/downloads
-install: make install options=-N -q -t 3
+install: make install
 script: make tests
 notifications:
   irc: "irc.freenode.org#simplesconsultoria"
