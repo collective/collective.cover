@@ -36,10 +36,9 @@ class PersistentCoverTileDataManager(PersistentTileDataManager):
     def set(self, data):
         for k, v in data.items():
             if INamedImage.providedBy(v):
-                # XXX: has_key is deprecated
-                if not self.annotations.has_key(self.key) or \
-                   not self.annotations[self.key].has_key(k) or \
-                   (self.annotations.has_key(self.key) and \
+                if self.key not in self.annotations or \
+                   k not in self.annotations[self.key] or \
+                   (self.key not in self.annotations and \
                     data[k] != self.annotations[self.key][k]):
                     # set modification time of the image
                     data['%s_mtime' % k] = time.mktime(datetime.now().timetuple())

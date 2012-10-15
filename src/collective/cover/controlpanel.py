@@ -4,7 +4,6 @@ from zope import schema
 from zope.interface import Interface
 
 from plone.app.registry.browser import controlpanel
-#from z3c.form.browser.textlines import TextLinesFieldWidget
 
 from collective.cover import _
 from collective.cover.config import DEFAULT_SEARCHABLE_CONTENT_TYPES

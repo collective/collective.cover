@@ -112,7 +112,7 @@ class LayoutSave(grok.View):
         return cover_layout
 
     def render(self):
-        save = self.save()  # XXX: variable never used
+        #save = self.save()
         return 'saved'
 
 

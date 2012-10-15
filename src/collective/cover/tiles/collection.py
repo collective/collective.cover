@@ -95,7 +95,6 @@ class CollectionTile(PersistentCoverTile):
 
     def results(self):
         self.configured_fields = self.get_configured_fields()
-        start = 0  # XXX: variable never used
         size_conf = [i for i in self.configured_fields if i['id'] == 'number_to_show']
 
         if size_conf and 'size' in size_conf[0].keys():

@@ -7,11 +7,7 @@ from plone.namedfile.field import NamedBlobImage as NamedImage
 from plone.namedfile.file import NamedBlobImage as NamedImageFile
 from plone.tiles.interfaces import ITileDataManager
 
-# XXX: why do we need this?
-try:
-    from z3c.form.browser.textlines import TextLinesFieldWidget
-except ImportError:
-    from plone.z3cform.textlines.textlines import TextLinesFieldWidget
+from z3c.form.browser.textlines import TextLinesFieldWidget
 
 from plone.autoform import directives as form
 

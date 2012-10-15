@@ -70,7 +70,6 @@ class ListTile(PersistentCoverTile):
 
     def results(self):
         self.set_limit()
-        start = 0  # XXX: variable never used
         uuids = self.data.get('uuids', None)
         result = []
         if uuids:
