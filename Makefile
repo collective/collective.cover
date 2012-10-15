@@ -10,5 +10,5 @@ install:
 
 tests:
 	@bin/test
-	@bin/pyflakes src/
-	@bin/pep8 --ignore=$(pep8_ignores) src/
+	@pyflakes src/
+	@pep8 --ignore=$(pep8_ignores) src/
