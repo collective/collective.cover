@@ -9,6 +9,6 @@ install:
 	bin/buildout -c travis.cfg $(options)
 
 tests:
-	bin/test
-	bin/pyflakes src/
-	bin/pep8 --ignore=$(pep8_ignores) src/
+	@bin/test
+	@bin/pyflakes src/
+	@bin/pep8 --ignore=$(pep8_ignores) src/
