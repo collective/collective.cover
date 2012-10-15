@@ -1,8 +1,5 @@
 language: python
 python: 2.7
-before_install:
-  - sudo apt-get install -qq pyflakes pep8
-  - mkdir -p buildout-cache/downloads
 install: make install
 script: make tests
 notifications:
