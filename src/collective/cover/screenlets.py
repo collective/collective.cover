@@ -61,14 +61,16 @@ class ContentSearch(grok.View):
         self.tab = self.request.get('tab', None)
         b_size = 10
         page = int(self.request.get('page', 0))
-        
+
         uids = None
         if self.tab == 'recent':
             pass
         elif self.tab == 'clipboard':
             brains = list(self.search(''))[:2]
             uids = [b.UID for b in brains]
-        result = self.search(query, uids=uids, b_start=page*b_size, b_size=b_size)
+        result = self.search(query, uids=uids,
+                             b_start=page * b_size,
+                             b_size=b_size)
         strategy = SitemapNavtreeStrategy(self.context)
         result = [strategy.decoratorFactory({'item': node}) for node in result]
         if self.tab == 'content-tree':
