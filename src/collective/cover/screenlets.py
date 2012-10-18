@@ -75,16 +75,16 @@ class ContentSearch(grok.View):
         result = [strategy.decoratorFactory({'item': node}) for node in result]
         if self.tab == 'content-tree':
             portal_state = getMultiAdapter((self.context, self.request),
-                                              name=u'plone_portal_state')
+                                           name=u'plone_portal_state')
             portal = portal_state.portal()
             query_tree = {'sort_on': 'getObjPositionInParent',
                           'sort_order': 'asc',
                           'is_default_page': False}
             strategy.rootPath = portal.absolute_url_path()
             data = buildFolderTree(portal,
-                               obj=portal,
-                               query=query_tree,
-                               strategy=strategy)
+                                   obj=portal,
+                                   query=query_tree,
+                                   strategy=strategy)
             result = data.get('children', [])
         self.level = 1
         self.children = result
@@ -105,7 +105,7 @@ class ContentSearch(grok.View):
         catalog_query['portal_type'] = searchable_types
         catalog_query['b_start'] = b_start
         catalog_query['b_size'] = b_size
-        
+
         if query:
             catalog_query = {'SearchableText': query}
         if uids:
