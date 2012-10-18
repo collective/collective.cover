@@ -105,7 +105,7 @@ class ContentSearch(grok.View):
         catalog_query['portal_type'] = searchable_types
         catalog_query['b_start'] = b_start
         catalog_query['b_size'] = b_size
-        
+
         if query:
             catalog_query = {'SearchableText': query}
         if uids:
