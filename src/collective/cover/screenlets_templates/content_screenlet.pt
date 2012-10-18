@@ -26,6 +26,19 @@
         <ul id="item-list">
             <li tal:replace="structure context/@@content-search" />
         </ul>
+		<script>
+			$('#item-list').endlessScroll({
+				  callback: function(n, p){
+				    $.ajax({
+				         url: "@@content-search",
+				         data: {'page': p},
+				    }).done(function(data) { 
+				   		 $('#item-list').append(data);
+				    });
+				    return true;
+				  }
+				});		
+		</script>
       </div>
       <div id="clipboard" class="tab-pane">
         <input id="screenlet-content-search-input" type="text" />
