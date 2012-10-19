@@ -3,4 +3,4 @@ python: 2.7
 install: make install
 script: make tests
 notifications:
-  irc: "irc.freenode.org#simplesconsultoria"
+  irc: irc.freenode.org#simplesconsultoria

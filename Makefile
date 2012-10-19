@@ -13,6 +13,6 @@ install: prerequisites
 	bin/buildout -c travis.cfg $(options)
 
 tests:
-	@bin/test
-	@pyflakes src/
-	@pep8 --ignore=$(pep8_ignores) src/
+	bin/test
+	pyflakes src/
+	pep8 --ignore=$(pep8_ignores) src/
