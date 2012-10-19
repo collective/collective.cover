@@ -61,18 +61,9 @@ class ContentSearch(grok.View):
         self.tab = self.request.get('tab', None)
         b_size = 10
         page = int(self.request.get('page', 0))
+        strategy = SitemapNavtreeStrategy(self.context)
 
         uids = None
-        if self.tab == 'recent':
-            pass
-        elif self.tab == 'clipboard':
-            brains = list(self.search(''))[:2]
-            uids = [b.UID for b in brains]
-        result = self.search(query, uids=uids,
-                             b_start=page * b_size,
-                             b_size=b_size)
-        strategy = SitemapNavtreeStrategy(self.context)
-        result = [strategy.decoratorFactory({'item': node}) for node in result]
         if self.tab == 'content-tree':
             portal_state = getMultiAdapter((self.context, self.request),
                                            name=u'plone_portal_state')
@@ -86,6 +77,14 @@ class ContentSearch(grok.View):
                                    query=query_tree,
                                    strategy=strategy)
             result = data.get('children', [])
+        else:
+            if self.tab == 'clipboard':
+                brains = list(self.search(''))[:2]
+                uids = [b.UID for b in brains]
+            result = self.search(query, uids=uids,
+                                 b_start=page * b_size,
+                                 b_size=b_size)
+            result = [strategy.decoratorFactory({'item': node}) for node in result]
         self.level = 1
         self.children = result
 
@@ -103,11 +102,12 @@ class ContentSearch(grok.View):
         #temporary we'll only list published elements
         catalog_query = {'sort_on': 'effective', 'sort_order': 'descending'}
         catalog_query['portal_type'] = searchable_types
-        catalog_query['b_start'] = b_start
-        catalog_query['b_size'] = b_size
+        if b_start >= 0 and b_size:
+            catalog_query['b_start'] = b_start
+            catalog_query['b_size'] = b_size
 
         if query:
-            catalog_query = {'SearchableText': query}
+            catalog_query = {'SearchableText': '%s*' % query}
         if uids:
             catalog_query['UID'] = uids
 
