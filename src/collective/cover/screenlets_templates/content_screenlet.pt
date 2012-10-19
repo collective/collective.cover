@@ -11,12 +11,13 @@
 
     <div class="close" i18n:translate="">X</div>
 
+<!-- 
     <ul class="formTabs">
       <li class="formTab"><a href="#recent" i18n:translate="">Recent items</a></li>
       <li class="formTab"><a href="#clipboard" i18n:translate="">Clipboard</a></li>
       <li class="formTab"><a href="#content-tree" i18n:translate="">Content tree</a></li>
     </ul>
-
+-->
     <div class="panes">
       <div id="recent" class="tab-pane active">
         <input id="screenlet-content-search-input" type="text" />
@@ -25,21 +26,24 @@
          i18n:attributes="value" />
         <ul id="item-list">
             <li tal:replace="structure context/@@content-search" />
+        	<a class="next" href="">more</a>
         </ul>
 		<script>
-			$('#item-list').endlessScroll({
-				  callback: function(n, p){
-				    $.ajax({
-				         url: "@@content-search",
-				         data: {'page': p},
-				    }).done(function(data) { 
-				   		 $('#item-list').append(data);
-				    });
-				    return true;
-				  }
-				});		
+			var page = 1; 
+			$("#item-list a.next").live("click", function(){
+				$.ajax({
+					url: "@@content-search",
+					data: {'page': page},
+					async: false
+				}).done(function(data) { 
+					$('#item-list a.next').prepend(data);
+					page += 1;
+				});
+				return false;
+			});
 		</script>
       </div>
+<!-- 
       <div id="clipboard" class="tab-pane">
         <input id="screenlet-content-search-input" type="text" />
         <input type="button" value="ok" id="screenlet-content-search-button"
@@ -57,6 +61,7 @@
             <li tal:replace="structure context/@@content-search" />
           </ul>
       </div>
+ -->      
     </div>
 
     <div id="screenlet-content-search-compose-button" style="display: none;"
