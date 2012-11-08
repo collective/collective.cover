@@ -51,7 +51,7 @@ setup(name='collective.cover',
         'plone.app.tiles',
         'plone.namedfile[blobs]',
         'plone.principalsource',
-        'plone.tiles',
+        'plone.tiles>=1.2',
         ],
       extras_require={
         'test': ['plone.app.testing'],
