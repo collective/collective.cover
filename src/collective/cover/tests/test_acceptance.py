@@ -12,5 +12,7 @@ def test_suite():
     suite.addTests([
         layered(robotsuite.RobotTestSuite("test_cover.txt"),
                 layer=FUNCTIONAL_TESTING),
+        layered(robotsuite.RobotTestSuite("test_layout.txt"),
+                layer=FUNCTIONAL_TESTING),
     ])
     return suite
