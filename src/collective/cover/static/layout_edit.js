@@ -44,6 +44,8 @@
                 self.row_draggable($('#btn-row'));
                 self.row_droppable();
 
+                self.sort_rows();
+
                 self.column_draggable($('#btn-column'));
                 self.column_droppable();
 //                self.column_sortable();
@@ -128,30 +130,30 @@
             row_droppable: function() {
                 //XXX there is a jquery ui bug in the event binding code,
                 //so that is why i'm deleting and rebinding droppables
-                $('.row-droppable').droppable('destroy');
-                $('.row-droppable').remove();
-                var row_placeholder = $('<div/>').addClass('row-droppable');
+                //$('.row-droppable').droppable('destroy');
+                //$('.row-droppable').remove();
+                //var row_placeholder = $('<div/>').addClass('row-droppable');
 
                 var row = le.find('.' + row_class);
-                var droppable_elements = '';
+                //var droppable_elements = '';
 
-                if (row[0]) {
-                    row.before(row_placeholder);
-                    droppable_elements = row.siblings('.row-droppable');
-                } else {
+                // if (row[0]) {
+                //     row.before(row_placeholder);
+                //     droppable_elements = row.siblings('.row-droppable');
+                // } else {
                     //if we delete all the rows, we need just 1 placeholder
-                    le.append(row_placeholder);
-                    droppable_elements = le.find('.row-droppable');
-                }
+                //     le.append(row_placeholder);
+                //     droppable_elements = le.find('.row-droppable');
+                // }
 
-                droppable_elements.droppable({
+                le.droppable({
                     activeClass: 'ui-state-default',
                     hoverClass: 'ui-state-hover',
                     accept: '#btn-row',
                     drop: function( event, ui ) {
                         var new_row = $('<div/>')
                             .addClass(row_class).append(row_dom.clone());
-                        $(this).before(new_row);
+                        $(this).prepend(new_row);
                         self.row_droppable();
                         self.column_droppable(new_row);
 
@@ -159,6 +161,13 @@
                         self.grid_layout_guides(new_row);
                         self.delete_manager(new_row);
                     }
+                });
+            },
+
+            sort_rows: function() {
+                le.sortable({ 
+                    items: '.'+row_class,
+                    handle: '.rowlabel'
                 });
             },
 
@@ -677,7 +686,7 @@
                 if (itemClass) {
                     var regex_match = itemClass.match(/\bwidth\-(\d+)/);
                     item.removeClass(regex_match[0]);
-                    item.addClass('width-' + newWidth);
+                    item.addClass('width-' + new_width);
                 }
             }
         });
