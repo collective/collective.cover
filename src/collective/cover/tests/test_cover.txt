@@ -2,6 +2,7 @@
 
 Library  Selenium2Library  timeout=5 seconds  implicit_wait=3 seconds
 Resource  keywords.txt
+Resource  cover_keywords.txt
 Variables  plone/app/testing/interfaces.py
 
 Suite Setup  Start Browser and Log In
@@ -9,47 +10,14 @@ Suite Teardown  Close Browser
 
 *** Variables ***
 
-${PORT} =  55001
-${ZOPE_URL} =  http://localhost:${PORT}
-${PLONE_URL} =  ${ZOPE_URL}/plone
-${BROWSER} =  Firefox
-
-${title_selector} =  input#form-widgets-IBasic-title
-${description_selector} =  textarea#form-widgets-IBasic-description
-${layout_selector} =  select#form-widgets-template_layout
-
 *** Test cases ***
 
 Test CRUD
-    Create  Title  Description  Empty layout
-    Update  Cover  The site front page
+    Create Cover  Title  Description  Empty layout
+    Update  Title fixed  Description fixed
     Delete
 
 *** Keywords ***
-
-Start Browser and Log In
-    Open Browser  ${PLONE_URL}
-    Go to  ${PLONE_URL}/login_form
-    Page should contain element  __ac_name
-    Input text  __ac_name  ${SITE_OWNER_NAME}
-    Input text  __ac_password  ${SITE_OWNER_PASSWORD}
-    Click Button  Log in
-    Goto Homepage
-
-Click Add Cover
-    Open Add New Menu
-    Click Link  css=a#collective-cover-content
-    Page Should Contain  Add Cover
-
-Create
-    [arguments]  ${title}  ${description}  ${layout}
-
-    Click Add Cover
-    Input Text  css=${title_selector}  ${title}
-    Input Text  css=${description_selector}  ${description}
-    Select From List  css=${layout_selector}  ${layout}
-    Click Button  Save
-    Page Should Contain  Item created
 
 Update
     [arguments]  ${title}  ${description}
