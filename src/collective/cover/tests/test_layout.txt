@@ -10,13 +10,6 @@ Suite Teardown  Close Browser
 
 *** Variables ***
 
-${row_button_selector} =  a#btn-row
-${column_button_selector} =  a#btn-column
-${tile_button_selector} =  a#btn-tile
-${row_drop_area_selector} =  div.row .ui-droppable
-${column_drop_area_selector} =  div.row .ui-droppable
-${tile_drop_area_selector} =  div.column .ui-droppable
-${tile_cancel_area_selector} =  div.modal-backdrop
 ${basic_tile_name} =  collective.cover.basic
 
 *** Test cases ***
@@ -30,25 +23,20 @@ Test Basic Layout Operations
     #       this can be done using Xpath Should Match X Times
     #       http://rtomac.github.com/robotframework-selenium2library/doc/Selenium2Library.html#Xpath%20Should%20Match%20X%20Times
 
-    # Save button must be disabled as no change has taken place yet
-    Page Should Contain  Saved
     Add Row
     Add Column
     # TODO: test if there are 2 rows and 2 columns
 
-    # status changed; now we have a Save button
-    Page Should Contain  Save
-    Click Element  css=a#btn-save.btn
+    Save Cover Layout
 
     # load layout again, it has to be the new one
     Click Link  link=Layout
     # TODO: test if there are 2 rows and 2 columns
     Delete Column
     Delete Row
-    # status changed; now we have a Save button
+
     # TODO: test if there is 1 row and 1 column
-    Page Should Contain  Save
-    Click Element  css=a#btn-save.btn
+    Save Cover Layout
 
     Add Tile
     Cancel Add Tile
@@ -69,9 +57,6 @@ Delete Row
 
 Delete Column
     Click Element  css=div.column button.close
-
-Add Tile
-    Drag And Drop  css=${tile_button_selector}  css=${column_drop_area_selector}
 
 Cancel Add Tile
     Element Should Be Visible  css=${tile_cancel_area_selector}

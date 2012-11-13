@@ -15,6 +15,14 @@ ${title_selector} =  input#form-widgets-IBasic-title
 ${description_selector} =  textarea#form-widgets-IBasic-description
 ${layout_selector} =  select#form-widgets-template_layout
 
+${row_button_selector} =  a#btn-row
+${column_button_selector} =  a#btn-column
+${tile_button_selector} =  a#btn-tile
+${row_drop_area_selector} =  div.row .ui-droppable
+${column_drop_area_selector} =  div.row .ui-droppable
+${tile_drop_area_selector} =  div.column .ui-droppable
+${tile_cancel_area_selector} =  div.modal-backdrop
+
 *** Keywords ***
 
 Start Browser and Log In
@@ -55,3 +63,11 @@ Delete
     Click Link  css=a#delete
     Click Button  Delete
     Page Should Contain  Plone site
+
+Save Cover Layout
+    Page Should Contain  Save
+    Click Element  css=a#btn-save.btn
+    Page Should Contain  Saved
+
+Add Tile
+    Drag And Drop  css=${tile_button_selector}  css=${column_drop_area_selector}
