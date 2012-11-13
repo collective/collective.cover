@@ -42,6 +42,9 @@ class VocabulariesTestCase(unittest.TestCase):
         self.assertTrue(u'collective.cover.link' in tiles)
         self.assertTrue(u'collective.cover.list' in tiles)
         self.assertTrue(u'collective.cover.richtext' in tiles)
+        # XXX: https://github.com/collective/collective.cover/issues/81
+        #self.assertTrue(u'plone.app.imagetile' in tiles)
+        #self.assertTrue(u'plone.app.texttile' in tiles)
 
     def test_user_friendly_types_vocabulary(self):
         name = u'collective.cover.AvailableContentTypes'
