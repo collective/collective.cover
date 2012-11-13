@@ -6,33 +6,31 @@ from zope.interface.verify import verifyClass
 from zope.interface.verify import verifyObject
 
 from collective.cover.testing import INTEGRATION_TESTING
-from collective.cover.tiles.basic import BasicTile
+from collective.cover.tiles.collection import CollectionTile
 from collective.cover.tiles.base import IPersistentCoverTile
 
 
-class BasicTileTestCase(unittest.TestCase):
+class CollectionTileTestCase(unittest.TestCase):
 
     layer = INTEGRATION_TESTING
 
     def setUp(self):
         self.portal = self.layer['portal']
         self.request = self.layer['request']
-        self.tile = BasicTile(self.portal, self.request)
+        self.tile = CollectionTile(self.portal, self.request)
 
     def test_interface(self):
-        self.assertTrue(IPersistentCoverTile.implementedBy(BasicTile))
-        self.assertTrue(verifyClass(IPersistentCoverTile, BasicTile))
+        self.assertTrue(IPersistentCoverTile.implementedBy(CollectionTile))
+        self.assertTrue(verifyClass(IPersistentCoverTile, CollectionTile))
 
-        tile = BasicTile(None, None)
+        tile = CollectionTile(None, None)
         self.assertTrue(IPersistentCoverTile.providedBy(tile))
         self.assertTrue(verifyObject(IPersistentCoverTile, tile))
 
     def test_default_configuration(self):
         self.assertTrue(self.tile.is_configurable)
-        self.assertTrue(self.tile.is_editable)
+        self.assertFalse(self.tile.is_editable)
         self.assertTrue(self.tile.is_droppable)
 
     def test_accepted_content_types(self):
-        # XXX: should we add Collection here?
-        self.assertEqual(self.tile.accepted_ct(),
-                         ['Document', 'File', 'Image', 'Link', 'News Item'])
+        self.assertEqual(self.tile.accepted_ct(), ['Collection'])
