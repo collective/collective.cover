@@ -68,7 +68,7 @@
       title="Basic Tile"
       description="A tile with a title, decription and one image"
       add_permission="cmf.ModifyPortalContent"
-      schema=".basic.IBasicTileData"
+      schema=".basic.IBasicTile"
       class=".basic.BasicTile"
       permission="zope2.View"
       for="*"

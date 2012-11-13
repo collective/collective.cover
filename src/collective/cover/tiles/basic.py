@@ -19,7 +19,7 @@ from collective.cover.tiles.base import PersistentCoverTile
 
 
 # FIXME: basic tile is not storing the object URL
-class IBasicTileData(IPersistentCoverTile):
+class IBasicTile(IPersistentCoverTile):
 
     title = schema.TextLine(
         title=_(u'Title'),
@@ -51,42 +51,6 @@ class IBasicTileData(IPersistentCoverTile):
         )
 
     form.widget(tags=TextLinesFieldWidget)
-
-    def get_title():
-        """
-        A method to return the title stored in the tile
-        """
-
-    def get_description():
-        """
-        A method to return the description stored in the tile
-        """
-
-    def get_image():
-        """
-        A method to return the image stored in the tile
-        """
-
-    def get_date():
-        """
-        A method to return the date stored in the tile
-        """
-
-    def get_subjects():
-        """
-        A method to return the subjects stored in the tile
-        """
-
-    def populate_with_object(obj):
-        """
-        This method will take a CT object as parameter, and it will store the
-        content of the 'text' field into the tile.
-        """
-
-    def delete():
-        """
-        This method removes the persistent data created for this tile
-        """
 
 
 class BasicTile(PersistentCoverTile):

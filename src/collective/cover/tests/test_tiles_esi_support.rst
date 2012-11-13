@@ -37,10 +37,10 @@ registered via ZCML.
 
     >>> from zope.component import provideAdapter, provideUtility
     >>> from zope.interface import Interface
-    >>> from collective.cover.tiles.basic import IBasicTileData
+    >>> from collective.cover.tiles.basic import IBasicTile
 
     >>> provideUtility(BasicTileType, name=u'collective.cover.sample')
-    >>> provideAdapter(BasicTile, (Interface, Interface), IBasicTileData, name=u"collective.cover.sample")
+    >>> provideAdapter(BasicTile, (Interface, Interface), IBasicTile, name=u"collective.cover.sample")
 
 ESI lookup
 ----------
@@ -137,7 +137,7 @@ attribute to the ZCML directive will work also.
     ...     schema=".basic.BasicTile")
 
     >>> provideUtility(BasicTileType, name=u'collective.cover.sample')
-    >>> provideAdapter(BasicTile, (Interface, Interface), IBasicTileData, name=u"collective.cover.sample")
+    >>> provideAdapter(BasicTile, (Interface, Interface), IBasicTile, name=u"collective.cover.sample")
 
 The following simulates traversal to ``context/@@collective.cover.sample/tile1``
 
