@@ -6,11 +6,14 @@
     */
     function LayoutManager(layout, conf) {
         var self = this,
-            ncolumns = conf.ncolumns,
+            n_columns = conf.ncolumns,
             row_class = 'cover-row',
-            row_dom = $('<div/>').addClass(row_class),
+            row_dom = $('<div/>').addClass(row_class)
+                                 .attr('data-layout-type', 'row'),
             column_class = 'cover-column',
-            column_dom = $('<div/>').addClass(column_class),
+            column_dom = $('<div/>').addClass(column_class)
+                                    .attr('data-layout-type', 'column'),
+            tile_class = 'cover-tile',
             le = $('.layout');
 
         $.extend(self, {
@@ -39,23 +42,70 @@
                     items:'.' + row_class,
                     stop: function(event, ui){
                         if (ui.item.hasClass('btn')) {
-                            ui.item.after(row_dom);
+                            var row = row_dom.clone();
+                            ui.item.after(row);
                             ui.item.remove();
+
+                            self.row_events(row);
                         }
                         le.trigger('modified.layout');
                     }
                 });
 
-                //columns droppable
-                $('.' + row_class).droppable({
+                self.row_events();
+                self.column_events();
+
+            },
+
+            /**
+             * Row events binding
+             * makes the event setup in row/s
+             **/
+            row_events: function(row){
+                var rows = row ? row : le.find('.'+row_class);
+
+                //allow columns droppable
+                rows.droppable({
                     activeClass: 'ui-state-default',
                     hoverClass: 'ui-state-hover',
                     accept: '#btn-column',
                     drop: function( event, ui ) {
-                        $(this).append(column_dom.clone());
+                        //creates a new column
+                        var column = column_dom.clone();
+                        $(this).append(column);
+                        self.column_events(column);
 
                         self.calculate_grid($(this).find('.' + column_class));
 
+                        le.trigger('modified.layout');
+                    }
+                });
+
+                //allow sortable columns
+                rows.sortable({
+                    items:'.' + column_class,
+                    connectWith: '.' + row_class,
+                    stop: function(event, ui){
+                        le.trigger('modified.layout');
+                    }
+                });
+            },
+
+            /**
+             * column events binding
+             * makes the event setup in column/s
+             **/
+            column_events: function(column){
+                var columns = column ? column : le.find('.'+column_class);
+
+                //allow sortable tiles
+                columns.sortable({
+                    placeholder: 'tile-placeholder',
+                    appendTo:'.layout',
+                    helper:'clone',
+                    items:'.' + tile_class,
+                    connectWith: '.' + column_class,
+                    stop: function(event, ui){
                         le.trigger('modified.layout');
                     }
                 });
@@ -63,9 +113,23 @@
 
             /**
              * Calculate Grid distribution
-             * calculates how the grid should response to new elements
+             * manage the grid behavior to new elements
              **/
             calculate_grid: function(elements){
+                var n_elements = elements.length;
+                var column_size = Math.floor(n_columns / n_elements);
+
+                if (n_elements <= n_columns ) {
+                    $(elements).attr('data-column-size', column_size);
+                }
+            },
+
+            /**
+             * Generate grid css
+             * on the fly generates an stylesheet with a dummy grid implementation, based on 
+             * the liquid version of boostrap
+             **/
+            generate_grid_css: function(){
 
             },
 
