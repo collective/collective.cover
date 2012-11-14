@@ -1,12 +1,52 @@
+
+/*ROWS*/
+.layout .cover-row {
+    outline: 1px dashed blue;
+    margin: 0 0 15px;
+    min-height: 100px;
+    padding: 15px 0;
+}
+
+/*COLUMNS*/
+.layout .cover-column {
+    min-height: 100px;
+    outline: 1px dashed #ccc;
+    padding: 15px 0;
+}
+
+/* SIDEBAR */
+#sidebar .btn {
+    cursor:pointer;
+    padding:9px;
+}
+
+#sidebar .draggable {
+    cursor: move;
+}
+#sidebar .btn:hover {
+    color:#FFF !important;
+}
+
+#sidebar ul {
+    list-style-type: none;
+    margin-left: 0;
+}
+#sidebar li {
+    display:inline;
+}
+
+
+
+
+
+
+
+
+
 .layout {
     float: left;
     width: 90%;
     position:relative;
-}
-
-#sidebar {
-    float: right;
-    width: 9%;
 }
 
 .layout .tile, 
@@ -55,33 +95,6 @@
 
 .ui-resizable-helper {
     border: 1px dotted #00F;
-}
-
-#sidebar {
-    background-color: #FFF;
-    padding: 0;
-    position: relative;
-    top: 10px;
-}
-
-#sidebar .btn {
-    cursor:pointer;
-    padding:9px;
-/*    margin-bottom: 10px;*/
-/*    padding: 10px 10px 10px 35px;*/
-/*    text-align: left;*/
-}
-
-.btn.ui-draggable-dragging {
-/*    background-color: #333333;*/
-/*    color: #FFFFFF;*/
-/*    padding:10px;*/
-}
-#sidebar .draggable {
-    cursor: move;
-}
-#sidebar .btn:hover {
-    color:#FFF !important;
 }
 
 #news img {
