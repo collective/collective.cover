@@ -14,11 +14,15 @@
             column_dom = $('<div/>').addClass(column_class)
                                     .attr('data-layout-type', 'column'),
             tile_class = 'cover-tile',
+            tile_dom = $('<div/>').addClass(tile_class)
+                                  .attr('data-layout-type', 'tile'),
             le = $('.layout');
 
         $.extend(self, {
             init: function() {
                 self.setup();
+                self.row_events();
+                self.column_events();
                 le.bind('modified.layout', self.layout_modified);
             },
 
@@ -51,9 +55,6 @@
                         le.trigger('modified.layout');
                     }
                 });
-
-                self.row_events();
-                self.column_events();
 
             },
 
@@ -98,6 +99,50 @@
             column_events: function(column){
                 var columns = column ? column : le.find('.'+column_class);
 
+                columns.droppable({
+                    activeClass: "ui-state-default",
+                    hoverClass: "ui-state-hover",
+                    accept: "#btn-tile",
+                    drop: function( event, ui ) {
+                        var new_tile = tile_dom.clone();
+                        var column_elem = this;
+
+                        //we open the tile list selection, on drop
+                        $("#tile-select-list").modal();
+                        
+                        //the selection of the tile generates a few things, idsetup, and the actuall element
+                        $(".tile-select-button").click(function(e) {
+                            e.stopPropagation();
+                            e.preventDefault();
+                            $(".tile-select-button").unbind("click");
+
+                            var tile_type = $(this).text();
+                            new_tile.attr("data-tile-type", tile_type);
+
+                            $.ajax({
+                                url: "@@uid_getter",
+                                success: function(info, la) {
+                                    new_tile.attr("id", info);
+                                    var url_config = "@@configure-tile/" + tile_type + "/" + info;
+                                    var config_link = $("<a />").addClass("config-tile-link label")
+                                                                .attr('href',url_config)
+                                                                .text('Config');
+                                    var name_tag = $("<span />").addClass("tile-name")
+                                                                .text(tile_type);
+                                    new_tile.append(config_link)
+                                            .append(name_tag);
+
+                                    $(column_elem).append(new_tile);
+
+                                    le.trigger('modified.layout');
+                                    return false;
+                                }
+                            });
+                           $("#tile-select-list").modal('hide');
+                        });
+                    }
+                });
+
                 //allow sortable tiles
                 columns.sortable({
                     placeholder: 'tile-placeholder',
@@ -109,6 +154,14 @@
                         le.trigger('modified.layout');
                     }
                 });
+            },
+
+            /**
+             * tile events binding
+             * makes the event setup in tile/s
+             **/
+            tile_events: function(tile){
+                var tiles = tile ? tile : le.find('.'+tile_class);
             },
 
             /**

@@ -14,6 +14,18 @@
     padding: 15px 0;
 }
 
+/*TILES*/
+.layout .cover-tile,
+.tile-placeholder {
+    background-color: #F9F9F9;
+    margin: 5px 15px 5px 5px;
+    min-height: 50px;
+    outline: 1px solid #999;
+    position: relative;
+}
+
+}
+
 /* SIDEBAR */
 #sidebar .btn {
     cursor:pointer;
@@ -49,14 +61,6 @@
     position:relative;
 }
 
-.layout .tile, 
-.tile-placeholder {
-    background-color: #F9F9F9;
-    margin: 5px 15px 5px 5px;
-    min-height: 50px;
-    outline: 1px solid #999;
-    position: relative;
-}
 .tile-placeholder {
     background-color: #DDD;
 }
