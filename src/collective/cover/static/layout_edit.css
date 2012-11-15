@@ -1,27 +1,32 @@
+.layout {
+    position:relative;
+    min-height: 130px;
+    margin: 30px 0;
+}
 
 /*ROWS*/
 .layout .cover-row {
     outline: 1px dashed blue;
     margin: 0 0 15px;
     min-height: 100px;
-    padding: 15px 0;
+    padding: 15px 1%;
+    position: relative;
 }
 
 /*COLUMNS*/
 .layout .cover-column {
     min-height: 100px;
     outline: 1px dashed #ccc;
-    padding: 15px 0;
-}
-.layout .cover-column {
+    padding: 0;
     float:left;
+    position: relative;
 }
 
 /*TILES*/
 .layout .cover-tile,
 .tile-placeholder {
     background-color: #F9F9F9;
-    margin: 5px 15px 5px 5px;
+    margin: 15px;
     min-height: 50px;
     outline: 1px solid #999;
     position: relative;
@@ -50,19 +55,20 @@
     display:inline;
 }
 
-
-
-
-
-
-
-
-
-.layout {
-    float: left;
-    width: 90%;
-    position:relative;
+/*delete button*/
+.cover-tile:hover > .close, .cover-row:hover > .close, .cover-column:hover > .close {
+    display: block !important;
 }
+
+
+
+
+
+
+
+
+
+
 
 .tile-placeholder {
     background-color: #DDD;

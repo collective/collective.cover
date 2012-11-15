@@ -51,12 +51,14 @@
                             ui.item.remove();
 
                             self.row_events(row);
+                            self.delete_manager(row);
                         }
                         le.trigger('modified.layout');
                     }
                 });
 
                 self.generate_grid_css();
+                self.delete_manager();
             },
 
             /**
@@ -74,8 +76,9 @@
                     drop: function( event, ui ) {
                         //creates a new column
                         var column = column_dom.clone();
-                        $(this).append(column);
+                        $(this).prepend(column);
                         self.column_events(column);
+                        self.delete_manager(column);
 
                         self.calculate_grid($(this).find('.' + column_class));
 
@@ -87,8 +90,19 @@
                 rows.sortable({
                     items:'.' + column_class,
                     connectWith: '.' + row_class,
+                    appendTo:'.layout',
+                    helper: 'clone',
+                    start: function (e, ui) { 
+                        ui.placeholder.attr('data-column-size', ui.item.data('column-size'));
+                    },
                     stop: function(event, ui){
                         le.trigger('modified.layout');
+                    },
+                    receive: function( event, ui ) {
+                        if (ui.sender[0] != this) {
+                            self.calculate_grid($(this).find('.' + column_class));
+                            self.calculate_grid(ui.sender.find('.' + column_class));
+                        }
                     }
                 });
             },
@@ -134,6 +148,7 @@
                                             .append(name_tag);
 
                                     $(column_elem).append(new_tile);
+                                    self.delete_manager(new_tile);
 
                                     le.trigger('modified.layout');
                                     return false;
@@ -165,6 +180,70 @@
                 var tiles = tile ? tile : le.find('.'+tile_class);
             },
 
+
+            /**
+             * Delete elements in layout
+             * manage the delete process of layout elements
+             **/
+            delete_manager: function(elements){
+                var button = $('<button class="close">&times;</button>').css({
+                    'font-size': '15px',
+                    'left': '0',
+                    'line-height': '15px',
+                    'overflow': 'hidden',
+                    'position': 'absolute',
+                    'text-align': 'center',
+                    'top': '0',
+                    'width': '15px',
+                    'display':'none'
+                });
+                elements = elements !== undefined? elements : le.find('.'+column_class +', .'+ tile_class + ', .' + row_class);
+                
+                button.click(function(){
+                    var element = $(this).parent('div');
+                    var tiles_to_delete = [];
+
+                    if (element.hasClass('tile')) {
+                        tiles_to_delete = element;
+                    } else {
+                        tiles_to_delete = element.find('.tile');
+                    }
+
+                    var success = true;
+                    //XXX are you sure
+                    tiles_to_delete.each(function(){
+                        var $this = $(this);
+
+                        $.ajax({
+                            url: 'deletetile',
+                            data: {
+                                'tile-type':$this.data('tileType'),
+                                'tile-id':$(this).attr('id')
+                            },
+                            success: function(e,v) {
+                                $this.remove();
+                            },
+                            error: function(){
+                                success = false;
+                            }
+                        });
+                    });
+                    if (success) {
+                        element.remove();
+                        le.trigger('modified.layout');                        
+                    }
+                });
+                button.hover(
+                    function(){
+                        $(this).parent('div').addClass('to-delete');
+                    },
+                    function(){
+                        $(this).parent('div').removeClass('to-delete');
+                    }
+                );
+                elements.append(button);
+            },
+
             /**
              * Calculate Grid distribution
              * manage the grid behavior in new elements
@@ -187,7 +266,7 @@
                 var gutter = '3';
 
                 jss('.'+row_class, {
-                    width: '100%'
+                    width: '98%'
                 });
                 jss('.'+row_class+':after', {
                     clear: 'both'
@@ -209,8 +288,8 @@
                 for (var i = 1; i <= n_columns; i++) {
 
                     var columns = Math.floor(n_columns / i); //amount of fiting columns
-                    var margin = (columns - 1 ) * gutter;
-                    var total_space = 100 - margin;
+                    var margin = (columns - 1 ) * gutter; //margin of the columns
+                    var total_space = 100 - margin; //total space to divide in columns
 
                     jss('[data-column-size="' + i + '"]', {
                         'width':  total_space / columns + '%',
