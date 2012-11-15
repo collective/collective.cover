@@ -13,6 +13,9 @@
     outline: 1px dashed #ccc;
     padding: 15px 0;
 }
+.layout .cover-column {
+    float:left;
+}
 
 /*TILES*/
 .layout .cover-tile,

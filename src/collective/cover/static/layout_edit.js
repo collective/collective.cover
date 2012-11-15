@@ -56,6 +56,7 @@
                     }
                 });
 
+                self.generate_grid_css();
             },
 
             /**
@@ -166,7 +167,7 @@
 
             /**
              * Calculate Grid distribution
-             * manage the grid behavior to new elements
+             * manage the grid behavior in new elements
              **/
             calculate_grid: function(elements){
                 var n_elements = elements.length;
@@ -183,7 +184,43 @@
              * the liquid version of boostrap
              **/
             generate_grid_css: function(){
+                var gutter = '3';
 
+                jss('.'+row_class, {
+                    width: '100%'
+                });
+                jss('.'+row_class+':after', {
+                    clear: 'both'
+                });
+                jss('.'+row_class+':before, .'+row_class+':after', {
+                    display: 'table',
+                    'line-height': '0',
+                    'content': '""'
+                });
+
+                jss('.'+column_class, {
+                    'display': 'block',
+                    'float':'left',
+                    'width': '100%',
+                    'min-height': '30px',
+                    'box-sizing': 'border-box'
+                });
+
+                for (var i = 1; i <= n_columns; i++) {
+
+                    var columns = Math.floor(n_columns / i); //amount of fiting columns
+                    var margin = (columns - 1 ) * gutter;
+                    var total_space = 100 - margin;
+
+                    jss('[data-column-size="' + i + '"]', {
+                        'width':  total_space / columns + '%',
+                        'margin-left': gutter + '%'
+                    });
+                };
+
+                jss('.'+column_class + ':first-child', {
+                    'margin-left':'0'
+                });
             },
 
             /**

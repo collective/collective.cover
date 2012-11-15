@@ -14,6 +14,9 @@
   <script type="text/javascript"
       tal:attributes="src string:${view/static}/layout_base.js">
   </script>
+  <script type="text/javascript"
+      tal:attributes="src string:${view/static}/jss.js">
+  </script>
 </metal:js>
 
 <metal:styles fill-slot="style_slot">
