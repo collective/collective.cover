@@ -19,22 +19,6 @@ class IRichTextTileData(IPersistentCoverTile):
 
     text = RichText(title=u'Text')
 
-    def getText():
-        """
-        A method to return the rich text stored in the tile
-        """
-
-    def populate_with_object(obj):
-        """
-        This method will take a CT object as parameter, and it will store the
-        content of the 'text' field into the tile.
-        """
-
-    def delete():
-        """
-        This method removes the persistent data created for this tile
-        """
-
 
 class RichTextTile(PersistentCoverTile):
 

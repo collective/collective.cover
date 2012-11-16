@@ -40,25 +40,6 @@ class IListTile(IPersistentCoverTile):
         readonly=True
         )
 
-    def results():
-        """
-        This method return a list of the objects in uuids
-        """
-
-    def populate_with_object(obj):
-        """
-        This method will take a CT and will append its uid to uuids
-        """
-
-    def delete():
-        """
-        This method removes the persistent data created for this tile
-        """
-    def accepted_ct():
-        """
-        Return a list of supported content types.
-        """
-
 
 class ListTile(PersistentCoverTile):
 
