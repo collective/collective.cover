@@ -122,10 +122,6 @@ class LinkTile(PersistentCoverTile):
                       'uuid': uuid,
                       })
 
-    def delete(self):
-        data_mgr = ITileDataManager(self)
-        data_mgr.delete()
-
     def accepted_ct(self):
         valid_ct = ['Link']
         return valid_ct

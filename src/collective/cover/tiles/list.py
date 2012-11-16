@@ -129,10 +129,6 @@ class ListTile(PersistentCoverTile):
         old_data['uuids'] = uids
         data_mgr.set(old_data)
 
-    def delete(self):
-        data_mgr = ITileDataManager(self)
-        data_mgr.delete()
-
     def get_uid(self, obj):
         return IUUID(obj, None)
 
