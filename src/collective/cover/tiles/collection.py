@@ -3,7 +3,6 @@
 from zope import schema
 
 from zope.component import queryUtility
-
 from zope.schema import getFieldsInOrder
 
 from plone.uuid.interfaces import IUUID
@@ -19,7 +18,6 @@ from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
 from collective.cover.tiles.base import IPersistentCoverTile
 from collective.cover.tiles.base import PersistentCoverTile
-
 from collective.cover.tiles.edit import ICoverTileEditView
 
 
@@ -97,8 +95,9 @@ class CollectionTile(PersistentCoverTile):
                       })
 
     def accepted_ct(self):
-        valid_ct = ['Collection', ]
-        return valid_ct
+        """ Return a list of content types accepted by the tile.
+        """
+        return ['Collection']
 
     def has_data(self):
         uuid = self.data.get('uuid', None)

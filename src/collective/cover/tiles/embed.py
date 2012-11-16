@@ -44,6 +44,3 @@ class EmbedTile(PersistentCoverTile):
         return not(self.data['embed'] or \
                    self.data['title'] or \
                    self.data['description'])
-
-    def accepted_ct(self):
-        return None

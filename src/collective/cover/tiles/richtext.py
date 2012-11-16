@@ -49,5 +49,6 @@ class RichTextTile(PersistentCoverTile):
         data_mgr.set({'text': value})
 
     def accepted_ct(self):
-        valid_ct = ['Document', ]
-        return valid_ct
+        """ Return a list of content types accepted by the tile.
+        """
+        return ['Document']

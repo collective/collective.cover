@@ -109,6 +109,8 @@ class BasicTile(PersistentCoverTile):
         data_mgr = ITileDataManager(self)
         data_mgr.set(data)
 
+    # XXX: should we accept Collection here?
     def accepted_ct(self):
-        valid_ct = ['Document', 'File', 'Image', 'Link', 'News Item']
-        return valid_ct
+        """ Return a list of content types accepted by the tile.
+        """
+        return ['Document', 'File', 'Image', 'Link', 'News Item']

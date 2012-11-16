@@ -97,5 +97,6 @@ class LinkTile(PersistentCoverTile):
                       })
 
     def accepted_ct(self):
-        valid_ct = ['Link']
-        return valid_ct
+        """ Return a list of content types accepted by the tile.
+        """
+        return ['Link']
