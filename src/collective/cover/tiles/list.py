@@ -113,9 +113,6 @@ class ListTile(PersistentCoverTile):
     def get_uid(self, obj):
         return IUUID(obj, None)
 
-    def accepted_ct(self):
-        return None
-
     def get_configured_fields(self):
         # Override this method, since we are not storing anything
         # in the fields, we just use them for configuration

@@ -72,9 +72,7 @@ class IPersistentCoverTile(Interface):
         """
 
     def accepted_ct():
-        """
-        This method returns a list of valid CT that this tile will accept, or
-        None if not
+        """ Return a list of content types accepted by the tile or None.
         """
 
     def get_tile_configuration():
@@ -151,8 +149,10 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
         notify(ObjectModifiedEvent(self.context))
 
     def accepted_ct(self):
-        valid_ct = None
-        return valid_ct
+        """ Return a list of content types accepted by the tile or None if all
+        types are accepted.
+        """
+        return None  # all content types accepted by default
 
     def get_tile_configuration(self):
         tile_conf_adapter = getMultiAdapter((self.context, self.request, self),
