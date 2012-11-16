@@ -109,10 +109,6 @@ class BasicTile(PersistentCoverTile):
         data_mgr = ITileDataManager(self)
         data_mgr.set(data)
 
-    def delete(self):
-        data_mgr = ITileDataManager(self)
-        data_mgr.delete()
-
     def accepted_ct(self):
         valid_ct = ['Document', 'File', 'Image', 'Link', 'News Item']
         return valid_ct

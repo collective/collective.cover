@@ -3,6 +3,8 @@
 # Basic implementation taken from
 # http://davisagli.com/blog/using-tiles-to-provide-more-flexible-plone-layouts
 
+import logging
+
 from logging import exception
 from AccessControl import Unauthorized
 from Acquisition import aq_base
@@ -44,11 +46,13 @@ from plone.rfc822.interfaces import IPrimaryFieldInfo
 
 from Products.CMFCore.utils import getToolByName
 
+from collective.cover.config import PROJECTNAME
 from collective.cover.tiles.configuration import ITilesConfigurationScreen
-
 from collective.cover.tiles.permissions import ITilesPermissions
 
 from collective.cover import _
+
+logger = logging.getLogger(PROJECTNAME)
 
 
 class IPersistentCoverTile(Interface):
@@ -134,8 +138,14 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
                                  "this tile"))
 
     def delete(self):
+        """ Delete the tile and notify the cover was modified.
+        """
+        logger.debug('Deleting tile %s', self.id)
+
         data_mgr = ITileDataManager(self)
         data_mgr.delete()
+
+        notify(ObjectModifiedEvent(self.context))
 
     def accepted_ct(self):
         valid_ct = None
