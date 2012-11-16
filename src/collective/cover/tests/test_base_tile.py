@@ -42,7 +42,7 @@ class BaseTileTestCase(unittest.TestCase):
     def test_no_content_type_accepted_by_default(self):
         self.assertEqual(self.tile.accepted_ct(), None)
 
-    def test_delete_tile(self):
+    def test_delete_tile_persistent_data(self):
         self.tile.delete()
         # TODO: test that ObjectModifiedEvent was fired for the cover
         self.fail(NotImplemented)

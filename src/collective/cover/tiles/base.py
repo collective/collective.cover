@@ -67,8 +67,8 @@ class IPersistentCoverTile(Interface):
         """
 
     def delete():
-        """
-        This method removes the persistent data created for this tile
+        """ Remove the persistent data associated with the tile and notify the
+        cover object was modified.
         """
 
     def accepted_ct():
@@ -137,8 +137,11 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
             raise Unauthorized(_("You are not allowed to remove content of "
                                  "this tile"))
 
+    # XXX: the name of this method is really confusing as it does not deletes
+    # the tile; rename it?
     def delete(self):
-        """ Delete the tile and notify the cover was modified.
+        """ Remove the persistent data associated with the tile and notify the
+        cover object was modified.
         """
         logger.debug('Deleting tile %s', self.id)
 
