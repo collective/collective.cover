@@ -27,10 +27,6 @@ class IEmbedTile(IPersistentCoverTile):
         required=False,
         )
 
-    def get_embedding_code():
-        """ Returns the embed code stored in the tile.
-        """
-
 
 class EmbedTile(PersistentCoverTile):
 

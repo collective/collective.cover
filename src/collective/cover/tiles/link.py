@@ -8,7 +8,6 @@ from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from plone.namedfile.field import NamedBlobImage as NamedImage
 from plone.tiles.interfaces import ITileDataManager
 from plone.uuid.interfaces import IUUID
-
 from plone.app.uuid.utils import uuidToObject
 
 from collective.cover import _
@@ -43,31 +42,6 @@ class ILinkTile(IPersistentCoverTile):
         required=False,
         readonly=True,  # the field can not be edited or configured
         )
-
-    def get_title():
-        """ Returns the title stored in the tile.
-        """
-
-    def get_description():
-        """ Returns the description stored in the tile.
-        """
-
-    def get_image():
-        """ Returns the image stored in the tile.
-        """
-
-    def get_remote_url():
-        """ Returns the URL stored in the tile.
-        """
-
-    def populate_with_object(obj):
-        """ Takes a File object as parameter, and it will store the content of
-        its fields into the tile.
-        """
-
-    def delete():
-        """ Removes the persistent data created for the tile.
-        """
 
 
 class LinkTile(PersistentCoverTile):
