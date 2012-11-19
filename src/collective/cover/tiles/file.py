@@ -121,10 +121,10 @@ class FileTile(PersistentCoverTile):
             return obj.Date()
 
     def is_empty(self):
-        return not(self.data['title'] or \
-                   self.data['description'] or \
-                   self.data['image'] or \
-                   self.data['uuid'])
+        return not(self.data.get('title', None) or \
+                   self.data.get('description', None) or \
+                   self.data.get('image', None) or \
+                   self.data.get('uuid', None))
 
     def populate_with_object(self, obj):
         super(FileTile, self).populate_with_object(obj)  # check permissions
