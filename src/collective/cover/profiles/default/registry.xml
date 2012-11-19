@@ -2,7 +2,9 @@
 <registry>
   <records interface="collective.cover.controlpanel.ICoverSettings" />
 
-  <record name="collective.cover.controlpanel.ICoverSettings.layouts">
+  <record field="layouts"
+          interface="collective.cover.controlpanel.ICoverSettings"
+          name="collective.cover.controlpanel.ICoverSettings.layouts">
     <field type="plone.registry.field.Dict">
       <key_type type="plone.registry.field.TextLine"/>
       <value_type type="plone.registry.field.TextLine"/>
