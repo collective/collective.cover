@@ -54,6 +54,8 @@ class ImageTile(PersistentCoverTile):
     is_configurable = True
 
     def get_image(self):
+        """ Return the image stored in the tile.
+        """
         return self.data['image']
 
     def is_empty(self):
