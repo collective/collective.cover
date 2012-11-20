@@ -61,7 +61,21 @@
 }
 
 
-
+.ui-sortable-placeholder {
+    background-color: #F9F9F9;
+    outline: 1px solid #999;
+    display: block;
+    height:100px;
+    margin: 0 0 15px;
+}
+.ui-sortable-placeholder-column {
+    background-color: #F9F9F9;
+    outline: 1px solid #999;
+    float: left;
+    min-height: 100px;
+    padding: 0;
+    position: relative;
+}
 
 
 

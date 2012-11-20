@@ -44,6 +44,7 @@
                 //sortable rows
                 le.sortable({
                     items:'.' + row_class,
+                    placeholder: 'ui-sortable-placeholder',
                     stop: function(event, ui){
                         if (ui.item.hasClass('btn')) {
                             var row = row_dom.clone();
@@ -92,8 +93,9 @@
                     connectWith: '.' + row_class,
                     appendTo:'.layout',
                     helper: 'clone',
+                    placeholder: 'ui-sortable-placeholder-column',
                     start: function (e, ui) { 
-                        ui.placeholder.attr('data-column-size', ui.item.data('column-size'));
+                        ui.placeholder.attr('data-column-size', ui.helper.data('column-size'));
                     },
                     stop: function(event, ui){
                         le.trigger('modified.layout');
@@ -125,7 +127,7 @@
                         //we open the tile list selection, on drop
                         $("#tile-select-list").modal();
                         
-                        //the selection of the tile generates a few things, idsetup, and the actuall element
+                        //the selection of the tile generates a few things, idsetup, and the actual element
                         $(".tile-select-button").click(function(e) {
                             e.stopPropagation();
                             e.preventDefault();
@@ -297,7 +299,7 @@
                     });
                 };
 
-                jss('.'+column_class + ':first-child', {
+                jss('.'+column_class + ':nth-of-type(1)', {
                     'margin-left':'0'
                 });
             },
