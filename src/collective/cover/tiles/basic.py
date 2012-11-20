@@ -24,31 +24,32 @@ class IBasicTile(IPersistentCoverTile):
     title = schema.TextLine(
         title=_(u'Title'),
         required=False,
-        )
+    )
 
     description = schema.Text(
         title=_(u'Description'),
         required=False,
-        )
+    )
 
     image = NamedImage(
         title=_(u'Image'),
         required=False,
-        )
+    )
 
     date = schema.Datetime(
         title=_(u'Date'),
         required=False,
-        )
+    )
 
     subjects = schema.Tuple(
         title=_(u'label_categories', default=u'Categories'),
         description=_(u'help_categories',
-                       default=u'Also known as keywords, tags or labels, these help you categorize your content.'),
+                      default=(u"Also known as keywords, tags or labels, "
+                               "these help you categorize your content.")),
         required=False,
         value_type=schema.TextLine(),
         missing_value=(),
-        )
+    )
 
     form.widget(tags=TextLinesFieldWidget)
 
@@ -74,7 +75,7 @@ class BasicTile(PersistentCoverTile):
         """
         A method to return the date stored in the tile
         """
-        if self.data['date'] == None:
+        if self.data['date'] is None:
             return ''
         formatter = self.request.locale.dates.getFormatter("dateTime", "short")
         datetime_value = self.data['date']
@@ -91,11 +92,11 @@ class BasicTile(PersistentCoverTile):
         return self.data['subjects']
 
     def is_empty(self):
-        return not(self.data['title'] or \
-                   self.data['description'] or \
-                   self.data['image'] or \
-                   self.data['date'] or \
-                   self.data['subjects'])
+        return not(self.data.get('title') or
+                   self.data.get('description') or
+                   self.data.get('image') or
+                   self.data.get('date') or
+                   self.data.get('subjects'))
 
     def populate_with_object(self, obj):
         super(BasicTile, self).populate_with_object(obj)

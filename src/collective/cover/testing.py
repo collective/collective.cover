@@ -31,8 +31,9 @@ FIXTURE = Fixture()
 INTEGRATION_TESTING = IntegrationTesting(
     bases=(FIXTURE,),
     name='collective.cover:Integration',
-    )
+)
+
 FUNCTIONAL_TESTING = FunctionalTesting(
     bases=(FIXTURE, ZSERVER_FIXTURE),
     name='collective.cover:Functional',
-    )
+)

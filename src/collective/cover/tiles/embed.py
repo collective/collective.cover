@@ -15,17 +15,17 @@ class IEmbedTile(IPersistentCoverTile):
     embed = schema.Text(
         title=_(u'Embedding code'),
         required=False,
-        )
+    )
 
     title = schema.TextLine(
         title=_(u'Title'),
         required=False,
-        )
+    )
 
     description = schema.Text(
         title=_(u'Description'),
         required=False,
-        )
+    )
 
 
 class EmbedTile(PersistentCoverTile):
@@ -41,6 +41,6 @@ class EmbedTile(PersistentCoverTile):
         return self.data['embed']
 
     def is_empty(self):
-        return not(self.data['embed'] or \
-                   self.data['title'] or \
-                   self.data['description'])
+        return not(self.data.get('embed') or
+                   self.data.get('title') or
+                   self.data.get('description'))

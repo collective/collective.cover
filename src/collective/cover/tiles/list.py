@@ -19,26 +19,27 @@ from collective.cover.tiles.base import PersistentCoverTile
 
 class IListTile(IPersistentCoverTile):
 
-    uuids = schema.List(title=_(u'Elements'),
+    uuids = schema.List(
+        title=_(u'Elements'),
         value_type=schema.TextLine(), required=False)
 
     title = schema.TextLine(
         title=_(u'Title'),
         required=False,
         readonly=True
-        )
+    )
 
     description = schema.Text(
         title=_(u'Description'),
         required=False,
         readonly=True
-        )
+    )
 
     image = NamedImage(
         title=_(u'Image'),
         required=False,
         readonly=True
-        )
+    )
 
 
 class ListTile(PersistentCoverTile):
@@ -65,9 +66,8 @@ class ListTile(PersistentCoverTile):
 
     def set_limit(self):
         for field in self.get_configured_fields():
-            if field and 'id' in field.keys() and 'size' in field.keys() \
-            and field['id'] == 'uuids':
-                self.limit = int(field['size'])
+            if field and field.get('id') == 'uuids':
+                self.limit = int(field.get('size', 0))
 
     def populate_with_object(self, obj):
         super(ListTile, self).populate_with_object(obj)

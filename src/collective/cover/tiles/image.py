@@ -42,7 +42,7 @@ class IImageTile(IPersistentCoverTile):
     image = NamedImage(
         title=_(u'Image'),
         required=False,
-        )
+    )
 
 
 class ImageTile(PersistentCoverTile):
@@ -57,7 +57,7 @@ class ImageTile(PersistentCoverTile):
         return self.data['image']
 
     def is_empty(self):
-        return not(self.data['image'])
+        return not(self.data.get('image'))
 
     def populate_with_object(self, obj):
         # check permissions

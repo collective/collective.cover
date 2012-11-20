@@ -11,4 +11,4 @@ def test_suite():
     return unittest.TestSuite((
         layered(doctest.DocFileSuite('test_tiles_esi_support.rst'),
                 layer=FUNCTIONAL_TESTING),
-        ))
+    ))

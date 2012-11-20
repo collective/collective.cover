@@ -37,10 +37,10 @@ class PersistentCoverTileDataManager(PersistentTileDataManager):
     def set(self, data):
         for k, v in data.items():
             if INamedImage.providedBy(v):
-                if self.key not in self.annotations or \
-                   k not in self.annotations[self.key] or \
-                   (self.key not in self.annotations and \
-                    data[k] != self.annotations[self.key][k]):
+                if (self.key not in self.annotations or
+                    k not in self.annotations[self.key] or
+                    (self.key not in self.annotations and
+                     data[k] != self.annotations[self.key][k])):
                     # set modification time of the image
                     data['%s_mtime' % k] = time.mktime(datetime.now().timetuple())
         self.annotations[self.key] = PersistentDict(data)
