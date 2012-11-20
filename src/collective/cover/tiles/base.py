@@ -3,6 +3,8 @@
 # Basic implementation taken from
 # http://davisagli.com/blog/using-tiles-to-provide-more-flexible-plone-layouts
 
+import logging
+
 from logging import exception
 from AccessControl import Unauthorized
 from Acquisition import aq_base
@@ -44,11 +46,13 @@ from plone.rfc822.interfaces import IPrimaryFieldInfo
 
 from Products.CMFCore.utils import getToolByName
 
+from collective.cover.config import PROJECTNAME
 from collective.cover.tiles.configuration import ITilesConfigurationScreen
-
 from collective.cover.tiles.permissions import ITilesPermissions
 
 from collective.cover import _
+
+logger = logging.getLogger(PROJECTNAME)
 
 
 class IPersistentCoverTile(Interface):
@@ -63,14 +67,12 @@ class IPersistentCoverTile(Interface):
         """
 
     def delete():
-        """
-        This method removes the persistent data created for this tile
+        """ Remove the persistent data associated with the tile and notify the
+        cover object was modified.
         """
 
     def accepted_ct():
-        """
-        This method returns a list of valid CT that this tile will accept, or
-        None if not
+        """ Return a list of content types accepted by the tile or None.
         """
 
     def get_tile_configuration():
@@ -133,13 +135,24 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
             raise Unauthorized(_("You are not allowed to remove content of "
                                  "this tile"))
 
+    # XXX: the name of this method is really confusing as it does not deletes
+    # the tile; rename it?
     def delete(self):
+        """ Remove the persistent data associated with the tile and notify the
+        cover object was modified.
+        """
+        logger.debug('Deleting tile %s', self.id)
+
         data_mgr = ITileDataManager(self)
         data_mgr.delete()
 
+        notify(ObjectModifiedEvent(self.context))
+
     def accepted_ct(self):
-        valid_ct = None
-        return valid_ct
+        """ Return a list of content types accepted by the tile or None if all
+        types are accepted.
+        """
+        return None  # all content types accepted by default
 
     def get_tile_configuration(self):
         tile_conf_adapter = getMultiAdapter((self.context, self.request, self),

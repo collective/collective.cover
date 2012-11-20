@@ -56,6 +56,8 @@ setup(name='collective.cover',
       extras_require={
         'test': [
           'plone.app.testing',
+          'plone.app.imagetile',
+          'plone.app.texttile',
           'robotsuite',
           'robotframework-selenium2library',
           ],

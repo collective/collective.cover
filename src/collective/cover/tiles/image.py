@@ -5,7 +5,6 @@ from zope.interface import implements
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
 from plone.namedfile.field import NamedBlobImage as NamedImage
-
 from plone.namedfile.file import NamedBlobImage
 
 from plone.tiles.interfaces import ITileDataManager
@@ -45,19 +44,6 @@ class IImageTile(IPersistentCoverTile):
         required=False,
         )
 
-    def get_image():
-        """ Returns the image stored in the tile.
-        """
-
-    def is_empty():
-        """ Returns True if the tile has no content
-        """
-
-    def populate_with_object(obj):
-        """ Takes an Image object as parameter, and it will store the content of
-        its fields into the tile.
-        """
-
 
 class ImageTile(PersistentCoverTile):
 
@@ -82,5 +68,7 @@ class ImageTile(PersistentCoverTile):
         data_mgr.set({'image': NamedBlobImage(obj.getImage().data)})
 
     def accepted_ct(self):
+        """ Return a list of content types accepted by the tile.
+        """
         valid_ct = ['Image']
         return valid_ct

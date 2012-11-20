@@ -40,25 +40,6 @@ class IListTile(IPersistentCoverTile):
         readonly=True
         )
 
-    def results():
-        """
-        This method return a list of the objects in uuids
-        """
-
-    def populate_with_object(obj):
-        """
-        This method will take a CT and will append its uid to uuids
-        """
-
-    def delete():
-        """
-        This method removes the persistent data created for this tile
-        """
-    def accepted_ct():
-        """
-        Return a list of supported content types.
-        """
-
 
 class ListTile(PersistentCoverTile):
 
@@ -129,15 +110,8 @@ class ListTile(PersistentCoverTile):
         old_data['uuids'] = uids
         data_mgr.set(old_data)
 
-    def delete(self):
-        data_mgr = ITileDataManager(self)
-        data_mgr.delete()
-
     def get_uid(self, obj):
         return IUUID(obj, None)
-
-    def accepted_ct(self):
-        return None
 
     def get_configured_fields(self):
         # Override this method, since we are not storing anything

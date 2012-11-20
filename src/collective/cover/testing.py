@@ -16,6 +16,11 @@ class Fixture(PloneSandboxLayer):
         # Load ZCML
         import collective.cover
         self.loadZCML(package=collective.cover)
+        # XXX: https://github.com/collective/collective.cover/issues/81
+        #import plone.app.imagetile
+        #self.loadZCML(package=plone.app.imagetile)
+        #import plone.app.texttile
+        #self.loadZCML(package=plone.app.imagetile)
 
     def setUpPloneSite(self, portal):
         # Install into Plone site using portal_setup

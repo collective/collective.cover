@@ -47,6 +47,13 @@ class InstallTestCase(unittest.TestCase):
         for id in CSS:
             self.assertTrue(id in resource_ids, '%s not installed' % id)
 
+    def test_reinstall_with_changed_registry(self):
+        ps = getattr(self.portal, 'portal_setup')
+        try:
+            ps.runAllImportStepsFromProfile('profile-collective.cover:default')
+        except AttributeError:
+            self.fail("Reinstall fails when the record was changed")
+
 
 class UninstallTestCase(unittest.TestCase):
 

@@ -8,7 +8,6 @@ from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from plone.namedfile.field import NamedBlobImage as NamedImage
 from plone.tiles.interfaces import ITileDataManager
 from plone.uuid.interfaces import IUUID
-
 from plone.app.uuid.utils import uuidToObject
 
 from collective.cover import _
@@ -59,7 +58,7 @@ class IFileTile(IPersistentCoverTile):
     download = schema.TextLine(
         title=_(u'Download link'),
         required=False,
-        readonly=True,  # the field can not be edited or configured
+        readonly=True,  # this field can not be edited or configured
         )
 
     uuid = schema.TextLine(
@@ -68,35 +67,6 @@ class IFileTile(IPersistentCoverTile):
         readonly=True,
         )
 
-    def get_title():
-        """ Returns the title stored in the tile.
-        """
-
-    def get_description():
-        """ Returns the description stored in the tile.
-        """
-
-    def get_image():
-        """ Returns the image stored in the tile.
-        """
-
-    def download_widget():
-        """ Returns a download link for the file associated with the tile.
-        """
-
-    def get_date():
-        """ Returns the date of the file associated with the tile.
-        """
-
-    def populate_with_object(obj):
-        """ Takes a File object as parameter, and it will store the content of
-        its fields into the tile.
-        """
-
-    def delete():
-        """ Removes the persistent data created for the tile.
-        """
-
 
 class FileTile(PersistentCoverTile):
 
@@ -104,20 +74,35 @@ class FileTile(PersistentCoverTile):
 
     index = ViewPageTemplateFile('templates/file.pt')
 
-    # TODO: make it configurable
-    is_configurable = False
+    is_configurable = False  # TODO: make the tile configurable
+    is_editable = True
+    is_droppable = True
+
+    # XXX: initialize tile? how?
+    #def __init__(self, context, request):
+    #    super(PersistentCoverTile, self).__init__(context, request)
+
+        #data_mgr = ITileDataManager(self)
+        #data_mgr.set({'title': '', 'description': '', 'image': '', 'download': '', 'uuid': ''})
 
     def get_title(self):
+        """ Returns the title stored in the tile.
+        """
         return self.data['title']
 
     def get_description(self):
+        """ Returns the description stored in the tile.
+        """
         return self.data['description']
 
     def get_image(self):
+        """ Returns the image stored in the tile.
+        """
         return self.data['image']
 
-    # XXX: can we do this without waking the object up?
     def download_widget(self):
+        """ Returns a download link for the file associated with the tile.
+        """
         obj = uuidToObject(self.data['uuid'])
         if obj:
             url = obj.absolute_url()
@@ -127,23 +112,22 @@ class FileTile(PersistentCoverTile):
             size = obj.get_size()
             return get_download_html(url, portal_url, icon, mime, size)
 
-    # XXX: can we do this without waking the object up?
     def get_date(self):
-        # TODO: we must support be able to select which date we want to
-        # display
+        """ Returns the date of the file associated with the tile.
+        """
+        # TODO: support selection of which date we want to display
         obj = uuidToObject(self.data['uuid'])
         if obj:
             return obj.Date()
 
     def is_empty(self):
-        return not(self.data['title'] or \
-                   self.data['description'] or \
-                   self.data['image'] or \
-                   self.data['uuid'])
+        return not(self.data.get('title', None) or \
+                   self.data.get('description', None) or \
+                   self.data.get('image', None) or \
+                   self.data.get('uuid', None))
 
     def populate_with_object(self, obj):
-        # check permissions
-        super(FileTile, self).populate_with_object(obj)
+        super(FileTile, self).populate_with_object(obj)  # check permissions
 
         title = obj.Title() if hasattr(obj, 'Title') else None
         description = obj.Description() if hasattr(obj, 'Description') else None
@@ -156,10 +140,7 @@ class FileTile(PersistentCoverTile):
                       'uuid': uuid,
                       })
 
-    def delete(self):
-        data_mgr = ITileDataManager(self)
-        data_mgr.delete()
-
     def accepted_ct(self):
-        valid_ct = ['File']
-        return valid_ct
+        """ Return a list of content types accepted by the tile.
+        """
+        return ['File']

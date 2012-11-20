@@ -27,11 +27,12 @@ class PersistentCoverTileDataManager(PersistentTileDataManager):
 
     def applyTileConfigurations(self):
         conf = self.tile.get_tile_configuration()
-        fields = getFields(self.tileType.schema)
+        if self.tileType:
+            fields = getFields(self.tileType.schema)
 
-        for field_name, field_conf in conf.items():
-            if 'order' in field_conf and field_conf['order']:
-                fields[field_name].order = int(field_conf['order'])
+            for field_name, field_conf in conf.items():
+                if 'order' in field_conf and field_conf['order']:
+                    fields[field_name].order = int(field_conf['order'])
 
     def set(self, data):
         for k, v in data.items():
