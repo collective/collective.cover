@@ -316,6 +316,56 @@
                     });
                     $('#btn-save').addClass('modified btn-warning');
                 }
+            },
+
+            /**
+             * Export html2json
+             *
+             **/
+            html2json: function (node) {
+                var data = [];
+                var excluded_elements = '.row-droppable';
+                var remove_classes = 'ui-droppable ui-sortable';
+
+                $(node).find('> div').not('.no-export').each(function(i, elem) {
+                    if ($(this).not(excluded_elements)[0] !== undefined) {
+                        $(this).removeClass(remove_classes);
+                        var entry = {};
+
+                        var patt=new RegExp(/\bcolumn|\brow|\btile/);
+                        var node_type = patt.exec($(this).attr('class'));
+                        if (node_type) {
+                            entry.type = node_type[0];
+                        }
+                        if (node_type == 'column') {
+                            entry.roles = ['Manager'];
+                            entry.type = 'group';
+                            entry.data = {
+                                'column-size': $(this).data('column-size'),
+                                'layout-type': $(this).data('layout-type')
+
+                            };
+                        }
+                        //entry.class = $(this).attr('class');
+
+                        var iterator = self.html2json($(this));
+                        if (iterator[0] !== undefined) {
+                            entry.children = iterator;
+                        }
+
+                        var node_id = $(this).attr('data-panel') || $(this).attr('id');
+                        if (node_id !== undefined) {
+                            entry.id = node_id;
+                        }
+
+                        var tile_type = $(this).attr('data-tile-type');
+                        if (tile_type !== undefined) {
+                            entry['tile-type'] = tile_type;
+                        }
+                        data.push(entry);
+                    }
+                });
+                return data;
             }
 
         });

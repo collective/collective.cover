@@ -24,7 +24,7 @@ $(document).ready(function() {
                     $this.find('span').text('Error '+errorThrown);
                     $('#btn-save').addClass('error btn-danger');           
                 }
-            })
+            });
         });
     }
 });
