@@ -15,7 +15,8 @@
                                 data python:section.get('data', '')"
                     tal:attributes="class python:'%s %s' % (klass, '' if view.is_user_allowed_in_group() else 'disabled');
                                     data-panel python: section.get('id', '');
-                                    data-column-size python: data['column-size'] if 'column-size' in data else 1">
+                                    data-column-size python: data['column-size'] if 'column-size' in data else 1;
+                                    data-layout-type python: data['layout-type'] if 'layout-type' in data else 'column'">
 
                 <tal:children repeat="child python:section.get('children')">
                     <div tal:replace="structure python:view.render_section(child, mode)" />

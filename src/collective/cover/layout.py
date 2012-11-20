@@ -206,7 +206,7 @@ class GridPlug(grok.View):
         p = 'position-'
         offset = 0
         for column in columns:
-            width = column['data']['column-size']
+            width = column['data']['column-size'] if 'data' in column else 1
             column['class'] = self.column_class + ' ' + (w + str(width)) + ' ' + (p + str(offset))
             offset = offset + width
         return columns
