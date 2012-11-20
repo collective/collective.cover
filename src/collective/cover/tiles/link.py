@@ -20,28 +20,28 @@ class ILinkTile(IPersistentCoverTile):
     title = schema.TextLine(
         title=_(u'Title'),
         required=False,
-        )
+    )
 
     description = schema.Text(
         title=_(u'Description'),
         required=False,
-        )
+    )
 
     image = NamedImage(
         title=_(u'Image'),
         required=False,
-        )
+    )
 
     remote_url = schema.TextLine(
         title=_(u'URL'),
         required=False,
-        )
+    )
 
     uuid = schema.TextLine(
         title=_(u'UUID'),
         required=False,
         readonly=True,  # the field can not be edited or configured
-        )
+    )
 
 
 class LinkTile(PersistentCoverTile):
@@ -74,11 +74,11 @@ class LinkTile(PersistentCoverTile):
         return self.data['remote_url']
 
     def is_empty(self):
-        return not(self.data['title'] or \
-                   self.data['description'] or \
-                   self.data['image'] or \
-                   self.data['remote_url'] or \
-                   self.data['uuid'])
+        return not(self.data.get('title') or
+                   self.data.get('description') or
+                   self.data.get('image') or
+                   self.data.get('remote_url') or
+                   self.data.get('uuid'))
 
     def populate_with_object(self, obj):
         # check permissions

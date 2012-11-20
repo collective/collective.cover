@@ -18,8 +18,7 @@ class ICoverSettings(Interface):
         required=True,
         key_type=schema.TextLine(title=_(u'Name')),
         value_type=schema.TextLine(title=_(u'Layout')),
-        readonly=True,  # FIXME: we have no widget for this field yet
-        )
+        readonly=True,)  # FIXME: we have no widget for this field yet
 
     searchable_content_types = schema.List(
         title=_(u"Searchable Content Types"),
@@ -28,8 +27,8 @@ class ICoverSettings(Interface):
         required=False,
         default=DEFAULT_SEARCHABLE_CONTENT_TYPES,
         # we are going to list only the main content types in the widget
-        value_type=schema.Choice(vocabulary=u'collective.cover.AvailableContentTypes'),
-        )
+        value_type=schema.Choice(
+            vocabulary=u'collective.cover.AvailableContentTypes'),)
 
 
 class CoverSettingsEditForm(controlpanel.RegistryEditForm):

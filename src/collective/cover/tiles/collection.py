@@ -29,26 +29,26 @@ class ICollectionTile(IPersistentCoverTile, form.Schema):
     description = schema.Text(
         title=u'Description',
         required=False,
-        )
+    )
 
     form.omitted(ICoverTileEditView, 'date')
     date = schema.Datetime(
         title=u'Date',
         required=False,
-        )
+    )
 
     form.omitted(ICoverTileEditView, 'image')
     image = NamedImage(
         title=u'Image',
         required=False,
-        )
+    )
 
     form.omitted(ICoverTileEditView, 'number_to_show')
     number_to_show = schema.List(
         title=u'number of elements to show',
         value_type=schema.TextLine(),
         required=False,
-        )
+    )
 
     uuid = schema.TextLine(title=u'Collection uuid', readonly=True)
 
