@@ -196,8 +196,7 @@
                     'position': 'absolute',
                     'text-align': 'center',
                     'top': '0',
-                    'width': '15px',
-                    'display':'none'
+                    'width': '15px'
                 });
                 elements = elements !== undefined? elements : le.find('.'+column_class +', .'+ tile_class + ', .' + row_class);
                 

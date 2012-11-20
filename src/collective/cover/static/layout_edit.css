@@ -55,11 +55,6 @@
     display:inline;
 }
 
-/*delete button*/
-.cover-tile:hover > .close, .cover-row:hover > .close, .cover-column:hover > .close {
-    display: block !important;
-}
-
 
 .ui-sortable-placeholder {
     background-color: #F9F9F9;
