@@ -43,29 +43,29 @@ class IFileTile(IPersistentCoverTile):
     title = schema.TextLine(
         title=_(u'Title'),
         required=False,
-        )
+    )
 
     description = schema.Text(
         title=_(u'Description'),
         required=False,
-        )
+    )
 
     image = NamedImage(
         title=_(u'Image'),
         required=False,
-        )
+    )
 
     download = schema.TextLine(
         title=_(u'Download link'),
         required=False,
         readonly=True,  # this field can not be edited or configured
-        )
+    )
 
     uuid = schema.TextLine(
         title=_(u'UUID'),
         required=False,
         readonly=True,
-        )
+    )
 
 
 class FileTile(PersistentCoverTile):
@@ -121,10 +121,10 @@ class FileTile(PersistentCoverTile):
             return obj.Date()
 
     def is_empty(self):
-        return not(self.data.get('title', None) or \
-                   self.data.get('description', None) or \
-                   self.data.get('image', None) or \
-                   self.data.get('uuid', None))
+        return not(self.data.get('title') or
+                   self.data.get('description') or
+                   self.data.get('image') or
+                   self.data.get('uuid'))
 
     def populate_with_object(self, obj):
         super(FileTile, self).populate_with_object(obj)  # check permissions

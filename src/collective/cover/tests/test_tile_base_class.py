@@ -53,7 +53,7 @@ class BaseTileTestCase(unittest.TestCase):
         # First, let's assign an id to the tile and store some data
         self.tile.id = 'test-tile'
         data_mgr = ITileDataManager(self.tile)
-        data_mgr.set({'test':'data'})
+        data_mgr.set({'test': 'data'})
 
         # We see that the data persists
         self.assertEqual(data_mgr.get(), {'test': 'data'})

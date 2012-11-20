@@ -113,7 +113,7 @@ class DefaultConfigureForm(TileForm, form.Form):
         # query string parameters from the original request
         tile = self.context.restrictedTraverse('@@%s/%s' % (typeName, tileId,))
         tile_conf_adapter = getMultiAdapter((self.context, self.request, tile),
-                                             ITilesConfigurationScreen)
+                                            ITilesConfigurationScreen)
 
         configuration = tile_conf_adapter.get_configuration()
         return configuration
@@ -170,7 +170,7 @@ class DefaultConfigureForm(TileForm, form.Form):
         tile = self.context.restrictedTraverse('@@%s/%s' % (typeName, self.tileId,))
 
         tile_conf_adapter = getMultiAdapter((self.context, self.request, tile),
-                                             ITilesConfigurationScreen)
+                                            ITilesConfigurationScreen)
 
         tile_conf_adapter.set_configuration(data)
 
