@@ -80,28 +80,31 @@ class CollectionTile(PersistentCoverTile):
         else:
             return []
 
+    def is_empty(self):
+        return self.data.get('uuid', None) is None
+
     def populate_with_object(self, obj):
-        super(CollectionTile, self).populate_with_object(obj)
+        super(CollectionTile, self).populate_with_object(obj)  # check permission
 
-        title = obj.Title() or None
-        description = obj.Description() or None
-        uuid = IUUID(obj, None)
+        if obj.portal_type in self.accepted_ct():
+            title = obj.Title()
+            description = obj.Description()
+            uuid = IUUID(obj)
 
-        data_mgr = ITileDataManager(self)
-
-        data_mgr.set({'title': title,
-                      'description': description,
-                      'uuid': uuid,
-                      })
+            data_mgr = ITileDataManager(self)
+            data_mgr.set({'title': title,
+                          'description': description,
+                          'uuid': uuid,
+                          })
 
     def accepted_ct(self):
         """ Return a list of content types accepted by the tile.
         """
         return ['Collection']
 
+    # TODO: add deprecation warning
     def has_data(self):
-        uuid = self.data.get('uuid', None)
-        return uuid is not None
+        return not self.is_empty()
 
     def get_configured_fields(self):
         # Override this method, since we are not storing anything

@@ -38,14 +38,3 @@ Test Collection Tile
     Click Link  link=Layout
     Delete Tile
     Save Cover Layout
-
-*** Keywords ***
-
-Select Tile to Add
-    [arguments]  ${location}
-
-    # XXX: refactor this to allow easier tile selection
-    Click Element  xpath=${location}
-
-Delete Tile
-    Click Element  css=div.tile button.close
