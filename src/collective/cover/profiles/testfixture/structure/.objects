@@ -1,3 +1,8 @@
 frontpage,collective.cover.content
 my-collection,Collection
 my-document,Document
+my-file,File
+test-folder,Folder
+test-image,Image
+test-link,Link
+test-news-item,News Item
