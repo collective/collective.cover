@@ -72,7 +72,8 @@ class IPersistentCoverTile(Interface):
         """
 
     def accepted_ct():
-        """ Return a list of content types accepted by the tile or None.
+        """ Return a list of content types accepted by the tile or None if all
+        types are accepted.
         """
 
     def get_tile_configuration():

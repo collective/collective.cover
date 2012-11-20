@@ -10,30 +10,30 @@ Suite Teardown  Close Browser
 
 *** Variables ***
 
-${collection_tile_location}  "collective.cover.collection"
-${collection_uuid}  12345
-${collection_selector}  ul#item-list li.ui-draggable
+${file_tile_location}  /html/body/div/div[2]/div/div[2]/div[2]/div[3]/div[5]
+${file_uuid}  12345
+${file_selector}  ul#item-list li.ui-draggable
 ${tile_selector}  div.tile-container div.tile
 
 *** Test cases ***
 
-Test Collection Tile
+Test file Tile
     # XXX: should we create the cover object programmatically?
     Create Cover  Title  Description  Empty layout
     Click Link  link=Layout
 
     Add Tile
-    Select Tile to Add  ${collection_tile_location}
+    Select Tile to Add  ${file_tile_location}
     Save Cover Layout
 
     Click Link  link=Compose
-    Page Should Contain  Select a collection to fill this tile
+    Page Should Contain  Please drag&drop a file here
 
     Click Element  css=div#screenlet-content-show-button
 
     # FIXME: current selectors suck!
-    #Drag And Drop  css=${collection_selector}  css=${tile_selector}
-    #Page Should Contain  The collection don't have any results
+    #Drag And Drop  css=${file_selector}  css=${tile_selector}
+    #Page Should Contain  The file don't have any results
 
     Click Link  link=Layout
     Delete Tile

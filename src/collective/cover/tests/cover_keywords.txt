@@ -22,6 +22,7 @@ ${row_drop_area_selector} =  div.layout
 ${column_drop_area_selector} =  div.cover-row
 ${tile_drop_area_selector} =  div.cover-column
 ${tile_cancel_area_selector} =  div.modal-backdrop
+${delete_tile_selector} =  div.cover-tile button.close
 
 *** Keywords ***
 
@@ -71,3 +72,12 @@ Save Cover Layout
 
 Add Tile
     Drag And Drop  css=${tile_button_selector}  css=${tile_drop_area_selector}
+
+
+Select Tile to Add
+    [arguments]  ${tile}
+
+    Click Element  xpath=//div[contains(@class, "tile-select-button") and contains(text(), ${tile})]
+
+Delete Tile
+    Click Element  css=${delete_tile_selector}

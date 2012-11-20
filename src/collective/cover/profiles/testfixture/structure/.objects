@@ -1,1 +1,8 @@
-test-collection,Collection
+frontpage,collective.cover.content
+my-collection,Collection
+my-document,Document
+my-file,File
+my-folder,Folder
+my-image,Image
+my-link,Link
+my-news-item,News Item
