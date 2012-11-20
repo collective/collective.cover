@@ -27,6 +27,8 @@ class RichTextTile(PersistentCoverTile):
     is_configurable = True
 
     def getText(self):
+        """ Return the rich text stored in the tile.
+        """
         text = ''
         if self.data['text']:
             transformer = ITransformer(self.context, None)

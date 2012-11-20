@@ -81,8 +81,7 @@ class LinkTile(PersistentCoverTile):
                    self.data.get('uuid'))
 
     def populate_with_object(self, obj):
-        # check permissions
-        super(LinkTile, self).populate_with_object(obj)
+        super(LinkTile, self).populate_with_object(obj)  # check permissions
 
         title = obj.Title()
         description = obj.Description()
