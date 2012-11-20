@@ -2,10 +2,13 @@
 
 import unittest2 as unittest
 
+from zope.component import eventtesting
+
 from zope.interface.verify import verifyClass
 from zope.interface.verify import verifyObject
 
 from plone.tiles.interfaces import IPersistentTile
+from plone.tiles.interfaces import ITileDataManager
 
 from collective.cover.testing import INTEGRATION_TESTING
 from collective.cover.tiles.base import PersistentCoverTile
@@ -19,6 +22,9 @@ class BaseTileTestCase(unittest.TestCase):
     def setUp(self):
         self.portal = self.layer['portal']
         self.request = self.layer['request']
+
+        eventtesting.setUp()
+
         self.tile = PersistentCoverTile(self.portal, self.request)
 
     def test_interface(self):
@@ -43,6 +49,22 @@ class BaseTileTestCase(unittest.TestCase):
         self.assertEqual(self.tile.accepted_ct(), None)
 
     def test_delete_tile_persistent_data(self):
+        eventtesting.clearEvents()
+        # First, let's assign an id to the tile and store some data
+        self.tile.id = 'test-tile'
+        data_mgr = ITileDataManager(self.tile)
+        data_mgr.set({'test':'data'})
+
+        # We see that the data persists
+        self.assertEqual(data_mgr.get(), {'test': 'data'})
+
+        # Call the delete method
         self.tile.delete()
-        # TODO: test that ObjectModifiedEvent was fired for the cover
-        self.fail(NotImplemented)
+
+        # Now we should not see the stored data anymore
+        self.assertEqual(data_mgr.get(), {})
+
+        events = eventtesting.getEvents()
+
+        # Finally, test that ObjectModifiedEvent was fired for the cover
+        self.assertEqual(events[0].object, self.portal)
