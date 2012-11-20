@@ -67,7 +67,7 @@ class ListTile(PersistentCoverTile):
     def set_limit(self):
         for field in self.get_configured_fields():
             if field and field.get('id') == 'uuids':
-                self.limit = int(field.get('size', 0))
+                self.limit = int(field.get('size', self.limit))
 
     def populate_with_object(self, obj):
         super(ListTile, self).populate_with_object(obj)
