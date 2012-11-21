@@ -10,7 +10,7 @@ Suite Teardown  Close Browser
 
 *** Variables ***
 
-${collection_tile_location}  /html/body/div/div[2]/div/div[2]/div[2]/div[3]/div[3]
+${collection_tile_location}  "collective.cover.collection"
 ${collection_uuid}  12345
 ${collection_selector}  ul#item-list li.ui-draggable
 ${tile_selector}  div.tile-container div.tile
