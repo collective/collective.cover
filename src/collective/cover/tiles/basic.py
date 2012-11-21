@@ -129,7 +129,7 @@ class BasicTile(PersistentCoverTile):
             Return a list with accepted content types ids
             basic tile accepts every content type
             allowed by the cover control panel
-            
+
             this method is called for every tile in the compose view
             please memoize if you're doing some very expensive calculation
         """

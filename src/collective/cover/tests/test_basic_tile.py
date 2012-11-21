@@ -64,7 +64,7 @@ class BasicTileTestCase(unittest.TestCase):
 
     def test_populated_date(self):
         obj = self.portal['my-news-item']
-        obj.effective_date = DateTime() 
+        obj.effective_date = DateTime()
         self.tile.populate_with_object(obj)
         self.assertEqual(obj.effective_date.strftime('%y/%m/%d %H:%M'),
                          self.tile.get_date())
@@ -87,7 +87,7 @@ class BasicTileTestCase(unittest.TestCase):
                         'populate the tile.' in self.tile())
 
     def test_render_title(self):
-        obj = self.portal['my-news-item']        
+        obj = self.portal['my-news-item']
         self.tile.populate_with_object(obj)
         rendered = self.tile()
         self.assertTrue('Test news item' in rendered)
@@ -95,9 +95,9 @@ class BasicTileTestCase(unittest.TestCase):
     def test_render(self):
         obj = self.portal['my-news-item']
         obj.setSubject('test-subject')
-        obj.effective_date = DateTime() 
+        obj.effective_date = DateTime()
         obj.setImage(loadImage('canoneye.jpg'))
-        
+
         self.tile.populate_with_object(obj)
         rendered = self.tile()
         self.assertTrue(obj.UID() in rendered)
