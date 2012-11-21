@@ -10,7 +10,7 @@
   </p>
 
   <div tal:condition="not: is_empty"
-       tal:define="description view/data/description">
+       tal:define="description view/data/description|nothing">
     <tal:fields repeat="field view/get_configured_fields">
       <tal:title define="htmltag python:field.get('htmltag', 'h1')"
                  condition="python:field['id'] == 'title'">
