@@ -15,7 +15,7 @@
                  condition="python:field['id'] == 'title'">
         <!-- FIXME: a tag should be inside h tag -->
         <!-- FIXME: basic tile is not storing the object URL -->
-        <a tal:attributes="href string:#;
+        <a tal:attributes="href view/get_url;
                            title view/get_description">
           <h1 tal:condition="python:htmltag == 'h1'"
               tal:content="python:field['content']" />

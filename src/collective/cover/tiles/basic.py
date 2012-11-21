@@ -2,10 +2,16 @@
 
 from zope import schema
 from zope.interface import implements
+from zope.component import getUtility
+from zope.component.hooks import getSite
 
+from plone.registry.interfaces import IRegistry
 from plone.namedfile.field import NamedBlobImage as NamedImage
 from plone.namedfile.file import NamedBlobImage as NamedImageFile
 from plone.tiles.interfaces import ITileDataManager
+from plone.memoize import view
+from plone.uuid.interfaces import IUUID
+from Products.ATContentTypes.utils import DT2dt
 
 from z3c.form.browser.textlines import TextLinesFieldWidget
 
@@ -16,9 +22,9 @@ from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from collective.cover import _
 from collective.cover.tiles.base import IPersistentCoverTile
 from collective.cover.tiles.base import PersistentCoverTile
+from collective.cover.controlpanel import ICoverSettings
 
 
-# FIXME: basic tile is not storing the object URL
 class IBasicTile(IPersistentCoverTile):
 
     title = schema.TextLine(
@@ -52,6 +58,12 @@ class IBasicTile(IPersistentCoverTile):
     )
 
     form.widget(tags=TextLinesFieldWidget)
+
+    uuid = schema.TextLine(
+        title=_(u'UUID'),
+        required=False,
+        readonly=True,
+        )
 
 
 class BasicTile(PersistentCoverTile):
@@ -98,20 +110,43 @@ class BasicTile(PersistentCoverTile):
                    self.data.get('date') or
                    self.data.get('subjects'))
 
+    def get_url(self):
+        if self.data['uuid']:
+            return '%s/resolveuid/%s' % \
+                (getSite().absolute_url(), self.data['uuid'])
+
     def populate_with_object(self, obj):
         super(BasicTile, self).populate_with_object(obj)
 
         data = {'title': obj.Title(),
-                'description': obj.Description()}
+                'description': obj.Description(),
+                'uuid': IUUID(obj, None),
+                'date': DT2dt(obj.effective_date),
+                'subjects': obj.Subject(),
+                }
 
-        if obj.getField('image'):
-            data['image'] = NamedImageFile(obj.getImage().data)
+        # XXX: Implements a better way to detect image fields.
+        try:
+            data['image'] = NamedImageFile(str(obj.getImage().data))
+        except:
+            try:
+                data['image'] = NamedImageFile(str(obj.image.data))
+            except:
+                pass
 
         data_mgr = ITileDataManager(self)
         data_mgr.set(data)
 
-    # XXX: should we accept Collection here?
+    @view.memoize
     def accepted_ct(self):
-        """ Return a list of content types accepted by the tile.
         """
-        return ['Document', 'File', 'Image', 'Link', 'News Item']
+            Return a list with accepted content types ids
+            basic tile accepts every content type
+            allowed by the cover control panel
+            
+            this method is called for every tile in the compose view
+            please memoize if you're doing some very expensive calculation
+        """
+        registry = getUtility(IRegistry)
+        settings = registry.forInterface(ICoverSettings)
+        return settings.searchable_content_types

@@ -33,6 +33,6 @@ class BasicTileTestCase(unittest.TestCase):
         self.assertTrue(self.tile.is_droppable)
 
     def test_accepted_content_types(self):
-        # XXX: should we add Collection here?
         self.assertEqual(self.tile.accepted_ct(),
-                         ['Document', 'File', 'Image', 'Link', 'News Item'])
+                         ['Collection', 'Document', 'File',
+                          'Image', 'Link', 'News Item'])
