@@ -109,11 +109,14 @@ class BasicTile(PersistentCoverTile):
                    self.data.get('image') or
                    self.data.get('date') or
                    self.data.get('subjects'))
+<<<<<<< HEAD
 
     def get_url(self):
         if self.data['uuid']:
             return '%s/resolveuid/%s' % \
                 (getSite().absolute_url(), self.data['uuid'])
+=======
+>>>>>>> cfded1cf376253c1b4bcb080e7270bff6e4f631f
 
     def populate_with_object(self, obj):
         super(BasicTile, self).populate_with_object(obj)
