@@ -74,15 +74,6 @@ class BasicTile(PersistentCoverTile):
 
     is_configurable = True
 
-    def get_title(self):
-        return self.data['title']
-
-    def get_description(self):
-        return self.data['description']
-
-    def get_image(self):
-        return self.data['image']
-
     def get_date(self):
         """
         A method to return the date stored in the tile
@@ -97,26 +88,17 @@ class BasicTile(PersistentCoverTile):
         # for now ctime is default
         return datetime_value.ctime()
 
-    def get_subjects(self):
-        """
-        A method to return the subjects stored in the tile
-        """
-        return self.data['subjects']
-
     def is_empty(self):
         return not(self.data.get('title') or
                    self.data.get('description') or
                    self.data.get('image') or
                    self.data.get('date') or
                    self.data.get('subjects'))
-<<<<<<< HEAD
 
     def get_url(self):
         if self.data['uuid']:
             return '%s/resolveuid/%s' % \
                 (getSite().absolute_url(), self.data['uuid'])
-=======
->>>>>>> cfded1cf376253c1b4bcb080e7270bff6e4f631f
 
     def populate_with_object(self, obj):
         super(BasicTile, self).populate_with_object(obj)
@@ -124,17 +106,18 @@ class BasicTile(PersistentCoverTile):
         data = {'title': obj.Title(),
                 'description': obj.Description(),
                 'uuid': IUUID(obj, None),
-                'date': DT2dt(obj.effective_date),
+                'date': obj.effective_date and \
+                        DT2dt(obj.effective_date) or None,
                 'subjects': obj.Subject(),
                 }
 
         # XXX: Implements a better way to detect image fields.
         try:
             data['image'] = NamedImageFile(str(obj.getImage().data))
-        except:
+        except AttributeError:
             try:
                 data['image'] = NamedImageFile(str(obj.image.data))
-            except:
+            except AttributeError:
                 pass
 
         data_mgr = ITileDataManager(self)

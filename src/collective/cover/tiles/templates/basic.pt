@@ -9,14 +9,15 @@
     Please drag&amp;drop some content here to populate the tile.
   </p>
 
-  <div tal:condition="not: is_empty">
+  <div tal:condition="not: is_empty"
+       tal:define="description view/data/description">
     <tal:fields repeat="field view/get_configured_fields">
       <tal:title define="htmltag python:field.get('htmltag', 'h1')"
                  condition="python:field['id'] == 'title'">
         <!-- FIXME: a tag should be inside h tag -->
         <!-- FIXME: basic tile is not storing the object URL -->
         <a tal:attributes="href view/get_url;
-                           title view/get_description">
+                           title description">
           <h1 tal:condition="python:htmltag == 'h1'"
               tal:content="python:field['content']" />
           <h2 tal:condition="python:htmltag == 'h2'"
@@ -33,7 +34,7 @@
       <tal:image condition="python:field['id'] == 'image'">
         <!-- FIXME: this should be configurable -->
         <a tal:attributes="href string:#;
-                           title view/get_description">
+                           title description">
           <img style="float: left; margin: 0 1em 0.5em 0;"
                tal:define="scales view/@@images;
                            thumbnail python: scales.scale('image', scale='mini');"
