@@ -4,76 +4,201 @@
     * @param jqDomObj layout, the layout container
     * @param {Object} conf, the conf dictionary
     */
-    function CoverLayout(layout, conf) {
+    function LayoutManager(layout, conf) {
         var self = this,
-            column_class = conf.columnclass,
-            row_class = conf.rowclass,
-            column_position = conf.columnposition,
-            column_width = conf.columnwidth,
-            number_of_columns = conf.numberofcolumns,
-            grid_manager = new conf.gridmanager(),
-            le = $('.layout'),
-            row_dom = $('<span/>')
-                .addClass('label rowlabel')
-                .text('row'),
-            column_dom = $('<span/>')
-                .addClass('label columnlabel label-info')
-                .text('column'),
-            group_dom = $('<span/>')
-                    .addClass('permitionbutton')
-                    .text('groups'),
-            tile_dom = $('<span/>')
-                .addClass('label tilelabel label-important')
-                .text('tile');
+            n_columns = conf.ncolumns,
+            row_class = 'cover-row',
+            row_dom = $('<div/>').addClass(row_class)
+                                 .attr('data-layout-type', 'row'),
+            column_class = 'cover-column',
+            column_dom = $('<div/>').addClass(column_class)
+                                    .attr('data-layout-type', 'column'),
+            tile_class = 'cover-tile',
+            tile_dom = $('<div/>').addClass(tile_class)
+                                  .attr('data-layout-type', 'tile'),
+            le = $('.layout');
 
         $.extend(self, {
             init: function() {
                 self.setup();
+                self.row_events();
+                self.column_events();
                 le.bind('modified.layout', self.layout_modified);
+            },
 
-                le.find('.'+row_class).each(function(row){
-                    self.grid_layout_guides($(this));
+            setup: function() {
+                //buttons draggable binding
+                $( "#btn-row" ).draggable({
+                    connectToSortable: ".layout",
+                    helper:'clone'
+                });
+                $( "#btn-column" ).draggable({
+                    appendTo: 'body',
+                    helper: 'clone'
+                });
+                $( "#btn-tile" ).draggable({
+                    appendTo: 'body',
+                    helper: 'clone'
+                });
+
+                //sortable rows
+                le.sortable({
+                    items:'.' + row_class,
+                    placeholder: 'ui-sortable-placeholder',
+                    stop: function(event, ui){
+                        if (ui.item.hasClass('btn')) {
+                            var row = row_dom.clone();
+                            ui.item.after(row);
+                            ui.item.remove();
+
+                            self.row_events(row);
+                            self.delete_manager(row);
+                        }
+                        le.trigger('modified.layout');
+                    }
+                });
+
+                self.generate_grid_css();
+                self.delete_manager();
+            },
+
+            /**
+             * Row events binding
+             * makes the event setup in row/s
+             **/
+            row_events: function(row){
+                var rows = row ? row : le.find('.'+row_class);
+
+                //allow columns droppable
+                rows.droppable({
+                    activeClass: 'ui-state-default',
+                    hoverClass: 'ui-state-hover',
+                    accept: '#btn-column',
+                    drop: function( event, ui ) {
+                        //creates a new column
+                        var column = column_dom.clone();
+                        $(this).prepend(column);
+                        self.column_events(column);
+                        self.delete_manager(column);
+
+                        self.calculate_grid($(this).find('.' + column_class));
+
+                        le.trigger('modified.layout');
+                    }
+                });
+
+                //allow sortable columns
+                rows.sortable({
+                    items:'.' + column_class,
+                    connectWith: '.' + row_class,
+                    appendTo:'.layout',
+                    helper: 'clone',
+                    placeholder: 'ui-sortable-placeholder-column',
+                    start: function (e, ui) { 
+                        ui.placeholder.attr('data-column-size', ui.helper.data('column-size'));
+                    },
+                    stop: function(event, ui){
+                        le.trigger('modified.layout');
+                    },
+                    receive: function( event, ui ) {
+                        if (ui.sender[0] != this) {
+                            self.calculate_grid($(this).find('.' + column_class));
+                            self.calculate_grid(ui.sender.find('.' + column_class));
+                        }
+                    }
                 });
             },
 
-            /*
-            * creates the basic structure for layouts managment and events
-            * binding.
-            */
-            setup: function(){
-                self.row_draggable($('#btn-row'));
-                self.row_droppable();
+            /**
+             * column events binding
+             * makes the event setup in column/s
+             **/
+            column_events: function(column){
+                var columns = column ? column : le.find('.'+column_class);
 
-                self.sort_rows();
+                columns.droppable({
+                    activeClass: "ui-state-default",
+                    hoverClass: "ui-state-hover",
+                    accept: "#btn-tile",
+                    drop: function( event, ui ) {
+                        var new_tile = tile_dom.clone();
+                        var column_elem = this;
 
-                self.column_draggable($('#btn-column'));
-                self.column_droppable();
-//                self.column_sortable();
-                self.column_resizable();
+                        //we open the tile list selection, on drop
+                        $("#tile-select-list").modal();
+                        
+                        //the selection of the tile generates a few things, idsetup, and the actual element
+                        $(".tile-select-button").click(function(e) {
+                            e.stopPropagation();
+                            e.preventDefault();
+                            $(".tile-select-button").unbind("click");
 
-                self.tile_draggable($('#btn-tile'));
-                self.tile_droppable();
+                            var tile_type = $(this).text();
+                            new_tile.attr("data-tile-type", tile_type);
 
-                self.column_resizable();
-                self.column_permissions();
+                            $.ajax({
+                                url: "@@uid_getter",
+                                success: function(info, la) {
+                                    new_tile.attr("id", info);
+                                    var url_config = "@@configure-tile/" + tile_type + "/" + info;
+                                    var config_link = $("<a />").addClass("config-tile-link label")
+                                                                .attr('href',url_config)
+                                                                .text('Config');
+                                    var name_tag = $("<span />").addClass("tile-name")
+                                                                .text(tile_type);
+                                    new_tile.append(config_link)
+                                            .append(name_tag);
 
-                le.find('.'+row_class).append(row_dom);
-                le.find('.'+column_class).append(column_dom).append(group_dom);
-                le.find('.tile').append(tile_dom);
+                                    $(column_elem).append(new_tile);
+                                    self.delete_manager(new_tile);
 
-                self.sort_tiles(le.find('.'+column_class));
-                
-                self.delete_manager();
+                                    le.trigger('modified.layout');
+                                    return false;
+                                }
+                            });
+                           $("#tile-select-list").modal('hide');
+                        });
+                    }
+                });
 
+                //allow sortable tiles
+                columns.sortable({
+                    placeholder: 'tile-placeholder',
+                    appendTo:'.layout',
+                    helper:'clone',
+                    items:'.' + tile_class,
+                    connectWith: '.' + column_class,
+                    stop: function(event, ui){
+                        le.trigger('modified.layout');
+                    }
+                });
             },
 
-            grid_manager_init: function(children, child) {
-                grid_manager.grid_handler(children, child, conf);
+            /**
+             * tile events binding
+             * makes the event setup in tile/s
+             **/
+            tile_events: function(tile){
+                var tiles = tile ? tile : le.find('.'+tile_class);
             },
-            
+
+
+            /**
+             * Delete elements in layout
+             * manage the delete process of layout elements
+             **/
             delete_manager: function(elements){
-                var button = $('<button class="close">&times;</button>').css({'line-height':'9px','position':'absolute', 'left':'0px', 'top':'0px'});
-                elements = elements !== undefined? elements : le.find('.row, .tile, .group');
+                var button = $('<button class="close">&times;</button>').css({
+                    'font-size': '15px',
+                    'left': '0',
+                    'line-height': '15px',
+                    'overflow': 'hidden',
+                    'position': 'absolute',
+                    'text-align': 'center',
+                    'top': '0',
+                    'width': '15px'
+                });
+                elements = elements !== undefined? elements : le.find('.'+column_class +', .'+ tile_class + ', .' + row_class);
                 
                 button.click(function(){
                     var element = $(this).parent('div');
@@ -84,7 +209,6 @@
                     } else {
                         tiles_to_delete = element.find('.tile');
                     }
-                    
 
                     var success = true;
                     //XXX are you sure
@@ -118,411 +242,81 @@
                         $(this).parent('div').removeClass('to-delete');
                     }
                 );
-                elements.find('.label').after(button);
-            },
-
-            row_draggable: function(draggable_button) {
-                draggable_button.draggable({
-                    appendTo: 'body',
-                    helper: 'clone'
-                });
-            },
-            row_droppable: function() {
-                //XXX there is a jquery ui bug in the event binding code,
-                //so that is why i'm deleting and rebinding droppables
-                //$('.row-droppable').droppable('destroy');
-                //$('.row-droppable').remove();
-                //var row_placeholder = $('<div/>').addClass('row-droppable');
-
-                var row = le.find('.' + row_class);
-                //var droppable_elements = '';
-
-                // if (row[0]) {
-                //     row.before(row_placeholder);
-                //     droppable_elements = row.siblings('.row-droppable');
-                // } else {
-                    //if we delete all the rows, we need just 1 placeholder
-                //     le.append(row_placeholder);
-                //     droppable_elements = le.find('.row-droppable');
-                // }
-
-                le.droppable({
-                    activeClass: 'ui-state-default',
-                    hoverClass: 'ui-state-hover',
-                    accept: '#btn-row',
-                    drop: function( event, ui ) {
-                        var new_row = $('<div/>')
-                            .addClass(row_class).append(row_dom.clone());
-                        $(this).prepend(new_row);
-                        self.row_droppable();
-                        self.column_droppable(new_row);
-
-                        le.trigger('modified.layout');
-                        self.grid_layout_guides(new_row);
-                        self.delete_manager(new_row);
-                    }
-                });
-            },
-
-            sort_rows: function() {
-                le.sortable({ 
-                    items: '.'+row_class,
-                    handle: '.rowlabel'
-                });
+                elements.append(button);
             },
 
             /**
-             * Column Draggable
-             * @param draggable_element, the element to be dragged
-             */
-            column_draggable: function(draggable_element) {
-                draggable_element.draggable({
-                    appendTo: 'body',
-                    helper: 'clone'
-                });
-            },
+             * Calculate Grid distribution
+             * manage the grid behavior in new elements
+             **/
+            calculate_grid: function(elements){
+                var n_elements = elements.length;
+                var column_size = Math.floor(n_columns / n_elements);
 
-            /**
-             * Column Droppable
-             * @param column, if provided is going to only bind the event to
-             * the dom or list of dom elements, if not, is going to do it in all
-             * the columns elements
-             */
-            column_droppable: function(column) {
-
-                var droppable_elements = column ? column : le.find('.'+row_class);
-
-                droppable_elements.droppable({
-                    activeClass: 'ui-state-default',
-                    hoverClass: 'ui-state-hover',
-                    accept: '#btn-column',
-                    drop: function( event, ui ) {
-                        var default_class = 'column ' +
-                                            column_class + ' ' +
-                                            column_position + 0 + ' ' +
-                                            column_width + number_of_columns;
-                        var new_column = $('<div/>')
-                            .addClass(default_class).append(column_dom.clone())
-                            .append(group_dom.clone());
-                        $(this).append(new_column);
-                        var cells = $(this)
-                                      .find('.' + column_class)
-                                      .not('.guides')
-                                      .not('.guides .row-guide');
-
-                        self.grid_manager_init(cells, new_column);
-                        self.tile_droppable(new_column);
-                        self.column_resizable(new_column);
-                        self.sort_tiles(new_column);
-                        self.delete_manager(new_column);
-                        le.trigger('modified.layout');
-                    }
-                });
-            },
-
-            /**
-             * Column sortable
-             * @param column/s
-             */
-            column_sortable: function(column) {
-                var sortable_elements = column ? column : le.find('.'+column_class);
-                flag = 1;            
-                sortable_elements.draggable({
-                    helper: 'original',
-                    axis: 'x',
-                    handle:'> .label',
-                    cancel:'> .tile',
-                    containment:'parent',
-                    start: function(event, ui) {
-                        $('.guides').css('visibility', 'visible');
-                        $('.row-guide').droppable( "option", "accept", ".column" );
-                        position = ui.originalPosition.left;
-                    },
-                    stop: function(event, ui) {
-                        $('.guides').css('visibility', 'hidden');
-                        ui.helper.removeAttr('style');
-                    },
-                    drag: function(event, ui) {
-                        var pos = grid_manager.get_grid_position(ui.helper);
-                        if ((position - ui.position.left) > 20) {
-                            if (pos[1]*1 !== 0) {
-                                grid_manager.set_grid_position(ui.helper, (pos[1]*1)-1);
-                                ui.helper.removeAttr('style');                                
-                                ui.position.left = $(ui.helper).position().left;
-                                position = ui.position.left;
-                            }
-                        } else {
-                            if (pos[1]*1 !== 16) {
-                                grid_manager.set_grid_position(ui.helper, pos[1]*1+1);
-                                ui.helper.removeAttr('style');
-                                ui.position.left = $(ui.helper).position().left;
-                                position = ui.position.left;                                
-                            }
-                        }
-                    }
-                    
-                });
-                
-            },
-            /**
-             * Column Resizable
-             * @param column
-             */
-            column_resizable: function(column) {
-                var columns = column ? column : le.find('.column');
-                columns.each(function(index) {
-                    var col = $(this);
-                    var this_position = grid_manager.get_grid_position(col);
-                    var this_width = grid_manager.get_grid_width(col);
-                    col.append("<span class='add-column'></span>\
-                        <span class='remove-column'></span>");
-                    var addButton = $(".add-column", col);
-                    var removeButton = $(".remove-column", col);
-                    if (this_width && this_position) {
-                        if(parseInt(this_width[1], 10) + parseInt(this_position[1], 10) === number_of_columns) {
-                              addButton.addClass("disabled");
-                          }
-                         if(parseInt(this_width[1], 10) === 1) {
-                                removeButton.addClass("disabled");
-                        }
-                    }
-                });
-                //addcolumn button
-                var addButton = $(".add-column", columns);
-                $(".add-column", columns).live("click", function (e) {
-                    e.stopPropagation();
-                    var column = $(this).parent();
-                    var row = column.parent();
-                    var columns = row.children(".column");
-                    var width = grid_manager.get_grid_width(column);
-                    var this_position = grid_manager.get_grid_position(column);
-                    var new_width = parseInt(width[1], 10) + 1;
-
-                    var next = column.next();
-                    var this_index = columns.index(column);
-                    var next_index = this_index + 1;
-                    var next_position_allowed = true;
-
-                    if(next_index < columns.length) {
-                        var next = $(columns[next_index]);
-                        position = grid_manager.get_grid_position(next);
-                        if(position) {
-                            next_position_allowed = position[1] >= new_width + parseInt(this_position[1], 10);
-                        }
-                      }
-                      var can_grow = new_width <= parseInt(number_of_columns, 10)
-                          && parseInt(number_of_columns, 10) >= new_width +
-                          parseInt(this_position[1], 10);
-                      if(width && can_grow && next_position_allowed ) {
-                          grid_manager.set_grid_width(column, new_width);
-                          remove = $(this).next();
-
-                          if(new_width + parseInt(this_position[1], 10) === number_of_columns) {
-                              $(this).addClass("disabled");
-                          } else {
-                              $(this).removeClass("disabled");
-                          }
-                          if(new_width === 1) {
-                                remove.addClass("disabled");
-                            } else {
-                                remove.removeClass("disabled");
-                            }
-                      }
-                });
-                //remove column button
-                var removeButton = $(".remove-column", columns);
-                $(".remove-column", columns).live("click", function (e) {
-                    e.stopPropagation();
-                    var column = $(this).parent();
-                    var row = column.parent();
-                    var columns = row.children(".column");
-                    var width = grid_manager.get_grid_width(column);
-                    var this_position = grid_manager.get_grid_position(column);
-                    var new_width = parseInt(width[1], 10) - 1;
-                    if(width && new_width > 0 && this_position) {
-                        var prev = $(this).prev();
-                        grid_manager.set_grid_width(column, new_width);
-                        if(new_width === 1) {
-                            $(this).addClass("disabled");
-                        } else {
-                            $(this).removeClass("disabled");
-                        }
-                        if(new_width + parseInt(this_position[1], 10) === number_of_columns) {
-                              prev.addClass("disabled");
-                          } else {
-                              prev.removeClass("disabled");
-                          }
-                    }
-                });
-            },
-            
-            /**
-             * Column Permissions
-             */
-            column_permissions: function() {
-               $(".permitionbutton").live("click", function(e) {
-                   $("#group-select-list").modal();
-                   var column = $(this).parent();
-                   $("#group-select-list #group-select-button").click(function(e) {
-                       $(this).unbind("click");
-                       e.stopPropagation();
-                       e.preventDefault();
-                       var tiles = $(".tile", column);
-                       var groups_input = $(".group-select-input:checked", $(this).parent());
-                       data_tiles = [];
-                       data_groups = [];
-                       tiles.each(function(index) {
-                           data_tiles.push({"id":$(this).attr("id"), "type":$(this).attr("data-tile-type")});
-                       });
-                       groups_input.each(function(index) {
-                           data_groups.push($(this).val());
-                       });
-                       data = {tiles: data_tiles, groups: data_groups, tile_len:data_tiles.length}
-                       
-                       $.ajax({
-                             type: 'POST',
-                             url: 'group_select',
-                             data: data,
-                             success: function(e,v) {
-                                $("#group-select-list").modal('hide');
-                                groups_input.attr('checked', false);
-                                column.attr("data-permissions",data_groups);
-                             }
-                           });
-                   });
-               });
-            },
-            /**
-             * Tile Permissions
-             */
-            tile_permissions_update: function(tile) {
-                var column = tile.parent();
-                var tiles = tile;
-                var perms = column.attr("data-permissions");
-                if(perms) {
-                var groups = perms.split(",");
-                var data_tiles = [];
-                data_tiles.push({"id":tile.attr("id"), "type":tile.attr("data-tile-type")});
-                data = {tiles: data_tiles, groups: groups, tile_len:data_tiles.length}
-                $.ajax({
-                    type: 'POST',
-                    url: 'group_select',
-                    data: data,
-                });
+                if (n_elements <= n_columns ) {
+                    $(elements).attr('data-column-size', column_size);
                 }
             },
-            /**
-             * Tile Draggable
-             * @param draggable_element, the element to be dragged
-             */
-            tile_draggable: function(draggable_element) {
-                draggable_element.draggable({
-                    appendTo: "body",
-                    helper: "clone"
-                });
-            },
 
             /**
-             * Tile Droppable
-             * @param tile, if provided is going to only bind the event to
-             * the dom or list of dom elements, if not, is going to do it in all
-             * the .cell elements
-             */
-            tile_droppable: function(tile) {
-                
-                //CONFIGURATION OF THE TILE
-                //when saving the configuration of the tile save it with ajax
-                var droppable_elements = tile ? tile : le.find('.'+column_class);
-                $("#configure_tile #buttons-save").live("click", function(e) {
-                    e.preventDefault();
-                    var url = $("#configure_tile").attr("action");
-                    var data = $("#configure_tile").serialize();
-                    data = data + '&buttons.save=Save&ajax_load=true';
-                    $.ajax({
-                      type: 'POST',
-                      url: url,
-                      data: data,
-                      success: function(e,v) {
-                          $('#tile-configure').html('');
-                          $('#tile-configure').modal('hide');
-                      }
-                    });
-                    return false;
-                });
-                //when canceling the configuration of the tile
-                $("#configure_tile #buttons-cancel").live("click", function(e) {
-                    e.preventDefault();
-                    $('#tile-configure').html('');
-                    $('#tile-configure').modal('hide');
-                    return false;
-                });
-                //config the tile
-                $(".config-tile-link").live("click", function(e) {
-                      e.preventDefault();
-                      var url = $(this).attr("href");
-                      $('#tile-configure').modal();
-                      $.ajax({
-                        type:'GET',
-                        url: url,
-                        data: {'ajax_load':true},
-                        success: function(data) {
-                            $('#tile-configure').html(data);
-                        }
-                      });
-                      return false;
-                  });
-
-                droppable_elements.droppable({
-                    activeClass: "ui-state-default",
-                    hoverClass: "ui-state-hover",
-                    accept: "#btn-tile",
-                    drop: function( event, ui ) {
-                        var can_drop = false;
-                        var default_class = 'tile';
-                        var new_tile = $('<div/>')
-                            .addClass(default_class).append(tile_dom.clone());
-                        $("#tile-select-list").modal();
-                        var that = this;
-                        $(".tile-select-button").click(function(e) {
-                            e.stopPropagation();
-                            e.preventDefault();
-                            $(".tile-select-button").unbind("click");
-                            var tile_type = $(this).text();
-                            new_tile.attr("data-tile-type", tile_type);
-                            $.ajax({
-                                url: "@@uid_getter",
-                                success: function(info, la) {
-                                    new_tile.attr("id", info);
-                                    var url_config = "@@configure-tile/" + tile_type + "/" + info;
-                                    var config_link = $("<a />").addClass("config-tile-link").addClass("label")
-                                    .attr('href',url_config).text('Config');
-                                    var name_tag = $("<span />").addClass("tile-name").text(tile_type);
-                                    new_tile.append(config_link);
-                                    new_tile.append(name_tag);
-                                    can_drop = true;
-                                    $(that).append(new_tile);
-                                    self.tile_permissions_update(new_tile);
-                                    le.trigger('modified.layout');
-                                    return false;
-                                }
-                            });
-                           $("#tile-select-list").modal('hide');
-                        });
-                        self.delete_manager(new_tile);
-                    }
-                });
-            },
-            /**
-             * Sort Tiles
-             *
+             * Generate grid css
+             * on the fly generates an stylesheet with a dummy grid implementation, based on 
+             * the liquid version of boostrap
              **/
-            sort_tiles: function(tiles_container) {
-                $( tiles_container ).sortable({
-                    placeholder: 'tile-placeholder',
-                    appendTo:'.layout',
-                    helper:'clone',
-                    connectWith: '.layout .column'
+            generate_grid_css: function(){
+                var gutter = '3';
+
+                jss('.'+row_class, {
+                    width: '98%'
                 });
+                jss('.'+row_class+':after', {
+                    clear: 'both'
+                });
+                jss('.'+row_class+':before, .'+row_class+':after', {
+                    display: 'table',
+                    'line-height': '0',
+                    'content': '""'
+                });
+
+                jss('.'+column_class, {
+                    'display': 'block',
+                    'float':'left',
+                    'width': '100%',
+                    'min-height': '30px',
+                    'box-sizing': 'border-box'
+                });
+
+                for (var i = 1; i <= n_columns; i++) {
+
+                    var columns = Math.floor(n_columns / i); //amount of fiting columns
+                    var margin = (columns - 1 ) * gutter; //margin of the columns
+                    var total_space = 100 - margin; //total space to divide in columns
+
+                    jss('[data-column-size="' + i + '"]', {
+                        'width':  total_space / columns + '%',
+                        'margin-left': gutter + '%'
+                    });
+                };
+
+                jss('.'+column_class + ':nth-of-type(1)', {
+                    'margin-left':'0'
+                });
+            },
+
+            /**
+             * Event, Layout was modified
+             * XXX I can do an autocheck code, but doesn't worth it at this point
+             **/
+            layout_modified: function () {
+                var save_btn = $('#btn-save');
+
+                if (save_btn.hasClass('saved')) {
+                    $('#btn-save').find('span').text('Save');
+                    $('#btn-save').removeClass(function (index, css) {
+                        return (css.match (/\bbtn-\S+/g) || []).join(' ');
+                    });
+                    $('#btn-save').addClass('modified btn-warning');
+                }
             },
 
             /**
@@ -532,14 +326,14 @@
             html2json: function (node) {
                 var data = [];
                 var excluded_elements = '.row-droppable';
-                var remove_classes = 'ui-droppable';
+                var remove_classes = 'ui-droppable ui-sortable';
 
                 $(node).find('> div').not('.no-export').each(function(i, elem) {
                     if ($(this).not(excluded_elements)[0] !== undefined) {
                         $(this).removeClass(remove_classes);
                         var entry = {};
 
-                        var patt=new RegExp(/\bcolumn|\bcell|\brow|\btile/);
+                        var patt=new RegExp(/\bcolumn|\brow|\btile/);
                         var node_type = patt.exec($(this).attr('class'));
                         if (node_type) {
                             entry.type = node_type[0];
@@ -547,8 +341,13 @@
                         if (node_type == 'column') {
                             entry.roles = ['Manager'];
                             entry.type = 'group';
+                            entry.data = {
+                                'column-size': $(this).data('column-size'),
+                                'layout-type': $(this).data('layout-type')
+
+                            };
                         }
-                        entry.class = $(this).attr('class');
+                        //entry.class = $(this).attr('class');
 
                         var iterator = self.html2json($(this));
                         if (iterator[0] !== undefined) {
@@ -568,150 +367,28 @@
                     }
                 });
                 return data;
-            },
-            
-            /**
-             * Grid Layout Helpers
-             *
-             **/
-             grid_layout_guides: function(row) {
-                var base_column = $('<div/>')
-                                    .addClass(column_class)
-                                    .addClass(column_width+'1')
-                                    .addClass('row-guide no-export');
-                row.append('<div class="guides no-export"/>');
-                for (i = 0; i < number_of_columns; i++) {
-                    var column = base_column.clone()
-                                   .addClass(column_position+i);
-
-                    row.find('.guides').append(column);
-                }
-             },
-
-            /**
-             * Layout Modified event
-             * XXX I can do an autocheck code, but doesn't worth it at this point
-             **/
-            layout_modified: function () {
-                var save_btn = $('#btn-save');
-
-                if (save_btn.hasClass('saved')) {
-                    $('#btn-save').find('span').text('Save');
-                    $('#btn-save').removeClass(function (index, css) {
-                        return (css.match (/\bbtn-\S+/g) || []).join(' ');
-                    });
-                    $('#btn-save').addClass('modified btn-warning');
-                }
             }
 
         });
         self.init();
     }
 
-    function GridManager(){
-        var self = this;
-        $.extend(self, {
-            grid_handler: function(children, child, conf){
-                var len = children.length;
-                var equal_parts = true;
-                if(child) {
-                    var this_index = children.index(child);
-                    var len = children.length;
-                    if(len > 1) {
-                        var prev = $(children[len-2]);
-                        var grid_width_prev = self.get_grid_width(prev);
-                        var grid_pos_prev = self.get_grid_position(prev);
-                        if(grid_width_prev && grid_pos_prev) {
-                            equal_parts = parseInt(grid_width_prev[1], 10) + parseInt(grid_pos_prev[1], 10) === conf.numberofcolumns;
-                            if(!equal_parts) {
-                                child.removeClass(self.get_grid_width(child)[0]);
-                                child.removeClass(self.get_grid_position(child)[0]);
-                                var new_position = parseInt(grid_width_prev[1], 10) + parseInt(grid_pos_prev[1], 10);
-                                var new_width = conf.numberofcolumns - new_position;
 
-                                child.addClass(conf.columnwidth + new_width);
-                                child.addClass(conf.columnposition + new_position);
-                            }
-                        }
-                    }
-                }
-
-                if(equal_parts) {
-                    children.each(function(index) {
-                        var child = $(this);
-                        new_width = parseInt(conf.numberofcolumns / len, 10);
-                        var tile_class = child.attr("class");
-
-                        if (tile_class !== undefined) {
-                            //TODO: fix width class
-                            var regex_match = tile_class.match(/\bwidth\-(\d+)/);
-                            var total_width = regex_match[1];
-                            child.removeClass(regex_match[0]);
-                            child.addClass(conf.columnwidth + new_width);
-
-                            //TODO: fix position class
-                            var regex_match = tile_class.match(/\bposition\-(\d+)/);
-                            var total_width = regex_match[1];
-                            child.removeClass(regex_match[0]);
-                            var position = new_width*index;
-                            child.addClass(conf.columnposition + position);
-                        }
-                    });
-                }            
-            },
-            get_grid_width: function(item){
-              var itemClass = item.attr("class");
-              if (itemClass) {
-                var regex_match = itemClass.match(/\bwidth\-(\d+)/);
-                return regex_match;
-              }            
-            },
-            get_grid_position: function(item) {
-                var itemClass = item.attr("class");
-                if (itemClass) {
-                var regex_match = itemClass.match(/\bposition\-(\d+)/);
-                    return regex_match;
-                }            
-            },
-            set_grid_position: function(item, new_position) {
-                var itemClass = item.attr("class");
-                if (itemClass) {
-                    var regex_match = itemClass.match(/\bposition\-(\d+)/);
-                    item.removeClass(regex_match[0]);
-                    item.addClass('position-' + new_position);
-                }            
-            },
-            set_grid_width: function(item, new_width) {
-                var itemClass = item.attr("class");
-                if (itemClass) {
-                    var regex_match = itemClass.match(/\bwidth\-(\d+)/);
-                    item.removeClass(regex_match[0]);
-                    item.addClass('width-' + new_width);
-                }
-            }
-        });
-    }
-
-    $.fn.coverlayout = function(options) {
+    $.fn.layoutmanager = function(options) {
 
         // already instanced, return the data object
-        var el = this.data("coverlayout");
+        var el = this.data("layoutmanager");
         if (el) { return el; }
 
 
-        var default_settings = this.data('coverlayout-settings');
+        var default_settings = this.data('layoutmanager-settings');
         var settings = '';
         //default settings
         if (default_settings) {
             settings = default_settings;
         } else {
             settings = {
-                'columnclass': 'cell',
-                'columnposition': 'position-',
-                'columnwidth': 'width-',
-                'numberofcolumns': 16,
-                'rowclass': 'row',
-                'gridmanager': GridManager
+                'ncolumns': 16,
             }
         }
 
@@ -720,8 +397,8 @@
         }
 
         return this.each(function() {
-            el = new CoverLayout($(this), settings);
-            $(this).data("coverlayout", el);
+            el = new LayoutManager($(this), settings);
+            $(this).data("layoutmanager", el);
         });
 
     };

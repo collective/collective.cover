@@ -8,9 +8,11 @@
 <body tal:omit-tag="">
 
     <tal:mode define="mode options/mode;">
-        <div tal:define="section options/section | nothing;"
+        <div tal:define="section options/section | nothing;
+                         data python:section.get('data', '') if section else None"
             tal:condition="section"
-            tal:attributes="class python:'%s' % section.get('class', '')">
+            tal:attributes="class python:'%s' % section.get('class', '');
+                            data-layout-type python: data['layout-type'] if 'layout-type' in data else 'row'">
 
             <tal:children repeat="child python:section.get('children')">
                 <div tal:replace="structure python:view.render_section(child, mode)" />

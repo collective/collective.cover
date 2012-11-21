@@ -1,12 +1,12 @@
 $(document).ready(function() {
     var layout = $('.layout');
     if (layout[0] !== undefined) {
-        layout.coverlayout();
+        layout.layoutmanager();
 
         //bind the save button
         $('#btn-save').click(function(event){
             event.preventDefault();
-            json = layout.coverlayout().html2json(layout);
+            json = layout.layoutmanager().html2json(layout);
             var $this = $(this);
             $this.removeClass(function (index, css) {
                 return (css.match (/\bbtn-\S+/g) || []).join(' ');
@@ -24,7 +24,7 @@ $(document).ready(function() {
                     $this.find('span').text('Error '+errorThrown);
                     $('#btn-save').addClass('error btn-danger');           
                 }
-            })
+            });
         });
     }
 });
