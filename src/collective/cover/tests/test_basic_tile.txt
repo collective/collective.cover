@@ -12,7 +12,11 @@ Suite Teardown  Close Browser
 
 ${basic_tile_location}  /html/body/div/div[2]/div/div[2]/div[2]/div[3]/div
 ${basic_uuid}  12345
-${basic_selector}  .ui-draggable .contenttype-news-item
+${document_selector}  .ui-draggable .contenttype-document
+${file_selector}  .ui-draggable .contenttype-file
+${image_selector}  .ui-draggable .contenttype-image
+${link_selector}  .ui-draggable .contenttype-link
+${news-item_selector}  .ui-draggable .contenttype-news-item
 ${tile_selector}  div.tile-container div.tile
 
 *** Test cases ***
@@ -31,7 +35,30 @@ Test basic Tile
 
     Click Element  css=div#screenlet-content-show-button
 
-    Drag And Drop  css=${basic_selector}  css=${tile_selector}
+    Drag And Drop  css=${document_selector}  css=${tile_selector}
+    Page Should Contain  My document
+
+    Click Element  css=div#screenlet-content-show-button
+
+    Drag And Drop  css=${file_selector}  css=${tile_selector}
+    Page Should Contain  My file
+	Page Should Contain  This file was created for testing purposes
+	
+    Click Element  css=div#screenlet-content-show-button
+
+    Drag And Drop  css=${image_selector}  css=${tile_selector}
+    Page Should Contain  Test image
+	Page Should Contain  This image was created for testing purposes
+	
+    Click Element  css=div#screenlet-content-show-button
+
+    Drag And Drop  css=${link_selector}  css=${tile_selector}
+    Page Should Contain  Test link
+	Page Should Contain  This link was created for testing purposes
+
+    Click Element  css=div#screenlet-content-show-button
+
+    Drag And Drop  css=${news-item_selector}  css=${tile_selector}
     Page Should Contain  Test news item
     Page Should Contain  This news item was created for testing purposes
 

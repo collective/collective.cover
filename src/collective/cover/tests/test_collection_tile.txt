@@ -12,7 +12,7 @@ Suite Teardown  Close Browser
 
 ${collection_tile_location}  "collective.cover.collection"
 ${collection_uuid}  12345
-${collection_selector}  ul#item-list li.ui-draggable
+${collection_selector}  .ui-draggable .contenttype-collection
 ${tile_selector}  div.tile-container div.tile
 
 *** Test cases ***
@@ -31,9 +31,8 @@ Test Collection Tile
 
     Click Element  css=div#screenlet-content-show-button
 
-    # FIXME: current selectors suck!
-    #Drag And Drop  css=${collection_selector}  css=${tile_selector}
-    #Page Should Contain  The collection don't have any results
+    Drag And Drop  css=${collection_selector}  css=${tile_selector}
+    Page Should Contain  The collection don't have any results
 
     Click Link  link=Layout
     Delete Tile
