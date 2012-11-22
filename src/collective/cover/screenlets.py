@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from zope.component import getMultiAdapter, getUtility
+from zope.component import getUtility  # , getMultiAdapter
 from zope.interface import Interface
 from zope.schema.vocabulary import SimpleTerm
 
@@ -9,7 +9,7 @@ from zope.app.pagetemplate.viewpagetemplatefile import ViewPageTemplateFile
 
 from plone.registry.interfaces import IRegistry
 
-from plone.app.layout.navigation.navtree import buildFolderTree
+#from plone.app.layout.navigation.navtree import buildFolderTree
 
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.browser.navtree import SitemapNavtreeStrategy
@@ -65,22 +65,26 @@ class ContentSearch(grok.View):
 
         uids = None
         if self.tab == 'content-tree':
-            portal_state = getMultiAdapter((self.context, self.request),
-                                           name=u'plone_portal_state')
-            portal = portal_state.portal()
-            query_tree = {'sort_on': 'getObjPositionInParent',
-                          'sort_order': 'asc',
-                          'is_default_page': False}
-            strategy.rootPath = portal.absolute_url_path()
-            data = buildFolderTree(portal,
-                                   obj=portal,
-                                   query=query_tree,
-                                   strategy=strategy)
-            result = data.get('children', [])
+            # XXX: not implemented
+            pass
+#            portal_state = getMultiAdapter((self.context, self.request),
+#                                           name=u'plone_portal_state')
+#            portal = portal_state.portal()
+#            query_tree = {'sort_on': 'getObjPositionInParent',
+#                          'sort_order': 'asc',
+#                          'is_default_page': False}
+#            strategy.rootPath = portal.absolute_url_path()
+#            data = buildFolderTree(portal,
+#                                   obj=portal,
+#                                   query=query_tree,
+#                                   strategy=strategy)
+#            result = data.get('children', [])
         else:
             if self.tab == 'clipboard':
-                brains = list(self.search(''))[:2]
-                uids = [b.UID for b in brains]
+                # XXX: not implemented
+                pass
+#                brains = list(self.search(''))[:2]
+#                uids = [b.UID for b in brains]
             result = self.search(query, uids=uids,
                                  b_start=page * b_size,
                                  b_size=b_size)
@@ -89,8 +93,9 @@ class ContentSearch(grok.View):
         self.children = result
 
     def render(self):
-        if self.tab == 'content-tree':
-            return self.tree_template(children=self.children, level=1)
+#        if self.tab == 'content-tree':
+#            # XXX: not implemented
+#            return self.tree_template(children=self.children, level=1)
         return self.list_template()
 
     def search(self, query=None, b_start=None, b_size=None, uids=None):
