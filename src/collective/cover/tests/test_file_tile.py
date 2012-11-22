@@ -67,3 +67,32 @@ class FileTileTestCase(unittest.TestCase):
 
     def test_accepted_content_types(self):
         self.assertEqual(self.tile.accepted_ct(), ['File'])
+
+    def test_render(self):
+        obj = self.portal['my-file']
+        self.tile.populate_with_object(obj)
+        rendered = self.tile()
+        self.assertTrue('Download file' in rendered)
+        self.assertTrue('My file' in rendered)
+        self.assertTrue('This file was created for testing purposes' \
+                        in rendered)
+
+    def test_render_kB_file(self):
+        obj = self.portal['my-file']
+        obj.setFile('0' * 1024)
+        self.tile.populate_with_object(obj)
+        rendered = self.tile()
+        self.assertTrue('1 kB (1024 bytes)' in rendered)
+        self.assertTrue('My file' in rendered)
+        self.assertTrue('This file was created for testing purposes' \
+                        in rendered)
+
+    def test_render_MB_file(self):
+        obj = self.portal['my-file']
+        obj.setFile('0' * 1048576)
+        self.tile.populate_with_object(obj)
+        rendered = self.tile()
+        self.assertTrue('1 MB (1048576 bytes)' in rendered)
+        self.assertTrue('My file' in rendered)
+        self.assertTrue('This file was created for testing purposes' \
+                        in rendered)

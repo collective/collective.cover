@@ -36,9 +36,6 @@ class RichTextTile(PersistentCoverTile):
                 text = transformer(self.data['text'], 'text/x-html-safe')
         return text
 
-    #def __ac_local_roles__(self):
-        #import pdb;pdb.set_trace()
-
     def populate_with_object(self, obj):
         super(RichTextTile, self).populate_with_object(obj)
 

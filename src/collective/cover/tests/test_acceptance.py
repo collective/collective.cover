@@ -22,5 +22,7 @@ def test_suite():
                 layer=FUNCTIONAL_TESTING),
         layered(robotsuite.RobotTestSuite("test_basic_tile.txt"),
                 layer=FUNCTIONAL_TESTING),
+        layered(robotsuite.RobotTestSuite("test_image_tile.txt"),
+                layer=FUNCTIONAL_TESTING),
     ])
     return suite

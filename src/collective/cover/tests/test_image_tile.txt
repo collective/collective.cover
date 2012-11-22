@@ -1,0 +1,39 @@
+*** Settings ***
+
+Library  Selenium2Library  timeout=5 seconds  implicit_wait=3 seconds
+Resource  keywords.txt
+Resource  cover_keywords.txt
+Variables  plone/app/testing/interfaces.py
+
+Suite Setup  Start Browser and Log In
+Suite Teardown  Close Browser
+
+*** Variables ***
+
+${image_tile_location}  /html/body/div/div[2]/div/div[2]/div[2]/div[3]/div[6]
+${image_uuid}  12345
+${image_selector}  .ui-draggable .contenttype-image
+${tile_selector}  div.tile-container div.tile
+
+*** Test cases ***
+
+Test image Tile
+    # XXX: should we create the cover object programmatically?
+    Create Cover  Title  Description  Empty layout
+    Click Link  link=Layout
+
+    Add Tile
+    Select Tile to Add  ${image_tile_location}
+    Save Cover Layout
+
+    Click Link  link=Compose
+    Page Should Contain  Please drag&drop an image here
+
+    Click Element  css=div#screenlet-content-show-button
+
+    Drag And Drop  css=${image_selector}  css=${tile_selector}
+	Page Should Contain Image  css=div.tile-container div.tile img
+
+    Click Link  link=Layout
+    Delete Tile
+    Save Cover Layout
