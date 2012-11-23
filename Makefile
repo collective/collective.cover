@@ -16,7 +16,7 @@ install: prerequisites
 	bin/buildout -c travis.cfg $(options)
 
 tests:
-	bin/test
 	pep8 --ignore=$(pep8_ignores) $(src)
 	pyflakes $(src)
+	bin/test
 	./coverage.sh $(minimum_coverage)

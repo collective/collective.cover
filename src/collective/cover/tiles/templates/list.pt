@@ -4,9 +4,13 @@
       xmlns:i18n="http://xml.zope.org/namespaces/i18n"
       i18n:domain="collective.cover">
 
-<body>
+<body tal:define="is_empty view/is_empty">
+  <p tal:condition="is_empty">
+    Please add up to <span tal:replace="view/limit"/> objects to the tile.
+  </p>
+
   <!-- FIXME: this should be configurable -->
-  <div class="sortable-tile cover-list-tile">
+  <div class="sortable-tile cover-list-tile" tal:condition="not: is_empty">
     <tal:items repeat="item view/results"
                define="toLocalizedTime nocall:context/@@plone/toLocalizedTime">
       <div style="position:relative"

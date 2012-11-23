@@ -2,13 +2,14 @@
 
 from zope import schema
 from zope.component import queryUtility
+from zope.interface import implements
+from zope.schema import getFieldsInOrder
 
-from plone.uuid.interfaces import IUUID
 from plone.app.uuid.utils import uuidToObject
+from plone.namedfile.field import NamedImage
 from plone.tiles.interfaces import ITileDataManager
 from plone.tiles.interfaces import ITileType
-from plone.namedfile.field import NamedImage
-from zope.schema import getFieldsInOrder
+from plone.uuid.interfaces import IUUID
 
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
@@ -17,40 +18,48 @@ from collective.cover.tiles.base import IPersistentCoverTile
 from collective.cover.tiles.base import PersistentCoverTile
 
 
+# XXX: we must refactor this tile
 class IListTile(IPersistentCoverTile):
 
     uuids = schema.List(
         title=_(u'Elements'),
-        value_type=schema.TextLine(), required=False)
+        value_type=schema.TextLine(),
+        required=False,
+    )
 
     title = schema.TextLine(
         title=_(u'Title'),
         required=False,
-        readonly=True
+        readonly=True,
     )
 
     description = schema.Text(
         title=_(u'Description'),
         required=False,
-        readonly=True
+        readonly=True,
     )
 
     image = NamedImage(
         title=_(u'Image'),
         required=False,
-        readonly=True
+        readonly=True,
     )
 
 
 class ListTile(PersistentCoverTile):
 
+    implements(IListTile)
+
     index = ViewPageTemplateFile("templates/list.pt")
 
     is_configurable = True
+    is_droppable = False
     is_editable = False
-    limit = 4
+    limit = 5
 
     def results(self):
+        """ Return the list of objects stored in the tile.
+        """
         self.set_limit()
         uuids = self.data.get('uuids', None)
         result = []
@@ -64,13 +73,17 @@ class ListTile(PersistentCoverTile):
                     self.remove_item(uid)
         return result[:self.limit]
 
+    def is_empty(self):
+        return self.results() == []
+
+    # XXX: we could get rid of this fixing the tile's schema
     def set_limit(self):
         for field in self.get_configured_fields():
             if field and field.get('id') == 'uuids':
                 self.limit = int(field.get('size', self.limit))
 
     def populate_with_object(self, obj):
-        super(ListTile, self).populate_with_object(obj)
+        super(ListTile, self).populate_with_object(obj)  # check permission
         self.set_limit()
         uuid = IUUID(obj, None)
         data_mgr = ITileDataManager(self)
@@ -89,7 +102,7 @@ class ListTile(PersistentCoverTile):
         data_mgr.set(old_data)
 
     def replace_with_objects(self, objs):
-        super(ListTile, self).replace_with_objects(objs)
+        super(ListTile, self).replace_with_objects(objs)  # check permission
         self.set_limit()
         data_mgr = ITileDataManager(self)
         old_data = data_mgr.get()
@@ -110,9 +123,11 @@ class ListTile(PersistentCoverTile):
         old_data['uuids'] = uids
         data_mgr.set(old_data)
 
+    # XXX: are we using this function somewhere? remove?
     def get_uid(self, obj):
         return IUUID(obj, None)
 
+    # XXX: refactoring the tile's schema should be a way to avoid this
     def get_configured_fields(self):
         # Override this method, since we are not storing anything
         # in the fields, we just use them for configuration
