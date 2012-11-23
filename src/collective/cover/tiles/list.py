@@ -111,9 +111,9 @@ class ListTile(PersistentCoverTile):
         data_mgr = ITileDataManager(self)
         old_data = data_mgr.get()
         if type(objs) == list:
-            old_data['uuids'] = objs[:self.limit]
+            old_data['uuids'] = [i.UID() for i in objs][:self.limit]
         else:
-            old_data['uuids'] = [objs]
+            old_data['uuids'] = [objs.UID()]
 
         data_mgr.set(old_data)
 

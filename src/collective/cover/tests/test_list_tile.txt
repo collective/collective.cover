@@ -31,6 +31,7 @@ Test List Tile
     Click Element  css=div#screenlet-content-show-button
 
     Drag And Drop  css=${document_selector}  css=${tile_selector}
+    Page Should Contain  My document
     Page Should Contain  This document was created for testing purposes
 
     Click Link  link=Layout
