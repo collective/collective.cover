@@ -15,20 +15,30 @@
     
          <tal:title define="htmltag python:field.get('htmltag', 'h1')"
                  condition="python:field['id'] == 'title'">
-        <!-- FIXME: a tag should be inside h tag -->
-        <!-- FIXME: basic tile is not storing the object URL -->
-        <a tal:attributes="href view/get_url;
-                           title description">
-          <h1 tal:condition="python:htmltag == 'h1'"
+      
+  <!-- FIXME: basic tile is not storing the object URL -->
+          <h1 tal:condition="python:htmltag == 'h1'">
+             <a tal:attributes="href view/get_url;
+                                title description"
               tal:content="python:field['content']" />
-          <h2 tal:condition="python:htmltag == 'h2'"
+          </h1>
+         
+          <h2 tal:condition="python:htmltag == 'h2'">
+             <a tal:attributes="href view/get_url;
+                                title description"
               tal:content="python:field['content']" />
-          <h3 tal:condition="python:htmltag == 'h3'"
+          </h2>
+          <h3 tal:condition="python:htmltag == 'h3'">
+             <a tal:attributes="href view/get_url;
+                                title description"
               tal:content="python:field['content']" />
-          <h4 tal:condition="python:htmltag == 'h4'"
-               tal:content="python:field['content']" />
-
-        </a>
+          </h3>
+          <h4 tal:condition="python:htmltag == 'h4'">
+             <a tal:attributes="href view/get_url;
+                                title description"
+              tal:content="python:field['content']" />
+          </h4>
+     
       </tal:title>
 
      
