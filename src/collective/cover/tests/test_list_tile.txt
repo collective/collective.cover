@@ -11,7 +11,7 @@ Suite Teardown  Close Browser
 *** Variables ***
 
 ${list_tile_location}  /html/body/div/div[2]/div/div[2]/div[2]/div[3]/div[8]
-${list_selector}  ul#item-list li.ui-draggable
+${document_selector}  .ui-draggable .contenttype-document
 ${tile_selector}  div.tile-container div.tile
 
 *** Test cases ***
@@ -30,9 +30,8 @@ Test List Tile
 
     Click Element  css=div#screenlet-content-show-button
 
-    # FIXME: current selectors suck!
-    #Drag And Drop  css=${list_selector}  css=${tile_selector}
-    #Page Should Contain  The list don't have any results
+    Drag And Drop  css=${document_selector}  css=${tile_selector}
+    Page Should Contain  This document was created for testing purposes
 
     Click Link  link=Layout
     Delete Tile
