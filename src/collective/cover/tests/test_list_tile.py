@@ -49,7 +49,7 @@ class ListTileTestCase(unittest.TestCase):
         self.tile.populate_with_object(obj1)
         self.tile.populate_with_object(obj2)
 
-        # tile's data attributed is cached so we should re-instantiate the tile  
+        # tile's data attributed is cached so we should re-instantiate the tile
         tile = getMultiAdapter((self.cover, self.request), name=self.name)
         tile = tile['test']
         self.assertEqual(len(tile.results()), 2)
@@ -59,7 +59,7 @@ class ListTileTestCase(unittest.TestCase):
         # next, we replace the list of objects with a different one
         obj3 = self.portal['my-news-item']
         tile.replace_with_objects([obj3])
-        # tile's data attributed is cached so we should re-instantiate the tile  
+        # tile's data attributed is cached so we should re-instantiate the tile
         tile = getMultiAdapter((self.cover, self.request), name=self.name)
         tile = tile['test']
         self.assertTrue(obj1 not in tile.results())
@@ -68,7 +68,7 @@ class ListTileTestCase(unittest.TestCase):
 
         # finally, we remove it from the list; the tile must be empty again
         tile.remove_item(obj3.UID())
-        # tile's data attributed is cached so we should re-instantiate the tile  
+        # tile's data attributed is cached so we should re-instantiate the tile
         tile = getMultiAdapter((self.cover, self.request), name=self.name)
         tile = tile['test']
         self.assertTrue(tile.is_empty())
