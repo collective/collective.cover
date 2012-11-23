@@ -47,17 +47,18 @@ class PageLayout(grok.View):
 
     def grid_layout_edit(self, layout):
         for element in layout:
-            if element['type'] == 'row':
-                element['class'] = 'cover-row'
+            if 'type' in element:
+                if element['type'] == 'row':
+                    element['class'] = 'cover-row'
 
-            if element['type'] == 'group':
-                element['class'] = 'cover-column'
+                if element['type'] == 'group':
+                    element['class'] = 'cover-column'
 
-            if element['type'] == 'tile':
-                element['class'] = 'cover-tile'
+                if element['type'] == 'tile':
+                    element['class'] = 'cover-tile'
 
-            if 'children' in element:
-                self.grid_layout_edit(element['children'])
+                if 'children' in element:
+                    self.grid_layout_edit(element['children'])
 
     def render_section(self, section, mode):
         if 'type' in section:
@@ -190,15 +191,16 @@ class GridPlug(grok.View):
 
     def transform(self, layout):
         for element in layout:
-            if element['type'] == 'row':
-                element['class'] = self.row_class
-                if 'children' in element:
-                    self.transform(self.columns_formater(element['children']))
-            if element['type'] == 'group' and 'children' in element:
-                self.transform(element['children'])
+            if 'type' in element:
+                if element['type'] == 'row':
+                    element['class'] = self.row_class
+                    if 'children' in element:
+                        self.transform(self.columns_formater(element['children']))
+                if element['type'] == 'group' and 'children' in element:
+                    self.transform(element['children'])
 
-            if element['type'] == 'tile':
-                element['class'] = 'tile'
+                if element['type'] == 'tile':
+                    element['class'] = 'tile'
 
     def columns_formater(self, columns):
         #this formater works for deco, but you can implemente a custom one, for you grid system
