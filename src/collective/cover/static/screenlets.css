@@ -18,7 +18,7 @@
     margin: 10px 0 0;
     overflow: auto;
     padding: 5px;
-    width: 300px;
+    width: 100%;
 }
 
 #screenlet-content-search #item-list li {
@@ -56,4 +56,14 @@
     position: absolute;
     right: 0;
     top: 0;
+}
+
+.current {
+    background: #fff;
+    border-top-right-radius: 0.5em;
+    border-top-left-radius: 0.5em;
+    -webkit-border-top-right-radius: 0.5em;
+    -webkit-border-top-left-radius: 0.5em;
+    -moz-border-radius-topleft: 0.5em;
+    -moz-border-radius-topright: 0.5em;
 }
