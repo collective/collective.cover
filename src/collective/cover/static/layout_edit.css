@@ -71,6 +71,19 @@
     padding: 0;
     position: relative;
 }
+.ui-sortable-placeholder-column {
+    margin-left: 0px !important;
+} 
+
+.resizer {
+    position: absolute;
+    top: 0px;
+    width: 10px;
+    cursor: e-resize;
+    font-size: 0.1px;
+    height: 100%;
+    right: 0px;
+}
 
 
 
