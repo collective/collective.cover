@@ -24,7 +24,7 @@
          i18n:attributes="value" />
         <ul id="item-list">
             <li tal:replace="structure context/@@content-search" />
-        	<a class="next" href="">more</a>
+        	<a class="next" href="" i18n:translate="">more</a>
         </ul>
 		<script>
 			var page = 1; 
@@ -48,13 +48,22 @@
       </div>
 
       <div id="content-trees" class="tab-pane">
-          <input id="screenlets-content-trees" name="screenlets-content-trees" type="text" /> <span id="filter-count"></span>
-          <div class="uponelevel"><a id="uponelevel" class="link-parent" href="javascript:void(0)" style="display: none;">Up level</a></div>
+          <div class="input">
+              <input id="screenlets-content-trees"
+              name="screenlets-content-trees" type="text" title="Filter items"
+              placeholder="Filter items" i18n:attributes="title; placeholder" />
+          </div>
+
+          <span id="filter-count" i18n:translate=""></span>
+
+          <div class="uponelevel"><a id="uponelevel" class="link-parent"
+                  href="javascript:void(0)" style="display: none;"
+                  i18n:translate="">Up level</a></div>
           <div>
            <ul class="configlets">
             <li id="home" style="display: inline;">
              <a tal:attributes="href python:'''javascript:coveractions.getFolderContents('%s','@@jsonbytype')''' %(context.portal_url())">
-              <img alt="" src="logoIcon.gif"><span>Home</span>
+              <img alt="" src="logoIcon.gif"><span i18n:translate="">Home</span>
              </a>
             </li>
            </ul>
@@ -65,7 +74,7 @@
           </ul>
 
           <fieldset id="general_panel">
-            <div id="internalpath" class="formHelp"></div>
+            <div id="internalpath" class="formHelp" i18n:translate=""></div>
          </fieldset>
 
 
