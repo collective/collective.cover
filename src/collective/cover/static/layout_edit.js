@@ -60,6 +60,7 @@
 
                 self.generate_grid_css();
                 self.delete_manager();
+                self.resize_columns_manager();
             },
 
             /**
@@ -286,16 +287,27 @@
                     'box-sizing': 'border-box'
                 });
 
+                var margin_space = (n_columns - 1) * gutter;
+                var computable_space = 100 - margin_space;
+                var minimun_column_width = computable_space / n_columns;
+
                 for (var i = 1; i <= n_columns; i++) {
 
-                    var columns = Math.floor(n_columns / i); //amount of fiting columns
-                    var margin = (columns - 1 ) * gutter; //margin of the columns
-                    var total_space = 100 - margin; //total space to divide in columns
+                    var column_width = minimun_column_width * i;
+                    var margin_width = gutter * (i - 1);
 
                     jss('[data-column-size="' + i + '"]', {
-                        'width':  total_space / columns + '%',
+                        'width':  column_width + margin_width + '%',
                         'margin-left': gutter + '%'
                     });
+                    // var columns = Math.floor(n_columns / i); //amount of fiting columns
+                    // var margin = (columns - 1 ) * gutter; //margin of the columns
+                    // var total_space = 100 - margin; //total space to divide in columns
+
+                    // jss('[data-column-size="' + i + '"]', {
+                    //     'width':  total_space / columns + '%',
+                    //     'margin-left': gutter + '%'
+                    // });
                 };
 
                 jss('.'+column_class + ':nth-of-type(1)', {
@@ -317,6 +329,43 @@
                     });
                     $('#btn-save').addClass('modified btn-warning');
                 }
+            },
+
+            /**
+             *  Resize columns
+             * 
+             **/
+            resize_columns_manager: function(columns){
+                columns = columns !== undefined? columns : le.find('.'+column_class);
+
+                var resizer = $('<div/>').addClass('resizer');
+                $(columns).append(resizer);
+                var start = 0;
+                var increment = 0;
+                var tolerance = ($('.cover-row').width() / 100 * 3.4375);
+                resizer.draggable({ 
+                    axis: "x",
+                    start: function(event, ui) {
+                        start = ui.position.left;
+                    },
+                    drag: function(event, ui){
+                        var distance = ui.position.left - start;
+                        if (Math.abs(distance) > tolerance) {
+                            var column = ui.helper.parents('.cover-column');
+                            var index = Math.floor(distance / tolerance)
+                            increment = column.data('column-size') + index
+                            column.attr('data-column-size', increment);
+                        }
+                    },
+                    stop: function(event, ui) {
+                        var column = ui.helper.parents('.cover-column');
+                        //reset the draggable position
+                        ui.helper.css('left', 'auto');
+                        increment = 0;
+                        column.data('column-size', column.attr('data-column-size')*1);
+                    }
+                });
+
             },
 
             /**
@@ -342,7 +391,7 @@
                             entry.roles = ['Manager'];
                             entry.type = 'group';
                             entry.data = {
-                                'column-size': $(this).data('column-size'),
+                                'column-size': $(this).data('columnSize'),
                                 'layout-type': $(this).data('layout-type')
 
                             };
