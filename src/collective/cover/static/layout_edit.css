@@ -21,6 +21,7 @@
     float:left;
     position: relative;
     overflow: hidden;
+    border:medium none;
 }
 
 /*TILES*/
