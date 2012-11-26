@@ -38,7 +38,12 @@
 					page += 1;
 				});
 				return false;
-			});
+            });
+
+            $(function(){
+                // Live search content tree
+                coveractions.liveSearch('#screenlets-content-trees','#item-list li','#filter-count');
+            });
         </script>
       </div>
 
