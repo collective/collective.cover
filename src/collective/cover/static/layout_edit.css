@@ -75,18 +75,7 @@
 }
 .ui-sortable-placeholder-column {
     margin-left: 0px !important;
-} 
-
-.resizer {
-    position: absolute;
-    top: 0px;
-    width: 10px;
-    cursor: e-resize;
-    font-size: 0.1px;
-    height: 100%;
-    right: 0px;
 }
-
 
 #content .layout .config-tile-link:link {
     position: absolute;
@@ -109,6 +98,19 @@
     width: 24px;
     display: block;
 }
+
+#content .layout .resizer {
+    background: transparent url(/++resource++collective.cover/resize.png) no-repeat center center;
+    height: 24px;
+    width: 24px;
+    display: block;
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+    /*cursor: e-resize;*/
+    cursor: pointer;
+}
+
 
 
 

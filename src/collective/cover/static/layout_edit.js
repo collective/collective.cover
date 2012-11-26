@@ -27,6 +27,9 @@
             },
 
             setup: function() {
+
+                le.append('<div id="dialog"><div id="slider"></div></div>');
+
                 //buttons draggable binding
                 $( "#btn-row" ).draggable({
                     connectToSortable: ".layout",
@@ -63,6 +66,7 @@
                 self.resize_columns_manager();
 
                 self.tile_config_manager();
+
             },
 
             /**
@@ -83,6 +87,7 @@
                         $(this).prepend(column);
                         self.column_events(column);
                         self.delete_manager(column);
+                        self.resize_columns_manager(column);
 
                         self.calculate_grid($(this).find('.' + column_class));
 
@@ -97,6 +102,7 @@
                     appendTo:'.layout',
                     helper: 'clone',
                     placeholder: 'ui-sortable-placeholder-column',
+                    cancel: '.resizer',
                     start: function (e, ui) { 
                         ui.placeholder.attr('data-column-size', ui.helper.data('column-size'));
                     },
@@ -342,34 +348,37 @@
             resize_columns_manager: function(columns){
                 columns = columns !== undefined? columns : le.find('.'+column_class);
 
-                var resizer = $('<div/>').addClass('resizer');
+                var resizer = $('<i/>').addClass('resizer');
                 $(columns).append(resizer);
-                var start = 0;
-                var increment = 0;
-                var tolerance = ($('.cover-row').width() / 100 * 3.4375);
-                resizer.draggable({ 
-                    axis: "x",
-                    start: function(event, ui) {
-                        start = ui.position.left;
-                    },
-                    drag: function(event, ui){
-                        var distance = ui.position.left - start;
-                        if (Math.abs(distance) > tolerance) {
-                            var column = ui.helper.parents('.cover-column');
-                            var index = Math.floor(distance / tolerance)
-                            increment = column.data('column-size') + index
-                            column.attr('data-column-size', increment);
-                        }
-                    },
-                    stop: function(event, ui) {
-                        var column = ui.helper.parents('.cover-column');
-                        //reset the draggable position
-                        ui.helper.css('left', 'auto');
-                        increment = 0;
-                        column.data('column-size', column.attr('data-column-size')*1);
-                    }
+
+                $( "#dialog" ).dialog({
+                    autoOpen: false
+                });
+                
+                $( ".resizer" ).click(function() {
+                    $( "#dialog" ).dialog( "open" );
+
+                    var column = $(this).parents('.cover-column');
+                    var size = column.attr('data-column-size');
+
+                    $('#slider').slider("option", "value", size);
+                    $('#slider').off("slide");
+                    $('#slider').on( "slide", function( event, ui ) {
+                        column.attr('data-column-size', ui.value);
+                    });
+                    return false;
                 });
 
+                $( "#slider" ).slider({
+                    range: "max",
+                    min: 1,
+                    max: 16,
+                    value: 1,
+                    slide: function( event, ui ) {
+                        $( "#amount" ).val( ui.value );
+                    }
+                });
+                $( "#amount" ).val( $( "#slider-range-max" ).slider( "value" ) );
             },
 
             /**
