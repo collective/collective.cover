@@ -11,6 +11,7 @@ Suite Teardown  Close Browser
 *** Variables ***
 
 ${basic_tile_name} =  "collective.cover.basic"
+${tile_class} =  div.cover-tile
 
 *** Test cases ***
 
@@ -59,6 +60,14 @@ Test Basic Layout Operations
     Select Tile to Add  ${basic_tile_name}
     Delete Tile
 
+    #add tile, and check if clicking in the config icon opens an overlay
+    Add Tile
+    Select Tile to Add  ${basic_tile_name}
+    Click Config from Tile  ${tile_class}
+    Click Button  Cancel
+
+
+
 *** Keywords ***
 
 Add Row
@@ -101,4 +110,8 @@ Count Number of Rows
 
     Xpath Should Match X Times  //div[contains(@class, 'cover-row')]  ${number}
 
+Click Config from Tile
+    [arguments]  ${tile}
+
+    Click Element  css=${tile} .config-tile-link
 

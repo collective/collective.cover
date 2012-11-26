@@ -20,6 +20,7 @@
     padding: 0;
     float:left;
     position: relative;
+    overflow: hidden;
 }
 
 /*TILES*/
@@ -84,6 +85,31 @@
     height: 100%;
     right: 0px;
 }
+
+
+#content .layout .config-tile-link:link {
+    position: absolute;
+    color: #FFFFFF;
+    cursor: pointer;
+    right: 0px;
+    left: auto;
+    top: 0px !important;
+    font-size: 10px;
+    line-height: 1em;
+    width: 24px;
+    height: 24px;
+    padding: 0px;
+    border: medium none;
+}
+
+#content .layout .config-tile-link .config-icon {
+    background: transparent url(/++resource++collective.cover/conf.png) no-repeat center center;
+    height: 24px;
+    width: 24px;
+    display: block;
+}
+
+
 
 
 
@@ -179,18 +205,6 @@
     text-align: center;
     padding-right:10px;
     padding-left:10px;
-}
-
-#content .layout .config-tile-link:link {
-    position: absolute;
-    background-color: green;
-    color: #FFFFFF;
-    cursor: pointer;
-    left: 80px;
-    top: 0px !important;
-    font-size: 10px;
-    line-height: 1em;
-    min-width: 5em;
 }
 
 .layout .to-delete {

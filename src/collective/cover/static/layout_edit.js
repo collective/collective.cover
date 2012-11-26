@@ -61,6 +61,8 @@
                 self.generate_grid_css();
                 self.delete_manager();
                 self.resize_columns_manager();
+
+                self.tile_config_manager();
             },
 
             /**
@@ -142,9 +144,11 @@
                                 success: function(info, la) {
                                     new_tile.attr("id", info);
                                     var url_config = "@@configure-tile/" + tile_type + "/" + info;
-                                    var config_link = $("<a />").addClass("config-tile-link label")
+
+                                    var config_icon = $("<i/>").addClass("config-icon");
+                                    var config_link = $("<a />").addClass("config-tile-link")
                                                                 .attr('href',url_config)
-                                                                .text('Config');
+                                                                .append(config_icon);
                                     var name_tag = $("<span />").addClass("tile-name")
                                                                 .text(tile_type);
                                     new_tile.append(config_link)
@@ -366,6 +370,53 @@
                     }
                 });
 
+            },
+
+            /**
+             *  Tile Config
+             *  Configuration for tiles, manage the save, open and cancel operations
+             **/
+            tile_config_manager: function(){
+                //CONFIGURATION OF THE TILE
+                //when saving the configuration of the tile save it with ajax
+                $("#configure_tile #buttons-save").live("click", function(e) {
+                    e.preventDefault();
+                    var url = $("#configure_tile").attr("action");
+                    var data = $("#configure_tile").serialize();
+                    data = data + '&buttons.save=Save&ajax_load=true';
+                    $.ajax({
+                      type: 'POST',
+                      url: url,
+                      data: data,
+                      success: function(e,v) {
+                          $('#tile-configure').html('');
+                          $('#tile-configure').modal('hide');
+                      }
+                    });
+                    return false;
+                });
+                //when canceling the configuration of the tile
+                $("#configure_tile #buttons-cancel").live("click", function(e) {
+                    e.preventDefault();
+                    $('#tile-configure').html('');
+                    $('#tile-configure').modal('hide');
+                    return false;
+                });
+                //config the tile
+                $(".config-tile-link").live("click", function(e) {
+                      e.preventDefault();
+                      var url = $(this).attr("href");
+                      $('#tile-configure').modal();
+                      $.ajax({
+                        type:'GET',
+                        url: url,
+                        data: {'ajax_load':true},
+                        success: function(data) {
+                            $('#tile-configure').html(data);
+                        }
+                      });
+                      return false;
+                  });
             },
 
             /**
