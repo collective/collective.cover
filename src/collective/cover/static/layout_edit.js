@@ -28,7 +28,7 @@
 
             setup: function() {
 
-                le.append('<div id="dialog"><div id="slider"></div></div>');
+                le.append('<div id="dialog" title="Resize Column"><p id="column-size-resize">Actual column size: <span></span></p><div id="slider"></div></div>');
 
                 //buttons draggable binding
                 $( "#btn-row" ).draggable({
@@ -361,6 +361,7 @@
                     var column = $(this).parents('.cover-column');
                     var size = column.attr('data-column-size');
 
+                    $( "#column-size-resize span" ).html( size );
                     $('#slider').slider("option", "value", size);
                     $('#slider').off("slide");
                     $('#slider').on( "slide", function( event, ui ) {
@@ -375,7 +376,7 @@
                     max: 16,
                     value: 1,
                     slide: function( event, ui ) {
-                        $( "#amount" ).val( ui.value );
+                        $( "#column-size-resize span" ).html( ui.value );
                     }
                 });
                 $( "#amount" ).val( $( "#slider-range-max" ).slider( "value" ) );
