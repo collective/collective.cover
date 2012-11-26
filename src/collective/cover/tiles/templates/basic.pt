@@ -38,7 +38,6 @@
                                 title description"
               tal:content="python:field['content']" />
           </h4>
-     
       </tal:title>
 
      
@@ -53,10 +52,16 @@
                tal:condition="thumbnail"
                tal:attributes="src thumbnail/url;
                                width thumbnail/width;
-                               height thumbnail/height" />
+                               height thumbnail/height;" />
+
+
+
         </a>
+
+           
       </tal:image>
 
+   
       <tal:description condition="python:field['id'] == 'description'">
         <p tal:content="python:field['content']">Description</p>
       </tal:description>
@@ -68,7 +73,7 @@
 
       <tal:description condition="python:field['id'] == 'subjects'">
         <tal:subjects repeat="subject python:field['content']">
-        	<span>
+        	<span class="keywords">
         		<tal:subject replace="subject"/><tal:notlast condition="not:repeat/subject/end">, </tal:notlast>
 	      	</span>
        	</tal:subjects>
