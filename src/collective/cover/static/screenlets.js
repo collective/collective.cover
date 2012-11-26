@@ -50,15 +50,6 @@ function screenletMaker(options) {
         drop: dropped
     });
 
-    $(windowId + " ul.formTabs li").click(function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        var id = $("a", this).attr("href").split("#")[1];
-        var dataUrl = $('#' + id + '> input[type=button]').attr("data-url");
-        contentSearchFilter(dataUrl, id);
-        return false;
-    });
-
     // TODO: check if the current screenlet requires any tabs
     $(windowId + " ul.formTabs").tabs("div.panes > div");
 }
