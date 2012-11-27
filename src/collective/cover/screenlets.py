@@ -18,11 +18,8 @@ from Products.Five.browser import BrowserView
 
 from collective.cover.controlpanel import ICoverSettings
 
-from collective.cover.interfaces import IJSONSearch
 from Products.CMFCore.interfaces._content import IFolderish
-from plone.app.vocabularies.types import ReallyUserFriendlyTypesVocabulary
 from zope.schema.interfaces import IVocabularyFactory
-from zope.interface import implements
 
 try:
     import json
@@ -247,7 +244,7 @@ class SearchItemsBrowserView(BrowserView):
                 'url': brain.getURL(),
                 'portal_type': brain.portal_type,
                 'normalized_type': normalizer.normalize(brain.portal_type),
-                'classicon': 'contenttype-%s' %(normalizer.normalize(brain.portal_type)),
+                'classicon': 'contenttype-%s' % (normalizer.normalize(brain.portal_type)),
                 'title': brain.Title == "" and brain.id or brain.Title,
                 'icon': self.getIcon(brain).html_tag() or '',
                 'is_folderish': brain.is_folderish
