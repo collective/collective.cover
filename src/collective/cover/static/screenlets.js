@@ -254,7 +254,9 @@ var coveractions = {
                             if (data.items[i].icon.length) {
                                 html += '<img src="' + data.items[i].getIcon + '" border="0" style="margin-left: 17px" /> ';
                             }
-                            html += '<a data-ct-type="' + data.items[i].portal_type  +'" class="' + data.items[i].classicon + '" ';
+                            html += '<a data-ct-type="' +
+                                data.items[i].portal_type  +'" class="' +
+                                data.items[i].classicon + ' ' + data.items[i].r_state + '" ';
                             html += 'href="javascript:coveractions.getFolderContents(\'' + data.items[i].url + '\',\'@@jsonbytype' + '\')">';
                             html += '<span>' + data.items[i].title + '</span>';
                             html += '</a>';
@@ -262,7 +264,10 @@ var coveractions = {
                             if (data.items[i].portal_type == 'Image') {
                                 html += '<img src="' + coveractions.call_context + '/image.png" border="0"/> ';
                             }
-                            html += '<a data-ct-type="' + data.items[i].portal_type  +'" class="' + data.items[i].classicon + '"> ';
+                            html += '<a data-ct-type="' +
+                                data.items[i].portal_type  +'" class="' +
+                                data.items[i].classicon + ' ' +
+                                data.items[i].r_state + '"> ';
                             html += '<span>' + data.items[i].title + '</span>';
                             html += '</a>';
                         }
