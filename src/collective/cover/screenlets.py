@@ -154,7 +154,8 @@ class SearchItemsBrowserView(BrowserView):
         self.context = context
         self.request = request
         self.catalog = getToolByName(self.context, 'portal_catalog')
-        self.plone_view = getMultiAdapter((self.context, self.request), name=u'plone')
+        self.plone_view = getMultiAdapter((self.context, self.request),
+                name=u'plone')
         self.getIcon = self.plone_view.getIcon
         self.registry = getUtility(IRegistry)
         self.settings = self.registry.forInterface(ICoverSettings)
@@ -194,7 +195,8 @@ class SearchItemsBrowserView(BrowserView):
         relative = aq_inner(self.obj).getPhysicalPath()[len(root.getPhysicalPath()):]
         if path is None:
             # Add siteroot
-            result.append({'title': root.title_or_id(), 'url': '/'.join(root.getPhysicalPath())})
+            result.append({'title': root.title_or_id(),
+                'url': '/'.join(root.getPhysicalPath())})
 
         for i in range(len(relative)):
             now = relative[:i + 1]
@@ -202,7 +204,8 @@ class SearchItemsBrowserView(BrowserView):
 
             if IFolderish.providedBy(obj):
                 if not now[-1] == 'talkback':
-                    result.append({'title': obj.title_or_id(), 'url': root_url + '/' + '/'.join(now)})
+                    result.append({'title': obj.title_or_id(),
+                        'url': root_url + '/' + '/'.join(now)})
         return result
 
     def jsonByType(self, rooted, document_base_url, searchtext):
