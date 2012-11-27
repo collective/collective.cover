@@ -272,31 +272,33 @@ var coveractions = {
                     html = '';
                 }
 
-                jQuery('#content-trees > #item-list')[0].innerHTML = html;
+                jQuery(function(){
+                    jQuery("#content-trees > #item-list")[0].innerHTML = html;
 
-                if (data.parent_url == "") {
-                    document.getElementById ('uponelevel').style.display = 'none';
-                    document.getElementById ('uponelevel').href = 'javascript:void(0)';
-                } else {
-                    document.getElementById ('uponelevel').style.display = 'block';
-                    document.getElementById ('uponelevel').href = 'javascript:coveractions.getFolderContents(\'' + data.parent_url + '\',\'@@jsonbytype' + '\')';
-                }
-
-                html = "";
-                for (var i = 0; i < data.path.length; i++) {
-                    if (i != 0) {
-                        html += " &rarr; ";
-                    }
-                    if (i == data.path.length - 1) {
-                        html += data.path[i].title;
+                    if (data.parent_url == "") {
+                        document.getElementById ('uponelevel').style.display = 'none';
+                        document.getElementById ('uponelevel').href = 'javascript:void(0)';
                     } else {
-                        html += '<a href="javascript:coveractions.getFolderContents(\'' + data.path[i].url + '\',\'@@jsonbytype' + '\')">';
-                        html += data.path[i].title;
-                        html += '</a>';
+                        document.getElementById ('uponelevel').style.display = 'block';
+                        document.getElementById ('uponelevel').href = 'javascript:coveractions.getFolderContents(\'' + data.parent_url + '\',\'@@jsonbytype' + '\')';
                     }
-                }
 
-                 jQuery('#content-trees #internalpath')[0].innerHTML = html;
+                    html = "";
+                    for (var i = 0; i < data.path.length; i++) {
+                        if (i != 0) {
+                            html += " &rarr; ";
+                        }
+                        if (i == data.path.length - 1) {
+                            html += data.path[i].title;
+                        } else {
+                            html += '<a href="javascript:coveractions.getFolderContents(\'' + data.path[i].url + '\',\'@@jsonbytype' + '\')">';
+                            html += data.path[i].title;
+                            html += '</a>';
+                        }
+                    }
+
+                    jQuery('#content-trees #internalpath')[0].innerHTML = html;
+                });
 
             }
         });
