@@ -32,7 +32,7 @@ Test Collection Tile
     Click Element  css=div#screenlet-content-show-button
 
     Drag And Drop  css=${collection_selector}  css=${tile_selector}
-    Page Should Contain  The collection don't have any results
+    Page Should Contain  The collection doesn't have any results
 
     Click Link  link=Layout
     Delete Tile

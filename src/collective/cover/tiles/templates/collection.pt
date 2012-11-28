@@ -15,7 +15,7 @@
     <tal:results define="results view/results;
                          toLocalizedTime nocall:context/@@plone/toLocalizedTime">
       <div tal:condition="not:results">
-        <p i18n:translate="">The collection don't have any results.</p>
+        <p i18n:translate="">The collection doesn't have any results.</p>
       </div>
 
       <div class="collection-item" tal:repeat="brain results">
