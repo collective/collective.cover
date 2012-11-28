@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from zope.component import getMultiAdapter, getUtility
+from zope.component import getUtility  # , getMultiAdapter
 from zope.interface import Interface
 from zope.schema.vocabulary import SimpleTerm
 
@@ -9,7 +9,7 @@ from zope.app.pagetemplate.viewpagetemplatefile import ViewPageTemplateFile
 
 from plone.registry.interfaces import IRegistry
 
-from plone.app.layout.navigation.navtree import buildFolderTree
+#from plone.app.layout.navigation.navtree import buildFolderTree
 
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.browser.navtree import SitemapNavtreeStrategy
@@ -59,37 +59,46 @@ class ContentSearch(grok.View):
     def update(self):
         query = self.request.get('q', None)
         self.tab = self.request.get('tab', None)
-        uids = None
-        if self.tab == 'recent':
-            pass
-        elif self.tab == 'clipboard':
-            brains = list(self.search(''))[:2]
-            uids = [b.UID for b in brains]
-        result = self.search(query, uids=uids)
+        b_size = 10
+        page = int(self.request.get('page', 0))
         strategy = SitemapNavtreeStrategy(self.context)
-        result = [strategy.decoratorFactory({'item': node}) for node in result]
+
+        uids = None
         if self.tab == 'content-tree':
-            portal_state = getMultiAdapter((self.context, self.request),
-                                           name=u'plone_portal_state')
-            portal = portal_state.portal()
-            query_tree = {'sort_on': 'getObjPositionInParent',
-                          'sort_order': 'asc',
-                          'is_default_page': False}
-            strategy.rootPath = '/Plone'
-            data = buildFolderTree(portal,
-                                   obj=portal,
-                                   query=query_tree,
-                                   strategy=strategy)
-            result = data.get('children', [])
+            # XXX: not implemented
+            pass
+#            portal_state = getMultiAdapter((self.context, self.request),
+#                                           name=u'plone_portal_state')
+#            portal = portal_state.portal()
+#            query_tree = {'sort_on': 'getObjPositionInParent',
+#                          'sort_order': 'asc',
+#                          'is_default_page': False}
+#            strategy.rootPath = portal.absolute_url_path()
+#            data = buildFolderTree(portal,
+#                                   obj=portal,
+#                                   query=query_tree,
+#                                   strategy=strategy)
+#            result = data.get('children', [])
+        else:
+            if self.tab == 'clipboard':
+                # XXX: not implemented
+                pass
+#                brains = list(self.search(''))[:2]
+#                uids = [b.UID for b in brains]
+            result = self.search(query, uids=uids,
+                                 b_start=page * b_size,
+                                 b_size=b_size)
+            result = [strategy.decoratorFactory({'item': node}) for node in result]
         self.level = 1
         self.children = result
 
     def render(self):
-        if self.tab == 'content-tree':
-            return self.tree_template(children=self.children, level=1)
+#        if self.tab == 'content-tree':
+#            # XXX: not implemented
+#            return self.tree_template(children=self.children, level=1)
         return self.list_template()
 
-    def search(self, query=None, limit=None, uids=None):
+    def search(self, query=None, b_start=None, b_size=None, uids=None):
         catalog = getToolByName(self.context, 'portal_catalog')
         registry = getUtility(IRegistry)
         settings = registry.forInterface(ICoverSettings)
@@ -98,11 +107,12 @@ class ContentSearch(grok.View):
         #temporary we'll only list published elements
         catalog_query = {'sort_on': 'effective', 'sort_order': 'descending'}
         catalog_query['portal_type'] = searchable_types
+        if b_start >= 0 and b_size:
+            catalog_query['b_start'] = b_start
+            catalog_query['b_size'] = b_size
 
         if query:
-            catalog_query = {'SearchableText': query}
-        if limit:
-            catalog_query['sort_limit'] = limit
+            catalog_query = {'SearchableText': '%s*' % query}
         if uids:
             catalog_query['UID'] = uids
 

@@ -38,12 +38,7 @@ class EmbedTile(PersistentCoverTile):
     is_editable = True
     is_droppable = False
 
-    def get_embedding_code(self):
-        """ Returns the embed code stored in the tile.
-        """
-        return self.data['embed']
-
     def is_empty(self):
-        return not(self.data.get('embed') or
-                   self.data.get('title') or
-                   self.data.get('description'))
+        return not(self.data.get('embed', None) or \
+                   self.data.get('title', None) or \
+                   self.data.get('description', None))

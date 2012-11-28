@@ -9,48 +9,71 @@
     Please drag&amp;drop some content here to populate the tile.
   </p>
 
-  <div tal:condition="not: is_empty">
+  <div tal:condition="not: is_empty"
+       tal:define="description view/data/description|nothing">
     <tal:fields repeat="field view/get_configured_fields">
-      <tal:title define="htmltag python:field.get('htmltag', 'h1')"
+    
+         <tal:title define="htmltag python:field.get('htmltag', 'h1')"
                  condition="python:field['id'] == 'title'">
-        <!-- FIXME: a tag should be inside h tag -->
-        <!-- FIXME: basic tile is not storing the object URL -->
-        <a tal:attributes="href string:#;
-                           title view/get_description">
-          <h1 tal:condition="python:htmltag == 'h1'"
+      
+  <!-- FIXME: basic tile is not storing the object URL -->
+          <h1 tal:condition="python:htmltag == 'h1'">
+             <a tal:attributes="href view/get_url;
+                                title description"
               tal:content="python:field['content']" />
-          <h2 tal:condition="python:htmltag == 'h2'"
+          </h1>
+         
+          <h2 tal:condition="python:htmltag == 'h2'">
+             <a tal:attributes="href view/get_url;
+                                title description"
               tal:content="python:field['content']" />
-          <h3 tal:condition="python:htmltag == 'h3'"
+          </h2>
+          <h3 tal:condition="python:htmltag == 'h3'">
+             <a tal:attributes="href view/get_url;
+                                title description"
               tal:content="python:field['content']" />
-        </a>
+          </h3>
+          <h4 tal:condition="python:htmltag == 'h4'">
+             <a tal:attributes="href view/get_url;
+                                title description"
+              tal:content="python:field['content']" />
+          </h4>
       </tal:title>
 
-      <tal:description condition="python:field['id'] == 'description'">
-        <p tal:content="python:field['content']">Description</p>
-      </tal:description>
-
+     
       <tal:image condition="python:field['id'] == 'image'">
         <!-- FIXME: this should be configurable -->
-        <a tal:attributes="href string:#;
-                           title view/get_description">
+        <a class="imag" tal:attributes="href view/get_url;
+                                        title description;">
+
           <img style="float: left; margin: 0 1em 0.5em 0;"
                tal:define="scales view/@@images;
                            thumbnail python: scales.scale('image', scale='mini');"
                tal:condition="thumbnail"
                tal:attributes="src thumbnail/url;
                                width thumbnail/width;
-                               height thumbnail/height" />
+                               height thumbnail/height;" />
+
+
+
         </a>
+
+           
       </tal:image>
+
+   
+      <tal:description condition="python:field['id'] == 'description'">
+        <p tal:content="python:field['content']">Description</p>
+      </tal:description>
 
       <tal:description condition="python:field['id'] == 'date'">
         <p tal:content="view/get_date">Date</p>
       </tal:description>
 
+
       <tal:description condition="python:field['id'] == 'subjects'">
         <tal:subjects repeat="subject python:field['content']">
-        	<span>
+        	<span class="keywords">
         		<tal:subject replace="subject"/><tal:notlast condition="not:repeat/subject/end">, </tal:notlast>
 	      	</span>
        	</tal:subjects>

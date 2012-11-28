@@ -7,7 +7,7 @@ from Acquisition import aq_inner
 
 from five import grok
 
-from zope.component import queryUtility
+from zope.component import queryUtility, getMultiAdapter
 from zope.schema.interfaces import IVocabularyFactory
 
 from zope.app.pagetemplate.viewpagetemplatefile import ViewPageTemplateFile
@@ -32,10 +32,33 @@ class PageLayout(grok.View):
     tile = ViewPageTemplateFile('layout_templates/tile.pt')
     generalmarkup = ViewPageTemplateFile('layout_templates/generalmarkup.pt')
 
-    def get_layout(self):
+    def get_layout(self, mode):
         layout = json.loads(self.context.cover_layout)
 
+        if mode == 'view' or mode == 'compose':
+            grid_plug = getMultiAdapter((self.context, self.request),
+                                        name=u'grid_plug')
+
+            grid_plug.transform(layout)
+        else:
+            self.grid_layout_edit(layout)
+
         return layout
+
+    def grid_layout_edit(self, layout):
+        for element in layout:
+            if 'type' in element:
+                if element['type'] == 'row':
+                    element['class'] = 'cover-row'
+
+                if element['type'] == 'group':
+                    element['class'] = 'cover-column'
+
+                if element['type'] == 'tile':
+                    element['class'] = 'cover-tile'
+
+                if 'children' in element:
+                    self.grid_layout_edit(element['children'])
 
     def render_section(self, section, mode):
         if 'type' in section:
@@ -156,3 +179,60 @@ class GroupSelect(grok.View):
                 tile = self.context.restrictedTraverse("%s/%s" % (tile_type, tile_id))
                 tile.setAllowedGroupsForEdit(groups)
                 i += 1
+
+
+class GridPlug(grok.View):
+    grok.context(ICover)
+    grok.name('grid_plug')
+    grok.require('zope2.View')
+
+    row_class = 'row'
+    column_class = 'cell'
+
+    def transform(self, layout):
+        for element in layout:
+            if 'type' in element:
+                if element['type'] == 'row':
+                    element['class'] = self.row_class
+                    if 'children' in element:
+                        self.transform(self.columns_formater(element['children']))
+                if element['type'] == 'group' and 'children' in element:
+                    self.transform(element['children'])
+
+                if element['type'] == 'tile':
+                    element['class'] = 'tile'
+
+    def columns_formater(self, columns):
+        #this formater works for deco, but you can implemente a custom one, for you grid system
+        w = 'width-'
+        p = 'position-'
+        offset = 0
+        for column in columns:
+            width = column['data']['column-size'] if 'data' in column else 1
+            column['class'] = self.column_class + ' ' + (w + str(width)) + ' ' + (p + str(offset))
+            offset = offset + width
+        return columns
+
+    def render(self):
+        return self
+
+
+## EXAMPLE of a usagge for a custom grid system, in this case, boostrap
+# class GridPlug(grok.View):
+#     grok.context(ICover)
+#     grok.name('grid_plug')
+#     grok.require('zope2.View')
+#     grok.layer(YOURLAYERINTERFACE)
+
+#     row_class = 'row'
+#     column_class = 'column'
+
+#     def columns_formater(self, columns):
+#         #this formater works for deco, but you can implemente a custom one, for you grid system
+#         w = 'span'
+
+#         for column in columns:
+#             width = column['data']['column-size']
+#             column['class'] = self.column_class + ' ' + (w + str(width))
+
+#         return columns

@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+import os
+
+from App.Common import package_home
 
 from plone.app.testing import PloneSandboxLayer
 from plone.app.testing import PLONE_FIXTURE
@@ -6,6 +9,16 @@ from plone.app.testing import IntegrationTesting
 from plone.app.testing import FunctionalTesting
 
 from plone.testing.z2 import ZSERVER_FIXTURE
+
+
+def loadImage(name, size=0):
+    """Load image from testing directory
+    """
+    path = os.path.join(package_home(globals()), 'tests/input', name)
+    fd = open(path, 'rb')
+    data = fd.read()
+    fd.close()
+    return data
 
 
 class Fixture(PloneSandboxLayer):
@@ -26,6 +39,7 @@ class Fixture(PloneSandboxLayer):
         # Install into Plone site using portal_setup
         self.applyProfile(portal, 'collective.cover:default')
         self.applyProfile(portal, 'collective.cover:testfixture')
+        portal['my-image'].setImage(loadImage('canoneye.jpg'))
 
 FIXTURE = Fixture()
 INTEGRATION_TESTING = IntegrationTesting(

@@ -18,16 +18,16 @@ ${layout_selector} =  select#form-widgets-template_layout
 ${row_button_selector} =  a#btn-row
 ${column_button_selector} =  a#btn-column
 ${tile_button_selector} =  a#btn-tile
-${row_drop_area_selector} =  div.row .ui-droppable
-${column_drop_area_selector} =  div.row .ui-droppable
-${tile_drop_area_selector} =  div.column .ui-droppable
+${row_drop_area_selector} =  div.layout
+${column_drop_area_selector} =  div.cover-row
+${tile_drop_area_selector} =  div.cover-column
 ${tile_cancel_area_selector} =  div.modal-backdrop
-${delete_tile_selector} =  div.tile button.close
+${delete_tile_selector} =  div.cover-tile button.close
 
 *** Keywords ***
 
 Start Browser and Log In
-    Open Browser  ${PLONE_URL}
+    Open Browser  ${PLONE_URL}  browser=${BROWSER}
     Go to  ${PLONE_URL}/login_form
     Page should contain element  __ac_name
     Input text  __ac_name  ${SITE_OWNER_NAME}
@@ -71,13 +71,13 @@ Save Cover Layout
     Page Should Contain  Saved
 
 Add Tile
-    Drag And Drop  css=${tile_button_selector}  css=${column_drop_area_selector}
+    Drag And Drop  css=${tile_button_selector}  css=${tile_drop_area_selector}
+
 
 Select Tile to Add
-    [arguments]  ${location}
+    [arguments]  ${tile}
 
-    # XXX: refactor this to allow easier tile selection
-    Click Element  xpath=${location}
+    Click Element  xpath=//div[contains(@class, "tile-select-button") and contains(text(), ${tile})]
 
 Delete Tile
     Click Element  css=${delete_tile_selector}

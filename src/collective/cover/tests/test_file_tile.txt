@@ -12,7 +12,7 @@ Suite Teardown  Close Browser
 
 ${file_tile_location}  /html/body/div/div[2]/div/div[2]/div[2]/div[3]/div[5]
 ${file_uuid}  12345
-${file_selector}  ul#item-list li.ui-draggable
+${file_selector}  .ui-draggable .contenttype-file
 ${tile_selector}  div.tile-container div.tile
 
 *** Test cases ***
@@ -31,9 +31,10 @@ Test file Tile
 
     Click Element  css=div#screenlet-content-show-button
 
-    # FIXME: current selectors suck!
-    #Drag And Drop  css=${file_selector}  css=${tile_selector}
-    #Page Should Contain  The file don't have any results
+    Drag And Drop  css=${file_selector}  css=${tile_selector}
+    Page Should Contain  My file
+	Page Should Contain  This file was created for testing purposes
+	Page Should Contain Link  link=Download file
 
     Click Link  link=Layout
     Delete Tile

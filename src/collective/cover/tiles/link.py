@@ -8,7 +8,7 @@ from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from plone.namedfile.field import NamedBlobImage as NamedImage
 from plone.tiles.interfaces import ITileDataManager
 from plone.uuid.interfaces import IUUID
-from plone.app.uuid.utils import uuidToObject
+#from plone.app.uuid.utils import uuidToObject
 
 from collective.cover import _
 from collective.cover.tiles.base import IPersistentCoverTile
@@ -53,22 +53,14 @@ class LinkTile(PersistentCoverTile):
     # TODO: make it configurable
     is_configurable = False
 
-    def get_title(self):
-        return self.data['title']
-
-    def get_description(self):
-        return self.data['description']
-
-    def get_image(self):
-        return self.data['image']
-
     # XXX: can we do this without waking the object up?
-    def get_date(self):
-        # TODO: we must support be able to select which date we want to
-        # display
-        obj = uuidToObject(self.data['uuid'])
-        if obj:
-            return obj.Date()
+    # XXX: commented because we're not rendering the date
+#    def get_date(self):
+#        # TODO: we must support be able to select which date we want to
+#        # display
+#        obj = uuidToObject(self.data['uuid'])
+#        if obj:
+#            return obj.Date()
 
     def get_remote_url(self):
         return self.data['remote_url']

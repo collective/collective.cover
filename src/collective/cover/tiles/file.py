@@ -30,7 +30,7 @@ HTML = """
 def get_download_html(url, portal_url, icon, mime_type, size):
     if size < 1024:
         size_str = '%s bytes' % size
-    elif size >= 1024 and size <= 1048576:
+    elif size >= 1024 and size < 1048576:
         size_str = '%s kB (%s bytes)' % (size / 1024, size)
     else:
         size_str = '%s MB (%s bytes)' % (size / 1048576, size)
@@ -72,16 +72,6 @@ class FileTile(PersistentCoverTile):
     is_configurable = False  # TODO: make the tile configurable
     is_editable = True
     is_droppable = True
-
-    def get_title(self):
-        """ Returns the title stored in the tile.
-        """
-        return self.data['title']
-
-    def get_description(self):
-        """ Returns the description stored in the tile.
-        """
-        return self.data['description']
 
     # XXX: refactor this to make it easier to test
     def download_widget(self):

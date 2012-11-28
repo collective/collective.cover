@@ -4,7 +4,7 @@
 options = -N -q -t 3
 pep8_ignores = E501
 src = src/collective/cover/
-minimum_coverage = 60
+minimum_coverage = 70
 
 prerequisites:
 	sudo apt-get install -q pep8 pyflakes
@@ -16,7 +16,7 @@ install: prerequisites
 	bin/buildout -c travis.cfg $(options)
 
 tests:
-	bin/test
 	pep8 --ignore=$(pep8_ignores) $(src)
 	pyflakes $(src)
+	bin/test
 	./coverage.sh $(minimum_coverage)

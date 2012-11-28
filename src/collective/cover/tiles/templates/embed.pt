@@ -4,8 +4,12 @@
       xmlns:i18n="http://xml.zope.org/namespaces/i18n"
       i18n:domain="collective.cover">
 
-<body>
-  <div>
+<body tal:define="is_empty view/is_empty">
+  <p tal:condition="is_empty">
+    Please edit the tile to add the code to be embedded.
+  </p>
+
+  <div tal:condition="not: is_empty">
     <tal:fields repeat="field view/get_configured_fields">
       <tal:embed condition="python:field['id'] == 'embed'">
         <!-- FIXME -->

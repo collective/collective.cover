@@ -17,7 +17,8 @@
               <tal:block define="item_class item_class">
                 <a tal:attributes="rel level;
                                    title node/Description;
-                                   class string:$item_class">
+                                   class string:$item_class"
+                   href="#content-tree">
                     <img tal:replace="structure item_icon/html_tag|item_icon" />
                     <span tal:content="node/Title">Selected Item Title</span>
                 </a>

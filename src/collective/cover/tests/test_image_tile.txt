@@ -10,29 +10,29 @@ Suite Teardown  Close Browser
 
 *** Variables ***
 
-${collection_tile_location}  "collective.cover.collection"
-${collection_uuid}  12345
-${collection_selector}  .ui-draggable .contenttype-collection
+${image_tile_location}  /html/body/div/div[2]/div/div[2]/div[2]/div[3]/div[6]
+${image_uuid}  12345
+${image_selector}  .ui-draggable .contenttype-image
 ${tile_selector}  div.tile-container div.tile
 
 *** Test cases ***
 
-Test Collection Tile
+Test image Tile
     # XXX: should we create the cover object programmatically?
     Create Cover  Title  Description  Empty layout
     Click Link  link=Layout
 
     Add Tile
-    Select Tile to Add  ${collection_tile_location}
+    Select Tile to Add  ${image_tile_location}
     Save Cover Layout
 
     Click Link  link=Compose
-    Page Should Contain  Select a collection to fill this tile
+    Page Should Contain  Please drag&drop an image here
 
     Click Element  css=div#screenlet-content-show-button
 
-    Drag And Drop  css=${collection_selector}  css=${tile_selector}
-    Page Should Contain  The collection don't have any results
+    Drag And Drop  css=${image_selector}  css=${tile_selector}
+	Page Should Contain Image  css=div.tile-container div.tile img
 
     Click Link  link=Layout
     Delete Tile
