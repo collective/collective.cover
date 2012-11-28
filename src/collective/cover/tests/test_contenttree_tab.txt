@@ -14,6 +14,9 @@ ${basic_tile_location}  /html/body/div/div[2]/div/div[2]/div[2]/div[3]/div
 ${basic_uuid}  12345
 ${document_selector}  .ui-draggable .contenttype-document
 ${folder_selector}  .ui-draggable .contenttype-folder
+${input_contenttree}  screenlets-content-trees
+${screenlet-content-show-button}  div#screenlet-content-show-button
+${home_screenlet}  #home
 ${tile_selector}  div.tile-container div.tile
 
 *** Test cases ***
@@ -30,25 +33,17 @@ Test content tree tab
     Click Link  link=Compose
     Page Should Contain   Please drag&drop some content here to populate the tile.
 
-    Click Element  css=div#screenlet-content-show-button
+    Click Element  css=${screenlet-content-show-button}
 
     Click Element  link=Content tree
-
-    Input text  screenlets-content-trees  document
-    Page Should Contain  1 Results
 
     Drag And Drop  css=${document_selector}  css=${tile_selector}
     Page Should Contain  My document
 
-    Input text  screenlets-content-trees  folder
+    Input text  name=${input_contenttree}  frontpage
     Page Should Contain  1 Results
-
-    Set Selenium timeout  5s
-    Page Should Contain Element  css=${folder_selector}
-
-    Click Element  css=${folder_selector}
-    Page Should Contain  Plone site → my-folder
 
     Click Link  link=Layout
     Delete Tile
     Save Cover Layout
+
