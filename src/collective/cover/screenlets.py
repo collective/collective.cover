@@ -173,8 +173,8 @@ class SearchItemsBrowserView(BrowserView):
         result = []
         # the vocabulary returns the values sorted by their translated title
         for term in vocab._terms:
-            value = unicode(portal_types[term.value].Title())  # portal_type
-            title = term.title  # already translated title
+            value = portal_types[term.value].id  # portal_type
+            title = unicode(term.title)  # already translated title
             result.append((value, title))
 
         return result
