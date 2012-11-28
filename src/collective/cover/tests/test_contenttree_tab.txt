@@ -46,7 +46,6 @@ Test content tree tab
     Set Selenium timeout  5s
     Page Should Contain Element  css=${folder_selector}
     Click Element  css=${folder_selector}
-    Page Should Contain  Plone site → my-folder
 
     Click Link  link=Layout
     Delete Tile
