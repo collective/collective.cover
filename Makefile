@@ -3,6 +3,8 @@
 
 options = -N -q -t 3
 pep8_ignores = E501
+js_ignores = ! -name bootstrap* ! -name jquery*
+css_ignores = ! -name bootstrap* ! -name jquery*
 src = src/collective/cover/
 minimum_coverage = 70
 
@@ -31,5 +33,5 @@ tests:
 	pyflakes $(src)
 	bin/test
 	./coverage.sh $(minimum_coverage)
-	find $(src) -name '*.js' -exec jshint {} ';'
-	find $(src) -name '*.css' -exec csslint {} ';'
+	find $(src) -name *.js $(js_ignores) -exec jshint {} ';'
+	find $(src) -name *.css $(css_ignores) -exec csslint {} ';'
