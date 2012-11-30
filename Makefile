@@ -17,7 +17,7 @@ csslint: nodejs
 jshint: nodejs
 	npm install jshint -g
 
-prerequisites: jshint
+prerequisites: csslint jshint
 	sudo apt-get install -q pep8 pyflakes
 	pip install -q createzopecoverage
 	mkdir -p buildout-cache/downloads
