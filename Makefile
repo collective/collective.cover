@@ -11,6 +11,9 @@ nodejs:
 	sudo apt-get update
 	sudo apt-get install nodejs npm -y
 
+csslint: nodejs
+	npm install csslint -g
+
 jshint: nodejs
 	npm install jshint -g
 
@@ -29,3 +32,4 @@ tests:
 	bin/test
 	./coverage.sh $(minimum_coverage)
 	find $(src) -name '*.js' -exec jshint {} ';'
+	find $(src) -name '*.css' -exec csslint {} ';'
