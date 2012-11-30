@@ -32,9 +32,8 @@ class BasicTileTestCase(unittest.TestCase):
     def setUp(self):
         self.portal = self.layer['portal']
         self.request = self.layer['request']
-        self.tile = self.layer['portal'].restrictedTraverse('@@%s/%s' %
-                                    ('collective.cover.basic',
-                                     'test-basic-tile',))
+        self.tile = self.portal.restrictedTraverse(
+            '@@%s/%s' % ('collective.cover.basic', 'test-basic-tile'))
 
     def test_interface(self):
         self.assertTrue(IPersistentCoverTile.implementedBy(BasicTile))
@@ -50,9 +49,9 @@ class BasicTileTestCase(unittest.TestCase):
         self.assertTrue(self.tile.is_droppable)
 
     def test_accepted_content_types(self):
-        self.assertEqual(self.tile.accepted_ct(),
-                         ['Collection', 'Document', 'File',
-                          'Image', 'Link', 'News Item'])
+        self.assertEqual(
+            self.tile.accepted_ct(),
+            ['Collection', 'Document', 'File', 'Image', 'Link', 'News Item'])
 
     def test_empty_date(self):
         self.assertEqual('', self.tile.get_date())
@@ -83,8 +82,8 @@ class BasicTileTestCase(unittest.TestCase):
                          self.tile.data['description'])
 
     def test_render_empty(self):
-        self.assertTrue('Please drag&amp;drop some content here to ' \
-                        'populate the tile.' in self.tile())
+        self.assertTrue(
+            "Please drag&amp;drop some content here to populate the tile." in self.tile())
 
     def test_render_title(self):
         obj = self.portal['my-news-item']
@@ -102,9 +101,9 @@ class BasicTileTestCase(unittest.TestCase):
         rendered = self.tile()
         self.assertTrue(obj.UID() in rendered)
         self.assertTrue('Test news item' in rendered)
-        self.assertTrue('This news item was created for testing purposes' \
-                        in rendered)
+        self.assertTrue(
+            "This news item was created for testing purposes" in rendered)
         self.assertTrue('test-subject' in rendered)
-        self.assertTrue(obj.effective_date.strftime('%y/%m/%d %H:%M') \
-                        in rendered)
+        self.assertTrue(
+            obj.effective_date.strftime('%y/%m/%d %H:%M') in rendered)
         self.assertTrue('test-basic-tile/@@images' in rendered)

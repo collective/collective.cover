@@ -17,9 +17,8 @@ class LinkTileTestCase(unittest.TestCase):
     def setUp(self):
         self.portal = self.layer['portal']
         self.request = self.layer['request']
-        self.tile = self.layer['portal'].restrictedTraverse('@@%s/%s' %
-                                    ('collective.cover.link',
-                                     'test-link-tile',))
+        self.tile = self.portal.restrictedTraverse(
+            '@@%s/%s' % ('collective.cover.link', 'test-link-tile'))
 
     def test_interface(self):
         self.assertTrue(IPersistentCoverTile.implementedBy(LinkTile))
@@ -41,17 +40,17 @@ class LinkTileTestCase(unittest.TestCase):
     def test_populate_with_object(self):
         self.tile.populate_with_object(self.portal['my-link'])
         self.assertEqual('Test link', self.tile.data['title'])
-        self.assertEqual('This link was created for testing purposes',
+        self.assertEqual("This link was created for testing purposes",
                          self.tile.data['description'])
 
     def test_render_empty(self):
-        self.assertTrue('Please drag&amp;drop a link here ' \
-                        'to populate the tile.' in self.tile())
+        self.assertTrue(
+            "Please drag&amp;drop a link here to populate the tile." in self.tile())
 
     def test_render(self):
         obj = self.portal['my-link']
         self.tile.populate_with_object(obj)
         rendered = self.tile()
         self.assertTrue('Test link' in rendered)
-        self.assertTrue('This link was created for testing purposes' \
-                        in rendered)
+        self.assertTrue(
+            "This link was created for testing purposes" in rendered)

@@ -30,9 +30,8 @@ class ImageTileTestCase(unittest.TestCase):
     def setUp(self):
         self.portal = self.layer['portal']
         self.request = self.layer['request']
-        self.tile = self.layer['portal'].restrictedTraverse('@@%s/%s' %
-                                    ('collective.cover.image',
-                                     'test-image-tile',))
+        self.tile = self.portal.restrictedTraverse(
+            '@@%s/%s' % ('collective.cover.image', 'test-image-tile'))
 
     def test_interface(self):
         self.assertTrue(IPersistentCoverTile.implementedBy(ImageTile))
@@ -52,8 +51,8 @@ class ImageTileTestCase(unittest.TestCase):
                          ['Image', ])
 
     def test_render_empty(self):
-        self.assertTrue('Please drag&amp;drop an image here to ' \
-                        'populate the tile.' in self.tile())
+        self.assertTrue(
+            "Please drag&amp;drop an image here to populate the tile." in self.tile())
 
     def test_render(self):
         obj = self.portal['my-image']

@@ -20,9 +20,8 @@ class FileTileTestCase(unittest.TestCase):
         self.portal = self.layer['portal']
         self.request = self.layer['request']
         self.cover = self.portal['frontpage']
-        self.tile = self.layer['portal'].restrictedTraverse('@@%s/%s' %
-                                    ('collective.cover.file',
-                                     'test-file-tile',))
+        self.tile = self.portal.restrictedTraverse(
+            '@@%s/%s' % ('collective.cover.file', 'test-file-tile'))
 
     def test_interface(self):
         self.assertTrue(IPersistentCoverTile.implementedBy(FileTile))
@@ -74,8 +73,8 @@ class FileTileTestCase(unittest.TestCase):
         rendered = self.tile()
         self.assertTrue('Download file' in rendered)
         self.assertTrue('My file' in rendered)
-        self.assertTrue('This file was created for testing purposes' \
-                        in rendered)
+        self.assertTrue(
+            "This file was created for testing purposes" in rendered)
 
     def test_render_kB_file(self):
         obj = self.portal['my-file']
@@ -84,8 +83,8 @@ class FileTileTestCase(unittest.TestCase):
         rendered = self.tile()
         self.assertTrue('1 kB (1024 bytes)' in rendered)
         self.assertTrue('My file' in rendered)
-        self.assertTrue('This file was created for testing purposes' \
-                        in rendered)
+        self.assertTrue(
+            "This file was created for testing purposes" in rendered)
 
     def test_render_MB_file(self):
         obj = self.portal['my-file']
@@ -94,5 +93,5 @@ class FileTileTestCase(unittest.TestCase):
         rendered = self.tile()
         self.assertTrue('1 MB (1048576 bytes)' in rendered)
         self.assertTrue('My file' in rendered)
-        self.assertTrue('This file was created for testing purposes' \
-                        in rendered)
+        self.assertTrue(
+            "This file was created for testing purposes" in rendered)

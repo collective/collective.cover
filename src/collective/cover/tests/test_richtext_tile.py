@@ -17,9 +17,8 @@ class RichTextTileTestCase(unittest.TestCase):
     def setUp(self):
         self.portal = self.layer['portal']
         self.request = self.layer['request']
-        self.tile = self.layer['portal'].restrictedTraverse('@@%s/%s' %
-                                    ('collective.cover.richtext',
-                                     'test-richtext-tile',))
+        self.tile = self.portal.restrictedTraverse(
+            '@@%s/%s' % ('collective.cover.richtext', 'test-richtext-tile'))
 
     def test_interface(self):
         self.assertTrue(IPersistentCoverTile.implementedBy(RichTextTile))
@@ -43,12 +42,12 @@ class RichTextTileTestCase(unittest.TestCase):
         self.assertEqual('', self.tile.getText())
 
     def test_render_empty(self):
-        self.assertTrue('Please edit the tile to enter some text.' \
-                        in self.tile())
+        self.assertTrue(
+            "Please edit the tile to enter some text." in self.tile())
 
     def test_render(self):
         obj = self.portal['my-document']
         obj.setText('<p>My document text...</p>')
         self.tile.populate_with_object(obj)
         rendered = self.tile()
-        self.assertTrue('<p>My document text...</p>' in rendered)
+        self.assertTrue("<p>My document text...</p>" in rendered)

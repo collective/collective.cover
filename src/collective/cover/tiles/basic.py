@@ -63,7 +63,7 @@ class IBasicTile(IPersistentCoverTile):
         title=_(u'UUID'),
         required=False,
         readonly=True,
-        )
+    )
 
 
 class BasicTile(PersistentCoverTile):
@@ -103,13 +103,13 @@ class BasicTile(PersistentCoverTile):
     def populate_with_object(self, obj):
         super(BasicTile, self).populate_with_object(obj)
 
-        data = {'title': obj.Title(),
-                'description': obj.Description(),
-                'uuid': IUUID(obj, None),
-                'date': obj.effective_date and \
-                        DT2dt(obj.effective_date) or None,
-                'subjects': obj.Subject(),
-                }
+        data = {
+            'title': obj.Title(),
+            'description': obj.Description(),
+            'uuid': IUUID(obj, None),
+            'date': obj.effective_date and DT2dt(obj.effective_date) or None,
+            'subjects': obj.Subject(),
+        }
 
         # XXX: Implements a better way to detect image fields.
         try:

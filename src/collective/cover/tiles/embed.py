@@ -39,6 +39,6 @@ class EmbedTile(PersistentCoverTile):
     is_droppable = False
 
     def is_empty(self):
-        return not(self.data.get('embed', None) or \
-                   self.data.get('title', None) or \
-                   self.data.get('description', None))
+        return not (self.data.get('embed', None) or
+                    self.data.get('title', None) or
+                    self.data.get('description', None))
