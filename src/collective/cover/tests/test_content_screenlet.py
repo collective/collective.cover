@@ -15,6 +15,6 @@ class LinkTileTestCase(unittest.TestCase):
         self.request = self.layer['request']
 
     def test_render(self):
-        rendered = self.layer['portal'].restrictedTraverse('@@test-content-screenlet')()
+        rendered = self.portal.restrictedTraverse('@@test-content-screenlet')()
         html = """<a data-ct-type="Document" class="contenttype-document state-missing-value" rel="1">"""
         self.assertRegexpMatches(rendered, re.compile(html))
