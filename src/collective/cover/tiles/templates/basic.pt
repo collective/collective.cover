@@ -2,6 +2,7 @@
       xmlns:metal="http://xml.zope.org/namespaces/metal"
       xmlns:tal="http://xml.zope.org/namespaces/tal"
       xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      tile=""
       i18n:domain="collective.cover">
 
 <body tal:define="is_empty view/is_empty">
@@ -13,28 +14,32 @@
        tal:define="description view/data/description|nothing">
     <tal:fields repeat="field view/get_configured_fields">
     
-         <tal:title define="htmltag python:field.get('htmltag', 'h1')"
+      <tal:title define="htmltag python:field.get('htmltag', 'h1')"
                  condition="python:field['id'] == 'title'">
       
   <!-- FIXME: basic tile is not storing the object URL -->
           <h1 tal:condition="python:htmltag == 'h1'">
-             <a tal:attributes="href view/get_url;
+             <a property="tile:title"
+              tal:attributes="href view/get_url;
                                 title description"
               tal:content="python:field['content']" />
           </h1>
          
           <h2 tal:condition="python:htmltag == 'h2'">
-             <a tal:attributes="href view/get_url;
+             <a property="tile:title" 
+                tal:attributes="href view/get_url;
                                 title description"
               tal:content="python:field['content']" />
           </h2>
           <h3 tal:condition="python:htmltag == 'h3'">
-             <a tal:attributes="href view/get_url;
+             <a property="tile:title"
+                tal:attributes="href view/get_url;
                                 title description"
               tal:content="python:field['content']" />
           </h3>
           <h4 tal:condition="python:htmltag == 'h4'">
-             <a tal:attributes="href view/get_url;
+             <a property="tile:title"
+                tal:attributes="href view/get_url;
                                 title description"
               tal:content="python:field['content']" />
           </h4>

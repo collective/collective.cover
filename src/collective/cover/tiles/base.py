@@ -4,6 +4,7 @@
 # http://davisagli.com/blog/using-tiles-to-provide-more-flexible-plone-layouts
 
 import logging
+import json
 
 from logging import exception
 from AccessControl import Unauthorized
@@ -117,6 +118,28 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
     is_editable = True
     is_droppable = True
 
+    def __call__(self, *args, **kwargs):
+        super(tiles.PersistentTile, self).__call__(self, *args, **kwargs)
+        model = self.request.get('model')
+        method = self.request.get('_method')
+        if model and method:
+            self.save_inline_data(model)
+            self.request.response.setHeader("Content-type", "application/json")
+            return model
+        return self.index()
+
+    def save_inline_data(self, model):
+        json_model = json.loads(model)
+        data_mgr = ITileDataManager(self)
+
+        data = data_mgr.get()
+        schema_element = ''
+        for key in json_model.keys():
+            if ':' in key:
+                schema_element = key.split(':')[1][:-1]
+                data[schema_element] = json_model.get(key)
+        data_mgr.set(data)
+
     def populate_with_object(self, obj):
         if not self.isAllowedToEdit():
             raise Unauthorized(_("You are not allowed to add content to "
@@ -125,7 +148,7 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
         notify(ObjectModifiedEvent(self))
 
     def replace_with_objects(self, obj):
-        if not self.isAllowedToEdit():
+        if not self.isAllowedToEdit():  
             raise Unauthorized(_("You are not allowed to add content to "
                                  "this tile"))
 

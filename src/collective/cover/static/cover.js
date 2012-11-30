@@ -123,3 +123,42 @@ $(document).ready(function() {
         }
     });
 });
+
+
+
+
+jQuery(document).ready(function () {
+    jQuery('body').midgardCreate({
+      url: function () {
+        return '/Plone' +  this.getSubjectUri();
+      },
+      stanbolUrl: 'http://dev.iks-project.eu:8081',
+      tags: true/*,
+      language: 'pt_BR'*/
+    });
+
+    // Set a simpler editor for title fields
+    jQuery('body').midgardCreate('configureEditor', 'title', 'halloWidget', {
+      plugins: {
+        halloformat: {},
+        halloblacklist: {
+          tags: ['br']
+        }
+      },
+    });
+    jQuery('body').midgardCreate('setEditorForProperty', 'tile:title', 'title');
+
+    // Disable editing of author fields
+    //jQuery('body').midgardCreate('setEditorForProperty', 'dcterms:author', null);
+
+});
+Backbone.emulateHTTP = true;
+Backbone.emulateJSON = true;
+// Fake Backbone.sync since there is no server to communicate with
+// Backbone.sync = function(method, model, options) {
+//     debugger;
+//     if (console && console.log) {
+//       console.log('Model contents', model.toJSONLD());
+//     }
+//     options.success(model);
+// };
