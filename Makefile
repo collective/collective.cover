@@ -2,11 +2,11 @@
 # use `make options=-v` to run buildout with extra options
 
 options = -N -q -t 3
-pep8_ignores = E501
-js_ignores = ! -name bootstrap* ! -name jquery*
-css_ignores = ! -name bootstrap* ! -name jquery*
 src = src/collective/cover/
 minimum_coverage = 70
+pep8_ignores = E501
+css_ignores = ! -name bootstrap* ! -name jquery*
+js_ignores = ! -name bootstrap* ! -name jquery*
 
 nodejs:
 	sudo apt-add-repository ppa:chris-lea/node.js -y
@@ -19,19 +19,17 @@ csslint: nodejs
 jshint: nodejs
 	npm install jshint -g
 
-prerequisites: csslint jshint
-	sudo apt-get install -q pep8 pyflakes
-	pip install -q createzopecoverage
+install:
 	mkdir -p buildout-cache/downloads
-
-install: prerequisites
 	python bootstrap.py -c travis.cfg
 	bin/buildout -c travis.cfg $(options)
 
-tests:
-	pep8 --ignore=$(pep8_ignores) $(src)
-	pyflakes $(src)
+quality_assurance: csslint jshint
+	bin/pep8 --ignore=$(pep8_ignores) $(src)
+	bin/pyflakes $(src)
+	find $(src) -name *.css $(css_ignores) -exec csslint {} ';'
+	find $(src) -name *.js $(js_ignores) -exec jshint {} ';'
+
+tests: quality_assurance
 	bin/test
 	./coverage.sh $(minimum_coverage)
-	find $(src) -name *.js $(js_ignores) -exec jshint {} ';'
-	find $(src) -name *.css $(css_ignores) -exec csslint {} ';'
