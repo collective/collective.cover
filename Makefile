@@ -27,8 +27,8 @@ install:
 quality_assurance: csslint jshint
 	bin/pep8 --ignore=$(pep8_ignores) $(src)
 	bin/pyflakes $(src)
-	find $(src) -name *.css $(css_ignores) -exec csslint {} ';'
-	find $(src) -name *.js $(js_ignores) -exec jshint {} ';'
+	find $(src) -type f -name *.css $(css_ignores) -exec csslint {} ';'
+	find $(src) -type f -name *.js $(js_ignores) -exec jshint {} ';'
 
 tests: quality_assurance
 	bin/test
