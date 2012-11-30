@@ -5,8 +5,8 @@ options = -N -q -t 3
 src = src/collective/cover/
 minimum_coverage = 70
 pep8_ignores = E123,E127,E128,E501,E502
-css_ignores = ! -name bootstrap* ! -name jquery*
-js_ignores = ! -name bootstrap* ! -name jquery*
+css_ignores = ! -name bootstrap\* ! -name jquery\*
+js_ignores = ! -name bootstrap\* ! -name jquery\*
 
 nodejs:
 	sudo apt-add-repository ppa:chris-lea/node.js -y
