@@ -7,7 +7,6 @@ src = src/collective/cover/
 minimum_coverage = 70
 
 nodejs:
-	sudo apt-get install python-software-properties
 	sudo apt-add-repository ppa:chris-lea/node.js -y
 	sudo apt-get update
 	sudo apt-get install nodejs npm -y
