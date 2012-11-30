@@ -133,7 +133,7 @@ jQuery(document).ready(function () {
         return '/Plone' +  this.getSubjectUri();
       },
       stanbolUrl: 'http://dev.iks-project.eu:8081',
-      tags: true/*,
+      tags: false/*,
       language: 'pt_BR'*/
     });
 
@@ -146,7 +146,8 @@ jQuery(document).ready(function () {
         }
       },
     });
-    jQuery('body').midgardCreate('setEditorForProperty', 'tile:title', 'title');
+    jQuery('body').midgardCreate('setEditorForProperty', '#title', 'title');
+    jQuery('body').midgardCreate('setEditorForProperty', '#description', 'title');
 
     // Disable editing of author fields
     //jQuery('body').midgardCreate('setEditorForProperty', 'dcterms:author', null);

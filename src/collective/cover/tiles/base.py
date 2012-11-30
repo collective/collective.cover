@@ -135,9 +135,14 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
         data = data_mgr.get()
         schema_element = ''
         for key in json_model.keys():
-            if ':' in key:
-                schema_element = key.split(':')[1][:-1]
-                data[schema_element] = json_model.get(key)
+            if '#' in key:
+                schema_element = str(key.split('#')[1].replace('>', ''))
+                if type(data[schema_element]) is RichTextValue:
+                    data[schema_element] = RichTextValue(raw=json_model.get(key),
+                                                         mimeType='text/x-html-safe',
+                                                         outputMimeType='text/x-html-safe')
+                else:
+                    data[schema_element] = json_model.get(key)
         data_mgr.set(data)
 
     def populate_with_object(self, obj):
@@ -148,7 +153,7 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
         notify(ObjectModifiedEvent(self))
 
     def replace_with_objects(self, obj):
-        if not self.isAllowedToEdit():  
+        if not self.isAllowedToEdit():
             raise Unauthorized(_("You are not allowed to add content to "
                                  "this tile"))
 

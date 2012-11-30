@@ -6,14 +6,16 @@
 
 <body>
     <tal:text define="text view/getText">
-        <p tal:condition="not:text">
-            Please edit the tile to enter some text.
-        </p>
-        <tal:fields repeat="field view/get_configured_fields">
-            <tal:text condition="python:field['id'] == 'text'">
-                <div tal:replace="structure python:field['content']">Rich Text</div>
-            </tal:text>
-        </tal:fields>
+        <div property="#text">
+            <p tal:condition="not:text">
+                Please edit the tile to enter some text.
+            </p>
+            <tal:fields repeat="field view/get_configured_fields">
+                <tal:text condition="python:field['id'] == 'text'">
+                    <div tal:replace="structure python:field['content']">Rich Text</div>
+                </tal:text>
+            </tal:fields>
+        </div>
     </tal:text>
 </body>
 </html>

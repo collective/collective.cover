@@ -2,7 +2,6 @@
       xmlns:metal="http://xml.zope.org/namespaces/metal"
       xmlns:tal="http://xml.zope.org/namespaces/tal"
       xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-      tile=""
       i18n:domain="collective.cover">
 
 <body tal:define="is_empty view/is_empty">
@@ -19,26 +18,26 @@
       
   <!-- FIXME: basic tile is not storing the object URL -->
           <h1 tal:condition="python:htmltag == 'h1'">
-             <a property="tile:title"
+             <a property="#title"
               tal:attributes="href view/get_url;
                                 title description"
               tal:content="python:field['content']" />
           </h1>
          
           <h2 tal:condition="python:htmltag == 'h2'">
-             <a property="tile:title" 
+             <a property="#title" 
                 tal:attributes="href view/get_url;
                                 title description"
               tal:content="python:field['content']" />
           </h2>
           <h3 tal:condition="python:htmltag == 'h3'">
-             <a property="tile:title"
+             <a property="#title"
                 tal:attributes="href view/get_url;
                                 title description"
               tal:content="python:field['content']" />
           </h3>
           <h4 tal:condition="python:htmltag == 'h4'">
-             <a property="tile:title"
+             <a property="#title"
                 tal:attributes="href view/get_url;
                                 title description"
               tal:content="python:field['content']" />
@@ -68,21 +67,21 @@
 
    
       <tal:description condition="python:field['id'] == 'description'">
-        <p tal:content="python:field['content']">Description</p>
+        <p property="#description" tal:content="python:field['content']">Description</p>
       </tal:description>
 
-      <tal:description condition="python:field['id'] == 'date'">
+      <tal:date condition="python:field['id'] == 'date'">
         <p tal:content="view/get_date">Date</p>
-      </tal:description>
+      </tal:date>
 
 
-      <tal:description condition="python:field['id'] == 'subjects'">
+      <tal:block condition="python:field['id'] == 'subjects'">
         <tal:subjects repeat="subject python:field['content']">
         	<span class="keywords">
         		<tal:subject replace="subject"/><tal:notlast condition="not:repeat/subject/end">, </tal:notlast>
 	      	</span>
        	</tal:subjects>
-      </tal:description>
+      </tal:block>
 
       <tal:last condition="repeat/field/end">
         <div class="visualClear"><!-- --></div>
