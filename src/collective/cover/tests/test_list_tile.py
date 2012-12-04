@@ -10,6 +10,8 @@ from collective.cover.testing import INTEGRATION_TESTING
 from collective.cover.tiles.list import ListTile
 from collective.cover.tiles.base import IPersistentCoverTile
 
+from plone.uuid.interfaces import IUUID
+
 
 class ListTileTestCase(unittest.TestCase):
 
@@ -58,7 +60,7 @@ class ListTileTestCase(unittest.TestCase):
 
         # next, we replace the list of objects with a different one
         obj3 = self.portal['my-news-item']
-        tile.replace_with_objects([obj3])
+        tile.replace_with_objects([IUUID(obj3, None)])
         # tile's data attributed is cached so we should re-instantiate the tile
         tile = getMultiAdapter((self.cover, self.request), name=self.name)
         tile = tile['test']
