@@ -1,6 +1,8 @@
 # convenience makefile to boostrap & run buildout
 # use `make options=-v` to run buildout with extra options
 
+SHELL = /bin/sh
+
 options = -N -q -t 3
 src = src/collective/cover/
 minimum_coverage = 70
