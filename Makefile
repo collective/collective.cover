@@ -13,14 +13,14 @@ ack:
 
 nodejs:
 	sudo apt-add-repository ppa:chris-lea/node.js -y
-	sudo apt-get update
+	sudo apt-get update 1>/dev/null
 	sudo apt-get install nodejs npm -y
 
 csslint: nodejs
-	npm install csslint -g
+	npm install csslint -g 1>/dev/null
 
 jshint: nodejs
-	npm install jshint -g
+	npm install jshint -g 1>/dev/null
 
 install:
 	mkdir -p buildout-cache/downloads
