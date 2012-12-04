@@ -33,7 +33,7 @@ quality-assurance: ack-install csslint-install jshint-install
 	bin/pep8 --ignore=$(pep8_ignores) $(src)
 	bin/pyflakes $(src)
 	find $(src) -type f -name *.css $(css_ignores) | xargs csslint | ack-grep --passthru error
-	find $(src) -type f -name *.js $(js_ignores) -exec jshint {} ';'
+	find $(src) -type f -name *.js $(js_ignores) -exec jshint {} ';' | ack-grep --passthru error
 
 tests: quality-assurance
 	bin/test
