@@ -24,17 +24,27 @@ csslint-install: nodejs-install
 jshint-install: nodejs-install
 	npm install jshint -g
 
+python-validation:
+	@echo Validating Python files
+	bin/pep8 --ignore=$(pep8_ignores) $(src)
+	bin/pyflakes $(src)
+
+css-validation: ack-install csslint-install
+	@echo Validating CSS files
+	find $(src) -type f -name *.css $(css_ignores) | xargs csslint | ack-grep --passthru error
+
+js-validation: ack-install jshint-install
+	@echo Validating JavaScript files
+	find $(src) -type f -name *.js $(js_ignores) -exec jshint {} ';' | ack-grep --passthru error
+
+quality-assurance: python-validation css-validation js-validation
+	@echo Quality assurance
+	./coverage.sh $(minimum_coverage)
+
 install:
 	mkdir -p buildout-cache/downloads
 	python bootstrap.py -c travis.cfg
 	bin/buildout -c travis.cfg $(options)
 
-quality-assurance: ack-install csslint-install jshint-install
-	bin/pep8 --ignore=$(pep8_ignores) $(src)
-	bin/pyflakes $(src)
-	find $(src) -type f -name *.css $(css_ignores) | xargs csslint | ack-grep --passthru error
-	find $(src) -type f -name *.js $(js_ignores) -exec jshint {} ';' | ack-grep --passthru error
-
-tests: quality-assurance
+tests:
 	bin/test
-	./coverage.sh $(minimum_coverage)
