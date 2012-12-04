@@ -8,6 +8,9 @@ pep8_ignores = E501
 css_ignores = ! -name bootstrap\* ! -name jquery\*
 js_ignores = ! -name bootstrap\* ! -name jquery\*
 
+ack:
+	sudo apt-get install ack
+
 nodejs:
 	sudo apt-add-repository ppa:chris-lea/node.js -y
 	sudo apt-get update
@@ -24,10 +27,10 @@ install:
 	python bootstrap.py -c travis.cfg
 	bin/buildout -c travis.cfg $(options)
 
-quality_assurance: csslint jshint
+quality_assurance: ack csslint jshint
 	bin/pep8 --ignore=$(pep8_ignores) $(src)
 	bin/pyflakes $(src)
-	find $(src) -type f -name *.css $(css_ignores) -exec csslint {} ';'
+	find $(src) -type f -name *.css $(css_ignores) | xargs csslint | ack --passthru error
 	find $(src) -type f -name *.js $(js_ignores) -exec jshint {} ';'
 
 tests: quality_assurance
