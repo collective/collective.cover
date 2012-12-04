@@ -55,7 +55,9 @@ $(document).ready(function() {
         stop:function(event, ui) {
             var uids = [];
             $(this).children().each(function(index) {
-                uids.push($(this).attr("data-uid"));
+                if ($(this).attr("data-uid") !== undefined) {
+                    uids.push($(this).attr("data-uid"));
+                }
             });
             var tile = $(this).closest('.tile');
             var tile_type = tile.attr("data-tile-type");

@@ -82,7 +82,8 @@ $(function() {
             var ct = $(this).data('tileValidCt');
             var valid = $.inArray($(e).find('a').data('ctType'), ct);
             var isDroppable = $(this).attr("data-is-droppable");
-            if(isDroppable === "False") {
+
+            if(isDroppable === "False" || $(e).attr('id') === 'screenlet-content-search') {
                 return false;
             }
             if(!ct && $($(e).context).parent().attr("id") === "item-list") {

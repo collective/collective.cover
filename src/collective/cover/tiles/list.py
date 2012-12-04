@@ -105,15 +105,15 @@ class ListTile(PersistentCoverTile):
             old_data['uuids'] = [uuid]
         data_mgr.set(old_data)
 
-    def replace_with_objects(self, objs):
-        super(ListTile, self).replace_with_objects(objs)  # check permission
+    def replace_with_objects(self, uids):
+        super(ListTile, self).replace_with_objects(uids)  # check permission
         self.set_limit()
         data_mgr = ITileDataManager(self)
         old_data = data_mgr.get()
-        if type(objs) == list:
-            old_data['uuids'] = [i.UID() for i in objs][:self.limit]
+        if type(uids) == list:
+            old_data['uuids'] = [i for i in uids][:self.limit]
         else:
-            old_data['uuids'] = [objs.UID()]
+            old_data['uuids'] = [uids]
 
         data_mgr.set(old_data)
 
