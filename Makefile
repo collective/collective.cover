@@ -9,7 +9,7 @@ css_ignores = ! -name bootstrap\* ! -name jquery\*
 js_ignores = ! -name bootstrap\* ! -name jquery\*
 
 ack:
-	sudo apt-get install ack
+	sudo apt-get install ack-grep
 
 nodejs:
 	sudo apt-add-repository ppa:chris-lea/node.js -y
@@ -30,7 +30,7 @@ install:
 quality_assurance: ack csslint jshint
 	bin/pep8 --ignore=$(pep8_ignores) $(src)
 	bin/pyflakes $(src)
-	find $(src) -type f -name *.css $(css_ignores) | xargs csslint | ack --passthru error
+	find $(src) -type f -name *.css $(css_ignores) | xargs csslint | ack-grep --passthru error
 	find $(src) -type f -name *.js $(js_ignores) -exec jshint {} ';'
 
 tests: quality_assurance
