@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 
 import unittest2 as unittest
-
+from PIL import Image
 from zope.interface.verify import verifyClass
 from zope.interface.verify import verifyObject
 
-from collective.cover.testing import INTEGRATION_TESTING
+from collective.cover.testing import INTEGRATION_TESTING, generate_jpeg
 from collective.cover.tiles.image import ImageTile
 from collective.cover.tiles.base import IPersistentCoverTile
 
@@ -46,3 +46,115 @@ class ImageTileTestCase(unittest.TestCase):
         self.tile.populate_with_object(obj)
         rendered = self.tile()
         self.assertTrue('test-image-tile/@@images' in rendered)
+
+    def test_image_traverser(self):
+        obj = self.portal['my-image']
+        self.tile.populate_with_object(obj)
+        scales = self.layer['portal'].restrictedTraverse('@@%s/%s/@@images' %
+                                                         ('collective.cover.image',
+                                                          'test-image-tile',))
+        img = scales.scale('image')
+        self.assertEqual(str(self.tile.data['image'].data),
+                         str(img.index_html().read()))
+
+    def test_change_images(self):
+        obj = self.portal['my-image']
+        obj1 = self.portal['my-image1']
+        obj2 = self.portal['my-image2']
+
+        tile = self.layer['portal'].restrictedTraverse('@@%s/%s' %
+                                    ('collective.cover.image',
+                                     'test-image-tile',))
+        tile.populate_with_object(obj1)
+        rendered = tile()
+        self.assertTrue('test-image-tile/@@images' in rendered)
+        self.assertEqual(str(tile.data['image'].data),
+                         str(obj1.getImage()))
+        scales = self.layer['portal'].restrictedTraverse('@@%s/%s/@@images' %
+                                                         ('collective.cover.image',
+                                                          'test-image-tile',))
+        img = scales.scale('image')
+        self.assertEqual(str(tile.data['image'].data),
+                         str(img.index_html().read()))
+        self.assertEqual(str(img.index_html().read()),
+                         str(obj1.getImage()))
+
+        tile = self.layer['portal'].restrictedTraverse('@@%s/%s' %
+                                    ('collective.cover.image',
+                                     'test-image-tile',))
+        tile.populate_with_object(obj)
+        rendered = tile()
+        self.assertTrue('test-image-tile/@@images' in rendered)
+        self.assertNotEqual(str(tile.data['image'].data),
+                            str(obj1.getImage()))
+        self.assertEqual(str(tile.data['image'].data),
+                         str(obj.getImage()))
+        scales = self.layer['portal'].restrictedTraverse('@@%s/%s/@@images' %
+                                                         ('collective.cover.image',
+                                                          'test-image-tile',))
+        img = scales.scale('image')
+        self.assertEqual(str(tile.data['image'].data),
+                         str(img.index_html().read()))
+        self.assertEqual(str(img.index_html().read()),
+                         str(obj.getImage()))
+
+        tile = self.layer['portal'].restrictedTraverse('@@%s/%s' %
+                                    ('collective.cover.image',
+                                     'test-image-tile',))
+        tile.populate_with_object(obj2)
+        rendered = tile()
+        self.assertTrue('test-image-tile/@@images' in rendered)
+        self.assertNotEqual(str(tile.data['image'].data),
+                            str(obj1.getImage()))
+        self.assertNotEqual(str(tile.data['image'].data),
+                            str(obj.getImage()))
+        self.assertEqual(str(tile.data['image'].data),
+                         str(obj2.getImage()))
+        scales = self.layer['portal'].restrictedTraverse('@@%s/%s/@@images' %
+                                                         ('collective.cover.image',
+                                                          'test-image-tile',))
+        img = scales.scale('image')
+        self.assertEqual(str(tile.data['image'].data),
+                         str(img.index_html().read()))
+        self.assertEqual(str(img.index_html().read()),
+                         str(obj2.getImage()))
+
+    def test_change_images_mtime(self):
+        obj = self.portal['my-image']
+        obj1 = self.portal['my-image1']
+        obj2 = self.portal['my-image2']
+
+        tile = self.layer['portal'].restrictedTraverse('@@%s/%s' %
+                                    ('collective.cover.image',
+                                     'test-image-tile',))
+        tile.populate_with_object(obj)
+        self.assertTrue('image_mtime' in tile.data)
+        mtime = tile.data['image_mtime']
+
+        tile = self.layer['portal'].restrictedTraverse('@@%s/%s' %
+                                    ('collective.cover.image',
+                                     'test-image-tile',))
+        tile.populate_with_object(obj1)
+        tile = self.layer['portal'].restrictedTraverse('@@%s/%s' %
+                                    ('collective.cover.image',
+                                     'test-image-tile',))
+        self.assertTrue('image_mtime' in tile.data)
+        self.assertNotEqual(tile.data['image_mtime'], mtime)
+
+        tile = self.layer['portal'].restrictedTraverse('@@%s/%s' %
+                                    ('collective.cover.image',
+                                     'test-image-tile',))
+        tile.populate_with_object(obj2)
+        self.assertTrue('image_mtime' in tile.data)
+        self.assertNotEqual(tile.data['image_mtime'], mtime)
+
+    def test_image_scale(self):
+        obj = self.portal['my-image']
+        obj.setImage(generate_jpeg(1024, 768))
+        self.tile.populate_with_object(obj)
+        scales = self.layer['portal'].restrictedTraverse('@@%s/%s/@@images' %
+                                                         ('collective.cover.image',
+                                                          'test-image-tile',))
+        scale_mini = scales.scale('image', scale='mini')
+        img = Image.open(scale_mini.index_html())
+        self.assertEqual(img.size, (200, 150))
