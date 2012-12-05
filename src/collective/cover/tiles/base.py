@@ -262,7 +262,9 @@ class ImageScale(BaseImageScale):
         self.request = request
         self.__dict__.update(**info)
         if self.data is None:
-            self.data = getattr(self.context, self.fieldname)
+            self.data = getattr(self.context, self.fieldname, None)
+        if self.data is None:
+            self.data = self.context.data.get(self.fieldname)
         url = self.context.url
         extension = self.data.contentType.split('/')[-1].lower()
         if 'uid' in info:
@@ -346,7 +348,7 @@ class ImageScaling(BaseImageScaling):
     def modified(self):
         """ provide a callable to return the modification time of content
             items, so stored image scales can be invalidated """
-        mtime = 0
+        mtime = ''
         for k, v in self.context.data.items():
             if INamedImage.providedBy(v):
                 mtime += self.context.data.get('%s_mtime' % k, 0)
