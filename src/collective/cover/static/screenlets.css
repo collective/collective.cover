@@ -1,3 +1,6 @@
+#content {
+    position: relative;
+}
 #screenlet-content-search {
     background-color: #fff;
     border: 1px solid #ccc;
@@ -38,15 +41,13 @@
 
 #screenlet-content-show-button {
     background: #fff;
-    border-radius: 0.5em 0.5em 0 0;
-    cursor: pointer;
-    font-weight: bold;
-    margin-right: 3px;
-    padding: 4px 1em;
-    position: absolute;
+    position: relative;
     right: 0;
-    top: 31px;
+    top: 0px;
     z-index: 999;
+    font-weight: bold;
+    float: right;
+    margin-bottom: 10px;
 }
 
 #screenlet-content-search .close {

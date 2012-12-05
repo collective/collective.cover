@@ -66,7 +66,7 @@ function screenletMaker(options) {
 $(function() {
     if($("#screenlet-content-search").length) {
         var content_name = $("#screenlet-content-search-compose-button").text();
-        $("#content").append("<div id='screenlet-content-show-button'>"+content_name+"</div>");
+        $("#content").prepend("<div class='btn' id='screenlet-content-show-button'>"+content_name+"</div>");
     }
     $("#screenlet-content-search-button").click(function(e) {
         e.preventDefault();
