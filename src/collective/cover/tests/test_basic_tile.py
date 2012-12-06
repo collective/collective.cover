@@ -137,4 +137,4 @@ class BasicTileTestCase(unittest.TestCase):
         self.assertNotIn('plone.tiles.permission.test-basic-tile',
                          annotations)
         self.assertNotIn('plone.tiles.configuration.test-basic-tile',
-                      annotations)
+                         annotations)
