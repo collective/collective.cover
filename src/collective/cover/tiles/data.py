@@ -1,5 +1,4 @@
 import time
-from datetime import datetime
 from persistent.dict import PersistentDict
 
 from zope.component import adapts
@@ -39,8 +38,8 @@ class PersistentCoverTileDataManager(PersistentTileDataManager):
             if INamedImage.providedBy(v):
                 if (self.key not in self.annotations or
                     k not in self.annotations[self.key] or
-                    (self.key not in self.annotations and
+                    (self.key in self.annotations and
                      data[k] != self.annotations[self.key][k])):
                     # set modification time of the image
-                    data['%s_mtime' % k] = time.mktime(datetime.now().timetuple())
+                    data['%s_mtime' % k] = '%f' % time.time()
         self.annotations[self.key] = PersistentDict(data)

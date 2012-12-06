@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
+import urllib2
 
 from App.Common import package_home
 
@@ -21,6 +22,11 @@ def loadImage(name, size=0):
     return data
 
 
+def generate_jpeg(width, height):
+    url = 'http://lorempixel.com/%d/%d/' % (width, height)
+    return urllib2.urlopen(url).read()
+
+
 class Fixture(PloneSandboxLayer):
 
     defaultBases = (PLONE_FIXTURE,)
@@ -40,6 +46,8 @@ class Fixture(PloneSandboxLayer):
         self.applyProfile(portal, 'collective.cover:default')
         self.applyProfile(portal, 'collective.cover:testfixture')
         portal['my-image'].setImage(loadImage('canoneye.jpg'))
+        portal['my-image1'].setImage(generate_jpeg(100, 100))
+        portal['my-image2'].setImage(generate_jpeg(100, 100))
 
 FIXTURE = Fixture()
 INTEGRATION_TESTING = IntegrationTesting(
