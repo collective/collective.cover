@@ -210,6 +210,9 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
                 if 'imgsize' in field_conf:
                     field['scale'] = field_conf['imgsize']
 
+                if 'position' in field_conf:
+                    field['position'] = field_conf['position']
+
             results.append(field)
 
         return results
