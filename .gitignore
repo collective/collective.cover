@@ -33,3 +33,4 @@ src/plone.scale/
 src/plone.tiles/
 var/
 Makefile.local
+node_modules
