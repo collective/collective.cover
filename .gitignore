@@ -32,3 +32,4 @@ src/plone.app.tiles/
 src/plone.scale/
 src/plone.tiles/
 var/
+Makefile.local
