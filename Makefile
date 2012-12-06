@@ -5,7 +5,7 @@ SHELL = /bin/sh
 
 options = -N -q -t 3
 src = src/collective/cover/
-minimum_coverage = 70
+minimum_coverage = 74
 pep8_ignores = E501
 css_ignores = ! -name bootstrap\* ! -name jquery\*
 js_ignores = ! -name bootstrap\* ! -name jquery\*
