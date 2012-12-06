@@ -148,6 +148,17 @@ class ImageTileTestCase(unittest.TestCase):
         self.assertTrue('image_mtime' in tile.data)
         self.assertNotEqual(tile.data['image_mtime'], mtime)
 
+    def test_image_traversal(self):
+        obj = self.portal['my-image']
+        obj.setImage(generate_jpeg(1024, 768))
+        self.tile.populate_with_object(obj)
+        image = self.layer['portal'].restrictedTraverse(
+            '@@%s/%s/@@images' %
+            ('collective.cover.image',
+             'test-image-tile',)).publishTraverse(self.request, 'image')
+        img = Image.open(image.index_html())
+        self.assertEqual(img.size, (1024, 768))
+
     def test_image_scale(self):
         obj = self.portal['my-image']
         obj.setImage(generate_jpeg(1024, 768))

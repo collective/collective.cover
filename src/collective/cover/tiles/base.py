@@ -318,7 +318,7 @@ class ImageScaling(BaseImageScaling):
             # otherwise `name` must refer to a field...
             if '.' in name:
                 name, ext = name.rsplit('.', 1)
-            value = getattr(self.context, name)
+            value = self.context.data.get(name)
             scale_view = ImageScale(self.context, self.request,
                                     data=value, fieldname=name)
             return scale_view.__of__(self.context)
