@@ -11,6 +11,10 @@ from Products.ATContentTypes.utils import DT2dt
 from collective.cover.testing import INTEGRATION_TESTING, loadImage
 from collective.cover.tiles.basic import BasicTile
 from collective.cover.tiles.base import IPersistentCoverTile
+from zope.component import getMultiAdapter
+from collective.cover.tiles.permissions import ITilesPermissions
+from zope.annotation.interfaces import IAnnotations
+from collective.cover.tiles.configuration import ITilesConfigurationScreen
 
 
 class BasicTileTestCase(unittest.TestCase):
@@ -95,3 +99,30 @@ class BasicTileTestCase(unittest.TestCase):
         self.assertTrue(
             obj.effective_date.strftime('%y/%m/%d %H:%M') in rendered)
         self.assertTrue('test-basic-tile/@@images' in rendered)
+
+    def test_delete_tile_persistent_data(self):
+        permissions = getMultiAdapter((self.tile.context,
+                                       self.request,
+                                       self.tile),
+                                      ITilesPermissions)
+        permissions.set_allowed_edit('masters_of_the_universe')
+        annotations = IAnnotations(self.tile.context)
+        self.assertIn('plone.tiles.permission.test-basic-tile',
+                      annotations)
+
+        configuration = getMultiAdapter((self.tile.context,
+                                         self.request,
+                                         self.tile),
+                                        ITilesConfigurationScreen)
+        configuration.set_configuration({'foo': 'bar'})
+        self.assertIn('plone.tiles.configuration.test-basic-tile',
+                      annotations)
+
+        # Call the delete method
+        self.tile.delete()
+
+        # Now we should not see the stored data anymore
+        self.assertNotIn('plone.tiles.permission.test-basic-tile',
+                         annotations)
+        self.assertNotIn('plone.tiles.configuration.test-basic-tile',
+                         annotations)

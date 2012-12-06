@@ -22,6 +22,11 @@ class ITilesConfigurationScreen(Interface):
         Set the configuration for a given tile
         """
 
+    def delete():
+        """
+        Remove configurations for a given tile
+        """
+
 
 class TilesConfigurationScreen(object):
     """
@@ -44,3 +49,7 @@ class TilesConfigurationScreen(object):
 
     def set_configuration(self, configuration):
         self.annotations[self.key] = PersistentDict(configuration)
+
+    def delete(self):
+        self.annotations.pop(self.key, None)
+        return
