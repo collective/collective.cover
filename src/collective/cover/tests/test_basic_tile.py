@@ -114,7 +114,11 @@ class BasicTileTestCase(unittest.TestCase):
                                          self.request,
                                          self.tile),
                                         ITilesConfigurationScreen)
-        configuration.set_configuration({'foo': 'bar'})
+        configuration.set_configuration({'title': {'order': u'0',
+                                                   'visibility': u'on'},
+                                         'description': {'order': u'1',
+                                                         'visibility': u'off'},
+                                         })
         self.assertIn('plone.tiles.configuration.test-basic-tile',
                       annotations)
 
