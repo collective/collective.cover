@@ -63,7 +63,7 @@
                             class view/klass;
                             tabindex view/tabindex;
                             accesskey view/accesskey;"
-            tal:define="values python:['left', 'right', 'top', 'bottom']">
+            tal:define="values python:['left', 'right',]">
 
             <option tal:repeat="value values"
                     tal:attributes="value value;

@@ -41,21 +41,19 @@
       </tal:title>
 
      
-      <tal:image condition="python:field['id'] == 'image'">
+      <tal:image condition="python:field['id'] == 'image'"
+      			 define="scale python:field.get('scale', 'large');
+      			         position python:field.get('position', '');">
         <!-- FIXME: this should be configurable -->
         <a class="imag" tal:attributes="href view/get_url;
                                         title description;">
-
-          <img style="float: left; margin: 0 1em 0.5em 0;"
-               tal:define="scales view/@@images;
-                           thumbnail python: scales.scale('image', scale='mini');"
+          <img tal:define="scales view/@@images;
+                           thumbnail python: scales.scale('image', scale=scale);"
                tal:condition="thumbnail"
                tal:attributes="src thumbnail/url;
                                width thumbnail/width;
-                               height thumbnail/height;" />
-
-
-
+                               height thumbnail/height;
+                               class position;" />
         </a>
 
            
