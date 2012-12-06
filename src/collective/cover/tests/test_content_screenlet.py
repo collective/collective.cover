@@ -27,7 +27,7 @@ class LinkTileTestCase(unittest.TestCase):
         self.assertRegexpMatches(rendered, re.compile(html))
 
     def test_jsonbytype(self):
-        portal_objects_ids = [i.id for i in \
+        portal_objects_ids = [i.id for i in
                               getToolByName(self.portal, 'portal_catalog')()]
         view = self.portal.restrictedTraverse('@@jsonbytype')
         json_response = json.loads(view(False, '', ''))

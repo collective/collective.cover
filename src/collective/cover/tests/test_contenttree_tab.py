@@ -21,8 +21,8 @@ class ContentTreeTabTestCase(unittest.TestCase):
         self.portal = self.layer['portal']
         self.request = self.layer['request']
         self.tile = self.layer['portal'].restrictedTraverse('@@%s/%s' %
-                                    ('collective.cover.basic',
-                                     'test-basic-tile',))
+                                                            ('collective.cover.basic',
+                                                             'test-basic-tile',))
 
     def test_interface(self):
         self.assertTrue(IPersistentCoverTile.implementedBy(BasicTile))
@@ -71,7 +71,7 @@ class ContentTreeTabTestCase(unittest.TestCase):
                          self.tile.data['description'])
 
     def test_render_empty(self):
-        self.assertTrue('Please drag&amp;drop some content here to ' \
+        self.assertTrue('Please drag&amp;drop some content here to '
                         'populate the tile.' in self.tile())
 
     def test_render_title(self):
@@ -90,9 +90,9 @@ class ContentTreeTabTestCase(unittest.TestCase):
         rendered = self.tile()
         self.assertTrue(obj.UID() in rendered)
         self.assertTrue('Test news item' in rendered)
-        self.assertTrue('This news item was created for testing purposes' \
+        self.assertTrue('This news item was created for testing purposes'
                         in rendered)
         self.assertTrue('test-subject' in rendered)
-        self.assertTrue(obj.effective_date.strftime('%y/%m/%d %H:%M') \
+        self.assertTrue(obj.effective_date.strftime('%y/%m/%d %H:%M')
                         in rendered)
         self.assertTrue('test-basic-tile/@@images' in rendered)

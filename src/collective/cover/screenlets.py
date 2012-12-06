@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+from Acquisition import aq_inner, aq_parent
+
 from zope.component import getMultiAdapter, getUtility, queryUtility
 
 from zope.interface import Interface
@@ -21,16 +23,15 @@ from collective.cover.controlpanel import ICoverSettings
 from Products.CMFCore.interfaces._content import IFolderish
 from zope.schema.interfaces import IVocabularyFactory
 
+from plone.i18n.normalizer.interfaces import IIDNormalizer
+from plone.app.layout.navigation.root import getNavigationRoot
+from plone.app.layout.navigation.interfaces import INavigationRoot
+
 try:
     import json
     json = json  # Pyflakes
 except ImportError:
     import simplejson as json
-
-from plone.i18n.normalizer.interfaces import IIDNormalizer
-from plone.app.layout.navigation.root import getNavigationRoot
-from plone.app.layout.navigation.interfaces import INavigationRoot
-from Acquisition import aq_inner, aq_parent
 
 
 VOCAB_ID = u'plone.app.vocabularies.ReallyUserFriendlyTypes'
@@ -136,7 +137,7 @@ class SearchItemsBrowserView(BrowserView):
         self.request = request
         self.catalog = getToolByName(self.context, 'portal_catalog')
         self.plone_view = getMultiAdapter((self.context, self.request),
-                name=u'plone')
+                                          name=u'plone')
         self.getIcon = self.plone_view.getIcon
         self.registry = getUtility(IRegistry)
         self.settings = self.registry.forInterface(ICoverSettings)
@@ -177,7 +178,7 @@ class SearchItemsBrowserView(BrowserView):
         if path is None:
             # Add siteroot
             result.append({'title': root.title_or_id(),
-                'url': '/'.join(root.getPhysicalPath())})
+                           'url': '/'.join(root.getPhysicalPath())})
 
         for i in range(len(relative)):
             now = relative[:i + 1]
@@ -186,7 +187,7 @@ class SearchItemsBrowserView(BrowserView):
             if IFolderish.providedBy(obj):
                 if not now[-1] == 'talkback':
                     result.append({'title': obj.title_or_id(),
-                        'url': root_url + '/' + '/'.join(now)})
+                                   'url': root_url + '/' + '/'.join(now)})
         return result
 
     def jsonByType(self, rooted, document_base_url, searchtext):
@@ -203,8 +204,7 @@ class SearchItemsBrowserView(BrowserView):
         else:
             self.filter_portal_types = [i[0] for i in self._getCurrentValues()]
 
-        if INavigationRoot.providedBy(obj) or \
-           (rooted == "True" and document_base_url[:-1] == obj.absolute_url()):
+        if INavigationRoot.providedBy(obj) or (rooted == "True" and document_base_url[:-1] == obj.absolute_url()):
             results['parent_url'] = ''
         else:
             results['parent_url'] = aq_parent(obj).absolute_url()
@@ -229,14 +229,13 @@ class SearchItemsBrowserView(BrowserView):
                 'url': brain.getURL(),
                 'portal_type': brain.portal_type,
                 'normalized_type': normalizer.normalize(brain.portal_type),
-                'classicon': 'contenttype-%s' % \
+                'classicon': 'contenttype-%s' %
                              (normalizer.normalize(brain.portal_type)),
-                'r_state': 'state-%s' % \
+                'r_state': 'state-%s' %
                            (normalizer.normalize(brain.review_state or '')),
                 'title': brain.Title == "" and brain.id or brain.Title,
                 'icon': self.getIcon(brain).html_tag() or '',
-                'is_folderish': brain.is_folderish
-                })
+                'is_folderish': brain.is_folderish})
         # add catalog_ressults
         results['items'] = catalog_results
         # return results in JSON format
