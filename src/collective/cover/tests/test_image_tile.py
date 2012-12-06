@@ -63,8 +63,8 @@ class ImageTileTestCase(unittest.TestCase):
         obj2 = self.portal['my-image2']
 
         tile = self.layer['portal'].restrictedTraverse('@@%s/%s' %
-                                    ('collective.cover.image',
-                                     'test-image-tile',))
+                                                       ('collective.cover.image',
+                                                        'test-image-tile',))
         tile.populate_with_object(obj1)
         rendered = tile()
         self.assertTrue('test-image-tile/@@images' in rendered)
@@ -80,8 +80,8 @@ class ImageTileTestCase(unittest.TestCase):
                          str(obj1.getImage()))
 
         tile = self.layer['portal'].restrictedTraverse('@@%s/%s' %
-                                    ('collective.cover.image',
-                                     'test-image-tile',))
+                                                       ('collective.cover.image',
+                                                        'test-image-tile',))
         tile.populate_with_object(obj)
         rendered = tile()
         self.assertTrue('test-image-tile/@@images' in rendered)
@@ -99,8 +99,8 @@ class ImageTileTestCase(unittest.TestCase):
                          str(obj.getImage()))
 
         tile = self.layer['portal'].restrictedTraverse('@@%s/%s' %
-                                    ('collective.cover.image',
-                                     'test-image-tile',))
+                                                       ('collective.cover.image',
+                                                        'test-image-tile',))
         tile.populate_with_object(obj2)
         rendered = tile()
         self.assertTrue('test-image-tile/@@images' in rendered)
@@ -125,25 +125,25 @@ class ImageTileTestCase(unittest.TestCase):
         obj2 = self.portal['my-image2']
 
         tile = self.layer['portal'].restrictedTraverse('@@%s/%s' %
-                                    ('collective.cover.image',
-                                     'test-image-tile',))
+                                                       ('collective.cover.image',
+                                                        'test-image-tile',))
         tile.populate_with_object(obj)
         self.assertTrue('image_mtime' in tile.data)
         mtime = tile.data['image_mtime']
 
         tile = self.layer['portal'].restrictedTraverse('@@%s/%s' %
-                                    ('collective.cover.image',
-                                     'test-image-tile',))
+                                                       ('collective.cover.image',
+                                                        'test-image-tile',))
         tile.populate_with_object(obj1)
         tile = self.layer['portal'].restrictedTraverse('@@%s/%s' %
-                                    ('collective.cover.image',
-                                     'test-image-tile',))
+                                                       ('collective.cover.image',
+                                                        'test-image-tile',))
         self.assertTrue('image_mtime' in tile.data)
         self.assertNotEqual(tile.data['image_mtime'], mtime)
 
         tile = self.layer['portal'].restrictedTraverse('@@%s/%s' %
-                                    ('collective.cover.image',
-                                     'test-image-tile',))
+                                                       ('collective.cover.image',
+                                                        'test-image-tile',))
         tile.populate_with_object(obj2)
         self.assertTrue('image_mtime' in tile.data)
         self.assertNotEqual(tile.data['image_mtime'], mtime)
