@@ -84,31 +84,10 @@ class ContentSearch(grok.View):
         strategy = SitemapNavtreeStrategy(self.context)
 
         uids = None
-        if self.tab == 'content-tree':
-            # XXX: not implemented
-            pass
-#            portal_state = getMultiAdapter((self.context, self.request),
-#                                           name=u'plone_portal_state')
-#            portal = portal_state.portal()
-#            query_tree = {'sort_on': 'getObjPositionInParent',
-#                          'sort_order': 'asc',
-#                          'is_default_page': False}
-#            strategy.rootPath = portal.absolute_url_path()
-#            data = buildFolderTree(portal,
-#                                   obj=portal,
-#                                   query=query_tree,
-#                                   strategy=strategy)
-#            result = data.get('children', [])
-        else:
-            if self.tab == 'clipboard':
-                # XXX: not implemented
-                pass
-#                brains = list(self.search(''))[:2]
-#                uids = [b.UID for b in brains]
-            result = self.search(query, uids=uids,
-                                 b_start=page * b_size,
-                                 b_size=b_size)
-            result = [strategy.decoratorFactory({'item': node}) for node in result]
+        result = self.search(query, uids=uids,
+                             b_start=page * b_size,
+                             b_size=b_size)
+        result = [strategy.decoratorFactory({'item': node}) for node in result]
         self.level = 1
         self.children = result
 
@@ -133,8 +112,10 @@ class ContentSearch(grok.View):
 
         if query:
             catalog_query = {'SearchableText': '%s*' % query}
-        if uids:
-            catalog_query['UID'] = uids
+
+        # XXX: not implemented, this is needed?
+#        if uids:
+#            catalog_query['UID'] = uids
 
         results = catalog(**catalog_query)
         return results
@@ -213,8 +194,8 @@ class SearchItemsBrowserView(BrowserView):
         catalog_results = []
         results = {}
 
-        object = self.obj
-        portal_catalog = getToolByName(object, 'portal_catalog')
+        obj = self.obj
+        portal_catalog = getToolByName(obj, 'portal_catalog')
         normalizer = getUtility(IIDNormalizer)
 
         if 'filter_portal_types' in self.request.keys():
@@ -222,17 +203,18 @@ class SearchItemsBrowserView(BrowserView):
         else:
             self.filter_portal_types = [i[0] for i in self._getCurrentValues()]
 
-        if INavigationRoot.providedBy(object) or (rooted == "True" and document_base_url[:-1] == object.absolute_url()):
+        if INavigationRoot.providedBy(obj) or \
+           (rooted == "True" and document_base_url[:-1] == obj.absolute_url()):
             results['parent_url'] = ''
         else:
-            results['parent_url'] = aq_parent(object).absolute_url()
+            results['parent_url'] = aq_parent(obj).absolute_url()
         if rooted == "True":
             results['path'] = self.getBreadcrumbs(results['parent_url'])
         else:
             # get all items from siteroot to context (title and url)
             results['path'] = self.getBreadcrumbs()
         # get all portal types and get information from brains
-        path = '/'.join(object.getPhysicalPath())
+        path = '/'.join(obj.getPhysicalPath())
 
         catalog_query = {'sort_on': 'getObjPositionInParent'}
         catalog_query['portal_type'] = self.filter_portal_types
@@ -247,8 +229,10 @@ class SearchItemsBrowserView(BrowserView):
                 'url': brain.getURL(),
                 'portal_type': brain.portal_type,
                 'normalized_type': normalizer.normalize(brain.portal_type),
-                'classicon': 'contenttype-%s' % (normalizer.normalize(brain.portal_type)),
-                'r_state': 'state-%s' % (normalizer.normalize(brain.review_state or '')),
+                'classicon': 'contenttype-%s' % \
+                             (normalizer.normalize(brain.portal_type)),
+                'r_state': 'state-%s' % \
+                           (normalizer.normalize(brain.review_state or '')),
                 'title': brain.Title == "" and brain.id or brain.Title,
                 'icon': self.getIcon(brain).html_tag() or '',
                 'is_folderish': brain.is_folderish
