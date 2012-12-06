@@ -147,6 +147,16 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
         data_mgr = ITileDataManager(self)
         data_mgr.delete()
 
+        # Remove permission data
+        permissions = getMultiAdapter((self.context, self.request, self),
+                                      ITilesPermissions)
+        permissions.delete()
+
+        # Remove configuration data
+        configuration = getMultiAdapter((self.context, self.request, self),
+                                        ITilesConfigurationScreen)
+        configuration.delete()
+
         notify(ObjectModifiedEvent(self.context))
 
     def accepted_ct(self):
