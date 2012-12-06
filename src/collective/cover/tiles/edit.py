@@ -66,8 +66,8 @@ class CustomEditForm(DefaultEditForm):
         # fields that weren't sent with the form.
         old_data = dataManager.get()
         for item in data:
-            if data[item] is not None:
-                old_data[item] = data[item]
+#            if data[item] is not None:
+            old_data[item] = data[item]
 
         dataManager.set(old_data)
 
