@@ -1,28 +1,16 @@
 # -*- coding: utf-8 -*-
 
 import unittest2 as unittest
-import os
 
 from DateTime import DateTime
-from App.Common import package_home
 
 from zope.interface.verify import verifyClass
 from zope.interface.verify import verifyObject
 
 from Products.ATContentTypes.utils import DT2dt
-from collective.cover.testing import INTEGRATION_TESTING
+from collective.cover.testing import INTEGRATION_TESTING, loadImage
 from collective.cover.tiles.basic import BasicTile
 from collective.cover.tiles.base import IPersistentCoverTile
-
-
-def loadImage(name, size=0):
-    """Load image from testing directory
-    """
-    path = os.path.join(package_home(globals()), 'input', name)
-    fd = open(path, 'rb')
-    data = fd.read()
-    fd.close()
-    return data
 
 
 class BasicTileTestCase(unittest.TestCase):
