@@ -70,11 +70,7 @@
 
 
       <tal:description condition="python:field['id'] == 'subjects'">
-        <tal:subjects repeat="subject python:field['content']">
-        	<span class="keywords">
-        		<tal:subject replace="subject"/><tal:notlast condition="not:repeat/subject/end">, </tal:notlast>
-	      	</span>
-       	</tal:subjects>
+		<span metal:use-macro="context/@@tile_macros/subjects" />
       </tal:description>
 
       <tal:last condition="repeat/field/end">

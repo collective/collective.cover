@@ -176,6 +176,13 @@
     factory="collective.cover.tiles.permissions.TilesPermissions"
     />
 
- <subscriber handler=".handlers.notifyModified" />
+  <subscriber handler=".handlers.notifyModified" />
+
+  <browser:page
+      name="tile_macros"
+      template="templates/tile_macros.pt"
+      for="*"
+      permission="zope.Public"
+      />
 
 </configure>
