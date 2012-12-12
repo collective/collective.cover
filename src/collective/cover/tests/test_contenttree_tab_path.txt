@@ -42,7 +42,7 @@ Test content tree tab
 
     Page Should Contain Element  css=${path_selector}    
 	Wait Until Page Contains Element  css=div#content-trees div#internalpath a
-    Page Should Contain  → my-folder    
+    Page Should Contain  Plone site → my-folder
 
 	# Test searches
 	#
