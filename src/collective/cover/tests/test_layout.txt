@@ -27,11 +27,11 @@ Test Basic Layout Operations
     #count if there is 1 row and 1 column
     Count Number of Columns  1
     Count Number of Rows  1
-
+	
     #add a row after the existing one.
     Add Row
     #add a column in the latest row
-    Add Column at Second Row
+	Add Column at First Row
 
     #2 columns and 2 rows
     Count Number of Columns  2
@@ -84,8 +84,8 @@ Delete the First Row
     Click Element  css=div.cover-row button.close
 
 Delete a Column in the First Row
-    Click Element  css=div.layout div.cover-row:nth-of-type(1) div.cover-column > button.close
-
+    Click Element  css=div.layout div.cover-row:nth-of-type(1) div.cover-column:nth-of-type(1) > button.close
+	
 Cancel Add Tile
     Element Should Be Visible  css=${tile_cancel_area_selector}
     Click Element  css=${tile_cancel_area_selector}
