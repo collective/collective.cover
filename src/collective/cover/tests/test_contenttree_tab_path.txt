@@ -1,6 +1,6 @@
 *** Settings ***
 
-Library  Selenium2Library  timeout=5 seconds  implicit_wait=3 seconds
+Library  Selenium2Library  timeout=5 seconds  implicit_wait=3 seconds  run_on_failure=Log Source
 Resource  keywords.txt
 Resource  cover_keywords.txt
 Variables  plone/app/testing/interfaces.py
@@ -28,6 +28,8 @@ Test content tree tab
     Select Tile to Add  ${basic_tile_location}
     Save Cover Layout
 
+	# Test navigate tree
+	#
     Click Link  link=Compose
     Page Should Contain   Please drag&drop some content here to populate the tile.
 
@@ -35,13 +37,23 @@ Test content tree tab
 
     Click Element  link=Content tree
 
-    Input text  name=${input_contenttree}  folder
-    Page Should Contain  1 Results
-
     Page Should Contain Element  css=${folder_selector}
     Click Element  css=${folder_selector}
 
-    Page Should Contain Element  css=${path_selector}
+    Page Should Contain Element  css=${path_selector}    
+	Wait Until Page Contains Element  css=div#content-trees div#internalpath a
+    Page Should Contain  → my-folder    
+
+	# Test searches
+	#
+    Click Link  link=Compose
+    Page Should Contain   Please drag&drop some content here to populate the tile.
+
+    Click Element  css=div#screenlet-content-show-button
+
+    Click Element  link=Content tree
+    Input text  name=${input_contenttree}  folder
+    Page Should Contain  1 Results
 
     Click Link  link=Layout
     Delete Tile
