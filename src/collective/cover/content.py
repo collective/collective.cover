@@ -26,6 +26,14 @@ from plone.uuid.interfaces import IUUIDGenerator
 from collective.cover.controlpanel import ICoverSettings
 from collective.cover.utils import assign_tile_ids
 
+from plone.locking.interfaces import ILockable
+
+from DateTime import DateTime
+from datetime import timedelta
+from zope.i18nmessageid import MessageFactory
+
+_ = MessageFactory('collective.cover')
+
 grok.templatedir('templates')
 
 
@@ -157,6 +165,115 @@ class Compose(grok.View):
         # XXX: used to lock the object when someone is editing it
         notify(EditBegunEvent(self.context))
 
+class lockedinfo(grok.View):
+    grok.context(ICover)
+    grok.require('cmf.ModifyPortalContent')
+
+    def render(self):
+        if self.is_locked():
+            return json.dumps(self.lock_info())
+
+    def is_locked(self):
+        """True if this object is locked for the current user (i.e. the
+        current user is not the lock owner)
+        """
+        lockable = ILockable(aq_inner(self.context))
+        # Faster version - we rely on the fact that can_safely_unlock() is
+        # True even if the object is not locked
+        return lockable.locked()
+
+    def lock_info(self):
+        """Get information about the current lock, a dict containing:
+
+        creator - the id of the user who created the lock
+        fullname - the full name of the lock creator
+        author_page - a link to the home page of the author
+        time - the creation time of the lock
+        time_difference - a string representing the time since the lock was
+        acquired.
+        """
+
+        portal_membership = getToolByName(self.context, 'portal_membership')
+        portal_url = getToolByName(self.context, 'portal_url')
+        lockable = ILockable(aq_inner(self.context))
+        url = portal_url()
+        for info in lockable.lock_info():
+            creator = info['creator']
+            time = info['time']
+            token = info['token']
+            lock_type = info['type']
+            # Get the fullname, but remember that the creator may not
+            # be a member, but only Authenticated or even anonymous.
+            # Same for the author_page
+            fullname = ''
+            author_page = ''
+            member = portal_membership.getMemberById(creator)
+            if member:
+                fullname = member.getProperty('fullname', '')
+                author_page = "%s/author/%s" % (url, creator)
+            if fullname == '':
+                fullname = creator or _('label_an_anonymous_user',
+                                        u'an anonymous user')
+            time_difference = self._getNiceTimeDifference(time)
+
+            return {
+                'creator': creator,
+                'fullname': fullname,
+                'author_page': author_page,
+                'time': time,
+                'time_difference': time_difference,
+                'token': token,
+            }
+
+    def _getNiceTimeDifference(self, baseTime):
+        now = DateTime()
+        days = int(round(now - DateTime(baseTime)))
+        delta = timedelta(now - DateTime(baseTime))
+        days = delta.days
+        hours = int(delta.seconds / 3600)
+        minutes = (delta.seconds - (hours * 3600)) / 60
+
+        dateString = u""
+        if days == 0:
+            if hours == 0:
+                if delta.seconds < 120:
+                    dateString = _(u"1 minute")
+                else:
+                    dateString = _(u"$m minutes", mapping={'m': minutes})
+            elif hours == 1:
+                dateString = _(u"$h hour and $m minutes", mapping={'h': hours, 'm': minutes})
+            else:
+                dateString = _(u"$h hours and $m minutes", mapping={'h': hours, 'm': minutes})
+        else:
+            if days == 1:
+                dateString = _(u"$d day and $h hours", mapping={'d': days, 'h': hours})
+            else:
+                dateString = _(u"$d days and $h hours", mapping={'d': days, 'h': hours})
+        return dateString
+
+
+class unlockcover(grok.View):
+    grok.context(ICover)
+    grok.require('cmf.ModifyPortalContent')
+
+    def render(self):
+        lockable = ILockable(aq_inner(self.context))
+        if lockable.locked():
+            lockable.unlock()
+
+            return 'Unlocked'
+
+
+class lockcover(grok.View):
+    grok.context(ICover)
+    grok.require('cmf.ModifyPortalContent')
+
+    def render(self):
+        lockable = ILockable(aq_inner(self.context))
+        if not lockable.locked():
+            lockable.lock()
+
+            return 'Locked'
 
 # TODO: implement EditCancelledEvent and EditFinishedEvent
 # XXX: we need to leave the view after saving or cancelling editing
