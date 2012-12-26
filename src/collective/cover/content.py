@@ -165,6 +165,7 @@ class Compose(grok.View):
         # XXX: used to lock the object when someone is editing it
         notify(EditBegunEvent(self.context))
 
+
 class lockedinfo(grok.View):
     grok.context(ICover)
     grok.require('cmf.ModifyPortalContent')
@@ -277,6 +278,8 @@ class lockcover(grok.View):
 
 # TODO: implement EditCancelledEvent and EditFinishedEvent
 # XXX: we need to leave the view after saving or cancelling editing
+
+
 class LayoutEdit(grok.View):
     grok.context(ICover)
     grok.require('cmf.ModifyPortalContent')
