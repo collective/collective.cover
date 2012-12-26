@@ -17,7 +17,11 @@ $(document).ready(function() {
                 'data': {'cover_layout':JSON.stringify(json)},
                 'type':'POST',
                 success: function(data) {
+
+                    /* Save and unlock */
                     $this.find('span').text('Saved');
+                    layout.trigger('unlocked.layout');
+
                     $('#btn-save').addClass('saved btn-success');
                 },
                 error: function(jqXHR, textStatus, errorThrown){
