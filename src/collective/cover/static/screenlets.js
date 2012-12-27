@@ -77,6 +77,11 @@ $(function() {
         return false;
     });
 
+    $("#content-trees > #item-list, #item-list").on('scroll', function () {
+        $("#screenlet-content-search, .ui-draggable-dragging").draggable('option', 'revert', true).trigger('mouseup');
+        $("#screenlet-content-search, .ui-draggable-dragging").draggable('option', 'revert', false).trigger('mousedown');
+    });
+
     screenletMaker({
         draggable: '#screenlet-content-search #item-list li',
         draggable_acepted: function(e) {
