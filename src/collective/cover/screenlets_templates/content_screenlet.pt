@@ -20,7 +20,7 @@
       <div id="recent" class="tab-pane active">
         <div class="input">
           <input class="screenlets-content-trees" id="screenlet-content-search-input" type="text"
-            title="Filter items" placeholder="Filter items"
+            title="Filter items" placeholder="Filter items" name="screenlet-search"
             i18n:attributes="title; placeholder"/>
         </div>
         <input type="button" value="ok" id="screenlet-content-search-button"
