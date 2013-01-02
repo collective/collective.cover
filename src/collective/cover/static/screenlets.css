@@ -21,7 +21,7 @@
     margin: 10px 0 0;
     overflow: auto;
     padding: 5px;
-    width: 100%;
+    width: 500px;
 }
 
 #screenlet-content-search #item-list li {
@@ -79,6 +79,7 @@ div.input {
     background: white;
 }
 
+input[type="text"].screenlets-content-trees,
 input[type="text"]#screenlets-content-trees {
     border: 0px solid;
     width: 100%;
