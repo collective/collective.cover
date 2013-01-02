@@ -3,20 +3,20 @@
 from zope import schema
 from zope.interface import implements
 from zope.component import getUtility
-from zope.component.hooks import getSite
 
-from plone.registry.interfaces import IRegistry
+from plone.memoize import view
+from plone.memoize.instance import memoizedproperty
 from plone.namedfile.field import NamedBlobImage as NamedImage
 from plone.namedfile.file import NamedBlobImage as NamedImageFile
+from plone.registry.interfaces import IRegistry
 from plone.tiles.interfaces import ITileDataManager
-from plone.memoize import view
 from plone.uuid.interfaces import IUUID
-from Products.ATContentTypes.utils import DT2dt
 
 from z3c.form.browser.textlines import TextLinesFieldWidget
 
 from plone.autoform import directives as form
 
+from Products.CMFCore.utils import getToolByName
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
 from collective.cover import _
@@ -45,6 +45,7 @@ class IBasicTile(IPersistentCoverTile):
     date = schema.Datetime(
         title=_(u'Date'),
         required=False,
+        readonly=True,
     )
 
     subjects = schema.Tuple(
@@ -53,6 +54,7 @@ class IBasicTile(IPersistentCoverTile):
                       default=(u"Also known as keywords, tags or labels, "
                                "these help you categorize your content.")),
         required=False,
+        readonly=True,
         value_type=schema.TextLine(),
         missing_value=(),
     )
@@ -74,31 +76,30 @@ class BasicTile(PersistentCoverTile):
 
     is_configurable = True
 
-    def get_date(self):
+    @memoizedproperty
+    def brain(self):
+        catalog = getToolByName(self.context, 'portal_catalog')
+        uuid = self.data.get('uuid')
+        result = catalog(UID=uuid) if uuid is not None else []
+        assert len(result) <= 1
+        return result[0] if result else None
+
+    def Date(self):
+        """ Return the date of publication or modification of the object.
         """
-        A method to return the date stored in the tile
-        """
-        if self.data['date'] is None:
-            return ''
-        formatter = self.request.locale.dates.getFormatter("dateTime", "short")
-        datetime_value = self.data['date']
-        if datetime_value.year > 1900:
-            return formatter.format(datetime_value)
-        # due to fantastic datetime.strftime we need this hack
-        # for now ctime is default
-        return datetime_value.ctime()
+        if self.brain is not None:
+            return self.brain.Date
 
     def is_empty(self):
-        return not(self.data.get('title') or
-                   self.data.get('description') or
-                   self.data.get('image') or
-                   self.data.get('date') or
-                   self.data.get('subjects'))
+        return self.brain is not None and not (
+            self.data.get('title') or
+            self.data.get('description') or
+            self.data.get('image')
+        )
 
-    def get_url(self):
-        if self.data['uuid']:
-            return '%s/resolveuid/%s' % \
-                (getSite().absolute_url(), self.data['uuid'])
+    def getURL(self):
+        if self.brain is not None:
+            return self.brain.getURL()
 
     def populate_with_object(self, obj):
         super(BasicTile, self).populate_with_object(obj)
@@ -107,11 +108,10 @@ class BasicTile(PersistentCoverTile):
             'title': obj.Title(),
             'description': obj.Description(),
             'uuid': IUUID(obj, None),
-            'date': obj.effective_date and DT2dt(obj.effective_date) or None,
-            'subjects': obj.Subject(),
         }
 
         # XXX: Implements a better way to detect image fields.
+        # probably detecting if the object is Archetypes or Dexterity first
         try:
             data['image'] = NamedImageFile(str(obj.getImage().data))
         except AttributeError:

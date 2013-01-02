@@ -4,7 +4,8 @@
       xmlns:i18n="http://xml.zope.org/namespaces/i18n"
       i18n:domain="collective.cover">
 
-<body tal:define="is_empty view/is_empty">
+<body tal:define="is_empty nocall:view/is_empty;
+                  toLocalizedTime nocall:context/@@plone/toLocalizedTime">
   <p tal:condition="is_empty">
     Please drag&amp;drop some content here to populate the tile.
   </p>
@@ -16,36 +17,34 @@
          <tal:title define="htmltag python:field.get('htmltag', 'h1')"
                  condition="python:field['id'] == 'title'">
       
-  <!-- FIXME: basic tile is not storing the object URL -->
           <h1 tal:condition="python:htmltag == 'h1'">
-             <a tal:attributes="href view/get_url;
+             <a tal:attributes="href view/getURL;
                                 title description"
               tal:content="python:field['content']" />
           </h1>
          
           <h2 tal:condition="python:htmltag == 'h2'">
-             <a tal:attributes="href view/get_url;
+             <a tal:attributes="href view/getURL;
                                 title description"
               tal:content="python:field['content']" />
           </h2>
           <h3 tal:condition="python:htmltag == 'h3'">
-             <a tal:attributes="href view/get_url;
+             <a tal:attributes="href view/getURL;
                                 title description"
               tal:content="python:field['content']" />
           </h3>
           <h4 tal:condition="python:htmltag == 'h4'">
-             <a tal:attributes="href view/get_url;
+             <a tal:attributes="href view/getURL;
                                 title description"
               tal:content="python:field['content']" />
           </h4>
       </tal:title>
 
-     
       <tal:image condition="python:field['id'] == 'image'"
       			 define="scale python:field.get('scale', 'large');
       			         position python:field.get('position', '');">
         <!-- FIXME: this should be configurable -->
-        <a class="imag" tal:attributes="href view/get_url;
+        <a class="imag" tal:attributes="href view/getURL;
                                         title description;">
           <img tal:define="scales view/@@images;
                            thumbnail python: scales.scale('image', scale=scale);"
@@ -55,23 +54,19 @@
                                height thumbnail/height;
                                class position;" />
         </a>
-
-           
       </tal:image>
 
-   
       <tal:description condition="python:field['id'] == 'description'">
         <p tal:content="python:field['content']">Description</p>
       </tal:description>
 
-      <tal:description condition="python:field['id'] == 'date'">
-        <p tal:content="view/get_date">Date</p>
-      </tal:description>
+      <tal:date condition="python:field['id'] == 'date'">
+        <p tal:content="python:toLocalizedTime(view.Date())">Date</p>
+      </tal:date>
 
-
-      <tal:description condition="python:field['id'] == 'subjects'">
-		<span metal:use-macro="context/@@tile_macros/subjects" />
-      </tal:description>
+      <tal:subjects condition="python:field['id'] == 'subjects'">
+		    <span metal:use-macro="context/@@tile_macros/subjects" />
+      </tal:subjects>
 
       <tal:last condition="repeat/field/end">
         <div class="visualClear"><!-- --></div>
