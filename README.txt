@@ -7,11 +7,19 @@ collective.cover
 Life, the Universe, and Everything
 ----------------------------------
 
-An easy-to-use package to create complex covers for Plone sites. Under
-development (`see and comment our mockups online`_).
+Collective Cover is a product that allows the creation of advanced covers 
+for websites homepages, especially for news portals, government and intranets
+that require more resources than a simple page or collection can offer. However, 
+despite offering rich resources to build a cover, the Collective Cover also 
+provides a very easy mechanism for managing it's contents, fully based on drag 
+and drop interface.
 
-Government, news sites, and intranets have special requirements in terms of
-permissions and versioning.
+Based on Deco, who will be the new model for building Plone Content, Collective 
+Cover allows the inclusion of Tiles in your body, forming a advanced panel for 
+your homepage.
+
+Use cases
+^^^^^^^^^
 
 For instance, suppose you are running The Planet, a news site that has a bunch
 of editors focused on getting news on different topics like Economy, Health or
@@ -28,69 +36,238 @@ and publish the right one focused on the team that won at the end.
 This is the kind of issues we want to solve with this package; we are far from
 it, but that is the idea.
 
-Use cases
-^^^^^^^^^
-
-- [X] a front page may have different layouts
-- [X] layouts are created by a Site Administrator TTW
-- [ ] the package will provide some layouts by default
-- [X] layouts are made of groups of tiles
-- [X] groups of tiles may have different editing permissions
-- [X] a Site Administrator can drag&drop tiles and groups of tiles around the
-  layout
-- [X] some tiles could be configured by Site Administrators (fields shown,
-  image location, and so on…)
-- [X] a Site Administrator will define which fields will be shown on each tile
-- [X] tiles will be associated with different kind of objects: static text
-  tiles, content type tiles, collection tiles, portlet tiles, and so on…
-- [X] only users with specific permissions can modify the content inside a
-  group of tiles
-- [X] a user can associate content to a tile using a simple drag&drop metaphor
-  (if the content and the tile do match)
-- [ ] a user can easily edit the content of a tile in place
-- [ ] front page edition will take place on a working copy of the object
-- [X] a front page may have versions
-- [ ] it will be easy to implement a responsive design for a front page
-
-Alternate solutions
-^^^^^^^^^^^^^^^^^^^
-
-Over the years there have been some packages to solve the problem of creating
-covers in Plone; we have used and are taking ideas from the following:
-
-`CompositePack`_
-    Very old; the legacy code is so complex that is not maintainable anymore.
-    It has (arguably) the best user interface of all. Layouts can not be
-    created TTW. Viewlets are just page templates associated with content
-    types; you can drag&drop viewlets around the layout. Publishers love it.
-
-`CMFContentPanels`_
-    Code is very old, but still maintained (at least works in Plone 4). Allows
-    to create complex layouts TTW and use any layout as a template. Easy to
-    extend and edit (but is terrible to find a content to use). Needs a lot of
-    memory to work and aggressive cache settings.
-
-`Collage`_
-    It allows to create layouts TTW but it has (arguably) the worst user
-    interface of all. It is easily extended and there are several add-ons
-    available that provide new functionality for it.
-
-Home Page Editor of the Brazilian Chamber of Deputies Site
-    Strongly based on `Collage`_, this package was presented at the `World
-    Plone Day 2012 Brasilia`_. It allows the edition of home pages and the
-    definition of permissions on blocks of content. Available only for Plone 3
-    and not openly published… yet.
-
-`collective.panels`_
-    A new package that lets site editors add portlets to a set of new
-    locations: above and below page contents, portal top and footer. The
-    package comes with a number of flexible layouts that are used to position
-    the portlets, and locations can be fixed to the nearest site object, to
-    facilitate inheritance. In `collective.cover` (this package), we don't
-    want to use portlets at all.
 
 Don't Panic
 -----------
+
+Adding Cover
+^^^^^^^^^^^^^
+
+.. figure:: https://raw.github.com/collective/collective.cover/master/cover1.png
+    :align: center
+    :height: 312px
+    :width: 367px
+
+
+To add a cover you should perform the same procedure used to any type of 
+content in Plone:
+
+1. Navigate to the folder where you want to create a cover;
+
+2. Click in "Add Item ..." and choose "Cover";
+
+Then, you have to inform some specific data to create the cover:
+
+3. Fill the required fields as explained below:
+    - Title: Enter a name of your cover.
+    - Description: a informative description of your cover.
+    - Layout: Choose one of the predefined layouts.
+
+4. Click in "Save".
+
+Your cover is now created based on the informed data.
+
+
+
+Adding content in your Cover
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. figure:: https://raw.github.com/collective/collective.cover/master/cover2.png
+    :align: center
+    :height: 405px
+    :width: 706px
+
+After you create your cover, you'll see it comes with some predefined blocks
+ (according to the chosen layout), but it still have no associated content. 
+To define the content that will appears on your cover perform the following 
+steps:
+
+1. Click in the "Compose" tab;
+
+2. Click in the "Add Content" tab on the right of the green bar;
+
+A small window will appears showing the most recent items added in the portal.
+
+3. Click on the title of any choosen item in the list and drag it to one of 
+the tiles (dotted boxes) in the content area;
+
+4. Release the item on one of the boxes. Each Tile allows only certain types 
+of content to be added. If you the content you choose is allowed the box will 
+turn green, if it's not permitted it will remains gray;
+
+.. figure:: https://raw.github.com/collective/collective.cover/master/cover3.png
+    :align: center
+    :height: 405px
+    :width: 706px
+
+The information content will be automatically applied to the selected 
+destination tile and that content will be visible on the cover.
+
+5. Repeat for add content in each one of the existing tiles.
+
+6. To visualize the final result click in "View" tab.
+
+Besides using the most recent items you also have two other listing options to 
+find the content you want.
+
+
+Searching Content
+++++++++++++++++++
+
+You can use the search field in the selection content window to find the object 
+you want.
+
+1. Type the term you want to find;
+
+2. Click in the "Search" button.
+
+The items related to the term you search will be displayed and can be used like 
+the steps mentioned above.
+
+Content tree
++++++++++++++
+
+Inside selection content window you can also navigate through your site to locate 
+existing content.
+
+1.  Click the "Content Tree" tab;
+
+2. Click on the links to browse through the structure of your site until you find 
+the desired content. All items listed are available to be used like the  above 
+mentioned steps.
+
+Changing information from a Content
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+After a content is added to a cover, a copy of the data will be stored in the Cover 
+and appear to the end user. If it's necessary, you can edit some data of this content 
+exclusively for the cover without changing the information in the original item. This 
+feature is very useful to adapt the content for the cover,  making, for example, the 
+titles more suitable for display on a homepage. To change the data take the following 
+steps.
+
+1. Click on the "Compose" tab;
+
+2. Click on the portion of text you want to change, like the title, description or 
+any other text element.
+
+3. Change the text and click "Save."
+
+The changes will be apply to your cover immediately.
+
+*Important:* The changes will be apply only in the cover tile, not in the original 
+content.
+
+
+Advanced Actions
+-----------------
+
+Changing the layout of your cover
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+If you have created a blank cover or want to change the structure of your current 
+cover you can add or delete tiles, change the place of an existing tile or even 
+change the rows and columns structure of the cover. All these operations can be 
+performed from the "Layout" tab.
+
+A cover is a combination of three basic elements:
+
+   - Lines (which may contain one or more columns)
+   - Columns (which may contain one or more tiles)
+   - Tiles
+
+
+Adding rows and columns
+++++++++++++++++++++++++
+
+To add a new line you can take the following steps:
+
+1. In the Layout tab, click the Line icon and drag it to your page;
+
+After that you need to add a column to this line so you can add tiles later.
+
+2. Click on the icon column and drag this icon into a column. You can repeat this 
+operation as many times as you need. The Collective cover will automatically 
+divide the space between the rows.
+
+Changing the columns width
+++++++++++++++++++++++++++++++
+
+You can control the width of each column individually. Just do the following:
+
+1. Click on the configuration icon of the desired column;
+
+2. Drag the slider to one side or another, adjusting the desired number. The 
+higher the number, the higher the column width.
+
+3. Click the Save button.
+
+By default, the cover uses a grid of 16 units. Therefore, the sum of the all widths 
+in a columns must not exceed the number 16. To make your management easer, when 
+editing the widths always start changing the width of the smaller column.
+
+Adding new tiles
+^^^^^^^^^^^^^^^^^^
+
+Now that you have created new columns, you can add new tiles in it. To add a new 
+tile, do the following:
+
+1. In the Layout tab, click in the Tile icon and drag it to the column where you 
+want to put it;
+
+2. Choose one of the available tiles;
+
+3. Change the configuration as desired;
+
+4. Click the Save button.
+
+Now your new tile can be used in the Compose tab to add contents.
+
+Setting tiles
+^^^^^^^^^^^^^^
+
+At any time you can change the settings in the previous item. Just take the 
+following steps:
+
+1. In the Layout tab, click the Setup icon of the respective tile;
+
+2. Change the information;
+
+3. Click the Save button.
+
+
+Moving the tiles
+^^^^^^^^^^^^^^^^^
+
+On a page that has more than one column, you can move the places of your 
+tiles in a simple and fast way:
+
+1. Click in a tile and drag it to the new column;
+
+2. When you release the tile it will be positioned in the new column;
+
+3. Repeat as often as necessary;
+
+4. When finished, click the the Save button and new configuration will be 
+applied.
+
+
+Saving a layout as a model
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+You can save one of your covers as a template for making other covers in your website. 
+Just do the following:
+
+1. Click in the Layout tab;
+
+2. At the top of the page, enter a name for your model;
+
+3. Click the Save button.
+
+Now your layout can be used as a model to create new covers, as explained in 
+section "Adding a cover".
+
+
 
 Views
 ^^^^^
@@ -243,6 +420,45 @@ Then, you have several ways of using image scales in your tile templates.
 
 Recommendation:: Use the scale saved from the configuration. Check lines 26 through
 34 from the collection.pt file under tiles/templates directory to get the idea.
+
+
+Alternate solutions
+^^^^^^^^^^^^^^^^^^^
+
+Over the years there have been some packages to solve the problem of creating
+covers in Plone; we have used and are taking ideas from the following:
+
+`CompositePack`_
+    Very old; the legacy code is so complex that is not maintainable anymore.
+    It has (arguably) the best user interface of all. Layouts can not be
+    created TTW. Viewlets are just page templates associated with content
+    types; you can drag&drop viewlets around the layout. Publishers love it.
+
+`CMFContentPanels`_
+    Code is very old, but still maintained (at least works in Plone 4). Allows
+    to create complex layouts TTW and use any layout as a template. Easy to
+    extend and edit (but is terrible to find a content to use). Needs a lot of
+    memory to work and aggressive cache settings.
+
+`Collage`_
+    It allows to create layouts TTW but it has (arguably) the worst user
+    interface of all. It is easily extended and there are several add-ons
+    available that provide new functionality for it.
+
+Home Page Editor of the Brazilian Chamber of Deputies Site
+    Strongly based on `Collage`_, this package was presented at the `World
+    Plone Day 2012 Brasilia`_. It allows the edition of home pages and the
+    definition of permissions on blocks of content. Available only for Plone 3
+    and not openly published… yet.
+
+`collective.panels`_
+    A new package that lets site editors add portlets to a set of new
+    locations: above and below page contents, portal top and footer. The
+    package comes with a number of flexible layouts that are used to position
+    the portlets, and locations can be fixed to the nearest site object, to
+    facilitate inheritance. In `collective.cover` (this package), we don't
+    want to use portlets at all.
+
 
 
 Mostly Harmless
