@@ -1,20 +1,16 @@
-function contentSearchFilter(url, tab) {
+var ajaxSearchRequest = [];
+function contentSearchFilter(url) {
   var queryVal = $("#screenlet-content-search-input").val();
   var data = {'q': queryVal};
-  var id = tab ? '#' + tab + ' > ' : '';
-  if (tab) {
-    var queryVal = $(tab + " > #screenlet-content-search-input").val();
-    data['tab'] = tab;
-  }
-  $.ajax({
+  ajaxSearchRequest.push($.ajax({
     url: url,
     data: data,
     success: function(info) {
-      $("#screenlet-content-search " + id + " #item-list").html(info);
-      $("#screenlet-content-search " + id + " #item-list li ul").css("display", "none");
+      $("#screenlet-content-search #recent #item-list").html(info);
+      $("#screenlet-content-search #recent #item-list li ul").css("display", "none");
       return false;
     }
-  });
+  }));
   return false;
 }
 
@@ -359,6 +355,11 @@ coveractions.preInit();
 function filterOnKeyUp() {
     $("#screenlet-content-search-button").css("display", "none");
     $(".screenlets-content-trees").keyup(function() {
+        var i = 0;
+        for(i=0; i<ajaxSearchRequest.length; i++) {
+            ajaxSearchRequest[i].abort();
+        }
+        ajaxSearchRequest = [];
         $("#screenlet-content-search-button").trigger("click");
     });
 }
