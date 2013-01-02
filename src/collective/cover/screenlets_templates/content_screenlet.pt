@@ -18,7 +18,11 @@
 
     <div class="panes">
       <div id="recent" class="tab-pane active">
-        <input id="screenlet-content-search-input" type="text" />
+        <div class="input">
+          <input class="screenlets-content-trees" id="screenlet-content-search-input" type="text"
+            title="Filter items" placeholder="Filter items"
+            i18n:attributes="title; placeholder"/>
+        </div>
         <input type="button" value="ok" id="screenlet-content-search-button"
          tal:attributes="data-url view/post_url"
          i18n:attributes="value" />
@@ -27,13 +31,13 @@
         	<a class="next" href="" i18n:translate="">more</a>
         </ul>
 		<script>
-			var page = 1; 
+			var page = 1;
 			$("#item-list a.next").live("click", function(){
 				$.ajax({
 					url: "@@content-search",
 					data: {'page': page},
 					async: false
-				}).done(function(data) { 
+				}).done(function(data) {
 					$('#item-list a.next').prepend(data);
 					page += 1;
 				});

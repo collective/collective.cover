@@ -44,7 +44,7 @@ function screenletMaker(options) {
     });
 
     $(droppable).droppable({
-        activeClass: 'ui-state-default',    
+        activeClass: 'ui-state-default',
         accept: draggable_acepted,
         hoverClass: 'content-drop-hover ui-state-hover',
         drop: dropped
@@ -98,7 +98,7 @@ $(function() {
             return valid !== -1? true : false;
         },
         windowId: '#screenlet-content-search',
-        droppable: '.tile', 
+        droppable: '.tile',
         dropped: function(event, ui) {
             var tile = $(this);
             var tile_type = tile.attr("data-tile-type");
@@ -192,7 +192,7 @@ var coveractions = {
             if (x.overrideMimeType){
                 x.overrideMimeType(o.content_type);
             }
-            
+
             x.open(o.type || (o.data ? 'POST' : 'GET'), o.url, o.async);
 
             if (o.content_type){
@@ -339,7 +339,7 @@ var coveractions = {
                 }
 
             });
-        
+
             // Update the count
             if (filter != ""){
                 var numberItems = count;
@@ -354,3 +354,15 @@ var coveractions = {
 };
 
 coveractions.preInit();
+
+
+function filterOnKeyUp() {
+    $("#screenlet-content-search-button").css("display", "none");
+    $(".screenlets-content-trees").keyup(function() {
+        $("#screenlet-content-search-button").trigger("click");
+    });
+}
+
+$(document).ready(function() {
+  filterOnKeyUp();
+});
