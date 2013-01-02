@@ -93,10 +93,7 @@ class ContentSearch(grok.View):
         self.children = result
 
     def render(self):
-#        if self.tab == 'content-tree':
-#            # XXX: not implemented
-#            return self.tree_template(children=self.children, level=1)
-        return self.list_template()
+        return self.list_template(children=self.children, level=1)
 
     def search(self, query=None, b_start=None, b_size=None, uids=None):
         catalog = getToolByName(self.context, 'portal_catalog')

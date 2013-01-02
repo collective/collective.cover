@@ -1,5 +1,5 @@
 <tal:master define="level view/level|python:0; children view/children | nothing;">
-    <tal:navitem repeat="node children">
+    <tal:navitem repeat="node children" condition="children">
         <li tal:define="uid node/UID;
                         children python: [];
                         item_url node/getURL;
@@ -19,4 +19,7 @@
             </tal:level>
         </li>
     </tal:navitem>
+    <tal:nothasresult condition="python: not children">
+        <li></li>
+    </tal:nothasresult>
 </tal:master>
