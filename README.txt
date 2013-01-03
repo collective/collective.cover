@@ -170,6 +170,12 @@ cover you can add or delete tiles, change the place of an existing tile or even
 change the rows and columns structure of the cover. All these operations can be 
 performed from the "Layout" tab.
 
+.. figure:: https://raw.github.com/collective/collective.cover/master/cover4.png
+    :align: center
+    :height: 427px
+    :width: 696px
+
+
 A cover is a combination of three basic elements:
 
    - Lines (which may contain one or more columns)
@@ -199,6 +205,11 @@ You can control the width of each column individually. Just do the following:
 
 2. Drag the slider to one side or another, adjusting the desired number. The 
 higher the number, the higher the column width.
+
+.. figure:: https://raw.github.com/collective/collective.cover/master/cover5.png
+    :align: center
+    :height: 386px
+    :width: 691px
 
 3. Click the Save button.
 
