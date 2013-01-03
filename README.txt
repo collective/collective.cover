@@ -7,6 +7,11 @@ collective.cover
 Life, the Universe, and Everything
 ----------------------------------
 
+.. Warning::
+   ``collective.cover`` is currently not compatible with standard Plone tiles;
+   this will be addressed in a future realease of the package. See `81`_ and
+   `112`_ for more information.
+
 Collective Cover is a product that allows the creation of advanced covers 
 for websites homepages, especially for news portals, government and intranets
 that require more resources than a simple page or collection can offer. However, 
@@ -493,4 +498,5 @@ Have an idea? Found a bug? Let us know by `opening a support ticket`_.
 .. _`World Plone Day 2012 Brasilia`: http://colab.interlegis.leg.br/wiki/WorldPloneDay
 .. _`collective.panels`: https://github.com/collective/collective.panels
 .. _`opening a support ticket`: https://github.com/collective/collective.cover/issues
-
+.. _`81`: https://github.com/collective/collective.cover/issues/81
+.. _`112`: https://github.com/collective/collective.cover/issues/112
