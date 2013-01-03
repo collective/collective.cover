@@ -45,7 +45,6 @@ class IBasicTile(IPersistentCoverTile):
     date = schema.Datetime(
         title=_(u'Date'),
         required=False,
-        readonly=True,
     )
 
     subjects = schema.Tuple(
@@ -54,7 +53,6 @@ class IBasicTile(IPersistentCoverTile):
                       default=(u"Also known as keywords, tags or labels, "
                                "these help you categorize your content.")),
         required=False,
-        readonly=True,
         value_type=schema.TextLine(),
         missing_value=(),
     )
