@@ -43,7 +43,6 @@
       <tal:image condition="python:field['id'] == 'image'"
       			 define="scale python:field.get('scale', 'large');
       			         position python:field.get('position', '');">
-        <!-- FIXME: this should be configurable -->
         <a class="imag" tal:attributes="href view/getURL;
                                         title description;">
           <img tal:define="scales view/@@images;
