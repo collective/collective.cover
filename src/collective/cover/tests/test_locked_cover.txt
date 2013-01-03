@@ -63,14 +63,6 @@ Test locked cover
 
     Click Link  link=My Cover
 
-    Open Workflow Menu
-    Click Link  css=a#workflow-transition-publish
-    Page Should Contain  Item state changed.
-
-    Goto Homepage
-
-    Click Link  link=My Cover
-
     Open Browser  ${PLONE_URL}  ${BROWSER_CHROME}
     Go to  ${PLONE_URL}/login_form
     Page should contain element  __ac_name
@@ -82,8 +74,7 @@ Test locked cover
     Close Browser
 
     Switch Browser  2
-    Goto Homepage
     Click Link  link=My Cover
-    Page Should Contain  This item was locked by admin
+    Page Should Contain   Locked    This item was locked by admin 1 minute ago.
 
     Close Browser 
