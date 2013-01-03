@@ -23,14 +23,7 @@
                 self.setup();
                 self.row_events();
                 self.column_events();
-            
-                / * Unlocked by default */
-                coveractions.unlocked();
-
                 le.bind('modified.layout', self.layout_modified);
-
-                le.bind('locked.layout', coveractions.locked);
-                le.bind('unlocked.layout', coveractions.unlocked);
             },
 
             setup: function() {
@@ -345,13 +338,6 @@
                         return (css.match (/\bbtn-\S+/g) || []).join(' ');
                     });
                     $('#btn-save').addClass('modified btn-warning');
-
-                    /* Locked layout*/
-                    if (save_btn.hasClass('modified btn-warning')){
-                        le.trigger('locked.layout'); 
-                    } else {
-                        le.trigger('unlocked.layout');
-                    }
                 }
             },
 

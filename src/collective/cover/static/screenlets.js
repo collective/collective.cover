@@ -52,14 +52,6 @@ function screenletMaker(options) {
 
     // TODO: check if the current screenlet requires any tabs
     $(windowId + " ul.formTabs").tabs("div.panes > div");
-
-    if (document.URL.indexOf('/compose') > 0){
-        $('#content').bind('unlocked.layout', coveractions.unlocked);
-        $('#content').bind('locked.layout', coveractions.locked);
-
-        /* Unlocked by default*/
-        coveractions.unlocked();
-    }
 }
 
 $(function() {
@@ -83,6 +75,11 @@ $(function() {
         var dataUrl = $(this).attr("data-url");
         contentSearchFilter(dataUrl);
         return false;
+    });
+
+    $("#content-trees > #item-list, #item-list").on('scroll', function () {
+        $("#screenlet-content-search, .ui-draggable-dragging").draggable('option', 'revert', true).trigger('mouseup');
+        $("#screenlet-content-search, .ui-draggable-dragging").draggable('option', 'revert', false).trigger('mousedown');
     });
 
     screenletMaker({
@@ -112,8 +109,6 @@ $(function() {
                 url: "@@updatetilecontent",
                 data: {'tile-type': tile_type, 'tile-id': tile_id, 'uid': ct_uid},
                 success: function(info) {
-                    /* locked for editing */
-                    $('#content').trigger('locked.layout');
                     tile.html(info);
                     tile.find('.loading-mask').removeClass('show');
                     TitleMarkupSetup();
@@ -355,23 +350,6 @@ var coveractions = {
         });
     },
 
-    locked: function() {
-        var base_layout = document.baseURI + '@@lockcover';
-        $.ajax({
-                url:base_layout,
-        });
-    },
-
-    unlocked: function() {
-        var islocked = $.ajax({
-                            url:document.baseURI + '@@lockedinfo',
-                            dataType: 'json',
-                        });
-        var base_layout = document.baseURI + '@@unlockcover';
-        if (islocked){
-            $.ajax({url:base_layout,});
-        }
-    },
 
 };
 

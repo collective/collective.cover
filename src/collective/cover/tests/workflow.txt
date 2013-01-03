@@ -1,0 +1,43 @@
+*** Settings ***
+
+*** Variables ***
+
+${WORKFLOW_MENU_LOCATOR} =  dl#plone-contentmenu-workflow.actionMenu
+${STATUS_MESSAGE} =  Item state changed.
+
+*** Keywords ***
+
+Check Status Message
+    [Arguments]  ${message}
+    Page Should Contain Element  css=dl.portalMessage dt  Info
+    Page Should Contain Element  css=dl.portalMessage dd  ${message}
+
+Open Workflow Menu
+    Element Should Not Be Visible  css=${WORKFLOW_MENU_LOCATOR} dd.actionMenuContent
+    Click Link  css=${WORKFLOW_MENU_LOCATOR} dt.actionMenuHeader a
+    Wait until keyword succeeds  1  5  Element Should Be Visible  css=${WORKFLOW_MENU_LOCATOR} dd.actionMenuContent
+
+Trigger Workflow Transition
+    [Arguments]  ${transitionId}
+
+    Open Workflow Menu
+    Click Link  workflow-transition-${transitionId}
+    Check Status Message  ${STATUS_MESSAGE}
+
+Workflow Submit
+    Trigger Workflow Transition  submit
+
+Workflow Retract
+    Trigger Workflow Transition  retract
+
+Workflow Reject
+    Trigger Workflow Transition  reject
+
+Workflow Publish
+    Trigger Workflow Transition  publish
+
+Workflow Make Private
+    Trigger Workflow Transition  hide
+
+Workflow Promote to Draft
+    Trigger Workflow Transition  show

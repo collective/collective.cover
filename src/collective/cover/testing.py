@@ -50,6 +50,9 @@ class Fixture(PloneSandboxLayer):
         portal['my-image2'].setImage(generate_jpeg(100, 100))
         portal['my-file'].setFile(loadImage('canoneye.jpg'))
         portal['my-file'].reindexObject()
+        portal_workflow = portal.portal_workflow
+        portal_workflow.setChainForPortalTypes(['Collection'],
+                                               ['plone_workflow'],)
 
 
 FIXTURE = Fixture()
