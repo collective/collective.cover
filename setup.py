@@ -40,6 +40,7 @@ setup(name='collective.cover',
       zip_safe=False,
       install_requires=[
         'setuptools',
+        'Pillow',
         'Plone>=4.2',
         'collective.js.jqueryui',
         'plone.app.blocks',
