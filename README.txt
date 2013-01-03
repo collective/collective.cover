@@ -12,16 +12,19 @@ Life, the Universe, and Everything
    this will be addressed in a future realease of the package. See `81`_ and
    `112`_ for more information.
 
-Collective Cover is a product that allows the creation of advanced covers 
+``collective.cover`` is a package that allows the creation of advanced covers
 for websites homepages, especially for news portals, government and intranets
 that require more resources than a simple page or collection can offer. However, 
-despite offering rich resources to build a cover, the Collective Cover also 
+despite offering rich resources to build a cover, ``collective.cover`` also
 provides a very easy mechanism for managing it's contents, fully based on drag 
 and drop interface.
 
-Based on Deco, who will be the new model for building Plone Content, Collective 
-Cover allows the inclusion of Tiles in your body, forming a advanced panel for 
-your homepage.
+``collective.cover`` is based on Blocks and Tiles the same as Deco, the new
+layout composition system for Plone.
+
+.. TODO: add links to Blocks, Tiles and Deco
+
+.. TODO: add a comparisson among Deco and collective.cover
 
 Use cases
 ^^^^^^^^^
@@ -203,7 +206,7 @@ To add a new line you can take the following steps:
 After that you need to add a column to this line so you can add tiles later.
 
 2. Click on the icon column and drag this icon into a column. You can repeat this 
-operation as many times as you need. The Collective cover will automatically 
+operation as many times as you need. ``collective.cover`` will automatically
 divide the space between the rows.
 
 Changing the columns width
@@ -478,7 +481,7 @@ Home Page Editor of the Brazilian Chamber of Deputies Site
     locations: above and below page contents, portal top and footer. The
     package comes with a number of flexible layouts that are used to position
     the portlets, and locations can be fixed to the nearest site object, to
-    facilitate inheritance. In `collective.cover` (this package), we don't
+    facilitate inheritance. In ``collective.cover`` (this package), we don't
     want to use portlets at all.
 
 
