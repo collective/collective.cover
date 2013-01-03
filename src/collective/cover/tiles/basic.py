@@ -96,10 +96,16 @@ class BasicTile(PersistentCoverTile):
     def populate_with_object(self, obj):
         super(BasicTile, self).populate_with_object(obj)
 
+        # initialize the tile with all fields needed for its rendering
+        # note that we include here 'date' and 'subjects', but we do not
+        # really care about their value: they came directly from the catalog
+        # brain
         data = {
             'title': obj.Title(),
             'description': obj.Description(),
             'uuid': IUUID(obj, None),  # XXX: can we get None here? see below
+            'date': True,
+            'subjects': True,
         }
 
         # TODO: if a Dexterity object does not have the IReferenceable
