@@ -60,7 +60,7 @@
       </tal:description>
 
       <tal:date condition="python:field['id'] == 'date'">
-        <p tal:content="python:toLocalizedTime(view.Date())">Date</p>
+        <p tal:content="python:toLocalizedTime(view.Date(), True)">Date</p>
       </tal:date>
 
       <tal:subjects condition="python:field['id'] == 'subjects'">
