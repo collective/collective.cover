@@ -7,7 +7,6 @@ from DateTime import DateTime
 from zope.interface.verify import verifyClass
 from zope.interface.verify import verifyObject
 
-from Products.ATContentTypes.utils import DT2dt
 from collective.cover.testing import INTEGRATION_TESTING, loadImage
 from collective.cover.tiles.basic import BasicTile
 from collective.cover.tiles.base import IPersistentCoverTile
@@ -87,13 +86,25 @@ class BasicTileTestCase(unittest.TestCase):
 
         self.tile.populate_with_object(obj)
         rendered = self.tile()
-        self.assertIn(obj.absolute_url(), rendered)
+
+        # the title and a link to the original object must be there
         self.assertIn('Test news item', rendered)
+        self.assertIn(obj.absolute_url(), rendered)
+
+        # the description must be there
         self.assertIn(
             "This news item was created for testing purposes", rendered)
-        self.assertIn('test-subject', rendered)
-        self.assertIn(obj.Date(), rendered)
+
+        # the image must be there
         self.assertIn('test-basic-tile/@@images', rendered)
+
+        # the localized time must be there
+        utils = getMultiAdapter((self.portal, self.request), name=u'plone')
+        date = utils.toLocalizedTime(obj.Date(), True)
+        self.assertIn(date, rendered)
+
+        # the tags must be there
+        self.assertIn('test-subject', rendered)
 
     def test_delete_tile_persistent_data(self):
         permissions = getMultiAdapter(
