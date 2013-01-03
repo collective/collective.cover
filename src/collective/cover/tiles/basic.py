@@ -89,11 +89,7 @@ class BasicTile(PersistentCoverTile):
             return self.brain.Date
 
     def is_empty(self):
-        return self.brain is not None and not (
-            self.data.get('title') or
-            self.data.get('description') or
-            self.data.get('image')
-        )
+        return self.brain is None
 
     def getURL(self):
         if self.brain is not None:

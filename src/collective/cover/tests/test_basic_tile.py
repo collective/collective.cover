@@ -45,6 +45,14 @@ class BasicTileTestCase(unittest.TestCase):
             self.tile.accepted_ct(),
             ['Collection', 'Document', 'File', 'Image', 'Link', 'News Item'])
 
+    def test_is_empty(self):
+        self.assertTrue(self.tile.is_empty())
+
+    def test_is_not_empty(self):
+        obj = self.portal['my-news-item']
+        self.tile.populate_with_object(obj)
+        self.assertFalse(self.tile.is_empty())
+
     def test_date_on_empty_tile(self):
         self.assertIsNone(self.tile.Date())
 
