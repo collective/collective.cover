@@ -101,8 +101,13 @@ class BasicTile(PersistentCoverTile):
         data = {
             'title': obj.Title(),
             'description': obj.Description(),
-            'uuid': IUUID(obj, None),
+            'uuid': IUUID(obj, None),  # XXX: can we get None here? see below
         }
+
+        # TODO: if a Dexterity object does not have the IReferenceable
+        # behaviour enable then it will not work here
+        # we need to figure out how to enforce the use of
+        # plone.app.referenceablebehavior
 
         # XXX: Implements a better way to detect image fields.
         # probably detecting if the object is Archetypes or Dexterity first
