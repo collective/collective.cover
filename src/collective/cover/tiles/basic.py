@@ -49,9 +49,7 @@ class IBasicTile(IPersistentCoverTile):
 
     subjects = schema.Tuple(
         title=_(u'label_categories', default=u'Categories'),
-        description=_(u'help_categories',
-                      default=(u"Also known as keywords, tags or labels, "
-                               "these help you categorize your content.")),
+        description=_(u'help_categories'),
         required=False,
         value_type=schema.TextLine(),
         missing_value=(),
