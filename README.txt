@@ -139,6 +139,11 @@ mentioned steps.
 Changing information from a Content
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+.. figure:: https://raw.github.com/collective/collective.cover/master/cover6.png
+    :align: center
+    :height: 494px
+    :width: 693px
+
 After a content is added to a cover, a copy of the data will be stored in the Cover 
 and appear to the end user. If it's necessary, you can edit some data of this content 
 exclusively for the cover without changing the information in the original item. This 
@@ -210,6 +215,7 @@ higher the number, the higher the column width.
     :align: center
     :height: 386px
     :width: 691px
+
 
 3. Click the Save button.
 
