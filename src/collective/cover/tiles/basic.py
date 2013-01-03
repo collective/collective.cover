@@ -81,7 +81,8 @@ class BasicTile(PersistentCoverTile):
         return result[0] if result else None
 
     def Date(self):
-        """ Return the date of publication or modification of the object.
+        """ Return the date of publication of the original object; if it has
+        not been published yet, it will return its modification date.
         """
         if self.brain is not None:
             return self.brain.Date
@@ -90,6 +91,8 @@ class BasicTile(PersistentCoverTile):
         return self.brain is None
 
     def getURL(self):
+        """ Return the URL of the original object.
+        """
         if self.brain is not None:
             return self.brain.getURL()
 
