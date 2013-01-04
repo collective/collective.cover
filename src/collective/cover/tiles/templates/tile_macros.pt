@@ -1,7 +1,7 @@
 <metal:subjects define-macro="subjects" i18n:domain="collective.cover">
 <div id="category"
      class="documentByLine"
-     tal:define="categories python:field['content'];
+     tal:define="categories view/Subject;
                  url_quote  nocall:modules/Products.PythonScripts.standard/url_quote;"
      tal:condition="categories">
   <tal:filedunder i18n:domain="plone"
