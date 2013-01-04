@@ -10,27 +10,16 @@ Suite Teardown  Close Browser
 
 *** Variables ***
 
-${basic_tile_location}  /html/body/div/div[2]/div/div[2]/div[2]/div[3]/div
-${basic_uuid}  12345
 ${folder_selector}  .contenttype-folder
 ${input_search}  screenlet-search
-${tile_selector}  div.tile-container div.tile
-${path_selector}  div#content-trees div#internalpath
 
 *** Test cases ***
 
 Test content tree tab
     # XXX: should we create the cover object programmatically?
     Create Cover  Title  Description  Empty layout
-    Click Link  link=Layout
-
-    Add Tile
-    Select Tile to Add  ${basic_tile_location}
-    Save Cover Layout
 
     Click Link  link=Compose
-    Page Should Contain   Please drag&drop some content here to populate the tile.
-
     Click Element  css=div#screenlet-content-show-button
 
     Page Should Contain Element  css=${folder_selector}
@@ -40,7 +29,3 @@ Test content tree tab
     Set Selenium Timeout  10s
 
     Xpath Should Match X Times  //div[contains(@id, 'recent')]//ul[contains(@id, 'item-list')]//li  1
-
-    Click Link  link=Layout
-    Delete Tile
-    Save Cover Layout
