@@ -1,20 +1,16 @@
-function contentSearchFilter(url, tab) {
+var ajaxSearchRequest = [];
+function contentSearchFilter(url) {
   var queryVal = $("#screenlet-content-search-input").val();
   var data = {'q': queryVal};
-  var id = tab ? '#' + tab + ' > ' : '';
-  if (tab) {
-    var queryVal = $(tab + " > #screenlet-content-search-input").val();
-    data['tab'] = tab;
-  }
-  $.ajax({
+  ajaxSearchRequest.push($.ajax({
     url: url,
     data: data,
     success: function(info) {
-      $("#screenlet-content-search " + id + " #item-list").html(info);
-      $("#screenlet-content-search " + id + " #item-list li ul").css("display", "none");
+      $("#screenlet-content-search #recent #item-list").html(info);
+      $("#screenlet-content-search #recent #item-list li ul").css("display", "none");
       return false;
     }
-  });
+  }));
   return false;
 }
 
@@ -44,7 +40,7 @@ function screenletMaker(options) {
     });
 
     $(droppable).droppable({
-        activeClass: 'ui-state-default',    
+        activeClass: 'ui-state-default',
         accept: draggable_acepted,
         hoverClass: 'content-drop-hover ui-state-hover',
         drop: dropped
@@ -98,7 +94,7 @@ $(function() {
             return valid !== -1? true : false;
         },
         windowId: '#screenlet-content-search',
-        droppable: '.tile', 
+        droppable: '.tile',
         dropped: function(event, ui) {
             var tile = $(this);
             var tile_type = tile.attr("data-tile-type");
@@ -192,7 +188,7 @@ var coveractions = {
             if (x.overrideMimeType){
                 x.overrideMimeType(o.content_type);
             }
-            
+
             x.open(o.type || (o.data ? 'POST' : 'GET'), o.url, o.async);
 
             if (o.content_type){
@@ -340,7 +336,7 @@ var coveractions = {
                 }
 
             });
-        
+
             // Update the count
             if (filter != ""){
                 var numberItems = count;
@@ -355,3 +351,20 @@ var coveractions = {
 };
 
 coveractions.preInit();
+
+
+function filterOnKeyUp() {
+    $("#screenlet-content-search-button").css("display", "none");
+    $(".screenlets-content-trees").keyup(function() {
+        var i = 0;
+        for(i=0; i<ajaxSearchRequest.length; i++) {
+            ajaxSearchRequest[i].abort();
+        }
+        ajaxSearchRequest = [];
+        $("#screenlet-content-search-button").trigger("click");
+    });
+}
+
+$(document).ready(function() {
+  filterOnKeyUp();
+});
