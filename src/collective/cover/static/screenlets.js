@@ -236,6 +236,7 @@ var coveractions = {
     getFolderContents : function(path, method) {
         // Sends a low level Ajax request
         var t = this, d = document, w = window, na = navigator, ua = na.userAgent;
+        $('#screenlets-content-trees').val('')
 
         coveractions.send({
             url : path + '/' + method,
