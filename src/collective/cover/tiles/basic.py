@@ -96,8 +96,9 @@ class BasicTile(PersistentCoverTile):
         if self.brain is not None:
             return self.brain.getURL()
 
-    def subjects(self):
-        """ Return the Subject of the original object.
+    def Subject(self):
+        """ Return the categories of the original object (AKA keywords, tags
+            or labels).
         """
         if self.brain is not None:
             return self.brain.Subject
