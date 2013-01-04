@@ -96,6 +96,12 @@ class BasicTile(PersistentCoverTile):
         if self.brain is not None:
             return self.brain.getURL()
 
+    def subjects(self):
+        """ Return the Subject of the original object.
+        """
+        if self.brain is not None:
+            return self.brain.Subject
+
     def populate_with_object(self, obj):
         super(BasicTile, self).populate_with_object(obj)
 
