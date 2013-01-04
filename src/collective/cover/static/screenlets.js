@@ -48,6 +48,11 @@ function screenletMaker(options) {
 
     // TODO: check if the current screenlet requires any tabs
     $(windowId + " ul.formTabs").tabs("div.panes > div");
+
+    if (document.URL.indexOf('/compose') > 0){
+        $(window).unload(plone.UnlockHandler.execute);
+    }
+
 }
 
 $(function() {

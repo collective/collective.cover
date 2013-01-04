@@ -3,6 +3,8 @@ $(document).ready(function() {
     if (layout[0] !== undefined) {
         layout.layoutmanager();
 
+        $(window).unload(plone.UnlockHandler.execute);
+
         //bind the save button
         $('#btn-save').click(function(event){
             event.preventDefault();
