@@ -70,11 +70,10 @@ Test locked cover
     Input text  __ac_password  ${CHROME_OWNER_PASSWORD}
     Click Button  Log in
 
-    Switch Browser  1
-    Close Browser
-
     Switch Browser  2
     Click Link  link=My Cover
     Page Should Contain   Locked    This item was locked by admin 1 minute ago.
-
     Close Browser 
+
+    Switch Browser  1
+    Close Browser
