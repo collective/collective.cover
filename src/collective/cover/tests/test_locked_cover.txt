@@ -1,6 +1,6 @@
 *** Settings ***
 
-Documentation  Testing locked
+Documentation  Testing locked and unlocked
 Library  Selenium2Library  timeout=5 seconds  implicit_wait=3 seconds
 Resource  keywords.txt
 Resource  cover_keywords.txt
@@ -74,7 +74,43 @@ Test locked cover
     Switch Browser  2
     Click Link  link=My Cover
     Page Should Contain   Locked    This item was locked by admin 1 minute ago.
-    Close Browser 
 
     Switch Browser  1
+    Click Link  link=View
+
+    Switch Browser  2
+    Click Link  link=My Cover
+    Page Should Not Contain   Locked    This item was locked by admin 1 minute ago.
+    Click Link  link=Compose
+
+    Switch Browser  1
+    Click Link  link=My Cover
+    Page Should Contain   Locked    This item was locked by admin 1 minute ago.
+
+    Switch Browser  2
+    Click Link  link=View
+
+    Switch Browser  1
+    Click Link  link=My Cover
+    Page Should Not Contain   Locked    This item was locked by admin 1 minute ago.
+    Click Link  link=Layout
+
+    Switch Browser  2
+    Click Link  link=My Cover
+    Page Should Contain   Locked    This item was locked by admin 1 minute ago.
+
+    Switch Browser  1
+    Click Link  link=View
+
+    Switch Browser  2
+    Click Link  link=My Cover
+    Page Should Not Contain   Locked    This item was locked by admin 1 minute ago.
+    Click Link  link=Layout
+
+    Switch Browser  1
+    Click Link  link=My Cover
+    Page Should Contain   Locked    This item was locked by admin 1 minute ago.
+    Close Browser
+
+    Switch Browser  2
     Close Browser
