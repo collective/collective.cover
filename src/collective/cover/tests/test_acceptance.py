@@ -20,6 +20,8 @@ def test_suite():
                 layer=FUNCTIONAL_TESTING),
         layered(robotsuite.RobotTestSuite("test_contenttree_tab_path.txt"),
                 layer=FUNCTIONAL_TESTING),
+        layered(robotsuite.RobotTestSuite("test_screenlet_search_tab.txt"),
+                layer=FUNCTIONAL_TESTING),
         layered(robotsuite.RobotTestSuite("test_collection_tile.txt"),
                 layer=FUNCTIONAL_TESTING),
         layered(robotsuite.RobotTestSuite("test_embed_tile.txt"),
