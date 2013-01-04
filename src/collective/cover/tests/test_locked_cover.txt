@@ -62,6 +62,7 @@ Test locked cover
     Page Should Contain  My document
 
     Click Link  link=My Cover
+    Click Link  link=Compose
 
     Open Browser  ${PLONE_URL}  ${BROWSER_CHROME}
     Go to  ${PLONE_URL}/login_form
