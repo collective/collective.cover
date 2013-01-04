@@ -79,7 +79,7 @@ class BasicTileTestCase(unittest.TestCase):
 
     def test_render(self):
         obj = self.portal['my-news-item']
-        obj.setSubject('test-subject')
+        obj.setSubject(['subject1', 'subject2'])
         obj.effective_date = DateTime()
         obj.setImage(loadImage('canoneye.jpg'))
         obj.reindexObject()
@@ -104,7 +104,8 @@ class BasicTileTestCase(unittest.TestCase):
         self.assertIn(date, rendered)
 
         # the tags must be there
-        self.assertIn('test-subject', rendered)
+        self.assertIn('subject1', rendered)
+        self.assertIn('subject2', rendered)
 
     def test_delete_tile_persistent_data(self):
         permissions = getMultiAdapter(
