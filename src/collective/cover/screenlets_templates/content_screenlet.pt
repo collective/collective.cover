@@ -67,7 +67,7 @@
            <ul class="configlets">
             <li id="home" style="display: inline;">
              <a tal:attributes="href python:'''javascript:coveractions.getFolderContents('%s','@@jsonbytype')''' %(context.portal_url())">
-              <img alt="" src="logoIcon.gif"><span i18n:translate="">Home</span>
+              <img alt="" src="logoIcon.gif" /><span i18n:translate="">Home</span>
              </a>
             </li>
            </ul>

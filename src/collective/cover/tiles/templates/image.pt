@@ -5,7 +5,7 @@
       i18n:domain="collective.cover">
 
 <body tal:define="is_empty view/is_empty">
-  <p tal:condition="is_empty">
+  <p tal:condition="is_empty" i18n:translate="">
     Please drag&amp;drop an image here to populate the tile.
   </p>
 

@@ -5,8 +5,8 @@
       i18n:domain="collective.cover">
 
 <body tal:define="is_empty view/is_empty">
-  <p tal:condition="is_empty">
-    Please add up to <span tal:replace="view/limit"/> objects to the tile.
+  <p tal:condition="is_empty" i18n:translate="">
+    Please add up to <span i18n:name="limit_objects" tal:replace="view/limit"/> objects to the tile.
   </p>
 
   <!-- FIXME: this should be configurable -->

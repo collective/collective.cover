@@ -6,7 +6,7 @@
 
 <body>
     <tal:text define="text view/getText">
-        <p tal:condition="not:text">
+        <p tal:condition="not:text" i18n:translate="">
             Please edit the tile to enter some text.
         </p>
         <tal:fields repeat="field view/get_configured_fields">
