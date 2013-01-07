@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: collective.cover\n"
 "POT-Creation-Date: 2013-01-07 14:04+0000\n"
-"PO-Revision-Date: 2012-09-04 16:19-0300\n"
+"PO-Revision-Date: 2013-01-07 14:20-0300\n"
 "Last-Translator: Andre Nogueira <andre@simplesconsultoria.com.br>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -20,39 +20,39 @@ msgstr "Uma capa."
 
 #: tiles/configure.zcml
 msgid "A tile that shows a carousel of images."
-msgstr ""
+msgstr "Um tile que exibe um carrossel de imagens"
 
 #: tiles/configure.zcml
 msgid "A tile that shows a file object."
-msgstr ""
+msgstr "Um tile que exibe um arquivo."
 
 #: tiles/configure.zcml
 msgid "A tile that shows a link object."
-msgstr ""
+msgstr "Um tile que exibe um link."
 
 #: tiles/configure.zcml
 msgid "A tile that shows a list of items."
-msgstr ""
+msgstr "Um tile que exibe uma lista de itens."
 
 #: tiles/configure.zcml
 msgid "A tile that shows an image object."
-msgstr ""
+msgstr "Um tile que exibe uma imagem."
 
 #: tiles/configure.zcml
 msgid "A tile that shows general information about objects."
-msgstr ""
+msgstr "Um tile que exibe  informações gerais sobre objetos."
 
 #: tiles/configure.zcml
 msgid "A tile that shows rich text format."
-msgstr ""
+msgstr "Um tile que exibe um campo de texto rico."
 
 #: tiles/configure.zcml
 msgid "A tile that shows the result of a collection."
-msgstr ""
+msgstr "Um tile que exibe o resultado de uma coleção."
 
 #: tiles/configure.zcml
 msgid "A tile to embed content from a remote source."
-msgstr ""
+msgstr "Um tile que permite embedar conteúdo de uma fonte externa."
 
 #: collective/cover/screenlets_templates/content_screenlet.pt:88
 msgid "Add Content"
@@ -64,7 +64,7 @@ msgstr "Um produto para criar capas complexas fácil de usar."
 
 #: tiles/configure.zcml
 msgid "Basic Tile"
-msgstr ""
+msgstr "Tile Básico"
 
 #: collective/cover/tiles/configuration_view.py:193
 #: collective/cover/tiles/edit.py:84
@@ -73,7 +73,7 @@ msgstr "Cancelar"
 
 #: tiles/configure.zcml
 msgid "Carousel Tile"
-msgstr ""
+msgstr "Tile de Carrossel"
 
 #: collective/cover/models/cover.xml
 msgid "Choose one of the predefined layouts"
@@ -81,7 +81,7 @@ msgstr "Escolha um dos layouts pré-definidos"
 
 #: tiles/configure.zcml
 msgid "Collection Tile"
-msgstr ""
+msgstr "Tile de Coleção"
 
 #: collective/cover/templates/layoutedit.pt:43
 msgid "Column"
@@ -89,7 +89,7 @@ msgstr "Coluna"
 
 #: collective/cover/profiles/default/types/collective.cover.content.xml
 msgid "Compose"
-msgstr ""
+msgstr "Composição"
 
 #: collective/cover/tiles/configuration_view.py:156
 msgid "Configure ${name}"
@@ -97,7 +97,7 @@ msgstr "Configurar ${name}"
 
 #: collective/cover/screenlets_templates/content_screenlet.pt:16
 msgid "Content tree"
-msgstr ""
+msgstr "Árvore de conteúdo"
 
 #: collective/cover/profiles/default/types/collective.cover.content.xml
 msgid "Cover"
@@ -116,8 +116,7 @@ msgstr "Configurações da capa"
 msgid "Date"
 msgstr "Data"
 
-#: collective/cover/tiles/basic.py:36
-#: collective/cover/tiles/embed.py:26
+#: collective/cover/tiles/basic.py:36 collective/cover/tiles/embed.py:26
 #: collective/cover/tiles/file.py:49
 msgid "Description"
 msgstr "Descrição"
@@ -132,11 +131,11 @@ msgstr "Editar"
 
 #: collective/cover/tiles/list.py:29
 msgid "Elements"
-msgstr ""
+msgstr "Elementos"
 
 #: tiles/configure.zcml
 msgid "Embedding Tile"
-msgstr ""
+msgstr "Tile de Embed"
 
 #: collective/cover/tiles/embed.py:16
 msgid "Embedding code"
@@ -148,11 +147,11 @@ msgstr "Exportar o layout"
 
 #: tiles/configure.zcml
 msgid "File Tile"
-msgstr ""
+msgstr "Tile de Arquivo"
 
 #: collective/cover/screenlets_templates/content_screenlet.pt:22
 msgid "Filter items"
-msgstr ""
+msgstr "Filtrar itens"
 
 #: collective/cover/tiles/configuration_widgets/textline.pt:42
 msgid "HTML tag"
@@ -160,24 +159,22 @@ msgstr "tag HTML"
 
 #: collective/cover/screenlets_templates/content_screenlet.pt:70
 msgid "Home"
-msgstr ""
+msgstr "Home"
 
-#: collective/cover/tiles/basic.py:41
-#: collective/cover/tiles/image.py:20
+#: collective/cover/tiles/basic.py:41 collective/cover/tiles/image.py:20
 #: collective/cover/tiles/link.py:31
 msgid "Image"
 msgstr "Imagem"
 
 #: tiles/configure.zcml
 msgid "Image Tile"
-msgstr ""
+msgstr "Tile de Imagem"
 
 #: collective/cover/tiles/configuration_widgets/namedimage.pt:42
 msgid "Image size"
 msgstr "Tamanho da imagem"
 
-#: collective/cover/controlpanel.py:20
-#: collective/cover/models/cover.xml
+#: collective/cover/controlpanel.py:20 collective/cover/models/cover.xml
 #: collective/cover/profiles/default/types/collective.cover.content.xml
 msgid "Layout"
 msgstr "Layout"
@@ -192,11 +189,11 @@ msgstr "Layouts"
 
 #: tiles/configure.zcml
 msgid "Link Tile"
-msgstr ""
+msgstr "Tile de Imagem"
 
 #: tiles/configure.zcml
 msgid "List Tile"
-msgstr ""
+msgstr "Tile de Lista"
 
 #: collective/cover/controlpanel.py:19
 msgid "Name"
@@ -224,27 +221,27 @@ msgstr "Ordem"
 
 #: collective/cover/tiles/templates/list.pt:9
 msgid "Please add up to ${limit_objects} objects to the tile."
-msgstr ""
+msgstr "Adicione até ${limit_objects} ao tile."
 
 #: collective/cover/tiles/templates/file.pt:8
 msgid "Please drag&amp;drop a file here."
-msgstr ""
+msgstr "Por favor, arraste e solte um arquivo aqui."
 
 #: collective/cover/tiles/templates/link.pt:8
 msgid "Please drag&amp;drop a link here to populate the tile."
-msgstr ""
+msgstr "Por favor, arraste e solte um link aqui para popular este tile"
 
 #: collective/cover/tiles/templates/image.pt:8
 msgid "Please drag&amp;drop an image here to populate the tile."
-msgstr ""
+msgstr "Por favor, arraste e solte uma imagem aqui para popular este tile."
 
 #: collective/cover/tiles/templates/embed.pt:8
 msgid "Please edit the tile to add the code to be embedded."
-msgstr ""
+msgstr "Por favor edite o tile para adicionar o código que será embedado."
 
 #: collective/cover/tiles/templates/richtext.pt:9
 msgid "Please edit the tile to enter some text."
-msgstr ""
+msgstr "Por favor edite o tile para adicionar um texto."
 
 #: collective/cover/tiles/configuration_widgets/namedimage.pt:58
 msgid "Position"
@@ -252,11 +249,11 @@ msgstr "Posição"
 
 #: collective/cover/screenlets_templates/content_screenlet.pt:15
 msgid "Recent items"
-msgstr ""
+msgstr "Itens recentes"
 
 #: tiles/configure.zcml
 msgid "Rich Text Tile"
-msgstr ""
+msgstr "Tile de texto rico"
 
 #: collective/cover/templates/layoutedit.pt:40
 msgid "Row"
@@ -277,7 +274,7 @@ msgstr "Tipos de conteúdo buscáveis"
 
 #: collective/cover/tiles/templates/collection.pt:10
 msgid "Select a collection to fill this tile."
-msgstr ""
+msgstr "Selecione uma coleção para preencher este tile."
 
 #: collective/cover/controlpanel.py:37
 msgid "Settings for the collective.cover package"
@@ -289,7 +286,7 @@ msgstr "Comprimento do texto"
 
 #: collective/cover/tiles/templates/collection.pt:18
 msgid "The collection doesn't have any results."
-msgstr ""
+msgstr "Esta coleção não possui nenhum resultado."
 
 #: collective/cover/models/cover.xml
 msgid "The layout to be used to render groups and tiles"
@@ -311,8 +308,7 @@ msgstr "Configuração do tile salva."
 msgid "Tile saved"
 msgstr "Tile salvo"
 
-#: collective/cover/tiles/basic.py:31
-#: collective/cover/tiles/embed.py:21
+#: collective/cover/tiles/basic.py:31 collective/cover/tiles/embed.py:21
 #: collective/cover/tiles/file.py:44
 msgid "Title"
 msgstr "Título"
@@ -321,8 +317,7 @@ msgstr "Título"
 msgid "URL"
 msgstr "URL"
 
-#: collective/cover/tiles/basic.py:61
-#: collective/cover/tiles/file.py:60
+#: collective/cover/tiles/basic.py:61 collective/cover/tiles/file.py:60
 #: collective/cover/tiles/link.py:41
 msgid "UUID"
 msgstr "UUID"
@@ -333,7 +328,7 @@ msgstr "Perfil de desintalação do produto collective.cover."
 
 #: collective/cover/screenlets_templates/content_screenlet.pt:63
 msgid "Up level"
-msgstr ""
+msgstr "Um nível acima"
 
 #: collective/cover/tiles/configuration_widgets/basewidget.pt:12
 #: collective/cover/tiles/configuration_widgets/list.pt:22
@@ -370,7 +365,9 @@ msgstr "Desintalação do collective.cover"
 #. Default: "Also known as keywords, tags or labels, these help you categorize your content."
 #: collective/cover/tiles/basic.py:52
 msgid "help_categories"
-msgstr "Tambem conhecido como palavras chaves, tags ou etiquetas, ajudam a categorizar o conteúdo."
+msgstr ""
+"Tambem conhecido como palavras chaves, tags ou etiquetas, ajudam a "
+"categorizar o conteúdo."
 
 #. Default: "Categories"
 #: collective/cover/tiles/basic.py:51
@@ -379,7 +376,7 @@ msgstr "Categorias"
 
 #: collective/cover/screenlets_templates/content_screenlet.pt:31
 msgid "more"
-msgstr ""
+msgstr "mais"
 
 #: collective/cover/screenlets_templates/content_screenlet.pt:26
 msgid "ok"
@@ -388,4 +385,3 @@ msgstr "aceitar"
 #: collective/cover/layout_templates/groupselect.pt:18
 msgid "save"
 msgstr "salvar"
-
