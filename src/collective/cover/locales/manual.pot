@@ -35,7 +35,7 @@ msgid "Basic Tile"
 msgstr ""
 
 #: tiles/configure.zcml
-msgid "A tile with a title, decription and one image"
+msgid "A tile that shows general information about objects."
 msgstr ""
 
 #: tiles/configure.zcml
@@ -43,7 +43,7 @@ msgid "Rich Text Tile"
 msgstr ""
 
 #: tiles/configure.zcml
-msgid "A tile containing rich text"
+msgid "A tile that shows rich text format."
 msgstr ""
 
 #: tiles/configure.zcml
@@ -51,7 +51,7 @@ msgid "Collection Tile"
 msgstr ""
 
 #: tiles/configure.zcml
-msgid "A tile that containg a Collection"
+msgid "A tile that shows the result of a collection."
 msgstr ""
 
 #: tiles/configure.zcml
@@ -59,7 +59,7 @@ msgid "List Tile"
 msgstr ""
 
 #: tiles/configure.zcml
-msgid "A tile that containg a List of Content Types"
+msgid "A tile that shows a list of items."
 msgstr ""
 
 #: tiles/configure.zcml
@@ -67,7 +67,7 @@ msgid "Carousel Tile"
 msgstr ""
 
 #: tiles/configure.zcml
-msgid "A Carousel Tile"
+msgid "A tile that shows a carousel of images."
 msgstr ""
 
 #: tiles/configure.zcml
@@ -75,7 +75,7 @@ msgid "Embedding Tile"
 msgstr ""
 
 #: tiles/configure.zcml
-msgid "A tile to embed content"
+msgid "A tile to embed content from a remote source."
 msgstr ""
 
 #: tiles/configure.zcml
@@ -83,7 +83,7 @@ msgid "File Tile"
 msgstr ""
 
 #: tiles/configure.zcml
-msgid "A tile that containg a File"
+msgid "A tile that shows a file object."
 msgstr ""
 
 #: tiles/configure.zcml
@@ -91,7 +91,7 @@ msgid "Image Tile"
 msgstr ""
 
 #: tiles/configure.zcml
-msgid "A tile that contains an image"
+msgid "A tile that shows an image object."
 msgstr ""
 
 #: tiles/configure.zcml
@@ -99,5 +99,5 @@ msgid "Link Tile"
 msgstr ""
 
 #: tiles/configure.zcml
-msgid "A tile that references a Link."
+msgid "A tile that shows a link object."
 msgstr ""
