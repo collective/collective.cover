@@ -19,11 +19,10 @@ despite offering rich resources to build a cover, ``collective.cover`` also
 provides a very easy mechanism for managing its contents, built around a
 drag-and-drop interface.
 
-``collective.cover`` is based on Blocks and Tiles, like Deco, the new
+``collective.cover`` is based on `Blocks`_ and `Tiles`_, like `Deco`_, the new
 layout composition system for Plone.
 
-.. TODO: add links to Blocks, Tiles and Deco and explain why we need it instead
-   of just using Deco itself.
+.. TODO: explain why we need cover instead of just using Deco itself.
 
 .. TODO: add a comparison between Deco and collective.cover
 
@@ -501,3 +500,6 @@ Got an idea? Found a bug? Let us know by `opening a support ticket`_.
 .. _`opening a support ticket`: https://github.com/collective/collective.cover/issues
 .. _`81`: https://github.com/collective/collective.cover/issues/81
 .. _`112`: https://github.com/collective/collective.cover/issues/112
+.. _`Blocks`: https://github.com/plone/plone.app.blocks
+.. _`Deco`: https://github.com/plone/plone.app.deco
+.. _`Tiles`: https://github.com/plone/plone.app.tiles

@@ -1,7 +1,7 @@
 Share and Enjoy
 ---------------
 
-collective.cover would not have been possible without the contribution
+``collective.cover`` would not have been possible without the contribution
 of the following people:
 
 - André Nogueira
@@ -22,5 +22,4 @@ of the following people:
 Development sponsored by Open Multimedia, Ravvit and `Simples Consultoria`_.
 
 .. _`Launched Pixels`: http://www.launchedpixels.com/
-
 .. _`Simples Consultoria`: http://www.simplesconsultoria.com.br/
