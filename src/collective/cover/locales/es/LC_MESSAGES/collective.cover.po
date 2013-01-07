@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: collective.cover\n"
 "POT-Creation-Date: 2013-01-07 14:04+0000\n"
-"PO-Revision-Date: 2013-01-07 13:49-0300\n"
+"PO-Revision-Date: 2013-01-07 15:34-0300\n"
 "Last-Translator: Héctor Velarde <hector.velarde@gmail.com>\n"
 "Language-Team: Spanish <https://github.com/collective>\n"
 "MIME-Version: 1.0\n"
@@ -231,15 +231,15 @@ msgstr "Por favor, agregar hasta ${limit_objects} objeto(s) para el tile."
 
 #: collective/cover/tiles/templates/file.pt:8
 msgid "Please drag&amp;drop a file here."
-msgstr "Por favor, sujete y arrastre un archivo aquí."
+msgstr "Arrastre y suelte un archivo aquí."
 
 #: collective/cover/tiles/templates/link.pt:8
 msgid "Please drag&amp;drop a link here to populate the tile."
-msgstr "Por favor, sujete y arrastre un enlace aquí para rellenar el tile."
+msgstr "Arrastre y suelte un enlace aquí."
 
 #: collective/cover/tiles/templates/image.pt:8
 msgid "Please drag&amp;drop an image here to populate the tile."
-msgstr "Por favor, sujete y arrastre una imagen aquí para rellenar el tile."
+msgstr "Arrastre y suelte una imagen aquí."
 
 #: collective/cover/tiles/templates/embed.pt:8
 msgid "Please edit the tile to add the code to be embedded."
