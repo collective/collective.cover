@@ -17,6 +17,13 @@
   <script type="text/javascript"
       tal:attributes="src string:${view/static}/jss.js">
   </script>
+
+  <script type="text/javascript">
+    jQuery(document).ready(function() {
+      jQuery(window).unload(plone.UnlockHandler.execute);
+    });
+  </script>
+
 </metal:js>
 
 <metal:styles fill-slot="style_slot">
