@@ -28,4 +28,4 @@ Test content tree tab
 
     Set Selenium Timeout  10s
 
-    Xpath Should Match X Times  //div[contains(@id, 'recent')]//ul[contains(@id, 'item-list')]//li  1
+    Xpath Should Match X Times  //div[contains(@id, 'recent')]//ul[contains(@class, 'item-list')]//li  1
