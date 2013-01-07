@@ -6,8 +6,8 @@ function contentSearchFilter(url) {
     url: url,
     data: data,
     success: function(info) {
-      $("#screenlet-content-search #recent #item-list").html(info);
-      $("#screenlet-content-search #recent #item-list li ul").css("display", "none");
+      $("#screenlet-content-search #recent .item-list").html(info);
+      $("#screenlet-content-search #recent .item-list li ul").css("display", "none");
       return false;
     }
   }));
@@ -73,13 +73,8 @@ $(function() {
         return false;
     });
 
-    $("#content-trees > #item-list, #item-list").on('scroll', function () {
-        $("#screenlet-content-search, .ui-draggable-dragging").draggable('option', 'revert', true).trigger('mouseup');
-        $("#screenlet-content-search, .ui-draggable-dragging").draggable('option', 'revert', false).trigger('mousedown');
-    });
-
     screenletMaker({
-        draggable: '#screenlet-content-search #item-list li',
+        draggable: '#screenlet-content-search .item-list li',
         draggable_acepted: function(e) {
             var ct = $(this).data('tileValidCt');
             var valid = $.inArray($(e).find('a').data('ctType'), ct);
@@ -88,7 +83,7 @@ $(function() {
             if(isDroppable === "False" || $(e).attr('id') === 'screenlet-content-search') {
                 return false;
             }
-            if(!ct && $($(e).context).parent().attr("id") === "item-list") {
+            if(!ct && $($(e).context).parent().attr("class") === "item-list") {
                 return true;
             }
             return valid !== -1? true : false;
@@ -114,9 +109,14 @@ $(function() {
         }
     });
 
-  $( "#screenlet-content-search" ).draggable({start: function(event, ui) {
-    $(this).removeClass("right");
-  }});
+
+
+    $( "#screenlet-content-search" ).draggable({
+        start: function(event, ui) {
+            $(this).removeClass("right");
+        },
+        cancel: '.item-list'
+    });
   $("#screenlet-content-show-button").click(function() {
     var offset = $(this).offset();
     $("#screenlet-content-search").css("display", "block");
@@ -126,7 +126,7 @@ $(function() {
   $("#screenlet-content-search .close").click(function() {
     $("#screenlet-content-search").css("display", "none");
   });
-  $("#screenlet-content-search #content-tree #item-list li").live("click",function(e) {
+  $("#screenlet-content-search #content-tree .item-list li").live("click",function(e) {
     e.stopPropagation();
     var child = $(this).children("ul");
     if (child.is(":visible")) {
@@ -279,7 +279,7 @@ var coveractions = {
                 }
 
                 jQuery(function(){
-                    jQuery("#content-trees > #item-list")[0].innerHTML = html;
+                    jQuery("#content-trees > .item-list")[0].innerHTML = html;
 
                     if (data.parent_url == "") {
                         document.getElementById ('uponelevel').style.display = 'none';
@@ -319,7 +319,7 @@ var coveractions = {
         // selector: Is an input text
         // selectorlist: Is an selector  type li tag
         // selectoroutput: Displays number of items that meet the search criteria
-        // Eg. coveractions.liveSearch('#screenlets-content-trees','#item-list li','#filter-count');
+        // Eg. coveractions.liveSearch('#screenlets-content-trees','.item-list li','#filter-count');
         jQuery(selector).keyup(function(){
             // Retrieve the input field text and reset the count to zero
             var filter = $(this).val(), count = 0;

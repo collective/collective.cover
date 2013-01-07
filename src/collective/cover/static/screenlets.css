@@ -15,7 +15,7 @@
     right: 0;
 }
 
-#screenlet-content-search #item-list {
+#screenlet-content-search .item-list {
     border: 1px solid #ccc;
     height: 250px;
     margin: 10px 0 0;
@@ -24,17 +24,17 @@
     width: 500px;
 }
 
-#screenlet-content-search #item-list li {
+#screenlet-content-search .item-list li {
     cursor: pointer;
     list-style-image: none;
     list-style-type: none;
 }
 
-#screenlet-content-search #item-list li:hover {
+#screenlet-content-search .item-list li:hover {
    background-color: #205C90;
 }
 
-#content #screenlet-content-search #item-list li a:link {
+#content #screenlet-content-search .item-list li a:link {
     border-bottom: 0;
     display: block;
 }

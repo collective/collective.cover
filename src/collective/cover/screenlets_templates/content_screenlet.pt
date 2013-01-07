@@ -26,19 +26,19 @@
         <input type="button" value="ok" id="screenlet-content-search-button"
          tal:attributes="data-url view/post_url"
          i18n:attributes="value" />
-        <ul id="item-list">
+        <ul class="item-list">
             <li tal:replace="structure context/@@content-search" />
         	<a class="next" href="" i18n:translate="">more</a>
         </ul>
 		<script>
 			var page = 1;
-			$("#item-list a.next").live("click", function(){
+			$(".item-list a.next").live("click", function(){
 				$.ajax({
 					url: "@@content-search",
 					data: {'page': page},
 					async: false
 				}).done(function(data) {
-					$('#item-list a.next').prepend(data);
+					$('.item-list a.next').prepend(data);
 					page += 1;
 				});
 				return false;
@@ -46,7 +46,7 @@
 
             $(function(){
                 // Live search content tree
-                coveractions.liveSearch('#screenlets-content-trees','#item-list li','#filter-count');
+                coveractions.liveSearch('#screenlets-content-trees','.item-list li','#filter-count');
             });
         </script>
       </div>
@@ -73,7 +73,7 @@
            </ul>
           </div>
 
-          <ul id="item-list">
+          <ul class="item-list">
             <li />
           </ul>
 
