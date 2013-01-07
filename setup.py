@@ -9,7 +9,7 @@ long_description = open("README.txt").read() + "\n" + \
 
 setup(name='collective.cover',
       version=version,
-      description="An easy-to-use package to create complex covers for Plone sites.",
+      description="An easy-to-use package to create elaborate covers for Plone sites.",
       long_description=long_description,
       classifiers=[
         "Development Status :: 3 - Alpha",
