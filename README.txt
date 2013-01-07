@@ -12,37 +12,39 @@ Life, the Universe, and Everything
    this will be addressed in a future realease of the package. See `81`_ and
    `112`_ for more information.
 
-``collective.cover`` is a package that allows the creation of advanced covers
-for websites homepages, especially for news portals, government and intranets
-that require more resources than a simple page or collection can offer. However, 
+``collective.cover`` is a package that allows the creation of elaborate covers
+for website homepages, especially for news portals, government sites and intranets
+that require more resources than a simple page or collection can offer. However,
 despite offering rich resources to build a cover, ``collective.cover`` also
-provides a very easy mechanism for managing it's contents, fully based on drag 
-and drop interface.
+provides a very easy mechanism for managing its contents, built around a
+drag-and-drop interface.
 
-``collective.cover`` is based on Blocks and Tiles the same as Deco, the new
+``collective.cover`` is based on Blocks and Tiles, like Deco, the new
 layout composition system for Plone.
 
-.. TODO: add links to Blocks, Tiles and Deco
+.. TODO: add links to Blocks, Tiles and Deco and explain why we need it instead
+   of just using Deco itself.
 
-.. TODO: add a comparisson among Deco and collective.cover
+.. TODO: add a comparison between Deco and collective.cover
 
 Use cases
 ^^^^^^^^^
 
-For instance, suppose you are running The Planet, a news site that has a bunch
-of editors focused on getting news on different topics like Economy, Health or
+Suppose you are running The Planet, a news site that has a bunch
+of editors focused on getting news on different topics, like Economy, Health or
 Sports.
 
-If you are the main publisher of the site, you may want to leave people
-working on the Economy section to take care of their content published on the
-cover, but you don't want that same people messing around the Sports section.
+If you are the main publisher of the site, you may want to delegate the
+construction of the cover page of the Economy section to the people working
+on that section content, but you might not want them messing around the
+Sports section as well.
 
 Also, suppose you have the final game of the World Cup and the match is going
 to be defined on penalties: you may want to prepare a couple of cover pages
-and publish the right one focused on the team that won at the end.
+and publish the right one focused on the team that won in the end.
 
-This is the kind of issues we want to solve with this package; we are far from
-it, but that is the idea.
+These are the kind of issues we want to solve with this package; we are still
+far from it, but that is the idea.
 
 
 Don't Panic
@@ -57,25 +59,19 @@ Adding Cover
     :width: 367px
 
 
-To add a cover you should perform the same procedure used to any type of 
-content in Plone:
+You add a cover like you would any type of content in Plone:
 
 1. Navigate to the folder where you want to create a cover;
 
-2. Click in "Add Item ..." and choose "Cover";
+2. Open the "Add Item ..." menu and choose "Cover";
 
-Then, you have to inform some specific data to create the cover:
+3. Fill in the required fields:
+    - "Title" and "Description": Same as with other Plone content, like Page.
+    - "Layout": Choose one of the predefined cover layouts.
 
-3. Fill the required fields as explained below:
-    - Title: Enter a name of your cover.
-    - Description: a informative description of your cover.
-    - Layout: Choose one of the predefined layouts.
+4. "Save".
 
-4. Click in "Save".
-
-Your cover is now created based on the informed data.
-
-
+Your cover is now created based on the information provided.
 
 Adding content in your Cover
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -85,64 +81,65 @@ Adding content in your Cover
     :height: 405px
     :width: 706px
 
-After you create your cover, you'll see it comes with some predefined blocks
- (according to the chosen layout), but it still have no associated content. 
-To define the content that will appears on your cover perform the following 
+After the cover is created, you'll notice it comes with some predefined blocks
+(according to the selected layout), but it still has no content associated.
+To define the content that will appear on the cover, perform the following
 steps:
 
-1. Click in the "Compose" tab;
+1. Select the "Compose" tab;
 
-2. Click in the "Add Content" tab on the right of the green bar;
+2. Open the "Add Content" tab to the right of the green bar;
 
 A small window will appears showing the most recent items added in the portal.
 
-3. Click on the title of any choosen item in the list and drag it to one of 
+3. Select the title of any item in the list and drag it to one of
 the tiles (dotted boxes) in the content area;
 
-4. Release the item on one of the boxes. Each Tile allows only certain types 
-of content to be added. If you the content you choose is allowed the box will 
-turn green, if it's not permitted it will remains gray;
+4. Hover the item over one of the Tile boxes. Each Tile allows only certain
+types of content to be added. If the content you selected is allowed on that
+Tile, the box will turn green. If not, it will remain gray;
+
+5. Release the item.
 
 .. figure:: https://raw.github.com/collective/collective.cover/master/cover3.png
     :align: center
     :height: 405px
     :width: 706px
 
-The information content will be automatically applied to the selected 
-destination tile and that content will be visible on the cover.
+Information from that content will be automatically applied to the chosen
+tile and will be visible on the cover.
 
-5. Repeat for add content in each one of the existing tiles.
+5. Repeat the process to add content to each one of the other tiles.
 
-6. To visualize the final result click in "View" tab.
+6. To visualize the final result, select the "View" tab.
 
-Besides using the most recent items you also have two other listing options to 
-find the content you want.
+There are also two other navigation options to find content:
 
 
 Searching Content
 ++++++++++++++++++
 
-You can use the search field in the selection content window to find the object 
-you want.
+You can use the search field in the content selection window to locate the
+content you want:
 
 1. Type the term you want to find;
 
-2. Click in the "Search" button.
+2. Push the "Search" button.
 
-The items related to the term you search will be displayed and can be used like 
-the steps mentioned above.
+The items related to the term you search will be displayed and can be used
+according to the steps above.
 
 Content tree
 +++++++++++++
 
-Inside selection content window you can also navigate through your site to locate 
-existing content.
+Inside the content selection window you can also navigate through your site to
+locate existing content.
 
-1.  Click the "Content Tree" tab;
+1. Select the "Content Tree" tab;
 
-2. Click on the links to browse through the structure of your site until you find 
-the desired content. All items listed are available to be used like the  above 
-mentioned steps.
+2. Select the links to browse through the structure of your site until you find
+the desired content. All items listed are available to be used according to the
+steps above.
 
 Changing information from a Content
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -152,23 +149,24 @@ Changing information from a Content
     :height: 494px
     :width: 693px
 
-After a content is added to a cover, a copy of the data will be stored in the Cover 
-and appear to the end user. If it's necessary, you can edit some data of this content 
-exclusively for the cover without changing the information in the original item. This 
-feature is very useful to adapt the content for the cover,  making, for example, the 
-titles more suitable for display on a homepage. To change the data take the following 
-steps.
+After a content is added to a cover tile, a copy of some of its information will be stored in the cover
+and will appear to the end user. If necessary, you can change some of the information related to the content
+exclusively for the cover, without changing the information in the original item. This
+feature is very useful to adjust the content for the cover. For example, you can shorten
+a title to better fit it into a homepage layout.
 
-1. Click on the "Compose" tab;
+To change the information on the cover, follow these steps:
 
-2. Click on the portion of text you want to change, like the title, description or 
+1. Select the "Compose" tab;
+
+2. Select the portion of text you want to change, like the title, the description or
 any other text element.
 
-3. Change the text and click "Save."
+3. Change the text and "Save".
 
-The changes will be apply to your cover immediately.
+The changes will be applied to your cover immediately.
 
-*Important:* The changes will be apply only in the cover tile, not in the original 
+*Important:* As mentioned before, the changes will be applied only to the cover tile, not to the original
 content.
 
 
@@ -178,10 +176,10 @@ Advanced Actions
 Changing the layout of your cover
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-If you have created a blank cover or want to change the structure of your current 
-cover you can add or delete tiles, change the place of an existing tile or even 
-change the rows and columns structure of the cover. All these operations can be 
-performed from the "Layout" tab.
+If you have created a blank cover or if want to change the structure of your
+current cover, you can add or delete tiles, change the position of an existing
+tile, or even change the rows and columns structure of the cover. These
+operations can be performed from the "Layout" tab.
 
 .. figure:: https://raw.github.com/collective/collective.cover/master/cover4.png
     :align: center
@@ -191,33 +189,34 @@ performed from the "Layout" tab.
 
 A cover is a combination of three basic elements:
 
-   - Lines (which may contain one or more columns)
-   - Columns (which may contain one or more tiles)
+   - Rows (which may contain one or more columns, arranged horizontally)
+   - Columns (which may contain one or more tiles arranged vertically)
    - Tiles
 
 
 Adding rows and columns
 ++++++++++++++++++++++++
 
-To add a new line you can take the following steps:
+To add a new row, follow these steps:
 
-1. In the Layout tab, click the Line icon and drag it to your page;
+1. In the Layout tab, click the Row icon and drag it to your page;
 
-After that you need to add a column to this line so you can add tiles later.
+Then you need to add one or more columns to this row so you can add tiles later:
 
-2. Click on the icon column and drag this icon into a column. You can repeat this 
-operation as many times as you need. ``collective.cover`` will automatically
-divide the space between the rows.
+2. Click on the Column icon and drag it into a row.
 
-Changing the columns width
+You can repeat this operation as often as you need. ``collective.cover`` will
+divide the space between the rows and columns automatically.
+
+Changing the width of columns
 ++++++++++++++++++++++++++++++
 
-You can control the width of each column individually. Just do the following:
+You can control the width of each column individually:
 
-1. Click on the configuration icon of the desired column;
+1. Push the configuration icon of the desired column;
 
-2. Drag the slider to one side or another, adjusting the desired number. The 
-higher the number, the higher the column width.
+2. Drag the slider sideways, adjusting the desired number of column widths. The
+higher the number, the larger the column width.
 
 .. figure:: https://raw.github.com/collective/collective.cover/master/cover5.png
     :align: center
@@ -225,71 +224,70 @@ higher the number, the higher the column width.
     :width: 691px
 
 
-3. Click the Save button.
+3. "Save".
 
 By default, the cover uses a grid of 16 units. Therefore, the sum of the all widths 
-in a columns must not exceed the number 16. To make your management easer, when 
-editing the widths always start changing the width of the smaller column.
+in a column must not exceed 16. To make it easier to edit the width of all
+columns, adjust first the width of the smallest column.
 
 Adding new tiles
 ^^^^^^^^^^^^^^^^^^
 
-Now that you have created new columns, you can add new tiles in it. To add a new 
-tile, do the following:
+Now that you have created columns, you can add tiles to it:
 
-1. In the Layout tab, click in the Tile icon and drag it to the column where you 
-want to put it;
+1. In the Layout tab, select the Tile icon and drag it to the column where
+you want to place it;
 
-2. Choose one of the available tiles;
+2. Choose one of the available tiles in the pop-up overlay;
 
 3. Change the configuration as desired;
 
-4. Click the Save button.
+4. Push "Save".
 
-Now your new tile can be used in the Compose tab to add contents.
+The new tile can be used in the Compose tab to select/add content.
 
-Setting tiles
-^^^^^^^^^^^^^^
+Adjusting tiles
+^^^^^^^^^^^^^^^
 
-At any time you can change the settings in the previous item. Just take the 
-following steps:
+You can change the settings from previously added tiles at any time:
 
-1. In the Layout tab, click the Setup icon of the respective tile;
+1. In the Layout tab, select the Setup icon of the respective tile;
 
-2. Change the information;
+2. Modify the information;
 
-3. Click the Save button.
+3. "Save".
 
 
-Moving the tiles
-^^^^^^^^^^^^^^^^^
+Moving tiles around
+^^^^^^^^^^^^^^^^^^^^^
 
-On a page that has more than one column, you can move the places of your 
-tiles in a simple and fast way:
+On a page that has more than one column, you can conveniently move your tiles
+around:
 
-1. Click in a tile and drag it to the new column;
+1. Select the "Layout" tab;
 
-2. When you release the tile it will be positioned in the new column;
+2. Click on a tile and drag it over another column in any of the rows;
 
-3. Repeat as often as necessary;
+3. When you release, the tile it will be positioned in the new column;
 
-4. When finished, click the the Save button and new configuration will be 
-applied.
+4. Repeat as often as necessary;
+
+5. When finished, push "Save" and the new configuration will be applied.
 
 
 Saving a layout as a model
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-You can save one of your covers as a template for making other covers in your website. 
-Just do the following:
+You can save one of your covers as a template for creating other covers on your
+website: 
 
-1. Click in the Layout tab;
+1. Select the Layout tab;
 
 2. At the top of the page, enter a name for your model;
 
-3. Click the Save button.
+3. "Save".
 
-Now your layout can be used as a model to create new covers, as explained in 
+Now this layout can be used as a model to create new covers, as explained in the
 section "Adding a cover".
 
 
@@ -302,21 +300,21 @@ Tiles for the collective.cover package provide 3 different views:
 Rendered view
 +++++++++++++
 
-This is the view that will be rendered for anyone that has view permission.
+This is the view that will be rendered for anyone that has View permission.
 It will render all fields defined in the schema of the tile, based on their
-configuration saved from the configuration view.
+configuration, as set in the configuration view.
 
-Edition view
+Edit view
 ++++++++++++
 
 This view is a common edit view, where all fields from the schema definition
-of the tile will be rendered in an "edit" mode. Data enterd here will persist
+of the tile will be rendered in an "edit" mode. Data entered here will persist
 in the tile itself.
-All fields from the schema will get rendered, no matter their configuration
-from the configure view.
+All fields from the schema will get rendered, irrespective of their setting in
+the configuration view.
 This view is accessed through the "Compose" view of the cover. You should see
 an "edit" button for each tile.
-If you don't want your tile to be able to be editable, you should override
+If you don't want your tile to be editable, you should override
 the "is_editable" attribute of your tile base class and set it to False
 
 Configuration view
@@ -325,7 +323,7 @@ Configuration view
 This view is similar to the edit one, except it is intended for configuring
 different aspects of the tile. From here you can specify which fields get
 rendered when viewing the tile, or the order in which they show up.
-In addition, each field widget can provide specific configuration options. 
+In addition, each field widget can provide specific configuration options.
 For instance, an ITextLinesWidget will provide an extra configuration 
 option, "HTML tag", which allows to specify the HTML tag to be used when
 rendering data saved in this field.
@@ -338,7 +336,7 @@ the "is_configurable" attribute of your tile base class and set it to False
 Writing a custom widget in "configure" mode for a field
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The configuration view utilizes z3c.form to be automatically generated based on
+The configuration view uses z3c.form to automatically render a form based on
 the tile's schema definition. For that, it renders widgets in a "configure" 
 mode. You can see how existing ones are defined, checking the configure.zcml
 file under tiles/configuration_widgets
@@ -367,17 +365,16 @@ additional functionality expected by the cover object, that you should
 override in your class:
 
 **populate_with_object(obj)**
-    It takes a CT object as parameter, and it will store the content into the
-    tile.
-    Make sure to call PersistentCoverTile's populate_with_object to
-    check for permissions before adding content to the tile. Check existing
-    tiles on how they do it.
+    It takes a Plone content object as parameter, and it will store the content
+    information into the tile.
+    Make sure to call this method to check for permissions before adding
+    content to the tile. Check the code of existing tiles for examples of use.
 
 **delete()**
     It removes the persistent data created for the tile.
 
 **accepted_ct()**
-    It returns a list of valid CT that this tile will accept, or None in case
+    It returns a list of valid content types that this tile will accept, or None in case
     it doesn't accept any.
 
 **get_tile_configuration()**
@@ -397,15 +394,15 @@ Render view
 In order to visualize the tile's content, you need to write a view that will
 render it. For that, you need to get some things into consideration.
 
-1. The view will get rendered always, so you need to add conditions to show
-   specific content based on what data the tile has, if any.
+1. The view will always be rendered, so you need to add conditions to show
+   specific content based on what information the tile has, if any.
 
-2. You need to render content based on the tile's fields configurations.
+2. You need to render content based on the configuration of the tile fields.
    For that, there's a helper method provided with every tile called
    "get_configured_fields". This will iterate over all fields, and will
-   get the configuration and data for each, and also in the order that 
-   they should be rendered. If the field has no data stored, then it will 
-   not get included in the returned values.
+   get the configuration and data for each, in the order that
+   they should be rendered. If the field has no data stored, then it will
+   not be included among the returned values.
    You can override this, in case you need a different behavior, check
    collection.py under the tiles directory and collection.pt under the
    tiles/templates directory for an example. 
@@ -425,7 +422,7 @@ To add an image field to your tile::
 
 Then, you have several ways of using image scales in your tile templates.
 
-1. You can pass the ``scale`` method explicit width and height::
+1. You can pass width and height to the ``scale`` method explicitly::
 
      <img tal:define="scales view/@@images;
                       thumbnail python: scales.scale('image', width=64, height=64);"
@@ -450,8 +447,9 @@ Recommendation:: Use the scale saved from the configuration. Check lines 26 thro
 Alternate solutions
 ^^^^^^^^^^^^^^^^^^^
 
-Over the years there have been some packages to solve the problem of creating
-covers in Plone; we have used and are taking ideas from the following:
+Over the years there have been some packages designed to solve the problem of creating
+section covers in Plone. We have used, and are taking ideas from, the
+following:
 
 `CompositePack`_
     Very old; the legacy code is so complex that is not maintainable anymore.
@@ -466,13 +464,13 @@ covers in Plone; we have used and are taking ideas from the following:
     memory to work and aggressive cache settings.
 
 `Collage`_
-    It allows to create layouts TTW but it has (arguably) the worst user
+    Allows the creation of layouts TTW but it has (arguably) the worst user
     interface of all. It is easily extended and there are several add-ons
     available that provide new functionality for it.
 
 Home Page Editor of the Brazilian Chamber of Deputies Site
     Strongly based on `Collage`_, this package was presented at the `World
-    Plone Day 2012 Brasilia`_. It allows the edition of home pages and the
+    Plone Day 2012 Brasilia`_. It allows editing of home pages and the
     definition of permissions on blocks of content. Available only for Plone 3
     and not openly published… yet.
 
@@ -492,9 +490,9 @@ Mostly Harmless
 .. image:: https://secure.travis-ci.org/collective/collective.cover.png
     :target: http://travis-ci.org/collective/collective.cover
 
-Have an idea? Found a bug? Let us know by `opening a support ticket`_.
+Got an idea? Found a bug? Let us know by `opening a support ticket`_.
 
-.. _`see and comment our mockups online`: https://simples.mybalsamiq.com/projects/capas/grid
+.. _`see and comment on our mockups online`: https://simples.mybalsamiq.com/projects/capas/grid
 .. _`CompositePack`: http://plone.org/products/compositepack
 .. _`CMFContentPanels`: http://plone.org/products/cmfcontentpanels
 .. _`Collage`: http://plone.org/products/collage
