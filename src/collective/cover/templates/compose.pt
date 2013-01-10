@@ -17,7 +17,6 @@
         jQuery(window).unload(plone.UnlockHandler.execute);
       });
     </script>
-
 </metal:js>
 
 <metal:styles fill-slot="style_slot">
