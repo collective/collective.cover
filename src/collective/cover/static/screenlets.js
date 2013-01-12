@@ -115,7 +115,7 @@ $(function() {
         start: function(event, ui) {
             $(this).removeClass("right");
         },
-        cancel: '.item-list'
+        cancel: '.item-list, #screenlet-content-search-input, #screenlets-content-trees'
     });
   $("#screenlet-content-show-button").click(function() {
     var offset = $(this).offset();
