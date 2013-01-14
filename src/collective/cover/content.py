@@ -195,6 +195,7 @@ class UpdateTileContent(grok.View):
         tile_id = self.request.form.get('tile-id')
         uid = self.request.form.get('uid')
 
+        html = ""
         if tile_type and tile_id and uid:
 
             tile = self.context.restrictedTraverse(tile_type)
@@ -206,13 +207,14 @@ class UpdateTileContent(grok.View):
 
                 try:
                     tile_instance.populate_with_object(obj)
+                    html = tile_instance()
                 except:
                     # XXX: Pass silently ?
                     pass
 
-        # XXX: Calling the tile will return the HTML with the headers, need to
-        #      find out if this affects us in any way.
-        return tile_instance()
+            # XXX: Calling the tile will return the HTML with the headers, need to
+            #      find out if this affects us in any way.
+        return html
 
 
 class UpdateTile(grok.View):

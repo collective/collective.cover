@@ -7,61 +7,82 @@
       tal:omit-tag="">
 <body tal:omit-tag="">
 
-<div id="screenlet-content-search" class="right">
+<div id="screenlet-content-search" class="right  ui-widget-content">
 
     <div class="close" i18n:translate="">X</div>
 
-<!-- 
     <ul class="formTabs">
       <li class="formTab"><a href="#recent" i18n:translate="">Recent items</a></li>
-      <li class="formTab"><a href="#clipboard" i18n:translate="">Clipboard</a></li>
       <li class="formTab"><a href="#content-tree" i18n:translate="">Content tree</a></li>
     </ul>
--->
+
     <div class="panes">
       <div id="recent" class="tab-pane active">
-        <input id="screenlet-content-search-input" type="text" />
+        <div class="input">
+          <input class="screenlets-content-trees" id="screenlet-content-search-input" type="text"
+            title="Filter items" placeholder="Filter items" name="screenlet-search"
+            i18n:attributes="title; placeholder"/>
+        </div>
         <input type="button" value="ok" id="screenlet-content-search-button"
          tal:attributes="data-url view/post_url"
          i18n:attributes="value" />
-        <ul id="item-list">
+        <ul class="item-list">
             <li tal:replace="structure context/@@content-search" />
-        	<a class="next" href="">more</a>
+        	<a class="next" href="" i18n:translate="">more</a>
         </ul>
 		<script>
-			var page = 1; 
-			$("#item-list a.next").live("click", function(){
+			var page = 1;
+			$(".item-list a.next").live("click", function(){
 				$.ajax({
 					url: "@@content-search",
 					data: {'page': page},
 					async: false
-				}).done(function(data) { 
-					$('#item-list a.next').prepend(data);
+				}).done(function(data) {
+					$('.item-list a.next').prepend(data);
 					page += 1;
 				});
 				return false;
-			});
-		</script>
+            });
+
+            $(function(){
+                // Live search content tree
+                coveractions.liveSearch('#screenlets-content-trees','.item-list li','#filter-count');
+            });
+        </script>
       </div>
-<!-- 
-      <div id="clipboard" class="tab-pane">
-        <input id="screenlet-content-search-input" type="text" />
-        <input type="button" value="ok" id="screenlet-content-search-button"
-            tal:attributes="data-url view/post_url"
-            i18n:attributes="value" />
-        <ul id="item-list">
-          <li tal:replace="structure context/@@content-search" />
-        </ul>
-      </div>
-      <div id="content-tree" class="tab-pane">
-        <input type="button" value="ok" id="screenlet-content-search-button"
-            tal:attributes="data-url view/post_url" style="display:none"
-            i18n:attributes="value" />
-          <ul id="item-list">
-            <li tal:replace="structure context/@@content-search" />
+
+      <div id="content-trees" class="tab-pane">
+          <div class="input">
+              <input id="screenlets-content-trees"
+              name="screenlets-content-trees" type="text" title="Filter items"
+              placeholder="Filter items" i18n:attributes="title; placeholder" />
+          </div>
+
+          <span id="filter-count" i18n:translate=""></span>
+
+          <div class="uponelevel"><a id="uponelevel" class="link-parent"
+                  href="javascript:void(0)" style="display: none;"
+                  i18n:translate="">Up level</a></div>
+          <div>
+           <ul class="configlets">
+            <li id="home" style="display: inline;">
+             <a tal:attributes="href python:'''javascript:coveractions.getFolderContents('%s','@@jsonbytype')''' %(context.portal_url())">
+              <img alt="" src="logoIcon.gif" /><span i18n:translate="">Home</span>
+             </a>
+            </li>
+           </ul>
+          </div>
+
+          <ul class="item-list">
+            <li />
           </ul>
+
+          <fieldset id="general_panel">
+            <div id="internalpath" class="formHelp" i18n:translate=""></div>
+         </fieldset>
+
+
       </div>
- -->      
     </div>
 
     <div id="screenlet-content-search-compose-button" style="display: none;"

@@ -29,3 +29,75 @@ msgstr ""
 #: profiles.zcml
 msgid "Uninstall profile for the collective.cover package."
 msgstr ""
+
+#: tiles/configure.zcml
+msgid "Basic Tile"
+msgstr ""
+
+#: tiles/configure.zcml
+msgid "A tile that shows general information about objects."
+msgstr ""
+
+#: tiles/configure.zcml
+msgid "Rich Text Tile"
+msgstr ""
+
+#: tiles/configure.zcml
+msgid "A tile that shows rich text format."
+msgstr ""
+
+#: tiles/configure.zcml
+msgid "Collection Tile"
+msgstr ""
+
+#: tiles/configure.zcml
+msgid "A tile that shows the result of a collection."
+msgstr ""
+
+#: tiles/configure.zcml
+msgid "List Tile"
+msgstr ""
+
+#: tiles/configure.zcml
+msgid "A tile that shows a list of items."
+msgstr ""
+
+#: tiles/configure.zcml
+msgid "Carousel Tile"
+msgstr ""
+
+#: tiles/configure.zcml
+msgid "A tile that shows a carousel of images."
+msgstr ""
+
+#: tiles/configure.zcml
+msgid "Embedding Tile"
+msgstr ""
+
+#: tiles/configure.zcml
+msgid "A tile to embed content from a remote source."
+msgstr ""
+
+#: tiles/configure.zcml
+msgid "File Tile"
+msgstr ""
+
+#: tiles/configure.zcml
+msgid "A tile that shows a file object."
+msgstr ""
+
+#: tiles/configure.zcml
+msgid "Image Tile"
+msgstr ""
+
+#: tiles/configure.zcml
+msgid "A tile that shows an image object."
+msgstr ""
+
+#: tiles/configure.zcml
+msgid "Link Tile"
+msgstr ""
+
+#: tiles/configure.zcml
+msgid "A tile that shows a link object."
+msgstr ""

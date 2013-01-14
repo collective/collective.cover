@@ -22,6 +22,11 @@ class ITilesPermissions(Interface):
         Set the list of groups that are allowed to add content to the tile
         """
 
+    def delete():
+        """
+        Remove the list of groups that are allowed to add content to the tile
+        """
+
 
 class TilesPermissions(object):
     """
@@ -53,3 +58,7 @@ class TilesPermissions(object):
         permissions['edit'] = group_ids
 
         self.annotations[self.key] = PersistentDict(permissions)
+
+    def delete(self):
+        self.annotations.pop(self.key, None)
+        return

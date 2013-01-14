@@ -1,5 +1,7 @@
 #! /bin/sh
 
+buildout_bin=`dirname $0`/bin
+PATH=$buildout_bin:$PATH
 I18NDOMAIN="collective.cover"
 BASE_DIRECTORY="src/collective/cover"
 

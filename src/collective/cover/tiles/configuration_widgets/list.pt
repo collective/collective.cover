@@ -19,5 +19,35 @@
                               value python:stored_data.get('size', 5);
                               accesskey view/accesskey;"/>
 
+        <span i18n:translate="">Visible</span>
+        <input type="radio" id="" name="" class=""
+            tabindex="" accesskey="" value="on"
+            tal:attributes="id string:${view/id}-visibility;
+                            name string:${view/name}.visibility;
+                            class view/klass;
+                            tabindex view/tabindex;
+                            checked python:not stored_data.get('visibility', None) and 'checked' or stored_data.get('visibility', None) == 'on' and 'checked';
+                            accesskey view/accesskey;"/>
+        <span i18n:translate="">Yes</span>
+        <input type="radio" id="" name="" class=""
+            tabindex="" accesskey="" value="off"
+            tal:attributes="id string:${view/id}-visibility;
+                            name string:${view/name}.visibility;
+                            class view/klass;
+                            tabindex view/tabindex;
+                            checked python:stored_data.get('visibility', None) == 'off' and 'checked';
+                            accesskey view/accesskey;"/>
+        <span i18n:translate="">No</span>
+
+        <span i18n:translate="">Order</span>
+        <input type="text" id="" name="" class="" size="2"
+            tabindex="" accesskey=""
+            tal:attributes="id string:${view/id}-order;
+                            name string:${view/name}.order;
+                            class view/klass;
+                            tabindex view/tabindex;
+                            value python:stored_data.get('order', None);
+                            accesskey view/accesskey;"/>
+
     </tal:stored_data>
 </html>

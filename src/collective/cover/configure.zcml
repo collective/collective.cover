@@ -23,4 +23,13 @@
         permission="cmf.ManagePortal"
         />
 
+    <browser:pages
+        for="*"
+        class=".screenlets.SearchItemsBrowserView"
+        permission="zope2.View">
+        <browser:page attribute="jsonByType" name="jsonbytype" />
+    </browser:pages>
+
+
+
 </configure>

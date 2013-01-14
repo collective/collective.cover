@@ -1,24 +1,25 @@
 Share and Enjoy
 ---------------
 
-collective.cover would not have been possible without the contribution
+``collective.cover`` would not have been possible without the contribution
 of the following people:
 
-- Carlos de la Guardia
-- Héctor Velarde
 - André Nogueira
-- Franco Pellegrini
-- Silvestre Huens
-- Gonzalo Almeida
-- Juan A. Díaz
-- Davi Lima
-- Ricardo Bánffy
-- Juan Pablo Giménez
-- `Launched Pixels`_ (icon)
+- Carlos de la Guardia
 - Cleber J Santos
+- Davi Lima
+- Franco Pellegrini
+- Gonzalo Almeida
+- Héctor Velarde
+- Juan A. Díaz
+- Juan Pablo Giménez
+- Ricardo Bánffy
+- Silvestre Huens
+- Thiago Tamosauskas
+- `Launched Pixels`_ (icon)
+
 
 Development sponsored by Open Multimedia, Ravvit and `Simples Consultoria`_.
 
 .. _`Launched Pixels`: http://www.launchedpixels.com/
-
 .. _`Simples Consultoria`: http://www.simplesconsultoria.com.br/

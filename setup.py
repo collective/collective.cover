@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '1.0a1'
+version = '1.0a2.dev0'
 long_description = open("README.txt").read() + "\n" + \
                    open(os.path.join("docs", "INSTALL.txt")).read() + "\n" + \
                    open(os.path.join("docs", "CREDITS.txt")).read() + "\n" + \
@@ -9,7 +9,7 @@ long_description = open("README.txt").read() + "\n" + \
 
 setup(name='collective.cover',
       version=version,
-      description="An easy-to-use package to create complex covers for Plone sites.",
+      description="An easy-to-use package to create elaborate covers for Plone sites.",
       long_description=long_description,
       classifiers=[
         "Development Status :: 3 - Alpha",
@@ -40,6 +40,7 @@ setup(name='collective.cover',
       zip_safe=False,
       install_requires=[
         'setuptools',
+        'Pillow',
         'Plone>=4.2',
         'collective.js.jqueryui',
         'plone.app.blocks',

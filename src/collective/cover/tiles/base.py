@@ -175,6 +175,16 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
         data_mgr = ITileDataManager(self)
         data_mgr.delete()
 
+        # Remove permission data
+        permissions = getMultiAdapter((self.context, self.request, self),
+                                      ITilesPermissions)
+        permissions.delete()
+
+        # Remove configuration data
+        configuration = getMultiAdapter((self.context, self.request, self),
+                                        ITilesConfigurationScreen)
+        configuration.delete()
+
         notify(ObjectModifiedEvent(self.context))
 
     def accepted_ct(self):
@@ -227,6 +237,9 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
 
                 if 'imgsize' in field_conf:
                     field['scale'] = field_conf['imgsize']
+
+                if 'position' in field_conf:
+                    field['position'] = field_conf['position']
 
             results.append(field)
 
@@ -290,7 +303,9 @@ class ImageScale(BaseImageScale):
         self.request = request
         self.__dict__.update(**info)
         if self.data is None:
-            self.data = getattr(self.context, self.fieldname)
+            self.data = getattr(self.context, self.fieldname, None)
+        if self.data is None:
+            self.data = self.context.data.get(self.fieldname)
         url = self.context.url
         extension = self.data.contentType.split('/')[-1].lower()
         if 'uid' in info:
@@ -331,7 +346,7 @@ class ImageScaling(BaseImageScaling):
             # otherwise `name` must refer to a field...
             if '.' in name:
                 name, ext = name.rsplit('.', 1)
-            value = getattr(self.context, name)
+            value = self.context.data.get(name)
             scale_view = ImageScale(self.context, self.request,
                                     data=value, fieldname=name)
             return scale_view.__of__(self.context)
@@ -374,7 +389,7 @@ class ImageScaling(BaseImageScaling):
     def modified(self):
         """ provide a callable to return the modification time of content
             items, so stored image scales can be invalidated """
-        mtime = 0
+        mtime = ''
         for k, v in self.context.data.items():
             if INamedImage.providedBy(v):
                 mtime += self.context.data.get('%s_mtime' % k, 0)

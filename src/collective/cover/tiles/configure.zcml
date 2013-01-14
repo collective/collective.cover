@@ -66,7 +66,7 @@
   <plone:tile
       name="collective.cover.basic"
       title="Basic Tile"
-      description="A tile with a title, decription and one image"
+      description="A tile that shows general information about objects."
       add_permission="cmf.ModifyPortalContent"
       schema=".basic.IBasicTile"
       class=".basic.BasicTile"
@@ -77,7 +77,7 @@
   <plone:tile
       name="collective.cover.richtext"
       title="Rich Text Tile"
-      description="A tile containing rich text"
+      description="A tile that shows rich text format."
       add_permission="cmf.ModifyPortalContent"
       schema=".richtext.IRichTextTileData"
       class=".richtext.RichTextTile"
@@ -88,7 +88,7 @@
   <plone:tile
       name="collective.cover.collection"
       title="Collection Tile"
-      description="A tile that containg a Collection"
+      description="A tile that shows the result of a collection."
       add_permission="cmf.ModifyPortalContent"
       schema=".collection.ICollectionTile"
       class=".collection.CollectionTile"
@@ -99,7 +99,7 @@
   <plone:tile
       name="collective.cover.list"
       title="List Tile"
-      description="A tile that containg a List of Content Types"
+      description="A tile that shows a list of items."
       add_permission="cmf.ModifyPortalContent"
       schema=".list.IListTile"
       class=".list.ListTile"
@@ -110,7 +110,7 @@
   <plone:tile
       name="collective.cover.carousel"
       title="Carousel Tile"
-      description="A Carousel Tile"
+      description="A tile that shows a carousel of images."
       add_permission="cmf.ModifyPortalContent"
       schema=".carousel.ICarouselTile"
       class=".carousel.CarouselTile"
@@ -121,7 +121,7 @@
   <plone:tile
       name="collective.cover.embed"
       title="Embedding Tile"
-      description="A tile to embed content"
+      description="A tile to embed content from a remote source."
       add_permission="cmf.ModifyPortalContent"
       schema=".embed.IEmbedTile"
       class=".embed.EmbedTile"
@@ -132,7 +132,7 @@
   <plone:tile
       name="collective.cover.file"
       title="File Tile"
-      description="A tile that containg a File"
+      description="A tile that shows a file object."
       add_permission="cmf.ModifyPortalContent"
       schema=".file.IFileTile"
       class=".file.FileTile"
@@ -143,7 +143,7 @@
   <plone:tile
       name="collective.cover.image"
       title="Image Tile"
-      description="A tile that contains an image"
+      description="A tile that shows an image object."
       add_permission="cmf.ModifyPortalContent"
       schema=".image.IImageTile"
       class=".image.ImageTile"
@@ -154,7 +154,7 @@
   <plone:tile
       name="collective.cover.link"
       title="Link Tile"
-      description="A tile that references a Link."
+      description="A tile that shows a link object."
       add_permission="cmf.ModifyPortalContent"
       schema=".link.ILinkTile"
       class=".link.LinkTile"
@@ -176,6 +176,13 @@
     factory="collective.cover.tiles.permissions.TilesPermissions"
     />
 
- <subscriber handler=".handlers.notifyModified" />
+  <subscriber handler=".handlers.notifyModified" />
+
+  <browser:page
+      name="tile_macros"
+      template="templates/tile_macros.pt"
+      for="*"
+      permission="zope.Public"
+      />
 
 </configure>

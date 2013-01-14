@@ -1,28 +1,19 @@
 # -*- coding: utf-8 -*-
 
 import unittest2 as unittest
-import os
 
 from DateTime import DateTime
-from App.Common import package_home
 
 from zope.interface.verify import verifyClass
 from zope.interface.verify import verifyObject
 
-from Products.ATContentTypes.utils import DT2dt
-from collective.cover.testing import INTEGRATION_TESTING
+from collective.cover.testing import INTEGRATION_TESTING, loadImage
 from collective.cover.tiles.basic import BasicTile
 from collective.cover.tiles.base import IPersistentCoverTile
-
-
-def loadImage(name, size=0):
-    """Load image from testing directory
-    """
-    path = os.path.join(package_home(globals()), 'input', name)
-    fd = open(path, 'rb')
-    data = fd.read()
-    fd.close()
-    return data
+from zope.component import getMultiAdapter
+from collective.cover.tiles.permissions import ITilesPermissions
+from zope.annotation.interfaces import IAnnotations
+from collective.cover.tiles.configuration import ITilesConfigurationScreen
 
 
 class BasicTileTestCase(unittest.TestCase):
@@ -53,27 +44,21 @@ class BasicTileTestCase(unittest.TestCase):
             self.tile.accepted_ct(),
             ['Collection', 'Document', 'File', 'Image', 'Link', 'News Item'])
 
-    def test_empty_date(self):
-        self.assertEqual('', self.tile.get_date())
+    def test_is_empty(self):
+        self.assertTrue(self.tile.is_empty())
 
-    def test_populated_empty_date(self):
+    def test_is_not_empty(self):
         obj = self.portal['my-news-item']
         self.tile.populate_with_object(obj)
-        self.assertEqual('', self.tile.get_date())
+        self.assertFalse(self.tile.is_empty())
 
-    def test_populated_date(self):
-        obj = self.portal['my-news-item']
-        obj.effective_date = DateTime()
-        self.tile.populate_with_object(obj)
-        self.assertEqual(obj.effective_date.strftime('%y/%m/%d %H:%M'),
-                         self.tile.get_date())
+    def test_date_on_empty_tile(self):
+        self.assertIsNone(self.tile.Date())
 
-    def test_populated_faultydate(self):
+    def test_date_on_populated_tile(self):
         obj = self.portal['my-news-item']
-        obj.effective_date = DateTime('1/1/1800')
         self.tile.populate_with_object(obj)
-        self.assertEqual(DT2dt(obj.effective_date).ctime(),
-                         self.tile.get_date())
+        self.assertEqual(obj.Date(), self.tile.Date())
 
     def test_populate_with_object(self):
         self.tile.populate_with_object(self.portal['my-news-item'])
@@ -82,28 +67,68 @@ class BasicTileTestCase(unittest.TestCase):
                          self.tile.data['description'])
 
     def test_render_empty(self):
-        self.assertTrue(
-            "Please drag&amp;drop some content here to populate the tile." in self.tile())
+        self.assertIn(
+            "Please drag&amp;drop some content here to populate the tile.",
+            self.tile())
 
     def test_render_title(self):
         obj = self.portal['my-news-item']
         self.tile.populate_with_object(obj)
         rendered = self.tile()
-        self.assertTrue('Test news item' in rendered)
+        self.assertIn('Test news item', rendered)
 
     def test_render(self):
         obj = self.portal['my-news-item']
-        obj.setSubject('test-subject')
+        obj.setSubject(['subject1', 'subject2'])
         obj.effective_date = DateTime()
         obj.setImage(loadImage('canoneye.jpg'))
+        obj.reindexObject()
 
         self.tile.populate_with_object(obj)
         rendered = self.tile()
-        self.assertTrue(obj.UID() in rendered)
-        self.assertTrue('Test news item' in rendered)
-        self.assertTrue(
-            "This news item was created for testing purposes" in rendered)
-        self.assertTrue('test-subject' in rendered)
-        self.assertTrue(
-            obj.effective_date.strftime('%y/%m/%d %H:%M') in rendered)
-        self.assertTrue('test-basic-tile/@@images' in rendered)
+
+        # the title and a link to the original object must be there
+        self.assertIn('Test news item', rendered)
+        self.assertIn(obj.absolute_url(), rendered)
+
+        # the description must be there
+        self.assertIn(
+            "This news item was created for testing purposes", rendered)
+
+        # the image must be there
+        self.assertIn('test-basic-tile/@@images', rendered)
+
+        # the localized time must be there
+        utils = getMultiAdapter((self.portal, self.request), name=u'plone')
+        date = utils.toLocalizedTime(obj.Date(), True)
+        self.assertIn(date, rendered)
+
+        # the tags must be there
+        self.assertIn('subject1', rendered)
+        self.assertIn('subject2', rendered)
+
+    def test_delete_tile_persistent_data(self):
+        permissions = getMultiAdapter(
+            (self.tile.context, self.request, self.tile), ITilesPermissions)
+        permissions.set_allowed_edit('masters_of_the_universe')
+        annotations = IAnnotations(self.tile.context)
+        self.assertIn('plone.tiles.permission.test-basic-tile', annotations)
+
+        configuration = getMultiAdapter(
+            (self.tile.context, self.request, self.tile),
+            ITilesConfigurationScreen)
+        configuration.set_configuration({
+            'title': {'order': u'0', 'visibility': u'on'},
+            'description': {'order': u'1', 'visibility': u'off'},
+        })
+        self.assertIn('plone.tiles.configuration.test-basic-tile',
+                      annotations)
+
+        # Call the delete method
+        self.tile.delete()
+
+        # Now we should not see the stored data anymore
+        self.assertNotIn('plone.tiles.permission.test-basic-tile',
+                         annotations)
+        self.assertNotIn('plone.tiles.configuration.test-basic-tile',
+                         annotations)

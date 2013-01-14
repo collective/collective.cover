@@ -1,0 +1,116 @@
+*** Settings ***
+
+Documentation  Testing locked and unlocked
+Library  Selenium2Library  timeout=5 seconds  implicit_wait=3 seconds
+Resource  keywords.txt
+Resource  cover_keywords.txt
+Variables  plone/app/testing/interfaces.py
+
+Suite Setup  Start Browser and Log In
+
+*** Variables ***
+
+${BROWSER_CHROME}      Chrome
+${CHROME_OWNER_NAME}      other_admin
+${CHROME_OWNER_PASSWORD}  other_admin
+${basic_tile_location}  /html/body/div/div[2]/div/div[2]/div[2]/div[3]/div
+${basic_uuid}  12345
+${document_selector}  .ui-draggable .contenttype-document
+${tile_selector}  div.tile-container div.tile
+
+*** Keywords ***
+
+Create new user
+    Open User Menu
+    Click Link  link=Site Setup
+    Page Should Contain   Configuration area for Plone and add-on Products.
+
+    Click Link  link=Users and Groups
+    Page Should Contain   Users Overview
+
+    Click Button    Add New User
+    Page should contain element  form.fullname
+
+    Input text  form.fullname  ${CHROME_OWNER_NAME}
+    Input text  form.username  ${CHROME_OWNER_PASSWORD} 
+    Input text  form.email     ${CHROME_OWNER_NAME}@null.com
+    Input Password  form.password     ${CHROME_OWNER_NAME}
+    Input Password  form.password_ctl     ${CHROME_OWNER_PASSWORD}
+    Select Checkbox   form.groups.0
+    Click Button    Register
+
+*** Test Cases ***
+
+Test locked cover
+    Create new user
+
+    Goto Homepage
+    
+    Create Cover  My Cover  Description  Empty layout
+    Click Link  link=Layout
+
+    Add Tile
+    Select Tile to Add  ${basic_tile_location}
+    Save Cover Layout
+
+    Click Link  link=Compose
+    Page Should Contain   Please drag&drop some content here to populate the tile.
+
+    Click Element  css=div#screenlet-content-show-button
+
+    Drag And Drop  css=${document_selector}  css=${tile_selector}
+    Page Should Contain  My document
+
+    Click Link  link=My Cover
+    Click Link  link=Compose
+
+    Open Browser  ${PLONE_URL}  ${BROWSER_CHROME}
+    Go to  ${PLONE_URL}/login_form
+    Page should contain element  __ac_name
+    Input text  __ac_name  ${CHROME_OWNER_NAME}
+    Input text  __ac_password  ${CHROME_OWNER_PASSWORD}
+    Click Button  Log in
+
+    Switch Browser  2
+    Click Link  link=My Cover
+    Page Should Contain   Locked    This item was locked by admin 1 minute ago.
+
+    Switch Browser  1
+    Click Link  link=View
+
+    Switch Browser  2
+    Click Link  link=My Cover
+    Page Should Not Contain   Locked    This item was locked by admin 1 minute ago.
+    Click Link  link=Compose
+
+    Switch Browser  1
+    Click Link  link=My Cover
+    Page Should Contain   Locked    This item was locked by admin 1 minute ago.
+
+    Switch Browser  2
+    Click Link  link=View
+
+    Switch Browser  1
+    Click Link  link=My Cover
+    Page Should Not Contain   Locked    This item was locked by admin 1 minute ago.
+    Click Link  link=Layout
+
+    Switch Browser  2
+    Click Link  link=My Cover
+    Page Should Contain   Locked    This item was locked by admin 1 minute ago.
+
+    Switch Browser  1
+    Click Link  link=View
+
+    Switch Browser  2
+    Click Link  link=My Cover
+    Page Should Not Contain   Locked    This item was locked by admin 1 minute ago.
+    Click Link  link=Layout
+
+    Switch Browser  1
+    Click Link  link=My Cover
+    Page Should Contain   Locked    This item was locked by admin 1 minute ago.
+    Close Browser
+
+    Switch Browser  2
+    Close Browser

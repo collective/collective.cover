@@ -1,0 +1,31 @@
+*** Settings ***
+
+Library  Selenium2Library  timeout=5 seconds  implicit_wait=3 seconds
+Resource  keywords.txt
+Resource  cover_keywords.txt
+Variables  plone/app/testing/interfaces.py
+
+Suite Setup  Start Browser and Log In
+Suite Teardown  Close Browser
+
+*** Variables ***
+
+${folder_selector}  .contenttype-folder
+${input_search}  screenlet-search
+
+*** Test cases ***
+
+Test content tree tab
+    # XXX: should we create the cover object programmatically?
+    Create Cover  Title  Description  Empty layout
+
+    Click Link  link=Compose
+    Click Element  css=div#screenlet-content-show-button
+
+    Page Should Contain Element  css=${folder_selector}
+
+    Input text  name=${input_search}  folder
+
+    Set Selenium Timeout  10s
+
+    Xpath Should Match X Times  //div[contains(@id, 'recent')]//ul[contains(@class, 'item-list')]//li  1

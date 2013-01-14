@@ -1,0 +1,85 @@
+*** Settings ***
+
+Library  Selenium2Library  timeout=5 seconds  implicit_wait=3 seconds
+Resource  keywords.txt
+Resource  cover_keywords.txt
+Variables  plone/app/testing/interfaces.py
+
+Suite Setup  Start Browser and Log In
+Suite Teardown  Close Browser
+
+*** Variables ***
+
+${basic_tile_location}  /html/body/div/div[2]/div/div[2]/div[2]/div[3]/div
+${basic_uuid}  12345
+${folder_selector}  .contenttype-folder
+${input_contenttree}  screenlets-content-trees
+${tile_selector}  div.tile-container div.tile
+${path_selector}  div#content-trees div#internalpath
+
+*** Test cases ***
+
+Test content tree tab
+    # XXX: should we create the cover object programmatically?
+    Create Cover  Title  Description  Empty layout
+    Click Link  link=Layout
+
+    Add Tile
+    Select Tile to Add  ${basic_tile_location}
+    Save Cover Layout
+
+	# Test navigate tree
+	#
+    Click Link  link=Compose
+    Page Should Contain   Please drag&drop some content here to populate the tile.
+
+    Click Element  css=div#screenlet-content-show-button
+
+    Click Element  link=Content tree
+
+    Page Should Contain Element  css=${folder_selector}
+    Click Element  css=${folder_selector}
+
+    Page Should Contain Element  css=${path_selector}    
+	Wait Until Page Contains Element  css=div#content-trees div#internalpath a
+    Page Should Contain  Plone site → my-folder
+
+	# Test searches
+	#
+    Click Link  link=Compose
+    Page Should Contain   Please drag&drop some content here to populate the tile.
+
+    Click Element  css=div#screenlet-content-show-button
+
+    Click Element  link=Content tree
+    Input text  name=${input_contenttree}  folder
+    Page Should Contain  1 Results
+
+	# Test navigate again, issue #105
+	#
+    Click Element  css=#home a
+
+    Page Should Contain Element  css=${folder_selector}
+    Click Element  css=${folder_selector}
+
+    Page Should Contain Element  css=${path_selector}    
+	Wait Until Page Contains Element  css=div#content-trees div#internalpath a
+    Page Should Contain  Plone site → my-folder
+
+    Input text  name=${input_contenttree}  foo-bar
+    Page Should Contain  0 Results
+
+    Click Element  css=#home a
+
+    Page Should Contain Element  css=${folder_selector}
+    Click Element  css=${folder_selector}
+
+    Page Should Contain Element  css=${path_selector}    
+	Wait Until Page Contains Element  css=div#content-trees div#internalpath a
+    Page Should Contain  Plone site → my-folder
+
+	# End test
+	#
+    Click Link  link=Layout
+    Delete Tile
+    Save Cover Layout
