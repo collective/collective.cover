@@ -3,7 +3,7 @@
 from zope import schema
 from zope.component import queryUtility
 from zope.component import getUtility
-from zope.interface import implements
+from zope.interface import implements, Interface
 from zope.schema import getFieldsInOrder
 
 from plone.registry.interfaces import IRegistry
@@ -20,6 +20,12 @@ from collective.cover import _
 from collective.cover.tiles.base import IPersistentCoverTile
 from collective.cover.tiles.base import PersistentCoverTile
 from collective.cover.controlpanel import ICoverSettings
+from collective.z3cform.datagridfield.registry import DictRow
+
+
+class IListElement(Interface):
+    name = schema.TextLine(title=u'Title')
+    license = schema.TextLine(title=u'Description')
 
 
 # XXX: we must refactor this tile
@@ -49,6 +55,10 @@ class IListTile(IPersistentCoverTile):
         readonly=True,
     )
 
+    elements = schema.List(title=u"Elements",
+                           value_type=DictRow(title=u'Elements row',
+                                              schema=IListElement))
+
 
 class ListTile(PersistentCoverTile):
 
@@ -58,7 +68,7 @@ class ListTile(PersistentCoverTile):
 
     is_configurable = True
     is_droppable = True
-    is_editable = False
+    is_editable = True
     limit = 5
 
     def results(self):

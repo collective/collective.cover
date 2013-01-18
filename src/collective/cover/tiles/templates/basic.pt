@@ -18,27 +18,23 @@
                  condition="python:field['id'] == 'title'">
       
           <h1 tal:condition="python:htmltag == 'h1'">
-             <a property="#title"
-                tal:attributes="href view/getURL;
+             <a property="#title" tal:attributes="href view/getURL;
                                 title description"
                 tal:content="python:field['content']" />
           </h1>
          
           <h2 tal:condition="python:htmltag == 'h2'">
-             <a property="#title" 
-                tal:attributes="href view/getURL;
+             <a property="#title" tal:attributes="href view/getURL;
                                 title description"
               tal:content="python:field['content']" />
           </h2>
           <h3 tal:condition="python:htmltag == 'h3'">
-             <a property="#title"
-                tal:attributes="href view/getURL;
+             <a property="#title" tal:attributes="href view/getURL;
                                 title description"
               tal:content="python:field['content']" />
           </h3>
           <h4 tal:condition="python:htmltag == 'h4'">
-             <a property="#title"
-                tal:attributes="href view/getURL;
+             <a property="#title" tal:attributes="href view/getURL;
                                 title description"
               tal:content="python:field['content']" />
           </h4>

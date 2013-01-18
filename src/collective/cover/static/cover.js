@@ -127,29 +127,55 @@ $(document).ready(function() {
 });
 
 
-
-
 jQuery(document).ready(function () {
+
+    // the dtd of ckeditor doesnt allow the edit A elements
+    CKEDITOR.dtd.$editable['a'] = 1;
+
+    CKEDITOR.on( 'instanceCreated', function( event ) {
+      var editor = event.editor,
+        element = editor.element;
+
+      // Customize editors for headers and tag list.
+      // These editors don't need features like smileys, templates, iframes etc.
+      if ( element.is( 'h1', 'h2', 'h3', 'a', 'p' ) || element.getAttribute( 'id' ) == 'taglist' ) {
+        // Customize the editor configurations on "configLoaded" event,
+        // which is fired after the configuration file loading and
+        // execution. This makes it possible to change the
+        // configurations before the editor initialization takes place.
+        editor.on( 'configLoaded', function() {
+
+          // Remove unnecessary plugins to make the editor simpler.
+          editor.config.removePlugins = 'colorbutton,find,flash,font,' +
+            'forms,iframe,image,newpage,removeformat,' +
+            'smiley,specialchar,stylescombo,templates, about, basicstyles';
+
+          // Rearrange the layout of the toolbar.
+          editor.config.toolbarGroups = [
+            { name: 'editing',    groups: [ 'basicstyles', 'links' ] },
+            { name: 'undo' },
+            { name: 'clipboard',  groups: [ 'selection', 'clipboard' ] },
+            { name: 'about' }
+          ];
+        });
+      }
+    });
+
     jQuery('body').midgardCreate({
       url: function () {
         return '/Plone' +  this.getSubjectUri();
       },
-      stanbolUrl: 'http://dev.iks-project.eu:8081',
       tags: false/*,
       language: 'pt_BR'*/
     });
 
     // Set a simpler editor for title fields
-    jQuery('body').midgardCreate('configureEditor', 'title', 'halloWidget', {
-      plugins: {
-        halloformat: {},
-        halloblacklist: {
-          tags: ['br']
-        }
-      },
+    jQuery('body').midgardCreate('configureEditor', 'title', 'ckeditorWidget', {
     });
-    jQuery('body').midgardCreate('setEditorForProperty', '#title', 'title');
-    jQuery('body').midgardCreate('setEditorForProperty', '#description', 'title');
+    jQuery('body').midgardCreate('setEditorForProperty', 'default', 'title');
+
+    //jQuery('body').midgardCreate('setEditorForProperty', '#title', 'title');
+    //jQuery('body').midgardCreate('setEditorForProperty', '#description', 'title');
 
     // Disable editing of author fields
     //jQuery('body').midgardCreate('setEditorForProperty', 'dcterms:author', null);
@@ -157,11 +183,3 @@ jQuery(document).ready(function () {
 });
 Backbone.emulateHTTP = true;
 Backbone.emulateJSON = true;
-// Fake Backbone.sync since there is no server to communicate with
-// Backbone.sync = function(method, model, options) {
-//     debugger;
-//     if (console && console.log) {
-//       console.log('Model contents', model.toJSONLD());
-//     }
-//     options.success(model);
-// };

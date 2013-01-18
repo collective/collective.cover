@@ -144,6 +144,7 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
                 else:
                     data[schema_element] = json_model.get(key)
         data_mgr.set(data)
+        notify(ObjectModifiedEvent(self))
 
     def populate_with_object(self, obj):
         if not self.isAllowedToEdit():

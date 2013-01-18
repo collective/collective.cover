@@ -13,18 +13,17 @@
     <script tal:attributes="src string:${view/static}/createjs/deps/vie-min.js"></script>
 
     <!-- Tags input is needed for the Tag widget -->
-    <script tal:attributes="src string:${view/static}/createjs/deps/jquery.tagsinput.min.js"></script>
+    <!-- <script tal:attributes="src string:${view/static}/createjs/deps/jquery.tagsinput.min.js"></script> -->
 
     <!-- rdfQuery and annotate are only needed for the Hallo
     annotations plugin -->
-    <script tal:attributes="src string:${view/static}/createjs/deps/jquery.rdfquery.min.js"></script>
-    <script tal:attributes="src string:${view/static}/createjs/deps/annotate-min.js"></script>
+<!--     <script tal:attributes="src string:${view/static}/createjs/deps/jquery.rdfquery.min.js"></script>
+    <script tal:attributes="src string:${view/static}/createjs/deps/annotate-min.js"></script> -->
 
-    <script tal:attributes="src string:${view/static}/createjs/deps/rangy-core-1.2.3.js"></script>
-    <script tal:attributes="src string:${view/static}/createjs/deps/hallo-min.js"></script>
-    <script type="text/javascript"
-        tal:attributes="src string:${view/static}/createjs/create-min.js">
-    </script>
+    <!-- <script tal:attributes="src string:${view/static}/createjs/deps/rangy-core-1.2.3.js"></script> -->
+    <!-- <script tal:attributes="src string:${view/static}/createjs/deps/hallo-min.js"></script> -->
+    <script type="text/javascript" tal:attributes="src string:${view/static}/createjs/ckeditor.js"></script>
+    <script type="text/javascript" tal:attributes="src string:${view/static}/createjs/create-min.js"></script>
     <script type="text/javascript"
         tal:attributes="src string:${view/static}/cover.js">
     </script>
@@ -39,7 +38,7 @@
 <metal:styles fill-slot="style_slot">
 
     <link rel="stylesheet" type="text/css" media="screen" href=""
-          tal:attributes="href string:${view/static}/createjs/font-awesome/css/font-awesome.css/" />
+          tal:attributes="href string:${view/static}/createjs/font-awesome/css/font-awesome.css" />
 
     <link rel="stylesheet" type="text/css" media="screen" href=""
           tal:attributes="href string:${view/static}/createjs/themes/create-ui/css/create-ui.css" />
