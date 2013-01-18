@@ -42,7 +42,7 @@
                                  data-tile-valid-ct python:view.accepted_ct_for_tile(tile_type);
                                  data-is-droppable python:view.tile_is_droppable(tile_type);
                                  id tile_id;
-                                 about python:'/hola-mundo/@@%s/%s' %(tile_type,tile_id);
+                                 about python:'/%s/@@%s/%s' %(context.absolute_url(relative=1), tile_type,tile_id);
                                  typeof python: '@@%s' %(tile_type);
 " />
             <a href="#" class="edit-tile-link"

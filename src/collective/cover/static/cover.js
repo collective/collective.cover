@@ -163,7 +163,7 @@ jQuery(document).ready(function () {
 
     jQuery('body').midgardCreate({
       url: function () {
-        return '/Plone' +  this.getSubjectUri();
+        return this.getSubjectUri();
       },
       tags: false/*,
       language: 'pt_BR'*/
