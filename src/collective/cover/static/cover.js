@@ -132,6 +132,7 @@ jQuery(document).ready(function () {
     // the dtd of ckeditor doesnt allow the edit A elements
     CKEDITOR.dtd.$editable['a'] = 1;
 
+    //simple editor for h1, h2, h3, 1 and p elements
     CKEDITOR.on( 'instanceCreated', function( event ) {
       var editor = event.editor,
         element = editor.element;
@@ -161,12 +162,15 @@ jQuery(document).ready(function () {
       }
     });
 
+    var lang = window.navigator.browserLanguage || window.navigator.language;
+    var glang = lang.split('-');
+
     jQuery('body').midgardCreate({
       url: function () {
         return this.getSubjectUri();
       },
-      tags: false/*,
-      language: 'pt_BR'*/
+      tags: false,
+      language: glang[0]
     });
 
     // Set a simpler editor for title fields
