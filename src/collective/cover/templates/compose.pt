@@ -8,10 +8,6 @@
 <body>
 
 <metal:js fill-slot="javascript_head_slot">
-    <script tal:attributes="src string:${view/static}/createjs/deps/underscore-min.js"></script>
-    <script tal:attributes="src string:${view/static}/createjs/deps/backbone-min.js"></script>
-    <script tal:attributes="src string:${view/static}/createjs/deps/vie-min.js"></script>
-
     <!-- Tags input is needed for the Tag widget -->
     <!-- <script tal:attributes="src string:${view/static}/createjs/deps/jquery.tagsinput.min.js"></script> -->
 
@@ -22,11 +18,20 @@
 
     <!-- <script tal:attributes="src string:${view/static}/createjs/deps/rangy-core-1.2.3.js"></script> -->
     <!-- <script tal:attributes="src string:${view/static}/createjs/deps/hallo-min.js"></script> -->
+    <script tal:attributes="src string:${view/static}/createjs/deps/underscore-min.js"></script>
+    <script tal:attributes="src string:${view/static}/createjs/deps/backbone-min.js"></script>
+    <script tal:attributes="src string:${view/static}/createjs/deps/vie-min.js"></script>
     <script type="text/javascript" tal:attributes="src string:${view/static}/createjs/ckeditor.js"></script>
     <script type="text/javascript" tal:attributes="src string:${view/static}/createjs/create-min.js"></script>
     <script type="text/javascript"
         tal:attributes="src string:${view/static}/cover.js">
     </script>
+
+    <tal:block tal:condition="view/inline_edition">
+      <script type="text/javascript" 
+          tal:attributes="src string:${view/static}/inline_editor.js">
+      </script>
+    </tal:block>
 
     <script type="text/javascript">
       jQuery(document).ready(function() {

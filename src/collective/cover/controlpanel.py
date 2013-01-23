@@ -30,6 +30,15 @@ class ICoverSettings(Interface):
         value_type=schema.Choice(
             vocabulary=u'collective.cover.AvailableContentTypes'),)
 
+    inline_edition = schema.Bool(
+        title=_(u"label_inline_edition",
+                default=u"Inline Edition"),
+        description=_(u"help_inline_edition",
+                      default=u"If selected, the inline edition is going to be active"),
+        required=False,
+        default=False,
+    )
+
 
 class CoverSettingsEditForm(controlpanel.RegistryEditForm):
     schema = ICoverSettings

@@ -15,6 +15,7 @@
 
     <include package=".tiles" />
     <include file="profiles.zcml" />
+    <include file="upgrades.zcml" />
 
     <browser:page
         name="cover-settings"
