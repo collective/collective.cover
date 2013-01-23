@@ -12,10 +12,6 @@ from plone.registry.interfaces import IRegistry
 from plone.tiles.interfaces import ITileDataManager
 from plone.uuid.interfaces import IUUID
 
-from z3c.form.browser.textlines import TextLinesFieldWidget
-
-from plone.autoform import directives as form
-
 from Products.CMFCore.utils import getToolByName
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
@@ -45,6 +41,7 @@ class IBasicTile(IPersistentCoverTile):
     date = schema.Datetime(
         title=_(u'Date'),
         required=False,
+        readonly=True,
     )
 
     subjects = schema.Tuple(
@@ -53,9 +50,8 @@ class IBasicTile(IPersistentCoverTile):
         required=False,
         value_type=schema.TextLine(),
         missing_value=(),
+        readonly=True,
     )
-
-    form.widget(tags=TextLinesFieldWidget)
 
     uuid = schema.TextLine(
         title=_(u'UUID'),
