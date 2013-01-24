@@ -14,6 +14,7 @@ from zope.app.container.interfaces import IObjectAddedEvent
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.interfaces import INonStructuralFolder
 
+from plone.dexterity.content import Item
 from plone.dexterity.events import EditBegunEvent
 #from plone.dexterity.events import EditCancelledEvent
 #from plone.dexterity.events import EditFinishedEvent
@@ -36,11 +37,9 @@ class ICover(form.Schema):
     form.model("models/cover.xml")
 
 
-# FIXME: we must inherit from dexterity.Item but we have to fix issue #48
-class Cover(dexterity.Container):
+class Cover(Item):
     """
     """
-    grok.implements(ICover, INonStructuralFolder)
 
 
 class View(grok.View):
