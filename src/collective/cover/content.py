@@ -7,12 +7,15 @@ from Acquisition import aq_inner
 from zope.annotation.interfaces import IAnnotations
 from zope.component import getUtility
 from zope.event import notify
+from zope.interface import implements
 
 from five import grok
 from zope.app.container.interfaces import IObjectAddedEvent
 
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.interfaces import INonStructuralFolder
+
+from Products.GenericSetup.interfaces import IDAVAware
 
 from plone.dexterity.content import Item
 from plone.dexterity.events import EditBegunEvent
@@ -40,6 +43,10 @@ class ICover(form.Schema):
 class Cover(Item):
     """
     """
+    # XXX: Provide this so Cover items can be imported using the import
+    #      content from GS, until a proper solution is found.
+    #      ref: http://thread.gmane.org/gmane.comp.web.zope.plone.devel/31799
+    implements(IDAVAware)
 
 
 class View(grok.View):
