@@ -17,6 +17,15 @@ Test CRUD
     Update  Title fixed  Description fixed
     Delete
 
+Test renderBase
+    Goto Homepage
+    Create Cover  Title  Description  Empty layout
+    Element Text Should Be tag=base <base href="${PLONE_URL}/titulo/">
+    Click Link  link=Compose
+    Element Text Should Be tag=base <base href="${PLONE_URL}/titulo/">
+    Click Link  link=Layout
+    Element Text Should Be tag=base <base href="${PLONE_URL}/titulo/">
+    
 *** Keywords ***
 
 Update

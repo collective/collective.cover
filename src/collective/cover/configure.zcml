@@ -30,6 +30,12 @@
         <browser:page attribute="jsonByType" name="jsonbytype" />
     </browser:pages>
 
-
+    <browser:page
+      for="collective.cover.content.ICover"
+      name="plone"
+      class=".adapters.PloneView"
+      permission="zope.Public"
+      allowed_interface="Products.CMFPlone.browser.interfaces.IPlone"
+      />
 
 </configure>
