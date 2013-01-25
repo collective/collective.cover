@@ -7,6 +7,7 @@ from Acquisition import aq_inner
 from zope.annotation.interfaces import IAnnotations
 from zope.component import getUtility
 from zope.event import notify
+from zope.interface import implements
 
 from five import grok
 from zope.app.container.interfaces import IObjectAddedEvent
@@ -14,6 +15,9 @@ from zope.app.container.interfaces import IObjectAddedEvent
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.interfaces import INonStructuralFolder
 
+from Products.GenericSetup.interfaces import IDAVAware
+
+from plone.dexterity.content import Item
 from plone.dexterity.events import EditBegunEvent
 #from plone.dexterity.events import EditCancelledEvent
 #from plone.dexterity.events import EditFinishedEvent
@@ -36,11 +40,13 @@ class ICover(form.Schema):
     form.model("models/cover.xml")
 
 
-# FIXME: we must inherit from dexterity.Item but we have to fix issue #48
-class Cover(dexterity.Container):
+class Cover(Item):
     """
     """
-    grok.implements(ICover, INonStructuralFolder)
+    # XXX: Provide this so Cover items can be imported using the import
+    #      content from GS, until a proper solution is found.
+    #      ref: http://thread.gmane.org/gmane.comp.web.zope.plone.devel/31799
+    implements(IDAVAware)
 
 
 class View(grok.View):
