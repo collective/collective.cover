@@ -53,6 +53,7 @@ setup(name='collective.cover',
         'plone.namedfile[blobs]',
         'plone.principalsource',
         'plone.tiles>=1.2',
+        'collective.z3cform.datagridfield',
         ],
       extras_require={
         'test': [
