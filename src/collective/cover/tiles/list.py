@@ -15,6 +15,8 @@ from plone.uuid.interfaces import IUUID
 from plone.memoize import view
 
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
+from Products.CMFCore.interfaces import IFolderish
+from plone.app.collection.interfaces import ICollection
 
 from collective.cover import _
 from collective.cover.tiles.base import IPersistentCoverTile
@@ -88,21 +90,43 @@ class ListTile(PersistentCoverTile):
 
     def populate_with_object(self, obj):
         super(ListTile, self).populate_with_object(obj)  # check permission
-        self.set_limit()
-        uuid = IUUID(obj, None)
-        data_mgr = ITileDataManager(self)
-
-        old_data = data_mgr.get()
-        if data_mgr.get()['uuids']:
-            uuids = data_mgr.get()['uuids']
-            if type(uuids) != list:
-                uuids = [uuid]
-            elif uuid not in uuids:
-                uuids.append(uuid)
-
-            old_data['uuids'] = uuids[:self.limit]
+        if IFolderish.providedBy(obj):
+            self.populate_with_uids([i.UID for i in obj.getFolderContents()])
+        elif ICollection.providedBy(obj):
+            self.populate_with_uids([i.UID for i in obj.queryCatalog()])
         else:
-            old_data['uuids'] = [uuid]
+            self.set_limit()
+            uuid = IUUID(obj, None)
+            data_mgr = ITileDataManager(self)
+
+            old_data = data_mgr.get()
+            if data_mgr.get()['uuids']:
+                uuids = data_mgr.get()['uuids']
+                if type(uuids) != list:
+                    uuids = [uuid]
+                elif uuid not in uuids:
+                    uuids.append(uuid)
+
+                old_data['uuids'] = uuids[:self.limit]
+            else:
+                old_data['uuids'] = [uuid]
+            data_mgr.set(old_data)
+
+    def populate_with_uids(self, uids):
+        self.set_limit()
+        data_mgr = ITileDataManager(self)
+        old_data = data_mgr.get()
+        uuids = data_mgr.get()['uuids']
+
+        for uuid in uids:
+            if uuids:
+                if type(uuids) != list:
+                    uuids = [uuid]
+                elif uuid not in uuids:
+                    uuids.append(uuid)
+            else:
+                uuids = [uuid]
+        old_data['uuids'] = uuids[:self.limit]
         data_mgr.set(old_data)
 
     def replace_with_objects(self, uids):
