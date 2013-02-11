@@ -163,6 +163,12 @@ class Compose(grok.View):
         # XXX: used to lock the object when someone is editing it
         notify(EditBegunEvent(self.context))
 
+    def inline_edition(self):
+        registry = getUtility(IRegistry)
+        settings = registry.forInterface(ICoverSettings)
+        inline_edition = settings.inline_edition
+        return inline_edition
+
 
 # TODO: implement EditCancelledEvent and EditFinishedEvent
 # XXX: we need to leave the view after saving or cancelling editing

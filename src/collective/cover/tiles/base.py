@@ -4,6 +4,7 @@
 # http://davisagli.com/blog/using-tiles-to-provide-more-flexible-plone-layouts
 
 import logging
+import json
 
 from logging import exception
 from AccessControl import Unauthorized
@@ -116,6 +117,34 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
     is_configurable = False
     is_editable = True
     is_droppable = True
+
+    def __call__(self, *args, **kwargs):
+        super(tiles.PersistentTile, self).__call__(self, *args, **kwargs)
+        model = self.request.get('model')
+        method = self.request.get('_method')
+        if model and method:
+            self.save_inline_data(model)
+            self.request.response.setHeader("Content-type", "application/json")
+            return model
+        return self.index()
+
+    def save_inline_data(self, model):
+        json_model = json.loads(model)
+        data_mgr = ITileDataManager(self)
+
+        data = data_mgr.get()
+        schema_element = ''
+        for key in json_model.keys():
+            if '#' in key:
+                schema_element = str(key.split('#')[1].replace('>', ''))
+                if type(data[schema_element]) is RichTextValue:
+                    data[schema_element] = RichTextValue(raw=json_model.get(key),
+                                                         mimeType='text/x-html-safe',
+                                                         outputMimeType='text/x-html-safe')
+                else:
+                    data[schema_element] = json_model.get(key)
+        data_mgr.set(data)
+        notify(ObjectModifiedEvent(self))
 
     def populate_with_object(self, obj):
         if not self.isAllowedToEdit():

@@ -1,0 +1,14 @@
+<configure
+  xmlns="http://namespaces.zope.org/zope"
+  xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+  i18n_domain="collective.cover">
+
+    <genericsetup:upgradeStep
+        title="Control Panel Update"
+        source="1000"
+        destination="1001"
+        description="Add the inline edition option in the cover configlet"
+        handler=".upgrades.inline_edition_control_panel_update"
+        profile="collective.cover:default" />
+
+</configure>
