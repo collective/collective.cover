@@ -7,7 +7,6 @@ Because you have to know where your towel is.
 ^^^^^^^^^^^^^^^^^^
 
 - Refactor of collection tile. [hvelarde]
-
 - list and carousel tiles now support loading images from folderish content [jpgimenez]
 
 
