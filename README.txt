@@ -140,6 +140,14 @@ locate existing content.
 the desired content. All items listed are available to be used according to the
 steps above.
 
+Images in folderish content
++++++++++++++++++++++++++++
+
+When you drop a 'folderish' content inside a list or a carousel tile, the tile
+will try to load the contained images. This way a folder, a collection, or some
+other kind of containers could be used to drop several images into a tile in just
+one step.
+
 Changing information from a Content
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
