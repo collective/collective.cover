@@ -13,7 +13,6 @@ from five import grok
 from zope.app.container.interfaces import IObjectAddedEvent
 
 from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone.interfaces import INonStructuralFolder
 
 from Products.GenericSetup.interfaces import IDAVAware
 
@@ -22,7 +21,7 @@ from plone.dexterity.events import EditBegunEvent
 #from plone.dexterity.events import EditCancelledEvent
 #from plone.dexterity.events import EditFinishedEvent
 from plone.dexterity.utils import createContentInContainer
-from plone.directives import dexterity, form
+from plone.directives import form
 from plone.registry.interfaces import IRegistry
 from plone.tiles.interfaces import ITileDataManager
 from plone.uuid.interfaces import IUUIDGenerator
