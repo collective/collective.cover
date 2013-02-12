@@ -186,7 +186,7 @@
       />
 
   <adapter
-      for="Products.CMFCore.interfaces.IFolderish"
+      for="Products.ATContentTypes.interface.IATFolder"
       provides="..interfaces.ICoverUIDsProvider"
       factory=".list.FolderUIDsProvider"
       />
