@@ -15,15 +15,13 @@
                define="toLocalizedTime nocall:context/@@plone/toLocalizedTime">
       <div style="position:relative"
            tal:attributes="data-uid python:view.get_uid(item)">
-        <tal:image condition="python:hasattr(item, 'image') or hasattr(item,'Schema') and 'image' in item.Schema().keys()">
+        <tal:image tal:define="thumbnail python:view.thumbnail(item);"
+                   condition="thumbnail">
           <a tal:attributes="href item/absolute_url;
                              title item/Description;
                              alt item/Description">
             <!-- XXX -->
             <img style="float: left; margin: 0 1em 0.5em 0;"
-                 tal:define="scales item/@@images;
-                             thumbnail python: scales.scale('image', 'mini');"
-                 tal:condition="thumbnail"
                  tal:attributes="src thumbnail/url;
                                  width thumbnail/width;
                                  height thumbnail/height" />

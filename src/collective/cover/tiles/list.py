@@ -20,6 +20,7 @@ from collective.cover import _
 from collective.cover.tiles.base import IPersistentCoverTile
 from collective.cover.tiles.base import PersistentCoverTile
 from collective.cover.controlpanel import ICoverSettings
+from collective.cover.interfaces import ICoverUIDsProvider
 
 
 # XXX: we must refactor this tile
@@ -88,6 +89,11 @@ class ListTile(PersistentCoverTile):
 
     def populate_with_object(self, obj):
         super(ListTile, self).populate_with_object(obj)  # check permission
+        uids = ICoverUIDsProvider(obj).getUIDs()
+        if uids:
+            self.populate_with_uids(uids)
+
+    def populate_with_uids(self, uids):
         self.set_limit()
         uuid = IUUID(obj, None)
         data_mgr = ITileDataManager(self)
@@ -179,3 +185,49 @@ class ListTile(PersistentCoverTile):
         registry = getUtility(IRegistry)
         settings = registry.forInterface(ICoverSettings)
         return settings.searchable_content_types
+
+    def thumbnail(self, item):
+        scales = item.restrictedTraverse('@@images')
+        try:
+            return scales.scale('image', 'mini')
+        except:
+            return None
+
+
+class CollectionUIDsProvider(object):
+
+    implements(ICoverUIDsProvider)
+
+    def __init__(self, context):
+        self.context = context
+
+    def getUIDs(self):
+        """ Return a list of UIDs of collection objects.
+        """
+        return [i.UID for i in self.context.queryCatalog()]
+
+
+class FolderUIDsProvider(object):
+
+    implements(ICoverUIDsProvider)
+
+    def __init__(self, context):
+        self.context = context
+
+    def getUIDs(self):
+        """ Return a list of UIDs of collection objects.
+        """
+        return [i.UID for i in self.context.getFolderContents()]
+
+
+class GenericUIDsProvider(object):
+
+    implements(ICoverUIDsProvider)
+
+    def __init__(self, context):
+        self.context = context
+
+    def getUIDs(self):
+        """ Return a list of UIDs of collection objects.
+        """
+        return [IUUID(self.context)]
