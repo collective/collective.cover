@@ -28,7 +28,7 @@ Test Collection Tile
     Save Cover Layout
 
     Click Link  link=Compose
-    Page Should Contain  Select a collection to fill this tile
+    Page Should Contain  Please drop a collection here to fill the tile
 
     Click Element  css=div#screenlet-content-show-button
 
