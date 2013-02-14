@@ -4,68 +4,59 @@
       xmlns:i18n="http://xml.zope.org/namespaces/i18n"
       i18n:domain="collective.cover">
 
-<body>
-  <tal:has_no_data condition="not:view/has_data">
-    <div>
-      <p i18n:translate="">Select a collection to fill this tile.</p>
-    </div>
-  </tal:has_no_data>
+<body tal:define="is_empty view/is_empty">
+  <p tal:condition="is_empty" i18n:translate="">
+    Please drop a collection here to fill the tile.
+  </p>
 
-  <tal:has_data condition="view/has_data">
+  <div class="cover-collection-tile" tal:condition="not:is_empty">
     <tal:results define="results view/results;
                          toLocalizedTime nocall:context/@@plone/toLocalizedTime">
       <div tal:condition="not:results">
         <p i18n:translate="">The collection doesn't have any results.</p>
       </div>
 
-      <div class="collection-item" tal:repeat="brain results">
-        <tal:obj define="obj brain/getObject;
-                         title obj/Title;
-                         summary obj/Description">
+      <div class="collection-item" tal:repeat="item results">
+        <tal:items define="obj item/getObject">
           <tal:fields repeat="field view/configured_fields">
-            <div class="image"
-                 tal:condition="python:field['id'] == 'image' and (hasattr(obj, 'image') or hasattr(obj,'Schema') and 'image' in obj.Schema().keys())">
-              <a tal:attributes="href obj/absolute_url; 
-                                 title summary">
+            <tal:image define="thumbnail python:view.thumbnail(obj);"
+                       condition="python:field['id'] == 'image' and thumbnail">
+              <a tal:attributes="href obj/absolute_url;
+                                 title obj/Description">
                 <!-- XXX -->
                 <img style="float: left; margin: 0 1em 0.5em 0;"
-                     tal:define="scales obj/@@images;
-                                 thumbnail python:scales.scale('image', scale=field.get('scale', 'mini'));"
-                     tal:condition="thumbnail"
                      tal:attributes="src thumbnail/url;
                                      width thumbnail/width;
                                      height thumbnail/height" />
               </a>
-            </div>
+            </tal:image>
 
             <tal:title define="htmltag python:field.get('htmltag', 'h1')"
                        condition="python:field['id'] == 'title'">
               <!-- FIXME: a tag should be inside h tag -->
               <a tal:attributes="href obj/absolute_url; 
-                                 title summary">
+                                 title obj/Description">
                 <h1 tal:condition="python:htmltag == 'h1'"
-                    tal:content="title" />
+                    tal:content="obj/Title" />
                 <h2 tal:condition="python:htmltag == 'h2'"
-                    tal:content="title" />
+                    tal:content="obj/Title" />
                 <h3 tal:condition="python:htmltag == 'h3'"
-                    tal:content="title" />
+                    tal:content="obj/Title" />
               </a>
             </tal:title>
 
-            <div class="description"
-                 tal:condition="python:field['id'] == 'description'">
-              <p tal:content="summary" />
-            </div>
+            <p class="description"
+               tal:condition="python:field['id'] == 'description'"
+               tal:content="obj/Description" />
 
-            <div class="collection-obj-date"
-                 tal:condition="python:field['id'] == 'date' and (hasattr(obj, 'Date') or hasattr(obj,'Schema') and 'Date' in obj.Schema().keys())">
-              <p tal:content="python:toLocalizedTime(obj.Date())" />
-            </div>
+            <p class=""
+               tal:content="python:toLocalizedTime(obj.Date())"
+               tal:condition="python:field['id'] == 'date' and (hasattr(obj, 'Date') or hasattr(obj,'Schema') and 'Date' in obj.Schema().keys())" />
           </tal:fields>
-        </tal:obj>
+        </tal:items>
         <div class="visualClear"><!-- --></div>
       </div>
     </tal:results>
-  </tal:has_data>
+  </div>
 </body>
 </html>
