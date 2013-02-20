@@ -5,13 +5,10 @@
       i18n:domain="collective.cover">
 
 <body>
-  <div id="CarouselTile" class="carousel slide">
+  <div class="galleria slide">
     <!-- Carousel items -->
-    <div class="carousel-inner sortable-tile">
+    <div class="galleria-inner sortable-tile">
       <tal:items repeat="item view/results">
-        <div class="item"
-             tal:attributes="class python:'item' + (' active' if repeat['item'].start else '');
-                             data-uid python:view.get_uid(item);">
           <tal:image condition="python:hasattr(item, 'image') or hasattr(item,'Schema') and 'image' in item.Schema().keys()">
             <a tal:attributes="href item/absolute_url; 
                                title item/Description">
@@ -20,47 +17,23 @@
                    tal:condition="thumbnail"
                    tal:attributes="src thumbnail/url;
                                    width thumbnail/width;
-                                   height thumbnail/height" />
+                                   height thumbnail/height;
+                                   data-title item/title;
+                                   data-description item/Description;
+                                   data-link item/absolute_url;" />
             </a>
           </tal:image>
-
-          <div class="carousel-caption">
-            <h1 tal:content="item/Title">Title</h1>
-            <p tal:content="item/Description">Summary</p>
-          </div>
-        </div>
       </tal:items>
     </div>
 
-    <!-- Carousel nav -->
-    <a class="carousel-control left" href="#article-carousel" data-slide="prev">&lsaquo;</a>
-    <a class="carousel-control right" href="#article-carousel" data-slide="next">&rsaquo;</a>
   </div>
 
+  <link rel="stylesheet" type="text/css"
+        tal:attributes="href string:${context/@@plone_portal_state/portal_url}/++resource++collective.cover/galleria-theme/galleria.cover_theme.css" />
+
   <script type="text/javascript">
-    $(document).ready(function() {
-        $('#CarouselTile').carousel();
-        $("#CarouselTile .carousel-control.left").live("click", function(e) {
-            var actual = $("#CarouselTile .item.active");
-            var prev = actual.prev();
-            if(prev.length) {
-                actual.removeClass('active');
-                prev.addClass('active');
-            }
-            e.preventDefault();
-            return false;
-        });
-        $("#CarouselTile .carousel-control.right").live("click", function(e) {
-            var actual = $("#CarouselTile .item.active");
-              var next = actual.next();
-              if(next.length) {
-                  actual.removeClass('active');
-                  next.addClass('active');
-              }
-              e.preventDefault();
-              return false;
-        });
-    });
+		Galleria.loadTheme("++resource++collective.cover/galleria-theme/galleria.cover_theme.js");
+		Galleria.run(".galleria-inner");
   </script>
 </body>
 </html>
