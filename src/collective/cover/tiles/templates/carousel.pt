@@ -9,9 +9,6 @@
     <!-- Carousel items -->
     <div class="galleria-inner sortable-tile">
       <tal:items repeat="item view/results">
-          <tal:image condition="python:hasattr(item, 'image') or hasattr(item,'Schema') and 'image' in item.Schema().keys()">
-            <a tal:attributes="href item/absolute_url; 
-                               title item/Description">
               <img tal:define="scales item/@@images;
                                thumbnail python:scales.scale('image', width=1000, height=1000);"
                    tal:condition="thumbnail"
@@ -21,8 +18,6 @@
                                    data-title item/title;
                                    data-description item/Description;
                                    data-link item/absolute_url;" />
-            </a>
-          </tal:image>
       </tal:items>
     </div>
 
