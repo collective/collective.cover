@@ -43,24 +43,11 @@ Galleria.addTheme({
             this.addIdleState( this.get('counter'), { opacity:0 });
         }
 
-        // bind some stuff
-        this.bind('thumbnail', function(e) {
-
-            if (! touch ) {
-                // fade thumbnails
-                $(e.thumbTarget).css('opacity', 0.6).parent().hover(function() {
-                    $(this).not('.active').children().stop().fadeTo(100, 1);
-                }, function() {
-                    $(this).not('.active').children().stop().fadeTo(400, 0.6);
-                });
-
-                if ( e.index === this.getIndex() ) {
-                    $(e.thumbTarget).css('opacity',1);
-                }
-            } else {
-                $(e.thumbTarget).css('opacity', this.getIndex() ? 1 : 0.6);
-            }
-        });
+        this.$('thumbnails').find('.galleria-image').css('opacity',0.5).hover(function() {
+        	$(this).fadeTo(200,1);
+        }, function() {
+        	$(this).not('.active').fadeTo(200,.5);
+        }); 
 
         this.bind('loadstart', function(e) {
             if (!e.cached) {
