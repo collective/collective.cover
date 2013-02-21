@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from zope import schema
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
 from collective.cover.tiles.list import ListTile, IListTile
@@ -7,16 +8,31 @@ from plone.uuid.interfaces import IUUID
 from plone.tiles.interfaces import ITileDataManager
 from plone.app.uuid.utils import uuidToObject
 
+from collective.cover import _
+
 
 class ICarouselTile(IListTile):
     """
     """
 
+    uuids = schema.List(
+        title=_(u'Elements'),
+        value_type=schema.TextLine(),
+        required=False,
+        readonly=True,
+    )
+
+    autoplay = schema.Bool(
+        title=_(u'Auto play'),
+        required=False,
+        default=True,
+    )
+
 
 class CarouselTile(ListTile):
     index = ViewPageTemplateFile("templates/carousel.pt")
     is_configurable = False
-    is_editable = False
+    is_editable = True
 
     def populate_with_object(self, obj):
         super(ListTile, self).populate_with_object(obj)  # check permission
@@ -42,3 +58,9 @@ class CarouselTile(ListTile):
         else:
             old_data['uuids'] = [uuid]
         data_mgr.set(old_data)
+
+    def autoplay(self):
+        if self.data['autoplay'] is None:
+            return True # default value
+
+        return self.data['autoplay']
