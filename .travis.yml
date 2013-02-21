@@ -9,14 +9,9 @@ before_install:
   - sudo apt-get update -qq
   - sudo apt-get install libxss1 xdg-utils google-chrome-stable -qq
 before_script:
-  - wget https://chromedriver.googlecode.com/files/chromedriver_linux32_21.0.1180.4.zip -O chromedriver.zip
-  - unzip chromedriver.zip
-  - sudo cp chromedriver /usr/bin
-  - sudo chmod 777 /usr/bin/chromedriver
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
 install: make install
-# script: make $TARGET
-script: bin/test -t test_locked_cover.txt
-# notifications:
-#  irc: irc.freenode.org#simplesconsultoria
+script: make $TARGET
+notifications:
+  irc: irc.freenode.org#simplesconsultoria
