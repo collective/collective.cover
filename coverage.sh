@@ -13,7 +13,7 @@ else
 fi
 
 if [ ! -f "$REPORT" ]; then
-    bin/createzopecoverage 1>/dev/null
+    bin/createzopecoverage
 fi
 
 # find first percentage value in file (module test coverage) and return it
