@@ -20,11 +20,14 @@ Test CRUD
 Test renderBase
     Goto Homepage
     Create Cover  Title  Description  Empty layout
-    Element Text Should Be tag=base <base href="${PLONE_URL}/titulo/">
+    ${BASE}  Get Element Attribute  tag=base@href
+    Should Be Equal  ${BASE}  ${PLONE_URL}/title-1/
     Click Link  link=Compose
-    Element Text Should Be tag=base <base href="${PLONE_URL}/titulo/">
+    ${BASE}  Get Element Attribute  tag=base@href
+    Should Be Equal  ${BASE}  ${PLONE_URL}/title-1/
     Click Link  link=Layout
-    Element Text Should Be tag=base <base href="${PLONE_URL}/titulo/">
+    ${BASE}  Get Element Attribute  tag=base@href
+    Should Be Equal  ${BASE}  ${PLONE_URL}/title-1/
     
 *** Keywords ***
 

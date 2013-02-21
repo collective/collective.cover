@@ -25,6 +25,7 @@ Test Basic Layout Operations
     #       http://rtomac.github.com/robotframework-selenium2library/doc/Selenium2Library.html#Xpath%20Should%20Match%20X%20Times
 
     #count if there is 1 row and 1 column
+    
     Count Number of Columns  1
     Count Number of Rows  1
 	
@@ -32,9 +33,11 @@ Test Basic Layout Operations
     Add Row
     #add a column in the latest row
 	Add Column at First Row
+	Add Column at Second Row
+	Add Column at Second Row
 
     #2 columns and 2 rows
-    Count Number of Columns  2
+    Count Number of Columns  4
     Count Number of Rows  2
 
     Save Cover Layout
@@ -43,13 +46,13 @@ Test Basic Layout Operations
     Click Link  link=Layout
 
     #2 columns and 2 rows
-    Count Number of Columns  2
+    Count Number of Columns  4
     Count Number of Rows  2
 
     Delete a Column in the First Row    
     Delete the First Row
 
-    Count Number of Columns  1
+    Count Number of Columns  2
     Count Number of Rows  1
 
     Save Cover Layout
@@ -81,7 +84,7 @@ Add Column at Second Row
     Drag And Drop  css=${column_button_selector}  css=div.layout div.cover-row:nth-of-type(2)
 
 Delete the First Row
-    Click Element  css=div.cover-row button.close
+    Click Element  css=div.cover-row:nth-of-type(1) > button.close
 
 Delete a Column in the First Row
     Click Element  css=div.layout div.cover-row:nth-of-type(1) div.cover-column:nth-of-type(1) > button.close

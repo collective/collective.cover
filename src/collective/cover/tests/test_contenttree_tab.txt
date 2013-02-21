@@ -40,10 +40,9 @@ Test content tree tab
     Drag And Drop  css=${document_selector}  css=${tile_selector}
     Page Should Contain  My document
 
-    Input text  name=${input_contenttree}  frontpage
+    Input text  name=${input_contenttree}  front
     Page Should Contain  1 Results
 
     Click Link  link=Layout
     Delete Tile
     Save Cover Layout
-
