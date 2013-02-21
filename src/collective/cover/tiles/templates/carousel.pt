@@ -4,8 +4,10 @@
       xmlns:i18n="http://xml.zope.org/namespaces/i18n"
       i18n:domain="collective.cover">
 
-<body>
-  <div class="galleria slide">
+<body tal:define="tile_id view/id;
+                  autoplay python:str(view.autoplay()).lower();">
+  <div class="galleria slide"
+       tal:attributes="id string:galleria-$tile_id">
     <!-- Carousel items -->
     <div class="galleria-inner sortable-tile">
       <tal:items repeat="item view/results">
@@ -28,6 +30,7 @@
 
   <script type="text/javascript">
 		Galleria.loadTheme("++resource++collective.cover/galleria-theme/galleria.cover_theme.js");
+		<tal:configure replace="string:Galleria.configure({ autoplay: $autoplay });" />
 		Galleria.run(".galleria-inner");
   </script>
 </body>
