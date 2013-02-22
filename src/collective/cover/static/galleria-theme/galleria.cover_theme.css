@@ -227,10 +227,11 @@
 	background: url(dot.png) no-repeat 0px 0;
 	margin-right: 5px;
 	cursor: pointer;
+	opacity: .5;
 }
 
-.galleria-thumbnails .active .img {
-	
+.galleria-thumbnails .active {
+	opacity: 1;
 }
 
 .galleria-counter {
@@ -251,5 +252,13 @@
 }
 
 .galleria-counter {
+	display: none;
+}
+
+.galleria-layer .tile-remove-item {
+	right: -25px;
+}
+
+.template-view .galleria-layer .tile-remove-item {
 	display: none;
 }
