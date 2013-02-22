@@ -64,3 +64,6 @@ class CarouselTile(ListTile):
             return True # default value
 
         return self.data['autoplay']
+
+    def get_uid(self, obj):
+        return IUUID(obj)

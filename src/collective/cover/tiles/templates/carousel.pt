@@ -13,7 +13,7 @@
       <tal:items repeat="item view/results">
               <img tal:define="scales item/@@images;
                                thumbnail python:scales.scale('image', width=1000, height=1000);
-                               uid item/UID|nothing;"
+                               uid python:view.get_uid(item);"
                    tal:condition="python:thumbnail and uid"
                    tal:attributes="src thumbnail/url;
                                    width thumbnail/width;
