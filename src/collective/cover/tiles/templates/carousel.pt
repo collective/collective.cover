@@ -9,7 +9,7 @@
   <div class="galleria slide"
        tal:attributes="id string:galleria-$tile_id">
     <!-- Carousel items -->
-    <div class="galleria-inner sortable-tile">
+    <div class="galleria-inner">
       <tal:items repeat="item view/results">
               <img tal:define="scales item/@@images;
                                thumbnail python:scales.scale('image', width=1000, height=1000);
@@ -29,21 +29,7 @@
   <link rel="stylesheet" type="text/css"
         tal:attributes="href string:${context/@@plone_portal_state/portal_url}/++resource++collective.cover/galleria-theme/galleria.cover_theme.css" />
 
-  <script type="text/javascript">
-	Galleria.loadTheme("++resource++collective.cover/galleria-theme/galleria.cover_theme.js");
-	<tal:configure replace="string:Galleria.run('#galleria-$tile_id .galleria-inner');" />
-
-	var rm_button = function(data) {
-	    var uid = data.original.attributes['data-uid'].value;
-	    return "<i class='tile-remove-item' data-uid='" + uid + "'><span class='text'>remove</span></i>";
-	};
-
-    function carousel_init() {
-		if($('body').hasClass('template-view')) {
-			<tal:configure replace="string:Galleria.configure({ autoplay: $autoplay });" />
-		};
-    };
-    carousel_init();
+  <script type="text/javascript" tal:content="structure view/init_js">
   </script>
 </body>
 </html>

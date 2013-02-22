@@ -6,7 +6,6 @@ from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from collective.cover.tiles.list import ListTile, IListTile
 from plone.uuid.interfaces import IUUID
 from plone.tiles.interfaces import ITileDataManager
-from plone.app.uuid.utils import uuidToObject
 
 from collective.cover import _
 
@@ -61,9 +60,21 @@ class CarouselTile(ListTile):
 
     def autoplay(self):
         if self.data['autoplay'] is None:
-            return True # default value
+            return True  # default value
 
         return self.data['autoplay']
 
     def get_uid(self, obj):
         return IUUID(obj)
+
+    def init_js(self):
+        return """
+$(function() {
+    Galleria.loadTheme("++resource++collective.cover/galleria-theme/galleria.cover_theme.js");
+    Galleria.run('#galleria-%s .galleria-inner');
+
+    if($('body').hasClass('template-view')) {
+        Galleria.configure({ autoplay: %s });
+    };
+});
+""" % (self.id, str(self.autoplay()).lower())
