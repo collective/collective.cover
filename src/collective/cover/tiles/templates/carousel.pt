@@ -18,8 +18,9 @@
                    tal:attributes="src thumbnail/url;
                                    width thumbnail/width;
                                    height thumbnail/height;
-                                   data-title item/title;
+                                   data-title string:<a href='${item/absolute_url}/view'>${item/title}</a>;
                                    data-description item/Description;
+                                   data-link string:${item/absolute_url}/view;
                                    data-uid uid;" />
       </tal:items>
     </div>
