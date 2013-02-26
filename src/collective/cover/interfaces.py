@@ -19,3 +19,14 @@ class IJSONSearch(Interface):
 
     def getSearchResults(self, filter_portal_types, rooted, document_base_url, searchtext):
         """ Returns the actual search results """
+
+
+class ICoverUIDsProvider(Interface):
+
+    def getUIDs(self):
+        """ Get UIDs associated with the object.
+            could be the UID of the object or a
+            list of related UIDs.
+
+        @return: iterable of UIDs
+        """

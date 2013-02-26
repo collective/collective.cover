@@ -75,6 +75,23 @@ class ListTileTestCase(unittest.TestCase):
         tile = tile['test']
         self.assertTrue(tile.is_empty())
 
+    def test_populate_with_uids(self):
+        # we start with an empty tile
+        self.assertTrue(self.tile.is_empty())
+
+        # now we add a couple of objects to the list
+        obj1 = self.portal['my-document']
+        obj2 = self.portal['my-image']
+        self.tile.populate_with_uids([IUUID(obj1, None),
+                                      IUUID(obj2, None)])
+
+        # tile's data attributed is cached so we should re-instantiate the tile
+        tile = getMultiAdapter((self.cover, self.request), name=self.name)
+        tile = tile['test']
+        self.assertEqual(len(tile.results()), 2)
+        self.assertTrue(obj1 in tile.results())
+        self.assertTrue(obj2 in tile.results())
+
     def test_accepted_content_types(self):
         # all content types are accepted
         # XXX: return None don't work
