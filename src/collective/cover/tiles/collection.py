@@ -102,10 +102,6 @@ class CollectionTile(PersistentCoverTile):
         """
         return ['Collection']
 
-    # TODO: add deprecation warning
-    def has_data(self):
-        return not self.is_empty()
-
     def get_configured_fields(self):
         # Override this method, since we are not storing anything
         # in the fields, we just use them for configuration
@@ -139,3 +135,10 @@ class CollectionTile(PersistentCoverTile):
             results.append(field)
 
         return results
+
+    def thumbnail(self, item):
+        scales = item.restrictedTraverse('@@images')
+        try:
+            return scales.scale('image', 'mini')
+        except:
+            return None
