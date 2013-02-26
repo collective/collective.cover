@@ -93,11 +93,7 @@ class ListTile(PersistentCoverTile):
         if uids:
             self.populate_with_uids(uids)
 
-<<<<<<< HEAD
-    def populate_with_uids(self, uuids):
-=======
     def populate_with_uids(self, uids):
->>>>>>> list tile now uses a uids provider adapter...
         self.set_limit()
         data_mgr = ITileDataManager(self)
 
