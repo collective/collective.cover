@@ -146,8 +146,8 @@ class TileSelect(grok.View):
 
     def update(self):
         self.context = aq_inner(self.context)
-        name = 'collective.cover.AvailableTiles'
-        available_tiles = queryUtility(IVocabularyFactory, name)
+        vocab_name = 'collective.cover.AvailableTiles'
+        available_tiles = queryUtility(IVocabularyFactory, vocab_name)
         # the view is expecting a dictionary of "tile types"
         self.tiles = [{'tile_type': name.value}
                       for name in available_tiles(self.context)]
