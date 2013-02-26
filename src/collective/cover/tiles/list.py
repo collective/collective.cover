@@ -93,7 +93,7 @@ class ListTile(PersistentCoverTile):
         if uids:
             self.populate_with_uids(uids)
 
-    def populate_with_uids(self, uids):
+    def populate_with_uids(self, uuids):
         self.set_limit()
         data_mgr = ITileDataManager(self)
 
