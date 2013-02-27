@@ -5,6 +5,7 @@ from z3c.form import form
 from z3c.form.interfaces import IDataManager
 from z3c.form.interfaces import NO_VALUE
 
+from zope.interface import implements, Interface
 from zope.component import getMultiAdapter
 
 from zope.event import notify
@@ -35,6 +36,12 @@ class ITileConfigureView(IBrowserView):
     The default edit view is an adapter from (context, request, tile_info) to
     this interface. Per-tile type overrides can be created by registering
     named adapters matching the tile name.
+    """
+
+
+class IDefaultConfigureForm(Interface):
+    """
+    ConfigureForm interface
     """
 
 
@@ -76,6 +83,7 @@ class DefaultConfigureForm(TileForm, form.Form):
     This form is capable of rendering the fields of any tile schema as defined
     by an ITileType utility.
     """
+    implements(IDefaultConfigureForm)
 
     mode = 'configure'
 
