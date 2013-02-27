@@ -6,6 +6,8 @@ Because you have to know where your towel is.
 1.0a2 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Refactor carousel tile to use collective.js.galleria. [jpgimenez]
+- Refactor list tile to use adapters to get the contained items uids. [jpgimenez]
 - Implements a way to ommit fields from tiles edit form and show it at configure form. [jpgimenez]
 - Refactor of collection tile. [hvelarde]
 - list and carousel tiles now support loading images from folderish content [jpgimenez]
