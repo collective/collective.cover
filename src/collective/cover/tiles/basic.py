@@ -11,6 +11,7 @@ from plone.namedfile.file import NamedBlobImage as NamedImageFile
 from plone.registry.interfaces import IRegistry
 from plone.tiles.interfaces import ITileDataManager
 from plone.uuid.interfaces import IUUID
+from plone.autoform import directives as form
 
 from Products.CMFCore.utils import getToolByName
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
@@ -19,6 +20,7 @@ from collective.cover import _
 from collective.cover.tiles.base import IPersistentCoverTile
 from collective.cover.tiles.base import PersistentCoverTile
 from collective.cover.controlpanel import ICoverSettings
+from collective.cover.tiles.configuration_view import IDefaultConfigureForm
 
 
 class IBasicTile(IPersistentCoverTile):
@@ -44,13 +46,15 @@ class IBasicTile(IPersistentCoverTile):
         readonly=True,
     )
 
+    form.omitted('subjects')
+    form.no_omit(IDefaultConfigureForm, 'subjects')
+    form.widget(subjects='z3c.form.browser.textarea.TextAreaFieldWidget')
     subjects = schema.Tuple(
         title=_(u'label_categories', default=u'Categories'),
         description=_(u'help_categories'),
         required=False,
         value_type=schema.TextLine(),
         missing_value=(),
-        readonly=True,
     )
 
     uuid = schema.TextLine(
