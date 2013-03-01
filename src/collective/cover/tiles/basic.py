@@ -40,10 +40,12 @@ class IBasicTile(IPersistentCoverTile):
         required=False,
     )
 
+    form.omitted('date')
+    form.no_omit(IDefaultConfigureForm, 'date')
     date = schema.Datetime(
         title=_(u'Date'),
         required=False,
-        readonly=True,
+        readonly=False,
     )
 
     form.omitted('subjects')
