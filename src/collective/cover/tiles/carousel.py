@@ -36,7 +36,8 @@ class CarouselTile(ListTile):
     def populate_with_object(self, obj):
         super(ListTile, self).populate_with_object(obj)  # check permission
         try:
-            image_size = obj.restrictedTraverse('@@images').getImageSize()
+            image_size = obj.restrictedTraverse('@@images').scale('image').size
+            image_size = hasattr(image_size, '__call__') and image_size() or image_size
         except:
             image_size = None
         if not image_size:
