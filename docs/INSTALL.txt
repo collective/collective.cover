@@ -18,7 +18,8 @@ To enable this package in a buildout-based installation:
 
     [versions]
     ...
-    collective.js.jqueryui = 1.8.16.7
+    archetypes.querywidget = 1.0.7
+    collective.js.jqueryui = 1.8.16.9
     plone.app.blocks = 1.0
     plone.app.drafts = 1.0a2
     plone.app.jquery = 1.7.2
