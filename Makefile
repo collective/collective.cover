@@ -20,27 +20,18 @@ js_ignores = ! -name bootstrap\* ! -name jquery\*
 ack-install:
 	sudo apt-get install ack-grep
 
-nodejs-install:
-	sudo apt-add-repository ppa:chris-lea/node.js -y
-	sudo apt-get update 1>/dev/null
-	sudo apt-get install nodejs npm -y
-
-csslint-install: nodejs-install
-	npm install csslint -g
-
-jshint-install: nodejs-install
-	npm install jshint -g
-
 python-validation:
 	@echo Validating Python files
 	bin/flake8 --ignore=$(pep8_ignores) --max-complexity=$(max_complexity) $(src)
 
-css-validation: ack-install csslint-install
+css-validation: ack-install
 	@echo Validating CSS files
+	npm install csslint -g
 	find $(src) -type f -name *.css $(css_ignores) | xargs csslint | ack-grep --passthru error
 
-js-validation: ack-install jshint-install
+js-validation: ack-install
 	@echo Validating JavaScript files
+	npm install jshint -g
 	find $(src) -type f -name *.js $(js_ignores) -exec jshint {} ';' | ack-grep --passthru error
 
 quality-assurance: python-validation css-validation js-validation
