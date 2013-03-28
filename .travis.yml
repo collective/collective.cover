@@ -1,21 +1,21 @@
 language: python
 python: 2.7
 env:
-  - PLONE_VERSION="" QA=true
+  - QA=true
   - PLONE_VERSION=4.2
   - PLONE_VERSION=4.3
 matrix:
   allow_failures:
     - env: PLONE_VERSION=4.3
 install:
-  - test -n "$PLONE_VERSION" && sed -ie "s#travis-4.x.cfg#travis-$PLONE_VERSION.x.cfg#" travis.cfg || true
+  - test -v PLONE_VERSION && sed -ie "s#travis-4.x.cfg#travis-$PLONE_VERSION.x.cfg#" travis.cfg || true
   - mkdir -p buildout-cache/downloads
   - python bootstrap.py -c travis.cfg
   - bin/buildout -c travis.cfg -N -q -t 3
 before_script:
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
-script: test -n "$PLONE_VERSION" && bin/test || true
-after_success: test -n "$QA" && make python-validation coverage-validation
+script: test -v QA && true || bin/test
+after_success: test -v QA && make python-validation coverage-validation || true
 notifications:
   irc: irc.freenode.org#simplesconsultoria
