@@ -10,9 +10,7 @@ from five import grok
 from zope.component import queryUtility, getMultiAdapter
 from zope.schema.interfaces import IVocabularyFactory
 
-from zope.app.pagetemplate.viewpagetemplatefile import ViewPageTemplateFile
-
-from plone.principalsource.source import GroupsVocabularyFactory
+from zope.browserpage.viewpagetemplatefile import ViewPageTemplateFile
 
 from collective.cover.content import ICover
 from collective.cover.utils import assign_tile_ids
