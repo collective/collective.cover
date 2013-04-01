@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
-import urllib2
+import StringIO
+from PIL import Image
 
 from App.Common import package_home
 
@@ -23,8 +24,32 @@ def loadImage(name, size=0):
 
 
 def generate_jpeg(width, height):
-    url = 'http://lorempixel.com/%d/%d/' % (width, height)
-    return urllib2.urlopen(url).read()
+    # Mandelbrot fractal
+    # FB - 201003254
+    # drawing area
+    xa = -2.0
+    xb = 1.0
+    ya = -1.5
+    yb = 1.5
+    maxIt = 255  # max iterations allowed
+    # image size
+    image = Image.new("RGB", (width, height))
+
+    for y in range(height):
+        zy = y * (yb - ya) / (height - 1) + ya
+        for x in range(width):
+            zx = x * (xb - xa) / (width - 1) + xa
+            z = zx + zy * 1j
+            c = z
+            for i in range(maxIt):
+                if abs(z) > 2.0:
+                    break
+                z = z * z + c
+            image.putpixel((x, y), (i % 4 * 64, i % 8 * 32, i % 16 * 16))
+
+    output = StringIO.StringIO()
+    image.save(output, format="PNG")
+    return output.getvalue()
 
 
 class Fixture(PloneSandboxLayer):
