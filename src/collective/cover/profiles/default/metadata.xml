@@ -7,5 +7,6 @@
   <dependency>profile-plone.app.iterate:plone.app.iterate</dependency>
   <dependency>profile-collective.js.jqueryui:default</dependency>
   <dependency>profile-collective.js.galleria:default</dependency>
+  <dependency>profile-plone.app.relationfield:default</dependency>
   </dependencies>
 </metadata>
