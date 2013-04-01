@@ -39,6 +39,7 @@ setup(name='collective.cover',
       include_package_data=True,
       zip_safe=False,
       install_requires=[
+        'five.grok',
         'collective.js.galleria',
         'collective.js.jqueryui',
         'Pillow',
