@@ -166,7 +166,9 @@ class GroupSelect(grok.View):
     grok.require('zope2.View')
 
     def update(self):
-        self.groups = GroupsVocabularyFactory(self.context)
+        vocab_name = 'plone.app.vocabularies.Groups'
+        groups_factory = queryUtility(IVocabularyFactory, vocab_name)
+        self.groups = groups_factory(self.context)
         if "groups[]" in self.request.keys():
             groups = self.request["groups[]"]
             tile_len = int(self.request["tile_len"])
