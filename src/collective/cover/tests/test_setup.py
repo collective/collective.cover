@@ -47,6 +47,12 @@ class InstallTestCase(unittest.TestCase):
         for id in CSS:
             self.assertTrue(id in resource_ids, '%s not installed' % id)
 
+    def test_resources_available(self):
+        resources = CSS + JS
+        for id in resources:
+            res = self.portal.restrictedTraverse(id)
+            self.assertTrue(res)
+
     def test_reinstall_with_changed_registry(self):
         ps = getattr(self.portal, 'portal_setup')
         try:
