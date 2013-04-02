@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 import os
-import StringIO
-from PIL import Image
+import random
+from StringIO import StringIO
+from PIL import Image, ImageChops
 
 from App.Common import package_home
 
@@ -34,22 +35,35 @@ def generate_jpeg(width, height):
     maxIt = 255  # max iterations allowed
     # image size
     image = Image.new("RGB", (width, height))
+    c = complex(random.random() * 2.0 - 1.0, random.random() - 0.5)
 
     for y in range(height):
         zy = y * (yb - ya) / (height - 1) + ya
         for x in range(width):
             zx = x * (xb - xa) / (width - 1) + xa
-            z = zx + zy * 1j
-            c = z
+            z = complex(zx, zy)
             for i in range(maxIt):
                 if abs(z) > 2.0:
                     break
                 z = z * z + c
-            image.putpixel((x, y), (i % 4 * 64, i % 8 * 32, i % 16 * 16))
+            r = i % 4 * 64
+            g = i % 8 * 32
+            b = i % 16 * 16
+            image.putpixel((x, y), b * 65536 + g * 256 + r)
 
-    output = StringIO.StringIO()
+    output = StringIO()
     image.save(output, format="PNG")
     return output.getvalue()
+
+
+def images_are_equal(str1, str2):
+    im1 = StringIO()
+    im2 = StringIO()
+    im1.write(str1)
+    im1.seek(0)
+    im2.write(str2)
+    im2.seek(0)
+    return ImageChops.difference(Image.open(im1), Image.open(im2)).getbbox() is None
 
 
 class Fixture(PloneSandboxLayer):
