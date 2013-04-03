@@ -32,7 +32,7 @@ def generate_jpeg(width, height):
     xb = 1.0
     ya = -1.5
     yb = 1.5
-    maxIt = 255  # max iterations allowed
+    maxIt = 25  # max iterations allowed
     # image size
     image = Image.new("RGB", (width, height))
     c = complex(random.random() * 2.0 - 1.0, random.random() - 0.5)
@@ -85,8 +85,8 @@ class Fixture(PloneSandboxLayer):
         self.applyProfile(portal, 'collective.cover:default')
         self.applyProfile(portal, 'collective.cover:testfixture')
         portal['my-image'].setImage(loadImage('canoneye.jpg'))
-        portal['my-image1'].setImage(generate_jpeg(100, 100))
-        portal['my-image2'].setImage(generate_jpeg(100, 100))
+        portal['my-image1'].setImage(generate_jpeg(50, 50))
+        portal['my-image2'].setImage(generate_jpeg(50, 50))
         portal['my-file'].setFile(loadImage('canoneye.jpg'))
         portal['my-file'].reindexObject()
         portal_workflow = portal.portal_workflow
