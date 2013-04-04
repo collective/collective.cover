@@ -53,12 +53,6 @@ class View(grok.View):
     grok.require('zope2.View')
     grok.name('view')
 
-    def update(self):
-        self.context = aq_inner(self.context)
-        portal_state = self.context.restrictedTraverse('@@plone_portal_state')
-        navroot_url = portal_state.navigation_root_url()
-        self.static = '%s/++resource++collective.cover' % navroot_url
-
 
 class AddCTWidget(grok.View):
     grok.context(ICover)
@@ -139,10 +133,6 @@ class RemoveTileWidget(grok.View):
     grok.name("removetilewidget")
 
     def __call__(self):
-        self.context = aq_inner(self.context)
-        portal_state = self.context.restrictedTraverse('@@plone_portal_state')
-        navroot_url = portal_state.navigation_root_url()
-        self.static = '%s/++resource++collective.cover' % navroot_url
         template = self.template
         if 'form.submitted' not in self.request:
             return template.render(self)
@@ -169,9 +159,6 @@ class Compose(grok.View):
 
     def update(self):
         self.context = aq_inner(self.context)
-        portal_state = self.context.restrictedTraverse('@@plone_portal_state')
-        navroot_url = portal_state.navigation_root_url()
-        self.static = '%s/++resource++collective.cover' % navroot_url
         # XXX: used to lock the object when someone is editing it
         notify(EditBegunEvent(self.context))
 
@@ -184,9 +171,6 @@ class LayoutEdit(grok.View):
 
     def update(self):
         self.context = aq_inner(self.context)
-        portal_state = self.context.restrictedTraverse('@@plone_portal_state')
-        navroot_url = portal_state.navigation_root_url()
-        self.static = '%s/++resource++collective.cover' % navroot_url
         # XXX: used to lock the object when someone is editing it
         notify(EditBegunEvent(self.context))
 
