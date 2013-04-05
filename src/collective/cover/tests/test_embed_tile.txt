@@ -10,7 +10,7 @@ Suite Teardown  Close Browser
 
 *** Variables ***
 
-${embed_tile_location}  /html/body/div/div[2]/div/div[2]/div[2]/div[3]/div[4]
+${embed_tile_location}  /html/body/div/div[2]/div/div[2]/div[2]/div[3]/div[5]
 ${embed_selector}  ul#item-list li.ui-draggable
 ${tile_selector}  div.tile-container div.tile
 

@@ -10,7 +10,7 @@ Suite Teardown  Close Browser
 
 *** Variables ***
 
-${list_tile_location}  /html/body/div/div[2]/div/div[2]/div[2]/div[3]/div[8]
+${list_tile_location}  /html/body/div/div[2]/div/div[2]/div[2]/div[3]/div[9]
 ${document_selector}  .ui-draggable .contenttype-document
 ${file_selector}  .ui-draggable .contenttype-file
 ${image_selector}  .ui-draggable .contenttype-image

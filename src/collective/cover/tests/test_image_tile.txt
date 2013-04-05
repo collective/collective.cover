@@ -10,7 +10,7 @@ Suite Teardown  Close Browser
 
 *** Variables ***
 
-${image_tile_location}  /html/body/div/div[2]/div/div[2]/div[2]/div[3]/div[6]
+${image_tile_location}  /html/body/div/div[2]/div/div[2]/div[2]/div[3]/div[7]
 ${image_uuid}  12345
 ${image_selector}  .ui-draggable .contenttype-image
 ${tile_selector}  div.tile-container div.tile

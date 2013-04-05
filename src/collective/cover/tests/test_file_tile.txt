@@ -10,7 +10,7 @@ Suite Teardown  Close Browser
 
 *** Variables ***
 
-${file_tile_location}  /html/body/div/div[2]/div/div[2]/div[2]/div[3]/div[5]
+${file_tile_location}  /html/body/div/div[2]/div/div[2]/div[2]/div[3]/div[6]
 ${file_uuid}  12345
 ${file_selector}  .ui-draggable .contenttype-file
 ${tile_selector}  div.tile-container div.tile
