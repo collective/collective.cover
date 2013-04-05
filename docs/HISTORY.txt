@@ -6,6 +6,7 @@ Because you have to know where your towel is.
 1.0a2 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- New tile Content Body [ericof]
 - Update package documentation. [hvelarde, jpgimenez]
 - Package is now compatible with Plone 4.3. [ericof, jpgimenez, hvelarde]
 - Remove dependency on plone.principalsource (closes `#152`_). [ericof]
