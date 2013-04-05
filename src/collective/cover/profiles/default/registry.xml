@@ -22,6 +22,7 @@
       <element>collective.cover.basic</element>
       <element>collective.cover.carousel</element>
       <element>collective.cover.collection</element>
+      <element>collective.cover.contentbody</element>      
       <element>collective.cover.embed</element>
       <element>collective.cover.file</element>
       <element>collective.cover.image</element>

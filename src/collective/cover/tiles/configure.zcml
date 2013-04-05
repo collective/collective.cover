@@ -162,6 +162,17 @@
       for="*"
       />
 
+  <plone:tile
+      name="collective.cover.contentbody"
+      title="Content Body Tile"
+      description="A tile that display the body of a content type."
+      add_permission="cmf.ModifyPortalContent"
+      schema=".contentbody.IContentBodyTile"
+      class=".contentbody.ContentBodyTile"
+      permission="zope2.View"
+      for="*"
+      />
+
   <adapter for="zope.interface.Interface
                 zope.publisher.interfaces.browser.IBrowserRequest
                 collective.cover.tiles.base.IPersistentCoverTile"
