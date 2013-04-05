@@ -2,4 +2,7 @@
 <registry>
  <record name="collective.cover.controlpanel.ICoverSettings.layouts" remove="true" />
  <record name="collective.cover.controlpanel.ICoverSettings.searchable_content_types" remove="true"/>
+ <!-- XXX: compatibility with plone <= 4.2 -->
+ <record name="collective.cover.controlpanel.ICoverSettings.layouts" delete="true" />
+ <record name="collective.cover.controlpanel.ICoverSettings.searchable_content_types" delete="true"/>  
 </registry>
