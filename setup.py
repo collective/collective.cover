@@ -62,6 +62,7 @@ setup(name='collective.cover',
           'plone.app.texttile',
           'robotsuite',
           'robotframework-selenium2library',
+          'Products.PloneFormGen',
           ],
         },
       entry_points="""

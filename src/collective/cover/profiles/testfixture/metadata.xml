@@ -1,0 +1,6 @@
+<metadata>
+ <version>1000</version>
+ <dependencies>
+  <dependency>profile-Products.PloneFormGen:default</dependency>
+ </dependencies>
+</metadata>

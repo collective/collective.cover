@@ -12,6 +12,7 @@ from plone.app.testing import IntegrationTesting
 from plone.app.testing import FunctionalTesting
 
 from plone.testing.z2 import ZSERVER_FIXTURE
+from plone.testing.z2 import installProduct
 
 
 def loadImage(name, size=0):
@@ -71,6 +72,9 @@ class Fixture(PloneSandboxLayer):
     defaultBases = (PLONE_FIXTURE,)
 
     def setUpZope(self, app, configurationContext):
+        import Products.PloneFormGen
+        self.loadZCML(package=Products.PloneFormGen)
+        installProduct(app, 'Products.PloneFormGen')
         # Load ZCML
         import collective.cover
         self.loadZCML(package=collective.cover)
