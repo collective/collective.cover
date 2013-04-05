@@ -28,6 +28,7 @@
       <element>collective.cover.image</element>
       <element>collective.cover.link</element>
       <element>collective.cover.list</element>
+      <element>collective.cover.pfg</element>
       <element>collective.cover.richtext</element>
     </value>
   </record>
