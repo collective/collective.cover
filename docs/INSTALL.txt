@@ -25,7 +25,6 @@ To enable this package in a buildout-based installation:
     plone.app.jquery = 1.7.2
     plone.app.jquerytools = 1.5.5
     plone.app.tiles = 1.0.1
-    plone.principalsource = 1.0b1
     plone.tiles = 1.2
 
 After updating the configuration you need to run ''bin/buildout'', which will

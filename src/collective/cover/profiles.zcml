@@ -25,4 +25,12 @@
       description="This fixture creates generic content to be used in tests."
       provides="Products.GenericSetup.interfaces.EXTENSION" />
 
+  <genericsetup:upgradeStep
+      title="Upgrade cover to Plone 4.3"
+      source="1"
+      destination="2"
+      description="Install plone.app.relationfield"
+      handler="collective.cover.setuphandlers.to_plone43"
+      profile="collective.cover:default" />
+
 </configure>

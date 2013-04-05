@@ -9,7 +9,8 @@
 
 <metal:js fill-slot="javascript_head_slot">
     <script type="text/javascript"
-        tal:attributes="src string:${view/static}/cover.js">
+        tal:define="navroot context/@@plone_portal_state/navigation_root_url"
+        tal:attributes="src string:${navroot}/++resource++collective.cover/cover.js">
     </script>
 
     <script type="text/javascript">
@@ -21,7 +22,9 @@
 
 <metal:styles fill-slot="style_slot">
     <link rel="stylesheet" type="text/css" media="screen" href=""
-          tal:attributes="href string:${view/static}/cover.css" />
+          tal:define="navroot context/@@plone_portal_state/navigation_root_url"
+          tal:attributes="href string:${navroot}/++resource++collective.cover/cover.css"
+          />
 </metal:styles>
 
 <metal:main fill-slot="main">

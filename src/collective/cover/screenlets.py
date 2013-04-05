@@ -8,7 +8,8 @@ from zope.interface import Interface
 from zope.schema.vocabulary import SimpleTerm
 
 from five import grok
-from zope.app.pagetemplate.viewpagetemplatefile import ViewPageTemplateFile
+
+from zope.browserpage.viewpagetemplatefile import ViewPageTemplateFile
 
 from plone.registry.interfaces import IRegistry
 
