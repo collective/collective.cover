@@ -1,6 +1,7 @@
 language: python
 python: 2.7
 env:
+  - QA=true
   - PLONE_VERSION=4.2
   - PLONE_VERSION=4.3 QA=true
 install:
