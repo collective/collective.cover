@@ -4,7 +4,7 @@ env:
   - PLONE_VERSION=4.2
   - PLONE_VERSION=4.3 QA=true
 install:
-  - test -v PLONE_VERSION && sed -ie "s#travis-4.x.cfg#travis-$PLONE_VERSION.x.cfg#" travis.cfg || true
+  - sed -ie "s#travis-4.x.cfg#travis-$PLONE_VERSION.x.cfg#" travis.cfg
   - mkdir -p buildout-cache/downloads
   - python bootstrap.py -c travis.cfg
   - bin/buildout -c travis.cfg -N -q -t 3
