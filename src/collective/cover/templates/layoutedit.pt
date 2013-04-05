@@ -10,15 +10,15 @@
 <metal:js fill-slot="javascript_head_slot">
   <script type="text/javascript"
           tal:define="navroot context/@@plone_portal_state/navigation_root_url"
-          tal:attributes="href string:${navroot}/++resource++collective.cover/layout_edit.js">
+          tal:attributes="src string:${navroot}/++resource++collective.cover/layout_edit.js">
   </script>
   <script type="text/javascript"
           tal:define="navroot context/@@plone_portal_state/navigation_root_url"
-          tal:attributes="href string:${navroot}/++resource++collective.cover/layout_base.js">
+          tal:attributes="src string:${navroot}/++resource++collective.cover/layout_base.js">
   </script>
   <script type="text/javascript"
           tal:define="navroot context/@@plone_portal_state/navigation_root_url"
-          tal:attributes="href string:${navroot}/++resource++collective.cover/jss.js">
+          tal:attributes="src string:${navroot}/++resource++collective.cover/jss.js">
   </script>
 
   <script type="text/javascript">
