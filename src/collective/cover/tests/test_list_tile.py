@@ -97,7 +97,7 @@ class ListTileTestCase(unittest.TestCase):
         # XXX: return None don't work
         #self.assertEqual(self.tile.accepted_ct(), None)
         self.assertEqual(self.tile.accepted_ct(),
-                         ['Collection', 'Document', 'File',
+                         ['Collection', 'Document', 'File', 'Form Folder',
                           'Image', 'Link', 'News Item'])
 
     def test_render_empty(self):

@@ -42,7 +42,8 @@ class BasicTileTestCase(unittest.TestCase):
     def test_accepted_content_types(self):
         self.assertEqual(
             self.tile.accepted_ct(),
-            ['Collection', 'Document', 'File', 'Image', 'Link', 'News Item'])
+            ['Collection', 'Document', 'File', 'Form Folder',
+             'Image', 'Link', 'News Item'])
 
     def test_is_empty(self):
         self.assertTrue(self.tile.is_empty())
