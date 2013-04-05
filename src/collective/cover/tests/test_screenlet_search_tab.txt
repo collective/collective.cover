@@ -26,6 +26,6 @@ Test content tree tab
 
     Input text  name=${input_search}  folder
 
-    Set Selenium Timeout  10s
+    Set Selenium Timeout  20s
 
     Xpath Should Match X Times  //div[contains(@id, 'recent')]//ul[contains(@class, 'item-list')]//li  1
