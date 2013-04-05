@@ -1,0 +1,44 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      i18n:domain="collective.cover">
+
+<body tal:define="body view/body">
+  <p tal:condition="not: body">
+    Please drag&amp;drop a Form Folder here to populate the tile.
+  </p>
+  <tal:fields
+     tal:condition="body" 
+     repeat="field view/get_configured_fields">
+  
+       <tal:title define="htmltag python:field.get('htmltag', 'h1')"
+               condition="python:field['id'] == 'title'">
+    
+        <h1 tal:condition="python:htmltag == 'h1'"
+          tal:content="python:field['content']" >
+        </h1>
+       
+        <h2 tal:condition="python:htmltag == 'h2'"
+          tal:content="python:field['content']" >
+        </h2>
+        <h3 tal:condition="python:htmltag == 'h3'"
+          tal:content="python:field['content']" >
+        </h3>
+        <h4 tal:condition="python:htmltag == 'h4'"
+          tal:content="python:field['content']" >
+        </h4>
+    </tal:title>
+
+    <tal:description condition="python:field['id'] == 'description'">
+      <p tal:content="python:field['content']">Description</p>
+    </tal:description>
+
+  </tal:fields>
+  <div tal:condition="body" class="contentbody">
+    <div class="content"
+         tal:content="structure body">Form Body</div>
+    <div class="visualClear"><!-- --></div>
+  </div>
+</body>
+</html>
