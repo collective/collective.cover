@@ -1,6 +1,6 @@
 *** Settings ***
 
-Library  Selenium2Library  timeout=5 seconds  implicit_wait=3 seconds
+Library  Selenium2Library  timeout=5 seconds  implicit_wait=10 seconds
 Resource  keywords.txt
 Resource  cover_keywords.txt
 Variables  plone/app/testing/interfaces.py
@@ -25,7 +25,5 @@ Test content tree tab
     Page Should Contain Element  css=${folder_selector}
 
     Input text  name=${input_search}  folder
-
-    Set Selenium Timeout  20s
 
     Xpath Should Match X Times  //div[contains(@id, 'recent')]//ul[contains(@class, 'item-list')]//li  1
