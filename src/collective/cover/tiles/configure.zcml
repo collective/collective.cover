@@ -173,6 +173,17 @@
       for="*"
       />
 
+  <plone:tile
+      name="collective.cover.pfg"
+      title="Plone FormGen Tile"
+      description="A tile that display an embedded Form Folder from Plone FormGen."
+      add_permission="cmf.ModifyPortalContent"
+      schema=".pfg.IPFGTile"
+      class=".pfg.PFGTile"
+      permission="zope2.View"
+      for="*"
+      />
+
   <adapter for="zope.interface.Interface
                 zope.publisher.interfaces.browser.IBrowserRequest
                 collective.cover.tiles.base.IPersistentCoverTile"
