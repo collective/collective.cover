@@ -4,6 +4,13 @@
       xmlns:i18n="http://xml.zope.org/namespaces/i18n"
       i18n:domain="collective.cover">
 
+<head>
+  <link rel="stylesheet" type="text/css"
+      tal:attributes="href string:${context/@@plone_portal_state/portal_url}/++resource++collective.cover/galleria-theme/galleria.cover_theme.css" />
+  <script type="text/javascript" tal:content="structure view/init_js">
+  </script>
+</head>
+
 <body tal:define="tile_id view/id;
                   autoplay python:str(view.autoplay()).lower();">
   <div class="galleria slide"
@@ -24,13 +31,6 @@
                                    data-uid uid;" />
       </tal:items>
     </div>
-
   </div>
-
-  <link rel="stylesheet" type="text/css"
-        tal:attributes="href string:${context/@@plone_portal_state/portal_url}/++resource++collective.cover/galleria-theme/galleria.cover_theme.css" />
-
-  <script type="text/javascript" tal:content="structure view/init_js">
-  </script>
 </body>
 </html>
