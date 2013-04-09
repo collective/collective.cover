@@ -3,6 +3,12 @@ Changelog
 
 Because you have to know where your towel is.
 
+1.0a3 (unreleased)
+^^^^^^^^^^^^^^^^^^
+
+- Nothing changed yet.
+
+
 1.0a2 (2013-04-09)
 ^^^^^^^^^^^^^^^^^^
 - Move Galleria's stylesheet and JS init to <head>. [davilima6]
