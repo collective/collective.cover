@@ -5,8 +5,9 @@ Because you have to know where your towel is.
 
 1.0a2 (unreleased)
 ^^^^^^^^^^^^^^^^^^
-- New tile: PloneFormGen embedded form [ericof]
-- New tile: Content Body [ericof]
+- Move Galleria's stylesheet and JS init to <head>. [davilima6]
+- New tile: `PloneFormGen`_ embedded form. [ericof]
+- New tile: Content Body. [ericof]
 - Update package documentation. [hvelarde, jpgimenez]
 - Package is now compatible with Plone 4.3. [ericof, jpgimenez, hvelarde]
 - Remove dependency on plone.principalsource (closes `#152`_). [ericof]
@@ -53,3 +54,4 @@ Because you have to know where your towel is.
 .. _`#142`: https://github.com/collective/collective.cover/issues/142
 .. _`#146`: https://github.com/collective/collective.cover/issues/146
 .. _`#152`: https://github.com/collective/collective.cover/issues/152
+.. _`PloneFormGen`: https://pypi.python.org/pypi/Products.PloneFormGen
