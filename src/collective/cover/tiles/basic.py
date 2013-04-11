@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+import time
 from zope import schema
 from zope.interface import implements
 from zope.component import getUtility
@@ -21,6 +21,8 @@ from collective.cover.tiles.base import IPersistentCoverTile
 from collective.cover.tiles.base import PersistentCoverTile
 from collective.cover.controlpanel import ICoverSettings
 from collective.cover.tiles.configuration_view import IDefaultConfigureForm
+from collective.cover.tiles.base import AnnotationStorage
+from plone.scale.storage import AnnotationStorage as BaseAnnotationStorage
 
 
 class IBasicTile(IPersistentCoverTile):
@@ -134,9 +136,15 @@ class BasicTile(PersistentCoverTile):
                 data['image'] = NamedImageFile(str(obj.image.data))
             except AttributeError:
                 pass
-
         data_mgr = ITileDataManager(self)
         data_mgr.set(data)
+        tile_storage = AnnotationStorage(self)
+        obj_storage = BaseAnnotationStorage(obj)
+        for k, v in obj_storage.items():
+            tile_storage.storage[k] = v
+            tile_storage.storage[k]['modified'] = '%f' % time.time()
+            scale_data = obj_storage.storage[k]['data'].open().read()
+            tile_storage.storage[k]['data'] = NamedImageFile(str(scale_data))
 
     @view.memoize
     def accepted_ct(self):

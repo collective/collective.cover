@@ -7,7 +7,8 @@ from DateTime import DateTime
 from zope.interface.verify import verifyClass
 from zope.interface.verify import verifyObject
 
-from collective.cover.testing import INTEGRATION_TESTING, loadImage
+from collective.cover.testing import INTEGRATION_TESTING, generate_jpeg,\
+    images_are_equal
 from collective.cover.tiles.basic import BasicTile
 from collective.cover.tiles.base import IPersistentCoverTile
 from zope.component import getMultiAdapter
@@ -82,7 +83,7 @@ class BasicTileTestCase(unittest.TestCase):
         obj = self.portal['my-news-item']
         obj.setSubject(['subject1', 'subject2'])
         obj.effective_date = DateTime()
-        obj.setImage(loadImage('canoneye.jpg'))
+        obj.setImage(generate_jpeg(128, 128))
         obj.reindexObject()
 
         self.tile.populate_with_object(obj)
@@ -133,3 +134,13 @@ class BasicTileTestCase(unittest.TestCase):
                          annotations)
         self.assertNotIn('plone.tiles.configuration.test-basic-tile',
                          annotations)
+
+    def test_image_traverser(self):
+        obj = self.portal['my-image']
+        self.tile.populate_with_object(obj)
+        scales = self.layer['portal'].restrictedTraverse('@@%s/%s/@@images' %
+                                                         ('collective.cover.basic',
+                                                          'test-basic-tile',))
+        img = scales.scale('image')
+        self.assertTrue(images_are_equal(str(self.tile.data['image'].data),
+                                         str(img.index_html().read())))
