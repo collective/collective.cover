@@ -111,6 +111,9 @@ $(document).ready(function() {
         },
         config: {
             onLoad: function() {
+              if(typeof initTinyMCE!='undefined'){
+                initTinyMCE(this.getOverlay());
+              }else{
                 $('textarea.mce_editable').each(function() {
                     var config = new TinyMCEConfig($(this).attr('id'));
                     config.init();
@@ -119,6 +122,7 @@ $(document).ready(function() {
                     $('div.suppressVisualEditor').remove()
 
                 });
+              }
             },
             onClose: function() { location.reload(); }
 
