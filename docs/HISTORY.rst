@@ -6,7 +6,9 @@ Because you have to know where your towel is.
 1.0a3 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
-- Nothing changed yet.
+- Fixed a bug with Plone 4.3 that avoided TinyMCE being displayed for 
+  RichText. (closes `#157`_).
+  [ericof]
 
 
 1.0a2 (2013-04-09)
@@ -60,4 +62,5 @@ Because you have to know where your towel is.
 .. _`#142`: https://github.com/collective/collective.cover/issues/142
 .. _`#146`: https://github.com/collective/collective.cover/issues/146
 .. _`#152`: https://github.com/collective/collective.cover/issues/152
+.. _`#157`: https://github.com/collective/collective.cover/issues/157
 .. _`PloneFormGen`: https://pypi.python.org/pypi/Products.PloneFormGen
