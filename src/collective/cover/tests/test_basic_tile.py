@@ -4,6 +4,7 @@ import unittest2 as unittest
 
 from DateTime import DateTime
 
+from ZODB.blob import Blob
 from zope.interface.verify import verifyClass
 from zope.interface.verify import verifyObject
 
@@ -15,6 +16,8 @@ from zope.component import getMultiAdapter
 from collective.cover.tiles.permissions import ITilesPermissions
 from zope.annotation.interfaces import IAnnotations
 from collective.cover.tiles.configuration import ITilesConfigurationScreen
+from plone.scale.storage import AnnotationStorage as BaseAnnotationStorage
+from collective.cover.tiles.base import AnnotationStorage
 
 
 class BasicTileTestCase(unittest.TestCase):
@@ -144,3 +147,22 @@ class BasicTileTestCase(unittest.TestCase):
         img = scales.scale('image')
         self.assertTrue(images_are_equal(str(self.tile.data['image'].data),
                                          str(img.index_html().read())))
+
+    def test_modified_scale(self):
+        obj = self.portal['my-image']
+        obj_scales = obj.restrictedTraverse('@@images')
+        self.assertFalse(BaseAnnotationStorage(obj).items())
+        obj_scales.scale('image', width=64, height=64)
+        obj_storage = BaseAnnotationStorage(obj)
+        obj_storage[(('fieldname', 'image'),
+                     ('height', 64),
+                     ('width', 64))]['data'] = Blob(generate_jpeg(64, 64))
+        self.tile.populate_with_object(obj)
+        tile_storage = AnnotationStorage(self.tile)
+        self.assertTrue(images_are_equal(
+            obj_storage[(('fieldname', 'image'),
+                         ('height', 64),
+                         ('width', 64))]['data'].open().read(),
+            tile_storage[(('fieldname', 'image'),
+                          ('height', 64),
+                          ('width', 64))]['data'].open().read()))
