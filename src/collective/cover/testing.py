@@ -88,7 +88,7 @@ class Fixture(PloneSandboxLayer):
         # Install into Plone site using portal_setup
         self.applyProfile(portal, 'collective.cover:default')
         self.applyProfile(portal, 'collective.cover:testfixture')
-        portal['my-image'].setImage(loadImage('canoneye.jpg'))
+        portal['my-image'].setImage(generate_jpeg(50, 50))
         portal['my-image1'].setImage(generate_jpeg(50, 50))
         portal['my-image2'].setImage(generate_jpeg(50, 50))
         portal['my-file'].setFile(loadImage('canoneye.jpg'))

@@ -43,10 +43,11 @@ class ImageTile(PersistentCoverTile):
 
         data = {}
         obj = aq_inner(obj)
-        scales = queryMultiAdapter((obj, self.request), name="images")
-        if scales and scales.scale('image'):
+        try:
+            scales = queryMultiAdapter((obj, self.request), name="images")
             data['image'] = NamedImageFile(str(scales.scale('image').data))
-
+        except AttributeError:
+            pass
         data_mgr = ITileDataManager(self)
         data_mgr.set(data)
         tile_storage = AnnotationStorage(self)
