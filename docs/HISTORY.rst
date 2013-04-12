@@ -6,10 +6,15 @@ Because you have to know where your towel is.
 1.0a3 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Implement issue #156 to copy scales from the original object, this way
+  we can support products like plone.app.imagecropping. [jpgimenez]
+
+- Improve the way than images are accesed from the original object, using
+  the standard images traversal. [jpgimenez]
+
 - Fixed a bug with Plone 4.3 that avoided TinyMCE being displayed for 
   RichText. (closes `#157`_).
   [ericof]
-
 
 1.0a2 (2013-04-09)
 ^^^^^^^^^^^^^^^^^^
