@@ -6,7 +6,7 @@ Because you have to know where your towel is.
 1.0a3 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
-- Implement issue `#156`_ to copy scales from the original object,
+- Implement issue `#158`_ to copy scales from the original object,
   this way we can support products like plone.app.imagecropping.
   [jpgimenez]
 
