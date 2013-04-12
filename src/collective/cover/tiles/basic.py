@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
-
+import time
+from Acquisition import aq_inner
 from zope import schema
 from zope.interface import implements
 from zope.component import getUtility
+from zope.component import queryMultiAdapter
 
 from plone.memoize import view
 from plone.memoize.instance import memoizedproperty
@@ -21,6 +23,8 @@ from collective.cover.tiles.base import IPersistentCoverTile
 from collective.cover.tiles.base import PersistentCoverTile
 from collective.cover.controlpanel import ICoverSettings
 from collective.cover.tiles.configuration_view import IDefaultConfigureForm
+from collective.cover.tiles.base import AnnotationStorage
+from plone.scale.storage import AnnotationStorage as BaseAnnotationStorage
 
 
 class IBasicTile(IPersistentCoverTile):
@@ -125,18 +129,21 @@ class BasicTile(PersistentCoverTile):
         # we need to figure out how to enforce the use of
         # plone.app.referenceablebehavior
 
-        # XXX: Implements a better way to detect image fields.
-        # probably detecting if the object is Archetypes or Dexterity first
+        obj = aq_inner(obj)
         try:
-            data['image'] = NamedImageFile(str(obj.getImage().data))
+            scales = queryMultiAdapter((obj, self.request), name="images")
+            data['image'] = NamedImageFile(str(scales.scale('image').data))
         except AttributeError:
-            try:
-                data['image'] = NamedImageFile(str(obj.image.data))
-            except AttributeError:
-                pass
-
+            pass
         data_mgr = ITileDataManager(self)
         data_mgr.set(data)
+        tile_storage = AnnotationStorage(self)
+        obj_storage = BaseAnnotationStorage(obj)
+        for k, v in obj_storage.items():
+            tile_storage.storage[k] = v
+            tile_storage.storage[k]['modified'] = '%f' % time.time()
+            scale_data = obj_storage.storage[k]['data'].open().read()
+            tile_storage.storage[k]['data'] = NamedImageFile(str(scale_data))
 
     @view.memoize
     def accepted_ct(self):

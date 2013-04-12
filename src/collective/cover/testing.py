@@ -15,8 +15,8 @@ from plone.testing.z2 import ZSERVER_FIXTURE
 from plone.testing.z2 import installProduct
 
 
-def loadImage(name, size=0):
-    """Load image from testing directory
+def loadFile(name, size=0):
+    """Load file from testing directory
     """
     path = os.path.join(package_home(globals()), 'tests/input', name)
     fd = open(path, 'rb')
@@ -88,10 +88,10 @@ class Fixture(PloneSandboxLayer):
         # Install into Plone site using portal_setup
         self.applyProfile(portal, 'collective.cover:default')
         self.applyProfile(portal, 'collective.cover:testfixture')
-        portal['my-image'].setImage(loadImage('canoneye.jpg'))
+        portal['my-image'].setImage(loadFile('canoneye.jpg'))
         portal['my-image1'].setImage(generate_jpeg(50, 50))
         portal['my-image2'].setImage(generate_jpeg(50, 50))
-        portal['my-file'].setFile(loadImage('canoneye.jpg'))
+        portal['my-file'].setFile(loadFile('lorem_ipsum.txt'))
         portal['my-file'].reindexObject()
         portal_workflow = portal.portal_workflow
         portal_workflow.setChainForPortalTypes(['Collection'],

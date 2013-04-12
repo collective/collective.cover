@@ -4,16 +4,20 @@ import unittest2 as unittest
 
 from DateTime import DateTime
 
+from ZODB.blob import Blob
 from zope.interface.verify import verifyClass
 from zope.interface.verify import verifyObject
 
-from collective.cover.testing import INTEGRATION_TESTING, loadImage
+from collective.cover.testing import INTEGRATION_TESTING, generate_jpeg,\
+    images_are_equal
 from collective.cover.tiles.basic import BasicTile
 from collective.cover.tiles.base import IPersistentCoverTile
 from zope.component import getMultiAdapter
 from collective.cover.tiles.permissions import ITilesPermissions
 from zope.annotation.interfaces import IAnnotations
 from collective.cover.tiles.configuration import ITilesConfigurationScreen
+from plone.scale.storage import AnnotationStorage as BaseAnnotationStorage
+from collective.cover.tiles.base import AnnotationStorage
 
 
 class BasicTileTestCase(unittest.TestCase):
@@ -78,11 +82,11 @@ class BasicTileTestCase(unittest.TestCase):
         rendered = self.tile()
         self.assertIn('Test news item', rendered)
 
-    def test_render(self):
+    def test_basic_tile_render(self):
         obj = self.portal['my-news-item']
         obj.setSubject(['subject1', 'subject2'])
         obj.effective_date = DateTime()
-        obj.setImage(loadImage('canoneye.jpg'))
+        obj.setImage(generate_jpeg(128, 128))
         obj.reindexObject()
 
         self.tile.populate_with_object(obj)
@@ -133,3 +137,44 @@ class BasicTileTestCase(unittest.TestCase):
                          annotations)
         self.assertNotIn('plone.tiles.configuration.test-basic-tile',
                          annotations)
+
+    def test_populate_with_file(self):
+        obj = self.portal['my-file']
+        obj.setSubject(['subject1', 'subject2'])
+        obj.effective_date = DateTime()
+        obj.reindexObject()
+
+        self.tile.populate_with_object(obj)
+        rendered = self.tile()
+
+        # there is no image...
+        self.assertNotIn('test-basic-tile/@@images', rendered)
+
+    def test_image_traverser(self):
+        obj = self.portal['my-image']
+        self.tile.populate_with_object(obj)
+        scales = self.layer['portal'].restrictedTraverse('@@%s/%s/@@images' %
+                                                         ('collective.cover.basic',
+                                                          'test-basic-tile',))
+        img = scales.scale('image')
+        self.assertTrue(images_are_equal(str(self.tile.data['image'].data),
+                                         str(img.index_html().read())))
+
+    def test_modified_scale(self):
+        obj = self.portal['my-image']
+        obj_scales = obj.restrictedTraverse('@@images')
+        self.assertFalse(BaseAnnotationStorage(obj).items())
+        obj_scales.scale('image', width=64, height=64)
+        obj_storage = BaseAnnotationStorage(obj)
+        obj_storage[(('fieldname', 'image'),
+                     ('height', 64),
+                     ('width', 64))]['data'] = Blob(generate_jpeg(64, 64))
+        self.tile.populate_with_object(obj)
+        tile_storage = AnnotationStorage(self.tile)
+        self.assertTrue(images_are_equal(
+            obj_storage[(('fieldname', 'image'),
+                         ('height', 64),
+                         ('width', 64))]['data'].open().read(),
+            tile_storage[(('fieldname', 'image'),
+                          ('height', 64),
+                          ('width', 64))]['data'].open().read()))
