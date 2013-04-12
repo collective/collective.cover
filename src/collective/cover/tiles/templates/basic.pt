@@ -41,18 +41,9 @@
       </tal:title>
 
       <tal:image condition="python:field['id'] == 'image'"
-      			 define="scale python:field.get('scale', 'large');
+      			 define="scale python:field.get('scale', 'large').split()[0];
       			         position python:field.get('position', '');">
-        <a class="imag" tal:attributes="href view/getURL;
-                                        title description;">
-          <img tal:define="scales view/@@images;
-                           thumbnail python: scales.scale('image', scale=scale);"
-               tal:condition="thumbnail"
-               tal:attributes="src thumbnail/url;
-                               width thumbnail/width;
-                               height thumbnail/height;
-                               class position;" />
-        </a>
+		    <span metal:use-macro="context/@@tile_macros/image" />
       </tal:image>
 
       <tal:description condition="python:field['id'] == 'description'">

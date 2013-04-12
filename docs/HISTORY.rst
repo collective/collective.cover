@@ -6,6 +6,8 @@ Because you have to know where your towel is.
 1.0a3 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Implements an original size scale to show the original image. [jpgimenez]
+
 - Fixed a bug with Plone 4.3 that avoided TinyMCE being displayed for 
   RichText. (closes `#157`_).
   [ericof]
