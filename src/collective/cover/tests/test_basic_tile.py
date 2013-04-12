@@ -82,7 +82,7 @@ class BasicTileTestCase(unittest.TestCase):
         rendered = self.tile()
         self.assertIn('Test news item', rendered)
 
-    def test_render(self):
+    def test_basic_tile_render(self):
         obj = self.portal['my-news-item']
         obj.setSubject(['subject1', 'subject2'])
         obj.effective_date = DateTime()
