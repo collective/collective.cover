@@ -81,7 +81,8 @@ class CollectionTile(PersistentCoverTile):
             return []
 
     def is_empty(self):
-        return self.data.get('uuid', None) is None
+        return self.data.get('uuid', None) is None or \
+            uuidToObject(self.data.get('uuid')) is None
 
     def populate_with_object(self, obj):
         super(CollectionTile, self).populate_with_object(obj)  # check permission

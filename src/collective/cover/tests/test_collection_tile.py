@@ -10,6 +10,10 @@ from plone.uuid.interfaces import IUUID
 from collective.cover.testing import INTEGRATION_TESTING
 from collective.cover.tiles.collection import CollectionTile
 from collective.cover.tiles.base import IPersistentCoverTile
+from plone.app.testing import TEST_USER_ID
+from plone.app.testing import TEST_USER_NAME
+from plone.app.testing import login
+from plone.app.testing import setRoles
 
 
 class CollectionTileTestCase(unittest.TestCase):
@@ -20,7 +24,8 @@ class CollectionTileTestCase(unittest.TestCase):
         self.portal = self.layer['portal']
         self.request = self.layer['request']
         self.cover = self.portal['frontpage']
-        self.tile = CollectionTile(self.cover, self.request)
+        self.tile = self.portal.restrictedTraverse(
+            '@@%s/%s' % ('collective.cover.collection', 'test-collection-tile'))
 
     def test_interface(self):
         self.assertTrue(IPersistentCoverTile.implementedBy(CollectionTile))
@@ -53,3 +58,20 @@ class CollectionTileTestCase(unittest.TestCase):
 
     def test_accepted_content_types(self):
         self.assertEqual(self.tile.accepted_ct(), ['Collection'])
+
+    def test_collection_tile_render(self):
+        obj = self.portal['my-collection']
+        self.tile.populate_with_object(obj)
+        rendered = self.tile()
+
+        self.assertIn("<p>The collection doesn't have any results.</p>", rendered)
+
+    def test_delete_collection(self):
+        obj = self.portal['my-collection']
+        self.tile.populate_with_object(obj)
+        setRoles(self.portal, TEST_USER_ID, ['Manager', 'Editor', 'Reviewer'])
+        login(self.portal, TEST_USER_NAME)
+        self.portal.manage_delObjects(['my-collection'])
+        rendered = self.tile()
+
+        self.assertIn("Please drop a collection here to fill the tile.", rendered)
