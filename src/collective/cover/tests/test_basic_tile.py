@@ -7,7 +7,7 @@ from DateTime import DateTime
 from zope.interface.verify import verifyClass
 from zope.interface.verify import verifyObject
 
-from collective.cover.testing import INTEGRATION_TESTING, loadImage
+from collective.cover.testing import INTEGRATION_TESTING, loadFile
 from collective.cover.tiles.basic import BasicTile
 from collective.cover.tiles.base import IPersistentCoverTile
 from zope.component import getMultiAdapter
@@ -82,7 +82,7 @@ class BasicTileTestCase(unittest.TestCase):
         obj = self.portal['my-news-item']
         obj.setSubject(['subject1', 'subject2'])
         obj.effective_date = DateTime()
-        obj.setImage(loadImage('canoneye.jpg'))
+        obj.setImage(loadFile('canoneye.jpg'))
         obj.reindexObject()
 
         self.tile.populate_with_object(obj)
@@ -133,3 +133,15 @@ class BasicTileTestCase(unittest.TestCase):
                          annotations)
         self.assertNotIn('plone.tiles.configuration.test-basic-tile',
                          annotations)
+
+    def test_populate_with_file(self):
+        obj = self.portal['my-file']
+        obj.setSubject(['subject1', 'subject2'])
+        obj.effective_date = DateTime()
+        obj.reindexObject()
+
+        self.tile.populate_with_object(obj)
+        rendered = self.tile()
+
+        # there is no image...
+        self.assertNotIn('test-basic-tile/@@images', rendered)
