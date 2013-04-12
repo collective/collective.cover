@@ -279,7 +279,12 @@ class ImageScale(BaseImageScale):
         if self.data is None:
             self.data = self.context.data.get(self.fieldname)
         url = self.context.url
-        extension = self.data.contentType.split('/')[-1].lower()
+        if hasattr(self.data, 'contentType'):
+            extension = self.data.contentType.split('/')[-1].lower()
+        elif 'mimetype' in info:
+            extension = info['mimetype'].split('/')[-1]
+        else:
+            extension = 'png'  # default images extension
         if 'uid' in info:
             name = info['uid']
         else:
