@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 import time
+from Acquisition import aq_inner
 from zope import schema
 from zope.interface import implements
 from zope.component import getUtility
+from zope.component import queryMultiAdapter
 
 from plone.memoize import view
 from plone.memoize.instance import memoizedproperty
@@ -127,15 +129,11 @@ class BasicTile(PersistentCoverTile):
         # we need to figure out how to enforce the use of
         # plone.app.referenceablebehavior
 
-        # XXX: Implements a better way to detect image fields.
-        # probably detecting if the object is Archetypes or Dexterity first
-        try:
-            data['image'] = NamedImageFile(str(obj.getImage().data))
-        except AttributeError:
-            try:
-                data['image'] = NamedImageFile(str(obj.image.data))
-            except AttributeError:
-                pass
+        obj = aq_inner(obj)
+        scales = queryMultiAdapter((obj, self.request), name="images")
+        if scales and scales.scale('image'):
+            data['image'] = NamedImageFile(str(scales.scale('image').data))
+
         data_mgr = ITileDataManager(self)
         data_mgr.set(data)
         tile_storage = AnnotationStorage(self)
