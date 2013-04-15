@@ -16,8 +16,10 @@ ${document_selector}  .ui-draggable .contenttype-document
 ${file_selector}  .ui-draggable .contenttype-file
 ${image_selector}  .ui-draggable .contenttype-image
 ${link_selector}  .ui-draggable .contenttype-link
-${news-item_selector}  .ui-draggable .contenttype-news-item
 ${tile_selector}  div.tile-container div.tile
+${news_item_selector}  .ui-draggable .contenttype-news-item
+${news_item_title}  Test news item
+${news_item_description}  This news item was created for testing purposes
 
 *** Test cases ***
 
@@ -50,9 +52,14 @@ Test basic Tile
     Page Should Contain  Test link
 	Page Should Contain  This link was created for testing purposes
 
-    Drag And Drop  css=${news-item_selector}  css=${tile_selector}
-    Page Should Contain  Test news item
-    Page Should Contain  This news item was created for testing purposes
+    Drag And Drop  css=${news_item_selector}  css=${tile_selector}
+    Page Should Contain  ${news_item_title}
+    Page Should Contain  ${news_item_description}
+
+    # now we move to the default view to check the information is still there
+    Click Link  link=View
+    Page Should Contain  ${news_item_title}
+    Page Should Contain  ${news_item_description}
 
     Click Link  link=Layout
     Delete Tile
