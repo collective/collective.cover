@@ -9,13 +9,13 @@
     i18n_domain="collective.cover">
 
     <include package="five.grok" />
-    
+
     <five:registerPackage package="." />
 
     <includeDependencies package="." />
 
     <grok:grok package="." />
-    
+
     <i18n:registerTranslations directory="locales" />
 
     <include package=".tiles" />
@@ -37,7 +37,7 @@
 
     <browser:pages
         for="*"
-        class=".screenlets.SearchItemsBrowserView"
+        class=".browser.contentchooser.SearchItemsBrowserView"
         permission="zope2.View">
         <browser:page attribute="jsonByType" name="jsonbytype" />
     </browser:pages>

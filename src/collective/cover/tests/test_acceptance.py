@@ -40,7 +40,7 @@ def test_suite():
     #        see https://github.com/collective/collective.cover/issues/155
     if '4.3' not in PLONE_VERSION:
         suite.addTests([
-            layered(robotsuite.RobotTestSuite("test_screenlet_search_tab.txt"),
+            layered(robotsuite.RobotTestSuite("test_contentchooser_search_tab.txt"),
                     layer=FUNCTIONAL_TESTING),
         ])
     return suite

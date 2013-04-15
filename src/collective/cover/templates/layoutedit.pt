@@ -65,7 +65,7 @@
     <div class="layout">
         <div tal:define="layout nocall:context/@@layout"
              tal:replace="structure layout/render_layout_edit" />
-        <!--div class="content-screenlet" tal:replace="structure context/@@select-content-screenlet"></div-->
+        <!--div class="content-contentchooser" tal:replace="structure context/@@select-content-contentchooser"></div-->
     </div>
     <div id="tile-select-list" class="modal hide" tal:replace="structure context/@@tile_select"></div>
     <div id="group-select-list" class="modal hide" tal:replace="structure context/@@group_select"></div>

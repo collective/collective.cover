@@ -28,7 +28,7 @@ Test Embed Tile
     Click Link  link=Compose
     Page Should Contain  Please edit the tile to add the code to be embedded.
 
-    Click Element  css=div#screenlet-content-show-button
+    Click Element  css=div#contentchooser-content-show-button
 
     # FIXME: current selectors suck!
     #Drag And Drop  css=${embed_selector}  css=${tile_selector}

@@ -54,7 +54,7 @@ msgstr "Um tile que exibe o resultado de uma coleção."
 msgid "A tile to embed content from a remote source."
 msgstr "Um tile que permite embedar conteúdo de uma fonte externa."
 
-#: collective/cover/screenlets_templates/content_screenlet.pt:88
+#: collective/cover/contentchooser_templates/content_contentchooser.pt:88
 msgid "Add Content"
 msgstr "Adicionar conteúdo"
 
@@ -95,7 +95,7 @@ msgstr "Composição"
 msgid "Configure ${name}"
 msgstr "Configurar ${name}"
 
-#: collective/cover/screenlets_templates/content_screenlet.pt:16
+#: collective/cover/contentchooser_templates/content_contentchooser.pt:16
 msgid "Content tree"
 msgstr "Árvore de conteúdo"
 
@@ -149,7 +149,7 @@ msgstr "Exportar o layout"
 msgid "File Tile"
 msgstr "Tile de Arquivo"
 
-#: collective/cover/screenlets_templates/content_screenlet.pt:22
+#: collective/cover/contentchooser_templates/content_contentchooser.pt:22
 msgid "Filter items"
 msgstr "Filtrar itens"
 
@@ -157,7 +157,7 @@ msgstr "Filtrar itens"
 msgid "HTML tag"
 msgstr "tag HTML"
 
-#: collective/cover/screenlets_templates/content_screenlet.pt:70
+#: collective/cover/contentchooser_templates/content_contentchooser.pt:70
 msgid "Home"
 msgstr "Home"
 
@@ -210,8 +210,8 @@ msgid "Number of items"
 msgstr "Número de itens"
 
 #: collective/cover/controlpanel.py:25
-msgid "Only objects of these content types will be searched on the screenlet."
-msgstr "Só os tipos de conteúdo listados serão procurados pelo screenlet."
+msgid "Only objects of these content types will be searched on the contentchooser."
+msgstr "Só os tipos de conteúdo listados serão procurados pelo contentchooser."
 
 #: collective/cover/tiles/configuration_widgets/basewidget.pt:32
 #: collective/cover/tiles/configuration_widgets/list.pt:42
@@ -247,7 +247,7 @@ msgstr "Por favor edite o tile para adicionar um texto."
 msgid "Position"
 msgstr "Posição"
 
-#: collective/cover/screenlets_templates/content_screenlet.pt:15
+#: collective/cover/contentchooser_templates/content_contentchooser.pt:15
 msgid "Recent items"
 msgstr "Itens recentes"
 
@@ -326,7 +326,7 @@ msgstr "UUID"
 msgid "Uninstall profile for the collective.cover package."
 msgstr "Perfil de desintalação do produto collective.cover."
 
-#: collective/cover/screenlets_templates/content_screenlet.pt:63
+#: collective/cover/contentchooser_templates/content_contentchooser.pt:63
 msgid "Up level"
 msgstr "Um nível acima"
 
@@ -336,7 +336,7 @@ msgstr "Um nível acima"
 msgid "Visible"
 msgstr "Visível"
 
-#: collective/cover/screenlets_templates/content_screenlet.pt:12
+#: collective/cover/contentchooser_templates/content_contentchooser.pt:12
 msgid "X"
 msgstr "X"
 
@@ -374,11 +374,11 @@ msgstr ""
 msgid "label_categories"
 msgstr "Categorias"
 
-#: collective/cover/screenlets_templates/content_screenlet.pt:31
+#: collective/cover/contentchooser_templates/content_contentchooser.pt:31
 msgid "more"
 msgstr "mais"
 
-#: collective/cover/screenlets_templates/content_screenlet.pt:26
+#: collective/cover/contentchooser_templates/content_contentchooser.pt:26
 msgid "ok"
 msgstr "aceitar"
 

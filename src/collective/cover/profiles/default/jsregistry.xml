@@ -12,12 +12,12 @@
   <javascript bundle="tinymce" id="tiny_mce.js" />
   <javascript bundle="tinymce" id="tiny_mce_init.js" />
 
-  <javascript id="++resource++collective.cover/screenlets.js"
+  <javascript id="++resource++collective.cover/contentchooser.js"
       cacheable="True" compression="none" cookable="True" enabled="True"
       expression="" inline="False" authenticated="True" />
   <javascript id="++resource++collective.cover/bootstrap.min.js"
       cacheable="True" compression="none" cookable="True" enabled="True"
-      expression="" inline="False" /> 
+      expression="" inline="False" />
   <javascript id="++resource++collective.cover/jquery.endless-scroll.js"
       cacheable="True" compression="none" cookable="True" enabled="True"
       expression="" inline="False" authenticated="True" />

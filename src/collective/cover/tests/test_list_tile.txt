@@ -32,31 +32,31 @@ Test List Tile
     Click Link  link=Compose
     Page Should Contain  Please add up to 5 objects to the tile.
 
-    Click Element  css=div#screenlet-content-show-button
+    Click Element  css=div#contentchooser-content-show-button
 
     Drag And Drop  css=${document_selector}  css=${tile_selector}
     Page Should Contain  My document
     Page Should Contain  This document was created for testing purposes
 
-#    Click Element  css=div#screenlet-content-show-button
+#    Click Element  css=div#contentchooser-content-show-button
 
     Drag And Drop  css=${file_selector}  css=${tile_selector}
     Page Should Contain  My file
 	Page Should Contain  This file was created for testing purposes
-	
-#    Click Element  css=div#screenlet-content-show-button
+
+#    Click Element  css=div#contentchooser-content-show-button
 
     Drag And Drop  css=${image_selector}  css=${tile_selector}
     Page Should Contain  Test image
 	Page Should Contain  This image was created for testing purposes
-	
-#    Click Element  css=div#screenlet-content-show-button
+
+#    Click Element  css=div#contentchooser-content-show-button
 
     Drag And Drop  css=${link_selector}  css=${tile_selector}
     Page Should Contain  Test link
 	Page Should Contain  This link was created for testing purposes
 
-#    Click Element  css=div#screenlet-content-show-button
+#    Click Element  css=div#contentchooser-content-show-button
 
     Drag And Drop  css=${news-item_selector}  css=${tile_selector}
     Page Should Contain  Test news item

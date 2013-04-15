@@ -1,32 +1,25 @@
 # -*- coding: utf-8 -*-
-
 from Acquisition import aq_inner, aq_parent
 
-from zope.component import getMultiAdapter, getUtility, queryUtility
-
-from zope.interface import Interface
-from zope.schema.vocabulary import SimpleTerm
+from collective.cover.controlpanel import ICoverSettings
 
 from five import grok
 
-from zope.browserpage.viewpagetemplatefile import ViewPageTemplateFile
-
+from plone.app.layout.navigation.interfaces import INavigationRoot
+from plone.app.layout.navigation.root import getNavigationRoot
+from plone.i18n.normalizer.interfaces import IIDNormalizer
 from plone.registry.interfaces import IRegistry
 
-#from plone.app.layout.navigation.navtree import buildFolderTree
-
+from Products.CMFCore.interfaces._content import IFolderish
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.browser.navtree import SitemapNavtreeStrategy
 from Products.Five.browser import BrowserView
 
-from collective.cover.controlpanel import ICoverSettings
-
-from Products.CMFCore.interfaces._content import IFolderish
+from zope.browserpage.viewpagetemplatefile import ViewPageTemplateFile
+from zope.component import getMultiAdapter, getUtility, queryUtility
+from zope.interface import Interface
 from zope.schema.interfaces import IVocabularyFactory
-
-from plone.i18n.normalizer.interfaces import IIDNormalizer
-from plone.app.layout.navigation.root import getNavigationRoot
-from plone.app.layout.navigation.interfaces import INavigationRoot
+from zope.schema.vocabulary import SimpleTerm
 
 try:
     import json
@@ -38,27 +31,27 @@ except ImportError:
 VOCAB_ID = u'plone.app.vocabularies.ReallyUserFriendlyTypes'
 
 
-grok.templatedir("screenlets_templates")
+grok.templatedir("contentchooser_templates")
 
 
 class TestContent(grok.View):
     """
-    test screenlet for selecting
+    test contentchooser for selecting
     """
     grok.context(Interface)
-    grok.name('test-content-screenlet')
+    grok.name('test-content-contentchooser')
     grok.require('zope2.View')
-    grok.template('test_content_screenlet')
+    grok.template('test_content_contentchooser')
 
 
-class SelectContentScreenlet(grok.View):
+class SelectContent(grok.View):
     """
-    screenlet for selecting
+    contentchooser for selecting
     """
     grok.context(Interface)
-    grok.name('select-content-screenlet')
+    grok.name('select-content-contentchooser')
     grok.require('zope2.View')
-    grok.template('content_screenlet')
+    grok.template('content_contentchooser')
 
     def update(self):
         pass
@@ -75,8 +68,8 @@ class ContentSearch(grok.View):
     grok.name('content-search')
     grok.require('zope2.View')
 
-    list_template = ViewPageTemplateFile('screenlets_templates/search_list.pt')
-    tree_template = ViewPageTemplateFile('screenlets_templates/tree_template.pt')
+    list_template = ViewPageTemplateFile('contentchooser_templates/search_list.pt')
+    tree_template = ViewPageTemplateFile('contentchooser_templates/tree_template.pt')
 
     def update(self):
         query = self.request.get('q', None)

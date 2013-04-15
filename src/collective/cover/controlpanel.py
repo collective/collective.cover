@@ -23,7 +23,7 @@ class ICoverSettings(Interface):
     searchable_content_types = schema.List(
         title=_(u"Searchable Content Types"),
         description=_(u"Only objects of these content types will be searched "
-                      u"on the screenlet."),
+                      u"on the content chooser."),
         required=False,
         default=DEFAULT_SEARCHABLE_CONTENT_TYPES,
         # we are going to list only the main content types in the widget

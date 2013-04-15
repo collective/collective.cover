@@ -29,7 +29,7 @@ Test file Tile
     Click Link  link=Compose
     Page Should Contain  Please drag&drop a file here
 
-    Click Element  css=div#screenlet-content-show-button
+    Click Element  css=div#contentchooser-content-show-button
 
     Drag And Drop  css=${file_selector}  css=${tile_selector}
     Page Should Contain  My file
