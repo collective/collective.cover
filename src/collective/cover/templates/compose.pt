@@ -30,8 +30,8 @@
 <metal:main fill-slot="main">
     <div tal:define="layout nocall:context/@@layout"
         tal:replace="structure layout/render_compose" />
-    <div class="content-screenlet"
-        tal:replace="structure context/@@select-content-screenlet" />
+    <div class="content-contentchooser"
+        tal:replace="structure context/@@select-content-contentchooser" />
 </metal:main>
 
 </body>

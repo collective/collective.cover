@@ -1,13 +1,13 @@
 var ajaxSearchRequest = [];
 function contentSearchFilter(url) {
-  var queryVal = $("#screenlet-content-search-input").val();
+  var queryVal = $("#contentchooser-content-search-input").val();
   var data = {'q': queryVal};
   ajaxSearchRequest.push($.ajax({
     url: url,
     data: data,
     success: function(info) {
-      $("#screenlet-content-search #recent .item-list").html(info);
-      $("#screenlet-content-search #recent .item-list li ul").css("display", "none");
+      $("#contentchooser-content-search #recent .item-list").html(info);
+      $("#contentchooser-content-search #recent .item-list li ul").css("display", "none");
       return false;
     }
   }));
@@ -26,14 +26,14 @@ function contentSearchFilter(url) {
 }(jQuery));
 
 
-function screenletMaker(options) {
+function contentchooserMaker(options) {
     var windowId = options['windowId'];
     var droppable = options['droppable'];
     var draggable = options['draggable'];
     var draggable_acepted = options['draggable_acepted'];
     var dropped = options['dropped'];
 
-    //items inside screenlet should be draggable
+    //items inside contentchooser should be draggable
     $(draggable).liveDraggable({
         scroll: false,
         helper: "clone"
@@ -46,17 +46,17 @@ function screenletMaker(options) {
         drop: dropped
     });
 
-    // TODO: check if the current screenlet requires any tabs
+    // TODO: check if the current contentchooser requires any tabs
     $(windowId + " ul.formTabs").tabs("div.panes > div");
 }
 
 $(function() {
 
-    if($("#screenlet-content-search").length) {
-        var content_name = $("#screenlet-content-search-compose-button").text();
-        $("#content").prepend("<div class='btn' id='screenlet-content-show-button'>"+content_name+"</div>");
+    if($("#contentchooser-content-search").length) {
+        var content_name = $("#contentchooser-content-search-compose-button").text();
+        $("#content").prepend("<div class='btn' id='contentchooser-content-show-button'>"+content_name+"</div>");
 
-        $( "#screenlet-content-search" ).resizable({
+        $( "#contentchooser-content-search" ).resizable({
             maxHeight:411,
             minHeight: 411,
             minWidth: 350,
@@ -65,7 +65,7 @@ $(function() {
 
     }
 
-    $("#screenlet-content-search-button").click(function(e) {
+    $("#contentchooser-content-search-button").click(function(e) {
         e.preventDefault();
         e.stopPropagation();
         var dataUrl = $(this).attr("data-url");
@@ -73,14 +73,14 @@ $(function() {
         return false;
     });
 
-    screenletMaker({
-        draggable: '#screenlet-content-search .item-list li',
+    contentchooserMaker({
+        draggable: '#contentchooser-content-search .item-list li',
         draggable_acepted: function(e) {
             var ct = $(this).data('tileValidCt');
             var valid = $.inArray($(e).find('a').data('ctType'), ct);
             var isDroppable = $(this).attr("data-is-droppable");
 
-            if(isDroppable === "False" || $(e).attr('id') === 'screenlet-content-search') {
+            if(isDroppable === "False" || $(e).attr('id') === 'contentchooser-content-search') {
                 return false;
             }
             if(!ct && $($(e).context).parent().attr("class") === "item-list") {
@@ -88,7 +88,7 @@ $(function() {
             }
             return valid !== -1? true : false;
         },
-        windowId: '#screenlet-content-search',
+        windowId: '#contentchooser-content-search',
         droppable: '.tile',
         dropped: function(event, ui) {
             var tile = $(this);
@@ -111,22 +111,22 @@ $(function() {
 
 
 
-    $( "#screenlet-content-search" ).draggable({
+    $( "#contentchooser-content-search" ).draggable({
         start: function(event, ui) {
             $(this).removeClass("right");
         },
-        cancel: '.item-list, #screenlet-content-search-input, #screenlets-content-trees'
+        cancel: '.item-list, #contentchooser-content-search-input, #contentchooser-content-trees'
     });
-  $("#screenlet-content-show-button").click(function() {
+  $("#contentchooser-content-show-button").click(function() {
     var offset = $(this).offset();
-    $("#screenlet-content-search").css("display", "block");
-    $("#screenlet-content-search").offset({'top':offset.top});
+    $("#contentchooser-content-search").css("display", "block");
+    $("#contentchooser-content-search").offset({'top':offset.top});
   });
 
-  $("#screenlet-content-search .close").click(function() {
-    $("#screenlet-content-search").css("display", "none");
+  $("#contentchooser-content-search .close").click(function() {
+    $("#contentchooser-content-search").css("display", "none");
   });
-  $("#screenlet-content-search #content-tree .item-list li").live("click",function(e) {
+  $("#contentchooser-content-search #content-tree .item-list li").live("click",function(e) {
     e.stopPropagation();
     var child = $(this).children("ul");
     if (child.is(":visible")) {
@@ -232,14 +232,14 @@ var coveractions = {
     getFolderContents : function(path, method) {
         // Sends a low level Ajax request
         var t = this, d = document, w = window, na = navigator, ua = na.userAgent;
-        $('#screenlets-content-trees').val('')
+        $('#contentchooser-content-trees').val('')
 
         coveractions.send({
             url : path + '/' + method,
             content_type : "application/x-www-form-urlencoded",
             type : 'POST',
             data : "searchtext=" +
-            (jQuery('input:text[id=screenlets-content-trees][name=screenlets-content-trees]').val()
+            (jQuery('input:text[id=contentchooser-content-trees][name=contentchooser-content-trees]').val()
              || '') + "&rooted='False'" + "&document_base_url=" +
             encodeURIComponent(d.baseURI),
             success : function(text) {
@@ -319,7 +319,7 @@ var coveractions = {
         // selector: Is an input text
         // selectorlist: Is an selector  type li tag
         // selectoroutput: Displays number of items that meet the search criteria
-        // Eg. coveractions.liveSearch('#screenlets-content-trees','.item-list li','#filter-count');
+        // Eg. coveractions.liveSearch('#contentchooser-content-trees','.item-list li','#filter-count');
         jQuery(selector).keyup(function(){
             // Retrieve the input field text and reset the count to zero
             var filter = $(this).val(), count = 0;
@@ -354,14 +354,14 @@ coveractions.preInit();
 
 
 function filterOnKeyUp() {
-    $("#screenlet-content-search-button").css("display", "none");
-    $(".screenlets-content-trees").keyup(function() {
+    $("#contentchooser-content-search-button").css("display", "none");
+    $(".contentchooser-content-trees").keyup(function() {
         var i = 0;
         for(i=0; i<ajaxSearchRequest.length; i++) {
             ajaxSearchRequest[i].abort();
         }
         ajaxSearchRequest = [];
-        $("#screenlet-content-search-button").trigger("click");
+        $("#contentchooser-content-search-button").trigger("click");
     });
 }
 

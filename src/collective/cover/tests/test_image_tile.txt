@@ -29,7 +29,7 @@ Test image Tile
     Click Link  link=Compose
     Page Should Contain  Please drag&drop an image here
 
-    Click Element  css=div#screenlet-content-show-button
+    Click Element  css=div#contentchooser-content-show-button
 
     Drag And Drop  css=${image_selector}  css=${tile_selector}
 	Page Should Contain Image  css=div.tile-container div.tile img

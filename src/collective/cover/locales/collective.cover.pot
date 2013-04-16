@@ -54,7 +54,7 @@ msgstr ""
 msgid "A tile to embed content from a remote source."
 msgstr ""
 
-#: collective/cover/screenlets_templates/content_screenlet.pt:88
+#: collective/cover/contentchooser_templates/content_contentchooser.pt:88
 msgid "Add Content"
 msgstr ""
 
@@ -95,7 +95,7 @@ msgstr ""
 msgid "Configure ${name}"
 msgstr ""
 
-#: collective/cover/screenlets_templates/content_screenlet.pt:16
+#: collective/cover/contentchooser_templates/content_contentchooser.pt:16
 msgid "Content tree"
 msgstr ""
 
@@ -150,7 +150,7 @@ msgstr ""
 msgid "File Tile"
 msgstr ""
 
-#: collective/cover/screenlets_templates/content_screenlet.pt:22
+#: collective/cover/contentchooser_templates/content_contentchooser.pt:22
 msgid "Filter items"
 msgstr ""
 
@@ -158,7 +158,7 @@ msgstr ""
 msgid "HTML tag"
 msgstr ""
 
-#: collective/cover/screenlets_templates/content_screenlet.pt:70
+#: collective/cover/contentchooser_templates/content_contentchooser.pt:70
 msgid "Home"
 msgstr ""
 
@@ -213,7 +213,7 @@ msgid "Number of items"
 msgstr ""
 
 #: collective/cover/controlpanel.py:25
-msgid "Only objects of these content types will be searched on the screenlet."
+msgid "Only objects of these content types will be searched on the contentchooser."
 msgstr ""
 
 #: collective/cover/tiles/configuration_widgets/basewidget.pt:32
@@ -250,7 +250,7 @@ msgstr ""
 msgid "Position"
 msgstr ""
 
-#: collective/cover/screenlets_templates/content_screenlet.pt:15
+#: collective/cover/contentchooser_templates/content_contentchooser.pt:15
 msgid "Recent items"
 msgstr ""
 
@@ -331,7 +331,7 @@ msgstr ""
 msgid "Uninstall profile for the collective.cover package."
 msgstr ""
 
-#: collective/cover/screenlets_templates/content_screenlet.pt:63
+#: collective/cover/contentchooser_templates/content_contentchooser.pt:63
 msgid "Up level"
 msgstr ""
 
@@ -341,7 +341,7 @@ msgstr ""
 msgid "Visible"
 msgstr ""
 
-#: collective/cover/screenlets_templates/content_screenlet.pt:12
+#: collective/cover/contentchooser_templates/content_contentchooser.pt:12
 msgid "X"
 msgstr ""
 
@@ -376,11 +376,11 @@ msgstr ""
 msgid "label_categories"
 msgstr ""
 
-#: collective/cover/screenlets_templates/content_screenlet.pt:31
+#: collective/cover/contentchooser_templates/content_contentchooser.pt:31
 msgid "more"
 msgstr ""
 
-#: collective/cover/screenlets_templates/content_screenlet.pt:26
+#: collective/cover/contentchooser_templates/content_contentchooser.pt:26
 msgid "ok"
 msgstr ""
 

@@ -9,8 +9,8 @@
 
 <metal:main fill-slot="main">
     <tal:main-macro metal:define-macro="main">
-       <div class="content-screenlet" tal:replace="structure context/@@select-content-screenlet"></div>
-      
+       <div class="content-contentchooser" tal:replace="structure context/@@select-content-contentchooser"></div>
+
     </tal:main-macro>
 </metal:main>
 
