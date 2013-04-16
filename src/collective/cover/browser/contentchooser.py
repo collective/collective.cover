@@ -1,22 +1,21 @@
 # -*- coding: utf-8 -*-
-from Acquisition import aq_inner, aq_parent
 
+from Acquisition import aq_inner
+from Acquisition import aq_parent
 from collective.cover.controlpanel import ICoverSettings
-
 from five import grok
-
 from plone.app.layout.navigation.interfaces import INavigationRoot
 from plone.app.layout.navigation.root import getNavigationRoot
 from plone.i18n.normalizer.interfaces import IIDNormalizer
 from plone.registry.interfaces import IRegistry
-
 from Products.CMFCore.interfaces._content import IFolderish
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.browser.navtree import SitemapNavtreeStrategy
 from Products.Five.browser import BrowserView
-
 from zope.browserpage.viewpagetemplatefile import ViewPageTemplateFile
-from zope.component import getMultiAdapter, getUtility, queryUtility
+from zope.component import getMultiAdapter
+from zope.component import getUtility
+from zope.component import queryUtility
 from zope.interface import Interface
 from zope.schema.interfaces import IVocabularyFactory
 from zope.schema.vocabulary import SimpleTerm
@@ -27,9 +26,7 @@ try:
 except ImportError:
     import simplejson as json
 
-
 VOCAB_ID = u'plone.app.vocabularies.ReallyUserFriendlyTypes'
-
 
 grok.templatedir("contentchooser_templates")
 
