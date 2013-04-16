@@ -17,6 +17,7 @@ the following people:
 - Ricardo Bánffy
 - Silvestre Huens
 - Thiago Tamosauskas
+- Rodrigo Ferreira de Souza
 - `Launched Pixels`_ (icon)
 
 You can find an updated list of package contributors on `GitHub`_.
