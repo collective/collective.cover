@@ -12,12 +12,12 @@ from collective.cover.testing import INTEGRATION_TESTING
 
 JS = [
     '++resource++collective.cover/bootstrap.min.js',
-    '++resource++collective.cover/screenlets.js',
+    '++resource++collective.cover/contentchooser.js',
 ]
 
 CSS = [
     '++resource++collective.cover/bootstrap.min.css',
-    '++resource++collective.cover/screenlets.css',
+    '++resource++collective.cover/contentchooser.css',
 ]
 
 

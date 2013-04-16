@@ -31,7 +31,7 @@ Create new user
     Page should contain element  form.fullname
 
     Input text  form.fullname  ${ANOTHER_OWNER_NAME}
-    Input text  form.username  ${ANOTHER_OWNER_PASSWORD} 
+    Input text  form.username  ${ANOTHER_OWNER_PASSWORD}
     Input text  form.email     ${ANOTHER_OWNER_NAME}@null.com
     Input Password  form.password     ${ANOTHER_OWNER_NAME}
     Input Password  form.password_ctl     ${ANOTHER_OWNER_PASSWORD}
@@ -44,7 +44,7 @@ Test locked cover
     Create new user
 
     Goto Homepage
-    
+
     Create Cover  My Cover  Description  Empty layout
     Click Link  link=Layout
 
@@ -55,7 +55,7 @@ Test locked cover
     Click Link  link=Compose
     Page Should Contain   Please drag&drop some content here to populate the tile.
 
-    Click Element  css=div#screenlet-content-show-button
+    Click Element  css=div#contentchooser-content-show-button
 
     Drag And Drop  css=${document_selector}  css=${tile_selector}
     Page Should Contain  My document

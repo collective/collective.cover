@@ -11,7 +11,7 @@ Suite Teardown  Close Browser
 *** Variables ***
 
 ${folder_selector}  .contenttype-folder
-${input_search}  screenlet-search
+${input_search}  contentchooser-search
 
 *** Test cases ***
 
@@ -20,7 +20,7 @@ Test content tree tab
     Create Cover  Title  Description  Empty layout
 
     Click Link  link=Compose
-    Click Element  css=div#screenlet-content-show-button
+    Click Element  css=div#contentchooser-content-show-button
 
     Page Should Contain Element  css=${folder_selector}
 

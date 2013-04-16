@@ -7,7 +7,7 @@
       tal:omit-tag="">
 <body tal:omit-tag="">
 
-<div id="screenlet-content-search" class="right  ui-widget-content">
+<div id="contentchooser-content-search" class="right  ui-widget-content">
 
     <div class="close" i18n:translate="">X</div>
 
@@ -19,11 +19,11 @@
     <div class="panes">
       <div id="recent" class="tab-pane active">
         <div class="input">
-          <input class="screenlets-content-trees" id="screenlet-content-search-input" type="text"
-            title="Filter items" placeholder="Filter items" name="screenlet-search"
+          <input class="contentchooser-content-trees" id="contentchooser-content-search-input" type="text"
+            title="Filter items" placeholder="Filter items" name="contentchooser-search"
             i18n:attributes="title; placeholder"/>
         </div>
-        <input type="button" value="ok" id="screenlet-content-search-button"
+        <input type="button" value="ok" id="contentchooser-content-search-button"
          tal:attributes="data-url view/post_url"
          i18n:attributes="value" />
         <ul class="item-list">
@@ -46,15 +46,15 @@
 
             $(function(){
                 // Live search content tree
-                coveractions.liveSearch('#screenlets-content-trees','.item-list li','#filter-count');
+                coveractions.liveSearch('#contentchooser-content-trees','.item-list li','#filter-count');
             });
         </script>
       </div>
 
       <div id="content-trees" class="tab-pane">
           <div class="input">
-              <input id="screenlets-content-trees"
-              name="screenlets-content-trees" type="text" title="Filter items"
+              <input id="contentchooser-content-trees"
+              name="contentchooser-content-trees" type="text" title="Filter items"
               placeholder="Filter items" i18n:attributes="title; placeholder" />
           </div>
 
@@ -85,7 +85,7 @@
       </div>
     </div>
 
-    <div id="screenlet-content-search-compose-button" style="display: none;"
+    <div id="contentchooser-content-search-compose-button" style="display: none;"
         i18n:translate="">Add Content</div>
 
 </div>

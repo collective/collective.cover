@@ -57,7 +57,7 @@ msgstr "Un tile que muestra el resultado de una colección."
 msgid "A tile to embed content from a remote source."
 msgstr "Un tile para integrar contenido de una fuente remota."
 
-#: collective/cover/screenlets_templates/content_screenlet.pt:88
+#: collective/cover/contentchooser_templates/content_contentchooser.pt:88
 msgid "Add Content"
 msgstr "Agregar contenido"
 
@@ -98,7 +98,7 @@ msgstr "Componer"
 msgid "Configure ${name}"
 msgstr "Configurar ${name}"
 
-#: collective/cover/screenlets_templates/content_screenlet.pt:16
+#: collective/cover/contentchooser_templates/content_contentchooser.pt:16
 msgid "Content tree"
 msgstr "Árbol de contenido"
 
@@ -153,7 +153,7 @@ msgstr "Exportar diseño"
 msgid "File Tile"
 msgstr "Tile de archivo"
 
-#: collective/cover/screenlets_templates/content_screenlet.pt:22
+#: collective/cover/contentchooser_templates/content_contentchooser.pt:22
 msgid "Filter items"
 msgstr "Filtrar elementos"
 
@@ -161,7 +161,7 @@ msgstr "Filtrar elementos"
 msgid "HTML tag"
 msgstr "Tag HTML"
 
-#: collective/cover/screenlets_templates/content_screenlet.pt:70
+#: collective/cover/contentchooser_templates/content_contentchooser.pt:70
 msgid "Home"
 msgstr "Inicio"
 
@@ -216,8 +216,8 @@ msgid "Number of items"
 msgstr "Número de elementos"
 
 #: collective/cover/controlpanel.py:25
-msgid "Only objects of these content types will be searched on the screenlet."
-msgstr "Sólo los objetos de estos tipos de contenido serán buscados en el screenlet."
+msgid "Only objects of these content types will be searched on the contentchooser."
+msgstr "Sólo los objetos de estos tipos de contenido serán buscados en el contentchooser."
 
 #: collective/cover/tiles/configuration_widgets/basewidget.pt:32
 #: collective/cover/tiles/configuration_widgets/list.pt:42
@@ -253,7 +253,7 @@ msgstr "Por favor edite el tile para agregar algún texto."
 msgid "Position"
 msgstr "Posición"
 
-#: collective/cover/screenlets_templates/content_screenlet.pt:15
+#: collective/cover/contentchooser_templates/content_contentchooser.pt:15
 msgid "Recent items"
 msgstr "Elementos recientes"
 
@@ -334,7 +334,7 @@ msgstr "UUID"
 msgid "Uninstall profile for the collective.cover package."
 msgstr "Perfil de desinstalación del paquete collective.cover."
 
-#: collective/cover/screenlets_templates/content_screenlet.pt:63
+#: collective/cover/contentchooser_templates/content_contentchooser.pt:63
 msgid "Up level"
 msgstr "Subir nivel"
 
@@ -344,7 +344,7 @@ msgstr "Subir nivel"
 msgid "Visible"
 msgstr "Visible"
 
-#: collective/cover/screenlets_templates/content_screenlet.pt:12
+#: collective/cover/contentchooser_templates/content_contentchooser.pt:12
 msgid "X"
 msgstr "X"
 
@@ -380,11 +380,11 @@ msgstr "Las etiquetas suelen utilizarse para la organización a medida del conte
 msgid "label_categories"
 msgstr "Etiquetas"
 
-#: collective/cover/screenlets_templates/content_screenlet.pt:31
+#: collective/cover/contentchooser_templates/content_contentchooser.pt:31
 msgid "more"
 msgstr "más"
 
-#: collective/cover/screenlets_templates/content_screenlet.pt:26
+#: collective/cover/contentchooser_templates/content_contentchooser.pt:26
 msgid "ok"
 msgstr "ok"
 

@@ -14,9 +14,9 @@ ${basic_tile_location}  /html/body/div/div[2]/div/div[2]/div[2]/div[3]/div
 ${basic_uuid}  12345
 ${document_selector}  .ui-draggable .contenttype-document
 ${folder_selector}  .ui-draggable .contenttype-folder
-${input_contenttree}  screenlets-content-trees
-${screenlet-content-show-button}  div#screenlet-content-show-button
-${home_screenlet}  #home
+${input_contenttree}  contentchooser-content-trees
+${contentchooser-content-show-button}  div#contentchooser-content-show-button
+${home_contentchooser}  #home
 ${tile_selector}  div.tile-container div.tile
 
 *** Test cases ***
@@ -33,7 +33,7 @@ Test content tree tab
     Click Link  link=Compose
     Page Should Contain   Please drag&drop some content here to populate the tile.
 
-    Click Element  css=${screenlet-content-show-button}
+    Click Element  css=${contentchooser-content-show-button}
 
     Click Element  link=Content tree
 

@@ -13,7 +13,7 @@ Suite Teardown  Close Browser
 ${basic_tile_location}  /html/body/div/div[2]/div/div[2]/div[2]/div[3]/div
 ${basic_uuid}  12345
 ${folder_selector}  .contenttype-folder
-${input_contenttree}  screenlets-content-trees
+${input_contenttree}  contentchooser-content-trees
 ${tile_selector}  div.tile-container div.tile
 ${path_selector}  div#content-trees div#internalpath
 
@@ -33,14 +33,14 @@ Test content tree tab
     Click Link  link=Compose
     Page Should Contain   Please drag&drop some content here to populate the tile.
 
-    Click Element  css=div#screenlet-content-show-button
+    Click Element  css=div#contentchooser-content-show-button
 
     Click Element  link=Content tree
 
     Page Should Contain Element  css=${folder_selector}
     Click Element  css=${folder_selector}
 
-    Page Should Contain Element  css=${path_selector}    
+    Page Should Contain Element  css=${path_selector}
 	Wait Until Page Contains Element  css=div#content-trees div#internalpath a
     Page Should Contain  Plone site → my-folder
 
@@ -49,7 +49,7 @@ Test content tree tab
     Click Link  link=Compose
     Page Should Contain   Please drag&drop some content here to populate the tile.
 
-    Click Element  css=div#screenlet-content-show-button
+    Click Element  css=div#contentchooser-content-show-button
 
     Click Element  link=Content tree
     Input text  name=${input_contenttree}  folder
@@ -62,7 +62,7 @@ Test content tree tab
     Page Should Contain Element  css=${folder_selector}
     Click Element  css=${folder_selector}
 
-    Page Should Contain Element  css=${path_selector}    
+    Page Should Contain Element  css=${path_selector}
 	Wait Until Page Contains Element  css=div#content-trees div#internalpath a
     Page Should Contain  Plone site → my-folder
 
@@ -74,7 +74,7 @@ Test content tree tab
     Page Should Contain Element  css=${folder_selector}
     Click Element  css=${folder_selector}
 
-    Page Should Contain Element  css=${path_selector}    
+    Page Should Contain Element  css=${path_selector}
 	Wait Until Page Contains Element  css=div#content-trees div#internalpath a
     Page Should Contain  Plone site → my-folder
 
