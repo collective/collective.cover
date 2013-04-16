@@ -94,14 +94,14 @@
 }
 
 #content .layout .config-tile-link .config-icon {
-    background: transparent url(/++resource++collective.cover/conf.png) no-repeat center center;
+    background: transparent url(++resource++collective.cover/conf.png) no-repeat center center;
     height: 24px;
     width: 24px;
     display: block;
 }
 
 #content .layout .resizer {
-    background: transparent url(/++resource++collective.cover/resize.png) no-repeat center center;
+    background: transparent url(++resource++collective.cover/resize.png) no-repeat center center;
     height: 24px;
     width: 24px;
     display: block;
@@ -223,7 +223,7 @@
     cursor:pointer;
     border-left:1px dashed #CCCCCC;
     border-bottom:1px dashed #CCCCCC;    
-    background: #FFF url(/++resource++collective.cover/arrow-right.gif) no-repeat center center;
+    background: #FFF url(++resource++collective.cover/arrow-right.gif) no-repeat center center;
 }
 
 .remove-column {
@@ -234,7 +234,7 @@
     width: 10px;
     cursor:pointer;
     border-left:1px dashed #CCCCCC;
-    background: #FFF url(/++resource++collective.cover/arrow-left.gif) no-repeat center center;
+    background: #FFF url(++resource++collective.cover/arrow-left.gif) no-repeat center center;
 }
 .add-column.disabled {
     background-color:#eaeaea;
@@ -250,15 +250,15 @@
     width: 22px;
 }
 #btn-row .icon-white{
-    background: url(/++resource++collective.cover/rows.png) no-repeat 0 0;
+    background: url(++resource++collective.cover/rows.png) no-repeat 0 0;
 }
 
 #btn-column .icon-white{
-    background: url(/++resource++collective.cover/columns.png) no-repeat 0 0;
+    background: url(++resource++collective.cover/columns.png) no-repeat 0 0;
 }
 
 #btn-tile .icon-white{
-    background: url(/++resource++collective.cover/tiles.png) no-repeat 0 0;
+    background: url(++resource++collective.cover/tiles.png) no-repeat 0 0;
 }
 
 #group-select-list,
