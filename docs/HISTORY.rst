@@ -8,12 +8,8 @@ Because you have to know where your towel is.
 
 - Implements an original size scale to show the original image. [jpgimenez]
 
-- Implement issue `#158`_ to copy scales from the original object,
-  this way we can support products like plone.app.imagecropping.
-  [jpgimenez]
-
 - Improve the way than images are accesed from the original object, 
-  using the standard images traversal. [jpgimenez]
+  using the standard images traversal. (issue `#158`_) [jpgimenez]
 
 - Fixed a bug with Plone 4.3 that avoided TinyMCE being displayed for 
   RichText. (closes `#157`_).
@@ -71,4 +67,5 @@ Because you have to know where your towel is.
 .. _`#146`: https://github.com/collective/collective.cover/issues/146
 .. _`#152`: https://github.com/collective/collective.cover/issues/152
 .. _`#157`: https://github.com/collective/collective.cover/issues/157
+.. _`#158`: https://github.com/collective/collective.cover/issues/158
 .. _`PloneFormGen`: https://pypi.python.org/pypi/Products.PloneFormGen
