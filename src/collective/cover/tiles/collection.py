@@ -68,10 +68,11 @@ class CollectionTile(PersistentCoverTile):
             size = 4
 
         uuid = self.data.get('uuid', None)
-        if uuid is not None:
-            obj = uuidToObject(uuid)
+        obj = uuidToObject(uuid)
+        if uuid and obj:
             return obj.results(batch=False)[:size]
         else:
+            self.remove_relation()
             return []
 
     def is_empty(self):
@@ -137,3 +138,10 @@ class CollectionTile(PersistentCoverTile):
             return scales.scale('image', 'mini')
         except:
             return None
+
+    def remove_relation(self):
+        data_mgr = ITileDataManager(self)
+        old_data = data_mgr.get()
+        if 'uuid' in old_data:
+            old_data.pop('uuid')
+        data_mgr.set(old_data)
