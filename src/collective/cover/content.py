@@ -10,7 +10,7 @@ from zope.event import notify
 from zope.interface import implements
 
 from five import grok
-from zope.app.container.interfaces import IObjectAddedEvent
+from zope.container.interfaces import IObjectAddedEvent
 
 from Products.CMFCore.utils import getToolByName
 
