@@ -281,14 +281,6 @@ var coveractions = {
                 jQuery(function(){
                     jQuery("#content-trees > .item-list")[0].innerHTML = html;
 
-                    if (data.parent_url == "") {
-                        document.getElementById ('uponelevel').style.display = 'none';
-                        document.getElementById ('uponelevel').href = 'javascript:void(0)';
-                    } else {
-                        document.getElementById ('uponelevel').style.display = 'block';
-                        document.getElementById ('uponelevel').href = 'javascript:coveractions.getFolderContents(\'' + data.parent_url + '\',\'@@jsonbytype' + '\')';
-                    }
-
                     html = "";
                     for (var i = 0; i < data.path.length; i++) {
                         if (i != 0) {

@@ -60,26 +60,13 @@
 
           <span id="filter-count" i18n:translate=""></span>
 
-          <div class="uponelevel"><a id="uponelevel" class="link-parent"
-                  href="javascript:void(0)" style="display: none;"
-                  i18n:translate="">Up level</a></div>
-          <div>
-           <ul class="configlets">
-            <li id="home" style="display: inline;">
-             <a tal:attributes="href python:'''javascript:coveractions.getFolderContents('%s','@@jsonbytype')''' %(context.portal_url())">
-              <img alt="" src="logoIcon.gif" /><span i18n:translate="">Home</span>
-             </a>
-            </li>
-           </ul>
-          </div>
+          <fieldset id="general_panel">
+            <div id="internalpath" class="formHelp" i18n:translate=""></div>
+          </fieldset>
 
           <ul class="item-list">
             <li />
           </ul>
-
-          <fieldset id="general_panel">
-            <div id="internalpath" class="formHelp" i18n:translate=""></div>
-         </fieldset>
 
 
       </div>
