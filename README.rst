@@ -52,21 +52,22 @@ We still have a long way to go, but lately we have received some nice
 compliments:
 
 End user 1
-    This is ridiculously easy to use!
+    *This is ridiculously easy to use!*
 
 End user 2
-    Finally!
+    *Finally!*
 
-.. https://twitter.com/MacYET/status/321642485925429248
 Andreas Jung (developer)
-    Working - MacYET approved
+    *Working - MacYET approved*
 
-Barack Obama
+Barack Obama (politician)
     .. figure:: https://raw.github.com/collective/collective.cover/master/not_bad.jpg
         :alt: Not bad
         :align: center
         :height: 236px
         :width: 310px
+
+.. https://twitter.com/MacYET/status/321642485925429248
 
 Don't Panic
 -----------
