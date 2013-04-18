@@ -18,43 +18,27 @@
 
     <div class="panes">
       <div id="recent" class="tab-pane active">
-        <div class="input">
+        <div class="input" id="contentchooser-content-search-input-container">
           <input class="contentchooser-content-trees" id="contentchooser-content-search-input" type="text"
             title="Filter items" placeholder="Filter items" name="contentchooser-search"
             i18n:attributes="title; placeholder"/>
         </div>
+        <a class="ui-icon ui-icon-trash contentchooser-clear"></a>
         <input type="button" value="ok" id="contentchooser-content-search-button"
          tal:attributes="data-url view/post_url"
          i18n:attributes="value" />
         <ul class="item-list">
             <li tal:replace="structure context/@@content-search" />
         </ul>
-		<script>
-			$(".item-list a.next").live("click", function(e){
-				$.ajax({
-					url: "@@content-search",
-					data: {'page': $(e.currentTarget).attr('data-page'),
-						   'q': $(e.currentTarget).attr('data-query')},
-					async: false
-				}).done(function(data) {
-					$('.item-list a.next').replaceWith(data);
-				});
-				return false;
-            });
-
-            $(function(){
-                // Live search content tree
-                coveractions.liveSearch('#contentchooser-content-trees','.item-list li','#filter-count');
-            });
-        </script>
       </div>
 
       <div id="content-trees" class="tab-pane">
-          <div class="input">
+          <div class="input" id="contentchooser-content-trees-container">
               <input id="contentchooser-content-trees"
               name="contentchooser-content-trees" type="text" title="Filter items"
               placeholder="Filter items" i18n:attributes="title; placeholder" />
           </div>
+          <a class="ui-icon ui-icon-trash contentchooser-clear"></a>
 
           <span id="filter-count" i18n:translate=""></span>
 
