@@ -28,7 +28,6 @@
          i18n:attributes="value" />
         <ul class="item-list">
             <li tal:replace="structure context/@@content-search" />
-        	<a class="next" href="" i18n:translate="">more</a>
         </ul>
 		<script>
 			var page = 1;

@@ -1,4 +1,5 @@
-<tal:master define="level view/level|python:0; children view/children | nothing;">
+<tal:master define="level view/level|python:0; children view/children | nothing;"
+            i18n:domain="collective.cover">
     <tal:navitem repeat="node children" condition="children">
         <li tal:define="uid node/UID;
                         children python: [];
@@ -19,6 +20,9 @@
             </tal:level>
         </li>
     </tal:navitem>
+  	<a class="next" href="" 
+  	   i18n:translate=""
+  	   tal:condition="view/has_next">more</a>
     <tal:nothasresult condition="python: not children">
         <li></li>
     </tal:nothasresult>
