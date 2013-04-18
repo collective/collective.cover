@@ -30,15 +30,14 @@
             <li tal:replace="structure context/@@content-search" />
         </ul>
 		<script>
-			var page = 1;
-			$(".item-list a.next").live("click", function(){
+			$(".item-list a.next").live("click", function(e){
 				$.ajax({
 					url: "@@content-search",
-					data: {'page': page},
+					data: {'page': $(e.currentTarget).attr('data-page'),
+						   'q': $(e.currentTarget).attr('data-query')},
 					async: false
 				}).done(function(data) {
-					$('.item-list a.next').prepend(data);
-					page += 1;
+					$('.item-list a.next').replaceWith(data);
 				});
 				return false;
             });
