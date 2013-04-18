@@ -9,6 +9,8 @@ from plone.tiles.data import PersistentTileDataManager
 from plone.namedfile.interfaces import INamedImage
 
 from collective.cover.tiles.base import IPersistentCoverTile
+from z3c.caching.purge import Purge
+from zope.event import notify
 
 
 class PersistentCoverTileDataManager(PersistentTileDataManager):
@@ -41,5 +43,6 @@ class PersistentCoverTileDataManager(PersistentTileDataManager):
                     (self.key in self.annotations and
                      data[k] != self.annotations[self.key][k])):
                     # set modification time of the image
+                    notify(Purge(self.tile))
                     data['%s_mtime' % k] = '%f' % time.time()
         self.annotations[self.key] = PersistentDict(data)
