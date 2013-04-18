@@ -1,7 +1,8 @@
 var ajaxSearchRequest = [];
 function contentSearchFilter(url) {
   var queryVal = $("#contentchooser-content-search-input").val();
-  var data = {'q': queryVal};
+  var page = 1;
+  var data = {'q': queryVal, 'page': page};
   ajaxSearchRequest.push($.ajax({
     url: url,
     data: data,
