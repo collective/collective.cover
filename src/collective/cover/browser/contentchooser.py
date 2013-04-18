@@ -70,17 +70,18 @@ class ContentSearch(grok.View):
     tree_template = ViewPageTemplateFile('contentchooser_templates/tree_template.pt')
 
     def update(self):
-        query = self.request.get('q', None)
+        self.query = self.request.get('q', None)
         self.tab = self.request.get('tab', None)
         b_size = int(self.request.get('b_size', 10))
-        page = int(self.request.get('page', 0)) + 1
+        page = int(self.request.get('page', 1))
         strategy = SitemapNavtreeStrategy(self.context)
 
         uids = None
-        result = self.search(query, uids=uids,
+        result = self.search(self.query, uids=uids,
                              page=page,
                              b_size=b_size)
         self.has_next = result.has_next
+        self.nextpage = result.nextpage
         result = [strategy.decoratorFactory({'item': node}) for node in result]
         self.level = 1
         self.children = result
