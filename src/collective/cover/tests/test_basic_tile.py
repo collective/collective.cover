@@ -4,7 +4,6 @@ import unittest2 as unittest
 
 from DateTime import DateTime
 
-from ZODB.blob import Blob
 from zope.interface.verify import verifyClass
 from zope.interface.verify import verifyObject
 
@@ -16,8 +15,16 @@ from zope.component import getMultiAdapter
 from collective.cover.tiles.permissions import ITilesPermissions
 from zope.annotation.interfaces import IAnnotations
 from collective.cover.tiles.configuration import ITilesConfigurationScreen
-from plone.scale.storage import AnnotationStorage as BaseAnnotationStorage
-from collective.cover.tiles.base import AnnotationStorage
+from zope.component import queryMultiAdapter
+from plone.namedfile.file import NamedBlobImage as NamedImageFile
+from plone.tiles.interfaces import ITileDataManager
+from zope.annotation.interfaces import IAttributeAnnotatable
+from zope.interface import alsoProvides
+from zope.component import provideUtility
+from zope.globalrequest import setRequest
+from plone.registry.interfaces import IRegistry
+from plone.cachepurging.interfaces import ICachePurgingSettings
+from zope.component import queryUtility
 
 
 class BasicTileTestCase(unittest.TestCase):
@@ -100,8 +107,8 @@ class BasicTileTestCase(unittest.TestCase):
         self.assertIn(
             "This news item was created for testing purposes", rendered)
 
-        # the image must be there
-        self.assertIn('test-basic-tile/@@images', rendered)
+        # the image must be there, pointing to original image
+        self.assertIn('my-news-item/@@images', rendered)
 
         # the localized time must be there
         utils = getMultiAdapter((self.portal, self.request), name=u'plone')
@@ -152,7 +159,11 @@ class BasicTileTestCase(unittest.TestCase):
 
     def test_image_traverser(self):
         obj = self.portal['my-image']
-        self.tile.populate_with_object(obj)
+        data = self.tile.data
+        scales = queryMultiAdapter((obj, self.request), name="images")
+        self.tile.data['image'] = NamedImageFile(str(scales.scale('image').data))
+        data_mgr = ITileDataManager(self.tile)
+        data_mgr.set(data)
         scales = self.layer['portal'].restrictedTraverse('@@%s/%s/@@images' %
                                                          ('collective.cover.basic',
                                                           'test-basic-tile',))
@@ -160,21 +171,47 @@ class BasicTileTestCase(unittest.TestCase):
         self.assertTrue(images_are_equal(str(self.tile.data['image'].data),
                                          str(img.index_html().read())))
 
-    def test_modified_scale(self):
-        obj = self.portal['my-image']
-        obj_scales = obj.restrictedTraverse('@@images')
-        self.assertFalse(BaseAnnotationStorage(obj).items())
-        obj_scales.scale('image', width=64, height=64)
-        obj_storage = BaseAnnotationStorage(obj)
-        obj_storage[(('fieldname', 'image'),
-                     ('height', 64),
-                     ('width', 64))]['data'] = Blob(generate_jpeg(64, 64))
+    def test_basic_tile_image(self):
+        obj = self.portal['my-news-item']
+        obj.setImage(generate_jpeg(128, 128))
+        obj.reindexObject()
+
         self.tile.populate_with_object(obj)
-        tile_storage = AnnotationStorage(self.tile)
-        self.assertTrue(images_are_equal(
-            obj_storage[(('fieldname', 'image'),
-                         ('height', 64),
-                         ('width', 64))]['data'].open().read(),
-            tile_storage[(('fieldname', 'image'),
-                          ('height', 64),
-                          ('width', 64))]['data'].open().read()))
+        rendered = self.tile()
+
+        # the image must be there, pointing to original image
+        self.assertIn('my-news-item/@@images', rendered)
+
+        # old code copy the image
+        self.assertNotIn('test-basic-tile/@@images', rendered)
+
+    def test_basic_tile_purge_cache(self):
+        request = self.request
+        alsoProvides(request, IAttributeAnnotatable)
+        setRequest(request)
+
+        registry = queryUtility(IRegistry)
+        registry.registerInterface(ICachePurgingSettings)
+        provideUtility(registry, IRegistry)
+
+        settings = registry.forInterface(ICachePurgingSettings)
+        settings.enabled = True
+        settings.cachingProxies = ('http://localhost:1234',)
+
+        obj = self.portal['my-image']
+        data = self.tile.data
+        scales = queryMultiAdapter((obj, self.request), name="images")
+        self.tile.data['image'] = NamedImageFile(str(scales.scale('image').data))
+        data_mgr = ITileDataManager(self.tile)
+        data_mgr.set(data)
+
+        self.assertEquals(set(['/@@collective.cover.basic/test-basic-tile',
+                               '/@@collective.cover.basic/test-basic-tile/@@images/image',
+                               '/@@collective.cover.basic/test-basic-tile/@@images/icon',
+                               '/@@collective.cover.basic/test-basic-tile/@@images/mini',
+                               '/@@collective.cover.basic/test-basic-tile/@@images/large',
+                               '/@@collective.cover.basic/test-basic-tile/@@images/listing',
+                               '/@@collective.cover.basic/test-basic-tile/@@images/thumb',
+                               '/@@collective.cover.basic/test-basic-tile/@@images/preview',
+                               '/@@collective.cover.basic/test-basic-tile/@@images/tile']),
+                          IAnnotations(request)['plone.cachepurging.urls'])

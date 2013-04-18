@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 from zope import schema
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 

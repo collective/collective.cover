@@ -7,7 +7,7 @@ import logging
 
 from logging import exception
 from AccessControl import Unauthorized
-from Acquisition import aq_base
+from Acquisition import aq_base, aq_parent
 from ZODB.POSException import ConflictError
 
 from zope.component import getMultiAdapter
@@ -51,6 +51,8 @@ from collective.cover.tiles.configuration import ITilesConfigurationScreen
 from collective.cover.tiles.permissions import ITilesPermissions
 
 from collective.cover import _
+from z3c.caching.interfaces import IPurgePaths
+from zope.component import adapts
 
 logger = logging.getLogger(PROJECTNAME)
 
@@ -389,3 +391,31 @@ class ImageScaling(BaseImageScaling):
             info['fieldname'] = fieldname
             scale_view = ImageScale(self.context, self.request, **info)
             return scale_view.__of__(self.context)
+
+
+class PersistentCoverTilePurgePaths(object):
+    """Paths to purge for cover tiles
+    """
+
+    implements(IPurgePaths)
+    adapts(IPersistentCoverTile)
+
+    def __init__(self, context):
+        self.context = context
+
+    def getRelativePaths(self):
+        context = self.context.aq_inner
+        portal_state = getMultiAdapter((context, context.request),
+                                       name=u'plone_portal_state')
+        prefix = context.url.replace(portal_state.portal_url(), '', 1)
+
+        yield prefix
+        for _, v in context.data.items():
+            if INamedImage.providedBy(v):
+                yield "%s/@@images/image" % prefix
+                scales = aq_parent(context).restrictedTraverse(prefix + '/@@images')
+                for size in scales.getAvailableSizes().keys():
+                    yield "%s/@@images/%s" % (prefix, size,)
+
+    def getAbsolutePaths(self):
+        return []
