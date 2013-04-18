@@ -25,6 +25,8 @@ from zope.globalrequest import setRequest
 from plone.registry.interfaces import IRegistry
 from plone.cachepurging.interfaces import ICachePurgingSettings
 from zope.component import queryUtility
+from zope.component.globalregistry import provideHandler
+from plone.cachepurging.hooks import queuePurge
 
 
 class BasicTileTestCase(unittest.TestCase):
@@ -186,6 +188,8 @@ class BasicTileTestCase(unittest.TestCase):
         self.assertNotIn('test-basic-tile/@@images', rendered)
 
     def test_basic_tile_purge_cache(self):
+        provideHandler(queuePurge)
+
         request = self.request
         alsoProvides(request, IAttributeAnnotatable)
         setRequest(request)
