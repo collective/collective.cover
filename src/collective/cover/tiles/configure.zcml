@@ -225,4 +225,6 @@
       factory=".list.GenericUIDsProvider"
       />
 
+    <adapter factory=".base.PersistentCoverTilePurgePaths" name="collective.cover.tiles" />
+
 </configure>

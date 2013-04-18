@@ -18,6 +18,13 @@ from collective.cover.tiles.configuration import ITilesConfigurationScreen
 from zope.component import queryMultiAdapter
 from plone.namedfile.file import NamedBlobImage as NamedImageFile
 from plone.tiles.interfaces import ITileDataManager
+from zope.annotation.interfaces import IAttributeAnnotatable
+from zope.interface import alsoProvides
+from zope.component import provideUtility
+from zope.globalrequest import setRequest
+from plone.registry.interfaces import IRegistry
+from plone.cachepurging.interfaces import ICachePurgingSettings
+from zope.component import queryUtility
 
 
 class BasicTileTestCase(unittest.TestCase):
@@ -177,3 +184,34 @@ class BasicTileTestCase(unittest.TestCase):
 
         # old code copy the image
         self.assertNotIn('test-basic-tile/@@images', rendered)
+
+    def test_basic_tile_purge_cache(self):
+        request = self.request
+        alsoProvides(request, IAttributeAnnotatable)
+        setRequest(request)
+
+        registry = queryUtility(IRegistry)
+        registry.registerInterface(ICachePurgingSettings)
+        provideUtility(registry, IRegistry)
+
+        settings = registry.forInterface(ICachePurgingSettings)
+        settings.enabled = True
+        settings.cachingProxies = ('http://localhost:1234',)
+
+        obj = self.portal['my-image']
+        data = self.tile.data
+        scales = queryMultiAdapter((obj, self.request), name="images")
+        self.tile.data['image'] = NamedImageFile(str(scales.scale('image').data))
+        data_mgr = ITileDataManager(self.tile)
+        data_mgr.set(data)
+
+        self.assertEquals(set(['/@@collective.cover.basic/test-basic-tile',
+                               '/@@collective.cover.basic/test-basic-tile/@@images/image',
+                               '/@@collective.cover.basic/test-basic-tile/@@images/icon',
+                               '/@@collective.cover.basic/test-basic-tile/@@images/mini',
+                               '/@@collective.cover.basic/test-basic-tile/@@images/large',
+                               '/@@collective.cover.basic/test-basic-tile/@@images/listing',
+                               '/@@collective.cover.basic/test-basic-tile/@@images/thumb',
+                               '/@@collective.cover.basic/test-basic-tile/@@images/preview',
+                               '/@@collective.cover.basic/test-basic-tile/@@images/tile']),
+                          IAnnotations(request)['plone.cachepurging.urls'])
