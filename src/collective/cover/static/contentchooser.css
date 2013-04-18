@@ -91,3 +91,6 @@ input[type="text"]#contentchooser-content-trees {
     min-width: 12em;
 }
 
+#content-trees #general_panel {
+	padding: 0;
+}
