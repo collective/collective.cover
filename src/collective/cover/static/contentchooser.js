@@ -52,6 +52,33 @@ function contentchooserMaker(options) {
 }
 
 $(function() {
+    // Live search content tree
+    coveractions.liveSearch('#contentchooser-content-trees','.item-list li','#filter-count');
+
+    $(".item-list a.next").live("click", function(e){
+		$.ajax({
+			url: "@@content-search",
+			data: {'page': $(e.currentTarget).attr('data-page'),
+				   'q': $(e.currentTarget).attr('data-query')},
+			async: false
+		}).done(function(data) {
+			$('.item-list a.next').replaceWith(data);
+		});
+		return false;
+    });
+
+	$("#recent .contentchooser-clear").live("click", function(e){
+		$(e.currentTarget).prev().children("input").val("");
+		ajaxSearchRequest.push($.ajax({
+			url: portal_url + "/@@content-search",
+		    success: function(info) {
+		      $("#contentchooser-content-search #recent .item-list").html(info);
+		      $("#contentchooser-content-search #recent .item-list li ul").css("display", "none");
+		      return false;
+		    }
+		}));
+		return false;
+	});
 
     if($("#contentchooser-content-search").length) {
         var content_name = $("#contentchooser-content-search-compose-button").text();
