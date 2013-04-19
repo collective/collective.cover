@@ -55,10 +55,6 @@ Test content tree tab
     Input text  name=${input_contenttree}  folder
     Page Should Contain  1 Results
 
-	# Test navigate again, issue #105
-	#
-    Click Element  css=#home a
-
     Page Should Contain Element  css=${folder_selector}
     Click Element  css=${folder_selector}
 
@@ -69,10 +65,11 @@ Test content tree tab
     Input text  name=${input_contenttree}  foo-bar
     Page Should Contain  0 Results
 
-    Click Element  css=#home a
-
-    Page Should Contain Element  css=${folder_selector}
-    Click Element  css=${folder_selector}
+# Changed in the new UI
+#    Click Element  css=#home a
+#
+#    Page Should Contain Element  css=${folder_selector}
+#    Click Element  css=${folder_selector}
 
     Page Should Contain Element  css=${path_selector}
 	Wait Until Page Contains Element  css=div#content-trees div#internalpath a
