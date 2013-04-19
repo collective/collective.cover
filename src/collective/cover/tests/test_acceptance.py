@@ -22,6 +22,7 @@ tests = [
     'test_layout.txt',
     'test_list_tile.txt',
     'test_locked_cover.txt',
+    'test_issue_59.txt',
 ]
 
 # FIXME: test randomly failing under Plone 4.3.x
