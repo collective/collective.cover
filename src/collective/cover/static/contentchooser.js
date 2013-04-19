@@ -80,7 +80,13 @@ $(function() {
 		return false;
 	});
 
-    if($("#contentchooser-content-search").length) {
+	$("#content-trees .contentchooser-clear").live("click", function(e){
+		$(e.currentTarget).prev().children("input").val("");
+		coveractions.getFolderContents(portal_url, '@@jsonbytype');
+		return false;
+	});
+
+	if($("#contentchooser-content-search").length) {
         var content_name = $("#contentchooser-content-search-compose-button").text();
         $("#content").prepend("<div class='btn' id='contentchooser-content-show-button'>"+content_name+"</div>");
 
