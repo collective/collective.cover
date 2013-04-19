@@ -64,7 +64,7 @@ Test content tree tab
     Input text  name=${input_contenttree}  foo-bar
     Page Should Contain  0 Results
 
-    Click Element  css=#home a
+    Click Element  css=#content-trees .contentchooser-clear
 
     Page Should Contain Element  css=${folder_selector}
     Click Element  css=${folder_selector}
