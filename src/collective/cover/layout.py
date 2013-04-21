@@ -1,20 +1,17 @@
 # -*- coding: utf-8 -*-
 
-import json
-from plone.uuid.interfaces import IUUIDGenerator
-
 from Acquisition import aq_inner
-
+from collective.cover.content import ICover
+from collective.cover.utils import assign_tile_ids
 from five import grok
+from plone.uuid.interfaces import IUUIDGenerator
+from zope.browserpage.viewpagetemplatefile import ViewPageTemplateFile
 from zope.component import getMultiAdapter
 from zope.component import getUtility
 from zope.component import queryUtility
 from zope.schema.interfaces import IVocabularyFactory
 
-from zope.browserpage.viewpagetemplatefile import ViewPageTemplateFile
-
-from collective.cover.content import ICover
-from collective.cover.utils import assign_tile_ids
+import json
 
 
 class PageLayout(grok.View):
