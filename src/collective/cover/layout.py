@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
 
 import json
-import uuid
+from plone.uuid.interfaces import IUUIDGenerator
 
 from Acquisition import aq_inner
 
 from five import grok
-
-from zope.component import queryUtility, getMultiAdapter
+from zope.component import getMultiAdapter
+from zope.component import getUtility
+from zope.component import queryUtility
 from zope.schema.interfaces import IVocabularyFactory
 
 from zope.browserpage.viewpagetemplatefile import ViewPageTemplateFile
@@ -152,12 +153,20 @@ class TileSelect(grok.View):
 
 
 class UidGetter(grok.View):
+    """Return a random UUID as a 32-character hexadecimal string. As we're
+    using the generated UUID as class id, we need the first char not to be a
+    number; see: http://css-tricks.com/ids-cannot-start-with-a-number/
+    """
     grok.context(ICover)
     grok.name('uid_getter')
     grok.require('zope2.View')
 
     def render(self):
-        return uuid.uuid4().hex
+        generator = getUtility(IUUIDGenerator)
+        uuid = generator()
+        while uuid[0].isdigit():
+            uuid = generator()
+        return uuid
 
 
 class GroupSelect(grok.View):
