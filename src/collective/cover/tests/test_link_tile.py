@@ -57,11 +57,10 @@ class LinkTileTestCase(unittest.TestCase):
 
     @unittest.expectedFailure
     def test_alt_atribute_present_in_image(self):
-        """See: https://github.com/collective/collective.cover/issues/182
+        """Object's title must be displayed in image alt attribute.
+        See: https://github.com/collective/collective.cover/issues/182
         """
         obj = self.portal['my-link']
         self.tile.populate_with_object(obj)
-        # XXX: by default, link tile does not populates image field on
-        #      drag&drop
         rendered = self.tile()
-        self.assertIn("alt='Alternate Text'", rendered)
+        self.assertIn('alt="Test link"', rendered)
