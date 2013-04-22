@@ -52,7 +52,8 @@
                tal:attributes="src thumbnail/url;
                                width thumbnail/width;
                                height thumbnail/height;
-                               class position;" />
+                               class position;
+                               alt view/data/title" />
         </a>
       </tal:image>
 
