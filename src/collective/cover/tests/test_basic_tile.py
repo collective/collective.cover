@@ -121,6 +121,21 @@ class BasicTileTestCase(unittest.TestCase):
         self.assertIn('subject1', rendered)
         self.assertIn('subject2', rendered)
 
+    @unittest.expectedFailure
+    def test_alt_atribute_present_in_image(self):
+        """See: https://github.com/collective/collective.cover/issues/182
+        """
+        obj = self.portal['my-news-item']
+        obj.setImage(generate_jpeg(128, 128))
+        # XXX: if the object dragged on the tile is a News Item we use it's
+        #      image field and we can also use it's caption; we need to think
+        #      about other cases
+        obj.setImageCaption('Test Caption')
+        obj.reindexObject()
+        self.tile.populate_with_object(obj)
+        rendered = self.tile()
+        self.assertIn("alt='Alternate Text'", rendered)
+
     def test_delete_tile_persistent_data(self):
         permissions = getMultiAdapter(
             (self.tile.context, self.request, self.tile), ITilesPermissions)
