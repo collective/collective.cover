@@ -20,11 +20,7 @@ from zope.interface import Interface
 from zope.schema.interfaces import IVocabularyFactory
 from zope.schema.vocabulary import SimpleTerm
 
-try:
-    import json
-    json = json  # Pyflakes
-except ImportError:
-    import simplejson as json
+import json
 
 VOCAB_ID = u'plone.app.vocabularies.ReallyUserFriendlyTypes'
 
