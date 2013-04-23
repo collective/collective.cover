@@ -27,6 +27,9 @@ VOCAB_ID = u'plone.app.vocabularies.ReallyUserFriendlyTypes'
 grok.templatedir("contentchooser_templates")
 
 
+# XXX: what's the purpose of this view?
+#      why is here if it's intendes for tests?
+#      can we get rid of it?
 class TestContent(grok.View):
     """
     test contentchooser for selecting
