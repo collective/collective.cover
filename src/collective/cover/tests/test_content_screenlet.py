@@ -6,11 +6,8 @@ import re
 from collective.cover.testing import INTEGRATION_TESTING
 from Products.CMFCore.utils import getToolByName
 from zope.component import getMultiAdapter
-try:
-    import json
-    json = json  # Pyflakes
-except ImportError:
-    import simplejson as json
+
+import json
 
 
 class LinkTileTestCase(unittest.TestCase):
