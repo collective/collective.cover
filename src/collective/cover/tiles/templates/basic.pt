@@ -40,10 +40,10 @@
           </h4>
       </tal:title>
 
-      <tal:image condition="python:field['id'] == 'image' and img_obj"
-      			 define="scale python:field.get('scale', 'large');
-      			         position python:field.get('position', '');
-      			         img_obj view/img_obj;">
+      <tal:image define="position python:field.get('position', '');
+      			         img_obj view/img_obj;
+      			         scale view/img_scale;"
+      			 condition="python:field['id'] == 'image' and img_obj">
         <a class="imag" tal:attributes="href view/getURL;
                                         title description;">
           <img tal:define="scales img_obj/@@images;
