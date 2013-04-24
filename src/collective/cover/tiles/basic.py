@@ -119,6 +119,13 @@ class BasicTile(PersistentCoverTile):
                 return None
         return None
 
+    def img_scale(self):
+        """
+        """
+        conf = self.get_tile_configuration()
+        scale = conf.get('image', {}).get('imgsize', 'large')
+        return scale.split()[0]
+
     def populate_with_object(self, obj):
         super(BasicTile, self).populate_with_object(obj)
 
