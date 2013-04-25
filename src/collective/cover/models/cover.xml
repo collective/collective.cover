@@ -6,7 +6,8 @@
 
     <schema>
 
-        <field name="template_layout" type="zope.schema.Choice"
+        <field name="template_layout" type="zope.schema.Choice" 
+               form:widget="collective.cover.widgets.selectpreview.SelectFieldWidget"
                form:omitted="z3c.form.interfaces.IEditForm:true">
             <description i18n:translate="">
                 Choose one of the predefined layouts
