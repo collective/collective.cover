@@ -12,6 +12,7 @@ from ZODB.POSException import ConflictError
 
 from zope.component import getMultiAdapter
 from zope.component import queryUtility
+from zope.component import getUtility
 
 from zope.event import notify
 
@@ -54,7 +55,6 @@ from collective.cover import _
 from z3c.caching.interfaces import IPurgePaths
 from zope.component import adapts
 from plone.app.uuid.utils import uuidToObject
-
 
 logger = logging.getLogger(PROJECTNAME)
 
@@ -177,6 +177,26 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
 
         return configuration
 
+    def _get_tile_field_names(self):
+        """Return a list of all field names in the order they were defined.
+        """
+        tile_type = getUtility(ITileType, name=self.__name__)
+        fields = [name for name, obj in getFieldsInOrder(tile_type.schema)]
+        return fields
+
+    def _tile_field_is_visible(self, field):
+        """Return boolean according to field's visibility; if field name not
+        among tile fields, raise AttributeError.
+        """
+        if field not in self._get_tile_field_names():
+            raise AttributeError
+
+        tile_config = self.get_tile_configuration()
+        field_config = tile_config[field]
+        assert 'visibility' in field_config  # all fields must have visibility
+
+        return field_config['visibility'] == u'on'
+
     def get_configured_fields(self):
         tileType = queryUtility(ITileType, name=self.__name__)
         conf = self.get_tile_configuration()
@@ -199,6 +219,7 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
             field = {'id': name,
                      'content': content,
                      'title': obj.title}  # XXX: object's title?
+
             if name in conf:
                 field_conf = conf[name]
                 if ('visibility' in field_conf and field_conf['visibility'] == u'off'):
@@ -219,10 +240,20 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
 
             results.append(field)
 
-        self._external_image_configuration(conf, results)
+        # XXX: if tile has an image attribute and it's visible, then...
+        try:
+            if self._tile_field_is_visible('image'):
+                self._external_image_configuration(conf, results)
+        except AttributeError:
+            pass
+
         return results
 
     def _external_image_configuration(self, conf, results):
+        # XXX: we need to explain better what we're trying to do; we were
+        #      including the image field here even if it was set as
+        #      non-visible on the configuration screen, so this was raising a
+        #      ComponentLookupError on line 409, in scale
         if 'image' in self.data and 'uuid' in self.data and \
                 self.data['image'] is None and self.data['uuid']:
             name = 'image'
