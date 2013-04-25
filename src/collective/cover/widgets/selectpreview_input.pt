@@ -1,5 +1,7 @@
 <div xmlns="http://www.w3.org/1999/xhtml"
      xmlns:tal="http://xml.zope.org/namespaces/tal"
+     xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+     i18n:domain="collective.cover"
      tal:omit-tag="">
 <script type="text/javascript" src="++resource++collective.cover/selectlayoutpreview.js"></script>
 <script type="text/javascript" tal:content="structure view/js"></script>
@@ -69,10 +71,10 @@
 </div>
 <div id="layout-preview">
     <fieldset>
-        <legend>Layout Details</legend>
+        <legend i18n:translate="">Layout Details</legend>
         <div class="layout-metadata">
             <h3></h3>
-            <p>No description</p>
+            <p i18n:translate="">No description</p>
         </div>
         <canvas id="canvas-layout" width="300" height="240"></canvas>
     </fieldset>
