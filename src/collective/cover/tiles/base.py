@@ -12,6 +12,7 @@ from ZODB.POSException import ConflictError
 
 from zope.component import getMultiAdapter
 from zope.component import queryUtility
+from zope.component import getUtility
 
 from zope.event import notify
 
@@ -53,6 +54,7 @@ from collective.cover.tiles.permissions import ITilesPermissions
 from collective.cover import _
 from z3c.caching.interfaces import IPurgePaths
 from zope.component import adapts
+from plone.app.uuid.utils import uuidToObject
 
 logger = logging.getLogger(PROJECTNAME)
 
@@ -175,6 +177,26 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
 
         return configuration
 
+    def _get_tile_field_names(self):
+        """Return a list of all field names in the order they were defined.
+        """
+        tile_type = getUtility(ITileType, name=self.__name__)
+        fields = [name for name, obj in getFieldsInOrder(tile_type.schema)]
+        return fields
+
+    def _tile_field_is_visible(self, field):
+        """Return boolean according to field's visibility; if field name not
+        among tile fields, raise AttributeError.
+        """
+        if field not in self._get_tile_field_names():
+            raise AttributeError
+
+        tile_config = self.get_tile_configuration()
+        field_config = tile_config[field]
+        assert 'visibility' in field_config  # all fields must have visibility
+
+        return field_config['visibility'] == u'on'
+
     def get_configured_fields(self):
         tileType = queryUtility(ITileType, name=self.__name__)
         conf = self.get_tile_configuration()
@@ -197,6 +219,7 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
             field = {'id': name,
                      'content': content,
                      'title': obj.title}  # XXX: object's title?
+
             if name in conf:
                 field_conf = conf[name]
                 if ('visibility' in field_conf and field_conf['visibility'] == u'off'):
@@ -210,14 +233,36 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
                     field['htmltag'] = field_conf['htmltag']
 
                 if 'imgsize' in field_conf:
-                    field['scale'] = field_conf['imgsize']
+                    field['scale'] = field_conf['imgsize'].split()[0]
 
                 if 'position' in field_conf:
                     field['position'] = field_conf['position']
 
             results.append(field)
 
+        # XXX: if tile has an image attribute and it's visible, then...
+        try:
+            if self._tile_field_is_visible('image'):
+                self._external_image_configuration(conf, results)
+        except AttributeError:
+            pass
+
         return results
+
+    def _external_image_configuration(self, conf, results):
+        # XXX: we need to explain better what we're trying to do; we were
+        #      including the image field here even if it was set as
+        #      non-visible on the configuration screen, so this was raising a
+        #      ComponentLookupError on line 409, in scale
+        if 'image' in self.data and 'uuid' in self.data and \
+                self.data['image'] is None and self.data['uuid']:
+            name = 'image'
+            scale = 'large'
+            if name in conf:
+                field_conf = conf[name]
+                scale = field_conf['imgsize'].split()[0]
+            results.append({'id': name,
+                            'scale': scale})
 
     def setAllowedGroupsForEdit(self, groups):
         permissions = getMultiAdapter((self.context, self.request, self),
@@ -304,6 +349,14 @@ class ImageScale(BaseImageScale):
 class ImageScaling(BaseImageScaling):
     """ view used for generating (and storing) image scales """
 
+    def __init__(self, context, request, **info):
+        tile_data = context.data
+        if tile_data.get('image') not in (None, True):
+            self.context = context
+        elif tile_data.get('uuid') is not None:
+            self.context = uuidToObject(tile_data.get('uuid'))
+        self.request = request
+
     def publishTraverse(self, request, name):
         """ used for traversal via publisher, i.e. when using as a url """
         stack = request.get('TraversalRequestNameStack')
@@ -336,6 +389,9 @@ class ImageScaling(BaseImageScaling):
     def create(self, fieldname, direction='thumbnail',
                height=None, width=None, **parameters):
         """ factory for image scales, see `IImageScaleStorage.scale` """
+        if not IPersistentCoverTile.providedBy(self.context):
+            base_scales = getMultiAdapter((self.context, self.request), name='images')
+            return base_scales.create(fieldname, direction, height, width, **parameters)
         orig_value = self.context.data.get(fieldname)
         if orig_value is None:
             return
@@ -368,6 +424,9 @@ class ImageScaling(BaseImageScaling):
     def modified(self):
         """ provide a callable to return the modification time of content
             items, so stored image scales can be invalidated """
+        if not IPersistentCoverTile.providedBy(self.context):
+            base_scales = getMultiAdapter((self.context, self.request), name='images')
+            return base_scales.modified()
         mtime = ''
         for k, v in self.context.data.items():
             if INamedImage.providedBy(v):
@@ -377,6 +436,12 @@ class ImageScaling(BaseImageScaling):
 
     def scale(self, fieldname=None, scale=None,
               height=None, width=None, **parameters):
+        if not IPersistentCoverTile.providedBy(self.context):
+            base_scales = getMultiAdapter((self.context, self.request), name='images')
+            try:
+                return base_scales.scale(fieldname, scale, height, width, **parameters)
+            except AttributeError:
+                return
         if fieldname is None:
             fieldname = IPrimaryFieldInfo(self.context).fieldname
         if scale is not None:
@@ -413,7 +478,7 @@ class PersistentCoverTilePurgePaths(object):
         for _, v in context.data.items():
             if INamedImage.providedBy(v):
                 yield "%s/@@images/image" % prefix
-                scales = aq_parent(context).restrictedTraverse(prefix + '/@@images')
+                scales = aq_parent(context).unrestrictedTraverse(prefix.strip('/') + '/@@images')
                 for size in scales.getAvailableSizes().keys():
                     yield "%s/@@images/%s" % (prefix, size,)
 
