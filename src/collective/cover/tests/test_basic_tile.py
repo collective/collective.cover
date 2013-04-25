@@ -80,6 +80,21 @@ class BasicTileTestCase(unittest.TestCase):
         self.assertEqual('This news item was created for testing purposes',
                          self.tile.data['description'])
 
+    def test_populate_with_object_unicode(self):
+        """We must store unicode always on schema.TextLine and schema.Text
+        fields to avoid UnicodeDecodeError. We could avoid this duplicate
+        this test if we create our test fixture content using unicode.
+        """
+        title = u"Pangrama en español"
+        description = u"El veloz murciélago hindú comía feliz cardillo y kiwi"
+        obj = self.portal['my-news-item']
+        obj.setTitle(title)
+        obj.setDescription(description)
+        obj.reindexObject()
+        self.tile.populate_with_object(obj)
+        self.assertEqual(title, self.tile.data['title'])
+        self.assertEqual(description, self.tile.data['description'])
+
     def test_render_empty(self):
         self.assertIn(
             "Please drag&amp;drop some content here to populate the tile.",

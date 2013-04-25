@@ -12,6 +12,7 @@ from plone.uuid.interfaces import IUUID
 from plone.autoform import directives as form
 
 from Products.CMFCore.utils import getToolByName
+from Products.CMFPlone.utils import safe_unicode
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
 from collective.cover import _
@@ -127,8 +128,8 @@ class BasicTile(PersistentCoverTile):
         # really care about their value: they came directly from the catalog
         # brain
         data = {
-            'title': obj.Title(),
-            'description': obj.Description(),
+            'title': safe_unicode(obj.Title()),
+            'description': safe_unicode(obj.Description()),
             'uuid': IUUID(obj, None),  # XXX: can we get None here? see below
             'date': True,
             'subjects': True,
