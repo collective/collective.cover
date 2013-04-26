@@ -139,13 +139,13 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
         data_mgr.delete()
 
         # Remove permission data
-        permissions = getMultiAdapter((self.context, self.request, self),
-                                      ITilesPermissions)
+        permissions = getMultiAdapter(
+            (self.context, self.request, self), ITilesPermissions)
         permissions.delete()
 
         # Remove configuration data
-        configuration = getMultiAdapter((self.context, self.request, self),
-                                        ITilesConfigurationScreen)
+        configuration = getMultiAdapter(
+            (self.context, self.request, self), ITilesConfigurationScreen)
         configuration.delete()
 
         notify(ObjectModifiedEvent(self.context))
@@ -157,41 +157,34 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
         return None  # all content types accepted by default
 
     def get_tile_configuration(self):
-        tile_conf_adapter = getMultiAdapter((self.context, self.request, self),
-                                            ITilesConfigurationScreen)
-
+        tile_conf_adapter = getMultiAdapter(
+            (self.context, self.request, self), ITilesConfigurationScreen)
         configuration = tile_conf_adapter.get_configuration()
 
         return configuration
 
     def _get_tile_field_names(self):
-        """Return a list of all field names in the order they were defined.
+        """Return a list of all the field names in the tile in schema order.
         """
         tile_type = getUtility(ITileType, name=self.__name__)
-        fields = [name for name, obj in getFieldsInOrder(tile_type.schema)]
-        return fields
+
+        return getFieldNamesInOrder(tile_type.schema)
 
     def _tile_field_is_visible(self, field):
-        """Return boolean according to field's visibility; if field name not
-        among tile fields, raise AttributeError.
+        """Return boolean according to the field visibility.
         """
-        if field not in self._get_tile_field_names():
-            raise AttributeError
-
         tile_config = self.get_tile_configuration()
         field_config = tile_config[field]
-        assert 'visibility' in field_config  # all fields must have visibility
 
         return field_config['visibility'] == u'on'
 
     def get_configured_fields(self):
         tileType = queryUtility(ITileType, name=self.__name__)
         conf = self.get_tile_configuration()
-
         fields = getFieldsInOrder(tileType.schema)
 
         results = []
-        for name, obj in fields:
+        for name, field in fields:
             if not self.data[name]:
                 # If there's no data for this field, ignore it
                 continue
@@ -203,9 +196,7 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
             else:
                 content = self.data[name]
 
-            field = {'id': name,
-                     'content': content,
-                     'title': obj.title}  # XXX: object's title?
+            field = {'id': name, 'content': content, 'title': field.title}
 
             if name in conf:
                 field_conf = conf[name]
@@ -227,12 +218,11 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
 
             results.append(field)
 
-        # XXX: if tile has an image attribute and it's visible, then...
-        try:
-            if self._tile_field_is_visible('image'):
-                self._external_image_configuration(conf, results)
-        except AttributeError:
-            pass
+        # if tile has an image field and it's visible, then...
+        names = self._get_tile_field_names()
+        if 'image' in names and self._tile_field_is_visible('image'):
+            # XXX: we need to fix this
+            self._external_image_configuration(conf, results)
 
         return results
 
@@ -252,13 +242,13 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
                             'scale': scale})
 
     def setAllowedGroupsForEdit(self, groups):
-        permissions = getMultiAdapter((self.context, self.request, self),
-                                      ITilesPermissions)
+        permissions = getMultiAdapter(
+            (self.context, self.request, self), ITilesPermissions)
         permissions.set_allowed_edit(groups)
 
     def getAllowedGroupsForEdit(self):
-        permissions = getMultiAdapter((self.context, self.request, self),
-                                      ITilesPermissions)
+        permissions = getMultiAdapter(
+            (self.context, self.request, self), ITilesPermissions)
         groups = permissions.get_allowed_edit()
 
         return groups
@@ -284,6 +274,7 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
         return allowed
 
 
+# XXX: these are views, we should move it away from this module
 # Image scale support for tile images
 
 class AnnotationStorage(BaseAnnotationStorage):
@@ -397,8 +388,9 @@ class ImageScaling(BaseImageScaling):
         except (ConflictError, KeyboardInterrupt):
             raise
         except Exception:
-            exception('could not scale "%r" of %r',
-                      orig_value, self.context.context.absolute_url())
+            logging.exception(
+                'could not scale "%r" of %r',
+                orig_value, self.context.context.absolute_url())
             return
         if result is not None:
             data, format, dimensions = result
@@ -412,7 +404,8 @@ class ImageScaling(BaseImageScaling):
         """ provide a callable to return the modification time of content
             items, so stored image scales can be invalidated """
         if not IPersistentCoverTile.providedBy(self.context):
-            base_scales = getMultiAdapter((self.context, self.request), name='images')
+            base_scales = getMultiAdapter(
+                (self.context, self.request), name='images')
             return base_scales.modified()
         mtime = ''
         for k, v in self.context.data.items():
@@ -424,7 +417,8 @@ class ImageScaling(BaseImageScaling):
     def scale(self, fieldname=None, scale=None,
               height=None, width=None, **parameters):
         if not IPersistentCoverTile.providedBy(self.context):
-            base_scales = getMultiAdapter((self.context, self.request), name='images')
+            base_scales = getMultiAdapter(
+                (self.context, self.request), name='images')
             try:
                 return base_scales.scale(fieldname, scale, height, width, **parameters)
             except AttributeError:
@@ -457,8 +451,8 @@ class PersistentCoverTilePurgePaths(object):
 
     def getRelativePaths(self):
         context = self.context.aq_inner
-        portal_state = getMultiAdapter((context, context.request),
-                                       name=u'plone_portal_state')
+        portal_state = getMultiAdapter(
+            (context, context.request), name=u'plone_portal_state')
         prefix = context.url.replace(portal_state.portal_url(), '', 1)
 
         yield prefix
