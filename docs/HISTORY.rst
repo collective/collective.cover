@@ -6,6 +6,9 @@ Because you have to know where your towel is.
 1.0a3 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Apply default configuration to tiles at initialization (closes `#100`_).
+  [hvelarde]
+
 - Store basic tile data in unicode format to avoid UnicodeDecodeError.
   [hvelarde]
 
@@ -89,6 +92,7 @@ Because you have to know where your towel is.
 
 .. _`PloneFormGen`: https://pypi.python.org/pypi/Products.PloneFormGen
 .. _`#48`: https://github.com/collective/collective.cover/issues/48
+.. _`#100`: https://github.com/collective/collective.cover/issues/100
 .. _`#114`: https://github.com/collective/collective.cover/issues/114
 .. _`#121`: https://github.com/collective/collective.cover/issues/121
 .. _`#123`: https://github.com/collective/collective.cover/issues/123
