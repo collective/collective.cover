@@ -21,6 +21,8 @@ class CollectionTileTestCase(unittest.TestCase):
         self.request = self.layer['request']
         self.cover = self.portal['frontpage']
         self.tile = CollectionTile(self.cover, self.request)
+        # XXX: tile initialization
+        self.tile.__name__ = 'collective.cover.collection'
 
     def test_interface(self):
         self.assertTrue(IPersistentCoverTile.implementedBy(CollectionTile))
