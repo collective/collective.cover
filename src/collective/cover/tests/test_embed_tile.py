@@ -19,6 +19,8 @@ class EmbedTileTestCase(unittest.TestCase):
         self.request = self.layer['request']
         self.cover = self.portal['frontpage']
         self.tile = EmbedTile(self.cover, self.request)
+        # XXX: tile initialization
+        self.tile.__name__ = 'collective.cover.embed'
 
     def test_interface(self):
         self.assertTrue(IPersistentCoverTile.implementedBy(EmbedTile))
