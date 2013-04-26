@@ -192,7 +192,7 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
             raise AttributeError
 
         tile_config = self.get_tile_configuration()
-        field_config = tile_config[field]
+        field_config = tile_config.get(field, [])
         assert 'visibility' in field_config  # all fields must have visibility
 
         return field_config['visibility'] == u'on'
@@ -240,12 +240,7 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
 
             results.append(field)
 
-        # XXX: if tile has an image attribute and it's visible, then...
-        try:
-            if self._tile_field_is_visible('image'):
-                self._external_image_configuration(conf, results)
-        except AttributeError:
-            pass
+        self._external_image_configuration(conf, results)
 
         return results
 
@@ -254,6 +249,13 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
         #      including the image field here even if it was set as
         #      non-visible on the configuration screen, so this was raising a
         #      ComponentLookupError on line 409, in scale
+
+        # XXX: if tile has an image attribute and it's visible, then...
+        try:
+            if not self._tile_field_is_visible('image'):
+                return
+        except (AttributeError, AssertionError):
+            return
         if 'image' in self.data and 'uuid' in self.data and \
                 self.data['image'] is None and self.data['uuid']:
             name = 'image'
