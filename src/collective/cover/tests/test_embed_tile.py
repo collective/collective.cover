@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 
-import unittest2 as unittest
-
+from collective.cover.testing import INTEGRATION_TESTING
+from collective.cover.tiles.base import IPersistentCoverTile
+from collective.cover.tiles.embed import EmbedTile
 from zope.interface.verify import verifyClass
 from zope.interface.verify import verifyObject
 
-from collective.cover.testing import INTEGRATION_TESTING
-from collective.cover.tiles.embed import EmbedTile
-from collective.cover.tiles.base import IPersistentCoverTile
+import unittest
 
 
 class EmbedTileTestCase(unittest.TestCase):
