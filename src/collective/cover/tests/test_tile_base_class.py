@@ -1,18 +1,17 @@
 # -*- coding: utf-8 -*-
 
-import unittest2 as unittest
-
+from collective.cover.testing import INTEGRATION_TESTING
+from collective.cover.tiles.base import IPersistentCoverTile
+from collective.cover.tiles.base import PersistentCoverTile
+from cStringIO import StringIO
+from plone.tiles.interfaces import IPersistentTile
+from plone.tiles.interfaces import ITileDataManager
 from zope.component import eventtesting
-
+from zope.configuration.xmlconfig import xmlconfig
 from zope.interface.verify import verifyClass
 from zope.interface.verify import verifyObject
 
-from plone.tiles.interfaces import IPersistentTile
-from plone.tiles.interfaces import ITileDataManager
-
-from collective.cover.testing import INTEGRATION_TESTING
-from collective.cover.tiles.base import PersistentCoverTile
-from collective.cover.tiles.base import IPersistentCoverTile
+import unittest
 
 ZCML = """
 <configure

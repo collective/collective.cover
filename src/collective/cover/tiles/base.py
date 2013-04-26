@@ -3,58 +3,45 @@
 # Basic implementation taken from
 # http://davisagli.com/blog/using-tiles-to-provide-more-flexible-plone-layouts
 
-import logging
-
-from logging import exception
 from AccessControl import Unauthorized
-from Acquisition import aq_base, aq_parent
-from ZODB.POSException import ConflictError
-
-from zope.component import getMultiAdapter
-from zope.component import queryUtility
-from zope.component import getUtility
-
-from zope.event import notify
-
-from zope.interface import implements
-from zope.interface import Interface
-
-from zope.lifecycleevent import ObjectModifiedEvent
-
-from zope.schema import getFieldsInOrder
-
-from zope.annotation import IAnnotations
-from persistent.dict import PersistentDict
-from zope.publisher.interfaces import NotFound
-
-from plone import tiles
-from plone.tiles.esi import ESITile
-
-from plone.app.textfield.interfaces import ITransformer
-from plone.app.textfield.value import RichTextValue
-
-from plone.tiles.interfaces import ITileType
-
-from plone.tiles.interfaces import ITileDataManager
-
-from plone.scale.scale import scaleImage
-from plone.scale.storage import AnnotationStorage as BaseAnnotationStorage
-from plone.namedfile.scaling import ImageScale as BaseImageScale
-from plone.namedfile.scaling import ImageScaling as BaseImageScaling
-from plone.namedfile.utils import set_headers, stream_data
-from plone.namedfile.interfaces import INamedImage
-from plone.rfc822.interfaces import IPrimaryFieldInfo
-
-from Products.CMFCore.utils import getToolByName
-
+from Acquisition import aq_base
+from Acquisition import aq_parent
+from collective.cover import _
 from collective.cover.config import PROJECTNAME
 from collective.cover.tiles.configuration import ITilesConfigurationScreen
 from collective.cover.tiles.permissions import ITilesPermissions
-
-from collective.cover import _
-from z3c.caching.interfaces import IPurgePaths
-from zope.component import adapts
+from persistent.dict import PersistentDict
+from plone import tiles
+from plone.app.textfield.interfaces import ITransformer
+from plone.app.textfield.value import RichTextValue
 from plone.app.uuid.utils import uuidToObject
+from plone.namedfile.interfaces import INamedImage
+from plone.namedfile.scaling import ImageScale as BaseImageScale
+from plone.namedfile.scaling import ImageScaling as BaseImageScaling
+from plone.namedfile.utils import set_headers, stream_data
+from plone.rfc822.interfaces import IPrimaryFieldInfo
+from plone.scale.scale import scaleImage
+from plone.scale.storage import AnnotationStorage as BaseAnnotationStorage
+from plone.tiles.esi import ESITile
+from plone.tiles.interfaces import ITileDataManager
+from plone.tiles.interfaces import ITileType
+from Products.CMFCore.utils import getToolByName
+from z3c.caching.interfaces import IPurgePaths
+from ZODB.POSException import ConflictError
+from zope.annotation import IAnnotations
+from zope.component import adapts
+from zope.component import getMultiAdapter
+from zope.component import getUtility
+from zope.component import queryUtility
+from zope.event import notify
+from zope.interface import implements
+from zope.interface import Interface
+from zope.lifecycleevent import ObjectModifiedEvent
+from zope.publisher.interfaces import NotFound
+from zope.schema import getFieldNamesInOrder
+from zope.schema import getFieldsInOrder
+
+import logging
 
 logger = logging.getLogger(PROJECTNAME)
 
