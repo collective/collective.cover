@@ -8,11 +8,6 @@ from zope.interface.verify import verifyClass
 from zope.interface.verify import verifyObject
 
 import unittest
-from plone.uuid.interfaces import IUUID
-
-from collective.cover.testing import INTEGRATION_TESTING
-from collective.cover.tiles.collection import CollectionTile
-from collective.cover.tiles.base import IPersistentCoverTile
 from plone.app.testing import TEST_USER_ID
 from plone.app.testing import TEST_USER_NAME
 from plone.app.testing import login
