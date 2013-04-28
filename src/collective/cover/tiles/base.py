@@ -15,7 +15,7 @@ from plone import tiles
 from plone.app.textfield.interfaces import ITransformer
 from plone.app.textfield.value import RichTextValue
 from plone.app.uuid.utils import uuidToObject
-from plone.namedfile.interfaces import INamedImage
+from plone.namedfile.interfaces import INamedImage, INamedImageField
 from plone.namedfile.scaling import ImageScale as BaseImageScale
 from plone.namedfile.scaling import ImageScaling as BaseImageScaling
 from plone.namedfile.utils import set_headers, stream_data
@@ -185,8 +185,11 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
 
         results = []
         for name, field in fields:
-            if not self.data[name]:
+            if not self.data[name] and \
+               (INamedImageField.providedBy(field) and not self.data.get('uuid')):
                 # If there's no data for this field, ignore it
+                # special condition, if the field is an image field and
+                # there is no uuid, then ignore it too
                 continue
 
             if isinstance(self.data[name], RichTextValue):
@@ -218,28 +221,7 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
 
             results.append(field)
 
-        # if tile has an image field and it's visible, then...
-        names = self._get_tile_field_names()
-        if 'image' in names and self._tile_field_is_visible('image'):
-            # XXX: we need to fix this
-            self._external_image_configuration(conf, results)
-
         return results
-
-    def _external_image_configuration(self, conf, results):
-        # XXX: we need to explain better what we're trying to do; we were
-        #      including the image field here even if it was set as
-        #      non-visible on the configuration screen, so this was raising a
-        #      ComponentLookupError on line 409, in scale
-        if 'image' in self.data and 'uuid' in self.data and \
-                self.data['image'] is None and self.data['uuid']:
-            name = 'image'
-            scale = 'large'
-            if name in conf:
-                field_conf = conf[name]
-                scale = field_conf['imgsize'].split()[0]
-            results.append({'id': name,
-                            'scale': scale})
 
     def setAllowedGroupsForEdit(self, groups):
         permissions = getMultiAdapter(
