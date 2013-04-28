@@ -9,8 +9,8 @@ Because you have to know where your towel is.
 - Apply default configuration to tiles at initialization (closes `#100`_).
   [hvelarde]
 
-- Store basic tile data in unicode format to avoid UnicodeDecodeError.
-  [hvelarde]
+- Store basic tile data in unicode format to avoid UnicodeDecodeError
+  (closes `#144`_). [hvelarde]
 
 - A new special widgect for the cover creation and layout selection was added;
   the widget draws a preview of the layout in real time using an HTML5 canvas
@@ -101,6 +101,7 @@ Because you have to know where your towel is.
 .. _`#129`: https://github.com/collective/collective.cover/issues/129
 .. _`#137`: https://github.com/collective/collective.cover/issues/137
 .. _`#142`: https://github.com/collective/collective.cover/issues/142
+.. _`#144`: https://github.com/collective/collective.cover/issues/144
 .. _`#146`: https://github.com/collective/collective.cover/issues/146
 .. _`#152`: https://github.com/collective/collective.cover/issues/152
 .. _`#157`: https://github.com/collective/collective.cover/issues/157
