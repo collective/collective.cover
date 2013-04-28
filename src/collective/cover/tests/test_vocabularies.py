@@ -46,10 +46,10 @@ class VocabulariesTestCase(unittest.TestCase):
         #self.assertIn(u'plone.app.imagetile', tiles)
         #self.assertIn(u'plone.app.texttile', tiles)
 
-    def test_user_friendly_types_vocabulary(self):
+    def test_available_content_types_vocabulary(self):
         name = u'collective.cover.AvailableContentTypes'
         vocabulary = queryUtility(IVocabularyFactory, name)
         self.assertIsNotNone(vocabulary)
-        friendly_types = vocabulary(self.portal)
-        self.assertTrue(len(friendly_types) > 0)
-        self.assertNotInIn(u'collective.cover.content', friendly_types)
+        available_content_types = vocabulary(self.portal)
+        self.assertTrue(len(available_content_types) > 0)
+        self.assertNotIn(u'collective.cover.content', available_content_types)
