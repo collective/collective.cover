@@ -62,6 +62,11 @@ class RegistryTestCase(unittest.TestCase):
         self.assertTrue(hasattr(self.settings, 'layouts'))
         self.assertNotEqual(self.settings.layouts, None)
 
+    def test_available_tiles_record_in_registry(self):
+        self.assertTrue(hasattr(self.settings, 'available_tiles'))
+        self.assertListEqual(
+            self.settings.available_tiles, DEFAULT_AVAILABLE_TILES)
+
     def test_searchable_content_types_record_in_registry(self):
         self.assertTrue(hasattr(self.settings, 'searchable_content_types'))
         self.assertListEqual(self.settings.searchable_content_types,
@@ -75,6 +80,7 @@ class RegistryTestCase(unittest.TestCase):
         BASE_REGISTRY = 'collective.cover.controlpanel.ICoverSettings.%s'
         records = [
             BASE_REGISTRY % 'layouts',
+            BASE_REGISTRY % 'available_tiles',
             BASE_REGISTRY % 'searchable_content_types',
         ]
 

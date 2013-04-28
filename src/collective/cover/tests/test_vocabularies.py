@@ -46,6 +46,28 @@ class VocabulariesTestCase(unittest.TestCase):
         #self.assertIn(u'plone.app.imagetile', tiles)
         #self.assertIn(u'plone.app.texttile', tiles)
 
+    def test_enabled_tiles_vocabulary(self):
+        name = u'collective.cover.EnabledTiles'
+        vocabulary = queryUtility(IVocabularyFactory, name)
+        self.assertIsNotNone(vocabulary)
+        tiles = vocabulary(self.portal)
+        self.assertEqual(len(tiles), 11)
+        self.assertIn(u'collective.cover.basic', tiles)
+        self.assertIn(u'collective.cover.carousel', tiles)
+        self.assertIn(u'collective.cover.collection', tiles)
+        self.assertIn(u'collective.cover.contentbody', tiles)
+        self.assertIn(u'collective.cover.embed', tiles)
+        self.assertIn(u'collective.cover.file', tiles)
+        self.assertIn(u'collective.cover.image', tiles)
+        self.assertIn(u'collective.cover.link', tiles)
+        self.assertIn(u'collective.cover.list', tiles)
+        self.assertIn(u'collective.cover.pfg', tiles)
+        self.assertIn(u'collective.cover.richtext', tiles)
+
+        # standard tiles are not enabled... yet
+        self.assertNotIn(u'plone.app.imagetile', tiles)
+        self.assertNotIn(u'plone.app.texttile', tiles)
+
     def test_available_content_types_vocabulary(self):
         name = u'collective.cover.AvailableContentTypes'
         vocabulary = queryUtility(IVocabularyFactory, name)

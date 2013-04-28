@@ -2,6 +2,21 @@
 
 PROJECTNAME = 'collective.cover'
 
+# by default, all cover tiles will be available on layouts
+DEFAULT_AVAILABLE_TILES = [
+    'collective.cover.basic',
+    'collective.cover.carousel',
+    'collective.cover.collection',
+    'collective.cover.contentbody',
+    'collective.cover.embed',
+    'collective.cover.file',
+    'collective.cover.image',
+    'collective.cover.link',
+    'collective.cover.list',
+    'collective.cover.pfg',
+    'collective.cover.richtext',
+]
+
 # by default, all standard content types will be searchable
 DEFAULT_SEARCHABLE_CONTENT_TYPES = [
     'Collection',
