@@ -74,7 +74,8 @@ Save Cover Layout
     Page Should Contain  Saved
 
 Add Tile
-    Drag And Drop  css=${tile_button_selector}  css=${tile_drop_area_selector}
+    [arguments]  ${tile}
+    Drag And Drop  xpath=//a[contains(@data-tile-type, ${tile})]  css=${tile_drop_area_selector}
 
 
 Select Tile to Add
