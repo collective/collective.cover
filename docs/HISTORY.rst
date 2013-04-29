@@ -6,6 +6,9 @@ Because you have to know where your towel is.
 1.0a3 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Add upgrade step to rename resources in CSS and JS registries
+  (fixes `#171`_). [hvelarde]
+
 - An option in the control panel configlet was added in order to select the
   tiles that will be available for cover layout creation; an upgrade step
   is provided to update the registry with the new record (closes `#191`_).
@@ -32,6 +35,7 @@ Because you have to know where your towel is.
 
 - Fixed a bug with Plone 4.3 that avoided TinyMCE being displayed for 
   RichText. (closes `#157`_). [ericof]
+
 
 1.0a2 (2013-04-09)
 ^^^^^^^^^^^^^^^^^^
@@ -111,5 +115,6 @@ Because you have to know where your towel is.
 .. _`#152`: https://github.com/collective/collective.cover/issues/152
 .. _`#157`: https://github.com/collective/collective.cover/issues/157
 .. _`#158`: https://github.com/collective/collective.cover/issues/158
+.. _`#171`: https://github.com/collective/collective.cover/issues/171
 .. _`#179`: https://github.com/collective/collective.cover/issues/179
 .. _`#191`: https://github.com/collective/collective.cover/issues/191
