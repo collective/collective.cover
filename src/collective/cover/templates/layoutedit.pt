@@ -37,6 +37,7 @@
 </metal:styles>
 
 <metal:main fill-slot="main">
+  <tal:block tal:define="can_export_layout view/can_export_layout">
     <div id="sidebar">
         <ul class="layout-actions">
             <li>
@@ -56,7 +57,7 @@
     <div id="tile-select-list" class="modal hide" tal:replace="structure context/@@tile_select"></div>
     <div id="group-select-list" class="modal hide" tal:replace="structure context/@@group_select"></div>
     <div id="tile-configure" class="modal hide"></div>
-    <div id="export-layout" class="modal hide">
+    <div id="export-layout" class="modal hide" tal:condition="can_export_layout">
       <form action="." tal:attributes="action request/URL" method="post"
           enctype="multipart/form-data">
 
@@ -67,9 +68,10 @@
       </form>
     </div>
     <div class="navbar">
-      <a id="btn-export" class="btn btn-info"><i class="icon-white icon-circle-arrow-up"></i><span i18n:translate="">Export layout</span></a>
-      <a id="btn-save" class="btn btn-success saved"><i class="icon-white icon-hdd"></i><span i18n:translate="">Saved</span></a>
+      <a id="btn-export" class="btn btn-info" tal:condition="can_export_layout"><span i18n:translate="">Export layout</span></a>
+      <a id="btn-save" class="btn btn-success saved"><span i18n:translate="">Saved</span></a>
     </div>
+  </tal:block>
 </metal:main>
 
 </body>

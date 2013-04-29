@@ -29,6 +29,7 @@ class CoverIntegrationTestCase(unittest.TestCase):
         self.folder.invokeFactory('collective.cover.content', 'c1',
                                   template_layout='Layout A')
         self.c1 = self.folder['c1']
+        self.layout_edit = self.c1.restrictedTraverse('layoutedit')
 
     def test_adding(self):
         self.assertTrue(ICover.providedBy(self.c1))
@@ -63,3 +64,9 @@ class CoverIntegrationTestCase(unittest.TestCase):
     def test_cover_selectable_as_folder_default_view(self):
         self.folder.setDefaultPage('c1')
         self.assertEqual(self.folder.default_page, 'c1')
+
+    def test_export_permission(self):
+        setRoles(self.portal, TEST_USER_ID, ['Manager'])
+        self.assertTrue(self.layout_edit.can_export_layout())
+        setRoles(self.portal, TEST_USER_ID, ['Member'])
+        self.assertFalse(self.layout_edit.can_export_layout())
