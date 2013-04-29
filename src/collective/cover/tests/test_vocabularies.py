@@ -40,6 +40,7 @@ class VocabulariesTestCase(unittest.TestCase):
         self.assertIn(u'collective.cover.image', tiles)
         self.assertIn(u'collective.cover.link', tiles)
         self.assertIn(u'collective.cover.list', tiles)
+        # FIXME see: https://github.com/collective/collective.cover/issues/194
         self.assertIn(u'collective.cover.pfg', tiles)
         self.assertIn(u'collective.cover.richtext', tiles)
         # XXX: https://github.com/collective/collective.cover/issues/81
@@ -61,6 +62,7 @@ class VocabulariesTestCase(unittest.TestCase):
         self.assertIn(u'collective.cover.image', tiles)
         self.assertIn(u'collective.cover.link', tiles)
         self.assertIn(u'collective.cover.list', tiles)
+        # FIXME see: https://github.com/collective/collective.cover/issues/194
         self.assertIn(u'collective.cover.pfg', tiles)
         self.assertIn(u'collective.cover.richtext', tiles)
 

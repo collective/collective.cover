@@ -13,7 +13,6 @@ DEFAULT_AVAILABLE_TILES = [
     'collective.cover.image',
     'collective.cover.link',
     'collective.cover.list',
-    'collective.cover.pfg',
     'collective.cover.richtext',
 ]
 
