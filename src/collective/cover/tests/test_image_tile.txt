@@ -10,7 +10,7 @@ Suite Teardown  Close Browser
 
 *** Variables ***
 
-${image_tile_location}  /html/body/div/div[2]/div/div[2]/div[2]/div[3]/div[7]
+${image_tile_location}  'collective.cover.image'
 ${image_uuid}  12345
 ${image_selector}  .ui-draggable .contenttype-image
 ${tile_selector}  div.tile-container div.tile
@@ -22,8 +22,7 @@ Test image Tile
     Create Cover  Title  Description  Empty layout
     Click Link  link=Layout
 
-    Add Tile
-    Select Tile to Add  ${image_tile_location}
+    Add Tile  ${image_tile_location}
     Save Cover Layout
 
     Click Link  link=Compose
