@@ -10,14 +10,14 @@ from zope.component import getUtility
 import unittest
 
 
-class UpgradeStepsTestCase(unittest.TestCase):
+class Upgrade2to3TestCase(unittest.TestCase):
 
     layer = INTEGRATION_TESTING
 
     def setUp(self):
         self.portal = self.layer['portal']
 
-    def test_from_2_to_3(self):
+    def test_register_available_tiles_record(self):
         registry = getUtility(IRegistry)
         record = 'collective.cover.controlpanel.ICoverSettings.available_tiles'
 
