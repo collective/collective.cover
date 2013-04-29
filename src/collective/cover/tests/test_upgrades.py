@@ -22,18 +22,20 @@ class Upgrade2to3TestCase(unittest.TestCase):
         record = 'collective.cover.controlpanel.ICoverSettings.available_tiles'
 
         eventtesting.setUp()
+
         # calling the handler here should have no effect as we are running the
         # latest profile version
+        eventtesting.clearEvents()
         register_available_tiles_record(self.portal)
         events = eventtesting.getEvents(IRecordAddedEvent)
         self.assertEqual(len(events), 0)
-        eventtesting.clearEvents()
 
         # now we delete the record and rerun the handler to verify the record
         # was added
         del registry.records[record]
+        eventtesting.clearEvents()
         register_available_tiles_record(self.portal)
         events = eventtesting.getEvents(IRecordAddedEvent)
-        self.assertEqual(len(events), 1)
+        self.assertNotEqual(len(events), 0)
         self.assertIn(record, registry.records)
         eventtesting.clearEvents()
