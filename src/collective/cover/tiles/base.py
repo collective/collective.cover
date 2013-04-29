@@ -185,8 +185,8 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
 
         results = []
         for name, field in fields:
-            if not self.data[name] and \
-               (INamedImageField.providedBy(field) and not self.data.get('uuid')):
+            if (not INamedImageField.providedBy(field) and not self.data[name]) or \
+               (INamedImageField.providedBy(field) and not self.data[name] and not self.data.get('uuid')):
                 # If there's no data for this field, ignore it
                 # special condition, if the field is an image field and
                 # there is no uuid, then ignore it too
