@@ -6,6 +6,8 @@ Because you have to know where your towel is.
 1.0a3 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Added a custom permission for the export layout funcionality (closes `#177`_).
+
 - The Tile selection functionality (in the layout edit view), was refactored 
   to an explicit D&D UI (closes `#183`_).
 
