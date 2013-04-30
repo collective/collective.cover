@@ -6,6 +6,9 @@ Because you have to know where your towel is.
 1.0a3 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Improve interface and performance of content chooser 
+  (closes `#168`_ and `#169`_). [jpgimenez]
+
 - Store basic tile data in unicode format to avoid UnicodeDecodeError.
   [hvelarde]
 
@@ -101,4 +104,6 @@ Because you have to know where your towel is.
 .. _`#152`: https://github.com/collective/collective.cover/issues/152
 .. _`#157`: https://github.com/collective/collective.cover/issues/157
 .. _`#158`: https://github.com/collective/collective.cover/issues/158
+.. _`#168`: https://github.com/collective/collective.cover/issues/168
+.. _`#169`: https://github.com/collective/collective.cover/issues/169
 .. _`#179`: https://github.com/collective/collective.cover/issues/179
