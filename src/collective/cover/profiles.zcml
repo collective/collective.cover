@@ -51,6 +51,12 @@
       profile="collective.cover:default">
 
       <genericsetup:upgradeStep
+          title="Rename resources"
+          description="Renames the screenlets resources to contentchooser"
+          handler=".upgrades.rename_content_chooser_resources"
+          />
+
+      <genericsetup:upgradeStep
           title="Update registry"
           description="Update the registry to register the available_tiles record"
           handler=".upgrades.register_available_tiles_record"
