@@ -40,7 +40,7 @@ Test content tree tab
     Click Element  css=${folder_selector}
 
     Page Should Contain Element  css=${path_selector}
-	Wait Until Page Contains Element  css=div#content-trees div#internalpath a
+	Wait Until Page Contains Element  css=div#content-trees div#internalpath a  timeout=10
     Page Should Contain  Plone site → my-folder
 
 	# Test searches
@@ -58,24 +58,15 @@ Test content tree tab
     Click Element  css=${folder_selector}
 
     Page Should Contain Element  css=${path_selector}
-	Wait Until Page Contains Element  css=div#content-trees div#internalpath a
+	Wait Until Page Contains Element  css=div#content-trees div#internalpath a  timeout=10
     Page Should Contain  Plone site → my-folder
 
     Input text  name=${input_contenttree}  foo-bar
     Page Should Contain  0 Results
 
-# Changed in the new UI
-#    Click Element  css=#home a
-#
-#    Page Should Contain Element  css=${folder_selector}
-#    Click Element  css=${folder_selector}
-
-# XXX: fix this, debug the timeout problem
-#	 ${orig wait} = 	Set Selenium Implicit Wait 	10 seconds
-#    Page Should Contain Element  css=${path_selector}
-#	 Wait Until Page Contains Element  css=div#content-trees div#internalpath a
-#    Page Should Contain  Plone site → my-folder
-# 	 Set Selenium Implicit Wait 	${orig wait}
+    Page Should Contain Element  css=${path_selector}
+	Wait Until Page Contains Element  css=div#content-trees div#internalpath a  timeout=10
+    Page Should Contain  Plone site → my-folder
 
 	# End test
 	#
