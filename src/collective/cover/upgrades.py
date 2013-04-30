@@ -8,6 +8,39 @@ from zope.component import getUtility
 import logging
 
 
+def rename_content_chooser_resources(context, logger=None):
+    """Handler for upgrade step from 2 to 3; renames the 'screenlets'
+    resources to 'contentchooser'.
+    See: https://github.com/collective/collective.cover/issues/165
+    """
+    if logger is None:
+        logger = logging.getLogger(PROJECTNAME)
+
+    # first we take care of the CSS registry
+    css_tool = getToolByName(context, 'portal_css')
+    old_id = '++resource++collective.cover/screenlets.css'
+    new_id = '++resource++collective.cover/contentchooser.css'
+    if old_id in css_tool.getResourceIds():
+        css_tool.renameResource(old_id, new_id)
+        logger.info("'%s' resource was renamed to '%s'" % (old_id, new_id))
+        css_tool.cookResources()
+        logger.info("CSS resources were cooked")
+    else:
+        logger.debug("'%s' resource not found in portal_css" % old_id)
+
+    # now we mess with the JS registry
+    js_tool = getToolByName(context, 'portal_javascripts')
+    old_id = '++resource++collective.cover/screenlets.js'
+    new_id = '++resource++collective.cover/contentchooser.js'
+    if old_id in js_tool.getResourceIds():
+        js_tool.renameResource(old_id, new_id)
+        logger.info("'%s' resource was renamed to '%s'" % (old_id, new_id))
+        js_tool.cookResources()
+        logger.info("JS resources were cooked")
+    else:
+        logger.debug("'%s' resource not found in portal_javascripts" % old_id)
+
+
 def register_available_tiles_record(context, logger=None):
     """Handler for upgrade step from 2 to 3; adds the 'available_tiles' record
     to the registry.
