@@ -6,8 +6,14 @@ Because you have to know where your towel is.
 1.0a3 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- An option in the control panel configlet was added in order to select the
+  tiles that will be available for cover layout creation; an upgrade step
+  is provided to update the registry with the new record (closes `#191`_).
+  [hvelarde]
+
 - The Tile selection functionality (in the layout edit view), was refactored 
   to an explicit D&D UI (closes `#183`_).
+
 
 - Apply default configuration to tiles at initialization (closes `#100`_).
   [hvelarde]
@@ -110,3 +116,4 @@ Because you have to know where your towel is.
 .. _`#157`: https://github.com/collective/collective.cover/issues/157
 .. _`#158`: https://github.com/collective/collective.cover/issues/158
 .. _`#179`: https://github.com/collective/collective.cover/issues/179
+.. _`#191`: https://github.com/collective/collective.cover/issues/191
