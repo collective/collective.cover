@@ -1,23 +1,51 @@
 # -*- coding: utf-8 -*-
 
-import unittest2 as unittest
-
+from collective.cover.testing import INTEGRATION_TESTING
+from collective.cover.tiles.base import IPersistentCoverTile
+from collective.cover.tiles.base import PersistentCoverTile
+from cStringIO import StringIO
+from plone.tiles.interfaces import IPersistentTile
+from plone.tiles.interfaces import ITileDataManager
 from zope.component import eventtesting
-
+from zope.configuration.xmlconfig import xmlconfig
 from zope.interface.verify import verifyClass
 from zope.interface.verify import verifyObject
 
-from plone.tiles.interfaces import IPersistentTile
-from plone.tiles.interfaces import ITileDataManager
+import unittest
 
-from collective.cover.testing import INTEGRATION_TESTING
-from collective.cover.tiles.base import PersistentCoverTile
-from collective.cover.tiles.base import IPersistentCoverTile
+ZCML = """
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:five="http://namespaces.zope.org/five"
+    xmlns:plone="http://namespaces.plone.org/plone">
+
+  <include package="zope.component" file="meta.zcml" />
+  <include package="Products.Five" />
+  <five:loadProducts file="meta.zcml"/>
+  <include package="plone.tiles" />
+  <include package="plone.tiles" file="meta.zcml"/>
+
+  <plone:tile
+      name="collective.cover.base"
+      title="the base tile"
+      description="the mother of all tiles."
+      add_permission="cmf.ModifyPortalContent"
+      schema="collective.cover.tiles.base.IPersistentCoverTile"
+      class="collective.cover.tiles.base.PersistentCoverTile"
+      permission="zope2.View"
+      for="*"
+      />
+
+</configure>
+"""
 
 
 class BaseTileTestCase(unittest.TestCase):
 
     layer = INTEGRATION_TESTING
+
+    def _register_tile(self):
+        xmlconfig(StringIO(ZCML))
 
     def setUp(self):
         self.portal = self.layer['portal']
@@ -25,7 +53,10 @@ class BaseTileTestCase(unittest.TestCase):
 
         eventtesting.setUp()
 
+        self._register_tile()
         self.tile = PersistentCoverTile(self.portal, self.request)
+        # XXX: tile initialization
+        self.tile.__name__ = 'collective.cover.base'
 
     def test_interface(self):
         self.assertTrue(IPersistentCoverTile.implementedBy(PersistentCoverTile))

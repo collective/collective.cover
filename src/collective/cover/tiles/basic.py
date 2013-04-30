@@ -12,6 +12,7 @@ from plone.uuid.interfaces import IUUID
 from plone.autoform import directives as form
 
 from Products.CMFCore.utils import getToolByName
+from Products.CMFPlone.utils import safe_unicode
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
 from collective.cover import _
@@ -19,7 +20,6 @@ from collective.cover.tiles.base import IPersistentCoverTile
 from collective.cover.tiles.base import PersistentCoverTile
 from collective.cover.controlpanel import ICoverSettings
 from collective.cover.tiles.configuration_view import IDefaultConfigureForm
-from plone.app.uuid.utils import uuidToObject
 
 
 class IBasicTile(IPersistentCoverTile):
@@ -89,7 +89,8 @@ class BasicTile(PersistentCoverTile):
             return self.brain.Date
 
     def is_empty(self):
-        return self.brain is None
+        return self.brain is None and \
+            not [i for i in self.data.values() if i]
 
     def getURL(self):
         """ Return the URL of the original object.
@@ -104,21 +105,6 @@ class BasicTile(PersistentCoverTile):
         if self.brain is not None:
             return self.brain.Subject
 
-    def img_obj(self):
-        """ Return the image object, internal or external.
-        """
-        if self.data.get('image') not in (None, True):
-            return self
-        elif self.data.get('uuid') is not None:
-            obj = uuidToObject(self.data.get('uuid'))
-            try:
-                # Target obj have an image?
-                obj.restrictedTraverse('@@images').scale('image')
-                return obj
-            except AttributeError:
-                return None
-        return None
-
     def populate_with_object(self, obj):
         super(BasicTile, self).populate_with_object(obj)
 
@@ -127,8 +113,8 @@ class BasicTile(PersistentCoverTile):
         # really care about their value: they came directly from the catalog
         # brain
         data = {
-            'title': obj.Title(),
-            'description': obj.Description(),
+            'title': safe_unicode(obj.Title()),
+            'description': safe_unicode(obj.Description()),
             'uuid': IUUID(obj, None),  # XXX: can we get None here? see below
             'date': True,
             'subjects': True,
@@ -154,9 +140,3 @@ class BasicTile(PersistentCoverTile):
         registry = getUtility(IRegistry)
         settings = registry.forInterface(ICoverSettings)
         return settings.searchable_content_types
-
-    def get_configured_fields(self):
-        if self.data['image'] is None and self.data['uuid']:
-            self.data['image'] = True
-        fields = super(BasicTile, self).get_configured_fields()
-        return fields

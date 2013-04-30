@@ -10,7 +10,7 @@ Suite Teardown  Close Browser
 
 *** Variables ***
 
-${embed_tile_location}  /html/body/div/div[2]/div/div[2]/div[2]/div[3]/div[5]
+${embed_tile_location}  'collective.cover.embed'
 ${embed_selector}  ul#item-list li.ui-draggable
 ${tile_selector}  div.tile-container div.tile
 
@@ -21,8 +21,7 @@ Test Embed Tile
     Create Cover  Title  Description  Empty layout
     Click Link  link=Layout
 
-    Add Tile
-    Select Tile to Add  ${embed_tile_location}
+    Add Tile  ${embed_tile_location}
     Save Cover Layout
 
     Click Link  link=Compose

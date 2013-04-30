@@ -1,19 +1,18 @@
 # -*- coding: utf-8 -*-
 
-import json
-import uuid
-
 from Acquisition import aq_inner
-
-from five import grok
-
-from zope.component import queryUtility, getMultiAdapter
-from zope.schema.interfaces import IVocabularyFactory
-
-from zope.browserpage.viewpagetemplatefile import ViewPageTemplateFile
-
 from collective.cover.content import ICover
 from collective.cover.utils import assign_tile_ids
+from five import grok
+from plone.uuid.interfaces import IUUIDGenerator
+from plone.tiles.interfaces import ITileType
+from zope.browserpage.viewpagetemplatefile import ViewPageTemplateFile
+from zope.component import getMultiAdapter
+from zope.component import getUtility
+from zope.component import queryUtility
+from zope.schema.interfaces import IVocabularyFactory
+
+import json
 
 
 class PageLayout(grok.View):
@@ -54,6 +53,8 @@ class PageLayout(grok.View):
 
                 if element['type'] == 'tile':
                     element['class'] = 'cover-tile'
+                    tile_type = getUtility(ITileType, element['tile-type'])
+                    element['tile-title'] = tile_type.title
 
                 if 'children' in element:
                     self.grid_layout_edit(element['children'])
@@ -151,13 +152,45 @@ class TileSelect(grok.View):
                       for name in available_tiles(self.context)]
 
 
+class TileList(grok.View):
+    grok.context(ICover)
+    grok.name('tile_list')
+    grok.require('zope2.View')
+
+    def update(self):
+        self.context = aq_inner(self.context)
+        vocab_name = 'collective.cover.AvailableTiles'
+        available_tiles = queryUtility(IVocabularyFactory, vocab_name)
+        # the view is expecting a dictionary of "tile types"
+        self.tiles = [{'tile_type': name.value}
+                      for name in available_tiles(self.context)]
+
+    def get_tile_metadata(self, tile_name):
+        tile_type = getUtility(ITileType, tile_name)
+        tile_metadata = {
+            'icon': tile_type.icon,
+            'description': tile_type.description,
+            'title': tile_type.title
+        }
+
+        return tile_metadata
+
+
 class UidGetter(grok.View):
+    """Return a random UUID as a 32-character hexadecimal string. As we're
+    using the generated UUID as class id, we need the first char not to be a
+    number; see: http://css-tricks.com/ids-cannot-start-with-a-number/
+    """
     grok.context(ICover)
     grok.name('uid_getter')
     grok.require('zope2.View')
 
     def render(self):
-        return uuid.uuid4().hex
+        generator = getUtility(IUUIDGenerator)
+        uuid = generator()
+        while uuid[0].isdigit():
+            uuid = generator()
+        return uuid
 
 
 class GroupSelect(grok.View):

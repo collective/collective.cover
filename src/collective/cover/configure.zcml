@@ -50,4 +50,11 @@
       allowed_interface="Products.CMFPlone.browser.interfaces.IPlone"
       />
 
+    <class class=".widgets.selectpreview.SelectPreviewWidget">
+        <require
+            permission="zope.Public"
+            interface=".widgets.interfaces.ISelectPreviewWidget"
+        />
+    </class>
+
 </configure>

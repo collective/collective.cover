@@ -10,7 +10,7 @@ Suite Teardown  Close Browser
 
 *** Variables ***
 
-${basic_tile_location}  /html/body/div/div[2]/div/div[2]/div[2]/div[3]/div
+${basic_tile_location}  'collective.cover.basic'
 ${basic_uuid}  12345
 ${document_selector}  .ui-draggable .contenttype-document
 ${folder_selector}  .ui-draggable .contenttype-folder
@@ -26,8 +26,7 @@ Test content tree tab
     Create Cover  Title  Description  Empty layout
     Click Link  link=Layout
 
-    Add Tile
-    Select Tile to Add  ${basic_tile_location}
+    Add Tile  ${basic_tile_location}
     Save Cover Layout
 
     Click Link  link=Compose

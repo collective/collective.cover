@@ -10,7 +10,7 @@ Suite Teardown  Close Browser
 
 *** Variables ***
 
-${basic_tile_location}  /html/body/div/div[2]/div/div[2]/div[2]/div[3]/div
+${basic_tile_location}  'collective.cover.basic'
 ${basic_uuid}  12345
 ${folder_selector}  .contenttype-folder
 ${input_contenttree}  contentchooser-content-trees
@@ -24,8 +24,7 @@ Test content tree tab
     Create Cover  Title  Description  Empty layout
     Click Link  link=Layout
 
-    Add Tile
-    Select Tile to Add  ${basic_tile_location}
+    Add Tile  ${basic_tile_location}
     Save Cover Layout
 
 	# Test navigate tree
@@ -41,7 +40,7 @@ Test content tree tab
     Click Element  css=${folder_selector}
 
     Page Should Contain Element  css=${path_selector}
-	Wait Until Page Contains Element  css=div#content-trees div#internalpath a
+	Wait Until Page Contains Element  css=div#content-trees div#internalpath a  timeout=10
     Page Should Contain  Plone site → my-folder
 
 	# Test searches
@@ -52,13 +51,17 @@ Test content tree tab
     Click Element  css=div#contentchooser-content-show-button
 
     Click Element  link=Content tree
+    # XXX: filtering code use some slow fadeOut code, we must slow down selenium
     Input text  name=${input_contenttree}  folder
-    Page Should Contain  1 Results
-
+    Set Selenium Speed  1
+    Wait Until Page Contains  1 Results
+    Set Selenium Speed  0
+	
+    Page Should Contain Element  css=${folder_selector}
     Click Element  css=${folder_selector}
 
     Page Should Contain Element  css=${path_selector}
-	Wait Until Page Contains Element  css=div#content-trees div#internalpath a
+	Wait Until Page Contains Element  css=div#content-trees div#internalpath a  timeout=10
     Page Should Contain  Plone site → my-folder
 
     Input text  name=${input_contenttree}  foo-bar
@@ -70,7 +73,7 @@ Test content tree tab
     Click Element  css=${folder_selector}
 
     Page Should Contain Element  css=${path_selector}
-	Wait Until Page Contains Element  css=div#content-trees div#internalpath a
+	Wait Until Page Contains Element  css=div#content-trees div#internalpath a  timeout=10
     Page Should Contain  Plone site → my-folder
 
 	# End test

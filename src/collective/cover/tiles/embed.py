@@ -1,13 +1,11 @@
 # -*- coding: utf-8 -*-
 
-from zope import schema
-from zope.interface import implements
-
-from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-
 from collective.cover import _
 from collective.cover.tiles.base import IPersistentCoverTile
 from collective.cover.tiles.base import PersistentCoverTile
+from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
+from zope import schema
+from zope.interface import implements
 
 
 class IEmbedTile(IPersistentCoverTile):
@@ -31,7 +29,6 @@ class IEmbedTile(IPersistentCoverTile):
 class EmbedTile(PersistentCoverTile):
 
     implements(IEmbedTile)
-
     index = ViewPageTemplateFile('templates/embed.pt')
 
     is_configurable = True

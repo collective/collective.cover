@@ -1,0 +1,82 @@
+<div xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:tal="http://xml.zope.org/namespaces/tal"
+     xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+     i18n:domain="collective.cover"
+     tal:omit-tag="">
+<script type="text/javascript" src="++resource++collective.cover/selectlayoutpreview.js"></script>
+<script type="text/javascript" tal:content="structure view/js"></script>
+<style media="screen" type="text/css">
+#preview-select-container {
+    float: left;
+    width: 20%;
+}
+#preview-select-container select {
+    width: 100%;
+}
+#layout-preview fieldset {
+    margin:0 0 0 22%;
+}
+#layout-preview canvas {
+    float:right;
+}
+.layout-metadata {
+    position:absolute;
+    margin-right:340px;
+}
+.layout-metadata p {
+    overflow:auto;
+    heigth:300px;
+}
+</style>
+<div id="preview-select-container">
+    <select id="" name="" class="" tabindex="" disabled="" multiple="" size=""
+            tal:attributes="id view/id;
+                            name string:${view/name}:list;
+                            class view/klass;
+                            style view/style;
+                            title view/title;
+                            lang view/lang;
+                            onclick view/onclick;
+                            ondblclick view/ondblclick;
+                            onmousedown view/onmousedown;
+                            onmouseup view/onmouseup;
+                            onmouseover view/onmouseover;
+                            onmousemove view/onmousemove;
+                            onmouseout view/onmouseout;
+                            onkeypress view/onkeypress;
+                            onkeydown view/onkeydown;
+                            onkeyup view/onkeyup;
+                            disabled view/disabled;
+                            tabindex view/tabindex;
+                            onfocus view/onfocus;
+                            onblur view/onblur;
+                            onchange view/onchange;
+                            multiple view/multiple;
+                            size view/size">
+    <tal:block repeat="item view/items"
+      ><option id="" value="" selected="selected"
+             tal:condition="item/selected"
+             tal:attributes="id item/id;
+                             value item/value"
+             tal:content="item/content">label</option
+      ><option id="" value=""
+             tal:condition="not:item/selected"
+             tal:attributes="id item/id;
+                             value item/value"
+             tal:content="item/content">label</option
+    ></tal:block>
+    </select>
+    <input name="field-empty-marker" type="hidden" value="1"
+           tal:attributes="name string:${view/name}-empty-marker" />
+</div>
+<div id="layout-preview">
+    <fieldset>
+        <legend i18n:translate="">Layout Details</legend>
+        <div class="layout-metadata">
+            <h3></h3>
+            <p i18n:translate="">No description</p>
+        </div>
+        <canvas id="canvas-layout" width="300" height="240"></canvas>
+    </fieldset>
+</div>
+</div>

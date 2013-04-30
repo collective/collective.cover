@@ -80,6 +80,21 @@ class BasicTileTestCase(unittest.TestCase):
         self.assertEqual('This news item was created for testing purposes',
                          self.tile.data['description'])
 
+    def test_populate_with_object_unicode(self):
+        """We must store unicode always on schema.TextLine and schema.Text
+        fields to avoid UnicodeDecodeError. We could avoid this duplicate
+        this test if we create our test fixture content using unicode.
+        """
+        title = u"Pangrama en español"
+        description = u"El veloz murciélago hindú comía feliz cardillo y kiwi"
+        obj = self.portal['my-news-item']
+        obj.setTitle(title)
+        obj.setDescription(description)
+        obj.reindexObject()
+        self.tile.populate_with_object(obj)
+        self.assertEqual(title, self.tile.data['title'])
+        self.assertEqual(description, self.tile.data['description'])
+
     def test_render_empty(self):
         self.assertIn(
             "Please drag&amp;drop some content here to populate the tile.",
@@ -109,9 +124,6 @@ class BasicTileTestCase(unittest.TestCase):
         self.assertIn(
             "This news item was created for testing purposes", rendered)
 
-        # the image must be there, pointing to original image
-        self.assertIn('my-news-item/@@images', rendered)
-
         # the localized time must be there
         utils = getMultiAdapter((self.portal, self.request), name=u'plone')
         date = utils.toLocalizedTime(obj.Date(), True)
@@ -120,6 +132,20 @@ class BasicTileTestCase(unittest.TestCase):
         # the tags must be there
         self.assertIn('subject1', rendered)
         self.assertIn('subject2', rendered)
+
+    def test_alt_atribute_present_in_image(self):
+        """Object's title must be displayed in image alt attribute.
+        See: https://github.com/collective/collective.cover/issues/182
+        """
+        obj = self.portal['my-news-item']
+        obj.setImage(generate_jpeg(128, 128))
+        obj.reindexObject()
+        self.tile.populate_with_object(obj)
+        tile_conf_adapter = getMultiAdapter((self.tile.context, self.request, self.tile),
+                                            ITilesConfigurationScreen)
+        tile_conf_adapter.set_configuration({'image': {'visibility': 'on', 'imgsize': 'large'}})
+        rendered = self.tile()
+        self.assertIn('alt="Test news item"', rendered)
 
     def test_delete_tile_persistent_data(self):
         permissions = getMultiAdapter(
@@ -180,9 +206,6 @@ class BasicTileTestCase(unittest.TestCase):
 
         self.tile.populate_with_object(obj)
         rendered = self.tile()
-
-        # the image must be there, pointing to original image
-        self.assertIn('my-news-item/@@images', rendered)
 
         # old code copy the image
         self.assertNotIn('test-basic-tile/@@images', rendered)
