@@ -20,8 +20,8 @@ Because you have to know where your towel is.
   is provided to update the registry with the new record (closes `#191`_).
   [hvelarde]
 
-- The Tile selection functionality (in the layout edit view), was refactored 
-  to an explicit D&D UI (closes `#183`_).
+- Tile selection functionality in layout edit view was refactored  to an
+  explicit D&D UI (closes `#183`_). [Quimera]
 
 - Apply default configuration to tiles at initialization (closes `#100`_).
   [hvelarde]
@@ -129,4 +129,5 @@ Because you have to know where your towel is.
 .. _`#169`: https://github.com/collective/collective.cover/issues/169
 .. _`#171`: https://github.com/collective/collective.cover/issues/171
 .. _`#179`: https://github.com/collective/collective.cover/issues/179
+.. _`#183`: https://github.com/collective/collective.cover/issues/183
 .. _`#191`: https://github.com/collective/collective.cover/issues/191
