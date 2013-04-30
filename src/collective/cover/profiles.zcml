@@ -9,21 +9,24 @@
       title="collective.cover"
       directory="profiles/default"
       description="An easy-to-use package to create complex cover pages for Plone sites."
-      provides="Products.GenericSetup.interfaces.EXTENSION" />
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      />
 
   <genericsetup:registerProfile
       name="uninstall"
       title="collective.cover uninstall"
       directory="profiles/uninstall"
       description="Uninstall profile for the collective.cover package."
-      provides="Products.GenericSetup.interfaces.EXTENSION" />
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      />
 
   <genericsetup:registerProfile
       name="testfixture"
       title="collective.cover: testfixture"
       directory="profiles/testfixture"
       description="This fixture creates generic content to be used in tests."
-      provides="Products.GenericSetup.interfaces.EXTENSION" />
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      />
 
   <genericsetup:upgradeStep
       title="Upgrade cover to Plone 4.3"
@@ -31,6 +34,34 @@
       destination="2"
       description="Install plone.app.relationfield"
       handler="collective.cover.setuphandlers.to_plone43"
-      profile="collective.cover:default" />
+      profile="collective.cover:default"
+      />
+
+  <genericsetup:registerProfile
+      name="upgrade_2_to_3"
+      title="collective.cover: upgrade_2_to_3"
+      directory="profiles/upgrade_2_to_3"
+      description="Upgrade steps from 2 to 3."
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      />
+
+  <genericsetup:upgradeSteps
+      source="2"
+      destination="3"
+      profile="collective.cover:default">
+
+      <genericsetup:upgradeStep
+          title="Rename resources"
+          description="Renames the screenlets resources to contentchooser"
+          handler=".upgrades.rename_content_chooser_resources"
+          />
+
+      <genericsetup:upgradeStep
+          title="Update registry"
+          description="Update the registry to register the available_tiles record"
+          handler=".upgrades.register_available_tiles_record"
+          />
+
+  </genericsetup:upgradeSteps>
 
 </configure>

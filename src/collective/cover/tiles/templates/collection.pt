@@ -10,7 +10,7 @@
   </p>
 
   <div class="cover-collection-tile" tal:condition="not:is_empty">
-    <tal:results define="results view/results;
+    <tal:results define="results view/results|nothing;
                          toLocalizedTime nocall:context/@@plone/toLocalizedTime">
       <div tal:condition="not:results">
         <p i18n:translate="">The collection doesn't have any results.</p>

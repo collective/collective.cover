@@ -6,10 +6,25 @@ Because you have to know where your towel is.
 1.0a3 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
-- Added a custom permission for the export layout funcionality (closes `#177`_).
+- Added custom permission for the export layout funcionality
+  (closes `#177`_). [Quimera]
 
-- The Tile selection functionality (in the layout edit view), was refactored 
-  to an explicit D&D UI (closes `#183`_).
+- Fix a bug in collection tile when the target collection was removed
+  (closes `#138`_). [jpgimenez]
+
+- Improve interface and performance of content chooser 
+  (closes `#168`_ and `#169`_). [jpgimenez]
+
+- Add upgrade step to rename resources in CSS and JS registries
+  (fixes `#171`_). [hvelarde]
+
+- An option in the control panel configlet was added in order to select the
+  tiles that will be available for cover layout creation; an upgrade step
+  is provided to update the registry with the new record (closes `#191`_).
+  [hvelarde]
+
+- Tile selection functionality in layout edit view was refactored  to an
+  explicit D&D UI (closes `#183`_). [Quimera]
 
 - Apply default configuration to tiles at initialization (closes `#100`_).
   [hvelarde]

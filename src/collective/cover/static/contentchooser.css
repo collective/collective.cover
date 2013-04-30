@@ -51,12 +51,13 @@
 }
 
 #contentchooser-content-search .close {
+    background-image: url("++resource++plone.app.jquerytools.pb_close.png");
     cursor: pointer;
-    font-size: 12px;
-    padding: 5px;
+    height: 30px;
+    left: -14px;
     position: absolute;
-    right: 0;
-    top: 0;
+    top: -14px;
+    width: 30px;
 }
 
 .current {
@@ -93,4 +94,10 @@ input[type="text"]#contentchooser-content-trees {
 
 #content-trees #general_panel {
 	padding: 0;
+}
+
+#contentchooser-content-search-input-container,
+#contentchooser-content-trees-container,
+.contentchooser-clear {
+	display: inline-block;
 }
