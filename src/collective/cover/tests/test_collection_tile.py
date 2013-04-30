@@ -68,6 +68,11 @@ class CollectionTileTestCase(unittest.TestCase):
     def test_delete_collection(self):
         obj = self.portal['my-collection']
         self.tile.populate_with_object(obj)
+        self.tile.populate_with_object(obj)
+        rendered = self.tile()
+
+        self.assertIn("<p>The collection doesn't have any results.</p>", rendered)
+
         setRoles(self.portal, TEST_USER_ID, ['Manager', 'Editor', 'Reviewer'])
         login(self.portal, TEST_USER_NAME)
         self.portal.manage_delObjects(['my-collection'])

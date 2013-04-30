@@ -6,6 +6,9 @@ Because you have to know where your towel is.
 1.0a3 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Fix a bug in collection tile when the target collection was removed
+  (closes `#138`_). [jpgimenez]
+
 - Apply default configuration to tiles at initialization (closes `#100`_).
   [hvelarde]
 
@@ -100,6 +103,7 @@ Because you have to know where your towel is.
 .. _`#128`: https://github.com/collective/collective.cover/issues/128
 .. _`#129`: https://github.com/collective/collective.cover/issues/129
 .. _`#137`: https://github.com/collective/collective.cover/issues/137
+.. _`#138`: https://github.com/collective/collective.cover/issues/138
 .. _`#142`: https://github.com/collective/collective.cover/issues/142
 .. _`#146`: https://github.com/collective/collective.cover/issues/146
 .. _`#152`: https://github.com/collective/collective.cover/issues/152
