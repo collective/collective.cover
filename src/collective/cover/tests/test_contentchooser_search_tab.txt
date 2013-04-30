@@ -24,6 +24,8 @@ Test content tree tab
 
     Page Should Contain Element  css=${folder_selector}
 
+	${orig wait} = 	Set Selenium Implicit Wait 	10 seconds
     Input text  name=${input_search}  folder
+	Set Selenium Implicit Wait 	${orig wait}
 
     Xpath Should Match X Times  //div[contains(@id, 'recent')]//ul[contains(@class, 'item-list')]//li  1

@@ -124,9 +124,6 @@ class BasicTileTestCase(unittest.TestCase):
         self.assertIn(
             "This news item was created for testing purposes", rendered)
 
-        # the image must be there, pointing to original image
-        self.assertIn('my-news-item/@@images', rendered)
-
         # the localized time must be there
         utils = getMultiAdapter((self.portal, self.request), name=u'plone')
         date = utils.toLocalizedTime(obj.Date(), True)
@@ -144,6 +141,9 @@ class BasicTileTestCase(unittest.TestCase):
         obj.setImage(generate_jpeg(128, 128))
         obj.reindexObject()
         self.tile.populate_with_object(obj)
+        tile_conf_adapter = getMultiAdapter((self.tile.context, self.request, self.tile),
+                                            ITilesConfigurationScreen)
+        tile_conf_adapter.set_configuration({'image': {'visibility': 'on', 'imgsize': 'large'}})
         rendered = self.tile()
         self.assertIn('alt="Test news item"', rendered)
 
@@ -206,9 +206,6 @@ class BasicTileTestCase(unittest.TestCase):
 
         self.tile.populate_with_object(obj)
         rendered = self.tile()
-
-        # the image must be there, pointing to original image
-        self.assertIn('my-news-item/@@images', rendered)
 
         # old code copy the image
         self.assertNotIn('test-basic-tile/@@images', rendered)

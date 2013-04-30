@@ -39,7 +39,7 @@
                     appendTo: 'body',
                     helper: 'clone'
                 });
-                $( "#btn-tile" ).draggable({
+                $( ".btn-tile" ).draggable({
                     appendTo: 'body',
                     helper: 'clone'
                 });
@@ -66,6 +66,12 @@
                 self.resize_columns_manager();
 
                 self.tile_config_manager();
+
+
+                //expor layout
+                $('#btn-export').click(function(){
+                    $('#export-layout').modal();
+                });
 
             },
 
@@ -128,46 +134,36 @@
                 columns.droppable({
                     activeClass: "ui-state-default",
                     hoverClass: "ui-state-hover",
-                    accept: "#btn-tile",
+                    accept: ".btn-tile",
                     drop: function( event, ui ) {
                         var new_tile = tile_dom.clone();
                         var column_elem = this;
 
-                        //we open the tile list selection, on drop
-                        $("#tile-select-list").modal();
-                        
-                        //the selection of the tile generates a few things, idsetup, and the actual element
-                        $(".tile-select-button").click(function(e) {
-                            e.stopPropagation();
-                            e.preventDefault();
-                            $(".tile-select-button").unbind("click");
+                        var tile_type = ui.draggable.data('tile-type');
+                        new_tile.attr("data-tile-type", tile_type);
+                        debugger;
 
-                            var tile_type = $(this).text();
-                            new_tile.attr("data-tile-type", tile_type);
+                        $.ajax({
+                            url: "@@uid_getter",
+                            success: function(info, la) {
+                                new_tile.attr("id", info);
+                                var url_config = "@@configure-tile/" + tile_type + "/" + info;
 
-                            $.ajax({
-                                url: "@@uid_getter",
-                                success: function(info, la) {
-                                    new_tile.attr("id", info);
-                                    var url_config = "@@configure-tile/" + tile_type + "/" + info;
+                                var config_icon = $("<i/>").addClass("config-icon");
+                                var config_link = $("<a />").addClass("config-tile-link")
+                                                            .attr('href',url_config)
+                                                            .append(config_icon);
+                                var name_tag = $("<span />").addClass("tile-name")
+                                                            .text(ui.draggable.data('tile-name'));
+                                new_tile.append(config_link)
+                                        .append(name_tag);
 
-                                    var config_icon = $("<i/>").addClass("config-icon");
-                                    var config_link = $("<a />").addClass("config-tile-link")
-                                                                .attr('href',url_config)
-                                                                .append(config_icon);
-                                    var name_tag = $("<span />").addClass("tile-name")
-                                                                .text(tile_type);
-                                    new_tile.append(config_link)
-                                            .append(name_tag);
+                                $(column_elem).append(new_tile);
+                                self.delete_manager(new_tile);
 
-                                    $(column_elem).append(new_tile);
-                                    self.delete_manager(new_tile);
-
-                                    le.trigger('modified.layout');
-                                    return false;
-                                }
-                            });
-                           $("#tile-select-list").modal('hide');
+                                le.trigger('modified.layout');
+                                return false;
+                            }
                         });
                     }
                 });

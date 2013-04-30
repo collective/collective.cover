@@ -13,6 +13,6 @@ before_script:
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
 script: bin/test
-after_success: test -v QA && make basic-validation coverage-validation || true
+after_success: test -v QA && make coverage-validation basic-validation || true
 notifications:
   irc: irc.freenode.org#simplesconsultoria
