@@ -19,6 +19,7 @@ from zope.component import queryUtility
 from zope.interface import Interface
 from zope.schema.interfaces import IVocabularyFactory
 from zope.schema.vocabulary import SimpleTerm
+from plone.batching import Batch
 
 import json
 
@@ -68,16 +69,18 @@ class ContentSearch(grok.View):
     tree_template = ViewPageTemplateFile('contentchooser_templates/tree_template.pt')
 
     def update(self):
-        query = self.request.get('q', None)
+        self.query = self.request.get('q', None)
         self.tab = self.request.get('tab', None)
-        b_size = 10
-        page = int(self.request.get('page', 0))
+        b_size = int(self.request.get('b_size', 10))
+        page = int(self.request.get('page', 1))
         strategy = SitemapNavtreeStrategy(self.context)
 
         uids = None
-        result = self.search(query, uids=uids,
-                             b_start=page * b_size,
+        result = self.search(self.query, uids=uids,
+                             page=page,
                              b_size=b_size)
+        self.has_next = result.has_next
+        self.nextpage = result.nextpage
         result = [strategy.decoratorFactory({'item': node}) for node in result]
         self.level = 1
         self.children = result
@@ -85,7 +88,7 @@ class ContentSearch(grok.View):
     def render(self):
         return self.list_template(children=self.children, level=1)
 
-    def search(self, query=None, b_start=None, b_size=None, uids=None):
+    def search(self, query=None, page=None, b_size=None, uids=None):
         catalog = getToolByName(self.context, 'portal_catalog')
         registry = getUtility(IRegistry)
         settings = registry.forInterface(ICoverSettings)
@@ -94,9 +97,6 @@ class ContentSearch(grok.View):
         #temporary we'll only list published elements
         catalog_query = {'sort_on': 'effective', 'sort_order': 'descending'}
         catalog_query['portal_type'] = searchable_types
-        if b_start >= 0 and b_size:
-            catalog_query['b_start'] = b_start
-            catalog_query['b_size'] = b_size
 
         if query:
             catalog_query = {'SearchableText': '%s*' % query}
@@ -106,6 +106,8 @@ class ContentSearch(grok.View):
 #            catalog_query['UID'] = uids
 
         results = catalog(**catalog_query)
+        results = Batch.fromPagenumber(items=results, pagesize=b_size, pagenumber=page)
+
         return results
 
     def getTermByBrain(self, brain, real_value=True):
