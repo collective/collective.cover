@@ -9,7 +9,8 @@ Because you have to know where your towel is.
 - Fix a bug in collection tile when the target collection was removed
   (closes `#138`_). [jpgimenez]
 
-- Apply default configuration to tiles at initialization (closes `#100`_).
+- Improve interface and performance of content chooser 
+  (closes `#168`_ and `#169`_). [jpgimenez]
 
 - Add upgrade step to rename resources in CSS and JS registries
   (fixes `#171`_). [hvelarde]
@@ -21,7 +22,6 @@ Because you have to know where your towel is.
 
 - The Tile selection functionality (in the layout edit view), was refactored 
   to an explicit D&D UI (closes `#183`_).
-
 
 - Apply default configuration to tiles at initialization (closes `#100`_).
   [hvelarde]
@@ -125,6 +125,8 @@ Because you have to know where your towel is.
 .. _`#152`: https://github.com/collective/collective.cover/issues/152
 .. _`#157`: https://github.com/collective/collective.cover/issues/157
 .. _`#158`: https://github.com/collective/collective.cover/issues/158
+.. _`#168`: https://github.com/collective/collective.cover/issues/168
+.. _`#169`: https://github.com/collective/collective.cover/issues/169
 .. _`#171`: https://github.com/collective/collective.cover/issues/171
 .. _`#179`: https://github.com/collective/collective.cover/issues/179
 .. _`#191`: https://github.com/collective/collective.cover/issues/191
