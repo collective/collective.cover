@@ -3,58 +3,45 @@
 # Basic implementation taken from
 # http://davisagli.com/blog/using-tiles-to-provide-more-flexible-plone-layouts
 
-import logging
-
-from logging import exception
 from AccessControl import Unauthorized
-from Acquisition import aq_base, aq_parent
-from ZODB.POSException import ConflictError
-
-from zope.component import getMultiAdapter
-from zope.component import queryUtility
-from zope.component import getUtility
-
-from zope.event import notify
-
-from zope.interface import implements
-from zope.interface import Interface
-
-from zope.lifecycleevent import ObjectModifiedEvent
-
-from zope.schema import getFieldsInOrder
-
-from zope.annotation import IAnnotations
-from persistent.dict import PersistentDict
-from zope.publisher.interfaces import NotFound
-
-from plone import tiles
-from plone.tiles.esi import ESITile
-
-from plone.app.textfield.interfaces import ITransformer
-from plone.app.textfield.value import RichTextValue
-
-from plone.tiles.interfaces import ITileType
-
-from plone.tiles.interfaces import ITileDataManager
-
-from plone.scale.scale import scaleImage
-from plone.scale.storage import AnnotationStorage as BaseAnnotationStorage
-from plone.namedfile.scaling import ImageScale as BaseImageScale
-from plone.namedfile.scaling import ImageScaling as BaseImageScaling
-from plone.namedfile.utils import set_headers, stream_data
-from plone.namedfile.interfaces import INamedImage
-from plone.rfc822.interfaces import IPrimaryFieldInfo
-
-from Products.CMFCore.utils import getToolByName
-
+from Acquisition import aq_base
+from Acquisition import aq_parent
+from collective.cover import _
 from collective.cover.config import PROJECTNAME
 from collective.cover.tiles.configuration import ITilesConfigurationScreen
 from collective.cover.tiles.permissions import ITilesPermissions
-
-from collective.cover import _
-from z3c.caching.interfaces import IPurgePaths
-from zope.component import adapts
+from persistent.dict import PersistentDict
+from plone import tiles
+from plone.app.textfield.interfaces import ITransformer
+from plone.app.textfield.value import RichTextValue
 from plone.app.uuid.utils import uuidToObject
+from plone.namedfile.interfaces import INamedImage, INamedImageField
+from plone.namedfile.scaling import ImageScale as BaseImageScale
+from plone.namedfile.scaling import ImageScaling as BaseImageScaling
+from plone.namedfile.utils import set_headers, stream_data
+from plone.rfc822.interfaces import IPrimaryFieldInfo
+from plone.scale.scale import scaleImage
+from plone.scale.storage import AnnotationStorage as BaseAnnotationStorage
+from plone.tiles.esi import ESITile
+from plone.tiles.interfaces import ITileDataManager
+from plone.tiles.interfaces import ITileType
+from Products.CMFCore.utils import getToolByName
+from z3c.caching.interfaces import IPurgePaths
+from ZODB.POSException import ConflictError
+from zope.annotation import IAnnotations
+from zope.component import adapts
+from zope.component import getMultiAdapter
+from zope.component import getUtility
+from zope.component import queryUtility
+from zope.event import notify
+from zope.interface import implements
+from zope.interface import Interface
+from zope.lifecycleevent import ObjectModifiedEvent
+from zope.publisher.interfaces import NotFound
+from zope.schema import getFieldNamesInOrder
+from zope.schema import getFieldsInOrder
+
+import logging
 
 logger = logging.getLogger(PROJECTNAME)
 
@@ -152,13 +139,13 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
         data_mgr.delete()
 
         # Remove permission data
-        permissions = getMultiAdapter((self.context, self.request, self),
-                                      ITilesPermissions)
+        permissions = getMultiAdapter(
+            (self.context, self.request, self), ITilesPermissions)
         permissions.delete()
 
         # Remove configuration data
-        configuration = getMultiAdapter((self.context, self.request, self),
-                                        ITilesConfigurationScreen)
+        configuration = getMultiAdapter(
+            (self.context, self.request, self), ITilesConfigurationScreen)
         configuration.delete()
 
         notify(ObjectModifiedEvent(self.context))
@@ -170,43 +157,39 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
         return None  # all content types accepted by default
 
     def get_tile_configuration(self):
-        tile_conf_adapter = getMultiAdapter((self.context, self.request, self),
-                                            ITilesConfigurationScreen)
-
+        tile_conf_adapter = getMultiAdapter(
+            (self.context, self.request, self), ITilesConfigurationScreen)
         configuration = tile_conf_adapter.get_configuration()
 
         return configuration
 
     def _get_tile_field_names(self):
-        """Return a list of all field names in the order they were defined.
+        """Return a list of all the field names in the tile in schema order.
         """
         tile_type = getUtility(ITileType, name=self.__name__)
-        fields = [name for name, obj in getFieldsInOrder(tile_type.schema)]
-        return fields
+
+        return getFieldNamesInOrder(tile_type.schema)
 
     def _tile_field_is_visible(self, field):
-        """Return boolean according to field's visibility; if field name not
-        among tile fields, raise AttributeError.
+        """Return boolean according to the field visibility.
         """
-        if field not in self._get_tile_field_names():
-            raise AttributeError
-
         tile_config = self.get_tile_configuration()
         field_config = tile_config[field]
-        assert 'visibility' in field_config  # all fields must have visibility
 
         return field_config['visibility'] == u'on'
 
     def get_configured_fields(self):
         tileType = queryUtility(ITileType, name=self.__name__)
         conf = self.get_tile_configuration()
-
         fields = getFieldsInOrder(tileType.schema)
 
         results = []
-        for name, obj in fields:
-            if not self.data[name]:
+        for name, field in fields:
+            if (not INamedImageField.providedBy(field) and not self.data[name]) or \
+               (INamedImageField.providedBy(field) and not self.data[name] and not self.data.get('uuid')):
                 # If there's no data for this field, ignore it
+                # special condition, if the field is an image field and
+                # there is no uuid, then ignore it too
                 continue
 
             if isinstance(self.data[name], RichTextValue):
@@ -216,9 +199,7 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
             else:
                 content = self.data[name]
 
-            field = {'id': name,
-                     'content': content,
-                     'title': obj.title}  # XXX: object's title?
+            field = {'id': name, 'content': content, 'title': field.title}
 
             if name in conf:
                 field_conf = conf[name]
@@ -240,38 +221,16 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
 
             results.append(field)
 
-        # XXX: if tile has an image attribute and it's visible, then...
-        try:
-            if self._tile_field_is_visible('image'):
-                self._external_image_configuration(conf, results)
-        except AttributeError:
-            pass
-
         return results
 
-    def _external_image_configuration(self, conf, results):
-        # XXX: we need to explain better what we're trying to do; we were
-        #      including the image field here even if it was set as
-        #      non-visible on the configuration screen, so this was raising a
-        #      ComponentLookupError on line 409, in scale
-        if 'image' in self.data and 'uuid' in self.data and \
-                self.data['image'] is None and self.data['uuid']:
-            name = 'image'
-            scale = 'large'
-            if name in conf:
-                field_conf = conf[name]
-                scale = field_conf['imgsize'].split()[0]
-            results.append({'id': name,
-                            'scale': scale})
-
     def setAllowedGroupsForEdit(self, groups):
-        permissions = getMultiAdapter((self.context, self.request, self),
-                                      ITilesPermissions)
+        permissions = getMultiAdapter(
+            (self.context, self.request, self), ITilesPermissions)
         permissions.set_allowed_edit(groups)
 
     def getAllowedGroupsForEdit(self):
-        permissions = getMultiAdapter((self.context, self.request, self),
-                                      ITilesPermissions)
+        permissions = getMultiAdapter(
+            (self.context, self.request, self), ITilesPermissions)
         groups = permissions.get_allowed_edit()
 
         return groups
@@ -297,6 +256,7 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
         return allowed
 
 
+# XXX: these are views, we should move it away from this module
 # Image scale support for tile images
 
 class AnnotationStorage(BaseAnnotationStorage):
@@ -410,8 +370,9 @@ class ImageScaling(BaseImageScaling):
         except (ConflictError, KeyboardInterrupt):
             raise
         except Exception:
-            exception('could not scale "%r" of %r',
-                      orig_value, self.context.context.absolute_url())
+            logging.exception(
+                'could not scale "%r" of %r',
+                orig_value, self.context.context.absolute_url())
             return
         if result is not None:
             data, format, dimensions = result
@@ -425,7 +386,8 @@ class ImageScaling(BaseImageScaling):
         """ provide a callable to return the modification time of content
             items, so stored image scales can be invalidated """
         if not IPersistentCoverTile.providedBy(self.context):
-            base_scales = getMultiAdapter((self.context, self.request), name='images')
+            base_scales = getMultiAdapter(
+                (self.context, self.request), name='images')
             return base_scales.modified()
         mtime = ''
         for k, v in self.context.data.items():
@@ -437,7 +399,8 @@ class ImageScaling(BaseImageScaling):
     def scale(self, fieldname=None, scale=None,
               height=None, width=None, **parameters):
         if not IPersistentCoverTile.providedBy(self.context):
-            base_scales = getMultiAdapter((self.context, self.request), name='images')
+            base_scales = getMultiAdapter(
+                (self.context, self.request), name='images')
             try:
                 return base_scales.scale(fieldname, scale, height, width, **parameters)
             except AttributeError:
@@ -470,8 +433,8 @@ class PersistentCoverTilePurgePaths(object):
 
     def getRelativePaths(self):
         context = self.context.aq_inner
-        portal_state = getMultiAdapter((context, context.request),
-                                       name=u'plone_portal_state')
+        portal_state = getMultiAdapter(
+            (context, context.request), name=u'plone_portal_state')
         prefix = context.url.replace(portal_state.portal_url(), '', 1)
 
         yield prefix

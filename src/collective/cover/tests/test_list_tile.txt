@@ -10,7 +10,7 @@ Suite Teardown  Close Browser
 
 *** Variables ***
 
-${list_tile_location}  /html/body/div/div[2]/div/div[2]/div[2]/div[3]/div[9]
+${list_tile_location}  'collective.cover.list'
 ${document_selector}  .ui-draggable .contenttype-document
 ${file_selector}  .ui-draggable .contenttype-file
 ${image_selector}  .ui-draggable .contenttype-image
@@ -25,8 +25,7 @@ Test List Tile
     Create Cover  Title  Description  Empty layout
     Click Link  link=Layout
 
-    Add Tile
-    Select Tile to Add  ${list_tile_location}
+    Add Tile  ${list_tile_location}
     Save Cover Layout
 
     Click Link  link=Compose

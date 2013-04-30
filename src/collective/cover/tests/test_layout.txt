@@ -57,15 +57,11 @@ Test Basic Layout Operations
 
     Save Cover Layout
 
-    Add Tile
-    Cancel Add Tile
-    Add Tile
-    Select Tile to Add  ${basic_tile_name}
+    Add Tile  ${basic_tile_name}
     Delete Tile
 
     #add tile, and check if clicking in the config icon opens an overlay
-    Add Tile
-    Select Tile to Add  ${basic_tile_name}
+    Add Tile  ${basic_tile_name}
     Click Config from Tile  ${tile_class}
     Click Button  Cancel
 

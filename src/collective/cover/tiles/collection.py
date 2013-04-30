@@ -1,24 +1,18 @@
 # -*- coding: utf-8 -*-
 
-from zope import schema
-
-from zope.component import queryUtility
-from zope.schema import getFieldsInOrder
-
-from plone.uuid.interfaces import IUUID
-from plone.app.uuid.utils import uuidToObject
-from plone.namedfile.field import NamedBlobImage as NamedImage
-
-from plone.tiles.interfaces import ITileDataManager
-from plone.tiles.interfaces import ITileType
-
-from plone.directives import form
-
-from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-
 from collective.cover.tiles.base import IPersistentCoverTile
 from collective.cover.tiles.base import PersistentCoverTile
 from collective.cover.tiles.edit import ICoverTileEditView
+from plone.app.uuid.utils import uuidToObject
+from plone.directives import form
+from plone.namedfile.field import NamedBlobImage as NamedImage
+from plone.tiles.interfaces import ITileDataManager
+from plone.tiles.interfaces import ITileType
+from plone.uuid.interfaces import IUUID
+from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
+from zope import schema
+from zope.component import queryUtility
+from zope.schema import getFieldsInOrder
 
 
 class ICollectionTile(IPersistentCoverTile, form.Schema):

@@ -5,6 +5,7 @@ from collective.cover.content import ICover
 from collective.cover.utils import assign_tile_ids
 from five import grok
 from plone.uuid.interfaces import IUUIDGenerator
+from plone.tiles.interfaces import ITileType
 from zope.browserpage.viewpagetemplatefile import ViewPageTemplateFile
 from zope.component import getMultiAdapter
 from zope.component import getUtility
@@ -52,6 +53,8 @@ class PageLayout(grok.View):
 
                 if element['type'] == 'tile':
                     element['class'] = 'cover-tile'
+                    tile_type = getUtility(ITileType, element['tile-type'])
+                    element['tile-title'] = tile_type.title
 
                 if 'children' in element:
                     self.grid_layout_edit(element['children'])
@@ -147,6 +150,30 @@ class TileSelect(grok.View):
         # the view is expecting a dictionary of "tile types"
         self.tiles = [{'tile_type': name.value}
                       for name in available_tiles(self.context)]
+
+
+class TileList(grok.View):
+    grok.context(ICover)
+    grok.name('tile_list')
+    grok.require('zope2.View')
+
+    def update(self):
+        self.context = aq_inner(self.context)
+        vocab_name = 'collective.cover.AvailableTiles'
+        available_tiles = queryUtility(IVocabularyFactory, vocab_name)
+        # the view is expecting a dictionary of "tile types"
+        self.tiles = [{'tile_type': name.value}
+                      for name in available_tiles(self.context)]
+
+    def get_tile_metadata(self, tile_name):
+        tile_type = getUtility(ITileType, tile_name)
+        tile_metadata = {
+            'icon': tile_type.icon,
+            'description': tile_type.description,
+            'title': tile_type.title
+        }
+
+        return tile_metadata
 
 
 class UidGetter(grok.View):

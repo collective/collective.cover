@@ -1,15 +1,13 @@
 # -*- coding: utf-8 -*-
 
-import unittest2 as unittest
-
+from collective.cover.testing import INTEGRATION_TESTING
+from collective.cover.tiles.base import IPersistentCoverTile
+from collective.cover.tiles.collection import CollectionTile
+from plone.uuid.interfaces import IUUID
 from zope.interface.verify import verifyClass
 from zope.interface.verify import verifyObject
 
-from plone.uuid.interfaces import IUUID
-
-from collective.cover.testing import INTEGRATION_TESTING
-from collective.cover.tiles.collection import CollectionTile
-from collective.cover.tiles.base import IPersistentCoverTile
+import unittest
 
 
 class CollectionTileTestCase(unittest.TestCase):
@@ -21,6 +19,8 @@ class CollectionTileTestCase(unittest.TestCase):
         self.request = self.layer['request']
         self.cover = self.portal['frontpage']
         self.tile = CollectionTile(self.cover, self.request)
+        # XXX: tile initialization
+        self.tile.__name__ = 'collective.cover.collection'
 
     def test_interface(self):
         self.assertTrue(IPersistentCoverTile.implementedBy(CollectionTile))

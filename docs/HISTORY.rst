@@ -10,7 +10,24 @@ Because you have to know where your towel is.
   (closes `#168`_ and `#169`_). [jpgimenez]
 
 - Store basic tile data in unicode format to avoid UnicodeDecodeError.
+
+- Add upgrade step to rename resources in CSS and JS registries
+  (fixes `#171`_). [hvelarde]
+
+- An option in the control panel configlet was added in order to select the
+  tiles that will be available for cover layout creation; an upgrade step
+  is provided to update the registry with the new record (closes `#191`_).
   [hvelarde]
+
+- The Tile selection functionality (in the layout edit view), was refactored 
+  to an explicit D&D UI (closes `#183`_).
+
+
+- Apply default configuration to tiles at initialization (closes `#100`_).
+  [hvelarde]
+
+- Store basic tile data in unicode format to avoid UnicodeDecodeError
+  (closes `#144`_). [hvelarde]
 
 - A new special widgect for the cover creation and layout selection was added;
   the widget draws a preview of the layout in real time using an HTML5 canvas
@@ -27,6 +44,7 @@ Because you have to know where your towel is.
 
 - Fixed a bug with Plone 4.3 that avoided TinyMCE being displayed for 
   RichText. (closes `#157`_). [ericof]
+
 
 1.0a2 (2013-04-09)
 ^^^^^^^^^^^^^^^^^^
@@ -92,6 +110,7 @@ Because you have to know where your towel is.
 
 .. _`PloneFormGen`: https://pypi.python.org/pypi/Products.PloneFormGen
 .. _`#48`: https://github.com/collective/collective.cover/issues/48
+.. _`#100`: https://github.com/collective/collective.cover/issues/100
 .. _`#114`: https://github.com/collective/collective.cover/issues/114
 .. _`#121`: https://github.com/collective/collective.cover/issues/121
 .. _`#123`: https://github.com/collective/collective.cover/issues/123
@@ -100,10 +119,13 @@ Because you have to know where your towel is.
 .. _`#129`: https://github.com/collective/collective.cover/issues/129
 .. _`#137`: https://github.com/collective/collective.cover/issues/137
 .. _`#142`: https://github.com/collective/collective.cover/issues/142
+.. _`#144`: https://github.com/collective/collective.cover/issues/144
 .. _`#146`: https://github.com/collective/collective.cover/issues/146
 .. _`#152`: https://github.com/collective/collective.cover/issues/152
 .. _`#157`: https://github.com/collective/collective.cover/issues/157
 .. _`#158`: https://github.com/collective/collective.cover/issues/158
 .. _`#168`: https://github.com/collective/collective.cover/issues/168
 .. _`#169`: https://github.com/collective/collective.cover/issues/169
+.. _`#171`: https://github.com/collective/collective.cover/issues/171
 .. _`#179`: https://github.com/collective/collective.cover/issues/179
+.. _`#191`: https://github.com/collective/collective.cover/issues/191

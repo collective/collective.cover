@@ -11,7 +11,7 @@ Suite Teardown  Close Browser
 
 *** Variables ***
 
-${collection_tile_location}  "collective.cover.collection"
+${collection_tile_location}  'collective.cover.collection'
 ${collection_uuid}  12345
 ${collection_selector}  .ui-draggable .contenttype-collection
 ${tile_selector}  div.tile-container div.tile
@@ -23,8 +23,7 @@ Test Collection Tile
     Create Cover  Title  Description  Empty layout
     Click Link  link=Layout
 
-    Add Tile
-    Select Tile to Add  ${collection_tile_location}
+    Add Tile  ${collection_tile_location}
     Save Cover Layout
 
     Click Link  link=Compose
