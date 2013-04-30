@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<registry>
+  <record name="collective.cover.controlpanel.ICoverSettings.available_tiles" interface="collective.cover.controlpanel.ICoverSettings" field="available_tiles">
+    <field type="plone.registry.field.List">
+      <default>
+        <element>collective.cover.basic</element>
+        <element>collective.cover.carousel</element>
+        <element>collective.cover.collection</element>
+        <element>collective.cover.contentbody</element>
+        <element>collective.cover.embed</element>
+        <element>collective.cover.file</element>
+        <element>collective.cover.image</element>
+        <element>collective.cover.link</element>
+        <element>collective.cover.list</element>
+        <element>collective.cover.richtext</element>
+      </default>
+      <description>This tiles will be available for layout creation.</description>
+      <required>False</required>
+      <title>Available tiles</title>
+      <value_type type="plone.registry.field.Choice">
+        <vocabulary>collective.cover.EnabledTiles</vocabulary>
+      </value_type>
+    </field>
+    <value>
+      <element>collective.cover.basic</element>
+      <element>collective.cover.carousel</element>
+      <element>collective.cover.collection</element>
+      <element>collective.cover.contentbody</element>
+      <element>collective.cover.embed</element>
+      <element>collective.cover.file</element>
+      <element>collective.cover.image</element>
+      <element>collective.cover.link</element>
+      <element>collective.cover.list</element>
+      <element>collective.cover.richtext</element>
+    </value>
+  </record>
+</registry>
