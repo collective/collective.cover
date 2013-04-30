@@ -55,7 +55,6 @@ Test content tree tab
     Page Should Contain  1 Results
 
     Page Should Contain Element  css=${folder_selector}
->>>>>>> Temporary merge branch 2
     Click Element  css=${folder_selector}
 
     Page Should Contain Element  css=${path_selector}
