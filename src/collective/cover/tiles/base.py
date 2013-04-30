@@ -221,37 +221,8 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
 
             results.append(field)
 
-<<<<<<< HEAD
         return results
 
-=======
-        self._external_image_configuration(conf, results)
-
-        return results
-
-    def _external_image_configuration(self, conf, results):
-        # XXX: we need to explain better what we're trying to do; we were
-        #      including the image field here even if it was set as
-        #      non-visible on the configuration screen, so this was raising a
-        #      ComponentLookupError on line 409, in scale
-
-        # XXX: if tile has an image attribute and it's visible, then...
-        try:
-            if not self._tile_field_is_visible('image'):
-                return
-        except (AttributeError, AssertionError):
-            return
-        if 'image' in self.data and 'uuid' in self.data and \
-                self.data['image'] is None and self.data['uuid']:
-            name = 'image'
-            scale = 'large'
-            if name in conf:
-                field_conf = conf[name]
-                scale = field_conf['imgsize'].split()[0]
-            results.append({'id': name,
-                            'scale': scale})
-
->>>>>>> Fixing images tests.
     def setAllowedGroupsForEdit(self, groups):
         permissions = getMultiAdapter(
             (self.context, self.request, self), ITilesPermissions)
