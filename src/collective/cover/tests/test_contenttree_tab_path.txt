@@ -51,9 +51,12 @@ Test content tree tab
     Click Element  css=div#contentchooser-content-show-button
 
     Click Element  link=Content tree
+    # XXX: filtering code use some slow fadeOut code, we must slow down selenium
     Input text  name=${input_contenttree}  folder
-    Page Should Contain  1 Results
-
+    Set Selenium Speed  1
+    Wait Until Page Contains  1 Results
+    Set Selenium Speed  0
+	
     Page Should Contain Element  css=${folder_selector}
     Click Element  css=${folder_selector}
 
