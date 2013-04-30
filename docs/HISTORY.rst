@@ -6,10 +6,11 @@ Because you have to know where your towel is.
 1.0a3 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Fix a bug in collection tile when the target collection was removed
+  (closes `#138`_). [jpgimenez]
+
 - Improve interface and performance of content chooser 
   (closes `#168`_ and `#169`_). [jpgimenez]
-
-- Store basic tile data in unicode format to avoid UnicodeDecodeError.
 
 - Add upgrade step to rename resources in CSS and JS registries
   (fixes `#171`_). [hvelarde]
@@ -19,9 +20,8 @@ Because you have to know where your towel is.
   is provided to update the registry with the new record (closes `#191`_).
   [hvelarde]
 
-- The Tile selection functionality (in the layout edit view), was refactored 
-  to an explicit D&D UI (closes `#183`_).
-
+- Tile selection functionality in layout edit view was refactored  to an
+  explicit D&D UI (closes `#183`_). [Quimera]
 
 - Apply default configuration to tiles at initialization (closes `#100`_).
   [hvelarde]
@@ -118,6 +118,7 @@ Because you have to know where your towel is.
 .. _`#128`: https://github.com/collective/collective.cover/issues/128
 .. _`#129`: https://github.com/collective/collective.cover/issues/129
 .. _`#137`: https://github.com/collective/collective.cover/issues/137
+.. _`#138`: https://github.com/collective/collective.cover/issues/138
 .. _`#142`: https://github.com/collective/collective.cover/issues/142
 .. _`#144`: https://github.com/collective/collective.cover/issues/144
 .. _`#146`: https://github.com/collective/collective.cover/issues/146
@@ -128,4 +129,5 @@ Because you have to know where your towel is.
 .. _`#169`: https://github.com/collective/collective.cover/issues/169
 .. _`#171`: https://github.com/collective/collective.cover/issues/171
 .. _`#179`: https://github.com/collective/collective.cover/issues/179
+.. _`#183`: https://github.com/collective/collective.cover/issues/183
 .. _`#191`: https://github.com/collective/collective.cover/issues/191
