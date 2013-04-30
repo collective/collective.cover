@@ -11,6 +11,10 @@ Because you have to know where your towel is.
   is provided to update the registry with the new record (closes `#191`_).
   [hvelarde]
 
+- The Tile selection functionality (in the layout edit view), was refactored 
+  to an explicit D&D UI (closes `#183`_).
+
+
 - Apply default configuration to tiles at initialization (closes `#100`_).
   [hvelarde]
 
