@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 from zope import schema
+from plone.directives import form
+
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
 from collective.cover.tiles.list import ListTile, IListTile
@@ -7,23 +9,25 @@ from plone.uuid.interfaces import IUUID
 from plone.tiles.interfaces import ITileDataManager
 
 from collective.cover import _
+from collective.cover.widgets.textlinessortable import TextLinesSortableFieldWidget
 
 
 class ICarouselTile(IListTile):
     """
     """
 
-    uuids = schema.List(
-        title=_(u'Elements'),
-        value_type=schema.TextLine(),
-        required=False,
-        readonly=True,
-    )
-
     autoplay = schema.Bool(
         title=_(u'Auto play'),
         required=False,
         default=True,
+    )
+
+    form.widget(uuids=TextLinesSortableFieldWidget)
+    uuids = schema.List(
+        title=_(u'Elements'),
+        value_type=schema.TextLine(),
+        required=False,
+        readonly=False,
     )
 
 

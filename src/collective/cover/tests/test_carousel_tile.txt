@@ -1,0 +1,45 @@
+*** Settings ***
+
+Library  Selenium2Library  timeout=5 seconds  implicit_wait=3 seconds
+Resource  keywords.txt
+Resource  cover_keywords.txt
+Variables  plone/app/testing/interfaces.py
+
+Suite Setup  Start Browser and Log In
+Suite Teardown  Close Browser
+
+*** Variables ***
+
+${carousel_tile_location}  "collective.cover.carousel"
+${image_selector}  .ui-draggable .contenttype-image:nth-child(1)
+${image_selector2}  .ui-draggable .contenttype-image:nth-child(2)
+${tile_selector}  div.tile-container div.tile
+
+*** Test cases ***
+
+Test file Tile
+    # XXX: should we create the cover object programmatically?
+    Create Cover  Title  Description  Empty layout
+    Click Link  link=Layout
+
+    Add Tile  ${carousel_tile_location}
+    Save Cover Layout
+
+    Click Link  link=Compose
+
+    Click Element  css=div#contentchooser-content-show-button
+
+    Drag And Drop  css=${image_selector}  css=${tile_selector}
+    Page Should Contain  Test image
+    Page Should Contain  This image was created for testing purposes
+
+    Drag And Drop  css=${image_selector2}  css=${tile_selector}
+    #Xpath Should Match X Times  //div[contains(@class, 'galleria-image')]  2
+
+    Click Link  css=.edit-tile-link
+    Page Should Contain Element  css=.textline-sortable-element
+    #Xpath Should Match X Times  //div[contains(@class, 'textline-sortable-element')]  2
+
+    Click Link  link=Layout
+    Delete Tile
+    Save Cover Layout
