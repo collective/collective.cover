@@ -4,6 +4,11 @@ There's a frood who really knows where his towel is
 1.0a3 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- A custom permission for the export layout funcionality was added; exporting
+  a cover layout to the Plone registry is now an administrative task
+  accomplished only by Managers and Site Administrators (closes `#177`_).
+  [Quimera]
+
 - Fix a bug in collection tile when the target collection was removed
   (closes `#138`_). [jpgimenez]
 
@@ -42,7 +47,6 @@ There's a frood who really knows where his towel is
 
 - Fixed a bug with Plone 4.3 that avoided TinyMCE being displayed for 
   RichText. (closes `#157`_). [ericof]
-
 
 1.0a2 (2013-04-09)
 ^^^^^^^^^^^^^^^^^^
@@ -116,16 +120,11 @@ There's a frood who really knows where his towel is
 .. _`#128`: https://github.com/collective/collective.cover/issues/128
 .. _`#129`: https://github.com/collective/collective.cover/issues/129
 .. _`#137`: https://github.com/collective/collective.cover/issues/137
-.. _`#138`: https://github.com/collective/collective.cover/issues/138
 .. _`#142`: https://github.com/collective/collective.cover/issues/142
 .. _`#144`: https://github.com/collective/collective.cover/issues/144
 .. _`#146`: https://github.com/collective/collective.cover/issues/146
 .. _`#152`: https://github.com/collective/collective.cover/issues/152
 .. _`#157`: https://github.com/collective/collective.cover/issues/157
 .. _`#158`: https://github.com/collective/collective.cover/issues/158
-.. _`#168`: https://github.com/collective/collective.cover/issues/168
-.. _`#169`: https://github.com/collective/collective.cover/issues/169
-.. _`#171`: https://github.com/collective/collective.cover/issues/171
+.. _`#177`: https://github.com/collective/collective.cover/issues/177
 .. _`#179`: https://github.com/collective/collective.cover/issues/179
-.. _`#183`: https://github.com/collective/collective.cover/issues/183
-.. _`#191`: https://github.com/collective/collective.cover/issues/191

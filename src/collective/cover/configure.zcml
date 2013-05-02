@@ -14,15 +14,17 @@
 
     <includeDependencies package="." />
 
-    <grok:grok package="." />
+    <permission
+        id="collective.cover.CanExportLayout"
+        title="collective.cover: Can Export Layout" />
 
+    <grok:grok package="." />
     <i18n:registerTranslations directory="locales" />
 
     <include package=".tiles" />
     <include file="profiles.zcml" />
 
     <!-- five.grok 1.3.2 will not register this by itself -->
-
     <browser:resourceDirectory
             name="collective.cover"
             directory="static"
@@ -54,7 +56,7 @@
         <require
             permission="zope.Public"
             interface=".widgets.interfaces.ISelectPreviewWidget"
-        />
+            />
     </class>
 
 </configure>
