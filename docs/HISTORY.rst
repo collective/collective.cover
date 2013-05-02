@@ -6,6 +6,11 @@ There's a frood who really knows where his towel is
 
 - New widget for allow sorting of gallery items.
 
+- A custom permission for the export layout funcionality was added; exporting
+  a cover layout to the Plone registry is now an administrative task
+  accomplished only by Managers and Site Administrators (closes `#177`_).
+  [Quimera]
+
 - Fix a bug in collection tile when the target collection was removed
   (closes `#138`_). [jpgimenez]
 

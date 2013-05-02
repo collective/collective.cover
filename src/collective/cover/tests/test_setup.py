@@ -60,6 +60,13 @@ class InstallTestCase(unittest.TestCase):
         except AttributeError:
             self.fail("Reinstall fails when the record was changed")
 
+    def test_can_export_layout_permission(self):
+        permission = 'collective.cover: Can Export Layout'
+        roles = self.portal.rolesOfPermission(permission)
+        roles = [r['name'] for r in roles if r['selected']]
+        expected = ['Manager', 'Site Administrator']
+        self.assertListEqual(roles, expected)
+
 
 class UninstallTestCase(unittest.TestCase):
 

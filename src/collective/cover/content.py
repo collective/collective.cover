@@ -3,6 +3,7 @@
 import json
 
 from Acquisition import aq_inner
+from AccessControl import getSecurityManager
 
 from zope.annotation.interfaces import IAnnotations
 from zope.component import getUtility
@@ -28,6 +29,7 @@ from plone.uuid.interfaces import IUUIDGenerator
 
 from collective.cover.controlpanel import ICoverSettings
 from collective.cover.utils import assign_tile_ids
+
 
 grok.templatedir('templates')
 
@@ -175,7 +177,7 @@ class LayoutEdit(grok.View):
         notify(EditBegunEvent(self.context))
 
     def __call__(self):
-        if 'export-layout' in self.request:
+        if 'export-layout' in self.request and self.can_export_layout():
             name = self.request.get('layout-name', None)
             if name:
                 layout = self.context.cover_layout
@@ -187,6 +189,12 @@ class LayoutEdit(grok.View):
                 settings.layouts[name] = unicode(layout)
 
         return super(LayoutEdit, self).__call__()
+
+    def can_export_layout(self):
+        sm = getSecurityManager()
+        portal = getToolByName(self.context, "portal_url").getPortalObject()
+        # TODO: check permission locally and not in portal context
+        return sm.checkPermission('collective.cover: Can Export Layout', portal)
 
 
 class UpdateTileContent(grok.View):
