@@ -11,6 +11,9 @@ dirname = os.path.dirname(__file__)
 files = os.listdir(dirname)
 tests = [f for f in files if f.startswith('test_') and f.endswith('.txt')]
 
+# FIXME: https://github.com/collective/collective.cover/issues/202
+tests.remove('test_carousel_tile.txt')
+
 
 def test_suite():
     suite = unittest.TestSuite()

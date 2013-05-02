@@ -141,7 +141,6 @@
 
                         var tile_type = ui.draggable.data('tile-type');
                         new_tile.attr("data-tile-type", tile_type);
-                        debugger;
 
                         $.ajax({
                             url: "@@uid_getter",
