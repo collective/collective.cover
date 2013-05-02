@@ -4,7 +4,9 @@ There's a frood who really knows where his towel is
 1.0a3 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
-- Added custom permission for the export layout funcionality (closes `#177`_).
+- A custom permission for the export layout funcionality was added; exporting
+  a cover layout to the Plone registry is now an administrative task
+  accomplished only by Managers and Site Administrators (closes `#177`_).
   [Quimera]
 
 - Fix a bug in collection tile when the target collection was removed
