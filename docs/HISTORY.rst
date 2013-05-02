@@ -4,8 +4,8 @@ There's a frood who really knows where his towel is
 1.0a3 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
-- Added custom permission for the export layout funcionality
-  (closes `#177`_). [Quimera]
+- Added custom permission for the export layout funcionality (closes `#177`_).
+  [Quimera]
 
 - Fix a bug in collection tile when the target collection was removed
   (closes `#138`_). [jpgimenez]
@@ -124,4 +124,5 @@ There's a frood who really knows where his towel is
 .. _`#152`: https://github.com/collective/collective.cover/issues/152
 .. _`#157`: https://github.com/collective/collective.cover/issues/157
 .. _`#158`: https://github.com/collective/collective.cover/issues/158
+.. _`#177`: https://github.com/collective/collective.cover/issues/177
 .. _`#179`: https://github.com/collective/collective.cover/issues/179
