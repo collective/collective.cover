@@ -40,10 +40,10 @@
     <div id="sidebar">
         <ul class="layout-actions">
             <li>
-                <a id="btn-row" class="btn btn-large btn-inverse draggable"><i class="icon-white"></i><span i18n:translate="">Row</span></a>
+                <a id="btn-row" class="btn btn-small btn-inverse draggable"><i class="icon-white"></i><span i18n:translate="">Row</span></a>
             </li>
             <li>
-                <a id="btn-column" class="btn btn-large btn-inverse draggable"><i class="icon-white"></i><span i18n:translate="">Column</span></a>
+                <a id="btn-column" class="btn btn-small btn-inverse draggable"><i class="icon-white"></i><span i18n:translate="">Column</span></a>
             </li>
         </ul>
         <div tal:replace="structure context/@@tile_list"></div>
@@ -53,7 +53,6 @@
              tal:replace="structure layout/render_layout_edit" />
         <!--div class="content-contentchooser" tal:replace="structure context/@@select-content-contentchooser"></div-->
     </div>
-    <div id="tile-select-list" class="modal hide" tal:replace="structure context/@@tile_select"></div>
     <div id="group-select-list" class="modal hide" tal:replace="structure context/@@group_select"></div>
     <div id="tile-configure" class="modal hide"></div>
     <div id="export-layout" class="modal hide">
