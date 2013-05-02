@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from zope import schema
-from plone.directives import form
+from plone.autoform import directives as form
 
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
