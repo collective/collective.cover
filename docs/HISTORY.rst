@@ -6,6 +6,8 @@ Because you have to know where your towel is.
 1.0a3 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- New widget for allow sorting of gallery items.
+
 - The Tile selection functionality (in the layout edit view), was refactored 
   to an explicit D&D UI (closes `#183`_).
 
