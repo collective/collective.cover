@@ -59,4 +59,11 @@
             />
     </class>
 
+    <class class=".widgets.textlinessortable.TextLinesSortableWidget">
+        <require
+            permission="zope.Public"
+            interface=".widgets.interfaces.ITextLinesSortableWidget"
+        />
+    </class>
+
 </configure>
