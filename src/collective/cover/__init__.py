@@ -5,5 +5,5 @@ from Products.CMFCore.permissions import setDefaultRoles
 
 _ = MessageFactory('collective.cover')
 
-setDefaultRoles('collective.cover: CanExportLayout',
-                ('Manager', 'Site Administrator'))
+setDefaultRoles(
+    'collective.cover: Can Export Layout', ('Manager', 'Site Administrator'))

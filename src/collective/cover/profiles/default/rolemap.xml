@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
  <rolemap>
    <permissions>
-     <permission name="collective.cover: CanExportLayout" acquire="False">
+     <permission name="collective.cover: Can Export Layout" acquire="False">
        <role name="Manager"/>
        <role name="Site Administrator"/>
      </permission>

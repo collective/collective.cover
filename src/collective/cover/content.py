@@ -193,7 +193,8 @@ class LayoutEdit(grok.View):
     def can_export_layout(self):
         sm = getSecurityManager()
         portal = getToolByName(self.context, "portal_url").getPortalObject()
-        return sm.checkPermission('collective.cover: CanExportLayout', portal)
+        # TODO: check permission locally and not in portal context
+        return sm.checkPermission('collective.cover: Can Export Layout', portal)
 
 
 class UpdateTileContent(grok.View):
