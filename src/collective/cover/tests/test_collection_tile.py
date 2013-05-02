@@ -8,6 +8,10 @@ from zope.interface.verify import verifyClass
 from zope.interface.verify import verifyObject
 
 import unittest
+from plone.app.testing import TEST_USER_ID
+from plone.app.testing import TEST_USER_NAME
+from plone.app.testing import login
+from plone.app.testing import setRoles
 
 
 class CollectionTileTestCase(unittest.TestCase):
@@ -53,3 +57,25 @@ class CollectionTileTestCase(unittest.TestCase):
 
     def test_accepted_content_types(self):
         self.assertEqual(self.tile.accepted_ct(), ['Collection'])
+
+    def test_collection_tile_render(self):
+        obj = self.portal['my-collection']
+        self.tile.populate_with_object(obj)
+        rendered = self.tile()
+
+        self.assertIn("<p>The collection doesn't have any results.</p>", rendered)
+
+    def test_delete_collection(self):
+        obj = self.portal['my-collection']
+        self.tile.populate_with_object(obj)
+        self.tile.populate_with_object(obj)
+        rendered = self.tile()
+
+        self.assertIn("<p>The collection doesn't have any results.</p>", rendered)
+
+        setRoles(self.portal, TEST_USER_ID, ['Manager', 'Editor', 'Reviewer'])
+        login(self.portal, TEST_USER_NAME)
+        self.portal.manage_delObjects(['my-collection'])
+        rendered = self.tile()
+
+        self.assertIn("Please drop a collection here to fill the tile.", rendered)

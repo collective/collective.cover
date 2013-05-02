@@ -151,6 +151,7 @@
       name="collective.cover.image"
       title="Image Tile"
       description="A tile that shows an image object."
+      icon="++resource++collective.cover/tile-image.png"
       add_permission="cmf.ModifyPortalContent"
       schema=".image.IImageTile"
       class=".image.ImageTile"
@@ -174,6 +175,7 @@
       name="collective.cover.contentbody"
       title="Content Body Tile"
       description="A tile that display the body of a content type."
+      icon="++resource++collective.cover/tile-contentbody.png"
       add_permission="cmf.ModifyPortalContent"
       schema=".contentbody.IContentBodyTile"
       class=".contentbody.ContentBodyTile"
@@ -183,8 +185,9 @@
 
   <plone:tile
       name="collective.cover.pfg"
-      title="Plone FormGen Tile"
+      title="FormGen Tile"
       description="A tile that display an embedded Form Folder from Plone FormGen."
+      icon="++resource++collective.cover/tile-pfg.png"
       add_permission="cmf.ModifyPortalContent"
       schema=".pfg.IPFGTile"
       class=".pfg.PFGTile"
