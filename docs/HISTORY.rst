@@ -1,10 +1,16 @@
-Changelog
----------
-
-Because you have to know where your towel is.
+There's a frood who really knows where his towel is
+---------------------------------------------------
 
 1.0a3 (unreleased)
 ^^^^^^^^^^^^^^^^^^
+
+- Gallery tile now allows sorting of items easily through a widget created for
+  that purpose (closes `#198`_). [Quimera]
+
+- A custom permission for the export layout funcionality was added; exporting
+  a cover layout to the Plone registry is now an administrative task
+  accomplished only by Managers and Site Administrators (closes `#177`_).
+  [Quimera]
 
 - Fix a bug in collection tile when the target collection was removed
   (closes `#138`_). [jpgimenez]
@@ -131,3 +137,4 @@ Because you have to know where your towel is.
 .. _`#179`: https://github.com/collective/collective.cover/issues/179
 .. _`#183`: https://github.com/collective/collective.cover/issues/183
 .. _`#191`: https://github.com/collective/collective.cover/issues/191
+.. _`#198`: https://github.com/collective/collective.cover/issues/198
