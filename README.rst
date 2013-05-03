@@ -430,25 +430,34 @@ Then, you have several ways of using image scales in your tile templates.
 
 1. You can pass width and height to the ``scale`` method explicitly::
 
-     <img tal:define="scales view/@@images;
-                      thumbnail python: scales.scale('image', width=64, height=64);"
-          tal:condition="thumbnail"
-          tal:attributes="src thumbnail/url;
-                          width thumbnail/width;
-                          height thumbnail/height" />
+    <img tal:define="scales view/@@images;
+                     thumbnail python: scales.scale('image', width=64, height=64);"
+       tal:condition="thumbnail"
+       tal:attributes="src thumbnail/url;
+                       width thumbnail/width;
+                       height thumbnail/height;
+                       class position;
+                       alt view/data/title" />
 
 2. Or you can use Plone predefined scales::
 
-     <img tal:define="scales view/@@images;
-                      thumbnail python: scales.scale('image', scale='mini');"
-          tal:condition="thumbnail"
-          tal:attributes="src thumbnail/url;
-                          width thumbnail/width;
-                          height thumbnail/height" />
+    <img tal:define="scales view/@@images;
+                     thumbnail python: scales.scale('image', scale=scale);"
+       tal:condition="thumbnail"
+       tal:attributes="src thumbnail/url;
+                       width thumbnail/width;
+                       height thumbnail/height;
+                       class position;
+                       alt view/data/title" />
 
 Recommendation:: Use the scale saved from the configuration. Check lines 26 through
 34 from the collection.pt file under tiles/templates directory to get the idea.
 
+Cover tiles supports external images too, that means than if you drop a
+content with an image into a cover tile than implements an image field,
+cover will honor the image and scales in the original object. This way
+the image data isn't duplicated and products than allow scales modifications
+are supported.
 
 Alternate solutions
 ^^^^^^^^^^^^^^^^^^^
