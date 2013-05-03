@@ -30,7 +30,7 @@ class VocabulariesTestCase(unittest.TestCase):
         vocabulary = queryUtility(IVocabularyFactory, name)
         self.assertIsNotNone(vocabulary)
         tiles = vocabulary(self.portal)
-        self.assertEqual(len(tiles), 11)
+        self.assertEqual(len(tiles), 10)
         self.assertIn(u'collective.cover.basic', tiles)
         self.assertIn(u'collective.cover.carousel', tiles)
         self.assertIn(u'collective.cover.collection', tiles)
@@ -40,12 +40,7 @@ class VocabulariesTestCase(unittest.TestCase):
         self.assertIn(u'collective.cover.image', tiles)
         self.assertIn(u'collective.cover.link', tiles)
         self.assertIn(u'collective.cover.list', tiles)
-        # FIXME see: https://github.com/collective/collective.cover/issues/194
-        self.assertIn(u'collective.cover.pfg', tiles)
         self.assertIn(u'collective.cover.richtext', tiles)
-        # XXX: https://github.com/collective/collective.cover/issues/81
-        #self.assertIn(u'plone.app.imagetile', tiles)
-        #self.assertIn(u'plone.app.texttile', tiles)
 
     def test_enabled_tiles_vocabulary(self):
         name = u'collective.cover.EnabledTiles'
@@ -65,7 +60,7 @@ class VocabulariesTestCase(unittest.TestCase):
         # FIXME see: https://github.com/collective/collective.cover/issues/194
         self.assertIn(u'collective.cover.pfg', tiles)
         self.assertIn(u'collective.cover.richtext', tiles)
-
+        # XXX: https://github.com/collective/collective.cover/issues/81
         # standard tiles are not enabled... yet
         self.assertNotIn(u'plone.app.imagetile', tiles)
         self.assertNotIn(u'plone.app.texttile', tiles)
