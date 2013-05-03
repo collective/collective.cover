@@ -26,12 +26,14 @@
 			         position python:field.get('position', '');">
   <a class="imag" tal:attributes="href view/getURL|string:#;
                                   title description|nothing;">
-    <h1 tal:content="scale">...</h1>
     <img tal:define="scales view/@@images;
                      thumbnail python:scale and scales.scale('image', scale=scale) or scales.scale('image');"
          tal:condition="thumbnail"
          tal:attributes="src thumbnail/url;
-                         class position;" />
+                         width thumbnail/width;
+                         height thumbnail/height;
+                         class position;
+                         alt string:Image" />
   </a>
 </tal:image>
 </metal:image>
