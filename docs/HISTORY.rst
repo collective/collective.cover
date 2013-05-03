@@ -1,7 +1,7 @@
 There's a frood who really knows where his towel is
 ---------------------------------------------------
 
-1.0a3 (unreleased)
+1.0a3 (2013-05-03)
 ^^^^^^^^^^^^^^^^^^
 
 - Better support for internal and external images (closes `#188`_).
