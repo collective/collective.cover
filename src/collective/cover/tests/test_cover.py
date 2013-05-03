@@ -64,7 +64,12 @@ class CoverIntegrationTestCase(unittest.TestCase):
         self.assertEqual(self.folder.default_page, 'c1')
 
     def test_export_permission(self):
+        # layout export is visible for user with administrative rights
         setRoles(self.portal, TEST_USER_ID, ['Manager'])
         self.assertTrue(self.layout_edit.can_export_layout())
+        self.assertIn('<span>Export layout</span>', self.layout_edit())
+
+        # layout export is not visible for other users
         setRoles(self.portal, TEST_USER_ID, ['Member'])
         self.assertFalse(self.layout_edit.can_export_layout())
+        self.assertNotIn('<span>Export layout</span>', self.layout_edit())
