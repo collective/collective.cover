@@ -1,10 +1,9 @@
-from five import grok
-
-from zope.annotation.interfaces import IAnnotations
-
-from plone.app.iterate.interfaces import ICheckinEvent
+# -*- coding: utf-8 -*-
 
 from collective.cover.content import ICover
+from five import grok
+from plone.app.iterate.interfaces import ICheckinEvent
+from zope.annotation.interfaces import IAnnotations
 
 
 @grok.subscribe(ICover, ICheckinEvent)

@@ -1,25 +1,23 @@
 # -*- coding: utf-8 -*-
-from zope import schema
-from zope.interface import implements
-from zope.component import getUtility
 
+from collective.cover import _
+from collective.cover.controlpanel import ICoverSettings
+from collective.cover.tiles.base import IPersistentCoverTile
+from collective.cover.tiles.base import PersistentCoverTile
+from collective.cover.tiles.configuration_view import IDefaultConfigureForm
+from plone.autoform import directives as form
 from plone.memoize import view
 from plone.memoize.instance import memoizedproperty
 from plone.namedfile.field import NamedBlobImage as NamedImage
 from plone.registry.interfaces import IRegistry
 from plone.tiles.interfaces import ITileDataManager
 from plone.uuid.interfaces import IUUID
-from plone.autoform import directives as form
-
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.utils import safe_unicode
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-
-from collective.cover import _
-from collective.cover.tiles.base import IPersistentCoverTile
-from collective.cover.tiles.base import PersistentCoverTile
-from collective.cover.controlpanel import ICoverSettings
-from collective.cover.tiles.configuration_view import IDefaultConfigureForm
+from zope import schema
+from zope.component import getUtility
+from zope.interface import implements
 
 
 class IBasicTile(IPersistentCoverTile):

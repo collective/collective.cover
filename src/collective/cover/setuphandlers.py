@@ -1,12 +1,9 @@
 # -*- coding:utf-8 -*-
-'''
-Created on 01/04/2013
 
-@author: jpg
-'''
-import logging
 from collective.cover.config import PROJECTNAME
 from Products.CMFCore.utils import getToolByName
+
+import logging
 
 
 def to_plone43(context, logger=None):

@@ -1,17 +1,14 @@
 # -*- coding: utf-8 -*-
 
-from zope import schema
-from zope.interface import implements
-
-from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-
-from plone.app.uuid.utils import uuidToObject
-from plone.tiles.interfaces import ITileDataManager
-from plone.uuid.interfaces import IUUID
-
 from collective.cover import _
 from collective.cover.tiles.base import IPersistentCoverTile
 from collective.cover.tiles.base import PersistentCoverTile
+from plone.app.uuid.utils import uuidToObject
+from plone.tiles.interfaces import ITileDataManager
+from plone.uuid.interfaces import IUUID
+from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
+from zope import schema
+from zope.interface import implements
 
 HTML = """
     <a href="%s/at_download/file">

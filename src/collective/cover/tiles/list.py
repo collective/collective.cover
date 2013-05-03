@@ -1,26 +1,23 @@
 # -*- coding: utf-8 -*-
 
-from zope import schema
-from zope.component import queryUtility
-from zope.component import getUtility
-from zope.interface import implements
-from zope.schema import getFieldsInOrder
-
-from plone.registry.interfaces import IRegistry
+from collective.cover import _
+from collective.cover.controlpanel import ICoverSettings
+from collective.cover.interfaces import ICoverUIDsProvider
+from collective.cover.tiles.base import IPersistentCoverTile
+from collective.cover.tiles.base import PersistentCoverTile
 from plone.app.uuid.utils import uuidToObject
+from plone.memoize import view
 from plone.namedfile.field import NamedImage
+from plone.registry.interfaces import IRegistry
 from plone.tiles.interfaces import ITileDataManager
 from plone.tiles.interfaces import ITileType
 from plone.uuid.interfaces import IUUID
-from plone.memoize import view
-
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-
-from collective.cover import _
-from collective.cover.tiles.base import IPersistentCoverTile
-from collective.cover.tiles.base import PersistentCoverTile
-from collective.cover.controlpanel import ICoverSettings
-from collective.cover.interfaces import ICoverUIDsProvider
+from zope import schema
+from zope.component import getUtility
+from zope.component import queryUtility
+from zope.interface import implements
+from zope.schema import getFieldsInOrder
 
 
 # XXX: we must refactor this tile

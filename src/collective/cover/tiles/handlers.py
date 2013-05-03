@@ -1,7 +1,8 @@
 # -*- coding: UTF-8 -*-
+
+from collective.cover.tiles.base import IPersistentCoverTile
 from zope.component import adapter
 from zope.lifecycleevent.interfaces import IObjectModifiedEvent
-from collective.cover.tiles.base import IPersistentCoverTile
 
 
 @adapter(IPersistentCoverTile, IObjectModifiedEvent)

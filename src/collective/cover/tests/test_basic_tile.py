@@ -1,32 +1,31 @@
 # -*- coding: utf-8 -*-
 
-import unittest2 as unittest
-
+from collective.cover.testing import generate_jpeg
+from collective.cover.testing import images_are_equal
+from collective.cover.testing import INTEGRATION_TESTING
+from collective.cover.tiles.base import IPersistentCoverTile
+from collective.cover.tiles.basic import BasicTile
+from collective.cover.tiles.configuration import ITilesConfigurationScreen
+from collective.cover.tiles.permissions import ITilesPermissions
 from DateTime import DateTime
-
+from plone.cachepurging.hooks import queuePurge
+from plone.cachepurging.interfaces import ICachePurgingSettings
+from plone.namedfile.file import NamedBlobImage as NamedImageFile
+from plone.registry.interfaces import IRegistry
+from plone.tiles.interfaces import ITileDataManager
+from zope.annotation.interfaces import IAnnotations
+from zope.annotation.interfaces import IAttributeAnnotatable
+from zope.component import getMultiAdapter
+from zope.component import provideUtility
+from zope.component import queryMultiAdapter
+from zope.component import queryUtility
+from zope.component.globalregistry import provideHandler
+from zope.globalrequest import setRequest
+from zope.interface import alsoProvides
 from zope.interface.verify import verifyClass
 from zope.interface.verify import verifyObject
 
-from collective.cover.testing import INTEGRATION_TESTING, generate_jpeg,\
-    images_are_equal
-from collective.cover.tiles.basic import BasicTile
-from collective.cover.tiles.base import IPersistentCoverTile
-from zope.component import getMultiAdapter
-from collective.cover.tiles.permissions import ITilesPermissions
-from zope.annotation.interfaces import IAnnotations
-from collective.cover.tiles.configuration import ITilesConfigurationScreen
-from zope.component import queryMultiAdapter
-from plone.namedfile.file import NamedBlobImage as NamedImageFile
-from plone.tiles.interfaces import ITileDataManager
-from zope.annotation.interfaces import IAttributeAnnotatable
-from zope.interface import alsoProvides
-from zope.component import provideUtility
-from zope.globalrequest import setRequest
-from plone.registry.interfaces import IRegistry
-from plone.cachepurging.interfaces import ICachePurgingSettings
-from zope.component import queryUtility
-from zope.component.globalregistry import provideHandler
-from plone.cachepurging.hooks import queuePurge
+import unittest
 
 
 class BasicTileTestCase(unittest.TestCase):

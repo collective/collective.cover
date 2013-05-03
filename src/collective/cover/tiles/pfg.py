@@ -1,19 +1,15 @@
 # -*- coding: utf-8 -*-
 
-from zope import schema
-from zope.interface import implements
-
-from plone.app.uuid.utils import uuidToObject
-from plone.autoform import directives as form
-
-from plone.tiles.interfaces import ITileDataManager
-from plone.uuid.interfaces import IUUID
-
-from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-
 from collective.cover import _
 from collective.cover.tiles.base import IPersistentCoverTile
 from collective.cover.tiles.base import PersistentCoverTile
+from plone.app.uuid.utils import uuidToObject
+from plone.autoform import directives as form
+from plone.tiles.interfaces import ITileDataManager
+from plone.uuid.interfaces import IUUID
+from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
+from zope import schema
+from zope.interface import implements
 
 
 class IPFGTile(IPersistentCoverTile):

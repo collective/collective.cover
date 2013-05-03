@@ -1,32 +1,22 @@
+# -*- coding: utf-8 -*-
 
-from z3c.form import button
-from z3c.form import form
-
-from z3c.form.interfaces import IDataManager
-from z3c.form.interfaces import NO_VALUE
-
-from zope.interface import implements, Interface
-from zope.component import getMultiAdapter
-
-from zope.event import notify
-
-from zope.lifecycleevent import ObjectModifiedEvent
-
-from zope.publisher.interfaces.browser import IBrowserView
-
-from zope.traversing.browser.absoluteurl import absoluteURL
+from collective.cover import _
+from collective.cover.tiles.configuration import ITilesConfigurationScreen
 from plone.app.tiles.browser.base import TileForm
 from plone.app.tiles.browser.traversal import TileTraverser
-
-
 from plone.z3cform import layout
-
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-
 from Products.statusmessages.interfaces import IStatusMessage
-
-from collective.cover.tiles.configuration import ITilesConfigurationScreen
-from collective.cover import _
+from z3c.form import button
+from z3c.form import form
+from z3c.form.interfaces import IDataManager
+from z3c.form.interfaces import NO_VALUE
+from zope.component import getMultiAdapter
+from zope.event import notify
+from zope.interface import implements, Interface
+from zope.lifecycleevent import ObjectModifiedEvent
+from zope.publisher.interfaces.browser import IBrowserView
+from zope.traversing.browser.absoluteurl import absoluteURL
 
 
 class ITileConfigureView(IBrowserView):

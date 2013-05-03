@@ -1,18 +1,17 @@
 # -*- coding: utf-8 -*-
-import os
-import random
-from StringIO import StringIO
-from PIL import Image, ImageChops
 
 from App.Common import package_home
-
-from plone.app.testing import PloneSandboxLayer
-from plone.app.testing import PLONE_FIXTURE
-from plone.app.testing import IntegrationTesting
+from PIL import Image, ImageChops
 from plone.app.testing import FunctionalTesting
-
-from plone.testing.z2 import ZSERVER_FIXTURE
+from plone.app.testing import IntegrationTesting
+from plone.app.testing import PLONE_FIXTURE
+from plone.app.testing import PloneSandboxLayer
 from plone.testing.z2 import installProduct
+from plone.testing.z2 import ZSERVER_FIXTURE
+from StringIO import StringIO
+
+import os
+import random
 
 
 def loadFile(name, size=0):

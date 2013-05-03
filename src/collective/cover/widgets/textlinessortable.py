@@ -1,16 +1,12 @@
-import zope.interface
-
-from z3c.form import interfaces
-
-from z3c.form.browser import textlines
-from z3c.form import widget
-
-from plone.app.uuid.utils import uuidToObject
-
-from zope.browserpage.viewpagetemplatefile import ViewPageTemplateFile
-
+# -*- coding: utf-8 -*-
 
 from collective.cover.widgets.interfaces import ITextLinesSortableWidget
+from plone.app.uuid.utils import uuidToObject
+from z3c.form import interfaces
+from z3c.form import widget
+from z3c.form.browser import textlines
+from zope.browserpage.viewpagetemplatefile import ViewPageTemplateFile
+import zope.interface
 
 
 class TextLinesSortableWidget(textlines.TextLinesWidget):
@@ -29,7 +25,7 @@ class TextLinesSortableWidget(textlines.TextLinesWidget):
             return self.input_template(self)
 
     def sort_results(self):
-        results = [{'obj': uuidToObject(x), 'uuid':x} for x in self.context['uuids']]
+        results = [{'obj': uuidToObject(x), 'uuid': x} for x in self.context['uuids']]
 
         return results
 

@@ -3,16 +3,13 @@
 # Basic implementation taken from
 # http://davisagli.com/blog/using-tiles-to-provide-more-flexible-plone-layouts
 
+from collective.cover.tiles.base import IPersistentCoverTile
+from collective.cover.tiles.base import PersistentCoverTile
 from plone.app.textfield import RichText
 from plone.app.textfield.interfaces import ITransformer
 from plone.app.textfield.value import RichTextValue
-
 from plone.tiles.interfaces import ITileDataManager
-
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-
-from collective.cover.tiles.base import IPersistentCoverTile
-from collective.cover.tiles.base import PersistentCoverTile
 
 
 class IRichTextTileData(IPersistentCoverTile):

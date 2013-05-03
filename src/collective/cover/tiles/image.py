@@ -1,21 +1,19 @@
 # -*- coding: utf-8 -*-
-import time
+
 from Acquisition import aq_inner
-from zope.interface import implements
-from zope.component import queryMultiAdapter
-
-from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-
-from plone.namedfile.field import NamedBlobImage as NamedImage
-from plone.namedfile.file import NamedBlobImage as NamedImageFile
-
-from plone.tiles.interfaces import ITileDataManager
-
 from collective.cover import _
+from collective.cover.tiles.base import AnnotationStorage
 from collective.cover.tiles.base import IPersistentCoverTile
 from collective.cover.tiles.base import PersistentCoverTile
-from collective.cover.tiles.base import AnnotationStorage
+from plone.namedfile.field import NamedBlobImage as NamedImage
+from plone.namedfile.file import NamedBlobImage as NamedImageFile
 from plone.scale.storage import AnnotationStorage as BaseAnnotationStorage
+from plone.tiles.interfaces import ITileDataManager
+from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
+from zope.component import queryMultiAdapter
+from zope.interface import implements
+
+import time
 
 
 class IImageTile(IPersistentCoverTile):

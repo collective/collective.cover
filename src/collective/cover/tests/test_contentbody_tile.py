@@ -1,17 +1,16 @@
 # -*- coding: utf-8 -*-
 
-import unittest2 as unittest
-
+from collective.cover.testing import INTEGRATION_TESTING
+from collective.cover.tiles.base import IPersistentCoverTile
+from collective.cover.tiles.configuration import ITilesConfigurationScreen
+from collective.cover.tiles.contentbody import ContentBodyTile
+from collective.cover.tiles.permissions import ITilesPermissions
+from zope.annotation.interfaces import IAnnotations
+from zope.component import getMultiAdapter
 from zope.interface.verify import verifyClass
 from zope.interface.verify import verifyObject
 
-from collective.cover.testing import INTEGRATION_TESTING
-from collective.cover.tiles.contentbody import ContentBodyTile
-from collective.cover.tiles.base import IPersistentCoverTile
-from zope.component import getMultiAdapter
-from collective.cover.tiles.permissions import ITilesPermissions
-from zope.annotation.interfaces import IAnnotations
-from collective.cover.tiles.configuration import ITilesConfigurationScreen
+import unittest
 
 
 class ContentBodyTileTestCase(unittest.TestCase):

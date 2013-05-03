@@ -1,16 +1,15 @@
-import time
-from persistent.dict import PersistentDict
-
-from zope.component import adapts
-
-from zope.schema import getFields
-
-from plone.tiles.data import PersistentTileDataManager
-from plone.namedfile.interfaces import INamedImage
+# -*- coding: utf-8 -*-
 
 from collective.cover.tiles.base import IPersistentCoverTile
+from persistent.dict import PersistentDict
+from plone.namedfile.interfaces import INamedImage
+from plone.tiles.data import PersistentTileDataManager
 from z3c.caching.purge import Purge
+from zope.component import adapts
 from zope.event import notify
+from zope.schema import getFields
+
+import time
 
 
 class PersistentCoverTileDataManager(PersistentTileDataManager):

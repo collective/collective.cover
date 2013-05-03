@@ -1,16 +1,14 @@
 # -*- coding: utf-8 -*-
 
-import unittest2 as unittest
-
+from collective.cover.testing import INTEGRATION_TESTING
+from collective.cover.tiles.base import IPersistentCoverTile
+from collective.cover.tiles.list import ListTile
+from plone.uuid.interfaces import IUUID
 from zope.component import getMultiAdapter
 from zope.interface.verify import verifyClass
 from zope.interface.verify import verifyObject
 
-from collective.cover.testing import INTEGRATION_TESTING
-from collective.cover.tiles.list import ListTile
-from collective.cover.tiles.base import IPersistentCoverTile
-
-from plone.uuid.interfaces import IUUID
+import unittest
 
 
 class ListTileTestCase(unittest.TestCase):

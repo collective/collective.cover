@@ -1,20 +1,16 @@
 # -*- coding: utf-8 -*-
-import json
-import unittest2 as unittest
 
+from collective.cover.controlpanel import ICoverSettings
+from collective.cover.testing import INTEGRATION_TESTING
+from collective.cover.widgets.selectpreview import SelectPreviewWidget
+from plone.app.testing import setRoles
+from plone.app.testing import TEST_USER_ID
+from plone.registry.interfaces import IRegistry
+from Products.CMFCore.utils import getToolByName
 from zope.component import getUtility
 
-from plone.app.testing import TEST_USER_ID
-
-
-from Products.CMFCore.utils import getToolByName
-from plone.app.testing import setRoles
-from plone.registry.interfaces import IRegistry
-
-from collective.cover.testing import INTEGRATION_TESTING
-
-from collective.cover.widgets.selectpreview import SelectPreviewWidget
-from collective.cover.controlpanel import ICoverSettings
+import json
+import unittest
 
 
 class WidgetPreviewCase(unittest.TestCase):

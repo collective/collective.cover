@@ -1,14 +1,15 @@
 # -*- coding: utf-8 -*-
 
-import unittest2 as unittest
+from collective.cover.testing import generate_jpeg
+from collective.cover.testing import images_are_equal
+from collective.cover.testing import INTEGRATION_TESTING
+from collective.cover.tiles.base import IPersistentCoverTile
+from collective.cover.tiles.image import ImageTile
 from PIL import Image
 from zope.interface.verify import verifyClass
 from zope.interface.verify import verifyObject
 
-from collective.cover.testing import INTEGRATION_TESTING, generate_jpeg,\
-    images_are_equal
-from collective.cover.tiles.image import ImageTile
-from collective.cover.tiles.base import IPersistentCoverTile
+import unittest
 
 
 class ImageTileTestCase(unittest.TestCase):

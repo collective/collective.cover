@@ -3,7 +3,6 @@
 from collective.cover.testing import INTEGRATION_TESTING
 from collective.cover.tiles.base import IPersistentCoverTile
 from collective.cover.tiles.carousel import CarouselTile
-from plone.uuid.interfaces import IUUID
 from zope.component import getMultiAdapter
 from zope.interface.verify import verifyClass
 from zope.interface.verify import verifyObject

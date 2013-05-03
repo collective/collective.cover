@@ -1,23 +1,21 @@
 # -*- coding: utf-8 -*-
 
-import unittest2 as unittest
-
-from plone.app.testing import TEST_USER_ID
-from plone.app.testing import TEST_USER_NAME
+from collective.cover.testing import INTEGRATION_TESTING
+from collective.cover.tiles.base import IPersistentCoverTile
+from collective.cover.tiles.configuration import ITilesConfigurationScreen
+from collective.cover.tiles.permissions import ITilesPermissions
+from collective.cover.tiles.pfg import PFGTile
 from plone.app.testing import login
 from plone.app.testing import setRoles
-
+from plone.app.testing import TEST_USER_ID
+from plone.app.testing import TEST_USER_NAME
+from plone.uuid.interfaces import IUUID
+from zope.annotation.interfaces import IAnnotations
+from zope.component import getMultiAdapter
 from zope.interface.verify import verifyClass
 from zope.interface.verify import verifyObject
 
-from collective.cover.testing import INTEGRATION_TESTING
-from collective.cover.tiles.pfg import PFGTile
-from collective.cover.tiles.base import IPersistentCoverTile
-from zope.component import getMultiAdapter
-from collective.cover.tiles.permissions import ITilesPermissions
-from zope.annotation.interfaces import IAnnotations
-from collective.cover.tiles.configuration import ITilesConfigurationScreen
-from plone.uuid.interfaces import IUUID
+import unittest
 
 
 class PFGTileTestCase(unittest.TestCase):

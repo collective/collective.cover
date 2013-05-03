@@ -1,15 +1,14 @@
 # -*- coding: utf-8 -*-
-from zope import schema
-from plone.autoform import directives as form
-
-from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-
-from collective.cover.tiles.list import ListTile, IListTile
-from plone.uuid.interfaces import IUUID
-from plone.tiles.interfaces import ITileDataManager
 
 from collective.cover import _
+from collective.cover.tiles.list import IListTile
+from collective.cover.tiles.list import ListTile
 from collective.cover.widgets.textlinessortable import TextLinesSortableFieldWidget
+from plone.autoform import directives as form
+from plone.tiles.interfaces import ITileDataManager
+from plone.uuid.interfaces import IUUID
+from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
+from zope import schema
 
 
 class ICarouselTile(IListTile):

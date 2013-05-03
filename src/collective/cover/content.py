@@ -1,35 +1,29 @@
 # -*- coding: utf-8 -*-
 
-import json
-
-from Acquisition import aq_inner
-from AccessControl import getSecurityManager
-
-from zope.annotation.interfaces import IAnnotations
-from zope.component import getUtility
-from zope.event import notify
-from zope.interface import implements
-
-from five import grok
-from zope.container.interfaces import IObjectAddedEvent
-
-from Products.CMFCore.utils import getToolByName
-
-from Products.GenericSetup.interfaces import IDAVAware
-
-from plone.dexterity.content import Item
-from plone.dexterity.events import EditBegunEvent
+# XXX: remove these imports?
 #from plone.dexterity.events import EditCancelledEvent
 #from plone.dexterity.events import EditFinishedEvent
+from AccessControl import getSecurityManager
+from Acquisition import aq_inner
+from collective.cover.controlpanel import ICoverSettings
+from collective.cover.utils import assign_tile_ids
+from five import grok
+from plone.dexterity.content import Item
+from plone.dexterity.events import EditBegunEvent
 from plone.dexterity.utils import createContentInContainer
 from plone.directives import form
 from plone.registry.interfaces import IRegistry
 from plone.tiles.interfaces import ITileDataManager
 from plone.uuid.interfaces import IUUIDGenerator
+from Products.CMFCore.utils import getToolByName
+from Products.GenericSetup.interfaces import IDAVAware
+from zope.annotation.interfaces import IAnnotations
+from zope.component import getUtility
+from zope.container.interfaces import IObjectAddedEvent
+from zope.event import notify
+from zope.interface import implements
 
-from collective.cover.controlpanel import ICoverSettings
-from collective.cover.utils import assign_tile_ids
-
+import json
 
 grok.templatedir('templates')
 

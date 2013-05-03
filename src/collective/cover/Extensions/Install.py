@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from Products.CMFCore.utils import getToolByName
-
 from collective.cover.config import PROJECTNAME
+from Products.CMFCore.utils import getToolByName
 
 
 def uninstall(portal, reinstall=False):

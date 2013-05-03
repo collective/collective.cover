@@ -1,28 +1,19 @@
-
-from z3c.form import button
+# -*- coding: utf-8 -*-
 
 from AccessControl import Unauthorized
-
-from zope.lifecycleevent import ObjectModifiedEvent
-from zope.event import notify
-
-from zope.publisher.interfaces.browser import IBrowserView
-
-from zope.traversing.browser.absoluteurl import absoluteURL
-
+from collective.cover import _
 from plone.app.tiles.browser.edit import DefaultEditForm
 from plone.app.tiles.browser.edit import DefaultEditView
-
 from plone.app.tiles.browser.traversal import EditTile
-
-from plone.tiles.interfaces import ITileDataManager
-
 from plone.app.tiles.utils import appendJSONData
-
-from Products.statusmessages.interfaces import IStatusMessage
+from plone.tiles.interfaces import ITileDataManager
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-
-from collective.cover import _
+from Products.statusmessages.interfaces import IStatusMessage
+from z3c.form import button
+from zope.event import notify
+from zope.lifecycleevent import ObjectModifiedEvent
+from zope.publisher.interfaces.browser import IBrowserView
+from zope.traversing.browser.absoluteurl import absoluteURL
 
 
 class ICoverTileEditView(IBrowserView):

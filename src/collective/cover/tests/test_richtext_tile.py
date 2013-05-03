@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 
-import unittest2 as unittest
-
+from collective.cover.testing import INTEGRATION_TESTING
+from collective.cover.tiles.base import IPersistentCoverTile
+from collective.cover.tiles.richtext import RichTextTile
 from zope.interface.verify import verifyClass
 from zope.interface.verify import verifyObject
 
-from collective.cover.testing import INTEGRATION_TESTING
-from collective.cover.tiles.richtext import RichTextTile
-from collective.cover.tiles.base import IPersistentCoverTile
+import unittest
 
 
 class RichTextTileTestCase(unittest.TestCase):

@@ -1,18 +1,16 @@
-import json
-
-import zope.interface
-from zope.component import getUtility
-
-from z3c.form import interfaces
-from z3c.form.widget import FieldWidget
-from z3c.form.browser import select
-
-from zope.browserpage.viewpagetemplatefile import ViewPageTemplateFile
-
-from collective.cover.widgets.interfaces import ISelectPreviewWidget
+# -*- coding: utf-8 -*-
 
 from collective.cover.controlpanel import ICoverSettings
+from collective.cover.widgets.interfaces import ISelectPreviewWidget
 from plone.registry.interfaces import IRegistry
+from z3c.form import interfaces
+from z3c.form.browser import select
+from z3c.form.widget import FieldWidget
+from zope.browserpage.viewpagetemplatefile import ViewPageTemplateFile
+from zope.component import getUtility
+
+import json
+import zope.interface
 
 
 class SelectPreviewWidget(select.SelectWidget):

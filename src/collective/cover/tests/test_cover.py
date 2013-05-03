@@ -1,19 +1,17 @@
 # -*- coding: utf-8 -*-
 
-import unittest2 as unittest
-
-from zope.component import createObject
-from zope.component import queryUtility
-
-from plone.app.testing import TEST_USER_ID
-from plone.app.testing import setRoles
-from plone.dexterity.interfaces import IDexterityFTI
+from collective.cover.content import ICover
+from collective.cover.testing import INTEGRATION_TESTING
 from plone.app.dexterity.behaviors.exclfromnav import IExcludeFromNavigation
 from plone.app.lockingbehavior.behaviors import ILocking
 from plone.app.stagingbehavior.interfaces import IStagingSupport
+from plone.app.testing import setRoles
+from plone.app.testing import TEST_USER_ID
+from plone.dexterity.interfaces import IDexterityFTI
+from zope.component import createObject
+from zope.component import queryUtility
 
-from collective.cover.content import ICover
-from collective.cover.testing import INTEGRATION_TESTING
+import unittest
 
 
 class CoverIntegrationTestCase(unittest.TestCase):
