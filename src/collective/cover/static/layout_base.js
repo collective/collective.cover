@@ -19,6 +19,7 @@ $(document).ready(function() {
                 success: function(data) {
                     $this.find('span').text('Saved');
                     $('#btn-save').addClass('saved btn-success');
+                    $('#btn-export').removeClass('disabled');
                 },
                 error: function(jqXHR, textStatus, errorThrown){
                     $this.find('span').text('Error '+errorThrown);

@@ -67,7 +67,7 @@
       </form>
     </div>
     <div class="navbar">
-      <a id="btn-export" class="btn btn-info" tal:condition="can_export_layout"><span i18n:translate="">Export layout</span></a>
+      <a id="btn-export" class="btn btn-inverse disabled" tal:condition="can_export_layout"><span i18n:translate="">Export layout</span></a>
       <a id="btn-save" class="btn btn-success saved"><span i18n:translate="">Saved</span></a>
     </div>
   </tal:block>

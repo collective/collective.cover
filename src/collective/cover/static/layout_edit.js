@@ -70,7 +70,9 @@
 
                 //expor layout
                 $('#btn-export').click(function(){
-                    $('#export-layout').modal();
+                    if (!$(this).hasClass('disabled') && $('#btn-save').hasClass('saved') ) {
+                        $('#export-layout').modal();
+                    }
                 });
 
             },
@@ -333,6 +335,9 @@
                         return (css.match (/\bbtn-\S+/g) || []).join(' ');
                     });
                     $('#btn-save').addClass('modified btn-warning');
+
+                    //disable export layout
+                    $('#btn-export').addClass('disabled');
                 }
             },
 
