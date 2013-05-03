@@ -4,7 +4,8 @@ There's a frood who really knows where his towel is
 1.0a3 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
-- Better support for internal and external images (closes `#188`_). [jpgimenez]
+- Better support for internal and external images (closes `#188`_).
+  [jpgimenez]
 
 - Gallery tile now allows sorting of items easily through a widget created for
   that purpose (closes `#198`_). [Quimera]
@@ -136,6 +137,7 @@ There's a frood who really knows where his towel is
 .. _`#168`: https://github.com/collective/collective.cover/issues/168
 .. _`#169`: https://github.com/collective/collective.cover/issues/169
 .. _`#171`: https://github.com/collective/collective.cover/issues/171
+.. _`#177`: https://github.com/collective/collective.cover/issues/177
 .. _`#179`: https://github.com/collective/collective.cover/issues/179
 .. _`#183`: https://github.com/collective/collective.cover/issues/183
 .. _`#188`: https://github.com/collective/collective.cover/issues/188
