@@ -18,7 +18,7 @@
     background-color: #833434;
 }
 
-.template-compose .tile {
+.template-compose #content .tile {
     outline:1px dotted #999;
     padding-top:1em;
 }

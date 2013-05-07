@@ -41,7 +41,7 @@ function removeObjFromTile() {
 }
 
 function TitleMarkupSetup(){
-    $('.tile').each(function(){
+    $('#content .tile').each(function(){
         if ($(this).find('.loading-mask')[0] === undefined) {
             $(this).append('<div class="loading-mask"/>');
         }

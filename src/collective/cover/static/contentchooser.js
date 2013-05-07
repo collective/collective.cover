@@ -123,7 +123,7 @@ $(function() {
             return valid !== -1? true : false;
         },
         windowId: '#contentchooser-content-search',
-        droppable: '.tile',
+        droppable: '#content .tile',
         dropped: function(event, ui) {
             var tile = $(this);
             var tile_type = tile.attr("data-tile-type");
