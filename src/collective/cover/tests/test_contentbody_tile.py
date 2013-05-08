@@ -5,6 +5,8 @@ from collective.cover.tiles.base import IPersistentCoverTile
 from collective.cover.tiles.configuration import ITilesConfigurationScreen
 from collective.cover.tiles.contentbody import ContentBodyTile
 from collective.cover.tiles.permissions import ITilesPermissions
+from plone.app.testing import setRoles
+from plone.app.testing import TEST_USER_ID
 from zope.annotation.interfaces import IAnnotations
 from zope.component import getMultiAdapter
 from zope.interface.verify import verifyClass
@@ -64,6 +66,21 @@ class ContentBodyTileTestCase(unittest.TestCase):
         obj.setText(text)
 
         self.tile.populate_with_object(obj)
+        rendered = self.tile()
+
+        # the body need to bring our motto
+        self.assertIn('Peace of mind', rendered)
+
+    def test_render_deleted_object(self):
+        text = '<h2>Peace of mind</h2>'
+        obj = self.portal['my-news-item']
+        obj.setText(text)
+
+        self.tile.populate_with_object(obj)
+        # Delete original object
+        setRoles(self.portal, TEST_USER_ID, ['Manager'])
+        self.portal.manage_delObjects(['my-news-item', ])
+        setRoles(self.portal, TEST_USER_ID, ['Member'])
         rendered = self.tile()
 
         # the body need to bring our motto
