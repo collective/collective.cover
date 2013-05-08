@@ -5,6 +5,7 @@
 
 from AccessControl import Unauthorized
 from Acquisition import aq_base
+from Acquisition import aq_inner
 from Acquisition import aq_parent
 from collective.cover import _
 from collective.cover.config import PROJECTNAME
@@ -32,6 +33,7 @@ from zope.annotation import IAnnotations
 from zope.component import adapts
 from zope.component import getMultiAdapter
 from zope.component import getUtility
+from zope.component import queryMultiAdapter
 from zope.component import queryUtility
 from zope.event import notify
 from zope.interface import implements
@@ -350,8 +352,13 @@ class ImageScaling(BaseImageScaling):
                height=None, width=None, **parameters):
         """ factory for image scales, see `IImageScaleStorage.scale` """
         if not IPersistentCoverTile.providedBy(self.context):
-            base_scales = getMultiAdapter((self.context, self.request), name='images')
-            return base_scales.create(fieldname, direction, height, width, **parameters)
+            base_scales = queryMultiAdapter((self.context, self.request),
+                                            name='images', default=None)
+            return base_scales and base_scales.create(fieldname,
+                                                      direction,
+                                                      height,
+                                                      width,
+                                                      **parameters)
         orig_value = self.context.data.get(fieldname)
         if orig_value is None:
             return
@@ -386,9 +393,10 @@ class ImageScaling(BaseImageScaling):
         """ provide a callable to return the modification time of content
             items, so stored image scales can be invalidated """
         if not IPersistentCoverTile.providedBy(self.context):
-            base_scales = getMultiAdapter(
-                (self.context, self.request), name='images')
-            return base_scales.modified()
+            base_scales = queryMultiAdapter((self.context, self.request),
+                                            name='images',
+                                            default=None)
+            return base_scales and base_scales.modified()
         mtime = ''
         for k, v in self.context.data.items():
             if INamedImage.providedBy(v):
@@ -399,12 +407,12 @@ class ImageScaling(BaseImageScaling):
     def scale(self, fieldname=None, scale=None,
               height=None, width=None, **parameters):
         if not IPersistentCoverTile.providedBy(self.context):
-            base_scales = getMultiAdapter(
-                (self.context, self.request), name='images')
-            try:
-                return base_scales.scale(fieldname, scale, height, width, **parameters)
-            except AttributeError:
-                return
+            base_scales = queryMultiAdapter((self.context, self.request),
+                                            name='images',
+                                            default=None)
+            if base_scales:
+                return base_scales.scale(fieldname, scale,
+                                         height, width, **parameters)
         if fieldname is None:
             fieldname = IPrimaryFieldInfo(self.context).fieldname
         if scale is not None:
@@ -432,16 +440,18 @@ class PersistentCoverTilePurgePaths(object):
         self.context = context
 
     def getRelativePaths(self):
-        context = self.context.aq_inner
+        context = aq_inner(self.context)
+        parent = aq_parent(context)
         portal_state = getMultiAdapter(
             (context, context.request), name=u'plone_portal_state')
         prefix = context.url.replace(portal_state.portal_url(), '', 1)
-
         yield prefix
         for _, v in context.data.items():
             if INamedImage.providedBy(v):
                 yield "%s/@@images/image" % prefix
-                scales = aq_parent(context).unrestrictedTraverse(prefix.strip('/') + '/@@images')
+                scales = parent.unrestrictedTraverse('%s/%s' %
+                                                     (prefix.strip('/'),
+                                                      '/@@images'))
                 for size in scales.getAvailableSizes().keys():
                     yield "%s/@@images/%s" % (prefix, size,)
 
