@@ -8,6 +8,8 @@ from collective.cover.tiles.basic import BasicTile
 from collective.cover.tiles.configuration import ITilesConfigurationScreen
 from collective.cover.tiles.permissions import ITilesPermissions
 from DateTime import DateTime
+from plone.app.testing import setRoles
+from plone.app.testing import TEST_USER_ID
 from plone.cachepurging.hooks import queuePurge
 from plone.cachepurging.interfaces import ICachePurgingSettings
 from plone.namedfile.file import NamedBlobImage as NamedImageFile
@@ -104,6 +106,26 @@ class BasicTileTestCase(unittest.TestCase):
         self.tile.populate_with_object(obj)
         rendered = self.tile()
         self.assertIn('Test news item', rendered)
+
+    def test_render_deleted_object(self):
+        # We will use an image to test it
+        obj = self.portal['my-image']
+        self.tile.populate_with_object(obj)
+
+        # Normally the image will be displayed
+        rendered = self.tile()
+        self.assertIn('@@images', rendered)
+
+        # Delete original object
+        setRoles(self.portal, TEST_USER_ID, ['Manager'])
+        self.portal.manage_delObjects(['my-image', ])
+        # To avoid caching, we get the tile again
+        tile = self.portal.restrictedTraverse(
+            '@@%s/%s' % ('collective.cover.basic', 'test-basic-tile'))
+        tile.is_empty()
+        rendered = tile()
+        # Now we gracefully ignore the lack of original image
+        self.assertNotIn('@@images', rendered)
 
     def test_basic_tile_render(self):
         obj = self.portal['my-news-item']
