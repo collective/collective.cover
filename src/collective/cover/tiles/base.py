@@ -416,6 +416,8 @@ class ImageScaling(BaseImageScaling):
             if base_scales:
                 return base_scales.scale(fieldname, scale,
                                          height, width, **parameters)
+            else:
+                return None
         if fieldname is None:
             fieldname = IPrimaryFieldInfo(self.context).fieldname
         if scale is not None:
