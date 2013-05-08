@@ -1,0 +1,139 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:i18n="http://namespaces.zope.org/i18n"
+    xmlns:plone="http://namespaces.plone.org/plone"
+    i18n_domain="collective.cover">
+
+  <plone:tile
+      name="collective.cover.basic"
+      title="Basic Tile"
+      description="A tile that shows general information about objects."
+      icon="++resource++collective.cover/tile-basic.png"
+      add_permission="cmf.ModifyPortalContent"
+      schema=".basic.IBasicTile"
+      class=".basic.BasicTile"
+      permission="zope2.View"
+      for="*"
+      />
+
+  <plone:tile
+      name="collective.cover.richtext"
+      title="Rich Text Tile"
+      description="A tile that shows rich text format."
+      icon="++resource++collective.cover/tile-richtext.png"
+      add_permission="cmf.ModifyPortalContent"
+      schema=".richtext.IRichTextTileData"
+      class=".richtext.RichTextTile"
+      permission="zope2.View"
+      for="*"
+      />
+
+  <plone:tile
+      name="collective.cover.collection"
+      title="Collection Tile"
+      description="A tile that shows the result of a collection."
+      icon="++resource++collective.cover/tile-collection.png"
+      add_permission="cmf.ModifyPortalContent"
+      schema=".collection.ICollectionTile"
+      class=".collection.CollectionTile"
+      permission="zope2.View"
+      for="*"
+      />
+
+  <plone:tile
+      name="collective.cover.list"
+      title="List Tile"
+      description="A tile that shows a list of items."
+      icon="++resource++collective.cover/tile-list.png"
+      add_permission="cmf.ModifyPortalContent"
+      schema=".list.IListTile"
+      class=".list.ListTile"
+      permission="zope2.View"
+      for="*"
+      />
+
+  <plone:tile
+      name="collective.cover.carousel"
+      title="Carousel Tile"
+      description="A tile that shows a carousel of images."
+      icon="++resource++collective.cover/tile-carousel.png"
+      add_permission="cmf.ModifyPortalContent"
+      schema=".carousel.ICarouselTile"
+      class=".carousel.CarouselTile"
+      permission="zope2.View"
+      for="*"
+      />
+
+  <plone:tile
+      name="collective.cover.embed"
+      title="Embedding Tile"
+      description="A tile to embed content from a remote source."
+      icon="++resource++collective.cover/tile-embed.png"
+      add_permission="cmf.ModifyPortalContent"
+      schema=".embed.IEmbedTile"
+      class=".embed.EmbedTile"
+      permission="zope2.View"
+      for="*"
+      />
+
+  <plone:tile
+      name="collective.cover.file"
+      title="File Tile"
+      description="A tile that shows a file object."
+      icon="++resource++collective.cover/tile-file.png"
+      add_permission="cmf.ModifyPortalContent"
+      schema=".file.IFileTile"
+      class=".file.FileTile"
+      permission="zope2.View"
+      for="*"
+    />
+
+  <plone:tile
+      name="collective.cover.image"
+      title="Image Tile"
+      description="A tile that shows an image object."
+      icon="++resource++collective.cover/tile-image.png"
+      add_permission="cmf.ModifyPortalContent"
+      schema=".image.IImageTile"
+      class=".image.ImageTile"
+      permission="zope2.View"
+      for="*"
+    />
+
+  <plone:tile
+      name="collective.cover.link"
+      title="Link Tile"
+      description="A tile that shows a link object."
+      icon="++resource++collective.cover/tile-link.png"
+      add_permission="cmf.ModifyPortalContent"
+      schema=".link.ILinkTile"
+      class=".link.LinkTile"
+      permission="zope2.View"
+      for="*"
+      />
+
+  <plone:tile
+      name="collective.cover.contentbody"
+      title="Content Body Tile"
+      description="A tile that display the body of a content type."
+      icon="++resource++collective.cover/tile-contentbody.png"
+      add_permission="cmf.ModifyPortalContent"
+      schema=".contentbody.IContentBodyTile"
+      class=".contentbody.ContentBodyTile"
+      permission="zope2.View"
+      for="*"
+      />
+
+  <plone:tile
+      name="collective.cover.pfg"
+      title="FormGen Tile"
+      description="A tile that display an embedded Form Folder from Plone FormGen."
+      icon="++resource++collective.cover/tile-pfg.png"
+      add_permission="cmf.ModifyPortalContent"
+      schema=".pfg.IPFGTile"
+      class=".pfg.PFGTile"
+      permission="zope2.View"
+      for="*"
+      />
+
+</configure>
