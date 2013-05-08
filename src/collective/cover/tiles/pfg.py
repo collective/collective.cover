@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+from AccessControl import Unauthorized
 from collective.cover import _
 from collective.cover.tiles.base import IPersistentCoverTile
 from collective.cover.tiles.base import PersistentCoverTile
@@ -40,9 +40,12 @@ class PFGTile(PersistentCoverTile):
     def body(self):
         body = ''
         uuid = self.data.get('uuid', None)
-        if uuid is not None:
-            obj = uuidToObject(uuid)
-            body = obj.restrictedTraverse('fg_embedded_view_p3')()
+        try:
+            obj = uuid and uuidToObject(uuid)
+            if obj is not None:
+                body = obj.restrictedTraverse('fg_embedded_view_p3')()
+        except Unauthorized:
+            body = ''
         return body
 
     def populate_with_object(self, obj):
