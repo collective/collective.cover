@@ -181,31 +181,34 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
         return field_config['visibility'] == u'on'
 
     def get_configured_fields(self):
+        context = self.context
         tileType = queryUtility(ITileType, name=self.__name__)
         conf = self.get_tile_configuration()
         fields = getFieldsInOrder(tileType.schema)
-
+        uuid = self.data.get('uuid', '')
         results = []
         for name, field in fields:
-            if (not INamedImageField.providedBy(field) and not self.data[name]) or \
-               (INamedImageField.providedBy(field) and not self.data[name] and not self.data.get('uuid')):
+            image_field = INamedImageField.providedBy(field)
+            data = self.data[name]
+            if not ((image_field and (data or uuid)) or
+                    (not image_field and data)):
                 # If there's no data for this field, ignore it
                 # special condition, if the field is an image field and
                 # there is no uuid, then ignore it too
                 continue
 
-            if isinstance(self.data[name], RichTextValue):
-                transformer = ITransformer(self.context, None)
+            if isinstance(data, RichTextValue):
+                transformer = ITransformer(context, None)
                 if transformer is not None:
-                    content = transformer(self.data[name], 'text/x-html-safe')
+                    content = transformer(data, 'text/x-html-safe')
             else:
-                content = self.data[name]
+                content = data
 
             field = {'id': name, 'content': content, 'title': field.title}
 
             if name in conf:
                 field_conf = conf[name]
-                if ('visibility' in field_conf and field_conf['visibility'] == u'off'):
+                if (field_conf.get('visibility', '') == u'off'):
                     # If the field was configured to be invisible, then just
                     # ignore it
                     continue
@@ -422,7 +425,10 @@ class ImageScaling(BaseImageScaling):
             width, height = available[scale]
         storage = AnnotationStorage(self.context, self.modified)
         info = storage.scale(factory=self.create,
-                             fieldname=fieldname, height=height, width=width, **parameters)
+                             fieldname=fieldname,
+                             height=height,
+                             width=width,
+                             **parameters)
         if info is not None:
             info['fieldname'] = fieldname
             scale_view = ImageScale(self.context, self.request, **info)
