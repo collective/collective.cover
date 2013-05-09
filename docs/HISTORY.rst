@@ -4,12 +4,10 @@ There's a frood who really knows where his towel is
 1.0a4 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
-- Keep tiles configuration in its own zcml file. [ericof]
+- Fix image scaling view. [ericof]
 
-- Fix Image scaling view. [ericof]
-
-- Improve handling of Unauthorized access and deletion of the referenced
-  content [ericof]
+- Avoid ComponentLookupError by improved handling of Unauthorized access of
+  non-published or deleted objects referenced in the tiles. [ericof]
 
 
 1.0a3 (2013-05-03)
