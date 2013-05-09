@@ -6,6 +6,8 @@ from collective.cover.testing import INTEGRATION_TESTING
 from collective.cover.tiles.base import IPersistentCoverTile
 from collective.cover.tiles.image import ImageTile
 from PIL import Image
+from plone.app.testing import setRoles
+from plone.app.testing import TEST_USER_ID
 from zope.interface.verify import verifyClass
 from zope.interface.verify import verifyObject
 
@@ -47,6 +49,17 @@ class ImageTileTestCase(unittest.TestCase):
         obj = self.portal['my-image']
         self.tile.populate_with_object(obj)
         rendered = self.tile()
+        self.assertIn('test-image-tile/@@images', rendered)
+
+    def test_render_deleted_object(self):
+        obj = self.portal['my-image']
+        self.tile.populate_with_object(obj)
+        # Delete original object
+        setRoles(self.portal, TEST_USER_ID, ['Manager'])
+        self.portal.manage_delObjects(['my-image', ])
+
+        rendered = self.tile()
+        # We keep a copy of the image data here
         self.assertIn('test-image-tile/@@images', rendered)
 
     @unittest.expectedFailure

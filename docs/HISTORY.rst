@@ -4,7 +4,12 @@ There's a frood who really knows where his towel is
 1.0a4 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
-- Nothing changed yet.
+- Keep tiles configuration in its own zcml file. [ericof]
+
+- Fix Image scaling view. [ericof]
+
+- Improve handling of Unauthorized access and deletion of the referenced
+  content [ericof]
 
 
 1.0a3 (2013-05-03)

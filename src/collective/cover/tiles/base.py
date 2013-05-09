@@ -5,6 +5,7 @@
 
 from AccessControl import Unauthorized
 from Acquisition import aq_base
+from Acquisition import aq_inner
 from Acquisition import aq_parent
 from collective.cover import _
 from collective.cover.config import PROJECTNAME
@@ -32,6 +33,7 @@ from zope.annotation import IAnnotations
 from zope.component import adapts
 from zope.component import getMultiAdapter
 from zope.component import getUtility
+from zope.component import queryMultiAdapter
 from zope.component import queryUtility
 from zope.event import notify
 from zope.interface import implements
@@ -179,31 +181,34 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
         return field_config['visibility'] == u'on'
 
     def get_configured_fields(self):
+        context = self.context
         tileType = queryUtility(ITileType, name=self.__name__)
         conf = self.get_tile_configuration()
         fields = getFieldsInOrder(tileType.schema)
-
+        uuid = self.data.get('uuid', '')
         results = []
         for name, field in fields:
-            if (not INamedImageField.providedBy(field) and not self.data[name]) or \
-               (INamedImageField.providedBy(field) and not self.data[name] and not self.data.get('uuid')):
+            image_field = INamedImageField.providedBy(field)
+            data = self.data[name]
+            if not ((image_field and (data or uuid)) or
+                    (not image_field and data)):
                 # If there's no data for this field, ignore it
                 # special condition, if the field is an image field and
                 # there is no uuid, then ignore it too
                 continue
 
-            if isinstance(self.data[name], RichTextValue):
-                transformer = ITransformer(self.context, None)
+            if isinstance(data, RichTextValue):
+                transformer = ITransformer(context, None)
                 if transformer is not None:
-                    content = transformer(self.data[name], 'text/x-html-safe')
+                    content = transformer(data, 'text/x-html-safe')
             else:
-                content = self.data[name]
+                content = data
 
             field = {'id': name, 'content': content, 'title': field.title}
 
             if name in conf:
                 field_conf = conf[name]
-                if ('visibility' in field_conf and field_conf['visibility'] == u'off'):
+                if (field_conf.get('visibility', '') == u'off'):
                     # If the field was configured to be invisible, then just
                     # ignore it
                     continue
@@ -350,8 +355,13 @@ class ImageScaling(BaseImageScaling):
                height=None, width=None, **parameters):
         """ factory for image scales, see `IImageScaleStorage.scale` """
         if not IPersistentCoverTile.providedBy(self.context):
-            base_scales = getMultiAdapter((self.context, self.request), name='images')
-            return base_scales.create(fieldname, direction, height, width, **parameters)
+            base_scales = queryMultiAdapter((self.context, self.request),
+                                            name='images', default=None)
+            return base_scales and base_scales.create(fieldname,
+                                                      direction,
+                                                      height,
+                                                      width,
+                                                      **parameters)
         orig_value = self.context.data.get(fieldname)
         if orig_value is None:
             return
@@ -386,9 +396,10 @@ class ImageScaling(BaseImageScaling):
         """ provide a callable to return the modification time of content
             items, so stored image scales can be invalidated """
         if not IPersistentCoverTile.providedBy(self.context):
-            base_scales = getMultiAdapter(
-                (self.context, self.request), name='images')
-            return base_scales.modified()
+            base_scales = queryMultiAdapter((self.context, self.request),
+                                            name='images',
+                                            default=None)
+            return base_scales and base_scales.modified()
         mtime = ''
         for k, v in self.context.data.items():
             if INamedImage.providedBy(v):
@@ -399,12 +410,21 @@ class ImageScaling(BaseImageScaling):
     def scale(self, fieldname=None, scale=None,
               height=None, width=None, **parameters):
         if not IPersistentCoverTile.providedBy(self.context):
-            base_scales = getMultiAdapter(
-                (self.context, self.request), name='images')
-            try:
-                return base_scales.scale(fieldname, scale, height, width, **parameters)
-            except AttributeError:
-                return
+            base_scales = queryMultiAdapter((self.context, self.request),
+                                            name='images',
+                                            default=None)
+            if base_scales:
+                try:
+                    scale = base_scales.scale(fieldname,
+                                              scale,
+                                              height,
+                                              width,
+                                              **parameters)
+                except AttributeError:
+                    scale = None
+                return scale
+            else:
+                return None
         if fieldname is None:
             fieldname = IPrimaryFieldInfo(self.context).fieldname
         if scale is not None:
@@ -414,7 +434,10 @@ class ImageScaling(BaseImageScaling):
             width, height = available[scale]
         storage = AnnotationStorage(self.context, self.modified)
         info = storage.scale(factory=self.create,
-                             fieldname=fieldname, height=height, width=width, **parameters)
+                             fieldname=fieldname,
+                             height=height,
+                             width=width,
+                             **parameters)
         if info is not None:
             info['fieldname'] = fieldname
             scale_view = ImageScale(self.context, self.request, **info)
@@ -432,16 +455,18 @@ class PersistentCoverTilePurgePaths(object):
         self.context = context
 
     def getRelativePaths(self):
-        context = self.context.aq_inner
+        context = aq_inner(self.context)
+        parent = aq_parent(context)
         portal_state = getMultiAdapter(
             (context, context.request), name=u'plone_portal_state')
         prefix = context.url.replace(portal_state.portal_url(), '', 1)
-
         yield prefix
         for _, v in context.data.items():
             if INamedImage.providedBy(v):
                 yield "%s/@@images/image" % prefix
-                scales = aq_parent(context).unrestrictedTraverse(prefix.strip('/') + '/@@images')
+                scales = parent.unrestrictedTraverse('%s/%s' %
+                                                     (prefix.strip('/'),
+                                                      '@@images'))
                 for size in scales.getAvailableSizes().keys():
                     yield "%s/@@images/%s" % (prefix, size,)
 

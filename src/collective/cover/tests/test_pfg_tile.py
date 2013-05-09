@@ -78,6 +78,26 @@ class PFGTileTestCase(unittest.TestCase):
 
         self.assertIn('Your E-Mail Address', rendered)
 
+    def test_render_deleted_object(self):
+        obj = self.pfg
+
+        self.tile.populate_with_object(obj)
+        # Delete original object
+        setRoles(self.portal, TEST_USER_ID, ['Manager'])
+        self.portal.manage_delObjects(['my-form', ])
+        rendered = self.tile()
+
+        self.assertIn('Please drag&amp;drop', rendered)
+
+    def test_render_restricted_object(self):
+        obj = self.pfg
+
+        self.tile.populate_with_object(obj)
+        obj.manage_permission('View', [], 0)
+        rendered = self.tile()
+
+        self.assertIn('Please drag&amp;drop', rendered)
+
     def test_delete_tile_persistent_data(self):
         permissions = getMultiAdapter(
             (self.tile.context, self.request, self.tile), ITilesPermissions)
