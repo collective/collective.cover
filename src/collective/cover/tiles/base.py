@@ -414,8 +414,15 @@ class ImageScaling(BaseImageScaling):
                                             name='images',
                                             default=None)
             if base_scales:
-                return base_scales.scale(fieldname, scale,
-                                         height, width, **parameters)
+                try:
+                    scale = base_scales.scale(fieldname,
+                                              scale,
+                                              height,
+                                              width,
+                                              **parameters)
+                except AttributeError:
+                    scale = None
+                return scale
             else:
                 return None
         if fieldname is None:
@@ -459,7 +466,7 @@ class PersistentCoverTilePurgePaths(object):
                 yield "%s/@@images/image" % prefix
                 scales = parent.unrestrictedTraverse('%s/%s' %
                                                      (prefix.strip('/'),
-                                                      '/@@images'))
+                                                      '@@images'))
                 for size in scales.getAvailableSizes().keys():
                     yield "%s/@@images/%s" % (prefix, size,)
 
