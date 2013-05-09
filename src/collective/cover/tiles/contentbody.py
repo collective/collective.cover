@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+from AccessControl import Unauthorized
 from collective.cover.tiles.base import IPersistentCoverTile
 from collective.cover.tiles.base import PersistentCoverTile
 from plone.app.uuid.utils import uuidToObject
@@ -27,8 +27,11 @@ class ContentBodyTile(PersistentCoverTile):
     def body(self):
         body = ''
         uuid = self.data.get('uuid', None)
-        if uuid is not None:
-            obj = uuidToObject(uuid)
+        try:
+            obj = uuid and uuidToObject(uuid)
+        except Unauthorized:
+            obj = None
+        if obj is not None:
             body = obj.getText()
         return body
 
