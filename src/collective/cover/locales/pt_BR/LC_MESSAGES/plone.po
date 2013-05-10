@@ -14,3 +14,9 @@ msgstr ""
 "Preferred-Encodings: utf-8 latin1\n"
 "Domain: plone\n"
 
+msgid "Compose"
+msgstr ""
+
+msgid "Layout"
+msgstr ""
+
