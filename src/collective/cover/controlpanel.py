@@ -48,7 +48,7 @@ class ICoverSettings(form.Schema):
             u"Format is title|className, one per line."),
         required=True,
         default=set(),
-        value_type=schema.TextLine(title=_(u'CSS Class')),
+        value_type=schema.ASCIILine(title=_(u'CSS Class')),
     )
 
 
