@@ -1,0 +1,25 @@
+import zope.interface
+import zope.schema
+from z3c.form.widget import FieldWidget
+from z3c.form.browser.select import SelectWidget
+from z3c.form import interfaces
+from interfaces import ICSSClassWidget
+
+
+@zope.interface.implementer_only(ICSSClassWidget)
+class CSSClassWidget(SelectWidget):
+    """Select widget implementation."""
+
+
+@zope.component.adapter(zope.schema.interfaces.IChoice,
+                        zope.interface.Interface,
+                        interfaces.IFormLayer)
+@zope.interface.implementer(interfaces.IFieldWidget)
+def CSSClassFieldWidget(field, source, request=None):
+    """IFieldWidget factory for SelectWidget."""
+    # BBB: emulate our pre-2.0 signature (field, request)
+    if request is None:
+        real_request = source
+    else:
+        real_request = request
+    return FieldWidget(field, CSSClassWidget(real_request))
