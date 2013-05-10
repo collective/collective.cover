@@ -58,7 +58,7 @@ class IPersistentCoverTile(Interface):
 
     cssclass = Choice(
         title=_(u'CSS Class'),
-        values=(u'class-red', u'class-black', u'class-rojinegra'),  # XXX: example classes, change for a vocabulary
+        vocabulary='collective.cover.TileStyles',
         required=False,
     )
     form.omitted('cssclass')
