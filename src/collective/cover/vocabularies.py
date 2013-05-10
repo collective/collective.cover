@@ -82,3 +82,25 @@ class AvailableContentTypesVocabulary(ReallyUserFriendlyTypesVocabulary):
 
 grok.global_utility(AvailableContentTypesVocabulary,
                     name=u'collective.cover.AvailableContentTypes')
+
+
+class TileStylesVocabulary(object):
+    """Creates a vocabulary with the available styles stored in the registry.
+    """
+    grok.implements(IVocabularyFactory)
+
+    def __call__(self, context):
+        registry = getUtility(IRegistry)
+        settings = registry.forInterface(ICoverSettings)
+        styles = list(settings.styles)
+        items = []
+        for style in styles:
+            if style.count('|') == 1:  # skip in case of any formating issue
+                (title, css_class) = style.split('|')
+                # remove any leading/trailing whitespaces
+                (title, css_class) = (title.strip(), css_class.strip())
+                items.append(
+                    SimpleVocabulary.createTerm(css_class, css_class, title))
+        return SimpleVocabulary(items)
+
+grok.global_utility(TileStylesVocabulary, name=u'collective.cover.TileStyles')
