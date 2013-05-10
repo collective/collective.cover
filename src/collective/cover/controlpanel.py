@@ -4,6 +4,7 @@ from collective.cover import _
 from collective.cover.config import DEFAULT_AVAILABLE_TILES
 from collective.cover.config import DEFAULT_SEARCHABLE_CONTENT_TYPES
 from plone.app.registry.browser import controlpanel
+from plone.directives import form
 from zope import schema
 from zope.interface import Interface
 
@@ -38,6 +39,17 @@ class ICoverSettings(Interface):
         # we are going to list only the main content types in the widget
         value_type=schema.Choice(
             vocabulary=u'collective.cover.AvailableContentTypes'),
+    )
+
+    form.widget(styles="z3c.form.browser.textlines.TextLinesFieldWidget")
+    styles = schema.Set(
+        title=_(u'Styles'),
+        description=_(
+            u"Enter a list of styles to appear in the style pulldown. "
+            u"Format is title|className, one per line."),
+        required=True,
+        default=set(),
+        value_type=schema.TextLine(title=_(u'CSS Class')),
     )
 
 
