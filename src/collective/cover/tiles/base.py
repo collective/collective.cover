@@ -121,6 +121,7 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
     is_configurable = False
     is_editable = True
     is_droppable = True
+    cssclass = None  # placeholder, we access it with tile's configuration
 
     def populate_with_object(self, obj):
         if not self.isAllowedToEdit():
