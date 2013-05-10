@@ -46,7 +46,7 @@ class ICoverSettings(form.Schema):
         description=_(
             u"Enter a list of styles to appear in the style pulldown. "
             u"Format is title|className, one per line."),
-        required=True,
+        required=False,
         default=set(),
         value_type=schema.ASCIILine(title=_(u'CSS Class')),
     )
@@ -65,6 +65,8 @@ class CoverSettingsEditForm(controlpanel.RegistryEditForm):
         super(CoverSettingsEditForm, self).updateWidgets()
         self.widgets['available_tiles'].style = u'min-width: 200px;'
         self.widgets['searchable_content_types'].style = u'min-width: 200px;'
+        self.widgets['styles'].rows = 6
+        self.widgets['styles'].style = u'max-width: 250px;'
 
 
 class CoverSettingsControlPanel(controlpanel.ControlPanelFormWrapper):
