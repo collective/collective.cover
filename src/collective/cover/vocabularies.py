@@ -5,7 +5,8 @@ from collective.cover.tiles.base import IPersistentCoverTile
 from five import grok
 from plone.app.vocabularies.types import ReallyUserFriendlyTypesVocabulary
 from plone.registry.interfaces import IRegistry
-from zope.component import getMultiAdapter
+from plone.tiles.interfaces import ITileType
+from zope.component import queryMultiAdapter
 from zope.component import getUtility
 from zope.globalrequest import getRequest
 from zope.schema.interfaces import IVocabularyFactory
@@ -49,8 +50,9 @@ class EnabledTilesVocabulary(object):
     grok.implements(IVocabularyFactory)
 
     def _enabled(self, name):
-        tile = getMultiAdapter((self.context, self.request), name=name)
-        return IPersistentCoverTile.providedBy(tile)
+        tile = queryMultiAdapter(
+            (self.context, self.request), name=name)
+        return IPersistentCoverTile.providedBy(tile) if tile else False
 
     def __call__(self, context):
         self.context = context
@@ -60,7 +62,10 @@ class EnabledTilesVocabulary(object):
         tiles = registry['plone.app.tiles']
 
         tiles = filter(self._enabled, tiles)  # only enabled tiles
-        items = [SimpleTerm(value=i, title=i) for i in tiles]
+        items = []
+        for tile in tiles:
+            tile_type = getUtility(ITileType, tile)
+            items.append(SimpleTerm(value=tile, title=tile_type.title))
         return SimpleVocabulary(items)
 
 grok.global_utility(EnabledTilesVocabulary,
@@ -96,11 +101,10 @@ class TileStylesVocabulary(object):
         items = []
         for style in styles:
             if style.count('|') == 1:  # skip in case of any formating issue
-                (title, css_class) = style.split('|')
+                title, css_class = style.split('|')
                 # remove any leading/trailing whitespaces
-                (title, css_class) = (title.strip(), css_class.strip())
-                items.append(
-                    SimpleVocabulary.createTerm(css_class, css_class, title))
+                title, css_class = title.strip(), css_class.strip()
+                items.append(SimpleTerm(value=css_class, title=title))
         return SimpleVocabulary(items)
 
 grok.global_utility(TileStylesVocabulary, name=u'collective.cover.TileStyles')
