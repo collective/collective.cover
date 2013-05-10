@@ -66,6 +66,11 @@ class PageLayout(grok.View):
             if section['type'] == u'group':
                 return self.group(section=section, mode=mode)
             if section['type'] == u'tile':
+                tile_url = '@@%s/%s' % (section.get('tile-type'), section.get('id'))
+                tile_conf = self.context.restrictedTraverse(tile_url.encode()).get_tile_configuration()
+                if tile_conf.get('cssclass'):
+                    cssclass = tile_conf.get('cssclass').items()[0][1][0]  # XXX: hack until hvelarde integrates the vocabulary
+                    section['class'] = '%s %s' % (section.get('class'), cssclass)
                 return self.tile(section=section, mode=mode)
         else:
             return self.generalmarkup(section=section, mode=mode)
