@@ -6,10 +6,9 @@ from collective.cover.config import DEFAULT_SEARCHABLE_CONTENT_TYPES
 from plone.app.registry.browser import controlpanel
 from plone.directives import form
 from zope import schema
-from zope.interface import Interface
 
 
-class ICoverSettings(Interface):
+class ICoverSettings(form.Schema):
     """ Interface for the control panel form.
     """
 
@@ -49,7 +48,7 @@ class ICoverSettings(Interface):
             u"Format is title|className, one per line."),
         required=True,
         default=set(),
-        value_type=schema.TextLine(title=_(u'CSS Class')),
+        value_type=schema.ASCIILine(title=_(u'CSS Class')),
     )
 
 

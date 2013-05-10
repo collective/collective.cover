@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 
+from collective.cover.controlpanel import ICoverSettings
 from collective.cover.testing import INTEGRATION_TESTING
+from plone.registry.interfaces import IRegistry
+from zope.component import getUtility
 from zope.component import queryUtility
 from zope.schema.interfaces import IVocabularyFactory
 
@@ -72,3 +75,26 @@ class VocabulariesTestCase(unittest.TestCase):
         available_content_types = vocabulary(self.portal)
         self.assertTrue(len(available_content_types) > 0)
         self.assertNotIn(u'collective.cover.content', available_content_types)
+
+    def test_tile_styles_vocabulary(self):
+        name = u'collective.cover.TileStyles'
+        vocabulary = queryUtility(IVocabularyFactory, name)
+        self.assertIsNotNone(vocabulary)
+        # in the beginning the vocabulary should be empty
+        styles = vocabulary(self.portal)
+        self.assertEqual(len(styles), 0)
+        # let's put some values on it
+        registry = getUtility(IRegistry)
+        settings = registry.forInterface(ICoverSettings)
+        settings.styles = set([
+            ' red background | redTile ',  # test trimming
+            'green background|greenTile',
+            'blue background|blueTile',
+        ])
+        styles = vocabulary(self.portal)
+        self.assertEqual(len(styles), 3)
+        self.assertIn('redTile', styles.by_value)
+        # adding a couple of not well formatted items result in no change
+        settings.styles = set(['not well formated'])
+        styles = vocabulary(self.portal)
+        self.assertEqual(len(styles), 0)
