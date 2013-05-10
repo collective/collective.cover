@@ -11,6 +11,8 @@ There's a frood who really knows where his towel is
 
 - Fix translation of Compose and Layout that must be in plone domain. [toutpt]
 
+- Add french translation [toutpt]
+
 1.0a3 (2013-05-03)
 ^^^^^^^^^^^^^^^^^^
 
