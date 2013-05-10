@@ -6,10 +6,9 @@ from collective.cover.config import DEFAULT_SEARCHABLE_CONTENT_TYPES
 from plone.app.registry.browser import controlpanel
 from plone.directives import form
 from zope import schema
-from zope.interface import Interface
 
 
-class ICoverSettings(Interface):
+class ICoverSettings(form.Schema):
     """ Interface for the control panel form.
     """
 
