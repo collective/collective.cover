@@ -9,6 +9,9 @@ There's a frood who really knows where his towel is
 - Avoid ComponentLookupError by improved handling of Unauthorized access of
   non-published or deleted objects referenced in the tiles. [ericof]
 
+- Fix translation of Compose and Layout that must be in plone domain. [toutpt]
+
+- Add french translation [toutpt]
 
 1.0a3 (2013-05-03)
 ^^^^^^^^^^^^^^^^^^
