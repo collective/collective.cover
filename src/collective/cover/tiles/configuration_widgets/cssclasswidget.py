@@ -15,7 +15,8 @@ class CSSClassWidget(SelectWidget):
         """See z3c.form.interfaces.IWidget."""
         super(SelectWidget, self).update()
         widget.addFieldClass(self)
-        self.value = [self.context.get('css_class')]
+        if isinstance(self.context.get('css_class'), str):
+            self.value = [self.context.get('css_class')]
 
 
 @zope.component.adapter(zope.schema.interfaces.IChoice,
