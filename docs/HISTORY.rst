@@ -4,6 +4,8 @@ There's a frood who really knows where his towel is
 1.0a4 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Implements issue `#190`_, allow editor to add custom class for each tile. [jpgimenez]
+
 - Fix image scaling view. [ericof]
 
 - Avoid ComponentLookupError by improved handling of Unauthorized access of
