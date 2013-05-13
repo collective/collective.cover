@@ -37,12 +37,12 @@
 		  ><option id="" value="" selected="selected"
 		         tal:condition="item/selected"
 		         tal:attributes="id item/id;
-		                         value item/value|item/content"
+		                         value item/value"
 		         tal:content="item/content">label</option
 		  ><option id="" value=""
 		         tal:condition="not:item/selected"
 		         tal:attributes="id item/id;
-		                         value item/value|item/content"
+		                         value item/value"
 		         tal:content="item/content">label</option
 		></tal:block>
 		</select>
