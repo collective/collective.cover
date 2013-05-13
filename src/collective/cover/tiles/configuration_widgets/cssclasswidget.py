@@ -15,7 +15,7 @@ class CSSClassWidget(SelectWidget):
         """See z3c.form.interfaces.IWidget."""
         super(SelectWidget, self).update()
         widget.addFieldClass(self)
-        if isinstance(self.context.get('css_class'), str):
+        if isinstance(self.context.get('css_class'), unicode):
             self.value = [self.context.get('css_class')]
 
 
