@@ -13,6 +13,9 @@ There's a frood who really knows where his towel is
 
 - Add french translation [toutpt]
 
+- [bugfix] Prevent the configuration view to crash if the widget does
+  not provide an 'accesskey' [frapell]
+
 1.0a3 (2013-05-03)
 ^^^^^^^^^^^^^^^^^^
 

@@ -17,7 +17,7 @@
                               class view/klass;
                               tabindex view/tabindex;
                               value python:stored_data.get('size', 5);
-                              accesskey view/accesskey;"/>
+                              accesskey view/accesskey|nothing;"/>
 
         <span i18n:translate="">Visible</span>
         <input type="radio" id="" name="" class=""
@@ -27,7 +27,7 @@
                             class view/klass;
                             tabindex view/tabindex;
                             checked python:not stored_data.get('visibility', None) and 'checked' or stored_data.get('visibility', None) == 'on' and 'checked';
-                            accesskey view/accesskey;"/>
+                            accesskey view/accesskey|nothing;"/>
         <span i18n:translate="">Yes</span>
         <input type="radio" id="" name="" class=""
             tabindex="" accesskey="" value="off"
@@ -36,7 +36,7 @@
                             class view/klass;
                             tabindex view/tabindex;
                             checked python:stored_data.get('visibility', None) == 'off' and 'checked';
-                            accesskey view/accesskey;"/>
+                            accesskey view/accesskey|nothing;"/>
         <span i18n:translate="">No</span>
 
         <span i18n:translate="">Order</span>
@@ -47,7 +47,7 @@
                             class view/klass;
                             tabindex view/tabindex;
                             value python:stored_data.get('order', None);
-                            accesskey view/accesskey;"/>
+                            accesskey view/accesskey|nothing;"/>
 
     </tal:stored_data>
 </html>

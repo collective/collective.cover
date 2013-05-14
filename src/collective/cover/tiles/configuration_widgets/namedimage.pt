@@ -20,7 +20,7 @@
                             class view/klass;
                             tabindex view/tabindex;
                             checked python:not stored_data.get('visibility', None) and 'checked' or stored_data.get('visibility', None) == 'on' and 'checked';
-                            accesskey view/accesskey;"/>
+                            accesskey view/accesskey|nothing;"/>
         <span i18n:translate="">Yes</span>
         <input type="radio" id="" name="" class=""
             tabindex="" accesskey="" value="off"
@@ -29,7 +29,7 @@
                             class view/klass;
                             tabindex view/tabindex;
                             checked python:stored_data.get('visibility', None) == 'off' and 'checked';
-                            accesskey view/accesskey;"/>
+                            accesskey view/accesskey|nothing;"/>
         <span i18n:translate="">No</span>
 
         <span i18n:translate="">Order</span>
@@ -40,7 +40,7 @@
                             class view/klass;
                             tabindex view/tabindex;
                             value python:stored_data.get('order', None);
-                            accesskey view/accesskey;"/>
+                            accesskey view/accesskey|nothing;"/>
 
         <span i18n:translate="">Image size</span>
         <select id="" name="" class=""
@@ -49,7 +49,7 @@
                             name string:${view/name}.imgsize;
                             class view/klass;
                             tabindex view/tabindex;
-                            accesskey view/accesskey;"
+                            accesskey view/accesskey|nothing;"
             tal:define="values allowed_sizes">
 
             <option tal:repeat="value values"
@@ -66,7 +66,7 @@
                             name string:${view/name}.position;
                             class view/klass;
                             tabindex view/tabindex;
-                            accesskey view/accesskey;"
+                            accesskey view/accesskey|nothing;"
             tal:define="values python:['left', 'right',]">
 
             <option tal:repeat="value values"
