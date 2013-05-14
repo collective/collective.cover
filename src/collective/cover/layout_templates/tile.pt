@@ -9,6 +9,7 @@
 
     <tal:mode define="mode options/mode;
                       section options/section | nothing;
+                      tile_url options/tile_url;
                       tile_type python:section.get('tile-type', '');
                       tile_id python:section.get('id', '');
                       css_id python:'tile-%s' % tile_id;">
@@ -31,14 +32,14 @@
             </div>
 
             <div tal:attributes="class python:'%s' % section.get('class', '');
-                                 data-tile python:'/%s/@@%s/%s' %(context.absolute_url(relative=1), tile_type,tile_id);
+                                 data-tile python:'%s' %(tile_url);
                                  id tile_id" />
         </div>
         </tal:view>
         <tal:compose tal:condition="python:mode == 'compose'">
         <div tal:condition="section" class="tile-container">
             <div tal:attributes="class python:'%s %s' % (section.get('class', ''), view.can_compose_tile_class(tile_type, tile_id));
-                                 data-tile python:'/%s/@@%s/%s' %(context.absolute_url(relative=1), tile_type,tile_id);
+                                 data-tile python:'%s' %(tile_url);
                                  data-tile-type tile_type;
                                  data-tile-valid-ct python:view.accepted_ct_for_tile(tile_type);
                                  data-is-droppable python:view.tile_is_droppable(tile_type);
