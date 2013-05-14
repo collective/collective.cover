@@ -4,6 +4,8 @@ There's a frood who really knows where his towel is
 1.0a4 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Spanish and Brazilian Portuguese translations were updated. [hvelarde]
+
 - [bugfix] Prevent the configuration view to crash if the widget does not
   provide an 'accesskey'. [frapell]
 

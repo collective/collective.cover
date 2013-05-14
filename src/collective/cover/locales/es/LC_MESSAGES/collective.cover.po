@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: collective.cover\n"
 "POT-Creation-Date: 2013-05-10 09:11+0000\n"
-"PO-Revision-Date: 2013-04-25 14:48-0300\n"
-"Last-Translator: quimera <quimera@ravvit.net>\n"
+"PO-Revision-Date: 2013-05-14 18:03-0300\n"
+"Last-Translator: Héctor Velarde <hector.velarde@gmail.com>\n"
 "Language-Team: Spanish <https://github.com/collective>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -67,11 +67,11 @@ msgstr "Un paquete de uso fácil para crear portadas en sitios Plone."
 
 #: collective/cover/tiles/carousel.py:19
 msgid "Auto play"
-msgstr ""
+msgstr "Reproducción automática"
 
 #: collective/cover/controlpanel.py:24
 msgid "Available tiles"
-msgstr ""
+msgstr "Tiles disponibles"
 
 #: tiles/configure.zcml
 msgid "Basic Tile"
@@ -230,7 +230,7 @@ msgstr "Número de elementos"
 
 #: collective/cover/controlpanel.py:34
 msgid "Only objects of these content types will be searched on the content chooser."
-msgstr ""
+msgstr "Sólo objetos de estos tipos serán buscados en la selección de contenido."
 
 #: collective/cover/tiles/configuration_widgets/basewidget.pt:32
 #: collective/cover/tiles/configuration_widgets/list.pt:42
@@ -240,11 +240,11 @@ msgstr "Orden"
 
 #: collective/cover/tiles/templates/list.pt:9
 msgid "Please add up to ${limit_objects} objects to the tile."
-msgstr "Por favor, agregar hasta ${limit_objects} objeto(s) para el tile."
+msgstr "Arrastre y suelte hasta ${limit_objects} objeto(s) aquí."
 
 #: collective/cover/tiles/templates/pfg.pt:8
 msgid "Please drag&amp;drop a Form Folder here to populate the tile."
-msgstr ""
+msgstr "Arrastre y suelte un formulario aquí."
 
 #: collective/cover/tiles/templates/file.pt:8
 msgid "Please drag&amp;drop a file here."
@@ -261,19 +261,19 @@ msgstr "Arrastre y suelte una imagen aquí."
 #: collective/cover/tiles/templates/basic.pt:9
 #: collective/cover/tiles/templates/contentbody.pt:8
 msgid "Please drag&amp;drop some content here to populate the tile."
-msgstr ""
+msgstr "Arrastre y suelte contenido aquí."
 
 #: collective/cover/tiles/templates/collection.pt:8
 msgid "Please drop a collection here to fill the tile."
-msgstr ""
+msgstr "Arrastre y suelte una colección aquí."
 
 #: collective/cover/tiles/templates/embed.pt:8
 msgid "Please edit the tile to add the code to be embedded."
-msgstr "Por favor edite el tile para agregar el código de incrustación."
+msgstr "Edite el tile para agregar el código de incrustación."
 
 #: collective/cover/tiles/templates/richtext.pt:9
 msgid "Please edit the tile to enter some text."
-msgstr "Por favor edite el tile para agregar algún texto."
+msgstr "Edite el tile para agregar algún texto."
 
 #: collective/cover/tiles/configuration_widgets/namedimage.pt:62
 msgid "Position"
@@ -322,7 +322,7 @@ msgstr "El diseño que será usado para mostrar grupos y tiles"
 
 #: collective/cover/controlpanel.py:25
 msgid "This tiles will be available for layout creation."
-msgstr ""
+msgstr "Estos tiles estarán dispobibles en la creación de diseños."
 
 #: collective/cover/tiles/configuration_view.py:200
 msgid "Tile configuration cancelled."
