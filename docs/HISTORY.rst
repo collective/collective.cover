@@ -4,6 +4,8 @@ There's a frood who really knows where his towel is
 1.0a4 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Add alt to images in list tile [ericof]
+
 - Fix image scaling view. [ericof]
 
 - Avoid ComponentLookupError by improved handling of Unauthorized access of
