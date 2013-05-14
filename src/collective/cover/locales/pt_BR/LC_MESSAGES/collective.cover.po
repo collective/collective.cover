@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: collective.cover\n"
-"POT-Creation-Date: 2013-05-10 09:11+0000\n"
-"PO-Revision-Date: 2013-05-14 18:10-0300\n"
+"POT-Creation-Date: 2013-05-14 21:36+0000\n"
+"PO-Revision-Date: 2013-05-14 18:51-0300\n"
 "Last-Translator: Héctor Velarde <hector.velarde@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -74,7 +74,12 @@ msgstr "Tiles disponíveis"
 msgid "Basic Tile"
 msgstr "Tile básico"
 
-#: collective/cover/tiles/configuration_view.py:191
+#: collective/cover/controlpanel.py:51
+#: collective/cover/tiles/base.py:60
+msgid "CSS Class"
+msgstr "Clase CSS"
+
+#: collective/cover/tiles/configuration_view.py:195
 #: collective/cover/tiles/edit.py:75
 msgid "Cancel"
 msgstr "Cancelar"
@@ -99,7 +104,7 @@ msgstr "Coluna"
 msgid "Compose"
 msgstr "Composição"
 
-#: collective/cover/tiles/configuration_view.py:154
+#: collective/cover/tiles/configuration_view.py:158
 msgid "Configure ${name}"
 msgstr "Configurar ${name}"
 
@@ -115,7 +120,7 @@ msgstr "Capa"
 msgid "Cover Layout"
 msgstr "Layout da capa"
 
-#: collective/cover/controlpanel.py:46
+#: collective/cover/controlpanel.py:57
 #: collective/cover/profiles/default/controlpanel.xml
 msgid "Cover Settings"
 msgstr "Configurações da capa"
@@ -150,6 +155,10 @@ msgstr "Tile de embed"
 #: collective/cover/tiles/embed.py:14
 msgid "Embedding code"
 msgstr "Código de embedding"
+
+#: collective/cover/controlpanel.py:46
+msgid "Enter a list of styles to appear in the style pulldown. Format is title|className, one per line."
+msgstr "Digite uma lista de estilos para aparecer no menu pulldown de estilo. Formato é título|nomeDeClase, um por linha."
 
 #: collective/cover/templates/layoutedit.pt:65
 msgid "Export layout"
@@ -189,7 +198,7 @@ msgstr "Layout"
 
 #: collective/cover/widgets/selectpreview_input.pt:74
 msgid "Layout Details"
-msgstr "Detalhes do desenho"
+msgstr "Detalhes do layout"
 
 #: collective/cover/templates/layoutedit.pt:63
 msgid "Layout name"
@@ -288,7 +297,7 @@ msgstr "Tile de texto rico"
 msgid "Row"
 msgstr "Linha"
 
-#: collective/cover/tiles/configuration_view.py:158
+#: collective/cover/tiles/configuration_view.py:162
 #: collective/cover/tiles/edit.py:43
 msgid "Save"
 msgstr "Salvar"
@@ -301,9 +310,13 @@ msgstr "Salvo"
 msgid "Searchable Content Types"
 msgstr "Tipos de conteúdo buscáveis"
 
-#: collective/cover/controlpanel.py:47
+#: collective/cover/controlpanel.py:58
 msgid "Settings for the collective.cover package"
 msgstr "Configurações do produto collective.cover"
+
+#: collective/cover/controlpanel.py:45
+msgid "Styles"
+msgstr "Estilos"
 
 #: collective/cover/tiles/configuration_widgets/richtext.pt:42
 msgid "Text length"
@@ -321,11 +334,11 @@ msgstr "O layout que será utilizado"
 msgid "This tiles will be available for layout creation."
 msgstr "Esses tiles serão disponíveis para criação dos desenhos."
 
-#: collective/cover/tiles/configuration_view.py:200
+#: collective/cover/tiles/configuration_view.py:204
 msgid "Tile configuration cancelled."
 msgstr "Configuração do tile cancelada."
 
-#: collective/cover/tiles/configuration_view.py:187
+#: collective/cover/tiles/configuration_view.py:191
 msgid "Tile configuration saved."
 msgstr "Configuração do tile salva."
 
@@ -365,11 +378,11 @@ msgstr "Visível"
 msgid "Yes"
 msgstr "Sim"
 
-#: collective/cover/tiles/base.py:115
+#: collective/cover/tiles/base.py:128
 msgid "You are not allowed to add content to this tile"
 msgstr "Você não tem permissão para adicionar conteúdo neste tile"
 
-#: collective/cover/tiles/base.py:129
+#: collective/cover/tiles/base.py:142
 msgid "You are not allowed to remove content of this tile"
 msgstr "Você não tem permissão para apagar conteúdo neste tile"
 

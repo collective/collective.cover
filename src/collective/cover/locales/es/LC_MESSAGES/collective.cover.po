@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: collective.cover\n"
-"POT-Creation-Date: 2013-05-10 09:11+0000\n"
-"PO-Revision-Date: 2013-05-14 18:03-0300\n"
+"POT-Creation-Date: 2013-05-14 21:36+0000\n"
+"PO-Revision-Date: 2013-05-14 18:42-0300\n"
 "Last-Translator: Héctor Velarde <hector.velarde@gmail.com>\n"
 "Language-Team: Spanish <https://github.com/collective>\n"
 "MIME-Version: 1.0\n"
@@ -77,7 +77,12 @@ msgstr "Tiles disponibles"
 msgid "Basic Tile"
 msgstr "Tile básico"
 
-#: collective/cover/tiles/configuration_view.py:191
+#: collective/cover/controlpanel.py:51
+#: collective/cover/tiles/base.py:60
+msgid "CSS Class"
+msgstr "Clase CSS"
+
+#: collective/cover/tiles/configuration_view.py:195
 #: collective/cover/tiles/edit.py:75
 msgid "Cancel"
 msgstr "Cancelar"
@@ -102,7 +107,7 @@ msgstr "Columna"
 msgid "Compose"
 msgstr "Componer"
 
-#: collective/cover/tiles/configuration_view.py:154
+#: collective/cover/tiles/configuration_view.py:158
 msgid "Configure ${name}"
 msgstr "Configurar ${name}"
 
@@ -118,7 +123,7 @@ msgstr "Portada"
 msgid "Cover Layout"
 msgstr "Diseño de portada"
 
-#: collective/cover/controlpanel.py:46
+#: collective/cover/controlpanel.py:57
 #: collective/cover/profiles/default/controlpanel.xml
 msgid "Cover Settings"
 msgstr "Configuraciones de portada"
@@ -153,6 +158,10 @@ msgstr "Tile de código incrustado"
 #: collective/cover/tiles/embed.py:14
 msgid "Embedding code"
 msgstr "Código a incrustar"
+
+#: collective/cover/controlpanel.py:46
+msgid "Enter a list of styles to appear in the style pulldown. Format is title|className, one per line."
+msgstr "Ingrese una lista de estilos para mostrar en el menú desplegable de estilos. El formato es título|nombreDeClase, uno por línea."
 
 #: collective/cover/templates/layoutedit.pt:65
 msgid "Export layout"
@@ -291,7 +300,7 @@ msgstr "Tile de texto enriquecido"
 msgid "Row"
 msgstr "Fila"
 
-#: collective/cover/tiles/configuration_view.py:158
+#: collective/cover/tiles/configuration_view.py:162
 #: collective/cover/tiles/edit.py:43
 msgid "Save"
 msgstr "Guardar"
@@ -304,9 +313,13 @@ msgstr "Guardado"
 msgid "Searchable Content Types"
 msgstr "Tipos de contenido consultables"
 
-#: collective/cover/controlpanel.py:47
+#: collective/cover/controlpanel.py:58
 msgid "Settings for the collective.cover package"
 msgstr "Preferencias para el paquete collective.cover"
+
+#: collective/cover/controlpanel.py:45
+msgid "Styles"
+msgstr "Estilos"
 
 #: collective/cover/tiles/configuration_widgets/richtext.pt:42
 msgid "Text length"
@@ -324,11 +337,11 @@ msgstr "El diseño que será usado para mostrar grupos y tiles"
 msgid "This tiles will be available for layout creation."
 msgstr "Estos tiles estarán dispobibles en la creación de diseños."
 
-#: collective/cover/tiles/configuration_view.py:200
+#: collective/cover/tiles/configuration_view.py:204
 msgid "Tile configuration cancelled."
 msgstr "Configuración del tile cancelada."
 
-#: collective/cover/tiles/configuration_view.py:187
+#: collective/cover/tiles/configuration_view.py:191
 msgid "Tile configuration saved."
 msgstr "Configuración del tile guardada."
 
@@ -368,11 +381,11 @@ msgstr "Visible"
 msgid "Yes"
 msgstr "Si"
 
-#: collective/cover/tiles/base.py:115
+#: collective/cover/tiles/base.py:128
 msgid "You are not allowed to add content to this tile"
 msgstr "No permiso para agregar contenido a este tile"
 
-#: collective/cover/tiles/base.py:129
+#: collective/cover/tiles/base.py:142
 msgid "You are not allowed to remove content of this tile"
 msgstr "No permiso para remover contenido de este tile"
 
