@@ -87,13 +87,14 @@ class BaseTileTestCase(unittest.TestCase):
         data_mgr.set({'test': 'data'})
 
         # We see that the data persists
-        self.assertEqual(data_mgr.get(), {'test': 'data'})
+        self.assertIn('test', data_mgr.get())
+        self.assertEqual(data_mgr.get()['test'], 'data')
 
         # Call the delete method
         self.tile.delete()
 
         # Now we should not see the stored data anymore
-        self.assertEqual(data_mgr.get(), {})
+        self.assertNotIn('test', data_mgr.get())
 
         events = eventtesting.getEvents()
 

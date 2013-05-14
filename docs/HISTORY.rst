@@ -4,6 +4,11 @@ There's a frood who really knows where his towel is
 1.0a4 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- [bugfix] Prevent the configuration view to crash if the widget does
+  not provide an 'accesskey' [frapell]
+
+- Implements issue `#190`_, allow editor to add custom class for each tile. [jpgimenez]
+
 - Add alt to images in list tile [ericof]
 
 - Fix image scaling view. [ericof]
@@ -15,8 +20,6 @@ There's a frood who really knows where his towel is
 
 - Add french translation [toutpt]
 
-- [bugfix] Prevent the configuration view to crash if the widget does
-  not provide an 'accesskey' [frapell]
 
 1.0a3 (2013-05-03)
 ^^^^^^^^^^^^^^^^^^

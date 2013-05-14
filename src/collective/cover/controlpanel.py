@@ -4,11 +4,11 @@ from collective.cover import _
 from collective.cover.config import DEFAULT_AVAILABLE_TILES
 from collective.cover.config import DEFAULT_SEARCHABLE_CONTENT_TYPES
 from plone.app.registry.browser import controlpanel
+from plone.directives import form
 from zope import schema
-from zope.interface import Interface
 
 
-class ICoverSettings(Interface):
+class ICoverSettings(form.Schema):
     """ Interface for the control panel form.
     """
 
@@ -40,6 +40,17 @@ class ICoverSettings(Interface):
             vocabulary=u'collective.cover.AvailableContentTypes'),
     )
 
+    form.widget(styles="z3c.form.browser.textlines.TextLinesFieldWidget")
+    styles = schema.Set(
+        title=_(u'Styles'),
+        description=_(
+            u"Enter a list of styles to appear in the style pulldown. "
+            u"Format is title|className, one per line."),
+        required=False,
+        default=set(),
+        value_type=schema.ASCIILine(title=_(u'CSS Class')),
+    )
+
 
 class CoverSettingsEditForm(controlpanel.RegistryEditForm):
     schema = ICoverSettings
@@ -54,6 +65,8 @@ class CoverSettingsEditForm(controlpanel.RegistryEditForm):
         super(CoverSettingsEditForm, self).updateWidgets()
         self.widgets['available_tiles'].style = u'min-width: 200px;'
         self.widgets['searchable_content_types'].style = u'min-width: 200px;'
+        self.widgets['styles'].rows = 6
+        self.widgets['styles'].style = u'max-width: 250px;'
 
 
 class CoverSettingsControlPanel(controlpanel.ControlPanelFormWrapper):

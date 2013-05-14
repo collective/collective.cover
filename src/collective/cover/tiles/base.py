@@ -42,6 +42,9 @@ from zope.lifecycleevent import ObjectModifiedEvent
 from zope.publisher.interfaces import NotFound
 from zope.schema import getFieldNamesInOrder
 from zope.schema import getFieldsInOrder
+from zope.schema import Choice
+from plone.autoform import directives as form
+from collective.cover.tiles.configuration_view import IDefaultConfigureForm
 
 import logging
 
@@ -52,6 +55,15 @@ class IPersistentCoverTile(Interface):
     """
     Base interface for tiles that go into the cover object
     """
+
+    css_class = Choice(
+        title=_(u'CSS Class'),
+        vocabulary='collective.cover.TileStyles',
+        required=False,
+    )
+    form.omitted('css_class')
+    form.no_omit(IDefaultConfigureForm, 'css_class')
+    form.widget(css_class='collective.cover.tiles.configuration_widgets.cssclasswidget.CSSClassFieldWidget')
 
     def populate_with_object(obj):
         """
@@ -109,6 +121,7 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
     is_configurable = False
     is_editable = True
     is_droppable = True
+    css_class = None  # placeholder, we access it with tile's configuration
 
     def populate_with_object(self, obj):
         if not self.isAllowedToEdit():

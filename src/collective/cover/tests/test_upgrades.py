@@ -2,6 +2,7 @@
 
 from collective.cover.testing import INTEGRATION_TESTING
 from collective.cover.upgrades import register_available_tiles_record
+from collective.cover.upgrades import register_styles_record
 from collective.cover.upgrades import rename_content_chooser_resources
 from plone.registry.interfaces import IRecordAddedEvent
 from plone.registry.interfaces import IRegistry
@@ -60,6 +61,29 @@ class Upgrade2to3TestCase(unittest.TestCase):
         del registry.records[record]
         eventtesting.clearEvents()
         register_available_tiles_record(self.portal)
+        events = eventtesting.getEvents(IRecordAddedEvent)
+        self.assertNotEqual(len(events), 0)
+        self.assertIn(record, registry.records)
+        eventtesting.clearEvents()
+
+    def test_register_styles_record(self):
+        registry = getUtility(IRegistry)
+        record = 'collective.cover.controlpanel.ICoverSettings.styles'
+
+        eventtesting.setUp()
+
+        # calling the handler here should have no effect as we are running the
+        # latest profile version
+        eventtesting.clearEvents()
+        register_styles_record(self.portal)
+        events = eventtesting.getEvents(IRecordAddedEvent)
+        self.assertEqual(len(events), 0)
+
+        # now we delete the record and rerun the handler to verify the record
+        # was added
+        del registry.records[record]
+        eventtesting.clearEvents()
+        register_styles_record(self.portal)
         events = eventtesting.getEvents(IRecordAddedEvent)
         self.assertNotEqual(len(events), 0)
         self.assertIn(record, registry.records)

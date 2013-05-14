@@ -1,4 +1,5 @@
 <configure
+    xmlns="http://namespaces.zope.org/zope"
     xmlns:z3c="http://namespaces.zope.org/z3c">
 
     <z3c:widgetTemplate
@@ -34,6 +35,18 @@
         widget="plone.formwidget.namedfile.interfaces.INamedImageWidget"
         layer="z3c.form.interfaces.IFormLayer"
         template="namedimage.pt"
+        />
+
+  	<class class=".cssclasswidget.CSSClassWidget">
+      	<require permission="zope.Public"
+               	 interface=".interfaces.ICSSClassWidget" />
+  	</class>
+
+    <z3c:widgetTemplate
+        mode="configure"
+        widget=".cssclasswidget.ICSSClassWidget"
+        layer="z3c.form.interfaces.IFormLayer"
+        template="cssclasswidget.pt"
         />
 
 </configure>
