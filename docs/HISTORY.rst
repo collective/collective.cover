@@ -4,6 +4,8 @@ There's a frood who really knows where his towel is
 1.0a4 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Add alt to images in list tile [ericof]
+
 - Fix image scaling view. [ericof]
 
 - Avoid ComponentLookupError by improved handling of Unauthorized access of
@@ -12,6 +14,9 @@ There's a frood who really knows where his towel is
 - Fix translation of Compose and Layout that must be in plone domain. [toutpt]
 
 - Add french translation [toutpt]
+
+- [bugfix] Prevent the configuration view to crash if the widget does
+  not provide an 'accesskey' [frapell]
 
 1.0a3 (2013-05-03)
 ^^^^^^^^^^^^^^^^^^
