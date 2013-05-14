@@ -122,6 +122,10 @@ class DefaultConfigureForm(TileForm, form.Form):
         errors = {}
         default_order = 0
         for name, widget in self.widgets.items():
+            if name == 'css_class':
+                data[name] = ' '.join(self.request.form.get(widget.name))
+                widget.field.order = 0
+                continue
             for key, value in self.request.form.items():
                 if key.startswith(widget.name):
                     config_name = key[len(widget.name) + 1:]

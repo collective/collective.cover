@@ -59,3 +59,23 @@ def register_available_tiles_record(context, logger=None):
         logger.info("'available_tiles' record added to the registry")
     else:
         logger.debug("'available_tiles' record already in the registry")
+
+
+def register_styles_record(context, logger=None):
+    """Handler for upgrade step from 3 to 4; adds the 'styles' record
+    to the registry.
+    See: https://github.com/collective/collective.cover/issues/190
+    """
+    if logger is None:
+        logger = logging.getLogger(PROJECTNAME)
+
+    registry = getUtility(IRegistry)
+    record = 'collective.cover.controlpanel.ICoverSettings.styles'
+
+    if record not in registry.records:
+        profile = 'profile-collective.cover:upgrade_3_to_4'
+        setup = getToolByName(context, 'portal_setup')
+        setup.runAllImportStepsFromProfile(profile)
+        logger.info("'styles' record added to the registry")
+    else:
+        logger.debug("'styles' record already in the registry")

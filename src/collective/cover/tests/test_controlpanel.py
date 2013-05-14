@@ -39,14 +39,14 @@ class ControlPanelTestCase(unittest.TestCase):
     def test_controlpanel_installed(self):
         actions = [a.getAction(self)['id']
                    for a in self.controlpanel.listActions()]
-        self.assertTrue('cover' in actions, 'control panel not installed')
+        self.assertIn('cover', actions, 'control panel not installed')
 
     def test_controlpanel_removed_on_uninstall(self):
         qi = self.portal['portal_quickinstaller']
         qi.uninstallProducts(products=[PROJECTNAME])
         actions = [a.getAction(self)['id']
                    for a in self.controlpanel.listActions()]
-        self.assertTrue('cover' not in actions, 'control panel not removed')
+        self.assertNotIn('cover', actions, 'control panel not removed')
 
 
 class RegistryTestCase(unittest.TestCase):
@@ -72,6 +72,10 @@ class RegistryTestCase(unittest.TestCase):
         self.assertListEqual(self.settings.searchable_content_types,
                              DEFAULT_SEARCHABLE_CONTENT_TYPES)
 
+    def test_styles_record_in_registry(self):
+        self.assertTrue(hasattr(self.settings, 'styles'))
+        self.assertSetEqual(self.settings.styles, set([]))
+
     def test_records_removed_on_uninstall(self):
         qi = self.portal['portal_quickinstaller']
         setRoles(self.portal, TEST_USER_ID, ['Manager'])
@@ -82,6 +86,7 @@ class RegistryTestCase(unittest.TestCase):
             BASE_REGISTRY % 'layouts',
             BASE_REGISTRY % 'available_tiles',
             BASE_REGISTRY % 'searchable_content_types',
+            BASE_REGISTRY % 'styles',
         ]
 
         for r in records:

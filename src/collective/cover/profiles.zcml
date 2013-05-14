@@ -64,4 +64,25 @@
 
   </genericsetup:upgradeSteps>
 
+  <genericsetup:registerProfile
+      name="upgrade_3_to_4"
+      title="collective.cover: upgrade_3_to_4"
+      directory="profiles/upgrade_3_to_4"
+      description="Upgrade steps from 3 to 4."
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      />
+
+  <genericsetup:upgradeSteps
+      source="3"
+      destination="4"
+      profile="collective.cover:default">
+
+      <genericsetup:upgradeStep
+          title="Update registry"
+          description="Update the registry to register the 'styles' record"
+          handler=".upgrades.register_styles_record"
+          />
+
+  </genericsetup:upgradeSteps>
+
 </configure>
