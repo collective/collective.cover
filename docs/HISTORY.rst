@@ -6,12 +6,17 @@ There's a frood who really knows where his towel is
 
 - Upgrade to plone.app.blocks 1.1 [ericof]
 
-- [bugfix] Prevent the configuration view to crash if the widget does
-  not provide an 'accesskey' [frapell]
+- Spanish and Brazilian Portuguese translations were updated. [hvelarde]
 
-- Implements issue `#190`_, allow editor to add custom class for each tile. [jpgimenez]
+- [bugfix] Prevent the configuration view to crash if the widget does not
+  provide an 'accesskey'. [frapell]
 
-- Add alt to images in list tile [ericof]
+- Allow editor to add custom class for each tile (closes `#190`_). [jpgimenez]
+
+- Refactor vocabularies and avoid ComponentLookupError when tile is not
+  available. [hvelarde]
+
+- Add 'alt' attribute to images in list tile. [ericof]
 
 - Fix image scaling view. [ericof]
 
@@ -20,7 +25,7 @@ There's a frood who really knows where his towel is
 
 - Fix translation of Compose and Layout that must be in plone domain. [toutpt]
 
-- Add french translation [toutpt]
+- Add French translation. [toutpt]
 
 
 1.0a3 (2013-05-03)
@@ -163,5 +168,6 @@ There's a frood who really knows where his towel is
 .. _`#179`: https://github.com/collective/collective.cover/issues/179
 .. _`#183`: https://github.com/collective/collective.cover/issues/183
 .. _`#188`: https://github.com/collective/collective.cover/issues/188
+.. _`#190`: https://github.com/collective/collective.cover/issues/190
 .. _`#191`: https://github.com/collective/collective.cover/issues/191
 .. _`#198`: https://github.com/collective/collective.cover/issues/198

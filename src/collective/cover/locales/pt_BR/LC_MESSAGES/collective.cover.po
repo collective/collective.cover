@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: collective.cover\n"
-"POT-Creation-Date: 2013-05-10 09:11+0000\n"
-"PO-Revision-Date: 2013-01-07 14:20-0300\n"
-"Last-Translator: Andre Nogueira <andre@simplesconsultoria.com.br>\n"
+"POT-Creation-Date: 2013-05-14 21:36+0000\n"
+"PO-Revision-Date: 2013-05-14 18:51-0300\n"
+"Last-Translator: Héctor Velarde <hector.velarde@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -64,24 +64,29 @@ msgstr "Um produto para criar capas complexas fácil de usar."
 
 #: collective/cover/tiles/carousel.py:19
 msgid "Auto play"
-msgstr ""
+msgstr "Reprodução automática"
 
 #: collective/cover/controlpanel.py:24
 msgid "Available tiles"
-msgstr ""
+msgstr "Tiles disponíveis"
 
 #: tiles/configure.zcml
 msgid "Basic Tile"
-msgstr "Tile Básico"
+msgstr "Tile básico"
 
-#: collective/cover/tiles/configuration_view.py:191
+#: collective/cover/controlpanel.py:51
+#: collective/cover/tiles/base.py:60
+msgid "CSS Class"
+msgstr "Clase CSS"
+
+#: collective/cover/tiles/configuration_view.py:195
 #: collective/cover/tiles/edit.py:75
 msgid "Cancel"
 msgstr "Cancelar"
 
 #: tiles/configure.zcml
 msgid "Carousel Tile"
-msgstr "Tile de Carrossel"
+msgstr "Tile de carrossel"
 
 #: collective/cover/models/cover.xml
 msgid "Choose one of the predefined layouts"
@@ -89,7 +94,7 @@ msgstr "Escolha um dos layouts pré-definidos"
 
 #: tiles/configure.zcml
 msgid "Collection Tile"
-msgstr "Tile de Coleção"
+msgstr "Tile de coleção"
 
 #: collective/cover/templates/layoutedit.pt:47
 msgid "Column"
@@ -99,7 +104,7 @@ msgstr "Coluna"
 msgid "Compose"
 msgstr "Composição"
 
-#: collective/cover/tiles/configuration_view.py:154
+#: collective/cover/tiles/configuration_view.py:158
 msgid "Configure ${name}"
 msgstr "Configurar ${name}"
 
@@ -115,7 +120,7 @@ msgstr "Capa"
 msgid "Cover Layout"
 msgstr "Layout da capa"
 
-#: collective/cover/controlpanel.py:46
+#: collective/cover/controlpanel.py:57
 #: collective/cover/profiles/default/controlpanel.xml
 msgid "Cover Settings"
 msgstr "Configurações da capa"
@@ -145,11 +150,15 @@ msgstr "Elementos"
 
 #: tiles/configure.zcml
 msgid "Embedding Tile"
-msgstr "Tile de Embed"
+msgstr "Tile de embed"
 
 #: collective/cover/tiles/embed.py:14
 msgid "Embedding code"
 msgstr "Código de embedding"
+
+#: collective/cover/controlpanel.py:46
+msgid "Enter a list of styles to appear in the style pulldown. Format is title|className, one per line."
+msgstr "Digite uma lista de estilos para aparecer no menu pulldown de estilo. Formato é título|nomeDeClase, um por linha."
 
 #: collective/cover/templates/layoutedit.pt:65
 msgid "Export layout"
@@ -157,7 +166,7 @@ msgstr "Exportar o layout"
 
 #: tiles/configure.zcml
 msgid "File Tile"
-msgstr "Tile de Arquivo"
+msgstr "Tile de arquivo"
 
 #: collective/cover/browser/contentchooser_templates/content_contentchooser.pt:22
 msgid "Filter items"
@@ -165,7 +174,7 @@ msgstr "Filtrar itens"
 
 #: collective/cover/tiles/configuration_widgets/textline.pt:42
 msgid "HTML tag"
-msgstr "tag HTML"
+msgstr "Tag HTML"
 
 #: collective/cover/tiles/basic.py:36
 #: collective/cover/tiles/image.py:22
@@ -175,7 +184,7 @@ msgstr "Imagem"
 
 #: tiles/configure.zcml
 msgid "Image Tile"
-msgstr "Tile de Imagem"
+msgstr "Tile de imagem"
 
 #: collective/cover/tiles/configuration_widgets/namedimage.pt:45
 msgid "Image size"
@@ -189,7 +198,7 @@ msgstr "Layout"
 
 #: collective/cover/widgets/selectpreview_input.pt:74
 msgid "Layout Details"
-msgstr ""
+msgstr "Detalhes do layout"
 
 #: collective/cover/templates/layoutedit.pt:63
 msgid "Layout name"
@@ -201,11 +210,11 @@ msgstr "Layouts"
 
 #: tiles/configure.zcml
 msgid "Link Tile"
-msgstr "Tile de Imagem"
+msgstr "Tile de link"
 
 #: tiles/configure.zcml
 msgid "List Tile"
-msgstr "Tile de Lista"
+msgstr "Tile de lista"
 
 #: collective/cover/controlpanel.py:18
 msgid "Name"
@@ -219,7 +228,7 @@ msgstr "Não"
 
 #: collective/cover/widgets/selectpreview_input.pt:77
 msgid "No description"
-msgstr ""
+msgstr "Sem descrição"
 
 #: collective/cover/tiles/configuration_widgets/list.pt:12
 msgid "Number of items"
@@ -227,7 +236,7 @@ msgstr "Número de itens"
 
 #: collective/cover/controlpanel.py:34
 msgid "Only objects of these content types will be searched on the content chooser."
-msgstr ""
+msgstr "Só objetos de esses tipos serão procurados na seleção de conteúdo"
 
 #: collective/cover/tiles/configuration_widgets/basewidget.pt:32
 #: collective/cover/tiles/configuration_widgets/list.pt:42
@@ -241,36 +250,36 @@ msgstr "Adicione até ${limit_objects} ao tile."
 
 #: collective/cover/tiles/templates/pfg.pt:8
 msgid "Please drag&amp;drop a Form Folder here to populate the tile."
-msgstr ""
+msgstr "Arraste e solte um formulário aqui."
 
 #: collective/cover/tiles/templates/file.pt:8
 msgid "Please drag&amp;drop a file here."
-msgstr "Por favor, arraste e solte um arquivo aqui."
+msgstr "Arraste e solte um arquivo aqui."
 
 #: collective/cover/tiles/templates/link.pt:8
 msgid "Please drag&amp;drop a link here to populate the tile."
-msgstr "Por favor, arraste e solte um link aqui para popular este tile"
+msgstr "Arraste e solte um link aqui para popular este tile"
 
 #: collective/cover/tiles/templates/image.pt:8
 msgid "Please drag&amp;drop an image here to populate the tile."
-msgstr "Por favor, arraste e solte uma imagem aqui para popular este tile."
+msgstr "Arraste e solte uma imagem aqui para popular este tile."
 
 #: collective/cover/tiles/templates/basic.pt:9
 #: collective/cover/tiles/templates/contentbody.pt:8
 msgid "Please drag&amp;drop some content here to populate the tile."
-msgstr ""
+msgstr "Arraste e solte algum conteúdo aqui."
 
 #: collective/cover/tiles/templates/collection.pt:8
 msgid "Please drop a collection here to fill the tile."
-msgstr ""
+msgstr "Arraste e solte uma coleção aqui."
 
 #: collective/cover/tiles/templates/embed.pt:8
 msgid "Please edit the tile to add the code to be embedded."
-msgstr "Por favor edite o tile para adicionar o código que será embedado."
+msgstr "Edite o tile para adicionar o código que será embedado."
 
 #: collective/cover/tiles/templates/richtext.pt:9
 msgid "Please edit the tile to enter some text."
-msgstr "Por favor edite o tile para adicionar um texto."
+msgstr "Edite o tile para adicionar um texto."
 
 #: collective/cover/tiles/configuration_widgets/namedimage.pt:62
 msgid "Position"
@@ -288,7 +297,7 @@ msgstr "Tile de texto rico"
 msgid "Row"
 msgstr "Linha"
 
-#: collective/cover/tiles/configuration_view.py:158
+#: collective/cover/tiles/configuration_view.py:162
 #: collective/cover/tiles/edit.py:43
 msgid "Save"
 msgstr "Salvar"
@@ -301,9 +310,13 @@ msgstr "Salvo"
 msgid "Searchable Content Types"
 msgstr "Tipos de conteúdo buscáveis"
 
-#: collective/cover/controlpanel.py:47
+#: collective/cover/controlpanel.py:58
 msgid "Settings for the collective.cover package"
 msgstr "Configurações do produto collective.cover"
+
+#: collective/cover/controlpanel.py:45
+msgid "Styles"
+msgstr "Estilos"
 
 #: collective/cover/tiles/configuration_widgets/richtext.pt:42
 msgid "Text length"
@@ -319,13 +332,13 @@ msgstr "O layout que será utilizado"
 
 #: collective/cover/controlpanel.py:25
 msgid "This tiles will be available for layout creation."
-msgstr ""
+msgstr "Esses tiles serão disponíveis para criação dos desenhos."
 
-#: collective/cover/tiles/configuration_view.py:200
+#: collective/cover/tiles/configuration_view.py:204
 msgid "Tile configuration cancelled."
 msgstr "Configuração do tile cancelada."
 
-#: collective/cover/tiles/configuration_view.py:187
+#: collective/cover/tiles/configuration_view.py:191
 msgid "Tile configuration saved."
 msgstr "Configuração do tile salva."
 
@@ -365,11 +378,11 @@ msgstr "Visível"
 msgid "Yes"
 msgstr "Sim"
 
-#: collective/cover/tiles/base.py:115
+#: collective/cover/tiles/base.py:128
 msgid "You are not allowed to add content to this tile"
 msgstr "Você não tem permissão para adicionar conteúdo neste tile"
 
-#: collective/cover/tiles/base.py:129
+#: collective/cover/tiles/base.py:142
 msgid "You are not allowed to remove content of this tile"
 msgstr "Você não tem permissão para apagar conteúdo neste tile"
 
