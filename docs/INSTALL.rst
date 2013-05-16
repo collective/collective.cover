@@ -15,7 +15,7 @@ To enable this package in a buildout-based installation:
 
     [versions]
     ...
-    plone.app.blocks = 1.0
+    plone.app.blocks = 1.1.1
     plone.app.drafts = 1.0a2
     plone.app.jquery = 1.7.2
     plone.app.jquerytools = 1.5.5
