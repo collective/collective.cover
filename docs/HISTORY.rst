@@ -6,6 +6,9 @@ There's a frood who really knows where his towel is
 
 - Upgrade to plone.app.blocks 1.1 [ericof]
 
+- Refactor EnabledTilesVocabulary to avoid issues with situations in which
+  we have no context/request (HT datakurre). [hvelarde]
+
 - Spanish and Brazilian Portuguese translations were updated. [hvelarde]
 
 - [bugfix] Prevent the configuration view to crash if the widget does not

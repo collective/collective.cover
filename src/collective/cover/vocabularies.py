@@ -6,7 +6,6 @@ from five import grok
 from plone.app.vocabularies.types import ReallyUserFriendlyTypesVocabulary
 from plone.registry.interfaces import IRegistry
 from plone.tiles.interfaces import ITileType
-from zope.component import queryMultiAdapter
 from zope.component import getUtility
 from zope.globalrequest import getRequest
 from zope.schema.interfaces import IVocabularyFactory
@@ -50,9 +49,8 @@ class EnabledTilesVocabulary(object):
     grok.implements(IVocabularyFactory)
 
     def _enabled(self, name):
-        tile = queryMultiAdapter(
-            (self.context, self.request), name=name)
-        return IPersistentCoverTile.providedBy(tile) if tile else False
+        tile_type = getUtility(ITileType, name)
+        return issubclass(tile_type.schema, IPersistentCoverTile)
 
     def __call__(self, context):
         self.context = context
