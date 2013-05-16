@@ -4,6 +4,8 @@ There's a frood who really knows where his towel is
 1.0a4 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Upgrade to plone.app.blocks 1.1 [ericof]
+
 - Refactor EnabledTilesVocabulary to avoid issues with situations in which
   we have no context/request (HT datakurre). [hvelarde]
 
