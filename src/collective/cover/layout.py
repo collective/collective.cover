@@ -71,7 +71,7 @@ class PageLayout(grok.View):
                 if tile_conf.get('css_class'):
                     css_class = tile_conf.get('css_class', '')
                     section['class'] = '%s %s' % (section.get('class'), css_class)
-                return self.tile(section=section, mode=mode)
+                return self.tile(section=section, mode=mode, tile_url=tile_url)
         else:
             return self.generalmarkup(section=section, mode=mode)
 
