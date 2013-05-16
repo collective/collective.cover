@@ -7,7 +7,6 @@ from plone.app.vocabularies.types import ReallyUserFriendlyTypesVocabulary
 from plone.registry.interfaces import IRegistry
 from plone.tiles.interfaces import ITileType
 from zope.component import getUtility
-from zope.globalrequest import getRequest
 from zope.schema.interfaces import IVocabularyFactory
 from zope.schema.vocabulary import SimpleTerm
 from zope.schema.vocabulary import SimpleVocabulary
@@ -53,9 +52,6 @@ class EnabledTilesVocabulary(object):
         return issubclass(tile_type.schema, IPersistentCoverTile)
 
     def __call__(self, context):
-        self.context = context
-        self.request = getRequest()  # context may be an adapter
-
         registry = getUtility(IRegistry)
         tiles = registry['plone.app.tiles']
 
