@@ -4,6 +4,8 @@ There's a frood who really knows where his towel is
 1.0a4 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Add border to carousel tile dot. (closes `#206`_). [hvelarde]
+
 - Upgrade to plone.app.blocks 1.1 [ericof]
 
 - Refactor EnabledTilesVocabulary to avoid issues with situations in which
@@ -174,3 +176,4 @@ There's a frood who really knows where his towel is
 .. _`#190`: https://github.com/collective/collective.cover/issues/190
 .. _`#191`: https://github.com/collective/collective.cover/issues/191
 .. _`#198`: https://github.com/collective/collective.cover/issues/198
+.. _`#206`: https://github.com/collective/collective.cover/issues/206
