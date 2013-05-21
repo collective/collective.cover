@@ -4,6 +4,8 @@ There's a frood who really knows where his towel is
 1.0a4 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Refactor Image tile to use original image and scales, when possible [ericof]
+
 - Add border to carousel tile dot. (closes `#206`_). [hvelarde]
 
 - Upgrade to plone.app.blocks 1.1 [ericof]
