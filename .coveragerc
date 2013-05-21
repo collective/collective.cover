@@ -3,5 +3,6 @@ omit =
     /home/*/.buildout/eggs/*
     /usr/*
     bin/test
+    buildout-cache/eggs/*
     eggs/*
     parts/*
