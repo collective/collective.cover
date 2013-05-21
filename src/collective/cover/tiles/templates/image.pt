@@ -13,9 +13,20 @@
     <tal:fields repeat="field view/get_configured_fields">
 
       <tal:image condition="python:field['id'] == 'image'"
-      			 define="scale python:field.get('scale', 'large').split()[0];
-      			         position python:field.get('position', '');">
-		    <span metal:use-macro="context/@@tile_macros/image" />
+             define="scale python:field.get('scale', 'large');
+                     position python:field.get('position', '');">
+
+        <a class="imag" tal:attributes="href view/getURL;
+                                        title view/description">
+          <img tal:define="scales view/@@images;
+                           thumbnail python: scales.scale('image', scale=scale);"
+               tal:condition="thumbnail"
+               tal:attributes="src thumbnail/url;
+                               width thumbnail/width;
+                               height thumbnail/height;
+                               class position;
+                               alt view/title" />
+        </a>
       </tal:image>
 
       <tal:last condition="repeat/field/end">
