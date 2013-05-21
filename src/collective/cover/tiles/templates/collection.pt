@@ -16,6 +16,10 @@
         <p i18n:translate="">The collection doesn't have any results.</p>
       </div>
 
+      <div class="tile-title">
+          <span tal:content="view/data/title" />
+      </div>
+
       <div class="collection-item" tal:repeat="item results">
         <tal:items define="obj item/getObject">
           <tal:fields repeat="field view/configured_fields">
@@ -33,16 +37,32 @@
 
             <tal:title define="htmltag python:field.get('htmltag', 'h1')"
                        condition="python:field['id'] == 'title'">
-              <!-- FIXME: a tag should be inside h tag -->
-              <a tal:attributes="href obj/absolute_url; 
-                                 title obj/Description">
-                <h1 tal:condition="python:htmltag == 'h1'"
-                    tal:content="obj/Title" />
-                <h2 tal:condition="python:htmltag == 'h2'"
-                    tal:content="obj/Title" />
-                <h3 tal:condition="python:htmltag == 'h3'"
-                    tal:content="obj/Title" />
-              </a>
+
+
+                <h1 tal:condition="python:htmltag == 'h1'">
+                    <a tal:attributes="href obj/absolute_url; 
+                                       title obj/Description"
+                       tal:content="obj/Title" />
+                </h1>
+
+                <h2 tal:condition="python:htmltag == 'h2'">
+                    <a tal:attributes="href obj/absolute_url; 
+                                       title obj/Description"
+                       tal:content="obj/Title" />
+                </h2>
+
+                <h3 tal:condition="python:htmltag == 'h3'">
+                    <a tal:attributes="href obj/absolute_url; 
+                                       title obj/Description"
+                       tal:content="obj/Title" />
+                </h3>
+
+                <h4 tal:condition="python:htmltag == 'h4'">
+                    <a tal:attributes="href obj/absolute_url; 
+                                       title obj/Description"
+                       tal:content="obj/Title" />
+                </h4>
+
             </tal:title>
 
             <p class="description"
@@ -56,6 +76,7 @@
         </tal:items>
         <div class="visualClear"><!-- --></div>
       </div>
+      <div class="visualClear"><!-- --></div>
     </tal:results>
   </div>
 </body>
