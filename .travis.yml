@@ -15,6 +15,6 @@ before_script:
 script: bin/test
 after_success:
   - test -v QA && bin/buildout -c coverage.cfg -N -q -t 3 || true
-  - test -v QA && make coverage-validation basic-validation || true
+  - test -v QA && make coveralls basic-validation || true
 notifications:
   irc: irc.freenode.org#simplesconsultoria
