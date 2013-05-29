@@ -87,7 +87,4 @@ class ImageTile(PersistentCoverTile):
         data_mgr.set(data)
 
     def accepted_ct(self):
-        """ Return a list of content types accepted by the tile.
-        """
-        valid_ct = ['Image']
-        return valid_ct
+        return ['Image']

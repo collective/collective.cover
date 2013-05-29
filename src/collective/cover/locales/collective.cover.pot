@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: collective.cover\n"
-"POT-Creation-Date: 2013-05-14 21:36+0000\n"
+"POT-Creation-Date: 2013-05-29 21:16+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -139,7 +139,11 @@ msgstr ""
 msgid "Download link"
 msgstr ""
 
-#: collective/cover/layout_templates/tile.pt:46
+#: collective/cover/tiles/templates/image.pt:8
+msgid "Drag&amp;drop an image here to populate the tile."
+msgstr ""
+
+#: collective/cover/layout_templates/tile.pt:47
 msgid "Edit"
 msgstr ""
 
@@ -177,7 +181,7 @@ msgid "HTML tag"
 msgstr ""
 
 #: collective/cover/tiles/basic.py:36
-#: collective/cover/tiles/image.py:22
+#: collective/cover/tiles/image.py:18
 #: collective/cover/tiles/link.py:27
 msgid "Image"
 msgstr ""
@@ -258,10 +262,6 @@ msgstr ""
 
 #: collective/cover/tiles/templates/link.pt:8
 msgid "Please drag&amp;drop a link here to populate the tile."
-msgstr ""
-
-#: collective/cover/tiles/templates/image.pt:8
-msgid "Please drag&amp;drop an image here to populate the tile."
 msgstr ""
 
 #: collective/cover/tiles/templates/basic.pt:9
@@ -358,7 +358,7 @@ msgstr ""
 
 #: collective/cover/tiles/basic.py:60
 #: collective/cover/tiles/file.py:57
-#: collective/cover/tiles/link.py:37
+#: collective/cover/tiles/image.py:23
 msgid "UUID"
 msgstr ""
 

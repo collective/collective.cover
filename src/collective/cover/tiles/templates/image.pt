@@ -6,7 +6,7 @@
 
 <body tal:define="is_empty view/is_empty">
   <p tal:condition="is_empty" i18n:translate="">
-    Please drag&amp;drop an image here to populate the tile.
+    Drag&amp;drop an image here to populate the tile.
   </p>
 
   <div tal:condition="not: is_empty">

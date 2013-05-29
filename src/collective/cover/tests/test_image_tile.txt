@@ -26,7 +26,7 @@ Test image Tile
     Save Cover Layout
 
     Click Link  link=Compose
-    Page Should Contain  Please drag&drop an image here
+    Page Should Contain  Drag&drop an image here to populate the tile.
 
     Click Element  css=div#contentchooser-content-show-button
 

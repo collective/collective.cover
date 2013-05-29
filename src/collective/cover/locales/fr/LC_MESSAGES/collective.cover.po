@@ -4,9 +4,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: collective.cover\n"
-"POT-Creation-Date: 2013-05-14 21:36+0000\n"
-"PO-Revision-Date: 2013-05-10 11:46+0200\n"
-"Last-Translator: Bitouzé Denis <dbitouze@wanadoo.fr>\n"
+"POT-Creation-Date: 2013-05-29 21:16+0000\n"
+"PO-Revision-Date: 2013-05-29 18:20-0300\n"
+"Last-Translator: Héctor Velarde <hector.velarde@gmail.com>\n"
 "Language-Team: French <kde-i18n-doc@kde.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -144,7 +144,11 @@ msgstr "Description"
 msgid "Download link"
 msgstr "Lien de téléchargement"
 
-#: collective/cover/layout_templates/tile.pt:46
+#: collective/cover/tiles/templates/image.pt:8
+msgid "Drag&amp;drop an image here to populate the tile."
+msgstr "Veuillez glisser &amp; déposer une image ici (via le bouton 'Ajouter du contenu')"
+
+#: collective/cover/layout_templates/tile.pt:47
 msgid "Edit"
 msgstr "Modifier"
 
@@ -182,7 +186,7 @@ msgid "HTML tag"
 msgstr "Balise HTML"
 
 #: collective/cover/tiles/basic.py:36
-#: collective/cover/tiles/image.py:22
+#: collective/cover/tiles/image.py:18
 #: collective/cover/tiles/link.py:27
 msgid "Image"
 msgstr "Image"
@@ -264,10 +268,6 @@ msgstr "Veuillez glisser &amp; déposer un fichier ici (via le bouton 'Ajouter d
 #: collective/cover/tiles/templates/link.pt:8
 msgid "Please drag&amp;drop a link here to populate the tile."
 msgstr "Veuillez glisser &amp; déposer un lien ici (via le bouton 'Ajouter du contenu')"
-
-#: collective/cover/tiles/templates/image.pt:8
-msgid "Please drag&amp;drop an image here to populate the tile."
-msgstr "Veuillez glisser &amp; déposer une image ici (via le bouton 'Ajouter du contenu')"
 
 #: collective/cover/tiles/templates/basic.pt:9
 #: collective/cover/tiles/templates/contentbody.pt:8
@@ -363,7 +363,7 @@ msgstr "URL"
 
 #: collective/cover/tiles/basic.py:60
 #: collective/cover/tiles/file.py:57
-#: collective/cover/tiles/link.py:37
+#: collective/cover/tiles/image.py:23
 msgid "UUID"
 msgstr "UUID"
 
