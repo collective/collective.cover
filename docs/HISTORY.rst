@@ -4,9 +4,6 @@ There's a frood who really knows where his towel is
 1.0a4 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
-- Add banner tile that will replace image and link tiles. (closes `#218`_).
-  [hvelarde]
-
 - Refactor image tile to use original image and scales, when possible.
   [ericof, hvelarde]
 
@@ -183,4 +180,3 @@ There's a frood who really knows where his towel is
 .. _`#191`: https://github.com/collective/collective.cover/issues/191
 .. _`#198`: https://github.com/collective/collective.cover/issues/198
 .. _`#206`: https://github.com/collective/collective.cover/issues/206
-.. _`#218`: https://github.com/collective/collective.cover/issues/218

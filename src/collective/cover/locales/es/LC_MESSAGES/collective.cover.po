@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: collective.cover\n"
-"POT-Creation-Date: 2013-05-30 20:41+0000\n"
-"PO-Revision-Date: 2013-05-30 17:42-0300\n"
+"POT-Creation-Date: 2013-05-29 21:16+0000\n"
+"PO-Revision-Date: 2013-05-29 18:19-0300\n"
 "Last-Translator: Héctor Velarde <hector.velarde@gmail.com>\n"
 "Language-Team: Spanish <https://github.com/collective>\n"
 "MIME-Version: 1.0\n"
@@ -146,10 +146,6 @@ msgstr "Enlace de descarga"
 msgid "Drag&amp;drop an image here to populate the tile."
 msgstr "Arrastre y suelte una imagen aquí."
 
-#: collective/cover/tiles/templates/banner.pt:8
-msgid "Drag&amp;drop an image or link here to populate the tile."
-msgstr "Arrastre y suelte una imagen o un enlace aquí."
-
 #: collective/cover/layout_templates/tile.pt:47
 msgid "Edit"
 msgstr "Editar"
@@ -187,9 +183,9 @@ msgstr "Filtrar elementos"
 msgid "HTML tag"
 msgstr "Tag HTML"
 
-#: collective/cover/tiles/banner.py:23
 #: collective/cover/tiles/basic.py:36
 #: collective/cover/tiles/image.py:18
+#: collective/cover/tiles/link.py:27
 msgid "Image"
 msgstr "Imagen"
 
@@ -353,13 +349,12 @@ msgstr "Configuración del tile guardada."
 msgid "Tile saved"
 msgstr "Tile guardado"
 
-#: collective/cover/tiles/banner.py:18
 #: collective/cover/tiles/basic.py:26
 #: collective/cover/tiles/embed.py:19
+#: collective/cover/tiles/file.py:41
 msgid "Title"
 msgstr "Titulo"
 
-#: collective/cover/tiles/banner.py:28
 #: collective/cover/tiles/link.py:32
 msgid "URL"
 msgstr "URL"

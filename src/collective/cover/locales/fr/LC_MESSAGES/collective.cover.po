@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: collective.cover\n"
-"POT-Creation-Date: 2013-05-30 20:41+0000\n"
+"POT-Creation-Date: 2013-05-29 21:16+0000\n"
 "PO-Revision-Date: 2013-05-29 18:20-0300\n"
 "Last-Translator: Héctor Velarde <hector.velarde@gmail.com>\n"
 "Language-Team: French <kde-i18n-doc@kde.org>\n"
@@ -148,10 +148,6 @@ msgstr "Lien de téléchargement"
 msgid "Drag&amp;drop an image here to populate the tile."
 msgstr "Veuillez glisser &amp; déposer une image ici (via le bouton 'Ajouter du contenu')"
 
-#: collective/cover/tiles/templates/banner.pt:8
-msgid "Drag&amp;drop an image or link here to populate the tile."
-msgstr ""
-
 #: collective/cover/layout_templates/tile.pt:47
 msgid "Edit"
 msgstr "Modifier"
@@ -189,9 +185,9 @@ msgstr "Filtrer les éléments"
 msgid "HTML tag"
 msgstr "Balise HTML"
 
-#: collective/cover/tiles/banner.py:23
 #: collective/cover/tiles/basic.py:36
 #: collective/cover/tiles/image.py:18
+#: collective/cover/tiles/link.py:27
 msgid "Image"
 msgstr "Image"
 
@@ -355,13 +351,12 @@ msgstr "Configuration de la tuile enregistrée."
 msgid "Tile saved"
 msgstr "Tuile enregistrée"
 
-#: collective/cover/tiles/banner.py:18
 #: collective/cover/tiles/basic.py:26
 #: collective/cover/tiles/embed.py:19
+#: collective/cover/tiles/file.py:41
 msgid "Title"
 msgstr "Titre"
 
-#: collective/cover/tiles/banner.py:28
 #: collective/cover/tiles/link.py:32
 msgid "URL"
 msgstr "URL"

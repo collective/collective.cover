@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: collective.cover\n"
-"POT-Creation-Date: 2013-05-30 20:41+0000\n"
-"PO-Revision-Date: 2013-05-30 17:46-0300\n"
+"POT-Creation-Date: 2013-05-29 21:16+0000\n"
+"PO-Revision-Date: 2013-05-29 18:19-0300\n"
 "Last-Translator: Héctor Velarde <hector.velarde@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -141,11 +141,7 @@ msgstr "Link para download"
 
 #: collective/cover/tiles/templates/image.pt:8
 msgid "Drag&amp;drop an image here to populate the tile."
-msgstr "Arraste e solte uma imagem aqui."
-
-#: collective/cover/tiles/templates/banner.pt:8
-msgid "Drag&amp;drop an image or link here to populate the tile."
-msgstr "Arraste e solte uma imagem ou um link aqui."
+msgstr "Arraste e solte uma imagem aqui para popular este tile."
 
 #: collective/cover/layout_templates/tile.pt:47
 msgid "Edit"
@@ -184,9 +180,9 @@ msgstr "Filtrar itens"
 msgid "HTML tag"
 msgstr "Tag HTML"
 
-#: collective/cover/tiles/banner.py:23
 #: collective/cover/tiles/basic.py:36
 #: collective/cover/tiles/image.py:18
+#: collective/cover/tiles/link.py:27
 msgid "Image"
 msgstr "Imagem"
 
@@ -266,7 +262,7 @@ msgstr "Arraste e solte um arquivo aqui."
 
 #: collective/cover/tiles/templates/link.pt:8
 msgid "Please drag&amp;drop a link here to populate the tile."
-msgstr "Arraste e solte um link aquie"
+msgstr "Arraste e solte um link aqui para popular este tile"
 
 #: collective/cover/tiles/templates/basic.pt:9
 #: collective/cover/tiles/templates/contentbody.pt:8
@@ -350,13 +346,12 @@ msgstr "Configuração do tile salva."
 msgid "Tile saved"
 msgstr "Tile salvo"
 
-#: collective/cover/tiles/banner.py:18
 #: collective/cover/tiles/basic.py:26
 #: collective/cover/tiles/embed.py:19
+#: collective/cover/tiles/file.py:41
 msgid "Title"
 msgstr "Título"
 
-#: collective/cover/tiles/banner.py:28
 #: collective/cover/tiles/link.py:32
 msgid "URL"
 msgstr "URL"
