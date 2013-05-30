@@ -19,14 +19,13 @@
 
   <record name="plone.app.tiles">
     <value purge="false">
+      <element>collective.cover.banner</element>
       <element>collective.cover.basic</element>
       <element>collective.cover.carousel</element>
       <element>collective.cover.collection</element>
       <element>collective.cover.contentbody</element>
       <element>collective.cover.embed</element>
       <element>collective.cover.file</element>
-      <element>collective.cover.image</element>
-      <element>collective.cover.link</element>
       <element>collective.cover.list</element>
       <element>collective.cover.pfg</element>
       <element>collective.cover.richtext</element>
