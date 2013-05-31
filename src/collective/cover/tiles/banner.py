@@ -80,13 +80,27 @@ class BannerTile(PersistentCoverTile):
     def is_empty(self):
         return not (self.Title() or self.has_image or self.getRemoteUrl())
 
-    # TODO: getting fields configuration is currently a nightmare; we must
-    #       refactor this on the base tile
-    def get_field_configuration(self, field, attribute=None):
+    @property
+    def css_class(self):
         tile_conf = self.get_tile_configuration()
-        field_conf = tile_conf.get(field, None)
-        if field_conf:
-            if attribute is not None:
-                return field_conf.get(attribute, None)
-            else:
-                return field_conf
+        image_conf = tile_conf.get('image', None)
+        if image_conf:
+            css_class = image_conf['position']
+            return css_class
+
+    @property
+    def scale(self):
+        tile_conf = self.get_tile_configuration()
+        image_conf = tile_conf.get('image', None)
+        if image_conf:
+            scale = image_conf['imgsize']
+            # scale string is something like: 'mini 200:200'
+            return scale.split(' ')[0]  # we need the name only: 'mini'
+
+    @property
+    def htmltag(self):
+        tile_conf = self.get_tile_configuration()
+        title_conf = tile_conf.get('title', None)
+        if title_conf:
+            htmltag = title_conf['htmltag']
+            return htmltag

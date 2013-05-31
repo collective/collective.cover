@@ -9,28 +9,28 @@
     Drag&amp;drop an image or link here to populate the tile.
   </p>
 
-  <div tal:condition="not:is_empty"
+  <div class="banner-tile"
+       tal:condition="not:is_empty"
        tal:define="title view/Title;
                    has_image view/has_image;
                    remote_url view/getRemoteUrl">
 
     <tal:image condition="has_image">
         <a tal:attributes="href remote_url">
-          <img tal:define="position python:view.get_field_configuration('image', 'position');
-                           scale python:view.get_field_configuration('image', 'scale');
+          <img tal:define="scale view/scale;
                            scales view/@@images;
                            thumbnail python:scales.scale('image', scale=scale)"
                tal:condition="thumbnail"
                tal:attributes="src thumbnail/url;
                                width thumbnail/width;
                                height thumbnail/height;
-                               class position;
+                               class view/css_class;
                                alt title" />
         </a>
     </tal:image>
 
     <tal:text condition="not:has_image"
-        define="htmltag python:view.get_field_configuration('title', 'htmltag')">
+        define="htmltag view/htmltag">
 
       <h2 tal:condition="python:htmltag == 'h2'">
          <a tal:attributes="href remote_url"
