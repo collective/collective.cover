@@ -31,7 +31,7 @@ class ITilesConfigurationScreen(Interface):
 
         the following attribute is available only in TextLine fields:
 
-        htmltag: (u'h1', u'h2', ...)
+        htmltag: (u'h2', u'h3', ...)
             defaults to u'h2'
             XXX: this name is a bad one, but I have no proposal for now
 
