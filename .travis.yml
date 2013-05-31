@@ -3,6 +3,10 @@ python: 2.7
 env:
   - PLONE_VERSION=4.2
   - PLONE_VERSION=4.3 QA=true
+matrix:
+  allow_failures:
+  - python: 2.7
+  - env: PLONE_VERSION=4.2
 install:
   - sed -ie "s#travis-4.x.cfg#travis-$PLONE_VERSION.x.cfg#" travis.cfg
   - test "$PLONE_VERSION" = "4.2" && sed -ie "s#collective.js.jqueryui = 1.10.1.2#collective.js.jqueryui = 1.8.16.9#" versions.cfg || true
