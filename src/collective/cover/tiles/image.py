@@ -9,6 +9,7 @@ from plone.uuid.interfaces import IUUID
 from Products.CMFCore.utils import getToolByName
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zope import schema
+from zope.deprecation import deprecated
 from zope.interface import implements
 
 
@@ -88,3 +89,9 @@ class ImageTile(PersistentCoverTile):
 
     def accepted_ct(self):
         return ['Image']
+
+
+deprecated(
+    'IImageTile',
+    "Image Tile is deprecated use Banner Tile instead. Image Tile will be "
+    "removed in collective.cover 1.0a5.")
