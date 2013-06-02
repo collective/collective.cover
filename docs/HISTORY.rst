@@ -4,6 +4,9 @@ There's a frood who really knows where his towel is
 1.0a4 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Avoid NoneType error by checking if carrousel is empty (fixes `#203`_).
+  [hvelarde]
+
 - Refactor image tile to use original image and scales, when possible.
   [ericof, hvelarde]
 
