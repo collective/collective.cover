@@ -6,6 +6,7 @@ from z3c.form import interfaces
 from z3c.form import widget
 from z3c.form.browser import textlines
 from zope.browserpage.viewpagetemplatefile import ViewPageTemplateFile
+
 import zope.interface
 
 
@@ -25,9 +26,11 @@ class TextLinesSortableWidget(textlines.TextLinesWidget):
             return self.input_template(self)
 
     def sort_results(self):
-        results = [{'obj': uuidToObject(x), 'uuid': x} for x in self.context['uuids']]
-
-        return results
+        uuids = self.context['uuids']
+        if uuids:
+            return [{'obj': uuidToObject(x), 'uuid': x} for x in uuids]
+        else:
+            return []
 
     def thumbnail(self, item):
         scales = item.restrictedTraverse('@@images')

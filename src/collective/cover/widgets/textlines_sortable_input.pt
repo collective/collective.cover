@@ -8,6 +8,11 @@
     display: block;
     position: relative;
 }
+
+.tileImage{
+    float: left;
+    margin: 0 1em 0.5em 0;
+}
 </style>
 <div data-carousel="carousel-sort">
     <textarea
@@ -42,37 +47,20 @@
         tal:content="structure view/value" />
 
     <div>
-      <!-- FIXME: this should be configurable -->
       <div class="sortable">
         <tal:items repeat="item view/sort_results">
-          <div tal:define="obj nocall:item/obj;
+          <div class="textline-sortable-element"
+               tal:define="obj nocall:item/obj;
                            uuid item/uuid"
-               tal:attributes="data-uid uuid"
-               class="textline-sortable-element">
-            <tal:image tal:define="thumbnail python:view.thumbnail(obj);"
-                       condition="thumbnail">
-              <a tal:attributes="href obj/absolute_url;
-                                 title obj/Description;
-                                 alt obj/Description">
-                <!-- XXX -->
-                <img style="float: left; margin: 0 1em 0.5em 0;"
+               tal:attributes="data-uid uuid">
+                <img class="tileImage"
+                     tal:define="thumbnail python:view.thumbnail(obj)"
+                     tal:condition="thumbnail"
                      tal:attributes="src thumbnail/url;
                                      width thumbnail/width;
                                      height thumbnail/height" />
-              </a>
-            </tal:image>
-
-            <tal:title>
-              <!-- FIXME: a tag should be inside h tag -->
-              <a tal:attributes="href obj/absolute_url;
-                                 title obj/Description">
-                <h3 tal:content="obj/Title" />
-              </a>
-            </tal:title>
-
-            <!-- <p tal:content="item/Description" /> -->
-
-
+            <h3 tal:content="obj/Title" />
+            <p tal:content="obj/Description" />
           </div>
 
           <div class="visualClear"><!-- --></div>
