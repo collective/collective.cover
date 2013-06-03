@@ -266,7 +266,7 @@ msgstr "Arraste e solte um arquivo aqui."
 
 #: collective/cover/tiles/templates/link.pt:8
 msgid "Please drag&amp;drop a link here to populate the tile."
-msgstr "Arraste e solte um link aquie"
+msgstr "Arraste e solte um link aqui"
 
 #: collective/cover/tiles/templates/basic.pt:9
 #: collective/cover/tiles/templates/contentbody.pt:8
