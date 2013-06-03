@@ -8,6 +8,7 @@ from plone.tiles.interfaces import ITileDataManager
 from plone.uuid.interfaces import IUUID
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zope import schema
+from zope.deprecation import deprecated
 from zope.interface import implements
 
 
@@ -87,3 +88,9 @@ class LinkTile(PersistentCoverTile):
         """ Return a list of content types accepted by the tile.
         """
         return ['Link']
+
+
+deprecated(
+    'LinkTile',
+    "Link Tile is deprecated use Banner Tile instead. Link Tile will be "
+    "removed in collective.cover 1.0a5.")
