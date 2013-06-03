@@ -8,6 +8,9 @@ There's a frood who really knows where his towel is
   warning to image and link tiles as they will be removed from package on
   next release. (closes `#218`_). [hvelarde]
 
+- Avoid NoneType error by checking if carousel is empty (fixes `#203`_).
+  [hvelarde]
+
 - Refactor image tile to use original image and scales, when possible.
   [ericof, hvelarde]
 
