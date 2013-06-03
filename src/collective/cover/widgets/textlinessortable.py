@@ -16,14 +16,17 @@ class TextLinesSortableWidget(textlines.TextLinesWidget):
     """
     zope.interface.implementsOnly(ITextLinesSortableWidget)
     klass = u"textlines-sortable-widget"
+    configure_template = ViewPageTemplateFile('textlines_sortable_configure.pt')
     display_template = ViewPageTemplateFile('textlines_sortable_display.pt')
     input_template = ViewPageTemplateFile('textlines_sortable_input.pt')
 
     def render(self):
         if self.mode == interfaces.DISPLAY_MODE:
             return self.display_template(self)
-        else:
+        elif self.mode == interfaces.INPUT_MODE:
             return self.input_template(self)
+        else:  # configure mode
+            return self.configure_template(self)
 
     def sort_results(self):
         uuids = self.context['uuids']
