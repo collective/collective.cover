@@ -6,6 +6,9 @@ There's a frood who really knows where his towel is
 
 - Remove <h1> tag from tiles. (closes `#220`_). [hvelarde]
 
+- Avoid NoneType error by checking if carousel is empty (fixes `#203`_).
+  [hvelarde]
+
 - Refactor image tile to use original image and scales, when possible.
   [ericof, hvelarde]
 
