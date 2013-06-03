@@ -4,6 +4,10 @@ There's a frood who really knows where his towel is
 1.0a4 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Add banner tile that will replace image and link tiles; add deprecation
+  warning to image and link tiles as they will be removed from package on
+  next release. (closes `#218`_). [hvelarde]
+
 - Make carousel tile configurable and avoid NoneType error by checking if
   carousel is empty (fixes `#203`_). [hvelarde]
 
@@ -184,3 +188,4 @@ There's a frood who really knows where his towel is
 .. _`#198`: https://github.com/collective/collective.cover/issues/198
 .. _`#203`: https://github.com/collective/collective.cover/issues/203
 .. _`#206`: https://github.com/collective/collective.cover/issues/206
+.. _`#218`: https://github.com/collective/collective.cover/issues/218
