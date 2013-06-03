@@ -6,8 +6,8 @@ There's a frood who really knows where his towel is
 
 - Remove <h1> tag from tiles. (closes `#220`_). [hvelarde]
 
-- Avoid NoneType error by checking if carousel is empty (fixes `#203`_).
-  [hvelarde]
+- Make carousel tile configurable and avoid NoneType error by checking if
+  carousel is empty (fixes `#203`_). [hvelarde]
 
 - Refactor image tile to use original image and scales, when possible.
   [ericof, hvelarde]
@@ -184,5 +184,6 @@ There's a frood who really knows where his towel is
 .. _`#190`: https://github.com/collective/collective.cover/issues/190
 .. _`#191`: https://github.com/collective/collective.cover/issues/191
 .. _`#198`: https://github.com/collective/collective.cover/issues/198
+.. _`#203`: https://github.com/collective/collective.cover/issues/203
 .. _`#206`: https://github.com/collective/collective.cover/issues/206
 .. _`#220`: https://github.com/collective/collective.cover/issues/220

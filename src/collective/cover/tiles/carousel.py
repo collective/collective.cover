@@ -32,7 +32,7 @@ class ICarouselTile(IListTile):
 
 class CarouselTile(ListTile):
     index = ViewPageTemplateFile("templates/carousel.pt")
-    is_configurable = False
+    is_configurable = True
     is_editable = True
 
     def populate_with_object(self, obj):
@@ -65,9 +65,6 @@ class CarouselTile(ListTile):
             return True  # default value
 
         return self.data['autoplay']
-
-    def get_uid(self, obj):
-        return IUUID(obj)
 
     def init_js(self):
         return """
