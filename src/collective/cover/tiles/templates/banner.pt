@@ -1,0 +1,52 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      i18n:domain="collective.cover">
+
+<body tal:define="is_empty view/is_empty">
+  <p tal:condition="is_empty" i18n:translate="">
+    Drag&amp;drop an image or link here to populate the tile.
+  </p>
+
+  <div class="banner-tile"
+       tal:condition="not:is_empty"
+       tal:define="title view/Title;
+                   has_image view/has_image;
+                   remote_url view/getRemoteUrl">
+
+    <tal:image condition="has_image">
+        <a tal:attributes="href remote_url">
+          <img tal:define="scale view/scale;
+                           scales view/@@images;
+                           thumbnail python:scales.scale('image', scale=scale)"
+               tal:condition="thumbnail"
+               tal:attributes="src thumbnail/url;
+                               width thumbnail/width;
+                               height thumbnail/height;
+                               class view/css_class;
+                               alt title" />
+        </a>
+    </tal:image>
+
+    <tal:text condition="not:has_image"
+        define="htmltag view/htmltag">
+
+      <h2 tal:condition="python:htmltag == 'h2'">
+         <a tal:attributes="href remote_url"
+            tal:content="title" />
+      </h2>
+      <h3 tal:condition="python:htmltag == 'h3'">
+         <a tal:attributes="href remote_url"
+            tal:content="title" />
+      </h3>
+      <h4 tal:condition="python:htmltag == 'h4'">
+         <a tal:attributes="href remote_url"
+            tal:content="title" />
+      </h4>
+    </tal:text>
+
+    <div class="visualClear"><!-- --></div>
+  </div>
+</body>
+</html>

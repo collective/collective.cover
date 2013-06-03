@@ -91,14 +91,15 @@ class TileStylesVocabulary(object):
     def __call__(self, context):
         registry = getUtility(IRegistry)
         settings = registry.forInterface(ICoverSettings)
-        styles = list(settings.styles)
         items = []
-        for style in styles:
-            if style.count('|') == 1:  # skip in case of any formating issue
-                title, css_class = style.split('|')
-                # remove any leading/trailing whitespaces
-                title, css_class = title.strip(), css_class.strip()
-                items.append(SimpleTerm(value=css_class, title=title))
+        if settings.styles is not None:
+            styles = list(settings.styles)
+            for style in styles:
+                if style.count('|') == 1:  # skip in case of formating issues
+                    title, css_class = style.split('|')
+                    # remove any leading/trailing whitespaces
+                    title, css_class = title.strip(), css_class.strip()
+                    items.append(SimpleTerm(value=css_class, title=title))
         return SimpleVocabulary(items)
 
 grok.global_utility(TileStylesVocabulary, name=u'collective.cover.TileStyles')
