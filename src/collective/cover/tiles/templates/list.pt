@@ -18,11 +18,8 @@
         <tal:image tal:define="thumbnail python:view.thumbnail(item);"
                    condition="thumbnail">
           <a tal:attributes="href item/absolute_url;
-                             title item/Description;
-                             alt item/Description">
-            <!-- XXX -->
-            <img style="float: left; margin: 0 1em 0.5em 0;"
-                 tal:attributes="alt item/Description;
+                             title item/Description">
+            <img tal:attributes="alt item/Description;
                                  src thumbnail/url;
                                  width thumbnail/width;
                                  height thumbnail/height" />
@@ -30,11 +27,11 @@
         </tal:image>
 
         <tal:title>
-          <!-- FIXME: a tag should be inside h tag -->
-          <a tal:attributes="href item/absolute_url;
-                             title item/Description">
-            <h1 tal:content="item/Title" />
-          </a>
+          <h2>
+            <a tal:content="item/Title"
+               tal:attributes="href item/absolute_url;
+                               title item/Description" />
+          </h2>
         </tal:title>
 
         <p tal:content="item/Description" />
