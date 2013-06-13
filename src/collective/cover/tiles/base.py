@@ -86,6 +86,11 @@ class IPersistentCoverTile(Interface):
         A method that will return the configuration options for this tile
         """
 
+    def set_tile_configuration(configuration):
+        """
+        A method that will set the configuration options for this tile
+        """
+
     def get_configured_fields():
         """
         This method will return all fields that should be rendered and it will
@@ -177,6 +182,13 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
         configuration = tile_conf_adapter.get_configuration()
 
         return configuration
+
+    def set_tile_configuration(self, configuration):
+        ''' Set tile configuration
+        '''
+        tile_conf_adapter = getMultiAdapter(
+            (self.context, self.request, self), ITilesConfigurationScreen)
+        tile_conf_adapter.set_configuration(configuration)
 
     def _get_tile_field_names(self):
         """Return a list of all the field names in the tile in schema order.
