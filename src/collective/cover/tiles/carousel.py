@@ -9,6 +9,7 @@ from plone.tiles.interfaces import ITileDataManager
 from plone.uuid.interfaces import IUUID
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zope import schema
+from zope.interface import implements
 
 
 class ICarouselTile(IListTile):
@@ -31,12 +32,14 @@ class ICarouselTile(IListTile):
 
 
 class CarouselTile(ListTile):
+    implements(ICarouselTile)
+
     index = ViewPageTemplateFile("templates/carousel.pt")
     is_configurable = True
     is_editable = True
 
     def populate_with_object(self, obj):
-        super(ListTile, self).populate_with_object(obj)  # check permission
+        super(CarouselTile, self).populate_with_object(obj)  # check permission
         try:
             scale = obj.restrictedTraverse('@@images').scale('image')
         except:
