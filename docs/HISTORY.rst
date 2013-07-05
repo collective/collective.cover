@@ -4,6 +4,8 @@ There's a frood who really knows where his towel is
 1.0a4 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Add simple Chinese translations(zh_CN). [Adam tang]
+
 - Add banner tile that will replace image and link tiles; add deprecation
   warning to image and link tiles as they will be removed from package on
   next release. (closes `#218`_). [hvelarde]
