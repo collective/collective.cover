@@ -54,7 +54,11 @@ class BannerTile(PersistentCoverTile):
         title = obj.Title()
         # if image, store a copy of its data
         if obj.portal_type == 'Image':
-            image = NamedBlobImage(obj.getImage().data)
+            if hasattr(obj, 'getImage'):
+                data = obj.getImage().data
+            else:
+                data = obj.image.data
+            image = NamedBlobImage(data)
         else:
             image = None
         remote_url = obj.getRemoteUrl() if obj.portal_type == 'Link' else None
