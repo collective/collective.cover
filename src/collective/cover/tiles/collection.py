@@ -19,32 +19,30 @@ class ICollectionTile(IPersistentCoverTile, form.Schema):
 
     title = schema.TextLine(title=u'Title')
 
-    form.omitted('description')
+    form.omitted(ICoverTileEditView, 'description')
     description = schema.Text(
         title=u'Description',
         required=False,
     )
 
-    form.omitted('date')
+    form.omitted(ICoverTileEditView, 'date')
     date = schema.Datetime(
         title=u'Date',
         required=False,
     )
 
-    form.omitted('image')
+    form.omitted(ICoverTileEditView, 'image')
     image = NamedImage(
         title=u'Image',
         required=False,
     )
 
-    form.omitted('number_to_show')
+    form.omitted(ICoverTileEditView, 'number_to_show')
     number_to_show = schema.List(
         title=u'number of elements to show',
         value_type=schema.TextLine(),
         required=False,
     )
-
-    footer = schema.TextLine(title=u'Footer Text')
 
     uuid = schema.TextLine(title=u'Collection uuid', readonly=True)
 
@@ -54,7 +52,7 @@ class CollectionTile(PersistentCoverTile):
     index = ViewPageTemplateFile("templates/collection.pt")
 
     is_configurable = True
-    is_editable = True
+    is_editable = False
     configured_fields = []
 
     def get_title(self):
@@ -147,16 +145,3 @@ class CollectionTile(PersistentCoverTile):
         if 'uuid' in old_data:
             old_data.pop('uuid')
         data_mgr.set(old_data)
-
-    def collection_url(self):
-        url = ''
-        uuid = self.data.get('uuid', None)
-        obj = uuidToObject(uuid)
-        if obj:
-            url = obj.absolute_url()
-        return url
-
-    def show_footer(self):
-        conf = self.get_tile_configuration()
-        show = conf.get('footer', {}).get('visibility') == 'on'
-        return show

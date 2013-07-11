@@ -76,9 +76,6 @@
         </tal:items>
         <div class="visualClear"><!-- --></div>
       </div>
-      <div class="tile-footer" tal:condition="python:view.data['footer'] and view.show_footer()">
-        <a tal:attributes="href view/collection_url" tal:content="view/data/footer"></a>
-      </div>
       <div class="visualClear"><!-- --></div>
     </tal:results>
   </div>
