@@ -36,7 +36,7 @@ class CollectionTileTestCase(unittest.TestCase):
 
     def test_default_configuration(self):
         self.assertTrue(self.tile.is_configurable)
-        self.assertTrue(self.tile.is_editable)
+        self.assertFalse(self.tile.is_editable)
         self.assertTrue(self.tile.is_droppable)
 
     def test_tile_is_empty(self):
