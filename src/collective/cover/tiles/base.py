@@ -197,13 +197,15 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
 
         return getFieldNamesInOrder(tile_type.schema)
 
-    def _tile_field_is_visible(self, field):
+    def _field_is_visible(self, field):
         """Return boolean according to the field visibility.
         """
-        tile_config = self.get_tile_configuration()
-        field_config = tile_config[field]
-
-        return field_config['visibility'] == u'on'
+        tile_conf = self.get_tile_configuration()
+        field_conf = tile_conf.get('footer', None)
+        if field_conf:
+            return field_conf.get('visibility', None) == u'on'
+        else:
+            return False
 
     def get_configured_fields(self):
         context = self.context

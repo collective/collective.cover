@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 
+from collective.cover import _
 from collective.cover.tiles.base import IPersistentCoverTile
 from collective.cover.tiles.base import PersistentCoverTile
-from collective.cover.tiles.edit import ICoverTileEditView
+from collective.cover.tiles.configuration_view import IDefaultConfigureForm
 from plone.app.uuid.utils import uuidToObject
 from plone.directives import form
 from plone.namedfile.field import NamedBlobImage as NamedImage
@@ -17,34 +18,57 @@ from zope.schema import getFieldsInOrder
 
 class ICollectionTile(IPersistentCoverTile, form.Schema):
 
-    title = schema.TextLine(title=u'Title')
+    header = schema.TextLine(
+        title=_(u'Header'),
+        required=False,
+    )
 
-    form.omitted(ICoverTileEditView, 'description')
+    form.omitted('title')
+    form.no_omit(IDefaultConfigureForm, 'title')
+    title = schema.TextLine(
+        title=_(u'Title'),
+        required=False,
+    )
+
+    form.omitted('description')
+    form.no_omit(IDefaultConfigureForm, 'description')
     description = schema.Text(
-        title=u'Description',
+        title=_(u'Description'),
         required=False,
     )
 
-    form.omitted(ICoverTileEditView, 'date')
+    form.omitted('date')
+    form.no_omit(IDefaultConfigureForm, 'date')
     date = schema.Datetime(
-        title=u'Date',
+        title=_(u'Date'),
         required=False,
     )
 
-    form.omitted(ICoverTileEditView, 'image')
+    form.omitted('image')
+    form.no_omit(IDefaultConfigureForm, 'image')
     image = NamedImage(
-        title=u'Image',
+        title=_(u'Image'),
         required=False,
     )
 
-    form.omitted(ICoverTileEditView, 'number_to_show')
+    # FIXME: this field should be named 'count'
+    form.omitted('number_to_show')
+    form.no_omit(IDefaultConfigureForm, 'number_to_show')
     number_to_show = schema.List(
-        title=u'number of elements to show',
+        title=_(u'Number of items to display'),
         value_type=schema.TextLine(),
         required=False,
     )
 
-    uuid = schema.TextLine(title=u'Collection uuid', readonly=True)
+    footer = schema.TextLine(
+        title=_(u'Footer'),
+        required=False,
+    )
+
+    uuid = schema.TextLine(
+        title=_(u'UUID'),
+        readonly=True,
+    )
 
 
 class CollectionTile(PersistentCoverTile):
@@ -52,7 +76,7 @@ class CollectionTile(PersistentCoverTile):
     index = ViewPageTemplateFile("templates/collection.pt")
 
     is_configurable = True
-    is_editable = False
+    is_editable = True
     configured_fields = []
 
     def get_title(self):
@@ -83,15 +107,16 @@ class CollectionTile(PersistentCoverTile):
         super(CollectionTile, self).populate_with_object(obj)  # check permission
 
         if obj.portal_type in self.accepted_ct():
-            title = obj.Title()
-            description = obj.Description()
+            header = obj.Title()  # use collection's title as header
+            footer = _(u'More…')  # XXX: can we use field's default?
             uuid = IUUID(obj)
 
             data_mgr = ITileDataManager(self)
-            data_mgr.set({'title': title,
-                          'description': description,
-                          'uuid': uuid,
-                          })
+            data_mgr.set({
+                'header': header,
+                'footer': footer,
+                'uuid': uuid,
+            })
 
     def accepted_ct(self):
         """ Return a list of content types accepted by the tile.
@@ -145,3 +170,14 @@ class CollectionTile(PersistentCoverTile):
         if 'uuid' in old_data:
             old_data.pop('uuid')
         data_mgr.set(old_data)
+
+    def show_header(self):
+        return self._field_is_visible('header')
+
+    def collection_url(self):
+        uuid = self.data.get('uuid', None)
+        obj = uuidToObject(uuid)
+        return obj.absolute_url() if obj else ''
+
+    def show_footer(self):
+        return self._field_is_visible('footer')

@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: collective.cover\n"
-"POT-Creation-Date: 2013-05-30 20:41+0000\n"
-"PO-Revision-Date: 2013-05-30 17:46-0300\n"
+"POT-Creation-Date: 2013-07-15 21:43+0000\n"
+"PO-Revision-Date: 2013-07-15 18:49-0300\n"
 "Last-Translator: Héctor Velarde <hector.velarde@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -62,7 +62,7 @@ msgstr "Adicionar conteúdo"
 msgid "An easy-to-use package to create complex cover pages for Plone sites."
 msgstr "Um produto para criar capas complexas fácil de usar."
 
-#: collective/cover/tiles/carousel.py:19
+#: collective/cover/tiles/carousel.py:20
 msgid "Auto play"
 msgstr "Reprodução automática"
 
@@ -79,7 +79,7 @@ msgstr "Tile básico"
 msgid "CSS Class"
 msgstr "Clase CSS"
 
-#: collective/cover/tiles/configuration_view.py:195
+#: collective/cover/tiles/configuration_view.py:196
 #: collective/cover/tiles/edit.py:75
 msgid "Cancel"
 msgstr "Cancelar"
@@ -104,7 +104,7 @@ msgstr "Coluna"
 msgid "Compose"
 msgstr "Composição"
 
-#: collective/cover/tiles/configuration_view.py:158
+#: collective/cover/tiles/configuration_view.py:159
 msgid "Configure ${name}"
 msgstr "Configurar ${name}"
 
@@ -126,12 +126,13 @@ msgid "Cover Settings"
 msgstr "Configurações da capa"
 
 #: collective/cover/tiles/basic.py:43
+#: collective/cover/tiles/collection.py:43
 msgid "Date"
 msgstr "Data"
 
 #: collective/cover/tiles/basic.py:31
+#: collective/cover/tiles/collection.py:36
 #: collective/cover/tiles/embed.py:24
-#: collective/cover/tiles/file.py:46
 msgid "Description"
 msgstr "Descrição"
 
@@ -151,7 +152,7 @@ msgstr "Arraste e solte uma imagem ou um link aqui."
 msgid "Edit"
 msgstr "Editar"
 
-#: collective/cover/tiles/carousel.py:26
+#: collective/cover/tiles/carousel.py:27
 #: collective/cover/tiles/list.py:27
 msgid "Elements"
 msgstr "Elementos"
@@ -180,13 +181,21 @@ msgstr "Tile de arquivo"
 msgid "Filter items"
 msgstr "Filtrar itens"
 
+#: collective/cover/tiles/collection.py:64
+msgid "Footer"
+msgstr "Rodapé"
+
 #: collective/cover/tiles/configuration_widgets/textline.pt:42
 msgid "HTML tag"
 msgstr "Tag HTML"
 
+#: collective/cover/tiles/collection.py:22
+msgid "Header"
+msgstr "Cabeçalho"
+
 #: collective/cover/tiles/banner.py:23
 #: collective/cover/tiles/basic.py:36
-#: collective/cover/tiles/image.py:18
+#: collective/cover/tiles/collection.py:50
 msgid "Image"
 msgstr "Imagem"
 
@@ -216,6 +225,10 @@ msgstr "Nome do layout"
 msgid "Layouts"
 msgstr "Layouts"
 
+#: collective/cover/widgets/textlines_sortable_configure.pt:9
+msgid "Limit"
+msgstr "Limite"
+
 #: tiles/configure.zcml
 msgid "Link Tile"
 msgstr "Tile de link"
@@ -223,6 +236,10 @@ msgstr "Tile de link"
 #: tiles/configure.zcml
 msgid "List Tile"
 msgstr "Tile de lista"
+
+#: collective/cover/tiles/collection.py:111
+msgid "More…"
+msgstr "Mais…"
 
 #: collective/cover/controlpanel.py:18
 msgid "Name"
@@ -241,6 +258,10 @@ msgstr "Sem descrição"
 #: collective/cover/tiles/configuration_widgets/list.pt:12
 msgid "Number of items"
 msgstr "Número de itens"
+
+#: collective/cover/tiles/collection.py:58
+msgid "Number of items to display"
+msgstr "Número de itens a exibir"
 
 #: collective/cover/controlpanel.py:34
 msgid "Only objects of these content types will be searched on the content chooser."
@@ -301,7 +322,7 @@ msgstr "Tile de texto rico"
 msgid "Row"
 msgstr "Linha"
 
-#: collective/cover/tiles/configuration_view.py:162
+#: collective/cover/tiles/configuration_view.py:163
 #: collective/cover/tiles/edit.py:43
 msgid "Save"
 msgstr "Salvar"
@@ -338,11 +359,11 @@ msgstr "O layout que será utilizado"
 msgid "This tiles will be available for layout creation."
 msgstr "Esses tiles serão disponíveis para criação dos desenhos."
 
-#: collective/cover/tiles/configuration_view.py:204
+#: collective/cover/tiles/configuration_view.py:205
 msgid "Tile configuration cancelled."
 msgstr "Configuração do tile cancelada."
 
-#: collective/cover/tiles/configuration_view.py:191
+#: collective/cover/tiles/configuration_view.py:192
 msgid "Tile configuration saved."
 msgstr "Configuração do tile salva."
 
@@ -352,18 +373,18 @@ msgstr "Tile salvo"
 
 #: collective/cover/tiles/banner.py:18
 #: collective/cover/tiles/basic.py:26
-#: collective/cover/tiles/embed.py:19
+#: collective/cover/tiles/collection.py:29
 msgid "Title"
 msgstr "Título"
 
 #: collective/cover/tiles/banner.py:28
-#: collective/cover/tiles/link.py:32
+#: collective/cover/tiles/link.py:33
 msgid "URL"
 msgstr "URL"
 
 #: collective/cover/tiles/basic.py:60
+#: collective/cover/tiles/collection.py:69
 #: collective/cover/tiles/file.py:57
-#: collective/cover/tiles/image.py:23
 msgid "UUID"
 msgstr "UUID"
 
@@ -383,11 +404,11 @@ msgstr "Visível"
 msgid "Yes"
 msgstr "Sim"
 
-#: collective/cover/tiles/base.py:128
+#: collective/cover/tiles/base.py:133
 msgid "You are not allowed to add content to this tile"
 msgstr "Você não tem permissão para adicionar conteúdo neste tile"
 
-#: collective/cover/tiles/base.py:142
+#: collective/cover/tiles/base.py:147
 msgid "You are not allowed to remove content of this tile"
 msgstr "Você não tem permissão para apagar conteúdo neste tile"
 

@@ -4,6 +4,9 @@ There's a frood who really knows where his towel is
 1.0a4 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Refactor collection tile to include header and footer fields and fix tile's
+  i18n. [hvelarde]
+
 - Add simple Chinese translations(zh_CN). [Adam tang]
 
 - Add banner tile that will replace image and link tiles; add deprecation

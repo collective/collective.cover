@@ -16,8 +16,8 @@
         <p i18n:translate="">The collection doesn't have any results.</p>
       </div>
 
-      <div class="tile-title">
-          <span tal:content="view/data/title" />
+      <div class="tile-header" tal:condition="view/show_header">
+          <span tal:content="view/data/header" />
       </div>
 
       <div class="collection-item" tal:repeat="item results">
@@ -75,6 +75,9 @@
           </tal:fields>
         </tal:items>
         <div class="visualClear"><!-- --></div>
+      </div>
+      <div class="tile-footer" tal:condition="view/show_footer">
+        <a tal:attributes="href view/collection_url" tal:content="view/data/footer" />
       </div>
       <div class="visualClear"><!-- --></div>
     </tal:results>

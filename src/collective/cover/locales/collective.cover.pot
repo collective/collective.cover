@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: collective.cover\n"
-"POT-Creation-Date: 2013-05-30 20:41+0000\n"
+"POT-Creation-Date: 2013-07-15 21:43+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -62,7 +62,7 @@ msgstr ""
 msgid "An easy-to-use package to create complex cover pages for Plone sites."
 msgstr ""
 
-#: collective/cover/tiles/carousel.py:19
+#: collective/cover/tiles/carousel.py:20
 msgid "Auto play"
 msgstr ""
 
@@ -79,7 +79,7 @@ msgstr ""
 msgid "CSS Class"
 msgstr ""
 
-#: collective/cover/tiles/configuration_view.py:195
+#: collective/cover/tiles/configuration_view.py:196
 #: collective/cover/tiles/edit.py:75
 msgid "Cancel"
 msgstr ""
@@ -104,7 +104,7 @@ msgstr ""
 msgid "Compose"
 msgstr ""
 
-#: collective/cover/tiles/configuration_view.py:158
+#: collective/cover/tiles/configuration_view.py:159
 msgid "Configure ${name}"
 msgstr ""
 
@@ -126,12 +126,13 @@ msgid "Cover Settings"
 msgstr ""
 
 #: collective/cover/tiles/basic.py:43
+#: collective/cover/tiles/collection.py:43
 msgid "Date"
 msgstr ""
 
 #: collective/cover/tiles/basic.py:31
+#: collective/cover/tiles/collection.py:36
 #: collective/cover/tiles/embed.py:24
-#: collective/cover/tiles/file.py:46
 msgid "Description"
 msgstr ""
 
@@ -151,7 +152,7 @@ msgstr ""
 msgid "Edit"
 msgstr ""
 
-#: collective/cover/tiles/carousel.py:26
+#: collective/cover/tiles/carousel.py:27
 #: collective/cover/tiles/list.py:27
 msgid "Elements"
 msgstr ""
@@ -180,13 +181,21 @@ msgstr ""
 msgid "Filter items"
 msgstr ""
 
+#: collective/cover/tiles/collection.py:64
+msgid "Footer"
+msgstr ""
+
 #: collective/cover/tiles/configuration_widgets/textline.pt:42
 msgid "HTML tag"
 msgstr ""
 
+#: collective/cover/tiles/collection.py:22
+msgid "Header"
+msgstr ""
+
 #: collective/cover/tiles/banner.py:23
 #: collective/cover/tiles/basic.py:36
-#: collective/cover/tiles/image.py:18
+#: collective/cover/tiles/collection.py:50
 msgid "Image"
 msgstr ""
 
@@ -216,12 +225,20 @@ msgstr ""
 msgid "Layouts"
 msgstr ""
 
+#: collective/cover/widgets/textlines_sortable_configure.pt:9
+msgid "Limit"
+msgstr ""
+
 #: tiles/configure.zcml
 msgid "Link Tile"
 msgstr ""
 
 #: tiles/configure.zcml
 msgid "List Tile"
+msgstr ""
+
+#: collective/cover/tiles/collection.py:111
+msgid "More…"
 msgstr ""
 
 #: collective/cover/controlpanel.py:18
@@ -240,6 +257,10 @@ msgstr ""
 
 #: collective/cover/tiles/configuration_widgets/list.pt:12
 msgid "Number of items"
+msgstr ""
+
+#: collective/cover/tiles/collection.py:58
+msgid "Number of items to display"
 msgstr ""
 
 #: collective/cover/controlpanel.py:34
@@ -301,7 +322,7 @@ msgstr ""
 msgid "Row"
 msgstr ""
 
-#: collective/cover/tiles/configuration_view.py:162
+#: collective/cover/tiles/configuration_view.py:163
 #: collective/cover/tiles/edit.py:43
 msgid "Save"
 msgstr ""
@@ -338,11 +359,11 @@ msgstr ""
 msgid "This tiles will be available for layout creation."
 msgstr ""
 
-#: collective/cover/tiles/configuration_view.py:204
+#: collective/cover/tiles/configuration_view.py:205
 msgid "Tile configuration cancelled."
 msgstr ""
 
-#: collective/cover/tiles/configuration_view.py:191
+#: collective/cover/tiles/configuration_view.py:192
 msgid "Tile configuration saved."
 msgstr ""
 
@@ -352,18 +373,18 @@ msgstr ""
 
 #: collective/cover/tiles/banner.py:18
 #: collective/cover/tiles/basic.py:26
-#: collective/cover/tiles/embed.py:19
+#: collective/cover/tiles/collection.py:29
 msgid "Title"
 msgstr ""
 
 #: collective/cover/tiles/banner.py:28
-#: collective/cover/tiles/link.py:32
+#: collective/cover/tiles/link.py:33
 msgid "URL"
 msgstr ""
 
 #: collective/cover/tiles/basic.py:60
+#: collective/cover/tiles/collection.py:69
 #: collective/cover/tiles/file.py:57
-#: collective/cover/tiles/image.py:23
 msgid "UUID"
 msgstr ""
 
@@ -383,11 +404,11 @@ msgstr ""
 msgid "Yes"
 msgstr ""
 
-#: collective/cover/tiles/base.py:128
+#: collective/cover/tiles/base.py:133
 msgid "You are not allowed to add content to this tile"
 msgstr ""
 
-#: collective/cover/tiles/base.py:142
+#: collective/cover/tiles/base.py:147
 msgid "You are not allowed to remove content of this tile"
 msgstr ""
 

@@ -29,6 +29,7 @@ class ITileConfigureView(IBrowserView):
     """
 
 
+# XXX: this should be in interfaces.py
 class IDefaultConfigureForm(Interface):
     """
     ConfigureForm interface
