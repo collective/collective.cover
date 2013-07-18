@@ -201,7 +201,7 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
         """Return boolean according to the field visibility.
         """
         tile_conf = self.get_tile_configuration()
-        field_conf = tile_conf.get('footer', None)
+        field_conf = tile_conf.get(field, None)
         if field_conf:
             return field_conf.get('visibility', None) == u'on'
         else:
