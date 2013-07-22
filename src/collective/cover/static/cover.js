@@ -80,7 +80,7 @@ $(document).ready(function() {
         subtype: 'ajax',
         filter: '.tiles-edit',
         formselector: '#edit_tile',
-        closeselector: 'name=buttons.cancel',
+        closeselector: '[name="buttons.cancel"]',
         noform: 'close',
         beforepost: function(return_value, data_parent){
             // Before post data, populate the textarea (textarea.mce_editable) with the contents of  iframe created by TinyMCE call.
