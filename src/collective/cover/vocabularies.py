@@ -34,7 +34,9 @@ class AvailableTilesVocabulary(object):
     def __call__(self, context):
 
         registry = getUtility(IRegistry)
-        tiles = registry['collective.cover.controlpanel.ICoverSettings.available_tiles']
+        tiles = registry[
+            'collective.cover.controlpanel.ICoverSettings.available_tiles'
+        ]
 
         items = [SimpleTerm(value=i, title=i) for i in tiles]
         return SimpleVocabulary(items)
