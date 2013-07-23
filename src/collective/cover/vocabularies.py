@@ -7,6 +7,7 @@ from plone.app.vocabularies.types import ReallyUserFriendlyTypesVocabulary
 from plone.registry.interfaces import IRegistry
 from plone.tiles.interfaces import ITileType
 from zope.component import getUtility
+from zope.component import queryUtility
 from zope.schema.interfaces import IVocabularyFactory
 from zope.schema.vocabulary import SimpleTerm
 from zope.schema.vocabulary import SimpleVocabulary
@@ -48,8 +49,9 @@ class EnabledTilesVocabulary(object):
     grok.implements(IVocabularyFactory)
 
     def _enabled(self, name):
-        tile_type = getUtility(ITileType, name)
-        return issubclass(tile_type.schema, IPersistentCoverTile)
+        tile_type = queryUtility(ITileType, name)
+        if tile_type:
+            return issubclass(tile_type.schema, IPersistentCoverTile)
 
     def __call__(self, context):
         registry = getUtility(IRegistry)
