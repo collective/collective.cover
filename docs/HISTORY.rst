@@ -4,6 +4,9 @@ There's a frood who really knows where his towel is
 1.0a4 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- 'buttons.cancel' in prepOverlay closeselector has to be in quotes to 
+  avoid unrecognized expression javascript errors [ericof]
+
 - Refactor collection tile to include header and footer fields and fix tile's
   i18n. [hvelarde]
 
