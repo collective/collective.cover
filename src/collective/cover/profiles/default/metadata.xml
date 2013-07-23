@@ -1,5 +1,5 @@
 <metadata>
- <version>3</version>
+ <version>4</version>
  <dependencies>
   <dependency>profile-plone.app.tiles:default</dependency>
   <dependency>profile-plone.app.blocks:default</dependency>
