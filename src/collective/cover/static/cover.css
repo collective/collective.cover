@@ -105,3 +105,26 @@
 
 /* tinyMCE table conflict */
 table.invisible{visibility:visible;}
+
+/*Skins*/
+.tile-edge {
+    border: 1px solid #DDDDDD;
+    padding: 5px;
+    border-radius: 4px;
+}
+
+.tile-dark {
+    background: #DDDDDD;
+    padding: 5px;
+    border-radius: 4px;
+}
+
+.tile-shadow {
+    border: 1px solid #DDDDDD;
+    padding: 5px;
+    border-radius: 4px;
+    -moz-box-shadow: 0 5px 10px #C3C3C3;
+    -webkit-box-shadow: 0 5px 10px #C3C3C3;
+    box-shadow: 0 5px 10px #C3C3C3;
+}
+
