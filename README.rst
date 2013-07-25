@@ -8,11 +8,11 @@ Life, the Universe, and Everything
 ----------------------------------
 
 ``collective.cover`` is a package that allows the creation of elaborate covers
-for website homepages, especially for news portals, government sites and intranets
-that require more resources than a simple page or collection can offer. However,
-despite offering rich resources to build a cover, ``collective.cover`` also
-provides a very easy mechanism for managing its contents, built around a
-drag-and-drop interface.
+for website homepages, especially for news portals, government sites and
+intranets that require more resources than a simple page or collection can
+offer. However, despite offering rich resources to build a cover,
+``collective.cover`` also provides a very easy mechanism for managing its
+contents, built around a drag-and-drop interface.
 
 ``collective.cover`` is based on `Blocks`_ and `Tiles`_, like `Deco`_, the new
 layout composition system for Plone.
@@ -21,14 +21,13 @@ layout composition system for Plone.
 
 .. TODO: add a comparison between Deco and collective.cover
 
+Mostly Harmless
+---------------
+
 .. Warning::
    ``collective.cover`` is currently not compatible with standard Plone tiles;
    this will be addressed in a future realease of the package. See issues
    `#81`_ and `#112`_ for more information.
-
-
-Mostly Harmless
----------------
 
 .. Warning::
     ``collective.cover`` 1.0a4 includes a new banner tile that will replace
@@ -39,6 +38,9 @@ Mostly Harmless
 
 .. image:: https://secure.travis-ci.org/collective/collective.cover.png
     :target: http://travis-ci.org/collective/collective.cover
+
+.. image:: https://coveralls.io/repos/collective/collective.cover/badge.png
+    :target: https://coveralls.io/r/collective/collective.cover?branch=master
 
 Got an idea? Found a bug? Let us know by `opening a support ticket`_.
 
@@ -65,7 +67,7 @@ These are the kind of issues we want to solve with this package; we are still
 far from it, but that is the idea.
 
 Adding Cover
-^^^^^^^^^^^^^
+^^^^^^^^^^^^
 
 .. figure:: https://raw.github.com/collective/collective.cover/master/cover1.png
     :align: center
@@ -77,23 +79,26 @@ You add a cover like you would any type of content in Plone:
 
 1. Navigate to the folder where you want to create a cover;
 
-2. Open the "Add Item ..." menu and choose "Cover";
+2. Open the "Add Item..." menu and choose "Cover";
 
 3. Fill in the required fields:
-    - "Title" and "Description": Same as with other Plone content, like Page.
-    - "Layout": Choose one of the predefined cover layouts.
+    "Title" and "Description"
+        Same as with other Plone content, like Page.
+    "Layout"
+        Choose one of the predefined cover layouts (you will see a preview of
+        the selected layout).
+
+.. figure:: https://raw.github.com/collective/collective.cover/master/cover1a.png
+    :align: center
+    :height: 600px
+    :width: 680px
 
 4. "Save".
 
 Your cover is now created based on the information provided.
 
 Adding content in your Cover
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-.. figure:: https://raw.github.com/collective/collective.cover/master/cover2.png
-    :align: center
-    :height: 405px
-    :width: 706px
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 After the cover is created, you'll notice it comes with some predefined blocks
 (according to the selected layout), but it still has no content associated.
@@ -106,6 +111,11 @@ steps:
 
 A small window will appears showing the most recent items added in the portal.
 
+.. figure:: https://raw.github.com/collective/collective.cover/master/cover2.png
+    :align: center
+    :height: 460px
+    :width: 680px
+
 3. Select the title of any item in the list and drag it to one of
 the tiles (dotted boxes) in the content area;
 
@@ -117,8 +127,8 @@ Tile, the box will turn green. If not, it will remain gray;
 
 .. figure:: https://raw.github.com/collective/collective.cover/master/cover3.png
     :align: center
-    :height: 405px
-    :width: 706px
+    :height: 500px
+    :width: 670px
 
 Information from that content will be automatically applied to the chosen
 tile and will be visible on the cover.
@@ -130,8 +140,8 @@ tile and will be visible on the cover.
 There are also two other navigation options to find content:
 
 
-Searching Content
-++++++++++++++++++
+Searching for content
++++++++++++++++++++++
 
 You can use the search field in the content selection window to locate the
 content you want:
@@ -144,7 +154,7 @@ The items related to the term you search will be displayed and can be used
 according to the steps above.
 
 Content tree
-+++++++++++++
+++++++++++++
 
 Inside the content selection window you can also navigate through your site to
 locate existing content.
@@ -163,40 +173,41 @@ will try to load the contained images. This way a folder, a collection, or some
 other kind of containers could be used to drop several images into a tile in just
 one step.
 
-Changing information from a Content
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Changing tile configuration
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. figure:: https://raw.github.com/collective/collective.cover/master/cover6.png
     :align: center
-    :height: 494px
-    :width: 693px
+    :height: 640px
+    :width: 760px
 
-After a content is added to a cover tile, a copy of some of its information will be stored in the cover
-and will appear to the end user. If necessary, you can change some of the information related to the content
-exclusively for the cover, without changing the information in the original item. This
-feature is very useful to adjust the content for the cover. For example, you can shorten
+After a content is added to a cover tile, a copy of some of its information
+will be stored in the cover and will appear to the end user. If necessary, you
+can change some of the information related to the content exclusively for the
+cover, without changing the information in the original item. This feature is
+very useful to adjust the content for the cover. For example, you can shorten
 a title to better fit it into a homepage layout.
 
 To change the information on the cover, follow these steps:
 
 1. Select the "Compose" tab;
 
-2. Select the portion of text you want to change, like the title, the description or
-any other text element.
+2. Select the portion of text you want to change, like the title, the
+description or any other text element.
 
 3. Change the text and "Save".
 
 The changes will be applied to your cover immediately.
 
-*Important:* As mentioned before, the changes will be applied only to the cover tile, not to the original
-content.
-
+.. Important::
+    As mentioned before, the changes will be applied only to the cover tile,
+    not to the original content.
 
 Advanced Actions
 -----------------
 
 Changing the layout of your cover
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 If you have created a blank cover or if want to change the structure of your
 current cover, you can add or delete tiles, change the position of an existing
@@ -208,16 +219,14 @@ operations can be performed from the "Layout" tab.
     :height: 427px
     :width: 696px
 
-
 A cover is a combination of three basic elements:
 
-   - Rows (which may contain one or more columns, arranged horizontally)
-   - Columns (which may contain one or more tiles arranged vertically)
-   - Tiles
-
+- Rows (which may contain one or more columns, arranged horizontally)
+- Columns (which may contain one or more tiles arranged vertically)
+- Tiles
 
 Adding rows and columns
-++++++++++++++++++++++++
++++++++++++++++++++++++
 
 To add a new row, follow these steps:
 
@@ -231,7 +240,7 @@ You can repeat this operation as often as you need. ``collective.cover`` will
 divide the space between the rows and columns automatically.
 
 Changing the width of columns
-++++++++++++++++++++++++++++++
++++++++++++++++++++++++++++++
 
 You can control the width of each column individually:
 
@@ -242,15 +251,15 @@ higher the number, the larger the column width.
 
 .. figure:: https://raw.github.com/collective/collective.cover/master/cover5.png
     :align: center
-    :height: 386px
-    :width: 691px
+    :height: 450px
+    :width: 670px
 
 
 3. "Save".
 
-By default, the cover uses a grid of 16 units. Therefore, the sum of the all widths 
-in a column must not exceed 16. To make it easier to edit the width of all
-columns, adjust first the width of the smallest column.
+By default, ``collective.cover`` uses a grid of 16 units. Therefore, the sum
+of the all widths in a column must not exceed 16. To make it easier to edit
+the width of all columns, adjust first the width of the smallest column.
 
 Adding new tiles
 ^^^^^^^^^^^^^^^^^^
@@ -296,7 +305,6 @@ around:
 
 5. When finished, push "Save" and the new configuration will be applied.
 
-
 Saving a layout as a model
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -311,8 +319,6 @@ website:
 
 Now this layout can be used as a model to create new covers, as explained in the
 section "Adding a cover".
-
-
 
 Views
 ^^^^^
@@ -349,8 +355,10 @@ In addition, each field widget can provide specific configuration options.
 For instance, an ITextLinesWidget will provide an extra configuration 
 option, "HTML tag", which allows to specify the HTML tag to be used when
 rendering data saved in this field.
+
 This view is accessed through the "Layout" view of the cover. You should see
 a "configuration" button for each tile.
+
 If you don't want your tile to be configurable, you should override
 the "is_configurable" attribute of your tile base class and set it to False
 
@@ -396,8 +404,8 @@ override in your class:
     It removes the persistent data created for the tile.
 
 **accepted_ct()**
-    It returns a list of valid content types that this tile will accept, or None in case
-    it doesn't accept any.
+    It returns a list of valid content types that this tile will accept, or
+    None in case it doesn't accept any.
 
 **get_tile_configuration()**
     It returns the stored configuration options for this tile.
@@ -466,8 +474,9 @@ Then, you have several ways of using image scales in your tile templates.
                        class position;
                        alt view/data/title" />
 
-Recommendation:: Use the scale saved from the configuration. Check lines 26 through
-34 from the collection.pt file under tiles/templates directory to get the idea.
+.. Tip::
+    Use the scale saved from the configuration. Check lines 26 through 34 from
+    the collection.pt file under tiles/templates directory to get the idea.
 
 Cover tiles supports external images too, that means than if you drop a
 content with an image into a cover tile than implements an image field,
@@ -478,8 +487,8 @@ are supported.
 Alternate solutions
 ^^^^^^^^^^^^^^^^^^^
 
-Over the years there have been some packages designed to solve the problem of creating
-section covers in Plone. We have used, and are taking ideas from, the
+Over the years there have been some packages designed to solve the problem of
+creating section covers in Plone. We have used, and are taking ideas from, the
 following:
 
 `CompositePack`_

@@ -4,6 +4,8 @@ There's a frood who really knows where his towel is
 1.0a4 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Package documentation was updated. [hvelarde]
+
 - 'buttons.cancel' in prepOverlay closeselector has to be in quotes to 
   avoid unrecognized expression javascript errors [ericof]
 
