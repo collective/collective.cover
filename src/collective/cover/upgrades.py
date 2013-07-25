@@ -76,7 +76,7 @@ def register_styles_record(context, logger=None):
         # XXX: if the record is on the registry it will be corrupt by a type
         # mismatch and we need just to remove it; this could happen only in
         # case of sites using collective.cover from master branch
-        del registry[record]
+        del registry.records[record]
 
     profile = 'profile-collective.cover:upgrade_3_to_4'
     setup = getToolByName(context, 'portal_setup')
