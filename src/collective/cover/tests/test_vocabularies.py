@@ -84,10 +84,10 @@ class VocabulariesTestCase(unittest.TestCase):
         name = u'collective.cover.TileStyles'
         vocabulary = queryUtility(IVocabularyFactory, name)
         self.assertIsNotNone(vocabulary)
-        # in the beginning the vocabulary should be empty
+        # in the beginning the vocabulary should contain the default styles
         styles = vocabulary(self.portal)
-        self.assertEqual(len(styles), 0)
-        # let's put some values on it
+        self.assertEqual(len(styles), 2)
+        # let's try to put some other values on it
         registry = getUtility(IRegistry)
         settings = registry.forInterface(ICoverSettings)
         settings.styles = set([

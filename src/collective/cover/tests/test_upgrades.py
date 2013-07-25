@@ -80,15 +80,8 @@ class Upgrade3to4TestCase(unittest.TestCase):
 
         eventtesting.setUp()
 
-        # calling the handler here should have no effect as we are running the
-        # latest profile version
-        eventtesting.clearEvents()
-        register_styles_record(self.portal)
-        events = eventtesting.getEvents(IRecordAddedEvent)
-        self.assertEqual(len(events), 0)
-
-        # now we delete the record and rerun the handler to verify the record
-        # was added
+        # just delete the existing record and rerun the handler to verify it
+        # was added again
         del registry.records[record]
         eventtesting.clearEvents()
         register_styles_record(self.portal)
