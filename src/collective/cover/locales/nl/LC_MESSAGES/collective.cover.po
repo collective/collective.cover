@@ -1,187 +1,186 @@
-# adam <yuejun.tang@gmail.com>, 2013.
+# --- PLEASE EDIT THE LINES BELOW CORRECTLY ---
+# SOME DESCRIPTIVE TITLE.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 msgid ""
 msgstr ""
 "Project-Id-Version: collective.cover\n"
-"POT-Creation-Date: 2013-07-15 21:43+0000\n"
-"PO-Revision-Date: 2013-06-27 21:57+0800\n"
-"Last-Translator: adam <yuejun.tang@gmail.com>\n"
-"Language-Team: Spanish <https://github.com/collective>\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI +ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"Language-Code: es\n"
-"Language-Name: Spanish\n"
+"Plural-Forms: nplurals=1; plural=0\n"
 "Preferred-Encodings: utf-8 latin1\n"
 "Domain: collective.cover\n"
-"Language: es\n"
 
 #: collective/cover/profiles/default/types/collective.cover.content.xml
 msgid "A cover page."
-msgstr "一个组合页"
+msgstr ""
 
 #: tiles/configure.zcml
 msgid "A tile that shows a carousel of images."
-msgstr "一个显示图片轮换的面板。"
+msgstr ""
 
 #: tiles/configure.zcml
 msgid "A tile that shows a file object."
-msgstr "一个显示文件对象的面板。"
+msgstr ""
 
 #: tiles/configure.zcml
 msgid "A tile that shows a link object."
-msgstr "一个显示链接对象的面板。"
+msgstr ""
 
 #: tiles/configure.zcml
 msgid "A tile that shows a list of items."
-msgstr "一个显示列表内容的面板。"
+msgstr ""
 
 #: tiles/configure.zcml
 msgid "A tile that shows an image object."
-msgstr "一个显示图像对象的面板。"
+msgstr ""
 
 #: tiles/configure.zcml
 msgid "A tile that shows general information about objects."
-msgstr "一个显示对象基本信息的面板。"
+msgstr ""
 
 #: tiles/configure.zcml
 msgid "A tile that shows rich text format."
-msgstr "一个显示富文本对象的面板。"
+msgstr ""
 
 #: tiles/configure.zcml
 msgid "A tile that shows the result of a collection."
-msgstr "一个显示查询集对象的面板。"
+msgstr ""
 
 #: tiles/configure.zcml
 msgid "A tile to embed content from a remote source."
-msgstr "一个嵌入远程对象的面板。"
+msgstr ""
 
 #: collective/cover/browser/contentchooser_templates/content_contentchooser.pt:57
 msgid "Add Content"
-msgstr "添加内容"
+msgstr ""
 
 #: profiles.zcml
 msgid "An easy-to-use package to create complex cover pages for Plone sites."
-msgstr "一个为Plone系统创建复杂页面的模块。"
+msgstr ""
 
 #: collective/cover/tiles/carousel.py:20
 msgid "Auto play"
-msgstr "自动播放"
+msgstr ""
 
 #: collective/cover/controlpanel.py:24
 msgid "Available tiles"
-msgstr "有效的面板种类"
+msgstr ""
 
 #: tiles/configure.zcml
 msgid "Basic Tile"
-msgstr "基本面板"
+msgstr ""
 
 #: collective/cover/controlpanel.py:51
 #: collective/cover/tiles/base.py:60
 msgid "CSS Class"
-msgstr "CSS 类"
+msgstr ""
 
 #: collective/cover/tiles/configuration_view.py:196
 #: collective/cover/tiles/edit.py:75
 msgid "Cancel"
-msgstr "取消"
+msgstr ""
 
 #: tiles/configure.zcml
 msgid "Carousel Tile"
-msgstr "图片轮换面板"
+msgstr ""
 
 #: collective/cover/models/cover.xml
 msgid "Choose one of the predefined layouts"
-msgstr "选择一个预订义的布局方式"
+msgstr ""
 
 #: tiles/configure.zcml
 msgid "Collection Tile"
-msgstr "集合面板"
+msgstr ""
 
 #: collective/cover/templates/layoutedit.pt:47
 msgid "Column"
-msgstr "列"
+msgstr ""
 
 #: collective/cover/profiles/default/types/collective.cover.content.xml
 msgid "Compose"
-msgstr "组建"
+msgstr ""
 
 #: collective/cover/tiles/configuration_view.py:159
 msgid "Configure ${name}"
-msgstr "配置${name}"
+msgstr ""
 
 #: collective/cover/browser/contentchooser_templates/content_contentchooser.pt:16
 msgid "Content tree"
-msgstr "内容树"
+msgstr ""
 
 #: collective/cover/profiles/default/types/collective.cover.content.xml
 msgid "Cover"
-msgstr "组合页"
+msgstr ""
 
 #: collective/cover/models/cover.xml
 msgid "Cover Layout"
-msgstr "组合页布局"
+msgstr ""
 
 #: collective/cover/controlpanel.py:57
 #: collective/cover/profiles/default/controlpanel.xml
 msgid "Cover Settings"
-msgstr "组合页设置"
+msgstr ""
 
 #: collective/cover/tiles/basic.py:43
 #: collective/cover/tiles/collection.py:43
 msgid "Date"
-msgstr "日期"
+msgstr ""
 
 #: collective/cover/tiles/basic.py:31
 #: collective/cover/tiles/collection.py:36
 #: collective/cover/tiles/embed.py:24
 msgid "Description"
-msgstr "描述"
+msgstr ""
 
 #: collective/cover/tiles/file.py:51
 msgid "Download link"
-msgstr "下载链接"
+msgstr ""
 
 #: collective/cover/tiles/templates/image.pt:8
 msgid "Drag&amp;drop an image here to populate the tile."
-msgstr "拖放一个图片以填充这个面板"
+msgstr ""
 
 #: collective/cover/tiles/templates/banner.pt:8
 msgid "Drag&amp;drop an image or link here to populate the tile."
-msgstr "拖放一个图片或链接以填充这个面板"
+msgstr ""
 
 #: collective/cover/layout_templates/tile.pt:47
 msgid "Edit"
-msgstr "编辑"
+msgstr ""
 
 #: collective/cover/tiles/carousel.py:27
 #: collective/cover/tiles/list.py:27
 msgid "Elements"
-msgstr "部件"
+msgstr ""
 
 #: tiles/configure.zcml
 msgid "Embedding Tile"
-msgstr "嵌入式面板"
+msgstr ""
 
 #: collective/cover/tiles/embed.py:14
 msgid "Embedding code"
-msgstr "嵌入面板代码"
+msgstr ""
 
 #: collective/cover/controlpanel.py:46
 msgid "Enter a list of styles to appear in the style pulldown. Format is title|className, one per line."
-msgstr "输入一个样式列表到样式下拉列表中。格式是title|className，一行一个。"
+msgstr ""
 
 #: collective/cover/templates/layoutedit.pt:65
 msgid "Export layout"
-msgstr "导出布局"
+msgstr ""
 
 #: tiles/configure.zcml
 msgid "File Tile"
-msgstr "文件面板"
+msgstr ""
 
 #: collective/cover/browser/contentchooser_templates/content_contentchooser.pt:22
 msgid "Filter items"
-msgstr "过滤内容"
+msgstr ""
 
 #: collective/cover/tiles/collection.py:64
 msgid "Footer"
@@ -189,7 +188,7 @@ msgstr ""
 
 #: collective/cover/tiles/configuration_widgets/textline.pt:42
 msgid "HTML tag"
-msgstr "HTML标签"
+msgstr ""
 
 #: collective/cover/tiles/collection.py:22
 msgid "Header"
@@ -199,33 +198,33 @@ msgstr ""
 #: collective/cover/tiles/basic.py:36
 #: collective/cover/tiles/collection.py:50
 msgid "Image"
-msgstr "图片"
+msgstr ""
 
 #: tiles/configure.zcml
 msgid "Image Tile"
-msgstr "图片面板"
+msgstr ""
 
 #: collective/cover/tiles/configuration_widgets/namedimage.pt:45
 msgid "Image size"
-msgstr "图片大小"
+msgstr ""
 
 #: collective/cover/controlpanel.py:19
 #: collective/cover/models/cover.xml
 #: collective/cover/profiles/default/types/collective.cover.content.xml
 msgid "Layout"
-msgstr "布局"
+msgstr ""
 
 #: collective/cover/widgets/selectpreview_input.pt:74
 msgid "Layout Details"
-msgstr "布局详情"
+msgstr ""
 
 #: collective/cover/templates/layoutedit.pt:63
 msgid "Layout name"
-msgstr "布局名称"
+msgstr ""
 
 #: collective/cover/controlpanel.py:16
 msgid "Layouts"
-msgstr "布局"
+msgstr ""
 
 #: collective/cover/widgets/textlines_sortable_configure.pt:9
 msgid "Limit"
@@ -233,11 +232,11 @@ msgstr ""
 
 #: tiles/configure.zcml
 msgid "Link Tile"
-msgstr "链接面板"
+msgstr ""
 
 #: tiles/configure.zcml
 msgid "List Tile"
-msgstr "列表面板"
+msgstr ""
 
 #: collective/cover/tiles/collection.py:111
 msgid "More…"
@@ -245,21 +244,21 @@ msgstr ""
 
 #: collective/cover/controlpanel.py:18
 msgid "Name"
-msgstr "名称"
+msgstr ""
 
 #: collective/cover/tiles/configuration_widgets/basewidget.pt:30
 #: collective/cover/tiles/configuration_widgets/list.pt:40
 #: collective/cover/tiles/configuration_widgets/namedimage.pt:33
 msgid "No"
-msgstr "不"
+msgstr ""
 
 #: collective/cover/widgets/selectpreview_input.pt:77
 msgid "No description"
-msgstr "没有描述"
+msgstr ""
 
 #: collective/cover/tiles/configuration_widgets/list.pt:12
 msgid "Number of items"
-msgstr "内容的数目"
+msgstr ""
 
 #: collective/cover/tiles/collection.py:58
 msgid "Number of items to display"
@@ -267,152 +266,152 @@ msgstr ""
 
 #: collective/cover/controlpanel.py:34
 msgid "Only objects of these content types will be searched on the content chooser."
-msgstr "仅仅下面这些内容类型对象可以出现在内容选择树中。"
+msgstr ""
 
 #: collective/cover/tiles/configuration_widgets/basewidget.pt:32
 #: collective/cover/tiles/configuration_widgets/list.pt:42
 #: collective/cover/tiles/configuration_widgets/namedimage.pt:35
 msgid "Order"
-msgstr "排序"
+msgstr ""
 
 #: collective/cover/tiles/templates/list.pt:9
 msgid "Please add up to ${limit_objects} objects to the tile."
-msgstr "请注意添加最多${limit_objects} 个对象到这个面板。"
+msgstr ""
 
 #: collective/cover/tiles/templates/pfg.pt:8
 msgid "Please drag&amp;drop a Form Folder here to populate the tile."
-msgstr "请拖放一个表单文件夹到这个面板。"
+msgstr ""
 
 #: collective/cover/tiles/templates/file.pt:8
 msgid "Please drag&amp;drop a file here."
-msgstr "请拖放一个文件到这儿。"
+msgstr ""
 
 #: collective/cover/tiles/templates/link.pt:8
 msgid "Please drag&amp;drop a link here to populate the tile."
-msgstr "请拖放一个链接到这个面板。"
+msgstr ""
 
 #: collective/cover/tiles/templates/basic.pt:9
 #: collective/cover/tiles/templates/contentbody.pt:8
 msgid "Please drag&amp;drop some content here to populate the tile."
-msgstr "请拖放某个内容到这个面板。"
+msgstr ""
 
 #: collective/cover/tiles/templates/collection.pt:8
 msgid "Please drop a collection here to fill the tile."
-msgstr "请拖放一个集合到这个面板。"
+msgstr ""
 
 #: collective/cover/tiles/templates/embed.pt:8
 msgid "Please edit the tile to add the code to be embedded."
-msgstr "请编辑这个嵌入面板以添加嵌入代码。"
+msgstr ""
 
 #: collective/cover/tiles/templates/richtext.pt:9
 msgid "Please edit the tile to enter some text."
-msgstr "请点击编辑链接以输入文本信息。"
+msgstr ""
 
 #: collective/cover/tiles/configuration_widgets/namedimage.pt:62
 msgid "Position"
-msgstr "位置"
+msgstr ""
 
 #: collective/cover/browser/contentchooser_templates/content_contentchooser.pt:15
 msgid "Recent items"
-msgstr "最新的内容"
+msgstr ""
 
 #: tiles/configure.zcml
 msgid "Rich Text Tile"
-msgstr "富文本面板"
+msgstr ""
 
 #: collective/cover/templates/layoutedit.pt:44
 msgid "Row"
-msgstr "行"
+msgstr ""
 
 #: collective/cover/tiles/configuration_view.py:163
 #: collective/cover/tiles/edit.py:43
 msgid "Save"
-msgstr "保存"
+msgstr ""
 
 #: collective/cover/templates/layoutedit.pt:71
 msgid "Saved"
-msgstr "已保存"
+msgstr ""
 
 #: collective/cover/controlpanel.py:33
 msgid "Searchable Content Types"
-msgstr "可搜索的内容类型"
+msgstr ""
 
 #: collective/cover/controlpanel.py:58
 msgid "Settings for the collective.cover package"
-msgstr "为collective.cover包的设置"
+msgstr ""
 
 #: collective/cover/controlpanel.py:45
 msgid "Styles"
-msgstr "样式"
+msgstr ""
 
 #: collective/cover/tiles/configuration_widgets/richtext.pt:42
 msgid "Text length"
-msgstr "文本长度"
+msgstr ""
 
 #: collective/cover/tiles/templates/collection.pt:16
 msgid "The collection doesn't have any results."
-msgstr "这个查询集合没有任何内容"
+msgstr ""
 
 #: collective/cover/models/cover.xml
 msgid "The layout to be used to render groups and tiles"
-msgstr "这种布局用于呈现组面板"
+msgstr ""
 
 #: collective/cover/controlpanel.py:25
 msgid "This tiles will be available for layout creation."
-msgstr "这些面板种类将在组合页布局中有效。"
+msgstr ""
 
 #: collective/cover/tiles/configuration_view.py:205
 msgid "Tile configuration cancelled."
-msgstr "配置已取消"
+msgstr ""
 
 #: collective/cover/tiles/configuration_view.py:192
 msgid "Tile configuration saved."
-msgstr "配置已保存。"
+msgstr ""
 
 #: collective/cover/tiles/edit.py:71
 msgid "Tile saved"
-msgstr "面板已保存"
+msgstr ""
 
 #: collective/cover/tiles/banner.py:18
 #: collective/cover/tiles/basic.py:26
 #: collective/cover/tiles/collection.py:29
 msgid "Title"
-msgstr "标题"
+msgstr ""
 
 #: collective/cover/tiles/banner.py:28
 #: collective/cover/tiles/link.py:33
 msgid "URL"
-msgstr "URL"
+msgstr ""
 
 #: collective/cover/tiles/basic.py:60
 #: collective/cover/tiles/collection.py:69
 #: collective/cover/tiles/file.py:57
 msgid "UUID"
-msgstr "UUID"
+msgstr ""
 
 #: profiles.zcml
 msgid "Uninstall profile for the collective.cover package."
-msgstr "为collective.cover包的卸载配置文件"
+msgstr ""
 
 #: collective/cover/tiles/configuration_widgets/basewidget.pt:12
 #: collective/cover/tiles/configuration_widgets/list.pt:22
 #: collective/cover/tiles/configuration_widgets/namedimage.pt:15
 msgid "Visible"
-msgstr "可视"
+msgstr ""
 
 #: collective/cover/tiles/configuration_widgets/basewidget.pt:21
 #: collective/cover/tiles/configuration_widgets/list.pt:31
 #: collective/cover/tiles/configuration_widgets/namedimage.pt:24
 msgid "Yes"
-msgstr "确定"
+msgstr ""
 
 #: collective/cover/tiles/base.py:133
 msgid "You are not allowed to add content to this tile"
-msgstr "你没有权限在这个面板中添加内容"
+msgstr ""
 
 #: collective/cover/tiles/base.py:147
 msgid "You are not allowed to remove content of this tile"
-msgstr "你没有权限删除这个面板的内容"
+msgstr ""
 
 #: profiles.zcml
 msgid "collective.cover"
@@ -420,27 +419,27 @@ msgstr ""
 
 #: profiles.zcml
 msgid "collective.cover uninstall"
-msgstr "卸载collective.cover"
+msgstr ""
 
 #. Default: "Also known as keywords, tags or labels, these help you categorize your content."
 #: collective/cover/tiles/basic.py:53
 msgid "help_categories"
-msgstr "Las etiquetas suelen utilizarse para la organización a medida del contenido."
+msgstr ""
 
 #. Default: "Categories"
 #: collective/cover/tiles/basic.py:52
 msgid "label_categories"
-msgstr "Etiquetas"
+msgstr ""
 
 #: collective/cover/browser/contentchooser_templates/search_list.pt:23
 msgid "more"
-msgstr "更多"
+msgstr ""
 
 #: collective/cover/browser/contentchooser_templates/content_contentchooser.pt:27
 msgid "ok"
-msgstr "确定"
+msgstr ""
 
 #: collective/cover/layout_templates/groupselect.pt:18
 msgid "save"
-msgstr "保存"
+msgstr ""
 
