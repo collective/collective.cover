@@ -25,7 +25,7 @@
       <default/>
       <description>Enter a list of styles to appear in the style pulldown. Format is title|className, one per line.</description>
       <title>Styles</title>
-      <value_type type="plone.registry.field.TextLine">
+      <value_type type="plone.registry.field.ASCIILine">
         <title>CSS Class</title>
       </value_type>
     </field>

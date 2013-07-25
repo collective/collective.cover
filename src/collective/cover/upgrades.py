@@ -72,13 +72,16 @@ def register_styles_record(context, logger=None):
     registry = getUtility(IRegistry)
     record = 'collective.cover.controlpanel.ICoverSettings.styles'
 
-    if record not in registry.records:
-        profile = 'profile-collective.cover:upgrade_3_to_4'
-        setup = getToolByName(context, 'portal_setup')
-        setup.runAllImportStepsFromProfile(profile)
-        logger.info("'styles' record added to the registry")
-    else:
-        logger.debug("'styles' record already in the registry")
+    if record in registry.records:
+        # XXX: if the record is on the registry it will be corrupt by a type
+        # mismatch and we need just to remove it; this could happen only in
+        # case of sites using collective.cover from master branch
+        del registry[record]
+
+    profile = 'profile-collective.cover:upgrade_3_to_4'
+    setup = getToolByName(context, 'portal_setup')
+    setup.runAllImportStepsFromProfile(profile)
+    logger.info("'styles' record added to the registry")
 
 
 def issue_218(context, logger=None):
