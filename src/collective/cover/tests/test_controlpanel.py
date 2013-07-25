@@ -76,8 +76,9 @@ class RegistryTestCase(unittest.TestCase):
         self.assertTrue(hasattr(self.settings, 'styles'))
         self.assertSetEqual(
             self.settings.styles,
-            set(['Dark Background|tile-dark-background',
-                 'Border|tile-border'])
+            set(['Border|tile-edge',
+                 'Dark Background|tile-dark',
+                 'Shadow|tile-shadow'])
         )
 
     def test_records_removed_on_uninstall(self):

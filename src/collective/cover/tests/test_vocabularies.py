@@ -86,7 +86,7 @@ class VocabulariesTestCase(unittest.TestCase):
         self.assertIsNotNone(vocabulary)
         # in the beginning the vocabulary should contain the default styles
         styles = vocabulary(self.portal)
-        self.assertEqual(len(styles), 2)
+        self.assertEqual(len(styles), 3)
         # let's try to put some other values on it
         registry = getUtility(IRegistry)
         settings = registry.forInterface(ICoverSettings)
