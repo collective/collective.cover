@@ -6,17 +6,17 @@ from setuptools import setup
 import os
 
 version = '1.0a4.dev0'
+description = "An easy-to-use package to create elaborate covers for Plone sites."
 long_description = (
     open("README.rst").read() + "\n" +
     open(os.path.join("docs", "INSTALL.rst")).read() + "\n" +
     open(os.path.join("docs", "CREDITS.rst")).read() + "\n" +
-    open(os.path.join("docs", "HISTORY.rst")).read()
+    open(os.path.join("docs", "CHANGES.rst")).read()
 )
 
 setup(name='collective.cover',
       version=version,
-      description='''An easy-to-use package to create elaborate
-                     covers for Plone sites.''',
+      description=description,
       long_description=long_description,
       classifiers=[
           "Development Status :: 3 - Alpha",
@@ -36,7 +36,7 @@ setup(name='collective.cover',
           "Topic :: Software Development :: Libraries :: Python Modules",
       ],
       keywords='plone cover javascript dexterity',
-      author='Carlos de la Guardia',
+      author='Carlos de la Guardia et al.',
       author_email='cguardia@yahoo.com',
       url='https://github.com/collective/collective.cover',
       license='GPLv2',

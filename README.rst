@@ -7,11 +7,6 @@ collective.cover
 Life, the Universe, and Everything
 ----------------------------------
 
-.. Warning::
-   ``collective.cover`` is currently not compatible with standard Plone tiles;
-   this will be addressed in a future realease of the package. See `81`_ and
-   `112`_ for more information.
-
 ``collective.cover`` is a package that allows the creation of elaborate covers
 for website homepages, especially for news portals, government sites and intranets
 that require more resources than a simple page or collection can offer. However,
@@ -25,6 +20,30 @@ layout composition system for Plone.
 .. TODO: explain why we need cover instead of just using Deco itself.
 
 .. TODO: add a comparison between Deco and collective.cover
+
+.. Warning::
+   ``collective.cover`` is currently not compatible with standard Plone tiles;
+   this will be addressed in a future realease of the package. See issues
+   `#81`_ and `#112`_ for more information.
+
+
+Mostly Harmless
+---------------
+
+.. Warning::
+    ``collective.cover`` 1.0a4 includes a new banner tile that will replace
+    image and link tiles completely, as we found them redundant. Please
+    replace manually any instance of image and link tiles in your covers with
+    banner tiles. Image and link tiles will be completely removed on next
+    release 1.0a5 (see issue `#218`_ for more information).
+
+.. image:: https://secure.travis-ci.org/collective/collective.cover.png
+    :target: http://travis-ci.org/collective/collective.cover
+
+Got an idea? Found a bug? Let us know by `opening a support ticket`_.
+
+Don't Panic
+-----------
 
 Use cases
 ^^^^^^^^^
@@ -44,9 +63,6 @@ and publish the right one focused on the team that won in the end.
 
 These are the kind of issues we want to solve with this package; we are still
 far from it, but that is the idea.
-
-Don't Panic
------------
 
 Adding Cover
 ^^^^^^^^^^^^^
@@ -497,25 +513,16 @@ Home Page Editor of the Brazilian Chamber of Deputies Site
     facilitate inheritance. In ``collective.cover`` (this package), we don't
     want to use portlets at all.
 
-
-
-Mostly Harmless
----------------
-
-.. image:: https://secure.travis-ci.org/collective/collective.cover.png
-    :target: http://travis-ci.org/collective/collective.cover
-
-Got an idea? Found a bug? Let us know by `opening a support ticket`_.
-
-.. _`see and comment on our mockups online`: https://simples.mybalsamiq.com/projects/capas/grid
-.. _`CompositePack`: http://plone.org/products/compositepack
+.. _`#112`: https://github.com/collective/collective.cover/issues/112
+.. _`#218`: https://github.com/collective/collective.cover/issues/218
+.. _`#81`: https://github.com/collective/collective.cover/issues/81
+.. _`Blocks`: https://github.com/plone/plone.app.blocks
 .. _`CMFContentPanels`: http://plone.org/products/cmfcontentpanels
 .. _`Collage`: http://plone.org/products/collage
-.. _`World Plone Day 2012 Brasilia`: http://colab.interlegis.leg.br/wiki/WorldPloneDay
 .. _`collective.panels`: https://github.com/collective/collective.panels
-.. _`opening a support ticket`: https://github.com/collective/collective.cover/issues
-.. _`81`: https://github.com/collective/collective.cover/issues/81
-.. _`112`: https://github.com/collective/collective.cover/issues/112
-.. _`Blocks`: https://github.com/plone/plone.app.blocks
+.. _`CompositePack`: http://plone.org/products/compositepack
 .. _`Deco`: https://github.com/plone/plone.app.deco
+.. _`opening a support ticket`: https://github.com/collective/collective.cover/issues
+.. _`see and comment on our mockups online`: https://simples.mybalsamiq.com/projects/capas/grid
 .. _`Tiles`: https://github.com/plone/plone.app.tiles
+.. _`World Plone Day 2012 Brasilia`: http://colab.interlegis.leg.br/wiki/WorldPloneDay
