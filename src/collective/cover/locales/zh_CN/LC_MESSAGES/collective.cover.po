@@ -1,5 +1,4 @@
-# Leonardo J. Caballero G. <leonardocaballero@gmail.com>, 2013.
-# Héctor Velarde <hector.velarde@gmail.com>, 2012-2013.
+# adam <yuejun.tang@gmail.com>, 2013.
 msgid ""
 msgstr ""
 "Project-Id-Version: collective.cover\n"

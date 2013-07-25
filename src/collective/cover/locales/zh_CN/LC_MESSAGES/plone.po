@@ -1,3 +1,4 @@
+# adam <yuejun.tang@gmail.com>, 2013.
 msgid ""
 msgstr ""
 "Project-Id-Version: collective.cover\n"
