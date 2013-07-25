@@ -66,6 +66,14 @@ class Upgrade2to3TestCase(unittest.TestCase):
         self.assertIn(record, registry.records)
         eventtesting.clearEvents()
 
+
+class Upgrade3to4TestCase(unittest.TestCase):
+
+    layer = INTEGRATION_TESTING
+
+    def setUp(self):
+        self.portal = self.layer['portal']
+
     def test_register_styles_record(self):
         registry = getUtility(IRegistry)
         record = 'collective.cover.controlpanel.ICoverSettings.styles'
@@ -88,3 +96,21 @@ class Upgrade2to3TestCase(unittest.TestCase):
         self.assertNotEqual(len(events), 0)
         self.assertIn(record, registry.records)
         eventtesting.clearEvents()
+
+    def test_issue_218(self):
+        from collective.cover.upgrades import issue_218
+        registry = getUtility(IRegistry)
+        record = 'plone.app.tiles'
+
+        # we set the record to contain only the tiles we care
+        registry[record] = [
+            u'collective.cover.image',
+            u'collective.cover.link',
+        ]
+
+        # this upgrade step must remve the above tiles and
+        # add the new banner tile
+        issue_218(self.portal)
+        self.assertIn(u'collective.cover.banner', registry[record])
+        self.assertNotIn(u'collective.cover.image', registry[record])
+        self.assertNotIn(u'collective.cover.link', registry[record])

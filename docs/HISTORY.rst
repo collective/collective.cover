@@ -14,7 +14,8 @@ There's a frood who really knows where his towel is
 
 - Add banner tile that will replace image and link tiles; add deprecation
   warning to image and link tiles as they will be removed from package on
-  next release. (closes `#218`_). [hvelarde]
+  next release; an upgrade step is provided for unregistering them to
+  avoid further addition on covers. (closes `#218`_). [hvelarde]
 
 - Make carousel tile configurable and avoid NoneType error by checking if
   carousel is empty (fixes `#203`_). [hvelarde]

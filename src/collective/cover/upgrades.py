@@ -79,3 +79,44 @@ def register_styles_record(context, logger=None):
         logger.info("'styles' record added to the registry")
     else:
         logger.debug("'styles' record already in the registry")
+
+
+def issue_218(context, logger=None):
+    """Unregister image and link tiles from plone.app.tiles to avoid further
+    addition of them in covers; register new banner tile.
+    See: https://github.com/collective/collective.cover/issues/218
+    """
+    if logger is None:
+        logger = logging.getLogger(PROJECTNAME)
+
+    registry = getUtility(IRegistry)
+    record = u'plone.app.tiles'
+
+    tile = u'collective.cover.banner'
+    if tile not in registry[record]:
+        registry[record].append(tile)
+        logger.info(
+            "'%s' tile added to '%s' record" % (tile, record))
+    else:
+        logger.debug(
+            "'%s' tile already in '%s' record" % (tile, record))
+
+    tile = u'collective.cover.image'
+    if tile in registry[record]:
+        registry[record].remove(tile)
+        logger.info(
+            "'%s' tile added to '%s' record" % (tile, record))
+    else:
+        logger.debug(
+            "'%s' tile already in '%s' record" % (tile, record))
+
+    tile = u'collective.cover.link'
+    if tile in registry[record]:
+        registry[record].remove(tile)
+        logger.info(
+            "'%s' tile added to '%s' record" % (tile, record))
+    else:
+        logger.debug(
+            "'%s' tile already in '%s' record" % (tile, record))
+
+    registry[record].sort()
