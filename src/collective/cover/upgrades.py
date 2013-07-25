@@ -89,34 +89,35 @@ def issue_218(context, logger=None):
     if logger is None:
         logger = logging.getLogger(PROJECTNAME)
 
+    def upgrade_record():
+        tile = u'collective.cover.banner'
+        if tile not in record:
+            record.append(tile)
+            logger.info(
+                "'%s' tile added to '%s' record" % (tile, record_name))
+        else:
+            logger.debug(
+                "'%s' tile already in '%s' record" % (tile, record_name))
+
+        for tile in (u'collective.cover.image', u'collective.cover.link'):
+            if tile in record:
+                record.remove(tile)
+                logger.info(
+                    "'%s' tile removed from '%s' record" % (tile, record_name))
+            else:
+                logger.debug(
+                    "'%s' tile already removed from '%s' record" % (tile, record_name))
+
+        record.sort()
+        registry[record_name] = record
+
     registry = getUtility(IRegistry)
-    record = u'plone.app.tiles'
+    record_name = u'plone.app.tiles'
+    record = registry[record_name]
+    upgrade_record()
 
-    tile = u'collective.cover.banner'
-    if tile not in registry[record]:
-        registry[record].append(tile)
-        logger.info(
-            "'%s' tile added to '%s' record" % (tile, record))
-    else:
-        logger.debug(
-            "'%s' tile already in '%s' record" % (tile, record))
-
-    tile = u'collective.cover.image'
-    if tile in registry[record]:
-        registry[record].remove(tile)
-        logger.info(
-            "'%s' tile added to '%s' record" % (tile, record))
-    else:
-        logger.debug(
-            "'%s' tile already in '%s' record" % (tile, record))
-
-    tile = u'collective.cover.link'
-    if tile in registry[record]:
-        registry[record].remove(tile)
-        logger.info(
-            "'%s' tile added to '%s' record" % (tile, record))
-    else:
-        logger.debug(
-            "'%s' tile already in '%s' record" % (tile, record))
-
-    registry[record].sort()
+    record_name = u'collective.cover.controlpanel.ICoverSettings.available_tiles'
+    record = registry[record_name]
+    if u'collective.cover.image' in record or \
+       u'collective.cover.link' in record:
+        upgrade_record()

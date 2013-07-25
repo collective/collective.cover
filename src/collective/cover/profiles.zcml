@@ -83,6 +83,12 @@
           handler=".upgrades.register_styles_record"
           />
 
+      <genericsetup:upgradeStep
+          title="Unregister image and link tiles"
+          description="see: https://github.com/collective/collective.cover/issues/218"
+          handler=".upgrades.issue_218"
+          />
+
   </genericsetup:upgradeSteps>
 
 </configure>
