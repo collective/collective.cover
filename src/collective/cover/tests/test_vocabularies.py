@@ -91,14 +91,14 @@ class VocabulariesTestCase(unittest.TestCase):
         registry = getUtility(IRegistry)
         settings = registry.forInterface(ICoverSettings)
         settings.styles = set([
-            ' red background | redTile ',  # test trimming
-            'green background|greenTile',
-            'blue background|blueTile',
+            u' red background | redTile ',  # test trimming
+            u'green background|greenTile',
+            u'blue background|blueTile',
         ])
         styles = vocabulary(self.portal)
         self.assertEqual(len(styles), 3)
         self.assertIn('redTile', styles.by_value)
         # adding a couple of not well formatted items result in no change
-        settings.styles = set(['not well formated'])
+        settings.styles = set([u'not well formated'])
         styles = vocabulary(self.portal)
         self.assertEqual(len(styles), 0)

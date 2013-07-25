@@ -1,6 +1,9 @@
 <?xml version="1.0"?>
 <registry>
-  <record name="collective.cover.controlpanel.ICoverSettings.styles" interface="collective.cover.controlpanel.ICoverSettings" field="styles">
+  <record
+      field="styles"
+      interface="collective.cover.controlpanel.ICoverSettings"
+      name="collective.cover.controlpanel.ICoverSettings.styles">
     <field type="plone.registry.field.Set">
       <default/>
       <description>Enter a list of styles to appear in the style pulldown. Format is title|className, one per line.</description>
