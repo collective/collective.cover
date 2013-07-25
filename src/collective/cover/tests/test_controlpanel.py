@@ -74,7 +74,11 @@ class RegistryTestCase(unittest.TestCase):
 
     def test_styles_record_in_registry(self):
         self.assertTrue(hasattr(self.settings, 'styles'))
-        self.assertSetEqual(self.settings.styles, set([]))
+        self.assertSetEqual(
+            self.settings.styles,
+            set(['Dark Background|tile-dark-background',
+                 'Border|tile-border'])
+        )
 
     def test_records_removed_on_uninstall(self):
         qi = self.portal['portal_quickinstaller']

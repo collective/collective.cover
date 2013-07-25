@@ -12,6 +12,9 @@
         <title>CSS Class</title>
       </value_type>
     </field>
-    <value/>
+    <value>
+      <element>Border|tile-border</element>
+      <element>Dark Background|tile-dark-background</element>
+    </value>
   </record>
 </registry>
