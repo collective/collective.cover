@@ -8,7 +8,7 @@ There's a frood who really knows where his towel is
   avoid unrecognized expression javascript errors [ericof]
 
 - Refactor collection tile to include header and footer fields and fix tile's
-  i18n. [hvelarde]
+  i18n. (closes `#118`_) [hvelarde]
 
 - Add simple Chinese translations(zh_CN). [Adam tang]
 
@@ -172,6 +172,7 @@ There's a frood who really knows where his towel is
 .. _`#48`: https://github.com/collective/collective.cover/issues/48
 .. _`#100`: https://github.com/collective/collective.cover/issues/100
 .. _`#114`: https://github.com/collective/collective.cover/issues/114
+.. _`#118`: https://github.com/collective/collective.cover/issues/118
 .. _`#121`: https://github.com/collective/collective.cover/issues/121
 .. _`#123`: https://github.com/collective/collective.cover/issues/123
 .. _`#124`: https://github.com/collective/collective.cover/issues/124
