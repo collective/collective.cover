@@ -19,7 +19,7 @@ msgstr ""
 "Domain: plone\n"
 
 msgid "Compose"
-msgstr "Componi layout"
+msgstr "Componi la pagina"
 
 msgid "Layout"
 msgstr "Layout"

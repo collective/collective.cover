@@ -444,4 +444,3 @@ msgstr "ok"
 #: collective/cover/layout_templates/groupselect.pt:18
 msgid "save"
 msgstr "salva"
-
