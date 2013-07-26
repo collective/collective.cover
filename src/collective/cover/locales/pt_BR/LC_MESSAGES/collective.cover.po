@@ -52,7 +52,7 @@ msgstr "Um tile que exibe o resultado de uma coleção."
 
 #: tiles/configure.zcml
 msgid "A tile to embed content from a remote source."
-msgstr "Um tile que permite embedar conteúdo de uma fonte externa."
+msgstr "Um tile que permite incluir conteúdo de uma fonte externa."
 
 #: collective/cover/browser/contentchooser_templates/content_contentchooser.pt:57
 msgid "Add Content"
@@ -171,7 +171,7 @@ msgstr "Digite uma lista de estilos para aparecer no menu pulldown de estilo. Fo
 
 #: collective/cover/templates/layoutedit.pt:65
 msgid "Export layout"
-msgstr "Exportar o layout"
+msgstr "Exportar este layout"
 
 #: tiles/configure.zcml
 msgid "File Tile"
@@ -265,7 +265,7 @@ msgstr "Número de itens a exibir"
 
 #: collective/cover/controlpanel.py:34
 msgid "Only objects of these content types will be searched on the content chooser."
-msgstr "Só objetos de esses tipos serão procurados na seleção de conteúdo"
+msgstr "Só objetos destes tipos serão buscados na seleção de conteúdo"
 
 #: collective/cover/tiles/configuration_widgets/basewidget.pt:32
 #: collective/cover/tiles/configuration_widgets/list.pt:42
@@ -300,7 +300,7 @@ msgstr "Arraste e solte uma coleção aqui."
 
 #: collective/cover/tiles/templates/embed.pt:8
 msgid "Please edit the tile to add the code to be embedded."
-msgstr "Edite o tile para adicionar o código que será embedado."
+msgstr "Edite o tile para adicionar o código que será incluído."
 
 #: collective/cover/tiles/templates/richtext.pt:9
 msgid "Please edit the tile to enter some text."
@@ -357,7 +357,7 @@ msgstr "O layout que será utilizado"
 
 #: collective/cover/controlpanel.py:25
 msgid "This tiles will be available for layout creation."
-msgstr "Esses tiles serão disponíveis para criação dos desenhos."
+msgstr "Esses tiles serão disponíveis para criação de layouts de capas."
 
 #: collective/cover/tiles/configuration_view.py:205
 msgid "Tile configuration cancelled."
@@ -410,7 +410,7 @@ msgstr "Você não tem permissão para adicionar conteúdo neste tile"
 
 #: collective/cover/tiles/base.py:147
 msgid "You are not allowed to remove content of this tile"
-msgstr "Você não tem permissão para apagar conteúdo neste tile"
+msgstr "Você não tem permissão para apagar o conteúdo deste tile"
 
 #: profiles.zcml
 msgid "collective.cover"
