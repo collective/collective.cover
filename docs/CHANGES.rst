@@ -4,9 +4,11 @@ There's a frood who really knows where his towel is
 1.0a4 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Add Italian translation [gborelli]
+
 - Package documentation was updated. [hvelarde]
 
-- 'buttons.cancel' in prepOverlay closeselector has to be in quotes to 
+- 'buttons.cancel' in prepOverlay closeselector has to be in quotes to
   avoid unrecognized expression javascript errors [ericof]
 
 - Refactor collection tile to include header and footer fields and fix tile's
@@ -71,7 +73,7 @@ There's a frood who really knows where his towel is
 - Fix a bug in collection tile when the target collection was removed
   (closes `#138`_). [jpgimenez]
 
-- Improve interface and performance of content chooser 
+- Improve interface and performance of content chooser
   (closes `#168`_ and `#169`_). [jpgimenez]
 
 - Add upgrade step to rename resources in CSS and JS registries
@@ -101,10 +103,10 @@ There's a frood who really knows where his towel is
 
 - Implements an original size scale to show the original image. [jpgimenez]
 
-- Improve the way than images are accesed from the original object, 
+- Improve the way than images are accesed from the original object,
   using the standard images traversal. (issue `#158`_) [jpgimenez]
 
-- Fixed a bug with Plone 4.3 that avoided TinyMCE being displayed for 
+- Fixed a bug with Plone 4.3 that avoided TinyMCE being displayed for
   RichText. (closes `#157`_). [ericof]
 
 

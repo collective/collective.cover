@@ -6,12 +6,11 @@
 
     <schema>
 
-        <field name="template_layout" type="zope.schema.Choice" 
+        <field name="template_layout" type="zope.schema.Choice"
                form:widget="collective.cover.widgets.selectpreview.SelectFieldWidget"
                form:omitted="z3c.form.interfaces.IEditForm:true">
-            <description i18n:translate="">
-                Choose one of the predefined layouts
-            </description>
+            <description i18n:translate=""
+              >Choose one of the predefined layouts</description>
             <title i18n:translate="">Layout</title>
             <vocabulary>collective.cover.AvailableLayouts</vocabulary>
         </field>
@@ -20,9 +19,8 @@
                form:omitted="z3c.form.interfaces.IForm:true
                              z3c.form.interfaces.IAddForm:true
                              z3c.form.interfaces.IEditForm:true">
-            <description i18n:translate="">
-                The layout to be used to render groups and tiles
-            </description>
+            <description i18n:translate=""
+              >The layout to be used to render groups and tiles</description>
             <title i18n:translate="">Cover Layout</title>
         </field>
 
