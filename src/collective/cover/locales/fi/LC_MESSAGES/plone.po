@@ -15,7 +15,7 @@ msgstr ""
 "Domain: plone\n"
 
 msgid "Compose"
-msgstr "Asettele sisältö"
+msgstr "Aseta sisältö"
 
 msgid "Layout"
 msgstr "Sommittele taitto"
