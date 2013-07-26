@@ -5,19 +5,21 @@ Share and Enjoy
 the following people:
 
 - André Nogueira
+- Asko Soukka
 - Carlos de la Guardia
-- Cleber J Santos
+- Cleber J. Santos
 - Davi Lima
 - Érico Andrei
 - Franco Pellegrini
+- Giorgio Borelli
 - Gonzalo Almeida
 - Héctor Velarde
 - Juan A. Díaz
 - Juan Pablo Giménez
 - Ricardo Bánffy
+- Rodrigo Ferreira de Souza
 - Silvestre Huens
 - Thiago Tamosauskas
-- Rodrigo Ferreira de Souza
 - `Launched Pixels`_ (icon)
 
 You can find an updated list of package contributors on `GitHub`_.

@@ -4,7 +4,9 @@ There's a frood who really knows where his towel is
 1.0a4 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
-- Add Italian translation [gborelli]
+- Add Finnish translation. [datakurre]
+
+- Add Italian translation. [gborelli]
 
 - Package documentation was updated. [hvelarde]
 
@@ -14,7 +16,7 @@ There's a frood who really knows where his towel is
 - Refactor collection tile to include header and footer fields and fix tile's
   i18n. (closes `#118`_) [hvelarde]
 
-- Add simple Chinese translations(zh_CN). [Adam tang]
+- Add simple Chinese translations (zh_CN). [Adam tang]
 
 - Add banner tile that will replace image and link tiles; add deprecation
   warning to image and link tiles as they will be removed from package on
