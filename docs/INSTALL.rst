@@ -1,9 +1,6 @@
 Installation
 ------------
 
-.. Note::
-   ``collective.cover`` has been tested in production with Plone 4.2.x only.
-
 To enable this package in a buildout-based installation:
 
 1. Edit your buildout.cfg and add add the following to it::
