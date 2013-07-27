@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 from collective.cover.tiles.base import IPersistentCoverTile
 from zope.component import adapter

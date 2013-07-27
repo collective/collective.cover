@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import zope.interface
 import zope.schema
 from z3c.form.widget import FieldWidget

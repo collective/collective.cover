@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from z3c.form import interfaces
 
 

@@ -1,4 +1,4 @@
-# -*- coding:utf-8 -*-
+# -*- coding: utf-8 -*-
 
 from collective.cover.config import PROJECTNAME
 from plone.registry.interfaces import IRegistry
