@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from App.Common import package_home
-from PIL import Image, ImageChops
+from PIL import Image
+from PIL import ImageChops
 from plone.app.testing import FunctionalTesting
 from plone.app.testing import IntegrationTesting
 from plone.app.testing import PLONE_FIXTURE

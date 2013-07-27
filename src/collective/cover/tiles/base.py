@@ -10,16 +10,20 @@ from Acquisition import aq_parent
 from collective.cover import _
 from collective.cover.config import PROJECTNAME
 from collective.cover.tiles.configuration import ITilesConfigurationScreen
+from collective.cover.tiles.configuration_view import IDefaultConfigureForm
 from collective.cover.tiles.permissions import ITilesPermissions
 from persistent.dict import PersistentDict
 from plone import tiles
 from plone.app.textfield.interfaces import ITransformer
 from plone.app.textfield.value import RichTextValue
 from plone.app.uuid.utils import uuidToObject
-from plone.namedfile.interfaces import INamedImage, INamedImageField
+from plone.autoform import directives as form
+from plone.namedfile.interfaces import INamedImage
+from plone.namedfile.interfaces import INamedImageField
 from plone.namedfile.scaling import ImageScale as BaseImageScale
 from plone.namedfile.scaling import ImageScaling as BaseImageScaling
-from plone.namedfile.utils import set_headers, stream_data
+from plone.namedfile.utils import set_headers
+from plone.namedfile.utils import stream_data
 from plone.rfc822.interfaces import IPrimaryFieldInfo
 from plone.scale.scale import scaleImage
 from plone.scale.storage import AnnotationStorage as BaseAnnotationStorage
@@ -40,11 +44,9 @@ from zope.interface import implements
 from zope.interface import Interface
 from zope.lifecycleevent import ObjectModifiedEvent
 from zope.publisher.interfaces import NotFound
+from zope.schema import Choice
 from zope.schema import getFieldNamesInOrder
 from zope.schema import getFieldsInOrder
-from zope.schema import Choice
-from plone.autoform import directives as form
-from collective.cover.tiles.configuration_view import IDefaultConfigureForm
 
 import logging
 

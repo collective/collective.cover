@@ -13,7 +13,8 @@ from z3c.form.interfaces import IDataManager
 from z3c.form.interfaces import NO_VALUE
 from zope.component import getMultiAdapter
 from zope.event import notify
-from zope.interface import implements, Interface
+from zope.interface import implements
+from zope.interface import Interface
 from zope.lifecycleevent import ObjectModifiedEvent
 from zope.publisher.interfaces.browser import IBrowserView
 from zope.traversing.browser.absoluteurl import absoluteURL
