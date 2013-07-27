@@ -253,7 +253,7 @@ class BasicTileTestCase(unittest.TestCase):
         data_mgr = ITileDataManager(self.tile)
         data_mgr.set(data)
 
-        self.assertEquals(set(['/@@collective.cover.basic/test-basic-tile',
+        self.assertEqual(set(['/@@collective.cover.basic/test-basic-tile',
                                '/@@collective.cover.basic/test-basic-tile/@@images/image',
                                '/@@collective.cover.basic/test-basic-tile/@@images/icon',
                                '/@@collective.cover.basic/test-basic-tile/@@images/mini',
