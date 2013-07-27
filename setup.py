@@ -5,7 +5,7 @@ from setuptools import setup
 
 import os
 
-version = '1.0a4'
+version = '1.0a5.dev0'
 description = "An easy-to-use package to create elaborate covers for Plone sites."
 long_description = (
     open("README.rst").read() + "\n" +
