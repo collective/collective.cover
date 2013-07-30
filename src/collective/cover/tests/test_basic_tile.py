@@ -253,13 +253,15 @@ class BasicTileTestCase(unittest.TestCase):
         data_mgr = ITileDataManager(self.tile)
         data_mgr.set(data)
 
-        self.assertEqual(set(['/@@collective.cover.basic/test-basic-tile',
-                               '/@@collective.cover.basic/test-basic-tile/@@images/image',
-                               '/@@collective.cover.basic/test-basic-tile/@@images/icon',
-                               '/@@collective.cover.basic/test-basic-tile/@@images/mini',
-                               '/@@collective.cover.basic/test-basic-tile/@@images/large',
-                               '/@@collective.cover.basic/test-basic-tile/@@images/listing',
-                               '/@@collective.cover.basic/test-basic-tile/@@images/thumb',
-                               '/@@collective.cover.basic/test-basic-tile/@@images/preview',
-                               '/@@collective.cover.basic/test-basic-tile/@@images/tile']),
-                          IAnnotations(request)['plone.cachepurging.urls'])
+        self.assertEqual(
+            set([
+                '/@@collective.cover.basic/test-basic-tile',
+                '/@@collective.cover.basic/test-basic-tile/@@images/image',
+                '/@@collective.cover.basic/test-basic-tile/@@images/icon',
+                '/@@collective.cover.basic/test-basic-tile/@@images/mini',
+                '/@@collective.cover.basic/test-basic-tile/@@images/large',
+                '/@@collective.cover.basic/test-basic-tile/@@images/listing',
+                '/@@collective.cover.basic/test-basic-tile/@@images/thumb',
+                '/@@collective.cover.basic/test-basic-tile/@@images/preview',
+                '/@@collective.cover.basic/test-basic-tile/@@images/tile']),
+            IAnnotations(request)['plone.cachepurging.urls'])
