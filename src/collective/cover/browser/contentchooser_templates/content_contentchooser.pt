@@ -8,9 +8,9 @@
 <body tal:omit-tag="">
 
 <div id="contentchooser-content-search" class="right ui-widget-content">
-	<div class="close">
-		<a href="#" class="hiddenStructure" title="Close this box">Close this box.</a>
-	</div>
+    <div class="close">
+        <a href="#" class="hiddenStructure" title="Close this box">Close this box.</a>
+    </div>
     <ul class="formTabs">
       <li class="formTab"><a href="#recent" i18n:translate="">Recent items</a></li>
       <li class="formTab"><a href="#content-tree" i18n:translate="">Content tree</a></li>
@@ -49,7 +49,6 @@
           <ul class="item-list">
             <li />
           </ul>
-
 
       </div>
     </div>

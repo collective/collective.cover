@@ -71,9 +71,9 @@
     outline:1px dashed green;
 }
 .ui-sortable-helper {
-	opacity:0.5;
-	outline:1px solid #333;
-	cursor:move;
+    opacity:0.5;
+    outline:1px solid #333;
+    cursor:move;
 }
 .ui-state-default {
     min-height: 100px;
@@ -89,13 +89,13 @@
 }
 
 .tile-container img.right {
-	float: right;
-	margin: 0 1em 0.5em 0;               	
+    float: right;
+    margin: 0 1em 0.5em 0;
 }
 
 .tile-container img.left {
-	float: left;
-	margin: 0 1em 0.5em 0;               	
+    float: left;
+    margin: 0 1em 0.5em 0;
 }
 
 .galleria-inner {

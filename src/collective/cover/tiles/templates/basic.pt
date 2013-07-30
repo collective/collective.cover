@@ -13,16 +13,16 @@
   <div tal:condition="not: is_empty"
        tal:define="description view/data/description|nothing">
     <tal:fields repeat="field view/get_configured_fields">
-    
+
          <tal:title define="htmltag python:field.get('htmltag', 'h1')"
                  condition="python:field['id'] == 'title'">
-      
+
           <h1 tal:condition="python:htmltag == 'h1'">
              <a tal:attributes="href view/getURL;
                                 title description"
               tal:content="python:field['content']" />
           </h1>
-         
+
           <h2 tal:condition="python:htmltag == 'h2'">
              <a tal:attributes="href view/getURL;
                                 title description"
@@ -41,13 +41,13 @@
       </tal:title>
 
       <tal:image condition="python:field['id'] == 'image'"
-      			 define="scale python:field.get('scale', 'large');
-      			         position python:field.get('position', '');">
+                 define="scale python:field.get('scale', 'large');
+                         position python:field.get('position', '');">
 
         <a class="imag" tal:attributes="href view/getURL;
                                         title description;">
           <img tal:define="scales view/@@images;
-      			               thumbnail python: scales.scale('image', scale=scale);"
+                               thumbnail python: scales.scale('image', scale=scale);"
                tal:condition="thumbnail"
                tal:attributes="src thumbnail/url;
                                width thumbnail/width;
@@ -66,7 +66,7 @@
       </tal:date>
 
       <tal:subjects condition="python:field['id'] == 'subjects'">
-		    <span metal:use-macro="context/@@tile_macros/subjects" />
+            <span metal:use-macro="context/@@tile_macros/subjects" />
       </tal:subjects>
 
       <tal:last condition="repeat/field/end">

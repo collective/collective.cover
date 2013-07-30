@@ -32,8 +32,8 @@ Test file Tile
 
     Drag And Drop  css=${file_selector}  css=${tile_selector}
     Page Should Contain  My file
-	Page Should Contain  This file was created for testing purposes
-	Page Should Contain Link  link=Download file
+    Page Should Contain  This file was created for testing purposes
+    Page Should Contain Link  link=Download file
 
     Click Link  link=Layout
     Delete Tile

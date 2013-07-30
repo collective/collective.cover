@@ -27,8 +27,8 @@ Test content tree tab
     Add Tile  ${basic_tile_location}
     Save Cover Layout
 
-	# Test navigate tree
-	#
+    # Test navigate tree
+    #
     Click Link  link=Compose
     Page Should Contain   Please drag&drop some content here to populate the tile.
 
@@ -40,11 +40,11 @@ Test content tree tab
     Click Element  css=${folder_selector}
 
     Page Should Contain Element  css=${path_selector}
-	Wait Until Page Contains Element  css=div#content-trees div#internalpath a
+    Wait Until Page Contains Element  css=div#content-trees div#internalpath a
     Page Should Contain  Plone site → my-folder
 
-	# Test searches
-	#
+    # Test searches
+    #
     Click Link  link=Compose
     Page Should Contain   Please drag&drop some content here to populate the tile.
 
@@ -56,12 +56,12 @@ Test content tree tab
     Set Selenium Speed  1
     Wait Until Page Contains  1 Results
     Set Selenium Speed  0
-	
+
     Page Should Contain Element  css=${folder_selector}
     Click Element  css=${folder_selector}
 
     Page Should Contain Element  css=${path_selector}
-	Wait Until Page Contains Element  css=div#content-trees div#internalpath a
+    Wait Until Page Contains Element  css=div#content-trees div#internalpath a
     Page Should Contain  Plone site → my-folder
 
     Input text  name=${input_contenttree}  foo-bar
@@ -74,11 +74,11 @@ Test content tree tab
 #    Click Element  css=${folder_selector}
 
     Page Should Contain Element  css=${path_selector}
-	Wait Until Page Contains Element  css=div#content-trees div#internalpath a
+    Wait Until Page Contains Element  css=div#content-trees div#internalpath a
     Page Should Contain  Plone site → my-folder
 
-	# End test
-	#
+    # End test
+    #
     Click Link  link=Layout
     Delete Tile
     Save Cover Layout

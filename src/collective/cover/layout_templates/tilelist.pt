@@ -11,7 +11,7 @@
       <ul>
       <tal:tiles repeat="tile view/tiles">
         <li tal:define="metadata python:view.get_tile_metadata(tile['tile_type'])">
-          <a class="btn-tile draggable" data-tile-type="" 
+          <a class="btn-tile draggable" data-tile-type=""
              tal:attributes="data-tile-type tile/tile_type;
                              data-tile-name metadata/title;
                              title metadata/description;

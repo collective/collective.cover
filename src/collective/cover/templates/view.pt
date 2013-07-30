@@ -7,7 +7,7 @@
       i18n:domain="collective.cover">
 
 <metal:js fill-slot="javascript_head_slot">
- 
+
 </metal:js>
 
 <metal:styles fill-slot="style_slot">

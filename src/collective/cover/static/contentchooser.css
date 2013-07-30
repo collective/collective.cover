@@ -93,11 +93,11 @@ input[type="text"]#contentchooser-content-trees {
 }
 
 #content-trees #general_panel {
-	padding: 0;
+    padding: 0;
 }
 
 #contentchooser-content-search-input-container,
 #contentchooser-content-trees-container,
 .contentchooser-clear {
-	display: inline-block;
+    display: inline-block;
 }

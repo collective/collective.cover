@@ -104,7 +104,7 @@ Convenience classes and placeholder rendering
 ---------------------------------------------
 
 Two convenience base classes can be found in the ``collective.cover.base`` module. These extend the standard ``PersistentCoverTile`` class
-to provide the ``IESIRendered`` interface. 
+to provide the ``IESIRendered`` interface.
 
 Additionally, these base classes implement a ``__call__()`` method that will
 render a tile placeholder if the request contains an ``X-ESI-Enabled``
@@ -148,7 +148,7 @@ By default, the tile renders as normal:
 
     >>> print tile()
     <html><head><title>Title</title></head><body><b>My basic ESI tile</b></body></html>
-    
+
 However, if we opt into ESI rendering via a request header ``X-ESI-Enabled``, we get a different
 view:
 

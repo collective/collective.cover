@@ -28,7 +28,7 @@ Test renderBase
     Click Link  link=Layout
     ${BASE}  Get Element Attribute  tag=base@href
     Should Be Equal  ${BASE}  ${PLONE_URL}/title-1/
-    
+
 *** Keywords ***
 
 Update

@@ -20,13 +20,13 @@
             </tal:level>
         </li>
     </tal:navitem>
-  	<a class="next" href=""
-  	   data-page="1"
-  	   data-query=""
-  	   i18n:translate=""
-  	   tal:condition="view/has_next"
-  	   tal:attributes="data-page view/nextpage;
-  	                   data-query view/query;">more</a>
+    <a class="next" href=""
+       data-page="1"
+       data-query=""
+       i18n:translate=""
+       tal:condition="view/has_next"
+       tal:attributes="data-page view/nextpage;
+                       data-query view/query;">more</a>
     <tal:nothasresult condition="python: not children">
         <li></li>
     </tal:nothasresult>

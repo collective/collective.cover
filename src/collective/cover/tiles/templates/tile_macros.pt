@@ -21,9 +21,9 @@
 
 <metal:image define-macro="image" i18n:domain="collective.cover">
 <tal:image condition="python:field['id'] == 'image'"
-			 define="scale python:field.get('scale', 'large').split()[0];
-			         scale python:scale != '_original' and scale or None; 
-			         position python:field.get('position', '');">
+             define="scale python:field.get('scale', 'large').split()[0];
+                     scale python:scale != '_original' and scale or None;
+                     position python:field.get('position', '');">
   <a class="imag" tal:attributes="href view/getURL|string:#;
                                   title description|nothing;">
     <img tal:define="scales view/@@images;

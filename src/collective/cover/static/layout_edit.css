@@ -227,7 +227,7 @@
     width: 10px;
     cursor:pointer;
     border-left:1px dashed #CCCCCC;
-    border-bottom:1px dashed #CCCCCC;    
+    border-bottom:1px dashed #CCCCCC;
     background: #FFF url(/++resource++collective.cover/arrow-right.gif) no-repeat center center;
 }
 
@@ -268,7 +268,7 @@
 .layout-actions .icon-white {
     height: 32px;
     line-height: 32px;
-    width: 32px; 
+    width: 32px;
 }
 
 .ui-draggable-dragging .icon-white {

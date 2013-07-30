@@ -10,7 +10,7 @@ $(document).ready(function() {
             var $this = $(this);
             $this.removeClass(function (index, css) {
                 return (css.match (/\bbtn-\S+/g) || []).join(' ');
-            });            
+            });
             $this.find('span').text('Saving...');
             $.ajax({
                 'url':'@@save_layout',
@@ -23,7 +23,7 @@ $(document).ready(function() {
                 },
                 error: function(jqXHR, textStatus, errorThrown){
                     $this.find('span').text('Error '+errorThrown);
-                    $('#btn-save').addClass('error btn-danger');           
+                    $('#btn-save').addClass('error btn-danger');
                 }
             });
         });

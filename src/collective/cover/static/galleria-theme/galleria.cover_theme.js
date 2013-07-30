@@ -61,40 +61,40 @@ Galleria.addTheme({
             this.$('loader').fadeOut(200);
             e.galleriaData.layer = rm_button(e.galleriaData);
         });
-		if($('body').hasClass('template-compose')) {
-			this.bind('data', function(e) {
-			    var self = this;
-			    $.each( self._data, function(i, data) {
-			        self._data[i].layer = rm_button(data);
-			    });
-			});
-		};
-		if($('body').hasClass('template-compose')) {
-	        this.bind('image', function(e) {
-	        	$(e.imageTarget).prev().html(e.galleriaData.layer);
-	        	$(e.imageTarget).prev().show();
-			    $(".tile-remove-item").click(function(e) {
-			        e.preventDefault();
-			        var uid = $(this).attr("data-uid");
-			        var tile = $(this).parents('.tile');
-	
-			        tile.find('.loading-mask').addClass('show remove-tile');
-			        var tile_type = "collective.cover.carousel";
-			        var tile_id = tile.attr("id");
-			        $.ajax({
-			             url: "@@removeitemfromlisttile",
-			             data: {'tile-type': tile_type, 'tile-id': tile_id, 'uid': uid},
-			             success: function(info) {
-			            	 $(tile).find('.galleria-inner').remove();
-			                 tile.html(info);
-			                 TitleMarkupSetup();
-			                 tile.find('.loading-mask').removeClass('show remove-tile');
-			                 return false;
-			             }
-			         });
-			    });
-	        });
-		};
+        if($('body').hasClass('template-compose')) {
+            this.bind('data', function(e) {
+                var self = this;
+                $.each( self._data, function(i, data) {
+                    self._data[i].layer = rm_button(data);
+                });
+            });
+        };
+        if($('body').hasClass('template-compose')) {
+            this.bind('image', function(e) {
+                $(e.imageTarget).prev().html(e.galleriaData.layer);
+                $(e.imageTarget).prev().show();
+                $(".tile-remove-item").click(function(e) {
+                    e.preventDefault();
+                    var uid = $(this).attr("data-uid");
+                    var tile = $(this).parents('.tile');
+
+                    tile.find('.loading-mask').addClass('show remove-tile');
+                    var tile_type = "collective.cover.carousel";
+                    var tile_id = tile.attr("id");
+                    $.ajax({
+                         url: "@@removeitemfromlisttile",
+                         data: {'tile-type': tile_type, 'tile-id': tile_id, 'uid': uid},
+                         success: function(info) {
+                             $(tile).find('.galleria-inner').remove();
+                             tile.html(info);
+                             TitleMarkupSetup();
+                             tile.find('.loading-mask').removeClass('show remove-tile');
+                             return false;
+                         }
+                     });
+                });
+            });
+        };
     }
 });
 

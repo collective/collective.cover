@@ -111,7 +111,7 @@
                     helper: 'clone',
                     placeholder: 'ui-sortable-placeholder-column',
                     cancel: '.resizer',
-                    start: function (e, ui) { 
+                    start: function (e, ui) {
                         ui.placeholder.attr('data-column-size', ui.helper.data('column-size'));
                     },
                     stop: function(event, ui){
@@ -207,7 +207,7 @@
                     'width': '15px'
                 });
                 elements = elements !== undefined? elements : le.find('.'+column_class +', .'+ tile_class + ', .' + row_class);
-                
+
                 button.click(function(){
                     var element = $(this).parent('div');
                     var tiles_to_delete = [];
@@ -239,7 +239,7 @@
                     });
                     if (success) {
                         element.remove();
-                        le.trigger('modified.layout');                        
+                        le.trigger('modified.layout');
                     }
                 });
                 button.hover(
@@ -268,8 +268,8 @@
 
             /**
              * Generate grid css
-             * on the fly generates an stylesheet with a dummy grid implementation, based on 
-             * the liquid version of boostrap
+             * on the fly generates an stylesheet with a dummy grid
+             * implementation, based on the liquid version of boostrap
              **/
             generate_grid_css: function(){
                 var gutter = '3';
@@ -343,7 +343,7 @@
 
             /**
              *  Resize columns
-             * 
+             *
              **/
             resize_columns_manager: function(columns){
                 columns = columns !== undefined? columns : le.find('.'+column_class);
@@ -354,7 +354,7 @@
                 $( "#dialog" ).dialog({
                     autoOpen: false
                 });
-                
+
                 $( ".resizer" ).click(function() {
                     $( "#dialog" ).dialog( "open" );
 

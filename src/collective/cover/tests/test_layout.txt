@@ -25,16 +25,16 @@ Test Basic Layout Operations
     #       http://rtomac.github.com/robotframework-selenium2library/doc/Selenium2Library.html#Xpath%20Should%20Match%20X%20Times
 
     #count if there is 1 row and 1 column
-    
+
     Count Number of Columns  1
     Count Number of Rows  1
-	
+
     #add a row after the existing one.
     Add Row
     #add a column in the latest row
-	Add Column at First Row
-	Add Column at Second Row
-	Add Column at Second Row
+    Add Column at First Row
+    Add Column at Second Row
+    Add Column at Second Row
 
     #2 columns and 2 rows
     Count Number of Columns  4
@@ -49,7 +49,7 @@ Test Basic Layout Operations
     Count Number of Columns  4
     Count Number of Rows  2
 
-    Delete a Column in the First Row    
+    Delete a Column in the First Row
     Delete the First Row
 
     Count Number of Columns  2
@@ -84,7 +84,7 @@ Delete the First Row
 
 Delete a Column in the First Row
     Click Element  css=div.layout div.cover-row:nth-of-type(1) div.cover-column:nth-of-type(1) > button.close
-	
+
 Cancel Add Tile
     Element Should Be Visible  css=${tile_cancel_area_selector}
     Click Element  css=${tile_cancel_area_selector}
@@ -93,7 +93,7 @@ Cancel Add Tile
 Select Tile to Add
     [arguments]  ${tile}
 
-    Click Element  xpath=//div[contains(@class, "tile-select-button") and contains(text(), ${tile})] 
+    Click Element  xpath=//div[contains(@class, "tile-select-button") and contains(text(), ${tile})]
 
 Delete Tile
     Click Element  css=div.cover-tile button.close
