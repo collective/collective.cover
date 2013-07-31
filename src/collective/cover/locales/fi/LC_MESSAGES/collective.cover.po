@@ -167,7 +167,7 @@ msgstr "Upotuskoodi"
 
 #: collective/cover/controlpanel.py:46
 msgid "Enter a list of styles to appear in the style pulldown. Format is title|className, one per line."
-msgstr "Syötä lista tyylejä, jotka on valittavissa pudotusvalikosta. Syötä yksi tyyli per rivi. Käytä muotoa \"otsikko|luokanNimi\"."
+msgstr "Syötä lista tyylejä, jotka on valittavissa pudotusvalikosta. Syötä yksi tyyli per rivi. Käytä muotoa \"nimike|luokanNimi\"."
 
 #: collective/cover/templates/layoutedit.pt:65
 msgid "Export layout"
@@ -337,7 +337,7 @@ msgstr "Haettavissa olevat sisältötyypit"
 
 #: collective/cover/controlpanel.py:58
 msgid "Settings for the collective.cover package"
-msgstr "Kansikuva-lisäosan asetukset"
+msgstr "Kansisivu-lisäosan asetukset"
 
 #: collective/cover/controlpanel.py:45
 msgid "Styles"
