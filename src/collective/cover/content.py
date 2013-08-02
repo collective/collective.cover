@@ -82,7 +82,7 @@ class AddTileWidget(grok.View):
 
         id = uuid()
         context_url = self.context.absolute_url()
-        widget_url = '%s/@@%s/%s' % (context_url, widget_type, id)
+        widget_url = '{0}/@@{1}/{2}'.format(context_url, widget_type, id)
 
         # Let's store locally info regarding tiles
         annotations = IAnnotations(self.context)
@@ -140,7 +140,7 @@ class RemoveTileWidget(grok.View):
         if tile_id in current_tiles:
             widget_type = current_tiles[tile_id]['type']
             #Let's remove all traces of the value stored in the tile
-            widget_uri = '@@%s/%s' % (widget_type, tile_id,)
+            widget_uri = '@@{0}/{1}'.format(widget_type, tile_id)
             tile = self.context.restrictedTraverse(widget_uri)
 
             dataManager = ITileDataManager(tile)

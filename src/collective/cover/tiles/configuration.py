@@ -88,7 +88,7 @@ class TilesConfigurationScreen(object):
         self.request = request
         self.tile = tile
         self.annotations = IAnnotations(self.context)
-        self.key = "%s.%s" % (ANNOTATIONS_KEY_PREFIX, tile.id)
+        self.key = '{0}.{1}'.format(ANNOTATIONS_KEY_PREFIX, tile.id)
 
     def _set_default_configuration(self):
         defaults = {}

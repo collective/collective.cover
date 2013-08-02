@@ -73,10 +73,10 @@ class CarouselTile(ListTile):
         return """
 $(function() {
     Galleria.loadTheme("++resource++collective.cover/galleria-theme/galleria.cover_theme.js");
-    Galleria.run('#galleria-%s .galleria-inner');
+    Galleria.run('#galleria-{0} .galleria-inner');
 
     if($('body').hasClass('template-view')) {
-        Galleria.configure({ autoplay: %s });
+        Galleria.configure({ autoplay: {1} });
     };
 });
-""" % (self.id, str(self.autoplay()).lower())
+""".format(self.id, str(self.autoplay()).lower())

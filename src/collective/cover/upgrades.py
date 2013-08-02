@@ -22,11 +22,11 @@ def rename_content_chooser_resources(context, logger=None):
     new_id = '++resource++collective.cover/contentchooser.css'
     if old_id in css_tool.getResourceIds():
         css_tool.renameResource(old_id, new_id)
-        logger.info("'%s' resource was renamed to '%s'" % (old_id, new_id))
+        logger.info("'{0}' resource was renamed to '{1}'".format(old_id, new_id))
         css_tool.cookResources()
         logger.info("CSS resources were cooked")
     else:
-        logger.debug("'%s' resource not found in portal_css" % old_id)
+        logger.debug("'{0}' resource not found in portal_css".format(old_id))
 
     # now we mess with the JS registry
     js_tool = getToolByName(context, 'portal_javascripts')
@@ -34,11 +34,11 @@ def rename_content_chooser_resources(context, logger=None):
     new_id = '++resource++collective.cover/contentchooser.js'
     if old_id in js_tool.getResourceIds():
         js_tool.renameResource(old_id, new_id)
-        logger.info("'%s' resource was renamed to '%s'" % (old_id, new_id))
+        logger.info("'{0}' resource was renamed to '{1}'".format(old_id, new_id))
         js_tool.cookResources()
         logger.info("JS resources were cooked")
     else:
-        logger.debug("'%s' resource not found in portal_javascripts" % old_id)
+        logger.debug("'{0}' resource not found in portal_javascripts".format(old_id))
 
 
 def register_available_tiles_record(context, logger=None):
@@ -97,19 +97,19 @@ def issue_218(context, logger=None):
         if tile not in record:
             record.append(tile)
             logger.info(
-                "'%s' tile added to '%s' record" % (tile, record_name))
+                "'{0}' tile added to '{1}' record".format(tile, record_name))
         else:
             logger.debug(
-                "'%s' tile already in '%s' record" % (tile, record_name))
+                "'{0}' tile already in '{1}' record".format(tile, record_name))
 
         for tile in (u'collective.cover.image', u'collective.cover.link'):
             if tile in record:
                 record.remove(tile)
                 logger.info(
-                    "'%s' tile removed from '%s' record" % (tile, record_name))
+                    "'{0}' tile removed from '{1}' record".format(tile, record_name))
             else:
                 logger.debug(
-                    "'%s' tile already removed from '%s' record" % (tile, record_name))
+                    "'{0}' tile already removed from '{1}' record".format(tile, record_name))
 
         record.sort()
         registry[record_name] = record

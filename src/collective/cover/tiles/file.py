@@ -11,14 +11,14 @@ from zope import schema
 from zope.interface import implements
 
 HTML = """
-    <a href="%s/at_download/file">
-      <img src="%s/%s" alt="">
+    <a href="{0}/at_download/file">
+      <img src="{1}/{2}" alt="">
          Download file
     </a>
     <span class="discreet">
       &#8212;
-      %s,
-      %s
+      {3},
+      {4}
     </span>
 """
 
@@ -26,13 +26,13 @@ HTML = """
 # XXX: refactor this to make it easier to test
 def get_download_html(url, portal_url, icon, mime_type, size):
     if size < 1024:
-        size_str = '%s bytes' % size
+        size_str = "{0} bytes".format(size)
     elif size >= 1024 and size < 1048576:
-        size_str = '%s kB (%s bytes)' % (size / 1024, size)
+        size_str = "{0} kB ({1} bytes)".format(size / 1024, size)
     else:
-        size_str = '%s MB (%s bytes)' % (size / 1048576, size)
+        size_str = "{0} MB ({1} bytes)".format(size / 1048576, size)
 
-    return HTML % (url, portal_url, icon, mime_type, size_str)
+    return HTML.format(url, portal_url, icon, mime_type, size_str)
 
 
 class IFileTile(IPersistentCoverTile):
