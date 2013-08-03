@@ -160,7 +160,8 @@ class CollectionTile(PersistentCoverTile):
     def thumbnail(self, item):
         scales = item.restrictedTraverse('@@images')
         try:
-            return scales.scale('image', 'mini')
+            scale = [i['scale'].split(' ')[0] for i in self.get_configured_fields() if i['id'] == 'image'][0]
+            return scales.scale('image', scale)
         except:
             return None
 
