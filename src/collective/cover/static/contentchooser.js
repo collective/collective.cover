@@ -168,7 +168,7 @@ $(function() {
     } else {
       child.css("display", "block");
     }
-  })
+  });
 
 });
 
@@ -189,9 +189,9 @@ var coveractions = {
     preInit : function() {
         // If compose exists in url
         if (this.current_path.indexOf('/compose') > 0){
-            this.getFolderContents(this.call_context,'@@jsonbytype')
+            this.getFolderContents(this.call_context,'@@jsonbytype');
 
-        };
+        }
 
     },
 
@@ -214,7 +214,7 @@ var coveractions = {
             }
 
             return x;
-        };
+        }
 
         x = w.XMLHttpRequest ? new XMLHttpRequest() : get('Microsoft.XMLHTTP') || get('Msxml2.XMLHTTP');
 
@@ -244,7 +244,7 @@ var coveractions = {
                 } else {
                     w.setTimeout(ready, 10);
                 }
-            };
+            }
 
             // Syncronous request
             if (!o.async){
@@ -266,7 +266,7 @@ var coveractions = {
     getFolderContents : function(path, method) {
         // Sends a low level Ajax request
         var t = this, d = document, w = window, na = navigator, ua = na.userAgent;
-        $('#contentchooser-content-trees').val('')
+        $('#contentchooser-content-trees').val('');
 
         coveractions.send({
             url : path + '/' + method,
@@ -317,7 +317,7 @@ var coveractions = {
 
                     html = "";
                     for (var i = 0; i < data.path.length; i++) {
-                        if (i != 0) {
+                        if (i !== 0) {
                             html += " &rarr; ";
                         }
                         if (i == data.path.length - 1) {
@@ -364,11 +364,11 @@ var coveractions = {
             });
 
             // Update the count
-            if (filter != ""){
+            if (filter !== ''){
                 var numberItems = count;
                 jQuery(selectoroutput).text(" "+ count + " Results");
             } else {
-                jQuery(selectoroutput).text("")
+                jQuery(selectoroutput).text("");
             }
         });
     },

@@ -12,7 +12,7 @@
 
 //XXX stupid method and stupid way of coding... XXXXXXX
 function removeObjFromTile() {
-    $(".tile-remove-item").remove()
+    $(".tile-remove-item").remove();
     $(".sortable-tile").each(function() {
         var child = $(this).children('*[data-uid]');
         child.append("<i class='tile-remove-item'><span class='text'>remove</span></i>");
@@ -99,10 +99,10 @@ $(document).ready(function() {
             });
 
             var newlist = $.map(data_parent, function(value, i) {
-                  if (data_parent[i].type == "textarea" && mcs[data_parent[i].name] != undefined) {
+                  if (data_parent[i].type == "textarea" && mcs[data_parent[i].name] !== undefined) {
                       value.value = mcs[value.name].contents().find('body').html();
                   }
-                  return value
+                  return value;
               });
 
         },
@@ -119,7 +119,7 @@ $(document).ready(function() {
                     config.init();
 
                     // Remove unecessary link, use HTML button of editor
-                    $('div.suppressVisualEditor').remove()
+                    $('div.suppressVisualEditor').remove();
 
                 });
               }

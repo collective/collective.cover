@@ -45,5 +45,5 @@ $(document).ready(function() {
         select.change(function(b, a) {
             setup_preview(layout_preview, $(this), ctx, layouts);
         });
-    }
+    };
 });

@@ -68,7 +68,7 @@ Galleria.addTheme({
                     self._data[i].layer = rm_button(data);
                 });
             });
-        };
+        }
         if($('body').hasClass('template-compose')) {
             this.bind('image', function(e) {
                 $(e.imageTarget).prev().html(e.galleriaData.layer);
@@ -94,7 +94,7 @@ Galleria.addTheme({
                      });
                 });
             });
-        };
+        }
     }
 });
 

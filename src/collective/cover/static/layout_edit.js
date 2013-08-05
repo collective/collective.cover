@@ -315,7 +315,7 @@
                     //     'width':  total_space / columns + '%',
                     //     'margin-left': gutter + '%'
                     // });
-                };
+                }
 
                 jss('.'+column_class + ':nth-of-type(1)', {
                     'margin-left':'0'
@@ -499,7 +499,7 @@
         } else {
             settings = {
                 'ncolumns': 16,
-            }
+            };
         }
 
         if (options) {
