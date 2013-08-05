@@ -183,6 +183,7 @@ There's a frood who really knows where his towel is
 .. _`PloneFormGen`: https://pypi.python.org/pypi/Products.PloneFormGen
 .. _`#48`: https://github.com/collective/collective.cover/issues/48
 .. _`#100`: https://github.com/collective/collective.cover/issues/100
+.. _`#113`: https://github.com/collective/collective.cover/issues/113
 .. _`#114`: https://github.com/collective/collective.cover/issues/114
 .. _`#118`: https://github.com/collective/collective.cover/issues/118
 .. _`#121`: https://github.com/collective/collective.cover/issues/121
