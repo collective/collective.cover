@@ -50,7 +50,6 @@ class IBasicTile(IPersistentCoverTile):
     form.widget(subjects='z3c.form.browser.textarea.TextAreaFieldWidget')
     subjects = schema.Tuple(
         title=_(u'label_categories', default=u'Categories'),
-        description=_(u'help_categories'),
         required=False,
         value_type=schema.TextLine(),
         missing_value=(),
