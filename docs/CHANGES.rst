@@ -4,7 +4,7 @@ There's a frood who really knows where his towel is
 1.0a5 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
-- Nothing changed yet.
+- Friendly layout for tile configuration (closes `#113`_). [agnogueira]
 
 
 1.0a4 (2013-07-27)
