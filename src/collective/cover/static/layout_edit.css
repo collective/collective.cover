@@ -343,4 +343,4 @@
 .visibility-box {position: absolute; top: 0; left: 0;}
 .visibility-box>span {display: none;}
 .visibility-no {background: url('visibility.png') no-repeat 0px 4px;}
-.visibility-yes {background: url'visibility.png') no-repeat -22px 4px;}
+.visibility-yes {background: url('visibility.png') no-repeat -22px 4px;}
