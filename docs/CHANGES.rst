@@ -4,6 +4,8 @@ There's a frood who really knows where his towel is
 1.0a5 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Move CSS to registry_css (closes `#244`_). [agnogueira]
+
 - Friendly layout for tile configuration (closes `#133`_). [agnogueira]
 
 - Fix configuration tile (closes `#239`_). [cleberjsantos]
@@ -214,3 +216,4 @@ There's a frood who really knows where his towel is
 .. _`#206`: https://github.com/collective/collective.cover/issues/206
 .. _`#218`: https://github.com/collective/collective.cover/issues/218
 .. _`#239`: https://github.com/collective/collective.cover/issues/239
+.. _`#239`: https://github.com/collective/collective.cover/issues/244

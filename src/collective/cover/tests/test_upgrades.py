@@ -4,6 +4,7 @@ from collective.cover.testing import INTEGRATION_TESTING
 from collective.cover.upgrades import register_available_tiles_record
 from collective.cover.upgrades import register_styles_record
 from collective.cover.upgrades import rename_content_chooser_resources
+from collective.cover.upgrades import issue_244
 from plone.registry.interfaces import IRecordAddedEvent
 from plone.registry.interfaces import IRegistry
 from zope.component import eventtesting
@@ -107,3 +108,19 @@ class Upgrade3to4TestCase(unittest.TestCase):
         self.assertIn(u'collective.cover.banner', registry[record])
         self.assertNotIn(u'collective.cover.image', registry[record])
         self.assertNotIn(u'collective.cover.link', registry[record])
+
+
+class Upgrade2to3TestCase(unittest.TestCase):
+
+    layer = INTEGRATION_TESTING
+
+    def setUp(self):
+        self.portal = self.layer['portal']
+
+    def test_issue_244(self):
+        css_tool = self.portal['portal_css']
+        id = '++resource++collective.cover/cover.css'
+        css_tool.unregisterResource(id)
+        self.assertNotIn(id, css_tool.getResourceIds())
+        issue_244(self.portal)
+        self.assertIn(id, css_tool.getResourceIds())
