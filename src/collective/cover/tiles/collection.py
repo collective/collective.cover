@@ -63,6 +63,7 @@ class ICollectionTile(IPersistentCoverTile, form.Schema):
     footer = schema.TextLine(
         title=_(u'Footer'),
         required=False,
+        readonly=True,
     )
 
     uuid = schema.TextLine(
@@ -188,38 +189,6 @@ class CollectionTile(PersistentCoverTile):
                 header['size'] = header_conf['size']
 
         return header
-
-    def get_configured_footer(self):
-        # Override this method, since we are not storing anything
-        # in the fields, we just use them for configuration
-        tileType = queryUtility(ITileType, name=self.__name__)
-        conf = self.get_tile_configuration()
-
-        fields = getFieldsInOrder(tileType.schema)
-
-        name, obj = [field for field in fields if field[0] == 'footer'][0]
-
-        footer = {'id': name,
-                  'title': obj.title}
-        if name in conf:
-            footer_conf = conf[name]
-            if ('visibility' in footer_conf and footer_conf['visibility'] == u'off'):
-                # If the footer was configured to be invisible, then just
-                # ignore it
-                return None
-
-            if 'htmltag' in footer_conf:
-                # If this footer has the capability to change its html tag
-                # render, save it here
-                footer['htmltag'] = footer_conf['htmltag']
-
-            if 'imgsize' in footer_conf:
-                footer['scale'] = footer_conf['imgsize']
-
-            if 'size' in footer_conf:
-                footer['size'] = footer_conf['size']
-
-        return footer
 
     def thumbnail(self, item):
         tile_conf = self.get_tile_configuration()
