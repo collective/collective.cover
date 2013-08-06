@@ -158,10 +158,15 @@ class CollectionTile(PersistentCoverTile):
         return results
 
     def thumbnail(self, item):
+        tile_conf = self.get_tile_configuration()
+        image_conf = tile_conf.get('image', None)
         scales = item.restrictedTraverse('@@images')
         try:
-            scale = [i['scale'].split(' ')[0] for i in self.get_configured_fields() if i['id'] == 'image'][0]
-            return scales.scale('image', scale)
+            if image_conf:
+                scaleconf = image_conf['imgsize']
+                # scale string is something like: 'mini 200:200'
+                scale = scaleconf.split(' ')[0] # we need the name only: 'mini'
+                return scales.scale('image', scale)
         except:
             return None
 
