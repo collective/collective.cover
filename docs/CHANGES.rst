@@ -4,9 +4,11 @@ There's a frood who really knows where his towel is
 1.0a5 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Collection tile now fulfills the configured image size (fixes `#239`_).
+  [cleberjsantos]
+
 - Friendly layout for tile configuration (closes `#133`_). [agnogueira]
 
-- Fix configuration tile (closes `#239`_). [cleberjsantos]
 
 1.0a4 (2013-07-27)
 ^^^^^^^^^^^^^^^^^^
