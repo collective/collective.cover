@@ -16,8 +16,21 @@
         <p i18n:translate="">The collection doesn't have any results.</p>
       </div>
 
-      <div class="tile-header" tal:condition="view/show_header">
-          <span tal:content="view/data/header" />
+      <div class="tile-header"
+           tal:define="header view/get_configured_header"
+           tal:condition="view/show_header">
+          <tal:title define="htmltag python:header.get('htmltag', 'h1')">
+
+              <h1 tal:condition="python:htmltag == 'h1'"
+                  tal:content="view/data/header" />
+              <h2 tal:condition="python:htmltag == 'h2'"
+                  tal:content="view/data/header" />
+              <h3 tal:condition="python:htmltag == 'h3'"
+                  tal:content="view/data/header" />
+              <h4 tal:condition="python:htmltag == 'h4'"
+                  tal:content="view/data/header" />
+
+          </tal:title>
       </div>
 
       <div class="collection-item" tal:repeat="item results">
@@ -76,9 +89,32 @@
         </tal:items>
         <div class="visualClear"><!-- --></div>
       </div>
-      <div class="tile-footer" tal:condition="view/show_footer">
-        <a tal:attributes="href view/collection_url" tal:content="view/data/footer" />
+
+      <div class="tile-footer"
+           tal:define="footer view/get_configured_footer"
+           tal:condition="view/show_footer">
+          <tal:title define="htmltag python:footer.get('htmltag', 'h1')">
+
+              <h1 tal:condition="python:htmltag == 'h1'">
+                  <a tal:attributes="href view/collection_url"
+                     tal:content="view/data/footer" />
+              </h1>
+              <h2 tal:condition="python:htmltag == 'h2'">
+                  <a tal:attributes="href view/collection_url"
+                     tal:content="footer/title" />
+              </h2>
+              <h3 tal:condition="python:htmltag == 'h3'">
+                  <a tal:attributes="href view/collection_url"
+                     tal:content="view/data/footer" />
+              </h3>
+              <h4 tal:condition="python:htmltag == 'h4'">
+                  <a tal:attributes="href view/collection_url"
+                     tal:content="view/data/footer" />
+              </h4>
+
+          </tal:title>
       </div>
+
       <div class="visualClear"><!-- --></div>
     </tal:results>
   </div>
