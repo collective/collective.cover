@@ -6,6 +6,7 @@ There's a frood who really knows where his towel is
 
 - Friendly layout for tile configuration (closes `#133`_). [agnogueira]
 
+- Fix configuration tile (closes `#239`_). [cleberjsantos]
 
 1.0a4 (2013-07-27)
 ^^^^^^^^^^^^^^^^^^
@@ -212,3 +213,4 @@ There's a frood who really knows where his towel is
 .. _`#203`: https://github.com/collective/collective.cover/issues/203
 .. _`#206`: https://github.com/collective/collective.cover/issues/206
 .. _`#218`: https://github.com/collective/collective.cover/issues/218
+.. _`#239`: https://github.com/collective/collective.cover/issues/239
