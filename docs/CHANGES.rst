@@ -4,6 +4,8 @@ There's a frood who really knows where his towel is
 1.0a5 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Move CSS to registry_css (closes `#244`_). [agnogueira]
+
 - Collection tile now fulfills the configured image size (fixes `#239`_).
   [cleberjsantos]
 
