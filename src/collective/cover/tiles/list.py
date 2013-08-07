@@ -5,7 +5,9 @@ from collective.cover.controlpanel import ICoverSettings
 from collective.cover.interfaces import ICoverUIDsProvider
 from collective.cover.tiles.base import IPersistentCoverTile
 from collective.cover.tiles.base import PersistentCoverTile
+from collective.cover.tiles.configuration_view import IDefaultConfigureForm
 from plone.app.uuid.utils import uuidToObject
+from plone.directives import form
 from plone.memoize import view
 from plone.namedfile.field import NamedImage
 from plone.registry.interfaces import IRegistry
@@ -21,7 +23,40 @@ from zope.schema import getFieldsInOrder
 
 
 # XXX: we must refactor this tile
-class IListTile(IPersistentCoverTile):
+class IListTile(IPersistentCoverTile, form.Schema):
+
+    header = schema.TextLine(
+        title=_(u'Header'),
+        required=False,
+    )
+
+    form.omitted('title')
+    form.no_omit(IDefaultConfigureForm, 'title')
+    title = schema.TextLine(
+        title=_(u'Title'),
+        required=False,
+    )
+
+    form.omitted('description')
+    form.no_omit(IDefaultConfigureForm, 'description')
+    description = schema.Text(
+        title=_(u'Description'),
+        required=False,
+    )
+
+    form.omitted('date')
+    form.no_omit(IDefaultConfigureForm, 'date')
+    date = schema.Datetime(
+        title=_(u'Date'),
+        required=False,
+    )
+
+    form.omitted('image')
+    form.no_omit(IDefaultConfigureForm, 'image')
+    image = NamedImage(
+        title=_(u'Image'),
+        required=False,
+    )
 
     uuids = schema.List(
         title=_(u'Elements'),
@@ -29,21 +64,8 @@ class IListTile(IPersistentCoverTile):
         required=False,
     )
 
-    title = schema.TextLine(
-        title=_(u'Title'),
-        required=False,
-        readonly=True,
-    )
-
-    description = schema.Text(
-        title=_(u'Description'),
-        required=False,
-        readonly=True,
-    )
-
-    image = NamedImage(
-        title=_(u'Image'),
-        required=False,
+    uuid = schema.TextLine(
+        title=_(u'UUID'),
         readonly=True,
     )
 
@@ -96,6 +118,9 @@ class ListTile(PersistentCoverTile):
 
         old_data = data_mgr.get()
         for uuid in uuids:
+            obj = uuidToObject(uuid)
+            old_data['header'] = obj.Title()
+            old_data['uuid'] = uuid
             if old_data['uuids']:
                 if type(old_data['uuids']) != list:
                     old_data['uuids'] = [uuid]
@@ -166,6 +191,11 @@ class ListTile(PersistentCoverTile):
 
         return results
 
+    def get_configured_header(self):
+        fields = self.get_configured_fields()
+        header = [field for field in fields if field['id'] == 'header'][0]
+        return header
+
     @view.memoize
     def accepted_ct(self):
         """
@@ -181,11 +211,17 @@ class ListTile(PersistentCoverTile):
         return settings.searchable_content_types
 
     def thumbnail(self, item):
+        tile_conf = self.get_tile_configuration()
+        image_conf = tile_conf.get('image', None)
         scales = item.restrictedTraverse('@@images')
-        try:
-            return scales.scale('image', 'mini')
-        except:
-            return None
+        if image_conf:
+            scaleconf = image_conf['imgsize']
+            # scale string is something like: 'mini 200:200'
+            scale = scaleconf.split(' ')[0]  # we need the name only: 'mini'
+            return scales.scale('image', scale)
+
+    def show_header(self):
+        return self._field_is_visible('header')
 
 
 class CollectionUIDsProvider(object):
