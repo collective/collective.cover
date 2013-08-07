@@ -39,7 +39,7 @@ class BannerTile(PersistentCoverTile):
     is_droppable = True
 
     def accepted_ct(self):
-        return ['Image', 'Link']
+        return ['Image', 'Link', 'image_artifact']
 
     def populate_with_object(self, obj):
         """Tile can be populated with images and links; in this case we're not
@@ -53,7 +53,7 @@ class BannerTile(PersistentCoverTile):
         obj = aq_base(obj)  # avoid acquisition
         title = obj.Title()
         # if image, store a copy of its data
-        if obj.portal_type == 'Image':
+        if obj.portal_type == 'Image' or obj.portal_type == 'image_artifact':
             if hasattr(obj, 'getImage'):
                 data = obj.getImage().data
             else:
