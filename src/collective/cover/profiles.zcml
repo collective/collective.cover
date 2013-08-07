@@ -91,4 +91,17 @@
 
   </genericsetup:upgradeSteps>
 
+  <genericsetup:upgradeSteps
+      source="4"
+      destination="5"
+      profile="collective.cover:default">
+
+      <genericsetup:upgradeStep
+          title="Solves issue 244"
+          description="Add cover.css to css_registry"
+          handler=".upgrades.issue_244"
+          />
+
+  </genericsetup:upgradeSteps>
+
 </configure>
