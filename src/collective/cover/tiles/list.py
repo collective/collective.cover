@@ -9,7 +9,7 @@ from collective.cover.tiles.configuration_view import IDefaultConfigureForm
 from plone.app.uuid.utils import uuidToObject
 from plone.directives import form
 from plone.memoize import view
-from plone.namedfile.field import NamedBlobImage as NamedImage
+from plone.namedfile.field import NamedImage
 from plone.registry.interfaces import IRegistry
 from plone.tiles.interfaces import ITileDataManager
 from plone.tiles.interfaces import ITileType
@@ -51,11 +51,10 @@ class IListTile(IPersistentCoverTile, form.Schema):
         required=False,
     )
 
-    form.omitted('image')
-    form.no_omit(IDefaultConfigureForm, 'image')
     image = NamedImage(
         title=_(u'Image'),
         required=False,
+        readonly=True,
     )
 
     form.omitted('uuids')
@@ -209,14 +208,10 @@ class ListTile(PersistentCoverTile):
         return settings.searchable_content_types
 
     def thumbnail(self, item):
-        tile_conf = self.get_tile_configuration()
-        image_conf = tile_conf.get('image', None)
-        scales = item.restrictedTraverse('@@images')
-        if image_conf:
-            scaleconf = image_conf['imgsize']
-            # scale string is something like: 'mini 200:200'
-            scale = scaleconf.split(' ')[0]  # we need the name only: 'mini'
-            return scales.scale('image', scale)
+        try:
+            return scales.scale('image', 'mini')
+        except:
+            return None
 
     def show_header(self):
         return self._field_is_visible('header')
