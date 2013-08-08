@@ -45,7 +45,7 @@
                                    height thumbnail/height" />
             </a>
           </tal:image>
-         
+
           <tal:title>
             <!-- FIXME: a tag should be inside h tag -->
             <a tal:attributes="href item/absolute_url;
@@ -53,16 +53,17 @@
               <h1 tal:content="item/Title" />
             </a>
           </tal:title>
-         
+
           <p tal:content="item/Description" />
-         
+
           <p tal:content="python:toLocalizedTime(item.Date())" />
-         
+
         </div>
-         
+
         <div class="visualClear"><!-- --></div>
       </div>
     </tal:items>
+    <div class="visualClear"><!-- --></div>
   </div>
 </body>
 </html>
