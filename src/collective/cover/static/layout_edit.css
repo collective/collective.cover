@@ -36,8 +36,6 @@
     position: relative;
 }
 
-}
-
 /* SIDEBAR */
 
 #sidebar .btn {
@@ -151,8 +149,8 @@
     position:absolute;
     width:100%;
     height:100%;
-    top:0px;
-    left:0px;
+    top:0;
+    left:0;
     visibility:hidden;
 }
 .layout .row-guide {
@@ -342,5 +340,5 @@
 .order-box {position: absolute;top: 0;right: 0;}
 .visibility-box {position: absolute; top: 0; left: 0;}
 .visibility-box>span {display: none;}
-.visibility-no {background: url('visibility.png') no-repeat 0px 4px;}
+.visibility-no {background: url('visibility.png') no-repeat 0 4px;}
 .visibility-yes {background: url('visibility.png') no-repeat -22px 4px;}
