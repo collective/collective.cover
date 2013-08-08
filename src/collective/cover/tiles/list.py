@@ -58,6 +58,8 @@ class IListTile(IPersistentCoverTile, form.Schema):
         required=False,
     )
 
+    form.omitted('uuids')
+    form.no_omit(IDefaultConfigureForm, 'uuids')
     uuids = schema.List(
         title=_(u'Elements'),
         value_type=schema.TextLine(),
@@ -78,7 +80,7 @@ class ListTile(PersistentCoverTile):
 
     is_configurable = True
     is_droppable = True
-    is_editable = False
+    is_editable = True
     limit = 5
     configured_fields = {}
 
