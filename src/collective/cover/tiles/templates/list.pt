@@ -10,11 +10,13 @@
   </p>
 
   <!-- FIXME: this should be configurable -->
-  <div class="sortable-tile cover-list-tile" tal:condition="not: is_empty">
+  <div class="sortable-tile cover-list-tile"
+       tal:define="conf_fields view/configured_fields"
+       tal:condition="not: is_empty">
     <div class="tile-header"
-         tal:define="header view/get_configured_header"
+         tal:define="config python:conf_fields.get('header')"
          tal:condition="view/show_header">
-        <tal:title define="htmltag python:header.get('htmltag', 'h1')">
+        <tal:title define="htmltag python:config.get('htmltag', 'h1')">
 
             <h1 tal:condition="python:htmltag == 'h1'"
                 tal:content="view/data/header" />
@@ -30,8 +32,8 @@
 
     <tal:items repeat="item view/results"
                define="toLocalizedTime nocall:context/@@plone/toLocalizedTime">
-      <div class="list-item">
-        <div tal:attributes="data-uid python:view.get_uid(item)">
+      <div class="list-item"
+           tal:attributes="data-uid python:view.get_uid(item)">
           <tal:image tal:define="thumbnail python:view.thumbnail(item);"
                      condition="thumbnail">
             <a tal:attributes="href item/absolute_url;
@@ -46,12 +48,31 @@
             </a>
           </tal:image>
          
-          <tal:title>
-            <!-- FIXME: a tag should be inside h tag -->
-            <a tal:attributes="href item/absolute_url;
-                               title item/Description">
-              <h1 tal:content="item/Title" />
-            </a>
+          <tal:title define="config python:conf_fields.get('title');
+                             htmltag python:config.get('htmltag', 'h1')">
+            <h1 tal:condition="python:htmltag == 'h1'">
+                <a tal:attributes="href item/absolute_url;
+                                   title item/Description"
+                   tal:content="item/Title" />
+            </h1>
+
+            <h2 tal:condition="python:htmltag == 'h2'">
+                <a tal:attributes="href item/absolute_url;
+                                   title item/Description"
+                   tal:content="item/Title" />
+            </h2>
+
+            <h3 tal:condition="python:htmltag == 'h3'">
+                <a tal:attributes="href item/absolute_url;
+                                   title item/Description"
+                   tal:content="item/Title" />
+            </h3>
+
+            <h4 tal:condition="python:htmltag == 'h4'">
+                <a tal:attributes="href item/absolute_url;
+                                   title item/Description"
+                   tal:content="item/Title" />
+            </h4>
           </tal:title>
          
           <p tal:content="item/Description" />
@@ -61,7 +82,6 @@
         </div>
          
         <div class="visualClear"><!-- --></div>
-      </div>
     </tal:items>
   </div>
 </body>

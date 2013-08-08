@@ -9,7 +9,7 @@ from collective.cover.tiles.configuration_view import IDefaultConfigureForm
 from plone.app.uuid.utils import uuidToObject
 from plone.directives import form
 from plone.memoize import view
-from plone.namedfile.field import NamedImage
+from plone.namedfile.field import NamedBlobImage as NamedImage
 from plone.registry.interfaces import IRegistry
 from plone.tiles.interfaces import ITileDataManager
 from plone.tiles.interfaces import ITileType
@@ -80,10 +80,12 @@ class ListTile(PersistentCoverTile):
     is_droppable = True
     is_editable = False
     limit = 5
+    configured_fields = {}
 
     def results(self):
         """ Return the list of objects stored in the tile.
         """
+        self.configured_fields = self.get_configured_fields()
         self.set_limit()
         uuids = self.data.get('uuids', None)
         result = []
@@ -102,9 +104,9 @@ class ListTile(PersistentCoverTile):
 
     # XXX: we could get rid of this fixing the tile's schema
     def set_limit(self):
-        for field in self.get_configured_fields():
-            if field and field.get('id') == 'uuids':
-                self.limit = int(field.get('size', self.limit))
+        field = self.configured_fields.get('uuids', None)
+        if field:
+            self.limit = int(field.get('size', self.limit))
 
     def populate_with_object(self, obj):
         super(ListTile, self).populate_with_object(obj)  # check permission
@@ -165,10 +167,9 @@ class ListTile(PersistentCoverTile):
 
         fields = getFieldsInOrder(tileType.schema)
 
-        results = []
+        results = {}
         for name, obj in fields:
-            field = {'id': name,
-                     'title': obj.title}
+            field = {'title': obj.title}
             if name in conf:
                 field_conf = conf[name]
                 if ('visibility' in field_conf and field_conf['visibility'] == u'off'):
@@ -187,14 +188,9 @@ class ListTile(PersistentCoverTile):
                 if 'size' in field_conf:
                     field['size'] = field_conf['size']
 
-            results.append(field)
+            results[name] = field
 
         return results
-
-    def get_configured_header(self):
-        fields = self.get_configured_fields()
-        header = [field for field in fields if field['id'] == 'header'][0]
-        return header
 
     @view.memoize
     def accepted_ct(self):
