@@ -47,7 +47,7 @@
                                    height thumbnail/height" />
             </a>
           </tal:image>
-         
+
           <tal:title define="config python:conf_fields.get('title');
                              htmltag python:config.get('htmltag', 'h1')">
             <h1 tal:condition="python:htmltag == 'h1'">
@@ -74,15 +74,17 @@
                    tal:content="item/Title" />
             </h4>
           </tal:title>
-         
+
           <p tal:content="item/Description" />
-         
+
           <p tal:content="python:toLocalizedTime(item.Date())" />
-         
+
+          <div class="visualClear"><!-- --></div>
+
         </div>
-         
-        <div class="visualClear"><!-- --></div>
+
     </tal:items>
+    <div class="visualClear"><!-- --></div>
   </div>
 </body>
 </html>
