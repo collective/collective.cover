@@ -110,7 +110,7 @@ class Upgrade3to4TestCase(unittest.TestCase):
         self.assertNotIn(u'collective.cover.link', registry[record])
 
 
-class Upgrade2to3TestCase(unittest.TestCase):
+class Upgrade4to5TestCase(unittest.TestCase):
 
     layer = INTEGRATION_TESTING
 
