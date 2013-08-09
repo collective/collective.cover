@@ -10,41 +10,81 @@
   </p>
 
   <!-- FIXME: this should be configurable -->
-  <div class="sortable-tile cover-list-tile" tal:condition="not: is_empty">
+  <div class="sortable-tile cover-list-tile"
+       tal:define="conf_fields view/configured_fields"
+       tal:condition="not: is_empty">
+    <div class="tile-header"
+         tal:define="config python:conf_fields.get('header')"
+         tal:condition="view/show_header">
+        <tal:title define="htmltag python:config.get('htmltag', 'h1')">
+
+            <h1 tal:condition="python:htmltag == 'h1'"
+                tal:content="view/data/header" />
+            <h2 tal:condition="python:htmltag == 'h2'"
+                tal:content="view/data/header" />
+            <h3 tal:condition="python:htmltag == 'h3'"
+                tal:content="view/data/header" />
+            <h4 tal:condition="python:htmltag == 'h4'"
+                tal:content="view/data/header" />
+
+        </tal:title>
+    </div>
+
     <tal:items repeat="item view/results"
                define="toLocalizedTime nocall:context/@@plone/toLocalizedTime">
-      <div style="position:relative"
+      <div class="list-item"
            tal:attributes="data-uid python:view.get_uid(item)">
-        <tal:image tal:define="thumbnail python:view.thumbnail(item);"
-                   condition="thumbnail">
-          <a tal:attributes="href item/absolute_url;
-                             title item/Description;
-                             alt item/Description">
-            <!-- XXX -->
-            <img style="float: left; margin: 0 1em 0.5em 0;"
-                 tal:attributes="alt item/Description;
-                                 src thumbnail/url;
-                                 width thumbnail/width;
-                                 height thumbnail/height" />
-          </a>
-        </tal:image>
+          <tal:image tal:define="thumbnail python:view.thumbnail(item);"
+                     condition="thumbnail">
+            <a tal:attributes="href item/absolute_url;
+                               title item/Description;
+                               alt item/Description">
+              <!-- XXX -->
+              <img style="float: left; margin: 0 1em 0.5em 0;"
+                   tal:attributes="alt item/Description;
+                                   src thumbnail/url;
+                                   width thumbnail/width;
+                                   height thumbnail/height" />
+            </a>
+          </tal:image>
 
-        <tal:title>
-          <!-- FIXME: a tag should be inside h tag -->
-          <a tal:attributes="href item/absolute_url;
-                             title item/Description">
-            <h1 tal:content="item/Title" />
-          </a>
-        </tal:title>
+          <tal:title define="config python:conf_fields.get('title');
+                             htmltag python:config.get('htmltag', 'h1')">
+            <h1 tal:condition="python:htmltag == 'h1'">
+                <a tal:attributes="href item/absolute_url;
+                                   title item/Description"
+                   tal:content="item/Title" />
+            </h1>
 
-        <p tal:content="item/Description" />
+            <h2 tal:condition="python:htmltag == 'h2'">
+                <a tal:attributes="href item/absolute_url;
+                                   title item/Description"
+                   tal:content="item/Title" />
+            </h2>
 
-        <p tal:content="python:toLocalizedTime(item.Date())" />
+            <h3 tal:condition="python:htmltag == 'h3'">
+                <a tal:attributes="href item/absolute_url;
+                                   title item/Description"
+                   tal:content="item/Title" />
+            </h3>
 
-      </div>
+            <h4 tal:condition="python:htmltag == 'h4'">
+                <a tal:attributes="href item/absolute_url;
+                                   title item/Description"
+                   tal:content="item/Title" />
+            </h4>
+          </tal:title>
 
-      <div class="visualClear"><!-- --></div>
+          <p tal:content="item/Description" />
+
+          <p tal:content="python:toLocalizedTime(item.Date())" />
+
+          <div class="visualClear"><!-- --></div>
+
+        </div>
+
     </tal:items>
+    <div class="visualClear"><!-- --></div>
   </div>
 </body>
 </html>
