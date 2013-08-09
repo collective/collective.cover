@@ -19,7 +19,11 @@ There's a frood who really knows where his towel is
 - Added the configurations options into tile list based on tile collection
   configuration options. [rodfersou]
 
+- Added a try/except into tile collection and tile list thumbnail method
+  to fix an integration test when there is a content without image.
+  [rodfersou]
 
+  
 1.0a4 (2013-07-27)
 ^^^^^^^^^^^^^^^^^^
 
