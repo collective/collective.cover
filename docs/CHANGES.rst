@@ -11,6 +11,7 @@ There's a frood who really knows where his towel is
 
 - Friendly layout for tile configuration (closes `#133`_). [agnogueira]
 
+- Refactor tile collection to have a more sane page template. [rodfersou]
 
 1.0a4 (2013-07-27)
 ^^^^^^^^^^^^^^^^^^
