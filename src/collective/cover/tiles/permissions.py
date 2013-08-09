@@ -38,7 +38,7 @@ class TilesPermissions(object):
         self.request = request
         self.tile = tile
         self.annotations = IAnnotations(self.context)
-        self.key = "%s.%s" % (ANNOTATIONS_KEY_PREFIX, tile.id,)
+        self.key = '{0}.{1}'.format(ANNOTATIONS_KEY_PREFIX, tile.id)
 
     def get_allowed_edit(self):
         permissions = dict(self.annotations.get(self.key, {}))

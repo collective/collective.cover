@@ -36,7 +36,7 @@ class PFGTileTestCase(unittest.TestCase):
                                   description='A form form FormGen')
         self.pfg = self.portal['my-form']
         self.tile = self.portal.restrictedTraverse(
-            '@@%s/%s' % ('collective.cover.pfg', 'test-pfg-tile'))
+            '@@{0}/{1}'.format('collective.cover.pfg', 'test-pfg-tile'))
 
     def test_interface(self):
         self.assertTrue(IPersistentCoverTile.implementedBy(PFGTile))

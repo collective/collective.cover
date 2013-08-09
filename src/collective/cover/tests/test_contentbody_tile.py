@@ -23,7 +23,7 @@ class ContentBodyTileTestCase(unittest.TestCase):
         self.portal = self.layer['portal']
         self.request = self.layer['request']
         self.tile = self.portal.restrictedTraverse(
-            '@@%s/%s' % ('collective.cover.contentbody', 'test-body-tile'))
+            '@@{0}/{1}'.format('collective.cover.contentbody', 'test-body-tile'))
 
     def test_interface(self):
         self.assertTrue(IPersistentCoverTile.implementedBy(ContentBodyTile))
