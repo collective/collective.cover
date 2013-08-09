@@ -27,8 +27,7 @@
                             tal:content="view/data/header" />
                         <h4 tal:condition="python:htmltag == 'h4'"
                             tal:content="view/data/header" />
-                        <span tal:condition="python:htmltag == 'span'"
-                              tal:content="view/data/header" />
+
                     </tal:title>
                 </div>
                 <div class="collection-item" tal:repeat="item results">
