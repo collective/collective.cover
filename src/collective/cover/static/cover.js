@@ -158,4 +158,33 @@ $(document).ready(function() {
 
         }
     });
+
+    /* Fields in tile config sortable */
+    jQuery('#configure_tile').sortable({opacity: 0.6, 
+                                        cursor: 'move',
+                                        revert: true,
+                                        placeholder: "ui-state-highlight",
+                                        zIndex: 9999,
+                                        refreshPositions: true, 
+                                        axis: 'y', 
+                                        helper: 'clone', 
+                                        forcePlaceholderSize: true, 
+                                        items: 'div.field', 
+                                        sort: function(e, ui) {
+                                            jQuery(ui.placeholder).html(Number($("#configure_tile > div.field").index(ui.placeholder)) + 1);
+                                        },
+                                        update: function(e, ui){
+                                            var $divs = jQuery(this).children('div.field');
+                                            $divs.each(function() {
+                                                var $div = jQuery(this);
+                                                var newVal = jQuery(this).index() + 1;
+                                                /* TODO: Is used newVal -1 to prevent the field **Clase CSS** be counted as sortable item */
+                                                jQuery(this).children('div.order-box').children('input').val(newVal-1);
+                                            });
+                                        }
+                                     });
+    
+    jQuery("#configure_tile").disableSelection();
+
 });
+
