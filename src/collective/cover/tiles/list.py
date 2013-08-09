@@ -25,11 +25,6 @@ from zope.schema import getFieldsInOrder
 # XXX: we must refactor this tile
 class IListTile(IPersistentCoverTile, form.Schema):
 
-    header = schema.TextLine(
-        title=_(u'Header'),
-        required=False,
-    )
-
     form.omitted('title')
     form.no_omit(IDefaultConfigureForm, 'title')
     title = schema.TextLine(
@@ -123,7 +118,6 @@ class ListTile(PersistentCoverTile):
         old_data = data_mgr.get()
         for uuid in uuids:
             obj = uuidToObject(uuid)
-            old_data['header'] = obj.Title()
             old_data['uuid'] = uuid
             if old_data['uuids']:
                 if type(old_data['uuids']) != list:
@@ -214,9 +208,6 @@ class ListTile(PersistentCoverTile):
             return scales.scale('image', 'mini')
         except:
             return None
-
-    def show_header(self):
-        return self._field_is_visible('header')
 
 
 class CollectionUIDsProvider(object):
