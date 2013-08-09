@@ -14,32 +14,18 @@
                 <div tal:condition="not:results">
                     <p i18n:translate="">The collection doesn't have any results.</p>
                 </div>
-                <div class="tile-header"
-                     tal:define="config python:conf_fields.get('header')"
-                     tal:condition="view/show_header">
-                    <tal:title define="htmltag python:config.get('htmltag', 'h1')">
 
-                        <h1 tal:condition="python:htmltag == 'h1'"
-                            tal:content="view/data/header" />
-                        <h2 tal:condition="python:htmltag == 'h2'"
-                            tal:content="view/data/header" />
-                        <h3 tal:condition="python:htmltag == 'h3'"
-                            tal:content="view/data/header" />
-                        <h4 tal:condition="python:htmltag == 'h4'"
-                            tal:content="view/data/header" />
-                        <span tal:condition="python:htmltag == 'span'"
-                              tal:content="view/data/header" />
-                    </tal:title>
+                <div class="tile-header" tal:condition="view/show_header">
+                    <span tal:content="view/data/header" />
                 </div>
+
                 <div class="collection-item" tal:repeat="item results">
                     <tal:items define="obj item/getObject;">
                         <tal:image define="thumbnail python:view.thumbnail(obj);"
                                    condition="thumbnail">
                             <a tal:attributes="href obj/absolute_url;
                                                title obj/Description">
-                                <!-- XXX -->
-                                <img style="float: left; margin: 0 1em 0.5em 0;"
-                                     tal:attributes="src thumbnail/url;
+                                <img tal:attributes="src thumbnail/url;
                                                      width thumbnail/width;
                                                      height thumbnail/height;
                                                      alt obj/Description|obj/Title" />
