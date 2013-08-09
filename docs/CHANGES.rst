@@ -4,6 +4,9 @@ There's a frood who really knows where his towel is
 1.0a5 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Added option to select header tag (h1/h2/h3/h4/span) into collection tile
+  (closes `#251`_). [rodfersou]
+
 - Refactor collection tile to have a more sane page template (closes `#249`_).
   [rodfersou]
 
@@ -15,8 +18,6 @@ There's a frood who really knows where his towel is
 - Friendly layout for tile configuration (closes `#133`_). [agnogueira]
 
 
-- Added option to select header tag (h1/h2/h3/h4/span) into tile collection.
-  [rodfersou]
 1.0a4 (2013-07-27)
 ^^^^^^^^^^^^^^^^^^
 
@@ -224,3 +225,4 @@ There's a frood who really knows where his towel is
 .. _`#218`: https://github.com/collective/collective.cover/issues/218
 .. _`#239`: https://github.com/collective/collective.cover/issues/239
 .. _`#249`: https://github.com/collective/collective.cover/issues/249
+.. _`#251`: https://github.com/collective/collective.cover/issues/251
