@@ -4,7 +4,15 @@ There's a frood who really knows where his towel is
 1.0a5 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
-- Nothing changed yet.
+- Refactor collection tile to have a more sane page template (closes `#249`_).
+  [rodfersou]
+
+- Move CSS to registry_css (closes `#244`_). [agnogueira]
+
+- Collection tile now fulfills the configured image size (fixes `#239`_).
+  [cleberjsantos]
+
+- Friendly layout for tile configuration (closes `#133`_). [agnogueira]
 
 
 1.0a4 (2013-07-27)
@@ -190,6 +198,7 @@ There's a frood who really knows where his towel is
 .. _`#124`: https://github.com/collective/collective.cover/issues/124
 .. _`#128`: https://github.com/collective/collective.cover/issues/128
 .. _`#129`: https://github.com/collective/collective.cover/issues/129
+.. _`#133`: https://github.com/collective/collective.cover/issues/133
 .. _`#137`: https://github.com/collective/collective.cover/issues/137
 .. _`#138`: https://github.com/collective/collective.cover/issues/138
 .. _`#142`: https://github.com/collective/collective.cover/issues/142
@@ -211,3 +220,5 @@ There's a frood who really knows where his towel is
 .. _`#203`: https://github.com/collective/collective.cover/issues/203
 .. _`#206`: https://github.com/collective/collective.cover/issues/206
 .. _`#218`: https://github.com/collective/collective.cover/issues/218
+.. _`#239`: https://github.com/collective/collective.cover/issues/239
+.. _`#249`: https://github.com/collective/collective.cover/issues/249

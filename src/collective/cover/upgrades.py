@@ -124,3 +124,21 @@ def issue_218(context, logger=None):
     if u'collective.cover.image' in record or \
        u'collective.cover.link' in record:
         upgrade_record()
+
+
+def issue_244(context, logger=None):
+    """Handler for upgrade step from 4 to 5; Add cover.css to css_registry.
+    See: https://github.com/collective/collective.cover/issues/244
+    """
+    if logger is None:
+        logger = logging.getLogger(PROJECTNAME)
+
+    css_tool = getToolByName(context, 'portal_css')
+    id = '++resource++collective.cover/cover.css'
+    if id not in css_tool.getResourceIds():
+        css_tool.registerStylesheet(id)
+        logger.info("{0} resource was added".format(id))
+        css_tool.cookResources()
+        logger.info("CSS resources were cooked")
+    else:
+        logger.debug("{0} resource already in portal_css".format(id))

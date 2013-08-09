@@ -36,8 +36,6 @@
     position: relative;
 }
 
-}
-
 /* SIDEBAR */
 
 #sidebar .btn {
@@ -151,8 +149,8 @@
     position:absolute;
     width:100%;
     height:100%;
-    top:0px;
-    left:0px;
+    top:0;
+    left:0;
     visibility:hidden;
 }
 .layout .row-guide {
@@ -331,3 +329,16 @@
 #export-layout {
     padding:20px;
 }
+
+/* tiles config */
+#configure_tile>div {border-bottom: 1px solid #d1d1d1; padding-bottom: 8px; position: relative;min-height: 2em;}
+#configure_tile>div>label {margin-left: 20px; margin-right: 8px; float: left;}
+#tile-configure .formControls {border-bottom: none;}
+#configure_tile input[type=radio] {display:none;}
+#configure_tile input[type=radio] + label {display:inline-block; text-indent: -2000px;padding: 0 10px;}
+#configure_tile input[type=radio]:checked + label {display:none;}
+.order-box {position: absolute;top: 0;right: 0;}
+.visibility-box {position: absolute; top: 0; left: 0;}
+.visibility-box>span {display: none;}
+.visibility-no {background: url('visibility.png') no-repeat 0 4px;}
+.visibility-yes {background: url('visibility.png') no-repeat -22px 4px;}

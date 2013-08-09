@@ -19,10 +19,11 @@
                               value python:stored_data.get('size', 5);
                               accesskey view/accesskey|nothing;"/>
 
+        <div class="visibility-box">
         <span i18n:translate="">Visible</span>
         <input type="radio" id="" name="" class=""
             tabindex="" accesskey="" value="on"
-            tal:attributes="id string:${view/id}-visibility;
+            tal:attributes="id string:${view/id}-visibility-yes;
                             name string:${view/name}.visibility;
                             class view/klass;
                             tabindex view/tabindex;
@@ -31,14 +32,18 @@
         <span i18n:translate="">Yes</span>
         <input type="radio" id="" name="" class=""
             tabindex="" accesskey="" value="off"
-            tal:attributes="id string:${view/id}-visibility;
+            tal:attributes="id string:${view/id}-visibility-no;
                             name string:${view/name}.visibility;
                             class view/klass;
                             tabindex view/tabindex;
                             checked python:stored_data.get('visibility', None) == 'off' and 'checked';
                             accesskey view/accesskey|nothing;"/>
-        <span i18n:translate="">No</span>
+        <label i18n:translate=""
+                tal:attributes="for string:${view/id}-visibility-no;"
+                class="visibility-no">No</label>
+        </div>
 
+        <div class="order-box">
         <span i18n:translate="">Order</span>
         <input type="text" id="" name="" class="" size="2"
             tabindex="" accesskey=""
@@ -48,6 +53,7 @@
                             tabindex view/tabindex;
                             value python:stored_data.get('order', None);
                             accesskey view/accesskey|nothing;"/>
+        </div>
 
     </tal:stored_data>
 </html>
