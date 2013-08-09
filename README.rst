@@ -36,11 +36,11 @@ Mostly Harmless
     banner tiles. Image and link tiles will be completely removed on next
     release 1.0a5 (see issue `#218`_ for more information).
 
-.. image:: https://secure.travis-ci.org/collective/collective.cover.png
+.. image:: https://secure.travis-ci.org/collective/collective.cover.png?branch=master
     :target: http://travis-ci.org/collective/collective.cover
 
-.. image:: https://coveralls.io/repos/collective/collective.cover/badge.png
-    :target: https://coveralls.io/r/collective/collective.cover?branch=master
+.. image:: https://coveralls.io/repos/collective/collective.cover/badge.png?branch=master
+    :target: https://coveralls.io/r/collective/collective.cover
 
 Got an idea? Found a bug? Let us know by `opening a support ticket`_.
 

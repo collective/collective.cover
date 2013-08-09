@@ -55,12 +55,12 @@
                             class view/klass;
                             tabindex view/tabindex;
                             accesskey view/accesskey|nothing;"
-            tal:define="values python:['h1', 'h2', 'h3', 'h4', 'span']">
+            tal:define="values python:['h1', 'h2', 'h3', 'h4']">
 
             <option tal:repeat="value values"
                     tal:attributes="value value;
                                     selected python:stored_data.get('htmltag', None) == value and 'selected' or None"
-                    tal:content="python:value.upper()">HTML TAG</option>
+                    tal:content="value">HTML tag</option>
         </select>
 
     </tal:stored_data>
