@@ -165,7 +165,10 @@ class CollectionTile(PersistentCoverTile):
             scaleconf = image_conf['imgsize']
             # scale string is something like: 'mini 200:200'
             scale = scaleconf.split(' ')[0]  # we need the name only: 'mini'
-            return scales.scale('image', scale)
+            try:
+                return scales.scale('image', scale)
+            except:
+                return None
 
     def remove_relation(self):
         data_mgr = ITileDataManager(self)
