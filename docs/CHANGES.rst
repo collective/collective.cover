@@ -11,6 +11,8 @@ There's a frood who really knows where his towel is
 
 - Friendly layout for tile configuration (closes `#133`_). [agnogueira]
 
+- Added the configurations options into tile list based on tile collection
+  configuration options. [rodfersou]
 
 1.0a4 (2013-07-27)
 ^^^^^^^^^^^^^^^^^^
