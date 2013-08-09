@@ -3,85 +3,76 @@
       xmlns:tal="http://xml.zope.org/namespaces/tal"
       xmlns:i18n="http://xml.zope.org/namespaces/i18n"
       i18n:domain="collective.cover">
+    <body tal:define="is_empty view/is_empty">
+        <p tal:condition="is_empty" i18n:translate="">
+            Please drop a collection here to fill the tile.
+        </p>
+        <div class="cover-collection-tile" tal:condition="not:is_empty">
+            <tal:results define="results view/results|nothing;
+                                 conf_fields view/configured_fields;
+                                 toLocalizedTime nocall:context/@@plone/toLocalizedTime">
+                <div tal:condition="not:results">
+                    <p i18n:translate="">The collection doesn't have any results.</p>
+                </div>
 
-<body tal:define="is_empty view/is_empty">
-  <p tal:condition="is_empty" i18n:translate="">
-    Please drop a collection here to fill the tile.
-  </p>
+                <div class="tile-header" tal:condition="view/show_header">
+                    <span tal:content="view/data/header" />
+                </div>
 
-  <div class="cover-collection-tile" tal:condition="not:is_empty">
-    <tal:results define="results view/results|nothing;
-                         toLocalizedTime nocall:context/@@plone/toLocalizedTime">
-      <div tal:condition="not:results">
-        <p i18n:translate="">The collection doesn't have any results.</p>
-      </div>
+                <div class="collection-item" tal:repeat="item results">
+                    <tal:items define="obj item/getObject;">
+                        <tal:image define="thumbnail python:view.thumbnail(obj);"
+                                   condition="thumbnail">
+                            <a tal:attributes="href obj/absolute_url;
+                                               title obj/Description">
+                                <!-- XXX -->
+                                <img style="float: left; margin: 0 1em 0.5em 0;"
+                                     tal:attributes="src thumbnail/url;
+                                                     width thumbnail/width;
+                                                     height thumbnail/height;
+                                                     alt obj/Description|obj/Title" />
+                            </a>
+                        </tal:image>
+                        <tal:title define="config python:conf_fields.get('title');
+                                           htmltag python:config.get('htmltag', 'h1')">
+                            <h1 tal:condition="python:htmltag == 'h1'">
+                                <a tal:attributes="href obj/absolute_url;
+                                                   title obj/Description"
+                                   tal:content="obj/Title" />
+                            </h1>
+                            <h2 tal:condition="python:htmltag == 'h2'">
+                                <a tal:attributes="href obj/absolute_url;
+                                                   title obj/Description"
+                                   tal:content="obj/Title" />
+                            </h2>
+                            <h3 tal:condition="python:htmltag == 'h3'">
+                                <a tal:attributes="href obj/absolute_url;
+                                                   title obj/Description"
+                                   tal:content="obj/Title" />
+                            </h3>
+                            <h4 tal:condition="python:htmltag == 'h4'">
+                                <a tal:attributes="href obj/absolute_url;
+                                                   title obj/Description"
+                                   tal:content="obj/Title" />
+                            </h4>
+                        </tal:title>
 
-      <div class="tile-header" tal:condition="view/show_header">
-          <span tal:content="view/data/header" />
-      </div>
+                        <p class="description"
+                           tal:content="obj/Description" />
 
-      <div class="collection-item" tal:repeat="item results">
-        <tal:items define="obj item/getObject">
-          <tal:fields repeat="field view/configured_fields">
-            <tal:image define="thumbnail python:view.thumbnail(obj);"
-                       condition="python:field['id'] == 'image' and thumbnail">
-              <a tal:attributes="href obj/absolute_url;
-                                 title obj/Description">
-                <!-- XXX -->
-                <img style="float: left; margin: 0 1em 0.5em 0;"
-                     tal:attributes="src thumbnail/url;
-                                     width thumbnail/width;
-                                     height thumbnail/height;
-                                     alt obj/Description|obj/Title" />
-              </a>
-            </tal:image>
+                        <p class=""
+                           tal:content="python:toLocalizedTime(obj.Date())"
+                           tal:condition="python:(hasattr(obj, 'Date') or hasattr(obj,'Schema') and 'Date' in obj.Schema().keys())" />
+                    </tal:items>
+                    <div class="visualClear"><!-- --></div>
+                </div>
 
-            <tal:title define="htmltag python:field.get('htmltag', 'h1')"
-                       condition="python:field['id'] == 'title'">
+                <div class="tile-footer" tal:condition="view/show_footer">
+                    <a tal:attributes="href view/collection_url" tal:content="view/data/footer" />
+                </div>
 
-
-                <h1 tal:condition="python:htmltag == 'h1'">
-                    <a tal:attributes="href obj/absolute_url;
-                                       title obj/Description"
-                       tal:content="obj/Title" />
-                </h1>
-
-                <h2 tal:condition="python:htmltag == 'h2'">
-                    <a tal:attributes="href obj/absolute_url;
-                                       title obj/Description"
-                       tal:content="obj/Title" />
-                </h2>
-
-                <h3 tal:condition="python:htmltag == 'h3'">
-                    <a tal:attributes="href obj/absolute_url;
-                                       title obj/Description"
-                       tal:content="obj/Title" />
-                </h3>
-
-                <h4 tal:condition="python:htmltag == 'h4'">
-                    <a tal:attributes="href obj/absolute_url;
-                                       title obj/Description"
-                       tal:content="obj/Title" />
-                </h4>
-
-            </tal:title>
-
-            <p class="description"
-               tal:condition="python:field['id'] == 'description'"
-               tal:content="obj/Description" />
-
-            <p class=""
-               tal:content="python:toLocalizedTime(obj.Date())"
-               tal:condition="python:field['id'] == 'date' and (hasattr(obj, 'Date') or hasattr(obj,'Schema') and 'Date' in obj.Schema().keys())" />
-          </tal:fields>
-        </tal:items>
-        <div class="visualClear"><!-- --></div>
-      </div>
-      <div class="tile-footer" tal:condition="view/show_footer">
-        <a tal:attributes="href view/collection_url" tal:content="view/data/footer" />
-      </div>
-      <div class="visualClear"><!-- --></div>
-    </tal:results>
-  </div>
-</body>
+                <div class="visualClear"><!-- --></div>
+            </tal:results>
+        </div>
+    </body>
 </html>
