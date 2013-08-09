@@ -11,6 +11,14 @@ There's a frood who really knows where his towel is
 
 - Friendly layout for tile configuration (closes `#133`_). [agnogueira]
 
+- Refactor tile collection to have a more sane page template. [rodfersou]
+
+- Added option to select header tag (h1/h2/h3/h4/span) into tile collection.
+  [rodfersou]
+
+- Added the configurations options into tile list based on tile collection
+  configuration options. [rodfersou]
+
 
 1.0a4 (2013-07-27)
 ^^^^^^^^^^^^^^^^^^
