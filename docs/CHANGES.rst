@@ -4,6 +4,9 @@ There's a frood who really knows where his towel is
 1.0a5 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Refactor collection tile to have a more sane page template (closes `#249`_).
+  [rodfersou]
+
 - Move CSS to registry_css (closes `#244`_). [agnogueira]
 
 - Collection tile now fulfills the configured image size (fixes `#239`_).
@@ -11,7 +14,6 @@ There's a frood who really knows where his towel is
 
 - Friendly layout for tile configuration (closes `#133`_). [agnogueira]
 
-- Refactor tile collection to have a more sane page template. [rodfersou]
 
 - Added option to select header tag (h1/h2/h3/h4/span) into tile collection.
   [rodfersou]
@@ -230,3 +232,4 @@ There's a frood who really knows where his towel is
 .. _`#206`: https://github.com/collective/collective.cover/issues/206
 .. _`#218`: https://github.com/collective/collective.cover/issues/218
 .. _`#239`: https://github.com/collective/collective.cover/issues/239
+.. _`#249`: https://github.com/collective/collective.cover/issues/249

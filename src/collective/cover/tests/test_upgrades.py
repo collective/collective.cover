@@ -110,7 +110,7 @@ class Upgrade3to4TestCase(unittest.TestCase):
         self.assertNotIn(u'collective.cover.link', registry[record])
 
 
-class Upgrade2to3TestCase(unittest.TestCase):
+class Upgrade4to5TestCase(unittest.TestCase):
 
     layer = INTEGRATION_TESTING
 
@@ -120,6 +120,7 @@ class Upgrade2to3TestCase(unittest.TestCase):
     def test_issue_244(self):
         css_tool = self.portal['portal_css']
         id = '++resource++collective.cover/cover.css'
+        # remove the resource so simulate status of profile version 4
         css_tool.unregisterResource(id)
         self.assertNotIn(id, css_tool.getResourceIds())
         issue_244(self.portal)
