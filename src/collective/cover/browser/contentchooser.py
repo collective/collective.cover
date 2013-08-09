@@ -99,7 +99,7 @@ class ContentSearch(grok.View):
         catalog_query['portal_type'] = searchable_types
 
         if query:
-            catalog_query = {'SearchableText': '%s*' % query}
+            catalog_query = {'SearchableText': '{0}*'.format(query)}
 
         # XXX: not implemented, this is needed?
 #        if uids:
@@ -209,7 +209,7 @@ class SearchItemsBrowserView(BrowserView):
         catalog_query['portal_type'] = self.filter_portal_types
         catalog_query['path'] = {'query': path, 'depth': 1}
         if searchtext:
-            catalog_query = {'SearchableText': '%s*' % searchtext}
+            catalog_query = {'SearchableText': '{0}*'.format(searchtext)}
 
         for brain in portal_catalog(**catalog_query):
             catalog_results.append({
@@ -218,10 +218,8 @@ class SearchItemsBrowserView(BrowserView):
                 'url': brain.getURL(),
                 'portal_type': brain.portal_type,
                 'normalized_type': normalizer.normalize(brain.portal_type),
-                'classicon': 'contenttype-%s' %
-                             (normalizer.normalize(brain.portal_type)),
-                'r_state': 'state-%s' %
-                           (normalizer.normalize(brain.review_state or '')),
+                'classicon': 'contenttype-{0}'.format(normalizer.normalize(brain.portal_type)),
+                'r_state': 'state-{0}'.format(normalizer.normalize(brain.review_state or '')),
                 'title': brain.Title == "" and brain.id or brain.Title,
                 'icon': self.getIcon(brain).html_tag() or '',
                 'is_folderish': brain.is_folderish})

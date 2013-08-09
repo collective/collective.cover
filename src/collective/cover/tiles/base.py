@@ -155,7 +155,7 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
         """ Remove the persistent data associated with the tile and notify the
         cover object was modified.
         """
-        logger.debug('Deleting tile %s', self.id)
+        logger.debug("Deleting tile {0}".format(self.id))
 
         data_mgr = ITileDataManager(self)
         data_mgr.delete()
@@ -304,8 +304,7 @@ class AnnotationStorage(BaseAnnotationStorage):
         tile = self.context
         cover = tile.context
         return IAnnotations(cover).setdefault(
-            'plone.tiles.scale.%s' % tile.id,
-            PersistentDict())
+            'plone.tiles.scale.{0}'.format(tile.id), PersistentDict())
 
 
 class ImageScale(BaseImageScale):
@@ -330,8 +329,8 @@ class ImageScale(BaseImageScale):
             name = info['uid']
         else:
             name = info['fieldname']
-        self.__name__ = '%s.%s' % (name, extension)
-        self.url = '%s/@@images/%s' % (url, self.__name__)
+        self.__name__ = '{0}.{1}'.format(name, extension)
+        self.url = '{0}/@@images/{1}'.format(url, self.__name__)
 
     def index_html(self):
         """ download the image """
@@ -411,10 +410,11 @@ class ImageScaling(BaseImageScaling):
         except Exception:
             logging.exception(
                 'could not scale "%r" of %r',
-                orig_value, self.context.context.absolute_url())
+                orig_value, self.context.context.absolute_url())  # FIXME: PEP 3101
             return
         if result is not None:
             data, format, dimensions = result
+            # FIXME: PEP 3101; how to avoid confusion among method and variable name?
             mimetype = 'image/%s' % format.lower()
             value = orig_value.__class__(data, contentType=mimetype,
                                          filename=orig_value.filename)
@@ -432,7 +432,7 @@ class ImageScaling(BaseImageScaling):
         mtime = ''
         for k, v in self.context.data.items():
             if INamedImage.providedBy(v):
-                mtime += self.context.data.get('%s_mtime' % k, 0)
+                mtime += self.context.data.get('{0}_mtime'.format(k), 0)
 
         return mtime
 
@@ -492,12 +492,11 @@ class PersistentCoverTilePurgePaths(object):
         yield prefix
         for _, v in context.data.items():
             if INamedImage.providedBy(v):
-                yield "%s/@@images/image" % prefix
-                scales = parent.unrestrictedTraverse('%s/%s' %
-                                                     (prefix.strip('/'),
-                                                      '@@images'))
+                yield '{0}/@@images/image'.format(prefix)
+                scales = parent.unrestrictedTraverse(
+                    '{0}/{1}'.format(prefix.strip('/'), '@@images'))
                 for size in scales.getAvailableSizes().keys():
-                    yield "%s/@@images/%s" % (prefix, size,)
+                    yield '{0}/@@images/{1}'.format(prefix, size)
 
     def getAbsolutePaths(self):
         return []

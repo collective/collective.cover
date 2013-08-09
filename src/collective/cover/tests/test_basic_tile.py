@@ -38,7 +38,7 @@ class BasicTileTestCase(unittest.TestCase):
         self.portal = self.layer['portal']
         self.request = self.layer['request']
         self.tile = self.portal.restrictedTraverse(
-            '@@%s/%s' % ('collective.cover.basic', 'test-basic-tile'))
+            '@@{0}/{1}'.format('collective.cover.basic', 'test-basic-tile'))
 
     def test_interface(self):
         self.assertTrue(IPersistentCoverTile.implementedBy(BasicTile))
@@ -121,7 +121,7 @@ class BasicTileTestCase(unittest.TestCase):
         self.portal.manage_delObjects(['my-image', ])
         # To avoid caching, we get the tile again
         tile = self.portal.restrictedTraverse(
-            '@@%s/%s' % ('collective.cover.basic', 'test-basic-tile'))
+            '@@{0}/{1}'.format('collective.cover.basic', 'test-basic-tile'))
         tile.is_empty()
         rendered = tile()
         # Now we gracefully ignore the lack of original image
@@ -213,9 +213,8 @@ class BasicTileTestCase(unittest.TestCase):
         self.tile.data['image'] = NamedImageFile(str(scales.scale('image').data))
         data_mgr = ITileDataManager(self.tile)
         data_mgr.set(data)
-        scales = self.layer['portal'].restrictedTraverse('@@%s/%s/@@images' %
-                                                         ('collective.cover.basic',
-                                                          'test-basic-tile',))
+        scales = self.layer['portal'].restrictedTraverse(
+            '@@{0}/{1}/@@images'.format('collective.cover.basic', 'test-basic-tile'))
         img = scales.scale('image')
         self.assertTrue(images_are_equal(str(self.tile.data['image'].data),
                                          str(img.index_html().read())))

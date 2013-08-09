@@ -17,7 +17,7 @@ class LinkTileTestCase(unittest.TestCase):
         self.portal = self.layer['portal']
         self.request = self.layer['request']
         self.tile = self.portal.restrictedTraverse(
-            '@@%s/%s' % ('collective.cover.link', 'test-link-tile'))
+            '@@{0}/{1}'.format('collective.cover.link', 'test-link-tile'))
 
     def test_interface(self):
         self.assertTrue(IPersistentCoverTile.implementedBy(LinkTile))

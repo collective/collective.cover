@@ -38,12 +38,12 @@ class InstallTestCase(unittest.TestCase):
     def test_jsregistry(self):
         resource_ids = self.portal.portal_javascripts.getResourceIds()
         for id in JS:
-            self.assertTrue(id in resource_ids, '%s not installed' % id)
+            self.assertIn(id, resource_ids, "{0} not installed".format(id))
 
     def test_cssregistry(self):
         resource_ids = self.portal.portal_css.getResourceIds()
         for id in CSS:
-            self.assertTrue(id in resource_ids, '%s not installed' % id)
+            self.assertIn(id, resource_ids, "{0} not installed".format(id))
 
     def test_resources_available(self):
         resources = CSS + JS
@@ -87,9 +87,9 @@ class UninstallTestCase(unittest.TestCase):
     def test_jsregistry_removed(self):
         resource_ids = self.portal.portal_javascripts.getResourceIds()
         for id in JS:
-            self.assertTrue(id not in resource_ids, '%s not removed' % id)
+            self.assertNotIn(id, resource_ids, "{0} not removed".format(id))
 
     def test_cssregistry_removed(self):
         resource_ids = self.portal.portal_css.getResourceIds()
         for id in CSS:
-            self.assertTrue(id not in resource_ids, '%s not removed' % id)
+            self.assertNotIn(id, resource_ids, "{0} not removed".format(id))

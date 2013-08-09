@@ -86,12 +86,12 @@ class RegistryTestCase(unittest.TestCase):
         setRoles(self.portal, TEST_USER_ID, ['Manager'])
         qi.uninstallProducts(products=[PROJECTNAME])
 
-        BASE_REGISTRY = 'collective.cover.controlpanel.ICoverSettings.%s'
+        BASE_REGISTRY = 'collective.cover.controlpanel.ICoverSettings.{0}'
         records = [
-            BASE_REGISTRY % 'layouts',
-            BASE_REGISTRY % 'available_tiles',
-            BASE_REGISTRY % 'searchable_content_types',
-            BASE_REGISTRY % 'styles',
+            BASE_REGISTRY.format('layouts'),
+            BASE_REGISTRY.format('available_tiles'),
+            BASE_REGISTRY.format('searchable_content_types'),
+            BASE_REGISTRY.format('styles'),
         ]
 
         for r in records:

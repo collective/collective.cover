@@ -111,7 +111,7 @@ class DefaultConfigureForm(TileForm, form.Form):
 
         # Traverse to the tile. If it is a transient tile, it will pick up
         # query string parameters from the original request
-        tile = self.context.restrictedTraverse('@@%s/%s' % (typeName, tileId,))
+        tile = self.context.restrictedTraverse('@@{0}/{1}'.format(typeName, tileId))
         tile_conf_adapter = getMultiAdapter((self.context, self.request, tile),
                                             ITilesConfigurationScreen)
 
@@ -171,7 +171,7 @@ class DefaultConfigureForm(TileForm, form.Form):
         typeName = self.tileType.__name__
 
         # Traverse to a new tile in the context, with no data
-        tile = self.context.restrictedTraverse('@@%s/%s' % (typeName, self.tileId,))
+        tile = self.context.restrictedTraverse('@@{0}/{1}'.format(typeName, self.tileId))
 
         tile_conf_adapter = getMultiAdapter((self.context, self.request, tile),
                                             ITilesConfigurationScreen)
@@ -185,7 +185,7 @@ class DefaultConfigureForm(TileForm, form.Form):
         # there's the only way from where a user would access the configuration
         contextURL = absoluteURL(tile.context, self.request)
 
-        layoutURL = '%s/layoutedit' % contextURL
+        layoutURL = '{0}/layoutedit'.format(contextURL)
 
         notify(ObjectModifiedEvent(tile))
 
@@ -197,7 +197,7 @@ class DefaultConfigureForm(TileForm, form.Form):
     @button.buttonAndHandler(_(u'Cancel'), name='cancel')
     def handleCancel(self, action):
         contextURL = absoluteURL(self.context, self.request)
-        layoutURL = '%s/layoutedit' % contextURL
+        layoutURL = '{0}/layoutedit'.format(contextURL)
 
         # XXX: We need to fire a notification ?
         #notify(ObjectModifiedEvent(tile))
