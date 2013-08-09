@@ -13,6 +13,8 @@ There's a frood who really knows where his towel is
 
 - Refactor tile collection to have a more sane page template. [rodfersou]
 
+- Added option to select header tag (h1/h2/h3/h4/span) into tile collection.
+  [rodfersou]
 1.0a4 (2013-07-27)
 ^^^^^^^^^^^^^^^^^^
 
