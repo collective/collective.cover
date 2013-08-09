@@ -210,7 +210,10 @@ class ListTile(PersistentCoverTile):
 
     def thumbnail(self, item):
         scales = item.restrictedTraverse('@@images')
-        return scales.scale('image', 'mini')
+        try:
+            return scales.scale('image', 'mini')
+        except:
+            return None
 
     def show_header(self):
         return self._field_is_visible('header')
