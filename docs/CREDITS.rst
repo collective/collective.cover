@@ -20,7 +20,6 @@ the following people:
 - Rodrigo Ferreira de Souza
 - Silvestre Huens
 - Thiago Tamosauskas
-- Felipe Duardo
 - `Launched Pixels`_ (icon)
 
 You can find an updated list of package contributors on `GitHub`_.
