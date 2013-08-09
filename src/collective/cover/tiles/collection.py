@@ -160,12 +160,14 @@ class CollectionTile(PersistentCoverTile):
     def thumbnail(self, item):
         tile_conf = self.get_tile_configuration()
         image_conf = tile_conf.get('image', None)
-        scales = item.restrictedTraverse('@@images')
-        if image_conf:
+        if item.getImage() and image_conf:
+            scales = item.restrictedTraverse('@@images')
             scaleconf = image_conf['imgsize']
             # scale string is something like: 'mini 200:200'
             scale = scaleconf.split(' ')[0]  # we need the name only: 'mini'
             return scales.scale('image', scale)
+        else:
+            return None
 
     def remove_relation(self):
         data_mgr = ITileDataManager(self)
