@@ -120,6 +120,7 @@ class Upgrade4to5TestCase(unittest.TestCase):
     def test_issue_244(self):
         css_tool = self.portal['portal_css']
         id = '++resource++collective.cover/cover.css'
+        # remove the resource so simulate status of profile version 4
         css_tool.unregisterResource(id)
         self.assertNotIn(id, css_tool.getResourceIds())
         issue_244(self.portal)
