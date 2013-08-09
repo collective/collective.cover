@@ -25,9 +25,7 @@
                                    condition="thumbnail">
                             <a tal:attributes="href obj/absolute_url;
                                                title obj/Description">
-                                <!-- XXX -->
-                                <img style="float: left; margin: 0 1em 0.5em 0;"
-                                     tal:attributes="src thumbnail/url;
+                                <img tal:attributes="src thumbnail/url;
                                                      width thumbnail/width;
                                                      height thumbnail/height;
                                                      alt obj/Description|obj/Title" />
