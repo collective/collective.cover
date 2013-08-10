@@ -160,7 +160,10 @@ class CollectionTile(PersistentCoverTile):
     def thumbnail(self, item):
         tile_conf = self.get_tile_configuration()
         image_conf = tile_conf.get('image', None)
-        if item.getImage() and image_conf:
+        if (item.portal_type != 'File' and
+            hasattr(item, 'getImage')  and
+            item.getImage()            and
+            image_conf):
             scales = item.restrictedTraverse('@@images')
             scaleconf = image_conf['imgsize']
             # scale string is something like: 'mini 200:200'
