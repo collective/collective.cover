@@ -61,11 +61,6 @@ class IListTile(IPersistentCoverTile, form.Schema):
         required=False,
     )
 
-    uuid = schema.TextLine(
-        title=_(u'UUID'),
-        readonly=True,
-    )
-
 
 class ListTile(PersistentCoverTile):
 
@@ -117,8 +112,6 @@ class ListTile(PersistentCoverTile):
 
         old_data = data_mgr.get()
         for uuid in uuids:
-            obj = uuidToObject(uuid)
-            old_data['uuid'] = uuid
             if old_data['uuids']:
                 if type(old_data['uuids']) != list:
                     old_data['uuids'] = [uuid]
