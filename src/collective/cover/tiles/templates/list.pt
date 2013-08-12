@@ -22,7 +22,6 @@
             <a tal:attributes="href item/absolute_url;
                                title item/Description;
                                alt item/Description">
-              <!-- XXX -->
               <img tal:attributes="alt item/Description;
                                    src thumbnail/url;
                                    width thumbnail/width;
