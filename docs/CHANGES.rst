@@ -5,7 +5,7 @@ There's a frood who really knows where his towel is
 ^^^^^^^^^^^^^^^^^^
 
 - Added the configurations options into tile list based on tile collection
-  configuration options (closes `#253`_). [rodfersou]
+  configuration options (closes `#253`_).  [rodfersou]
 
 - Refactor collection tile to have a more sane page template (closes `#249`_).
   [rodfersou]
