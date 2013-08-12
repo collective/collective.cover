@@ -34,7 +34,7 @@ class ListTileTestCase(unittest.TestCase):
     def test_default_configuration(self):
         self.assertTrue(self.tile.is_configurable)
         self.assertTrue(self.tile.is_droppable)
-        self.assertTrue(self.tile.is_editable)
+        self.assertFalse(self.tile.is_editable)
 
     def test_tile_is_empty(self):
         self.assertTrue(self.tile.is_empty())

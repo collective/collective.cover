@@ -75,7 +75,7 @@ class ListTile(PersistentCoverTile):
 
     is_configurable = True
     is_droppable = True
-    is_editable = True
+    is_editable = False
     limit = 5
     configured_fields = {}
 
