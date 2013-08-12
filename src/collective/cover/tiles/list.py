@@ -5,9 +5,11 @@ from collective.cover.controlpanel import ICoverSettings
 from collective.cover.interfaces import ICoverUIDsProvider
 from collective.cover.tiles.base import IPersistentCoverTile
 from collective.cover.tiles.base import PersistentCoverTile
+from collective.cover.tiles.configuration_view import IDefaultConfigureForm
 from plone.app.uuid.utils import uuidToObject
+from plone.directives import form
 from plone.memoize import view
-from plone.namedfile.field import NamedImage
+from plone.namedfile.field import NamedBlobImage as NamedImage
 from plone.registry.interfaces import IRegistry
 from plone.tiles.interfaces import ITileDataManager
 from plone.tiles.interfaces import ITileType
@@ -21,29 +23,46 @@ from zope.schema import getFieldsInOrder
 
 
 # XXX: we must refactor this tile
-class IListTile(IPersistentCoverTile):
+class IListTile(IPersistentCoverTile, form.Schema):
 
+    form.omitted('title')
+    form.no_omit(IDefaultConfigureForm, 'title')
+    title = schema.TextLine(
+        title=_(u'Title'),
+        required=False,
+    )
+
+    form.omitted('description')
+    form.no_omit(IDefaultConfigureForm, 'description')
+    description = schema.Text(
+        title=_(u'Description'),
+        required=False,
+    )
+
+    form.omitted('date')
+    form.no_omit(IDefaultConfigureForm, 'date')
+    date = schema.Datetime(
+        title=_(u'Date'),
+        required=False,
+    )
+
+    form.omitted('image')
+    form.no_omit(IDefaultConfigureForm, 'image')
+    image = NamedImage(
+        title=_(u'Image'),
+        required=False,
+    )
+
+    form.omitted('uuids')
+    form.no_omit(IDefaultConfigureForm, 'uuids')
     uuids = schema.List(
         title=_(u'Elements'),
         value_type=schema.TextLine(),
         required=False,
     )
 
-    title = schema.TextLine(
-        title=_(u'Title'),
-        required=False,
-        readonly=True,
-    )
-
-    description = schema.Text(
-        title=_(u'Description'),
-        required=False,
-        readonly=True,
-    )
-
-    image = NamedImage(
-        title=_(u'Image'),
-        required=False,
+    uuid = schema.TextLine(
+        title=_(u'UUID'),
         readonly=True,
     )
 
@@ -58,10 +77,12 @@ class ListTile(PersistentCoverTile):
     is_droppable = True
     is_editable = False
     limit = 5
+    configured_fields = {}
 
     def results(self):
         """ Return the list of objects stored in the tile.
         """
+        self.configured_fields = self.get_configured_fields()
         self.set_limit()
         uuids = self.data.get('uuids', None)
         result = []
@@ -80,9 +101,9 @@ class ListTile(PersistentCoverTile):
 
     # XXX: we could get rid of this fixing the tile's schema
     def set_limit(self):
-        for field in self.get_configured_fields():
-            if field and field.get('id') == 'uuids':
-                self.limit = int(field.get('size', self.limit))
+        field = self.configured_fields.get('uuids', None)
+        if field:
+            self.limit = int(field.get('size', self.limit))
 
     def populate_with_object(self, obj):
         super(ListTile, self).populate_with_object(obj)  # check permission
@@ -96,6 +117,8 @@ class ListTile(PersistentCoverTile):
 
         old_data = data_mgr.get()
         for uuid in uuids:
+            obj = uuidToObject(uuid)
+            old_data['uuid'] = uuid
             if old_data['uuids']:
                 if type(old_data['uuids']) != list:
                     old_data['uuids'] = [uuid]
@@ -140,10 +163,9 @@ class ListTile(PersistentCoverTile):
 
         fields = getFieldsInOrder(tileType.schema)
 
-        results = []
+        results = {}
         for name, obj in fields:
-            field = {'id': name,
-                     'title': obj.title}
+            field = {'title': obj.title}
             if name in conf:
                 field_conf = conf[name]
                 if ('visibility' in field_conf and field_conf['visibility'] == u'off'):
@@ -162,7 +184,7 @@ class ListTile(PersistentCoverTile):
                 if 'size' in field_conf:
                     field['size'] = field_conf['size']
 
-            results.append(field)
+            results[name] = field
 
         return results
 
@@ -181,10 +203,18 @@ class ListTile(PersistentCoverTile):
         return settings.searchable_content_types
 
     def thumbnail(self, item):
-        scales = item.restrictedTraverse('@@images')
-        try:
-            return scales.scale('image', 'mini')
-        except:
+        tile_conf = self.get_tile_configuration()
+        image_conf = tile_conf.get('image', None)
+        if (item.portal_type != 'File' and
+            hasattr(item, 'getImage')  and
+            item.getImage()            and
+            image_conf):
+            scales = item.restrictedTraverse('@@images')
+            scaleconf = image_conf['imgsize']
+            # scale string is something like: 'mini 200:200'
+            scale = scaleconf.split(' ')[0]  # we need the name only: 'mini'
+            return scales.scale('image', scale)
+        else:
             return None
 
 
