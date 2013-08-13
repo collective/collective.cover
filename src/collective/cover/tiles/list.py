@@ -22,14 +22,8 @@ from zope.interface import implements
 from zope.schema import getFieldsInOrder
 
 
+# XXX: we must refactor this tile
 class IListTile(IPersistentCoverTile, form.Schema):
-
-    form.omitted('uuids')
-    uuids = schema.List(
-        title=_(u'Elements'),
-        value_type=schema.ASCIILine(),
-        required=False,
-    )
 
     form.omitted('title')
     form.no_omit(IDefaultConfigureForm, 'title')
@@ -59,6 +53,14 @@ class IListTile(IPersistentCoverTile, form.Schema):
         required=False,
     )
 
+    form.omitted('uuids')
+    form.no_omit(IDefaultConfigureForm, 'uuids')
+    uuids = schema.List(
+        title=_(u'Elements'),
+        value_type=schema.TextLine(),
+        required=False,
+    )
+
 
 class ListTile(PersistentCoverTile):
 
@@ -70,10 +72,12 @@ class ListTile(PersistentCoverTile):
     is_droppable = True
     is_editable = False
     limit = 5
+    configured_fields = {}
 
     def results(self):
         """ Return the list of objects stored in the tile.
         """
+        self.configured_fields = self.get_configured_fields()
         self.set_limit()
         uuids = self.data.get('uuids', None)
         result = []
@@ -92,9 +96,9 @@ class ListTile(PersistentCoverTile):
 
     # XXX: we could get rid of this fixing the tile's schema
     def set_limit(self):
-        for field in self.get_configured_fields():
-            if field and field.get('id') == 'uuids':
-                self.limit = int(field.get('size', self.limit))
+        field = self.configured_fields.get('uuids', None)
+        if field:
+            self.limit = int(field.get('size', self.limit))
 
     def populate_with_object(self, obj):
         super(ListTile, self).populate_with_object(obj)  # check permission
@@ -139,6 +143,7 @@ class ListTile(PersistentCoverTile):
         old_data['uuids'] = uids
         data_mgr.set(old_data)
 
+    # XXX: are we using this function somewhere? remove?
     def get_uid(self, obj):
         return IUUID(obj, None)
 
@@ -151,10 +156,9 @@ class ListTile(PersistentCoverTile):
 
         fields = getFieldsInOrder(tileType.schema)
 
-        results = []
+        results = {}
         for name, obj in fields:
-            field = {'id': name,
-                     'title': obj.title}
+            field = {'title': obj.title}
             if name in conf:
                 field_conf = conf[name]
                 if ('visibility' in field_conf and field_conf['visibility'] == u'off'):
@@ -173,7 +177,7 @@ class ListTile(PersistentCoverTile):
                 if 'size' in field_conf:
                     field['size'] = field_conf['size']
 
-            results.append(field)
+            results[name] = field
 
         return results
 
@@ -191,52 +195,16 @@ class ListTile(PersistentCoverTile):
         settings = registry.forInterface(ICoverSettings)
         return settings.searchable_content_types
 
-    def title_tag(self, item):
-        """Return a title tag based on the tile configuration.
-        """
-        htmltag = 'h1'  # FIXME
-        title = item.Title()
-        description = item.Description()
-        absolute_url = item.absolute_url()
-        return u"""
-            <{0}>
-               <a href="{1}" title="{2}">{3}</a>
-            </{0}>
-            """.format(htmltag, absolute_url, description, title)
-
-    def description(self, item):
-        return item.Description()
-
-    def image_tag(self, item):
-        """Return an image tag based on the tile configuration.
-        """
-        # we look here for an image field or a getImage method in the object
-        # if none available, we just return an empty tag
-        if not hasattr(item, 'image') and not hasattr(item, 'getImage'):
-            return u''
-
-        # HACK: I have no idea why ATFile has a getImage method defined on it
-        if item.portal_type == 'File':
-            return u''
-
-        description = item.Description()
-        absolute_url = item.absolute_url()
+    def thumbnail(self, item):
         scales = item.restrictedTraverse('@@images')
-        scale = 'mini'  # FIXME
-        css_class = 'left'  # FIXME
-        alt = item.Title()  # FIXME
-        thumbnail = scales.scale('image', scale=scale)  # FIXME
-        thumbnail_tag = thumbnail.tag()
-        return u"""
-            <a class="imag" href="{0}" title="{1}">
-              {2}
-            </a>
-            """.format(absolute_url, description, thumbnail_tag)
+        try:
+            return scales.scale('image', 'mini')
+        except:
+            return None
 
 
 class CollectionUIDsProvider(object):
-    """XXX: please document!
-    """
+
     implements(ICoverUIDsProvider)
 
     def __init__(self, context):
@@ -249,8 +217,6 @@ class CollectionUIDsProvider(object):
 
 
 class FolderUIDsProvider(object):
-    """XXX: please document!
-    """
 
     implements(ICoverUIDsProvider)
 
@@ -264,8 +230,6 @@ class FolderUIDsProvider(object):
 
 
 class GenericUIDsProvider(object):
-    """XXX: please document!
-    """
 
     implements(ICoverUIDsProvider)
 
