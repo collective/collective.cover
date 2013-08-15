@@ -71,12 +71,12 @@ class CarouselTile(ListTile):
 
     def init_js(self):
         return """
-$(function() {
+$(function() {{
     Galleria.loadTheme("++resource++collective.cover/galleria-theme/galleria.cover_theme.js");
     Galleria.run('#galleria-{0} .galleria-inner');
 
     if($('body').hasClass('template-view')) {
-        Galleria.configure({ autoplay: {1} });
-    };
-});
+        Galleria.configure({{ autoplay: {1} }});
+    }};
+}});
 """.format(self.id, str(self.autoplay()).lower())
