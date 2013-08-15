@@ -13,7 +13,7 @@ $(document).ready(function() {
             var column_h_offset = 10;
             var n_columns = this.children.length;
             $(this.children).each(function(){
-                var column_width = (290 / 16 * this.size) - 10;
+                var column_width = (290 / 12 * this.size) - 10;
                 ctx.fillStyle = "#D9D9D9";
                 ctx.fillRect(column_h_offset, row_offset + 10, column_width, 50);
 

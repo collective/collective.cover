@@ -9,4 +9,12 @@
  <stylesheet title="" cacheable="True" compression="safe" cookable="True"
     enabled="1" expression="" id="++resource++collective.cover/cover.css" media="screen"
     rel="stylesheet" rendering="link"/>
+ <stylesheet title="" cacheable="True" compression="safe" cookable="True"
+    enabled="1" expression="" id="++resource++collective.cover/decogrid-12.css" media="screen"
+    rel="stylesheet" rendering="link"/>
+
+<!-- removing the default degrid 16 -->
+ <stylesheet title="" cacheable="True" compression="safe" cookable="True"
+    enabled="0" expression="" id="columns.css" media="screen"
+    rel="stylesheet" rendering="link"/>
 </object>
