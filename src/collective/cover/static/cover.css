@@ -63,6 +63,20 @@
     visibility: hidden;
 }
 
+.collection-item a img {
+    float: left;
+    margin: 0 1em 0.5em 0;
+}
+
+.list-item {
+    position: relative;
+}
+
+.list-item a img {
+    float: left;
+    margin: 0 1em 0.5em 0;
+}
+
 /*drag and drop*/
 
 .ui-sortable-placeholder {
