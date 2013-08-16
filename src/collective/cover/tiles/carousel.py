@@ -75,7 +75,7 @@ $(function() {{
     Galleria.loadTheme("++resource++collective.cover/galleria-theme/galleria.cover_theme.js");
     Galleria.run('#galleria-{0} .galleria-inner');
 
-    if($('body').hasClass('template-view')) {
+    if($('body').hasClass('template-view')) {{
         Galleria.configure({{ autoplay: {1} }});
     }};
 }});
