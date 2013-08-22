@@ -79,8 +79,8 @@ class ContentSearch(grok.View):
         result = self.search(self.query, uids=uids,
                              page=page,
                              b_size=b_size)
-        self.has_next = result.has_next
-        self.nextpage = result.nextpage
+        self.has_next = result.next is not None
+        self.nextpage = result.pagenumber + 1
         result = [strategy.decoratorFactory({'item': node}) for node in result]
         self.level = 1
         self.children = result
