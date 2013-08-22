@@ -19,7 +19,7 @@ from zope.component import queryUtility
 from zope.interface import Interface
 from zope.schema.interfaces import IVocabularyFactory
 from zope.schema.vocabulary import SimpleTerm
-from plone.batching import Batch
+from Products.CMFPlone.PloneBatch import Batch
 
 import json
 
@@ -88,7 +88,7 @@ class ContentSearch(grok.View):
     def render(self):
         return self.list_template(children=self.children, level=1)
 
-    def search(self, query=None, page=None, b_size=None, uids=None):
+    def search(self, query=None, page=1, b_size=10, uids=None):
         catalog = getToolByName(self.context, 'portal_catalog')
         registry = getUtility(IRegistry)
         settings = registry.forInterface(ICoverSettings)
@@ -106,7 +106,7 @@ class ContentSearch(grok.View):
 #            catalog_query['UID'] = uids
 
         results = catalog(**catalog_query)
-        results = Batch.fromPagenumber(items=results, pagesize=b_size, pagenumber=page)
+        results = Batch(results, size=b_size, start=(page * b_size))
 
         return results
 
