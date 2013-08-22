@@ -4,6 +4,9 @@ There's a frood who really knows where his towel is
 1.0a5 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Remove dependency on plone.batching to avoid ``IndexError: multiple_pages``
+  on Plone 4.2. [jpgimenez]
+
 - Refactor collection tile to have a more sane page template (closes `#249`_).
   [rodfersou]
 
