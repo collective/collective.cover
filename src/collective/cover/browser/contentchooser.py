@@ -72,7 +72,7 @@ class ContentSearch(grok.View):
         self.query = self.request.get('q', None)
         self.tab = self.request.get('tab', None)
         b_size = int(self.request.get('b_size', 10))
-        page = int(self.request.get('page', 1))
+        page = int(self.request.get('page', 0))
         strategy = SitemapNavtreeStrategy(self.context)
 
         uids = None
@@ -88,7 +88,7 @@ class ContentSearch(grok.View):
     def render(self):
         return self.list_template(children=self.children, level=1)
 
-    def search(self, query=None, page=1, b_size=10, uids=None):
+    def search(self, query=None, page=0, b_size=10, uids=None):
         catalog = getToolByName(self.context, 'portal_catalog')
         registry = getUtility(IRegistry)
         settings = registry.forInterface(ICoverSettings)
@@ -106,7 +106,7 @@ class ContentSearch(grok.View):
 #            catalog_query['UID'] = uids
 
         results = catalog(**catalog_query)
-        results = Batch(results, size=b_size, start=(page * b_size))
+        results = Batch(results, size=b_size, start=(page * b_size), orphan=0)
 
         return results
 
