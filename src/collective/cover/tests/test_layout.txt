@@ -30,14 +30,15 @@ Test Basic Layout Operations
     Count Number of Rows  1
 
     #add a row after the existing one.
+    #it comes with a new column
     Add Row
     #add a column in the latest row
     Add Column at First Row
     Add Column at Second Row
     Add Column at Second Row
 
-    #2 columns and 2 rows
-    Count Number of Columns  4
+    #5 columns and 2 rows
+    Count Number of Columns  5
     Count Number of Rows  2
 
     Save Cover Layout
@@ -45,14 +46,14 @@ Test Basic Layout Operations
     # load layout again, it has to be the new one
     Click Link  link=Layout
 
-    #2 columns and 2 rows
-    Count Number of Columns  4
+    #3 columns and 2 rows
+    Count Number of Columns  5
     Count Number of Rows  2
 
     Delete a Column in the First Row
     Delete the First Row
 
-    Count Number of Columns  2
+    Count Number of Columns  3
     Count Number of Rows  1
 
     Save Cover Layout

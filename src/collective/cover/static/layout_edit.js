@@ -56,6 +56,9 @@
 
                             self.row_events(row);
                             self.delete_manager(row);
+                            // after adding the row, call its drop handler
+                            // to automatically add a column (closes #212)
+                            self.row_drop($(row));
                         }
                         le.trigger('modified.layout');
                     }
@@ -78,6 +81,23 @@
             },
 
             /**
+             * Row drop handler
+             * available from outside the droppable definition
+             **/
+            row_drop: function( $row ) {
+	            //creates a new column
+	            var column = column_dom.clone();
+	            $row.prepend(column);
+	            self.column_events(column);
+	            self.delete_manager(column);
+	            self.resize_columns_manager(column);
+
+	            self.calculate_grid($row.find('.' + column_class));
+
+	            le.trigger('modified.layout');
+	        },
+
+            /**
              * Row events binding
              * makes the event setup in row/s
              **/
@@ -89,19 +109,11 @@
                     activeClass: 'ui-state-default',
                     hoverClass: 'ui-state-hover',
                     accept: '#btn-column',
-                    drop: function( event, ui ) {
-                        //creates a new column
-                        var column = column_dom.clone();
-                        $(this).prepend(column);
-                        self.column_events(column);
-                        self.delete_manager(column);
-                        self.resize_columns_manager(column);
-
-                        self.calculate_grid($(this).find('.' + column_class));
-
-                        le.trigger('modified.layout');
+                    drop: function(event, ui) {
+                            self.row_drop($(this));
                     }
                 });
+
 
                 //allow sortable columns
                 rows.sortable({
@@ -142,6 +154,7 @@
                         var column_elem = this;
 
                         var tile_type = ui.draggable.data('tile-type');
+                        var is_configurable = ui.draggable.data('tile-configurable');
                         new_tile.attr("data-tile-type", tile_type);
 
                         $.ajax({
@@ -156,8 +169,10 @@
                                                             .append(config_icon);
                                 var name_tag = $("<span />").addClass("tile-name")
                                                             .text(ui.draggable.data('tile-name'));
-                                new_tile.append(config_link)
-                                        .append(name_tag);
+                                if(is_configurable) {
+                                    new_tile.append(config_link)
+                                }
+                                new_tile.append(name_tag);
 
                                 $(column_elem).append(new_tile);
                                 self.delete_manager(new_tile);
