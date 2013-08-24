@@ -142,6 +142,7 @@
                         var column_elem = this;
 
                         var tile_type = ui.draggable.data('tile-type');
+                        var is_configurable = ui.draggable.data('tile-configurable');
                         new_tile.attr("data-tile-type", tile_type);
 
                         $.ajax({
@@ -156,8 +157,10 @@
                                                             .append(config_icon);
                                 var name_tag = $("<span />").addClass("tile-name")
                                                             .text(ui.draggable.data('tile-name'));
-                                new_tile.append(config_link)
-                                        .append(name_tag);
+                                if(is_configurable) {
+                                    new_tile.append(config_link)
+                                }
+                                new_tile.append(name_tag);
 
                                 $(column_elem).append(new_tile);
                                 self.delete_manager(new_tile);
