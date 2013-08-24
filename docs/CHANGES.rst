@@ -4,6 +4,9 @@ There's a frood who really knows where his towel is
 1.0a5 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Auto add a column when adding a row (closes `#212`_). 
+  [marcosfromero]
+
 - Remove dependency on plone.batching to avoid ``IndexError: multiple_pages``
   on Plone 4.2. [jpgimenez]
 
@@ -225,3 +228,4 @@ There's a frood who really knows where his towel is
 .. _`#218`: https://github.com/collective/collective.cover/issues/218
 .. _`#239`: https://github.com/collective/collective.cover/issues/239
 .. _`#249`: https://github.com/collective/collective.cover/issues/249
+.. _`#212`: https://github.com/collective/collective.cover/issues/212
