@@ -70,6 +70,10 @@ class PageLayout(grok.View):
                 tile_conf = self.context.restrictedTraverse(tile_url.encode()).get_tile_configuration()
                 if tile_conf.get('css_class'):
                     css_class = tile_conf.get('css_class', '')
+                    # FIXME: get noValueToken from SequenceWidget
+                    noValueToken = '--NOVALUE--'
+                    if css_class == noValueToken:
+                        css_class = 'tile-default'
                     section['class'] = '{0} {1}'.format(section.get('class'), css_class)
                 return self.tile(section=section, mode=mode, tile_url=tile_url)
         else:
