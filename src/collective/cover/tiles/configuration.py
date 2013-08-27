@@ -100,7 +100,7 @@ class TilesConfigurationScreen(object):
             order = unicode(fields.index(name))
             # default configuration attributes for all fields
             defaults[name] = {'order': order, 'visibility': u'on'}
-            if name=='css_class':
+            if name == 'css_class':
                 # css_class, set default
                 defaults[name] = DEFAULT_SEQUENCEWIDGET_VALUE
             if ITextLine.providedBy(field):
