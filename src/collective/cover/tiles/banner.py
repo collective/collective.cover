@@ -68,14 +68,22 @@ class BannerTile(PersistentCoverTile):
 
         super(BannerTile, self).populate_with_object(obj)  # check permissions
 
-        # Get object URL
-        obj_url = obj.absolute_url_path()
-        props = getToolByName(obj, 'portal_properties')
-        stp = props.site_properties
-        view_action_types = stp.getProperty('typesUseViewActionInListings', ())
+        if hasattr(obj, 'getRemoteUrl'):
+            remote_url = obj.getRemoteUrl()
+        else: 
+            # Get object URL
+            # For Image and File objects (or any other in typesUseViewActionInListings)
+            # we must add a /view to prevent the download of the file
+            obj_url = obj.absolute_url_path()
+            props = getToolByName(obj, 'portal_properties')
+            stp = props.site_properties
+            view_action_types = stp.getProperty('typesUseViewActionInListings', ())
 
-        if hasattr(obj, 'portal_type') and obj.portal_type in view_action_types:
-            obj_url += '/view'
+            if hasattr(obj, 'portal_type') and obj.portal_type in view_action_types:
+                obj_url += '/view'
+
+            remote_url = obj_url
+
 
         obj = aq_base(obj)  # avoid acquisition
         title = obj.Title()
@@ -87,22 +95,21 @@ class BannerTile(PersistentCoverTile):
         elif hasattr(obj, 'image'):
             data = obj.image.data
 
-        if data:
-            if not isinstance(data, basestring):
-                data = data.data
+        if data and not isinstance(data, basestring):
+            data = data.data
 
         image = None
         if data:
             image = NamedBlobImage(data)
 
-        # Check if we got a real image (File content type has a getImage method
-        # that returns the file
+        # Check if we got a real image: File content type has a getImage method
+        # that returns the file. If it's an image, it's OK, but if not we are
+        # dealing with any kind of file 
         if image:
             image_size = image.getImageSize()
             if image_size[0] == -1:
                 image = None
 
-        remote_url = obj.getRemoteUrl() if obj.portal_type == 'Link' else obj_url
 
         data_mgr = ITileDataManager(self)
         data_mgr.set({

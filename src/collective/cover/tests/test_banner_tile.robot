@@ -15,6 +15,7 @@ ${banner_uuid}  12345
 ${image_selector}  .ui-draggable .contenttype-image
 ${link_selector}  .ui-draggable .contenttype-link
 ${news_item_selector}  .ui-draggable .contenttype-news-item
+${file_selector}  .ui-draggable .contenttype-file
 ${tile_selector}  div.tile-container div.tile
 
 *** Test cases ***
@@ -60,6 +61,16 @@ Test Banner Tile
     # now we move to the default view to check the link is still there
     Click Link  link=View
     Page Should Contain  Test link
+
+    # now we test with a File content type to be sure that its getImage method doesn't
+    # break the tile
+
+    Click Link  link=Compose
+
+    Click Element  css=div#contentchooser-content-show-button
+
+    Drag And Drop  css=${file_selector}  css=${tile_selector}
+    Page Should Contain Link  css=div.banner-tile h2 a
 
     Click Link  link=Layout
     Delete Tile
