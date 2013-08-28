@@ -4,6 +4,9 @@ There's a frood who really knows where his towel is
 1.0a5 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Include plone.belowcontenttitle viewlet manager rendering on view template
+  (closes #`#266`_). [hvelarde]
+
 - When adding a tile, display configuration icon only for configurable
   tiles (closes `#204`_). [marcosfromero]
 
@@ -232,4 +235,6 @@ There's a frood who really knows where his towel is
 .. _`#212`: https://github.com/collective/collective.cover/issues/212
 .. _`#218`: https://github.com/collective/collective.cover/issues/218
 .. _`#239`: https://github.com/collective/collective.cover/issues/239
+.. _`#244`: https://github.com/collective/collective.cover/issues/244
 .. _`#249`: https://github.com/collective/collective.cover/issues/249
+.. _`#266`: https://github.com/collective/collective.cover/issues/266

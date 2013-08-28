@@ -3,6 +3,7 @@
 from Acquisition import aq_inner
 from collective.cover.content import ICover
 from collective.cover.utils import assign_tile_ids
+from collective.cover.config import DEFAULT_SEQUENCEWIDGET_VALUE
 from five import grok
 from plone.uuid.interfaces import IUUIDGenerator
 from plone.tiles.interfaces import ITileType
@@ -70,6 +71,8 @@ class PageLayout(grok.View):
                 tile_conf = self.context.restrictedTraverse(tile_url.encode()).get_tile_configuration()
                 if tile_conf.get('css_class'):
                     css_class = tile_conf.get('css_class', '')
+                    if css_class == DEFAULT_SEQUENCEWIDGET_VALUE:
+                        css_class = 'tile-default'
                     section['class'] = '{0} {1}'.format(section.get('class'), css_class)
                 return self.tile(section=section, mode=mode, tile_url=tile_url)
         else:

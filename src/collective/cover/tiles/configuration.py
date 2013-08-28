@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from collective.cover.config import DEFAULT_SEQUENCEWIDGET_VALUE
 from persistent.dict import PersistentDict
 from plone.namedfile.interfaces import INamedBlobImageField
 from plone.tiles.interfaces import ITileType
@@ -99,6 +100,9 @@ class TilesConfigurationScreen(object):
             order = unicode(fields.index(name))
             # default configuration attributes for all fields
             defaults[name] = {'order': order, 'visibility': u'on'}
+            if name == 'css_class':
+                # css_class, set default
+                defaults[name] = DEFAULT_SEQUENCEWIDGET_VALUE
             if ITextLine.providedBy(field):
                 # field is TextLine, we should add 'htmltag'
                 defaults[name]['htmltag'] = u'h2'

@@ -9,6 +9,9 @@
 <body>
 
 <metal:main fill-slot="main">
+    <!-- XXX: should we add more viewlet managers here? -->
+    <div tal:replace="structure provider:plone.belowcontenttitle" />
+
     <div tal:define="layout nocall:context/@@layout"
          tal:replace="structure layout/render_view" />
 </metal:main>
