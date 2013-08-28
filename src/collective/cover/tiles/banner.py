@@ -10,6 +10,7 @@ from plone.namedfile import field
 from plone.namedfile import NamedBlobImage
 from plone.tiles.interfaces import ITileDataManager
 from plone.registry.interfaces import IRegistry
+from Products.CMFPlone.utils import getToolByName
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zope import schema
 from zope.component import getUtility
@@ -66,9 +67,19 @@ class BannerTile(PersistentCoverTile):
             return
 
         super(BannerTile, self).populate_with_object(obj)  # check permissions
+
+        # Get object URL
         obj_url = obj.absolute_url_path()
+        props = getToolByName(obj, 'portal_properties')
+        stp = props.site_properties
+        view_action_types = stp.getProperty('typesUseViewActionInListings', ())
+
+        if hasattr(obj, 'portal_type') and obj.portal_type in view_action_types:
+            obj_url += '/view'
+
         obj = aq_base(obj)  # avoid acquisition
         title = obj.Title()
+
         # if has image, store a copy of its data
         data = None
         if hasattr(obj, 'getImage'):
@@ -80,10 +91,17 @@ class BannerTile(PersistentCoverTile):
             if not isinstance(data, basestring):
                 data = data.data
 
+        image = None
         if data:
             image = NamedBlobImage(data)
-        else:
-            image = None
+
+        # Check if we got a real image (File content type has a getImage method
+        # that returns the file
+        if image:
+            image_size = image.getImageSize()
+            if image_size[0] == -1:
+                image = None
+
         remote_url = obj.getRemoteUrl() if obj.portal_type == 'Link' else obj_url
 
         data_mgr = ITileDataManager(self)
