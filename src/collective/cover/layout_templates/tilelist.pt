@@ -14,6 +14,7 @@
           <a class="btn-tile draggable" data-tile-type=""
              tal:attributes="data-tile-type tile/tile_type;
                              data-tile-name metadata/title;
+                             data-tile-configurable metadata/is_configurable;
                              title metadata/description;
                              id tile/tile_type">
             <img src="" tal:attributes="src python:metadata['icon'] if metadata['icon'] else '++resource++collective.cover/tile-generic.png';

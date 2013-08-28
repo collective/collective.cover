@@ -44,3 +44,11 @@ class ContentChooserTestCase(unittest.TestCase):
         self.assertFalse(re.compile(html).search(view()))
         html = """<a data-ct-type="Image" class="contenttype-image state-missing-value" rel="1">"""
         self.assertTrue(re.compile(html).search(view()))
+
+    def test_batch_searches(self):
+        self.request.set('q', 'Image')
+        view = getMultiAdapter(
+            (self.portal, self.request), name=u'content-search')
+        batch = view.search(query=None, page=1, b_size=1)
+        # It's a batch and respect the size
+        self.assertEqual(len(list(batch)), 1)

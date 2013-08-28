@@ -21,7 +21,7 @@ class BannerTileTestCase(unittest.TestCase):
         self.request = self.layer['request']
         self.name = 'collective.cover.banner'
         self.tile = self.portal.restrictedTraverse(
-            '@@%s/%s' % (self.name, 'test-tile'))
+            '@@{0}/{1}'.format(self.name, 'test-tile'))
 
     @unittest.expectedFailure
     def test_interface(self):

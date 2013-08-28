@@ -19,7 +19,7 @@ class FileTileTestCase(unittest.TestCase):
         self.request = self.layer['request']
         self.cover = self.portal['frontpage']
         self.tile = self.portal.restrictedTraverse(
-            '@@%s/%s' % ('collective.cover.file', 'test-file-tile'))
+            '@@{0}/{1}'.format('collective.cover.file', 'test-file-tile'))
 
     def test_interface(self):
         self.assertTrue(IPersistentCoverTile.implementedBy(FileTile))

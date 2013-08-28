@@ -3,10 +3,21 @@ There's a frood who really knows where his towel is
 
 1.0a5 (unreleased)
 ^^^^^^^^^^^^^^^^^^
-
 - Added any content type support for banner tile. If it has an `image`
   or `getImage` attribute, displays that image. And always adds
   a link (closes `#241`_). [marcosfromero]
+
+- When adding a tile, display configuration icon only for configurable
+  tiles (closes `#204`_). [marcosfromero]
+
+- Auto add a column when adding a row (closes `#212`_).
+  [marcosfromero]
+
+- Remove dependency on plone.batching to avoid ``IndexError: multiple_pages``
+  on Plone 4.2. [jpgimenez]
+
+- Refactor collection tile to have a more sane page template (closes `#249`_).
+  [rodfersou]
 
 - Move CSS to registry_css (closes `#244`_). [agnogueira]
 
@@ -222,4 +233,3 @@ There's a frood who really knows where his towel is
 .. _`#206`: https://github.com/collective/collective.cover/issues/206
 .. _`#218`: https://github.com/collective/collective.cover/issues/218
 .. _`#239`: https://github.com/collective/collective.cover/issues/239
-.. _`#241`: https://github.com/collective/collective.cover/issues/241
