@@ -16,6 +16,7 @@ the following people:
 - Héctor Velarde
 - Juan A. Díaz
 - Juan Pablo Giménez
+- Marcos F. Romero
 - Ricardo Bánffy
 - Rodrigo Ferreira de Souza
 - Silvestre Huens

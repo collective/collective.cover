@@ -161,10 +161,12 @@ class TileList(grok.View):
 
     def get_tile_metadata(self, tile_name):
         tile_type = getUtility(ITileType, tile_name)
+        tile = self.context.restrictedTraverse(str(tile_name))
         tile_metadata = {
             'icon': tile_type.icon,
             'description': tile_type.description,
-            'title': tile_type.title
+            'title': tile_type.title,
+            'is_configurable': tile.is_configurable and 1 or 0
         }
 
         return tile_metadata
