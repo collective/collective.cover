@@ -2,13 +2,17 @@
 
 from Acquisition import aq_base
 from collective.cover import _
+from collective.cover.controlpanel import ICoverSettings
 from collective.cover.tiles.base import IPersistentCoverTile
 from collective.cover.tiles.base import PersistentCoverTile
+from plone.memoize import view
 from plone.namedfile import field
 from plone.namedfile import NamedBlobImage
 from plone.tiles.interfaces import ITileDataManager
+from plone.registry.interfaces import IRegistry
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zope import schema
+from zope.component import getUtility
 from zope.interface import implements
 
 
@@ -38,11 +42,23 @@ class BannerTile(PersistentCoverTile):
     is_editable = True
     is_droppable = True
 
+    @view.memoize
     def accepted_ct(self):
-        return ['Image', 'Link']
+        """
+            Return a list with accepted content types ids
+            basic tile accepts every content type
+            allowed by the cover control panel
+
+            this method is called for every tile in the compose view
+            please memoize if you're doing some very expensive calculation
+        """
+        registry = getUtility(IRegistry)
+        settings = registry.forInterface(ICoverSettings)
+        return settings.searchable_content_types
 
     def populate_with_object(self, obj):
-        """Tile can be populated with images and links; in this case we're not
+        """Tile can be populated with any content type with image
+        or getImage attribute; in this case we're not
         going to take care of any modification of the original object; we just
         copy the data to the tile and deal with it.
         """
@@ -50,18 +66,25 @@ class BannerTile(PersistentCoverTile):
             return
 
         super(BannerTile, self).populate_with_object(obj)  # check permissions
+        obj_url = obj.absolute_url_path()
         obj = aq_base(obj)  # avoid acquisition
         title = obj.Title()
-        # if image, store a copy of its data
-        if obj.portal_type == 'Image':
-            if hasattr(obj, 'getImage'):
-                data = obj.getImage().data
-            else:
-                data = obj.image.data
+        # if has image, store a copy of its data
+        data = None
+        if hasattr(obj, 'getImage'):
+            data = obj.getImage().data
+        elif hasattr(obj, 'image'):
+            data = obj.image.data
+
+        if data:
+            if not isinstance(data, basestring):
+                data = data.data
+
+        if data:
             image = NamedBlobImage(data)
         else:
             image = None
-        remote_url = obj.getRemoteUrl() if obj.portal_type == 'Link' else None
+        remote_url = obj.getRemoteUrl() if obj.portal_type == 'Link' else obj_url
 
         data_mgr = ITileDataManager(self)
         data_mgr.set({

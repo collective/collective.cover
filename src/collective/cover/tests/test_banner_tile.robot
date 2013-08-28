@@ -14,6 +14,7 @@ ${banner_tile_location}  'collective.cover.banner'
 ${banner_uuid}  12345
 ${image_selector}  .ui-draggable .contenttype-image
 ${link_selector}  .ui-draggable .contenttype-link
+${news_item_selector}  .ui-draggable .contenttype-news-item
 ${tile_selector}  div.tile-container div.tile
 
 *** Test cases ***
@@ -27,6 +28,17 @@ Test Banner Tile
 
     Click Link  link=Compose
     Page Should Contain  Drag&drop an image or link here to populate the tile.
+
+    Click Element  css=div#contentchooser-content-show-button
+    Drag And Drop  css=${news_item_selector}  css=${tile_selector}
+    Page Should Contain Image  css=div.banner-tile a img
+
+    # now we move to the default view to check the information is still there
+    Click Link  link=View
+    Page Should Contain Image  css=div.banner-tile a img
+
+    Click Link  link=Compose
+    Page Should Not Contain  Drag&drop an image or link here to populate the tile.
 
     Click Element  css=div#contentchooser-content-show-button
 
