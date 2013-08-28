@@ -70,7 +70,7 @@ class BannerTile(PersistentCoverTile):
 
         if hasattr(obj, 'getRemoteUrl'):
             remote_url = obj.getRemoteUrl()
-        else: 
+        else:
             # Get object URL
             # For Image and File objects (or any other in typesUseViewActionInListings)
             # we must add a /view to prevent the download of the file
@@ -83,7 +83,6 @@ class BannerTile(PersistentCoverTile):
                 obj_url += '/view'
 
             remote_url = obj_url
-
 
         obj = aq_base(obj)  # avoid acquisition
         title = obj.Title()
@@ -104,12 +103,11 @@ class BannerTile(PersistentCoverTile):
 
         # Check if we got a real image: File content type has a getImage method
         # that returns the file. If it's an image, it's OK, but if not we are
-        # dealing with any kind of file 
+        # dealing with any kind of file
         if image:
             image_size = image.getImageSize()
             if image_size[0] == -1:
                 image = None
-
 
         data_mgr = ITileDataManager(self)
         data_mgr.set({
