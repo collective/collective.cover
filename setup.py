@@ -81,9 +81,7 @@ setup(name='collective.cover',
       ],
       extras_require={
           'test': [
-              'plone.app.imagetile',
               'plone.app.testing',
-              'plone.app.texttile',
               'plone.browserlayer',
               'plone.cachepurging',
               'plone.testing',
