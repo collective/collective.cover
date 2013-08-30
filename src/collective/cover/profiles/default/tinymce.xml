@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<object>
+ <resourcetypes>
+  <linkable purge="False">
+   <element value="collective.cover.content"/>
+  </linkable>
+ </resourcetypes>
+</object>
+
