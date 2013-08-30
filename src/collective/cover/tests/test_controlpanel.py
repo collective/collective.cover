@@ -76,7 +76,8 @@ class RegistryTestCase(unittest.TestCase):
         self.assertTrue(hasattr(self.settings, 'styles'))
         self.assertSetEqual(
             self.settings.styles,
-            set(['Border|tile-edge',
+            set(['-Default-|tile-default',
+                 'Border|tile-edge',
                  'Dark Background|tile-dark',
                  'Shadow|tile-shadow'])
         )
