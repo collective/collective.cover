@@ -192,14 +192,16 @@ class Upgrade4to5TestCase(unittest.TestCase):
 
     def test_tinymce_linkables(self):
         # default installation includes Cover as linkable
-        self.assertIn('collective.cover.content', self.tinymce.linkable.split('\n'))
-
-        # set linkable as on version 5 and make sure cover is not linkable any more
         linkables = self.tinymce.linkable.split('\n')
-        linkables.pop()
+        self.assertIn(u'collective.cover.content', linkables)
+
+        # remove cover from linkables to simulate version 4
+        linkables.remove(u'collective.cover.content')
         self.tinymce.linkable = '\n'.join(linkables)
-        self.assertNotIn('collective.cover.content', self.tinymce.linkable.split('\n'))
+        linkables = self.tinymce.linkable.split('\n')
+        self.assertNotIn(u'collective.cover.content', linkables)
 
         # and now run the upgrade step to check that worked
         tinymce_linkable(self.portal)
-        self.assertIn('collective.cover.content', self.tinymce.linkable.split('\n'))
+        linkables = self.tinymce.linkable.split('\n')
+        self.assertIn(u'collective.cover.content', linkables)
