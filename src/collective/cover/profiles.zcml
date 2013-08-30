@@ -124,4 +124,24 @@
 
   </genericsetup:upgradeSteps>
 
+  <genericsetup:registerProfile
+      name="upgrade_5_to_6"
+      title="collective.cver: upgrade_5_to_6"
+      directory="profiles/upgrade_5_to_6"
+      description="Upgrade steps from 5 to 6."
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      />
+
+  <genericsetup:upgradeSteps
+      source="5"
+      destination="6"
+      profile="collective.cover:default">
+
+      <genericsetup:upgradeStep
+          title="Add Cover as Linkable in TinyMCE settings"
+          description="Cover is now linkable"
+          handler=".upgrades.tinymce_linkable"
+          />
+
+  </genericsetup:upgradeSteps>
 </configure>

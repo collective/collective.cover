@@ -14,6 +14,8 @@ ${banner_tile_location}  'collective.cover.banner'
 ${banner_uuid}  12345
 ${image_selector}  .ui-draggable .contenttype-image
 ${link_selector}  .ui-draggable .contenttype-link
+${news_item_selector}  .ui-draggable .contenttype-news-item
+${file_selector}  .ui-draggable .contenttype-file
 ${tile_selector}  div.tile-container div.tile
 
 *** Test cases ***
@@ -27,6 +29,17 @@ Test Banner Tile
 
     Click Link  link=Compose
     Page Should Contain  Drag&drop an image or link here to populate the tile.
+
+    Click Element  css=div#contentchooser-content-show-button
+    Drag And Drop  css=${news_item_selector}  css=${tile_selector}
+    Page Should Contain Image  css=div.banner-tile a img
+
+    # now we move to the default view to check the information is still there
+    Click Link  link=View
+    Page Should Contain Image  css=div.banner-tile a img
+
+    Click Link  link=Compose
+    Page Should Not Contain  Drag&drop an image or link here to populate the tile.
 
     Click Element  css=div#contentchooser-content-show-button
 
@@ -48,6 +61,16 @@ Test Banner Tile
     # now we move to the default view to check the link is still there
     Click Link  link=View
     Page Should Contain  Test link
+
+    # now we test with a File content type to be sure that its getImage method doesn't
+    # break the tile
+
+    Click Link  link=Compose
+
+    Click Element  css=div#contentchooser-content-show-button
+
+    Drag And Drop  css=${file_selector}  css=${tile_selector}
+    Page Should Contain Link  css=div.banner-tile h2 a
 
     Click Link  link=Layout
     Delete Tile
