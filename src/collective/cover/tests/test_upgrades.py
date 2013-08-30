@@ -7,6 +7,7 @@ from collective.cover.upgrades import rename_content_chooser_resources
 from collective.cover.upgrades import issue_244
 from collective.cover.upgrades import update_styles_record_4_5
 from collective.cover.upgrades import set_new_default_class_4_5
+from collective.cover.upgrades import tinymce_linkable
 from plone.app.testing import setRoles
 from plone.app.testing import TEST_USER_ID
 from plone.registry.interfaces import IRecordAddedEvent
@@ -120,6 +121,7 @@ class Upgrade4to5TestCase(unittest.TestCase):
 
     def setUp(self):
         self.portal = self.layer['portal']
+        self.tinymce = self.portal.portal_tinymce
         setRoles(self.portal, TEST_USER_ID, ['Manager'])
         self.portal.invokeFactory('Folder', 'test-folder')
         setRoles(self.portal, TEST_USER_ID, ['Member'])
@@ -129,6 +131,16 @@ class Upgrade4to5TestCase(unittest.TestCase):
         self.cover = self.folder['cover']
         self.layout_view = self.cover.restrictedTraverse('layout')
 
+    def test_issue_244(self):
+        css_tool = self.portal['portal_css']
+        id = '++resource++collective.cover/cover.css'
+        # remove the resource so simulate status of profile version 4
+        css_tool.unregisterResource(id)
+        self.assertNotIn(id, css_tool.getResourceIds())
+        issue_244(self.portal)
+        self.assertIn(id, css_tool.getResourceIds())
+
+    def test_issue_262(self):
         # get tiles and assign css_class as before version 5
         layout = self.layout_view.get_layout('view')
         tile_def = layout[0]['children'][0]['children'][0]
@@ -155,16 +167,6 @@ class Upgrade4to5TestCase(unittest.TestCase):
         tile_config['css_class'] = u"tile-shadow"
         self.tile4.set_tile_configuration(tile_config)
 
-    def test_issue_244(self):
-        css_tool = self.portal['portal_css']
-        id = '++resource++collective.cover/cover.css'
-        # remove the resource so simulate status of profile version 4
-        css_tool.unregisterResource(id)
-        self.assertNotIn(id, css_tool.getResourceIds())
-        issue_244(self.portal)
-        self.assertIn(id, css_tool.getResourceIds())
-
-    def test_issue_262(self):
         registry = getUtility(IRegistry)
         record = 'collective.cover.controlpanel.ICoverSettings.styles'
         default_style = u"-Default-|tile-default"
@@ -187,3 +189,19 @@ class Upgrade4to5TestCase(unittest.TestCase):
         self.assertEqual(self.tile2.get_tile_configuration()['css_class'], u"tile-default")
         self.assertEqual(self.tile3.get_tile_configuration()['css_class'], u"tile-default")
         self.assertEqual(self.tile4.get_tile_configuration()['css_class'], u"tile-shadow")
+
+    def test_tinymce_linkables(self):
+        # default installation includes Cover as linkable
+        linkables = self.tinymce.linkable.split('\n')
+        self.assertIn(u'collective.cover.content', linkables)
+
+        # remove cover from linkables to simulate version 4
+        linkables.remove(u'collective.cover.content')
+        self.tinymce.linkable = '\n'.join(linkables)
+        linkables = self.tinymce.linkable.split('\n')
+        self.assertNotIn(u'collective.cover.content', linkables)
+
+        # and now run the upgrade step to check that worked
+        tinymce_linkable(self.portal)
+        linkables = self.tinymce.linkable.split('\n')
+        self.assertIn(u'collective.cover.content', linkables)
