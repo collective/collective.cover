@@ -3,6 +3,10 @@ There's a frood who really knows where his towel is
 
 1.0a5 (unreleased)
 ^^^^^^^^^^^^^^^^^^
+
+- Added Cover as Linkable in TinyMCE settings (closes `#259`_).
+  [marcosfromero]
+
 - Added any content type support for banner tile. If it has an `image`
   or `getImage` attribute, displays that image. And always adds
   a link (closes `#241`_). [marcosfromero]
@@ -239,5 +243,6 @@ There's a frood who really knows where his towel is
 .. _`#239`: https://github.com/collective/collective.cover/issues/239
 .. _`#241`: https://github.com/collective/collective.cover/issues/241
 .. _`#249`: https://github.com/collective/collective.cover/issues/249
+.. _`#259`: https://github.com/collective/collective.cover/issues/259
 .. _`#262`: https://github.com/collective/collective.cover/issues/262
 
