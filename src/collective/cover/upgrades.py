@@ -4,7 +4,7 @@ from collective.cover.config import PROJECTNAME
 from collective.cover.content import ICover
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
-from zope.component import getUtility, getMultiAdapter
+from zope.component import getUtility
 
 import logging
 
@@ -167,6 +167,7 @@ def update_styles_record_4_5(context, logger=None):
     setup.runAllImportStepsFromProfile(profile)
     logger.info("'styles' record updated in the registry")
 
+
 def set_new_default_class_4_5(context, logger=None):
     """Sets the new default css_class value for old tiles
     See: https://github.com/collective/collective.cover/issues/262
@@ -177,11 +178,10 @@ def set_new_default_class_4_5(context, logger=None):
         logger = logging.getLogger(PROJECTNAME)
 
     catalog = getToolByName(context, 'portal_catalog')
-    brains = catalog(object_provides = ICover.__identifier__ )
+    brains = catalog(object_provides=ICover.__identifier__)
 
     for brain in brains:
         cover = brain.getObject()
-        import pdb; pdb.set_trace()
         layout_view = cover.restrictedTraverse("layout")
         layout = layout_view.get_layout("view")
         for row in layout:

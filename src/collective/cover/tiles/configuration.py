@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from collective.cover.config import DEFAULT_SEQUENCEWIDGET_VALUE
 from persistent.dict import PersistentDict
 from plone.namedfile.interfaces import INamedBlobImageField
 from plone.tiles.interfaces import ITileType
