@@ -191,3 +191,17 @@ def set_new_default_class_4_5(context, logger=None):
                         tile.set_tile_configuration(tile_config)
 
     logger.info("new default value checked in every tile's css_class")
+
+
+def tinymce_linkable(context, logger=None):
+    """Adds collective.cover.content as Linkable in TinyMCE settings
+    See: https://github.com/collective/collective.cover/issues/259
+    """
+
+    if logger is None:
+        logger = logging.getLogger(PROJECTNAME)
+
+    profile = 'profile-collective.cover:upgrade_5_to_6'
+    setup = getToolByName(context, 'portal_setup')
+    setup.runAllImportStepsFromProfile(profile)
+    logger.info("'linkable' property updated in TinyMCE settings")

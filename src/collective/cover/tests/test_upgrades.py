@@ -7,6 +7,7 @@ from collective.cover.upgrades import rename_content_chooser_resources
 from collective.cover.upgrades import issue_244
 from collective.cover.upgrades import update_styles_record_4_5
 from collective.cover.upgrades import set_new_default_class_4_5
+from collective.cover.upgrades import tinymce_linkable
 from plone.app.testing import setRoles
 from plone.app.testing import TEST_USER_ID
 from plone.registry.interfaces import IRecordAddedEvent
@@ -187,3 +188,26 @@ class Upgrade4to5TestCase(unittest.TestCase):
         self.assertEqual(self.tile2.get_tile_configuration()['css_class'], u"tile-default")
         self.assertEqual(self.tile3.get_tile_configuration()['css_class'], u"tile-default")
         self.assertEqual(self.tile4.get_tile_configuration()['css_class'], u"tile-shadow")
+
+
+class Upgrade5to6TestCase(unittest.TestCase):
+
+    layer = INTEGRATION_TESTING
+
+    def setUp(self):
+        self.portal = self.layer['portal']
+        self.tinymce = self.portal.portal_tinymce
+
+    def test_tinymce_linkables(self):
+        # default installation includes Cover as linkable
+        self.assertIn('collective.cover.content', self.tinymce.linkable.split('\n'))
+
+        # set linkable as on version 5 and make sure cover is not linkable any more
+        linkables = self.tinymce.linkable.split('\n')
+        linkables.pop()
+        self.tinymce.linkable = '\n'.join(linkables)
+        self.assertNotIn('collective.cover.content', self.tinymce.linkable.split('\n'))
+
+        # and now run the upgrade step to check that worked
+        tinymce_linkable(self.portal)
+        self.assertIn('collective.cover.content', self.tinymce.linkable.split('\n'))
