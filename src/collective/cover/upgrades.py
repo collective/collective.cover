@@ -172,7 +172,7 @@ def set_new_default_class_4_5(context, logger=None):
     """Sets the new default css_class value for old tiles
     See: https://github.com/collective/collective.cover/issues/262
     """
-    new_default_value = u"tile-config"
+    new_default_value = u"tile-default"
 
     if logger is None:
         logger = logging.getLogger(PROJECTNAME)
@@ -190,7 +190,8 @@ def set_new_default_class_4_5(context, logger=None):
                     tile = cover.restrictedTraverse("{0}/{1}".format(tile_data["tile-type"], tile_data["id"]))
                     tile_config = tile.get_tile_configuration()
                     css_class = tile_config.get("css_class", u"")
-                    if css_class == u"--NOVALUE--" or css_class == u"" or css_class.startswith("{"):
+                    if not isinstance(css_class, basestring) or 
+                       css_class == u"--NOVALUE--" or css_class == u"":
                         tile_config['css_class'] = new_default_value
                         tile.set_tile_configuration(tile_config)
 
