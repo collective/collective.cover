@@ -85,8 +85,10 @@ class VocabulariesTestCase(unittest.TestCase):
         vocabulary = queryUtility(IVocabularyFactory, name)
         self.assertIsNotNone(vocabulary)
         # in the beginning the vocabulary should contain the default styles
+        # and the default u"tile-default" style is always first
         styles = vocabulary(self.portal)
-        self.assertEqual(len(styles), 3)
+        self.assertEqual(len(styles), 4)
+        self.assertEqual(styles.by_value.keys()[0], u"tile-default")
         # let's try to put some other values on it
         registry = getUtility(IRegistry)
         settings = registry.forInterface(ICoverSettings)
@@ -96,9 +98,14 @@ class VocabulariesTestCase(unittest.TestCase):
             'blue background|blueTile',
         ])
         styles = vocabulary(self.portal)
-        self.assertEqual(len(styles), 3)
         self.assertIn('redTile', styles.by_value)
-        # adding a couple of not well formatted items result in no change
+
+        # although default style is not set, vocabulary inserts it first
+        self.assertEqual(len(styles), 4)
+        self.assertEqual(styles.by_value.keys()[0], u"tile-default")
+        # adding a couple of not well formatted items result in no option
+        # (except for the default one)
         settings.styles = set(['not well formated'])
         styles = vocabulary(self.portal)
-        self.assertEqual(len(styles), 0)
+        self.assertEqual(len(styles), 1)
+        self.assertEqual(styles.by_value.keys()[0], u"tile-default")

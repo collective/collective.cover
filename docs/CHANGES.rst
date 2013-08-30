@@ -7,6 +7,8 @@ There's a frood who really knows where his towel is
   or `getImage` attribute, displays that image. And always adds
   a link (closes `#241`_). [marcosfromero]
 
+- Default css class for tiles (closes `#262`_). [marcosfromero]
+
 - When adding a tile, display configuration icon only for configurable
   tiles (closes `#204`_). [marcosfromero]
 
@@ -237,3 +239,5 @@ There's a frood who really knows where his towel is
 .. _`#239`: https://github.com/collective/collective.cover/issues/239
 .. _`#241`: https://github.com/collective/collective.cover/issues/241
 .. _`#249`: https://github.com/collective/collective.cover/issues/249
+.. _`#262`: https://github.com/collective/collective.cover/issues/262
+

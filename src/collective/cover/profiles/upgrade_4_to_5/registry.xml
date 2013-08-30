@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<registry>
+  <record
+      name="collective.cover.controlpanel.ICoverSettings.styles">
+    <value purge="false">
+      <element>-Default-|tile-default</element>
+    </value>
+  </record>
+</registry>
