@@ -183,7 +183,12 @@ def set_new_default_class_4_5(context, logger=None):
     for brain in brains:
         cover = brain.getObject()
         layout_view = cover.restrictedTraverse("layout")
-        layout = layout_view.get_layout("view")
+
+        # There might be covers with empty layout
+        try:
+            layout = layout_view.get_layout("view")
+        except:
+            layout = []
         for row in layout:
             for column in row.get("children", []):
                 for tile_data in column.get("children", []):
