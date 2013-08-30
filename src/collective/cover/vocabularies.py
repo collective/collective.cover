@@ -97,7 +97,7 @@ class TileStylesVocabulary(object):
         settings = registry.forInterface(ICoverSettings)
         items = []
         if settings.styles is not None:
-            styles = list(settings.styles)
+            styles = sorted(list(settings.styles))
             for style in styles:
                 if style.count('|') == 1:  # skip in case of formating issues
                     title, css_class = style.split('|')

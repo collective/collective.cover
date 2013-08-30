@@ -30,6 +30,7 @@
       </value_type>
     </field>
     <value>
+      <element>-Default-|tile-default</element>
       <element>Border|tile-edge</element>
       <element>Dark Background|tile-dark</element>
       <element>Shadow|tile-shadow</element>

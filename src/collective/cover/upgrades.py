@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 
 from collective.cover.config import PROJECTNAME
+from collective.cover.content import ICover
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
-from zope.component import getUtility
+from zope.component import getUtility, getMultiAdapter
 
 import logging
 
@@ -142,3 +143,55 @@ def issue_244(context, logger=None):
         logger.info("CSS resources were cooked")
     else:
         logger.debug("{0} resource already in portal_css".format(id))
+
+
+def update_styles_record_4_5(context, logger=None):
+    """Handler for upgrade step from 4 to 5; adds the 'tile-default'
+    value to the 'styles' record in the registry.
+    See: https://github.com/collective/collective.cover/issues/262
+    """
+    if logger is None:
+        logger = logging.getLogger(PROJECTNAME)
+
+    registry = getUtility(IRegistry)
+    record = 'collective.cover.controlpanel.ICoverSettings.styles'
+
+    if record in registry.records:
+        # XXX: if the record is on the registry it will be corrupt by a type
+        # mismatch and we need just to remove it; this could happen only in
+        # case of sites using collective.cover from master branch
+        del registry.records[record]
+
+    profile = 'profile-collective.cover:upgrade_4_to_5'
+    setup = getToolByName(context, 'portal_setup')
+    setup.runAllImportStepsFromProfile(profile)
+    logger.info("'styles' record updated in the registry")
+
+def set_new_default_class_4_5(context, logger=None):
+    """Sets the new default css_class value for old tiles
+    See: https://github.com/collective/collective.cover/issues/262
+    """
+    new_default_value = u"tile-config"
+
+    if logger is None:
+        logger = logging.getLogger(PROJECTNAME)
+
+    catalog = getToolByName(context, 'portal_catalog')
+    brains = catalog(object_provides = ICover.__identifier__ )
+
+    for brain in brains:
+        cover = brain.getObject()
+        import pdb; pdb.set_trace()
+        layout_view = cover.restrictedTraverse("layout")
+        layout = layout_view.get_layout("view")
+        for row in layout:
+            for column in row.get("children", []):
+                for tile_data in column.get("children", []):
+                    tile = cover.restrictedTraverse("{0}/{1}".format(tile_data["tile-type"], tile_data["id"]))
+                    tile_config = tile.get_tile_configuration()
+                    css_class = tile_config.get("css_class", u"")
+                    if css_class == u"--NOVALUE--" or css_class == u"" or css_class.startswith("{"):
+                        tile_config['css_class'] = new_default_value
+                        tile.set_tile_configuration(tile_config)
+
+    logger.info("new default value checked in every tile's css_class")

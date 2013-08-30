@@ -102,7 +102,7 @@ class TilesConfigurationScreen(object):
             defaults[name] = {'order': order, 'visibility': u'on'}
             if name == 'css_class':
                 # css_class, set default
-                defaults[name] = DEFAULT_SEQUENCEWIDGET_VALUE
+                defaults[name] = field.default
             if ITextLine.providedBy(field):
                 # field is TextLine, we should add 'htmltag'
                 defaults[name]['htmltag'] = u'h2'
