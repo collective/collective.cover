@@ -190,8 +190,7 @@ def set_new_default_class_4_5(context, logger=None):
                     tile = cover.restrictedTraverse("{0}/{1}".format(tile_data["tile-type"], tile_data["id"]))
                     tile_config = tile.get_tile_configuration()
                     css_class = tile_config.get("css_class", u"")
-                    if not isinstance(css_class, basestring) or 
-                       css_class == u"--NOVALUE--" or css_class == u"":
+                    if not isinstance(css_class, basestring) or css_class == u"--NOVALUE--" or css_class == u"":
                         tile_config['css_class'] = new_default_value
                         tile.set_tile_configuration(tile_config)
 
