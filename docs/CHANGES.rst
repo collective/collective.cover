@@ -4,6 +4,8 @@ There's a frood who really knows where his towel is
 1.0a5 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Default css class for tiles (closes `#262`_). [marcosfromero]
+
 - When adding a tile, display configuration icon only for configurable
   tiles (closes `#204`_). [marcosfromero]
 
@@ -233,3 +235,5 @@ There's a frood who really knows where his towel is
 .. _`#218`: https://github.com/collective/collective.cover/issues/218
 .. _`#239`: https://github.com/collective/collective.cover/issues/239
 .. _`#249`: https://github.com/collective/collective.cover/issues/249
+.. _`#262`: https://github.com/collective/collective.cover/issues/262
+

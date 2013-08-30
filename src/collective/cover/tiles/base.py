@@ -61,7 +61,8 @@ class IPersistentCoverTile(Interface):
     css_class = Choice(
         title=_(u'CSS Class'),
         vocabulary='collective.cover.TileStyles',
-        required=False,
+        required=True,
+        default=u"tile-default",
     )
     form.omitted('css_class')
     form.no_omit(IDefaultConfigureForm, 'css_class')

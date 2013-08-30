@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from collective.cover.config import PROJECTNAME
+from collective.cover.content import ICover
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
 from zope.component import getUtility
@@ -142,3 +143,51 @@ def issue_244(context, logger=None):
         logger.info("CSS resources were cooked")
     else:
         logger.debug("{0} resource already in portal_css".format(id))
+
+
+def update_styles_record_4_5(context, logger=None):
+    """Handler for upgrade step from 4 to 5; adds the 'tile-default'
+    value to the 'styles' record in the registry.
+    See: https://github.com/collective/collective.cover/issues/262
+    """
+    if logger is None:
+        logger = logging.getLogger(PROJECTNAME)
+
+    profile = 'profile-collective.cover:upgrade_4_to_5'
+    setup = getToolByName(context, 'portal_setup')
+    setup.runAllImportStepsFromProfile(profile)
+    logger.info("'styles' record updated in the registry")
+
+
+def set_new_default_class_4_5(context, logger=None):
+    """Sets the new default css_class value for old tiles
+    See: https://github.com/collective/collective.cover/issues/262
+    """
+    new_default_value = u"tile-default"
+
+    if logger is None:
+        logger = logging.getLogger(PROJECTNAME)
+
+    catalog = getToolByName(context, 'portal_catalog')
+    brains = catalog(object_provides=ICover.__identifier__)
+
+    for brain in brains:
+        cover = brain.getObject()
+        layout_view = cover.restrictedTraverse("layout")
+
+        # There might be covers with empty layout
+        try:
+            layout = layout_view.get_layout("view")
+        except:
+            layout = []
+        for row in layout:
+            for column in row.get("children", []):
+                for tile_data in column.get("children", []):
+                    tile = cover.restrictedTraverse("{0}/{1}".format(tile_data["tile-type"], tile_data["id"]))
+                    tile_config = tile.get_tile_configuration()
+                    css_class = tile_config.get("css_class", u"")
+                    if not isinstance(css_class, basestring) or css_class == u"--NOVALUE--" or css_class == u"":
+                        tile_config['css_class'] = new_default_value
+                        tile.set_tile_configuration(tile_config)
+
+    logger.info("new default value checked in every tile's css_class")

@@ -96,6 +96,7 @@ class TileStylesVocabulary(object):
         registry = getUtility(IRegistry)
         settings = registry.forInterface(ICoverSettings)
         items = []
+        with_default = False
         if settings.styles is not None:
             styles = list(settings.styles)
             for style in styles:
@@ -103,7 +104,18 @@ class TileStylesVocabulary(object):
                     title, css_class = style.split('|')
                     # remove any leading/trailing whitespaces
                     title, css_class = title.strip(), css_class.strip()
-                    items.append(SimpleTerm(value=css_class, title=title))
+
+                    # make sure that default style is always first
+                    if css_class == u"tile-default":
+                        items.insert(0, SimpleTerm(value=css_class, title=title))
+                        with_default = True
+                    else:
+                        items.append(SimpleTerm(value=css_class, title=title))
+
+        # force default style if it was removed from configuration
+        if not with_default:
+            items.insert(0, SimpleTerm(value=u"tile-default", title="-Default-"))
+
         return SimpleVocabulary(items)
 
 grok.global_utility(TileStylesVocabulary, name=u'collective.cover.TileStyles')
