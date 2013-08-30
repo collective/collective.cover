@@ -153,15 +153,6 @@ def update_styles_record_4_5(context, logger=None):
     if logger is None:
         logger = logging.getLogger(PROJECTNAME)
 
-#    registry = getUtility(IRegistry)
-#    record = 'collective.cover.controlpanel.ICoverSettings.styles'
-
-#    if record in registry.records:
-        # XXX: if the record is on the registry it will be corrupt by a type
-        # mismatch and we need just to remove it; this could happen only in
-        # case of sites using collective.cover from master branch
-#        del registry.records[record]
-
     profile = 'profile-collective.cover:upgrade_4_to_5'
     setup = getToolByName(context, 'portal_setup')
     setup.runAllImportStepsFromProfile(profile)
