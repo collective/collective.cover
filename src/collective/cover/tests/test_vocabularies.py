@@ -86,7 +86,7 @@ class VocabulariesTestCase(unittest.TestCase):
         self.assertIsNotNone(vocabulary)
         # in the beginning the vocabulary should contain the default styles
         styles = vocabulary(self.portal)
-        self.assertEqual(len(styles), 3)
+        self.assertEqual(len(styles), 4)
         # let's try to put some other values on it
         registry = getUtility(IRegistry)
         settings = registry.forInterface(ICoverSettings)
@@ -96,9 +96,11 @@ class VocabulariesTestCase(unittest.TestCase):
             'blue background|blueTile',
         ])
         styles = vocabulary(self.portal)
-        self.assertEqual(len(styles), 3)
+        # although default style is not set, vocabulary inserts it
+        self.assertEqual(len(styles), 4)
         self.assertIn('redTile', styles.by_value)
-        # adding a couple of not well formatted items result in no change
+        # adding a couple of not well formatted items result in no option
+        # (except for the default one)
         settings.styles = set(['not well formated'])
         styles = vocabulary(self.portal)
-        self.assertEqual(len(styles), 0)
+        self.assertEqual(len(styles), 1)
