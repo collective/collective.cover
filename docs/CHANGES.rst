@@ -4,6 +4,23 @@ There's a frood who really knows where his towel is
 1.0a5 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Added Cover as Linkable in TinyMCE settings (closes `#259`_).
+  [marcosfromero]
+
+- Default CSS class for tiles (closes `#262`_). [marcosfromero]
+
+- When adding a tile, display configuration icon only for configurable
+  tiles (closes `#204`_). [marcosfromero]
+
+- Auto add a column when adding a row (closes `#212`_). 
+  [marcosfromero]
+
+- Remove dependency on plone.batching to avoid ``IndexError: multiple_pages``
+  on Plone 4.2. [jpgimenez]
+
+- Refactor collection tile to have a more sane page template (closes `#249`_).
+  [rodfersou]
+
 - Move CSS to registry_css (closes `#244`_). [agnogueira]
 
 - Collection tile now fulfills the configured image size (fixes `#239`_).
@@ -215,6 +232,12 @@ There's a frood who really knows where his towel is
 .. _`#191`: https://github.com/collective/collective.cover/issues/191
 .. _`#198`: https://github.com/collective/collective.cover/issues/198
 .. _`#203`: https://github.com/collective/collective.cover/issues/203
+.. _`#204`: https://github.com/collective/collective.cover/issues/204
 .. _`#206`: https://github.com/collective/collective.cover/issues/206
+.. _`#212`: https://github.com/collective/collective.cover/issues/212
 .. _`#218`: https://github.com/collective/collective.cover/issues/218
 .. _`#239`: https://github.com/collective/collective.cover/issues/239
+.. _`#249`: https://github.com/collective/collective.cover/issues/249
+.. _`#259`: https://github.com/collective/collective.cover/issues/259
+.. _`#262`: https://github.com/collective/collective.cover/issues/262
+

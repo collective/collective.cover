@@ -19,7 +19,7 @@ class ImageTileTestCase(unittest.TestCase):
         self.portal = self.layer['portal']
         self.request = self.layer['request']
         self.tile = self.portal.restrictedTraverse(
-            '@@%s/%s' % ('collective.cover.image', 'test-image-tile'))
+            '@@{0}/{1}'.format('collective.cover.image', 'test-image-tile'))
 
     def test_interface(self):
         self.assertTrue(IPersistentCoverTile.implementedBy(ImageTile))
@@ -76,7 +76,7 @@ class ImageTileTestCase(unittest.TestCase):
         self.assertIn('src="http://nohost/plone/my-image/@@images', rendered)
         # instantiate the tile again
         self.tile = self.portal.restrictedTraverse(
-            '@@%s/%s' % ('collective.cover.image', 'test-image-tile'))
+            '@@{0}/{1}'.format('collective.cover.image', 'test-image-tile'))
         self.tile.populate_with_object(obj1)
         rendered = self.tile()
         # the tile renders the new image

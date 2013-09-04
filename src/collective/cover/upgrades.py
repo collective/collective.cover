@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from collective.cover.config import PROJECTNAME
+from collective.cover.content import ICover
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
 from zope.component import getUtility
@@ -22,11 +23,11 @@ def rename_content_chooser_resources(context, logger=None):
     new_id = '++resource++collective.cover/contentchooser.css'
     if old_id in css_tool.getResourceIds():
         css_tool.renameResource(old_id, new_id)
-        logger.info("'%s' resource was renamed to '%s'" % (old_id, new_id))
+        logger.info("'{0}' resource was renamed to '{1}'".format(old_id, new_id))
         css_tool.cookResources()
         logger.info("CSS resources were cooked")
     else:
-        logger.debug("'%s' resource not found in portal_css" % old_id)
+        logger.debug("'{0}' resource not found in portal_css".format(old_id))
 
     # now we mess with the JS registry
     js_tool = getToolByName(context, 'portal_javascripts')
@@ -34,11 +35,11 @@ def rename_content_chooser_resources(context, logger=None):
     new_id = '++resource++collective.cover/contentchooser.js'
     if old_id in js_tool.getResourceIds():
         js_tool.renameResource(old_id, new_id)
-        logger.info("'%s' resource was renamed to '%s'" % (old_id, new_id))
+        logger.info("'{0}' resource was renamed to '{1}'".format(old_id, new_id))
         js_tool.cookResources()
         logger.info("JS resources were cooked")
     else:
-        logger.debug("'%s' resource not found in portal_javascripts" % old_id)
+        logger.debug("'{0}' resource not found in portal_javascripts".format(old_id))
 
 
 def register_available_tiles_record(context, logger=None):
@@ -97,19 +98,19 @@ def issue_218(context, logger=None):
         if tile not in record:
             record.append(tile)
             logger.info(
-                "'%s' tile added to '%s' record" % (tile, record_name))
+                "'{0}' tile added to '{1}' record".format(tile, record_name))
         else:
             logger.debug(
-                "'%s' tile already in '%s' record" % (tile, record_name))
+                "'{0}' tile already in '{1}' record".format(tile, record_name))
 
         for tile in (u'collective.cover.image', u'collective.cover.link'):
             if tile in record:
                 record.remove(tile)
                 logger.info(
-                    "'%s' tile removed from '%s' record" % (tile, record_name))
+                    "'{0}' tile removed from '{1}' record".format(tile, record_name))
             else:
                 logger.debug(
-                    "'%s' tile already removed from '%s' record" % (tile, record_name))
+                    "'{0}' tile already removed from '{1}' record".format(tile, record_name))
 
         record.sort()
         registry[record_name] = record
@@ -142,3 +143,65 @@ def issue_244(context, logger=None):
         logger.info("CSS resources were cooked")
     else:
         logger.debug("{0} resource already in portal_css".format(id))
+
+
+def update_styles_record_4_5(context, logger=None):
+    """Handler for upgrade step from 4 to 5; adds the 'tile-default'
+    value to the 'styles' record in the registry.
+    See: https://github.com/collective/collective.cover/issues/262
+    """
+    if logger is None:
+        logger = logging.getLogger(PROJECTNAME)
+
+    profile = 'profile-collective.cover:upgrade_4_to_5'
+    setup = getToolByName(context, 'portal_setup')
+    setup.runImportStepFromProfile(profile, 'plone.app.registry')
+    logger.info("'styles' record updated in the registry")
+
+
+def set_new_default_class_4_5(context, logger=None):
+    """Sets the new default css_class value for old tiles
+    See: https://github.com/collective/collective.cover/issues/262
+    """
+    new_default_value = u"tile-default"
+
+    if logger is None:
+        logger = logging.getLogger(PROJECTNAME)
+
+    catalog = getToolByName(context, 'portal_catalog')
+    brains = catalog(object_provides=ICover.__identifier__)
+
+    for brain in brains:
+        cover = brain.getObject()
+        layout_view = cover.restrictedTraverse("layout")
+
+        # There might be covers with empty layout
+        try:
+            layout = layout_view.get_layout("view")
+        except:
+            layout = []
+        for row in layout:
+            for column in row.get("children", []):
+                for tile_data in column.get("children", []):
+                    tile = cover.restrictedTraverse("{0}/{1}".format(tile_data["tile-type"], tile_data["id"]))
+                    tile_config = tile.get_tile_configuration()
+                    css_class = tile_config.get("css_class", u"")
+                    if not isinstance(css_class, basestring) or css_class == u"--NOVALUE--" or css_class == u"":
+                        tile_config['css_class'] = new_default_value
+                        tile.set_tile_configuration(tile_config)
+
+    logger.info("new default value checked in every tile's css_class")
+
+
+def tinymce_linkable(context, logger=None):
+    """Adds collective.cover.content as Linkable in TinyMCE settings
+    See: https://github.com/collective/collective.cover/issues/259
+    """
+
+    if logger is None:
+        logger = logging.getLogger(PROJECTNAME)
+
+    profile = 'profile-collective.cover:upgrade_4_to_5'
+    setup = getToolByName(context, 'portal_setup')
+    setup.runImportStepFromProfile(profile, 'tinymce_settings')
+    logger.info("'linkable' property updated in TinyMCE settings")

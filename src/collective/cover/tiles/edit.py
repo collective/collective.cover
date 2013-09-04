@@ -35,7 +35,7 @@ class CustomEditForm(DefaultEditForm):
         typeName = self.tileType.__name__
         tileId = self.tileId
 
-        tile = self.context.restrictedTraverse('@@%s/%s' % (typeName, tileId,))
+        tile = self.context.restrictedTraverse('@@{0}/{1}'.format(typeName, tileId))
 
         if not tile.isAllowedToEdit():
             raise Unauthorized("You are not allowed to add this kind of tile")
@@ -50,7 +50,7 @@ class CustomEditForm(DefaultEditForm):
         typeName = self.tileType.__name__
 
         # Traverse to a new tile in the context, with no data
-        tile = self.context.restrictedTraverse('@@%s/%s' % (typeName, self.tileId,))
+        tile = self.context.restrictedTraverse('@@{0}/{1}'.format(typeName, self.tileId))
 
         dataManager = ITileDataManager(tile)
         # We need to check first for existing content in order to not loose

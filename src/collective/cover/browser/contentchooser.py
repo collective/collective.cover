@@ -19,7 +19,7 @@ from zope.component import queryUtility
 from zope.interface import Interface
 from zope.schema.interfaces import IVocabularyFactory
 from zope.schema.vocabulary import SimpleTerm
-from plone.batching import Batch
+from Products.CMFPlone.PloneBatch import Batch
 
 import json
 
@@ -72,15 +72,15 @@ class ContentSearch(grok.View):
         self.query = self.request.get('q', None)
         self.tab = self.request.get('tab', None)
         b_size = int(self.request.get('b_size', 10))
-        page = int(self.request.get('page', 1))
+        page = int(self.request.get('page', 0))
         strategy = SitemapNavtreeStrategy(self.context)
 
         uids = None
         result = self.search(self.query, uids=uids,
                              page=page,
                              b_size=b_size)
-        self.has_next = result.has_next
-        self.nextpage = result.nextpage
+        self.has_next = result.next is not None
+        self.nextpage = result.pagenumber + 1
         result = [strategy.decoratorFactory({'item': node}) for node in result]
         self.level = 1
         self.children = result
@@ -88,7 +88,7 @@ class ContentSearch(grok.View):
     def render(self):
         return self.list_template(children=self.children, level=1)
 
-    def search(self, query=None, page=None, b_size=None, uids=None):
+    def search(self, query=None, page=0, b_size=10, uids=None):
         catalog = getToolByName(self.context, 'portal_catalog')
         registry = getUtility(IRegistry)
         settings = registry.forInterface(ICoverSettings)
@@ -99,14 +99,14 @@ class ContentSearch(grok.View):
         catalog_query['portal_type'] = searchable_types
 
         if query:
-            catalog_query = {'SearchableText': '%s*' % query}
+            catalog_query = {'SearchableText': '{0}*'.format(query)}
 
         # XXX: not implemented, this is needed?
 #        if uids:
 #            catalog_query['UID'] = uids
 
         results = catalog(**catalog_query)
-        results = Batch.fromPagenumber(items=results, pagesize=b_size, pagenumber=page)
+        results = Batch(results, size=b_size, start=(page * b_size), orphan=0)
 
         return results
 
@@ -209,7 +209,7 @@ class SearchItemsBrowserView(BrowserView):
         catalog_query['portal_type'] = self.filter_portal_types
         catalog_query['path'] = {'query': path, 'depth': 1}
         if searchtext:
-            catalog_query = {'SearchableText': '%s*' % searchtext}
+            catalog_query = {'SearchableText': '{0}*'.format(searchtext)}
 
         for brain in portal_catalog(**catalog_query):
             catalog_results.append({
@@ -218,10 +218,8 @@ class SearchItemsBrowserView(BrowserView):
                 'url': brain.getURL(),
                 'portal_type': brain.portal_type,
                 'normalized_type': normalizer.normalize(brain.portal_type),
-                'classicon': 'contenttype-%s' %
-                             (normalizer.normalize(brain.portal_type)),
-                'r_state': 'state-%s' %
-                           (normalizer.normalize(brain.review_state or '')),
+                'classicon': 'contenttype-{0}'.format(normalizer.normalize(brain.portal_type)),
+                'r_state': 'state-{0}'.format(normalizer.normalize(brain.review_state or '')),
                 'title': brain.Title == "" and brain.id or brain.Title,
                 'icon': self.getIcon(brain).html_tag() or '',
                 'is_folderish': brain.is_folderish})

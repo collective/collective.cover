@@ -88,7 +88,7 @@ class TilesConfigurationScreen(object):
         self.request = request
         self.tile = tile
         self.annotations = IAnnotations(self.context)
-        self.key = "%s.%s" % (ANNOTATIONS_KEY_PREFIX, tile.id)
+        self.key = '{0}.{1}'.format(ANNOTATIONS_KEY_PREFIX, tile.id)
 
     def _set_default_configuration(self):
         defaults = {}
@@ -99,6 +99,9 @@ class TilesConfigurationScreen(object):
             order = unicode(fields.index(name))
             # default configuration attributes for all fields
             defaults[name] = {'order': order, 'visibility': u'on'}
+            if name == 'css_class':
+                # css_class, set default
+                defaults[name] = field.default
             if ITextLine.providedBy(field):
                 # field is TextLine, we should add 'htmltag'
                 defaults[name]['htmltag'] = u'h2'

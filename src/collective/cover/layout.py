@@ -66,11 +66,11 @@ class PageLayout(grok.View):
             if section['type'] == u'group':
                 return self.group(section=section, mode=mode)
             if section['type'] == u'tile':
-                tile_url = '@@%s/%s' % (section.get('tile-type'), section.get('id'))
+                tile_url = '@@{0}/{1}'.format(section.get('tile-type'), section.get('id'))
                 tile_conf = self.context.restrictedTraverse(tile_url.encode()).get_tile_configuration()
-                if tile_conf.get('css_class'):
-                    css_class = tile_conf.get('css_class', '')
-                    section['class'] = '%s %s' % (section.get('class'), css_class)
+                css_class = tile_conf.get('css_class', '')
+                section['class'] = '{0} {1}'.format(section.get('class'), css_class)
+
                 return self.tile(section=section, mode=mode, tile_url=tile_url)
         else:
             return self.generalmarkup(section=section, mode=mode)
@@ -91,7 +91,7 @@ class PageLayout(grok.View):
         return tile.is_editable
 
     def can_compose_tile_class(self, tile_type, tile_id):
-        tile = self.context.restrictedTraverse("%s/%s" % (str(tile_type), str(tile_id)))
+        tile = self.context.restrictedTraverse('{0}/{1}'.format(str(tile_type), str(tile_id)))
         if not tile.isAllowedToEdit():
             return "disabled"
         else:
@@ -158,10 +158,12 @@ class TileList(grok.View):
 
     def get_tile_metadata(self, tile_name):
         tile_type = getUtility(ITileType, tile_name)
+        tile = self.context.restrictedTraverse(str(tile_name))
         tile_metadata = {
             'icon': tile_type.icon,
             'description': tile_type.description,
-            'title': tile_type.title
+            'title': tile_type.title,
+            'is_configurable': tile.is_configurable and 1 or 0
         }
 
         return tile_metadata
@@ -198,9 +200,9 @@ class GroupSelect(grok.View):
             tile_len = int(self.request["tile_len"])
             i = 0
             while(i < tile_len):
-                tile_type = self.request["tiles[%s][type]" % i]
-                tile_id = self.request["tiles[%s][id]" % i]
-                tile = self.context.restrictedTraverse("%s/%s" % (tile_type, tile_id))
+                tile_type = self.request['tiles[{0}][type]'.format(i)]
+                tile_id = self.request['tiles[{0}][id]'.format(i)]
+                tile = self.context.restrictedTraverse('{0}/{1}'.format(tile_type, tile_id))
                 tile.setAllowedGroupsForEdit(groups)
                 i += 1
 
