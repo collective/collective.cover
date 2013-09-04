@@ -78,7 +78,7 @@ $(document).ready(function() {
 
     $('a.edit-tile-link, a.config-tile-link').prepOverlay({
         subtype: 'ajax',
-        filter: '.tiles-edit',
+        filter: '.tile-content',
         formselector: '#edit_tile',
         closeselector: '[name="buttons.cancel"]',
         noform: 'close',
@@ -107,7 +107,8 @@ $(document).ready(function() {
 
         },
         afterpost: function(return_value, data_parent) {
-            location.reload();
+            var tile_id = data_parent.data('pbo').src.split('/').pop();
+            $('#'+tile_id).html(return_value);
         },
         config: {
             onLoad: function() {
@@ -153,8 +154,8 @@ $(document).ready(function() {
                   serial_sort(textarea, sortable);
                 });
               }
-            },
-            onClose: function() { location.reload(); }
+            }/*,
+            onClose: function() { location.reload(); }*/
 
         }
     });
