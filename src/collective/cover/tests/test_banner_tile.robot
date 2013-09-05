@@ -15,6 +15,8 @@ ${banner_uuid}  12345
 ${image_selector}  .ui-draggable .contenttype-image
 ${link_selector}  .ui-draggable .contenttype-link
 ${tile_selector}  div.tile-container div.tile
+${title_field_selector}  .pb-ajax input.text-widget:first
+${title_sample}  Some text for title
 
 *** Test cases ***
 
@@ -48,6 +50,13 @@ Test Banner Tile
     # now we move to the default view to check the link is still there
     Click Link  link=View
     Page Should Contain  Test link
+
+
+    # go back to compose view to edit banner title
+    Click Link  link=Compose
+    Input Text  css=${title_field_selector}  ${title_sample}
+    Click Button  Save
+    Page Should Contain Link  ${title_sample}
 
     Click Link  link=Layout
     Delete Tile
