@@ -122,6 +122,12 @@
           handler=".upgrades.set_new_default_class_4_5"
           />
 
+      <genericsetup:upgradeStep
+          title="Add Cover as Linkable in TinyMCE settings"
+          description="Cover is now linkable"
+          handler=".upgrades.tinymce_linkable"
+          />
+
   </genericsetup:upgradeSteps>
 
 </configure>
