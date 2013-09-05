@@ -7,7 +7,7 @@
         <p tal:condition="is_empty" i18n:translate="">
             Please drop a collection here to fill the tile.
         </p>
-        <div class="cover-collection-tile" tal:condition="not:is_empty">
+        <div class="cover-collection-tile tile-content" tal:condition="not:is_empty">
             <tal:results define="results view/results|nothing;
                                  conf_fields view/configured_fields;
                                  toLocalizedTime nocall:context/@@plone/toLocalizedTime">
