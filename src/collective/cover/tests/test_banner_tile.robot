@@ -15,8 +15,9 @@ ${banner_uuid}  12345
 ${image_selector}  .ui-draggable .contenttype-image
 ${link_selector}  .ui-draggable .contenttype-link
 ${tile_selector}  div.tile-container div.tile
-${title_field_selector}  .pb-ajax input.text-widget:first
+${title_field_id}  collective-cover-banner-title
 ${title_sample}  Some text for title
+${edit_link_selector}  a.edit-tile-link
 
 *** Test cases ***
 
@@ -54,7 +55,9 @@ Test Banner Tile
 
     # go back to compose view to edit banner title
     Click Link  link=Compose
-    Input Text  css=${title_field_selector}  ${title_sample}
+    Click Link  css=${edit_link_selector}
+    Wait until page contains element  id=${title_field_id}
+    Input Text  id=${title_field_id}  ${title_sample}
     Click Button  Save
     Page Should Contain Link  ${title_sample}
 
