@@ -86,7 +86,7 @@ class CollectionTileTestCase(unittest.TestCase):
         obj = self.portal['my-file']
         self.assertFalse(self.tile.thumbnail(obj))
 
-        # as an Image do have an image field, we should have a thumbnail
+        # as an Image does have an image field, we should have a thumbnail
         obj = self.portal['my-image']
         thumbnail = self.tile.thumbnail(obj)
         self.assertTrue(thumbnail)
@@ -101,3 +101,5 @@ class CollectionTileTestCase(unittest.TestCase):
 
         self.assertFalse(self.tile._field_is_visible('image'))
         self.assertFalse(self.tile.thumbnail(obj))
+
+        # TODO: test against Dexterity-based content types
