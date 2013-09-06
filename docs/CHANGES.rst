@@ -4,6 +4,9 @@ There's a frood who really knows where his towel is
 1.0a5 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Prevent unnecesary page reloads when saving or canceling edit overlay
+  in tiles (closes `#274`_). [marcosfromero]
+
 - On collection tile, return a thumbnail only if the item has an image field
   and the field is visible (closes `#278`_). [cleberjsantos, hvelarde]
 
@@ -239,4 +242,5 @@ There's a frood who really knows where his towel is
 .. _`#239`: https://github.com/collective/collective.cover/issues/239
 .. _`#259`: https://github.com/collective/collective.cover/issues/259
 .. _`#262`: https://github.com/collective/collective.cover/issues/262
+.. _`#274`: https://github.com/collective/collective.cover/issues/274
 .. _`#278`: https://github.com/collective/collective.cover/issues/278

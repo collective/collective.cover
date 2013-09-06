@@ -8,6 +8,7 @@
   <p tal:condition="not: body" i18n:translate="">
     Please drag&amp;drop a Form Folder here to populate the tile.
   </p>
+  <div class="tile-content">
   <tal:fields
      tal:condition="body"
      repeat="field view/get_configured_fields">
@@ -39,6 +40,7 @@
     <div class="content"
          tal:content="structure body">Form Body</div>
     <div class="visualClear"><!-- --></div>
+  </div>
   </div>
 </body>
 </html>

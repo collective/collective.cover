@@ -15,6 +15,10 @@ ${banner_uuid}  12345
 ${image_selector}  .ui-draggable .contenttype-image
 ${link_selector}  .ui-draggable .contenttype-link
 ${tile_selector}  div.tile-container div.tile
+${title_field_id}  collective-cover-banner-title
+${title_sample}  Some text for title
+${title_other_sample}  This text should never be saved
+${edit_link_selector}  a.edit-tile-link
 
 *** Test cases ***
 
@@ -48,6 +52,24 @@ Test Banner Tile
     # now we move to the default view to check the link is still there
     Click Link  link=View
     Page Should Contain  Test link
+
+
+    # go back to compose view to edit banner title
+    Click Link  link=Compose
+    Click Link  css=${edit_link_selector}
+    Wait until page contains element  id=${title_field_id}
+    Input Text  id=${title_field_id}  ${title_sample}
+    Click Button  Save
+    Page Should Contain Link  ${title_sample}
+
+
+    # edit tile but don't save it
+    Click Link  css=${edit_link_selector}
+    Wait until page contains element  id=${title_field_id}
+    Input Text  id=${title_field_id}  ${title_other_sample}
+    Click Button  Cancel
+    Page Should Not Contain Link  ${title_other_sample}
+    Page Should Contain Link  ${title_sample}
 
     Click Link  link=Layout
     Delete Tile
