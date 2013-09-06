@@ -158,15 +158,20 @@ class CollectionTile(PersistentCoverTile):
         return results
 
     def thumbnail(self, item):
-        tile_conf = self.get_tile_configuration()
-        image_conf = tile_conf.get('image', None)
-        scales = item.restrictedTraverse('@@images')
-        if image_conf:
-            img_visibility = image_conf.get('visibility', 'off')
-            if img_visibility == 'on' and item.getField('image'):
+        """Return a thumbnail of an image if the item has an image field and
+        the field is visible in the tile.
+
+        :param item: [required]
+        :type item: content object
+        """
+        if item.getField('image') and self._field_is_visible('image'):
+            tile_conf = self.get_tile_configuration()
+            image_conf = tile_conf.get('image', None)
+            if image_conf:
                 scaleconf = image_conf['imgsize']
                 # scale string is something like: 'mini 200:200'
                 scale = scaleconf.split(' ')[0]  # we need the name only: 'mini'
+                scales = item.restrictedTraverse('@@images')
                 return scales.scale('image', scale)
 
     def remove_relation(self):
