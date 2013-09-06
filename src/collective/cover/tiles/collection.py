@@ -77,18 +77,17 @@ class CollectionTile(PersistentCoverTile):
 
     is_configurable = True
     is_editable = True
-    configured_fields = {}
+    configured_fields = []
 
     def get_title(self):
         return self.data['title']
 
     def results(self):
         self.configured_fields = self.get_configured_fields()
+        size_conf = [i for i in self.configured_fields if i['id'] == 'number_to_show']
 
-        size_conf = self.configured_fields['number_to_show']
-
-        if size_conf and 'size' in size_conf.keys():
-            size = int(size_conf['size'])
+        if size_conf and 'size' in size_conf[0].keys():
+            size = int(size_conf[0]['size'])
         else:
             size = 4
 
@@ -132,9 +131,10 @@ class CollectionTile(PersistentCoverTile):
 
         fields = getFieldsInOrder(tileType.schema)
 
-        results = {}
+        results = []
         for name, obj in fields:
-            field = {'title': obj.title}
+            field = {'id': name,
+                     'title': obj.title}
             if name in conf:
                 field_conf = conf[name]
                 if ('visibility' in field_conf and field_conf['visibility'] == u'off'):
@@ -153,7 +153,7 @@ class CollectionTile(PersistentCoverTile):
                 if 'size' in field_conf:
                     field['size'] = field_conf['size']
 
-            results[name] = field
+            results.append(field)
 
         return results
 
