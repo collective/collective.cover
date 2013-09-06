@@ -107,8 +107,17 @@ $(document).ready(function() {
 
         },
         afterpost: function(return_value, data_parent) {
-            var tile_id = data_parent.data('pbo').src.split('/').pop();
-            $('#'+tile_id).html(return_value);
+            var tileId = data_parent.data('pbo').src.split('/').pop();
+            var tile = $('#'+tileId);
+            // Get tile type
+            var tileType = tile.data('tile-type');
+            // List of tile types that make a page reload
+            var reloadTypes = ['collective.cover.carousel'];
+            if(reloadTypes.indexOf(tileType)>-1) {
+                location.reload();
+            } else {
+                tile.html(return_value);
+            }
         },
         config: {
             onLoad: function() {
