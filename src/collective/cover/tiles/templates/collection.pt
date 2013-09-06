@@ -27,9 +27,7 @@
                        condition="python:field['id'] == 'image' and thumbnail">
               <a tal:attributes="href obj/absolute_url;
                                  title obj/Description">
-                <!-- XXX -->
-                <img style="float: left; margin: 0 1em 0.5em 0;"
-                     tal:attributes="src thumbnail/url;
+                <img tal:attributes="src thumbnail/url;
                                      width thumbnail/width;
                                      height thumbnail/height;
                                      alt obj/Description|obj/Title" />
@@ -38,7 +36,6 @@
 
             <tal:title define="htmltag python:field.get('htmltag', 'h1')"
                        condition="python:field['id'] == 'title'">
-
 
                 <h1 tal:condition="python:htmltag == 'h1'">
                     <a tal:attributes="href obj/absolute_url;
