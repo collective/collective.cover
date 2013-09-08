@@ -37,6 +37,21 @@ Test content search
     Add Tile  ${basic_tile_location}
     Save Cover Layout
 
+    # For this particular test, we need some text in contents
+    Go To  ${PLONE_URL}/my-document
+    Click Link  link=Edit
+    Input Text  id=text  A crise do apagão foi uma crise nacional ocorrida no Brasil, que afetou o fornecimento e distribuição de energia elétrica. 
+    Click Button  Save
+    Page Should Contain  Changes saved.
+
+    Go To  ${PLONE_URL}/my-news-item
+    Click Link  link=Edit
+    Wait For Condition  return tinyMCE.activeEditor != null
+    Execute Javascript  tinyMCE.activeEditor.setContent('É importante notar também que no português de Portugal, "apagão" é uma palavra que pode se referir a qualquer tipo de blecaute');
+    Click Button  Save
+    Page Should Contain  Changes saved.
+
+    Click Link  link=Title
     Click Link  link=Compose
     Page Should Contain   Please drag&drop some content here to populate the tile.
 
@@ -62,6 +77,21 @@ Test content search
     Wait Until Page Contains Element  css=#recent ul li
     Xpath Should Match X Times  //*[@id="recent"]/ul/li  2
 
+
+    Click Link  link=My document
+    Click Link  link=Edit
+    # For some reason, once edited, My document loads tinyMCE
+    Wait For Condition  return tinyMCE.activeEditor != null
+    Execute Javascript  tinyMCE.activeEditor.setContent('')
+    Click Button  Save
+
+    Click Link  link=Test news item
+    Click Link  link=Edit
+    Wait For Condition  return tinyMCE.activeEditor != null
+    Execute Javascript  tinyMCE.activeEditor.setContent('')
+    Click Button  Save
+
+    Click Link  link=Title
     Click Link  link=Layout
     Delete Tile
     Save Cover Layout

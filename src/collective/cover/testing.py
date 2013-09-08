@@ -99,10 +99,6 @@ class Fixture(PloneSandboxLayer):
         portal['my-image2'].setImage(generate_jpeg(50, 50))
         portal['my-file'].setFile(loadFile('lorem_ipsum.txt'))
         portal['my-file'].reindexObject()
-        portal['my-document'].setText(loadFile('apagao_1.txt'))
-        portal['my-document'].reindexObject()
-        portal['my-news-item'].setText(loadFile('apagao_2.txt'))
-        portal['my-news-item'].reindexObject()
         portal_workflow = portal.portal_workflow
         portal_workflow.setChainForPortalTypes(['Collection'],
                                                ['plone_workflow'],)
