@@ -29,7 +29,7 @@ ${edit_link_selector}  a.edit-tile-link
 
 *** Test cases ***
 
-Test basic Tile
+Test content search
     # XXX: should we create the cover object programmatically?
     Create Cover  Title  Description  Empty layout
     Click Link  link=Layout
@@ -51,7 +51,7 @@ Test basic Tile
     # Now we perform a sample search and wait until results are loaded
     Input Text  id=contentchooser-content-search-input  apagao
     Wait Until Page Contains Element  css=#recent ul li
-    Xpath Should Match X Times  //*[@id="recent"]/ul/li  4
+    Xpath Should Match X Times  //*[@id="recent"]/ul/li  2
 
     # Again, remove all previous results 
     Execute Javascript  $('#recent ul li').remove()
@@ -60,7 +60,7 @@ Test basic Tile
     # And then perform a different (similar) search again
     Input Text  id=contentchooser-content-search-input  apagão
     Wait Until Page Contains Element  css=#recent ul li
-    Xpath Should Match X Times  //*[@id="recent"]/ul/li  4
+    Xpath Should Match X Times  //*[@id="recent"]/ul/li  2
 
     Click Link  link=Layout
     Delete Tile
