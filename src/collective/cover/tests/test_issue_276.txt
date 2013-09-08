@@ -1,0 +1,67 @@
+*** Settings ***
+
+Library  Selenium2Library  timeout=5 seconds  implicit_wait=3 seconds
+Resource  keywords.txt
+Resource  cover_keywords.txt
+Variables  plone/app/testing/interfaces.py
+
+Suite Setup  Start Browser and Log In
+Suite Teardown  Close Browser
+
+*** Variables ***
+
+${basic_tile_location}  'collective.cover.basic'
+${basic_uuid}  12345
+${document_selector}  .ui-draggable .contenttype-document
+${file_selector}  .ui-draggable .contenttype-file
+${image_selector}  .ui-draggable .contenttype-image
+${link_selector}  .ui-draggable .contenttype-link
+${tile_selector}  div.tile-container div.tile
+${news_item_selector}  .ui-draggable .contenttype-news-item
+${news_item_title}  Test news item
+${news_item_description}  This news item was created for testing purposes
+
+${title_field_id}  collective-cover-basic-title
+${title_sample}  Some text for title
+${title_other_sample}  This text should never be saved
+${edit_link_selector}  a.edit-tile-link
+
+
+*** Test cases ***
+
+Test basic Tile
+    # XXX: should we create the cover object programmatically?
+    Create Cover  Title  Description  Empty layout
+    Click Link  link=Layout
+
+    Add Tile  ${basic_tile_location}
+    Save Cover Layout
+
+    Click Link  link=Compose
+    Page Should Contain   Please drag&drop some content here to populate the tile.
+
+    # Display content chooser to test the search
+    Click Element  css=div#contentchooser-content-show-button
+
+    # To make sure that contentsearch has been executed via AJAX
+    # we first remove all previous results
+    Execute Javascript  $('#recent ul li').remove()
+    Xpath Should Match X Times  //*[@id="recent"]/ul/li  0
+
+    # Now we perform a sample search and wait until results are loaded
+    Input Text  id=contentchooser-content-search-input  apagao
+    Wait Until Page Contains Element  css=#recent ul li
+    Xpath Should Match X Times  //*[@id="recent"]/ul/li  4
+
+    # Again, remove all previous results 
+    Execute Javascript  $('#recent ul li').remove()
+    Xpath Should Match X Times  //*[@id="recent"]/ul/li  0
+
+    # And then perform a different (similar) search again
+    Input Text  id=contentchooser-content-search-input  apagão
+    Wait Until Page Contains Element  css=#recent ul li
+    Xpath Should Match X Times  //*[@id="recent"]/ul/li  4
+
+    Click Link  link=Layout
+    Delete Tile
+    Save Cover Layout
