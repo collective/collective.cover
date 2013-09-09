@@ -1,0 +1,79 @@
+This tests the behaviour when removing three objects referencing each other
+in a circle.  This situation cannot be resolved completely, since the removal
+events are fired separately.  However, the circle gets "broken up" when
+confirming the removal of the first object, and no further confirmation form
+are necessary: 
+
+  >>> import zope.event
+  >>> from zope.lifecycleevent import ObjectModifiedEvent
+  >>> from plone.app.textfield.value import RichTextValue
+  >>> from Products.Archetypes.interfaces import IReferenceable
+  >>> self.setRoles(('Manager',))
+  >>> p = self.portal
+  >>> p.dexterity_item1.text = RichTextValue(raw='<a href="doc2">documents...</a>')
+  >>> zope.event.notify(ObjectModifiedEvent(p.dexterity_item1))
+  >>> self.setText(p.doc2, '<a href="folder1/doc3">linking...</a>')
+  >>> self.setText(p.folder1.doc3, '<a href="../doc1">in circles.</a>')
+  >>> IReferenceable(p.dexterity_item1).getReferences()
+  [<ATDocument at /plone/doc2>]
+  >>> p.doc2.getReferences()
+  [<ATDocument at /plone/folder1/doc3>]
+  >>> p.folder1.doc3.getReferences()
+  [<ATDocument at /plone/doc1>]
+
+We use a browser to try to delete all three documents.  Before we
+can do this we need to prevent the test framework from choking on the
+exception we intentionally throw (see docs/testRemovalTriggersConfirmation.txt
+for more info).  Also, we disable the event count helper (as set in
+folder_contents), so that all tests written so far won't need modification:
+
+  >>> self.setStatusCode('LinkIntegrityNotificationException', 200)
+  >>> self.disableEventCountHelper()
+  >>> browser = self.getBrowser(loggedIn=True)
+  >>> browser.open('http://nohost/plone/folder_contents')
+  >>> browser.getControl('Test Page 1').selected = True
+  >>> browser.getControl('Test Page 2').selected = True
+  >>> browser.getControl('Test Folder 1').selected = True
+  >>> browser.getControl('Delete').click()
+  >>> browser.contents
+  '...<a href="http://nohost/plone/doc1"...Test Page 1...
+   ...This...Page...is referenced by the following items:...
+   ...<li>...href="http://nohost/plone/folder1/doc3"...Test Page 3...</li>...
+   ...Would you like to delete it anyway?...'
+
+Before we continue with the removal of the item, we test for the presence of
+'Test Page 2' in the list of referenced items.  This should not appear as it
+links to an object contained in also to be deleted `folder1/`, and this breach
+can be filtered out even without the helper:
+
+  >>> '<dt><a href="http://nohost/plone/doc2">Test Page 2</a></dt>' in browser.contents
+  False
+
+Now we can continue, i.e. confirm the breaches:
+
+  >>> browser.getControl(name='delete_all').click()
+
+At this point the remaining integrity breaches can be resolved automatically,
+since their target objects are known to be removed as well.  Hence there are
+no further confirmation forms:
+
+  >>> browser.url
+  'http://nohost/plone/...folder_contents'
+  >>> browser.contents
+  '...<dl class="portalMessage...Item(s) deleted...</dl>...'
+
+The documents should have been deleted:
+
+  >>> portal.doc1
+  Traceback (most recent call last):
+  ...
+  AttributeError: doc1
+  >>> portal.doc2
+  Traceback (most recent call last):
+  ...
+  AttributeError: doc2
+  >>> portal.folder1.doc3
+  Traceback (most recent call last):
+  ...
+  AttributeError: folder1
+
