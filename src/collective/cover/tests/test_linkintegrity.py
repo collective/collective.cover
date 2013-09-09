@@ -21,6 +21,7 @@ class IMyDexterityItem(Interface):
     text = RichText(title=u'Text')
 
 
+
 PloneTestCase.setupPloneSite()
 
 from ZPublisher.HTTPRequest import HTTPRequest
