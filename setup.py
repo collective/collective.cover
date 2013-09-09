@@ -87,8 +87,6 @@ setup(name='collective.cover',
               'plone.cachepurging',
               'plone.testing',
               'Products.PloneFormGen',
-#              'robotframework-selenium2library',
-#              'robotsuite',
           ],
       },
       entry_points="""
