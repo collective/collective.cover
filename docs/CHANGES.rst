@@ -4,6 +4,10 @@ There's a frood who really knows where his towel is
 1.0a5 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Added any content type support for banner tile. If it has an `image`
+  or `getImage` attribute, displays that image. And always adds
+  a link (closes `#241`_). [marcosfromero]
+
 - Prevent unnecesary page reloads when saving or canceling edit overlay
   in tiles (closes `#274`_). [marcosfromero]
 
@@ -18,7 +22,7 @@ There's a frood who really knows where his towel is
 - When adding a tile, display configuration icon only for configurable
   tiles (closes `#204`_). [marcosfromero]
 
-- Auto add a column when adding a row (closes `#212`_). 
+- Auto add a column when adding a row (closes `#212`_).
   [marcosfromero]
 
 - Remove dependency on plone.batching to avoid ``IndexError: multiple_pages``
@@ -240,6 +244,7 @@ There's a frood who really knows where his towel is
 .. _`#212`: https://github.com/collective/collective.cover/issues/212
 .. _`#218`: https://github.com/collective/collective.cover/issues/218
 .. _`#239`: https://github.com/collective/collective.cover/issues/239
+.. _`#241`: https://github.com/collective/collective.cover/issues/241
 .. _`#259`: https://github.com/collective/collective.cover/issues/259
 .. _`#262`: https://github.com/collective/collective.cover/issues/262
 .. _`#274`: https://github.com/collective/collective.cover/issues/274
