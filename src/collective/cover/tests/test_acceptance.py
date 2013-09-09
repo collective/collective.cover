@@ -18,8 +18,7 @@ tests = [f for f in files
 
 # FIXME: https://github.com/collective/collective.cover/issues/281
 if '4.2' in PLONE_VERSION:
-    tests.remove('test_collection_tile.txt')
-    tests.remove('test_banner_tile.robot')
+    tests = []
 
 
 def test_suite():
