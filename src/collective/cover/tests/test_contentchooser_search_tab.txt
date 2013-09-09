@@ -19,6 +19,21 @@ Test content tree tab
     # XXX: should we create the cover object programmatically?
     Create Cover  Title  Description  Empty layout
 
+    # For this particular test, we need some text in contents
+    Go To  ${PLONE_URL}/my-document
+    Click Link  link=Edit
+    Input Text  id=text  A crise do apagão foi uma crise nacional ocorrida no Brasil, que afetou o fornecimento e distribuição de energia elétrica. 
+    Click Button  Save
+    Page Should Contain  Changes saved.
+
+    Go To  ${PLONE_URL}/my-news-item
+    Click Link  link=Edit
+    Wait For Condition  return tinyMCE.activeEditor != null
+    Execute Javascript  tinyMCE.activeEditor.setContent('É importante notar também que no português de Portugal, "apagão" é uma palavra que pode se referir a qualquer tipo de blecaute');
+    Click Button  Save
+    Page Should Contain  Changes saved.
+
+    Click Link  link=Title
     Click Link  link=Compose
     Click Element  css=div#contentchooser-content-show-button
 
@@ -29,5 +44,27 @@ Test content tree tab
     Input text  name=${input_search}  folder
 
     Xpath Should Match X Times  //div[contains(@id, 'recent')]//ul[contains(@class, 'item-list')]//li  1
+
+    Input text  name=${input_search}  apagao
+
+    Xpath Should Match X Times  //div[contains(@id, 'recent')]//ul[contains(@class, 'item-list')]//li  2
+
+    Input text  name=${input_search}  apagão
+
+    Xpath Should Match X Times  //div[contains(@id, 'recent')]//ul[contains(@class, 'item-list')]//li  2
+
     Set Selenium Implicit Wait  ${orig wait}
     Set Selenium Speed  0
+
+    Go To  ${PLONE_URL}/my-document
+    Click Link  link=Edit
+    # For some reason, once edited, My document loads tinyMCE
+    Wait For Condition  return tinyMCE.activeEditor != null
+    Execute Javascript  tinyMCE.activeEditor.setContent('')
+    Click Button  Save
+
+    Go To  ${PLONE_URL}/my-news-item
+    Click Link  link=Edit
+    Wait For Condition  return tinyMCE.activeEditor != null
+    Execute Javascript  tinyMCE.activeEditor.setContent('')
+    Click Button  Save
