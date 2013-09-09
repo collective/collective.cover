@@ -7,6 +7,12 @@ There's a frood who really knows where his towel is
   or `getImage` attribute, displays that image. And always adds
   a link (closes `#241`_). [marcosfromero]
 
+- Prevent unnecesary page reloads when saving or canceling edit overlay
+  in tiles (closes `#274`_). [marcosfromero]
+
+- On collection tile, return a thumbnail only if the item has an image field
+  and the field is visible (closes `#278`_). [cleberjsantos, hvelarde]
+
 - Added Cover as Linkable in TinyMCE settings (closes `#259`_).
   [marcosfromero]
 
@@ -20,9 +26,6 @@ There's a frood who really knows where his towel is
 
 - Remove dependency on plone.batching to avoid ``IndexError: multiple_pages``
   on Plone 4.2. [jpgimenez]
-
-- Refactor collection tile to have a more sane page template (closes `#249`_).
-  [rodfersou]
 
 - Move CSS to registry_css (closes `#244`_). [agnogueira]
 
@@ -240,6 +243,9 @@ There's a frood who really knows where his towel is
 .. _`#212`: https://github.com/collective/collective.cover/issues/212
 .. _`#218`: https://github.com/collective/collective.cover/issues/218
 .. _`#239`: https://github.com/collective/collective.cover/issues/239
+.. _`#241`: https://github.com/collective/collective.cover/issues/241
+.. _`#249`: https://github.com/collective/collective.cover/issues/249
 .. _`#259`: https://github.com/collective/collective.cover/issues/259
 .. _`#262`: https://github.com/collective/collective.cover/issues/262
-
+.. _`#274`: https://github.com/collective/collective.cover/issues/274
+.. _`#278`: https://github.com/collective/collective.cover/issues/278
