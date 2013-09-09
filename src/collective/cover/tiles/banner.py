@@ -84,30 +84,17 @@ class BannerTile(PersistentCoverTile):
 
             remote_url = obj_url
 
+        image = None
+        # if has image, store a copy of its data
+        if self._has_image_field(obj) and self._field_is_visible('image'):
+            scales = obj.restrictedTraverse('@@images')
+            image = scales.scale('image', None)
+
+        if image is not None and image != '':
+            image = NamedBlobImage(image.data)
+
         obj = aq_base(obj)  # avoid acquisition
         title = obj.Title()
-
-        # if has image, store a copy of its data
-        data = None
-        if hasattr(obj, 'getImage'):
-            data = obj.getImage().data
-        elif hasattr(obj, 'image'):
-            data = obj.image.data
-
-        if data and not isinstance(data, basestring):
-            data = data.data
-
-        image = None
-        if data:
-            image = NamedBlobImage(data)
-
-        # Check if we got a real image: File content type has a getImage method
-        # that returns the file. If it's an image, it's OK, but if not we are
-        # dealing with any kind of file
-        if image:
-            image_size = image.getImageSize()
-            if image_size[0] == -1:
-                image = None
 
         data_mgr = ITileDataManager(self)
         data_mgr.set({
