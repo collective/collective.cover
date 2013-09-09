@@ -23,9 +23,11 @@ else:
     HAS_DEXTERITY = True
     from plone.dexterity.fti import DexterityFTI
     from plone.app.textfield import RichText
-    from plone.app.textfield.value import RichTextValue
+#    from plone.app.textfield.value import RichTextValue
+
     class IMyDexterityItem(Interface):
         text = RichText(title=u'Text')
+
 
 PloneTestCase.setupPloneSite()
 
@@ -64,12 +66,12 @@ class LinkIntegrityFunctionalTestCase(PloneTestCase.FunctionalTestCase):
         self.portal.invokeFactory('My Dexterity Item', id='dexterity_item2',
                                   title='Dexterity Item 2')
         self.portal.invokeFactory('Non referenciable Dexterity Item',
-                             id='nonreferenciable_dexterity_item1',
-                             title='Non referenciable Dexterity Item 1')
+                                  id='nonreferenciable_dexterity_item1',
+                                  title='Non referenciable Dexterity Item 1')
         self.portal.invokeFactory('Non referenciable Dexterity Item',
-                             id='nonreferenciable_dexterity_item2',
-                             title='Non referenciable Dexterity Item 2')
-        
+                                  id='nonreferenciable_dexterity_item2',
+                                  title='Non referenciable Dexterity Item 2')
+
     def getBrowser(self, loggedIn=False):
         """ instantiate and return a testbrowser for convenience """
         return utils.getBrowser(loggedIn)
@@ -114,14 +116,14 @@ def test_suite():
     suite = TestSuite([
         makeSuite(LinkIntegrityTestCase),
     ])
-    if HAS_DEXTERITY:    
+    if HAS_DEXTERITY:
         docs_dir = abspath(dirname(docs.__file__)) + '/'
         for path, dirs, files in walk(docs_dir):
             for name in files:
                 relative = join(path, name)[len(docs_dir):]
                 if not '.svn' in split(path) and pattern.search(name):
                     suite.addTest(FunctionalDocFileSuite(relative,
-                        optionflags=OPTIONFLAGS,
-                        package=docs.__name__,
-                        test_class=LinkIntegrityFunctionalTestCase))
+                                  optionflags=OPTIONFLAGS,
+                                  package=docs.__name__,
+                                  test_class=LinkIntegrityFunctionalTestCase))
     return suite
