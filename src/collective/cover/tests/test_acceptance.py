@@ -12,14 +12,14 @@ PLONE_VERSION = pkg_resources.require("Plone")[0].version
 
 dirname = os.path.dirname(__file__)
 files = os.listdir(dirname)
-tests = [f for f in files if f.startswith('test_') and f.endswith('.txt')]
-
 # TODO: rename all tests from .txt to .robot
-tests.append('test_banner_tile.robot')
+tests = [f for f in files
+         if f.startswith('test_') and (f.endswith('.txt') or f.endswith('.robot'))]
 
 # FIXME: https://github.com/collective/collective.cover/issues/281
 if '4.2' in PLONE_VERSION:
     tests.remove('test_collection_tile.txt')
+    tests.remove('test_banner_tile.robot')
 
 
 def test_suite():
