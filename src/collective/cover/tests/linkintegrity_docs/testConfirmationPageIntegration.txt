@@ -1,0 +1,60 @@
+This tests the integration of Plone's separate "delete confirmation" page with
+the link integrity support, that is, the skipping of this extra page in case a
+link integrity breach exists and would present the user with a removal
+confirmation anyway.  First we use a browser to try to directly delete the
+image via the "delete action".  The regular confirmation page mentioned above
+should appear in this case:
+
+  >>> import zope.event
+  >>> from zope.lifecycleevent import ObjectModifiedEvent
+  >>> from plone.app.textfield.value import RichTextValue
+  >>> from Products.Archetypes.interfaces import IReferenceable
+  >>> self.setRoles(('Manager',))
+  >>> browser = self.getBrowser(loggedIn=True)
+  >>> browser.open('http://nohost/plone/image1/view')
+  >>> browser.getLink('Delete').click()
+  >>> browser.url
+  'http://nohost/plone/image1/delete_confirmation'
+  >>> browser.contents
+  '...Do you really want to delete this item?...
+   ...Test Image 1...
+   ...<form...action="http://nohost/plone/image1/delete_confirmation"...'
+
+Then we create a link to the same image from a text document and try to delete
+it again:
+
+  >>> portal.dexterity_item1.text = RichTextValue(raw=portal.image1.tag())
+  >>> zope.event.notify(ObjectModifiedEvent(portal.dexterity_item1))
+  >>> browser.goBack()
+
+Before we can continue we need to prevent the test framework from choking on
+the exception we intentionally throw (see testRemovalTriggersConfirmation.txt
+for more info):
+
+  >>> self.setStatusCode('LinkIntegrityNotificationException', 200)
+
+Now we can continue and "click" the "delete" action.  Now the confirmation
+page should be skipped and we should be presented with the "link integrity"
+page:
+
+  >>> browser.getLink('Delete').click()
+  >>> browser.contents
+  '...<a href="http://nohost/plone/image1"...Test Image 1...
+   ...This...Image...is referenced by the following items:...
+   ...<li>...href="http://nohost/plone/dexterity_item1"...Dexterity Item 1...</li>...
+   ...Would you like to delete it anyway?...'
+
+We go ahead and remove the image to test if the regular confirmation page does
+not appear after the link integrity check for some curious reason:
+
+  >>> browser.getControl(name='delete').click()
+  >>> browser.contents
+  '...<dl class="portalMessage...Test Image 1 has been deleted...</dl>...'
+
+The image should now be gone:
+
+  >>> portal.image1
+  Traceback (most recent call last):
+  ...
+  AttributeError: image1
+
