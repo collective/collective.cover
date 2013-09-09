@@ -15,5 +15,6 @@ script: bin/test
 after_success:
   - test -v QA && bin/buildout -c coverage.cfg -N -q -t 3 || true
   - test -v QA && make coveralls basic-validation || true
+after_failure: bin/buildout annotate
 notifications:
   irc: irc.freenode.org#simplesconsultoria
