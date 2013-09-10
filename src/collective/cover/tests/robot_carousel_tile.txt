@@ -47,7 +47,6 @@ Test file Tile
     Click Button  Save
     Wait Until Page Contains  Galleria.configure({ autoplay: false });
 
-
     #Xpath Should Match X Times  //div[contains(@class, 'textline-sortable-element')]  2
 
     Click Link  link=Layout

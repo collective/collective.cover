@@ -1,5 +1,7 @@
 *** Settings ***
 
+Documentation  https://github.com/collective/collective.cover/issues/59
+
 Library  Selenium2Library  timeout=5 seconds  implicit_wait=3 seconds
 Resource  keywords.txt
 Resource  cover_keywords.txt
@@ -23,7 +25,7 @@ ${news_item_description}  This news item was created for testing purposes
 
 *** Test cases ***
 
-Test issue_59
+Test Reverse Proxy
     Create Cover  Title  Description  Empty layout
     Click Link  link=Layout
 
