@@ -49,8 +49,6 @@ Test Collection Tile
     Click Button  Save
     # save via ajax => wait until the tile has been reloaded
     Wait Until Page Contains  ${title_sample}
-    Page Should Contain  ${title_sample}
-
 
     # edit tile but don't save it
     Click Link  css=${edit_link_selector}
