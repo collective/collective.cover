@@ -14,7 +14,7 @@ before_script:
 script: bin/test
 after_success:
   - test -v QA && bin/buildout -c coverage.cfg -N -q || true
-  - test -v QA && make coveralls basic-validation || true
+  - test -v QA && bin/coverage.sh && pip install -q coveralls && coveralls || true
 after_failure: bin/buildout annotate -c travis.cfg
 notifications:
   irc: irc.freenode.org#simplesconsultoria
