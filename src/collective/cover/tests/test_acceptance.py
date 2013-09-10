@@ -16,10 +16,6 @@ files = os.listdir(dirname)
 tests = [f for f in files
          if f.startswith('test_') and (f.endswith('.txt') or f.endswith('.robot'))]
 
-# FIXME: https://github.com/collective/collective.cover/issues/281
-if '4.2' in PLONE_VERSION:
-    tests = []
-
 
 def test_suite():
     suite = unittest.TestSuite()

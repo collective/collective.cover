@@ -81,7 +81,12 @@ Test Banner Tile
     Click Link  css=${edit_link_selector}
     Wait until page contains element  id=${title_field_id}
     Input Text  id=${title_field_id}  ${title_sample}
+    # before saving, clean the banner tile to make sure it has been loaded
+    # with the new text
+    Execute Javascript  $('.tile').empty()
     Click Button  Save
+    # save via ajax => wait until the tile has been reloaded
+    Wait Until Page Contains  ${title_sample}
     Page Should Contain Link  ${title_sample}
 
 
