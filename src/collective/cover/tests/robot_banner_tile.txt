@@ -74,7 +74,7 @@ Test Banner Tile
     Click Element  css=div#contentchooser-content-show-button
 
     Drag And Drop  css=${file_selector}  css=${tile_selector}
-    Page Should Contain Link  css=div.banner-tile h2 a
+    Wait Until Page Contains Element  css=div.banner-tile h2 a
 
     # go back to compose view to edit banner title
     Click Link  link=Compose
