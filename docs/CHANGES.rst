@@ -4,9 +4,6 @@ There's a frood who really knows where his towel is
 1.0a5 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
-- Adapted all tests with partial load of content via AJAX (closes `#281`_).
-  [marcosfromero]
-
 - Added any content type support for banner tile. If it has an `image`
   or `getImage` attribute, displays that image. And always adds
   a link (closes `#241`_). [marcosfromero]
