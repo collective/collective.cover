@@ -39,22 +39,25 @@ Test content tree tab
 
     Page Should Contain Element  css=${folder_selector}
 
-    Set Selenium Speed  1
-    ${orig wait} =  Set Selenium Implicit Wait  10 seconds
+    # Clear results before typing and wait they are loaded via AJAX
+    Execute Javascript  $('#recent ul').empty();
     Input text  name=${input_search}  folder
-
+    Wait Until Page Contains Element  css=#recent ul li a
     Xpath Should Match X Times  //div[contains(@id, 'recent')]//ul[contains(@class, 'item-list')]//li  1
 
+
+    # Clear results before typing and wait they are loaded via AJAX
+    Execute Javascript  $('#recent ul').empty();
     Input text  name=${input_search}  apagao
-
+    Wait Until Page Contains Element  css=#recent ul li a
     Xpath Should Match X Times  //div[contains(@id, 'recent')]//ul[contains(@class, 'item-list')]//li  2
 
+    # Clear results before typing and wait they are loaded via AJAX
+    Execute Javascript  $('#recent ul').empty();
     Input text  name=${input_search}  apagão
-
+    Wait Until Page Contains Element  css=#recent ul li a
     Xpath Should Match X Times  //div[contains(@id, 'recent')]//ul[contains(@class, 'item-list')]//li  2
 
-    Set Selenium Implicit Wait  ${orig wait}
-    Set Selenium Speed  0
 
     Go To  ${PLONE_URL}/my-document
     Click Link  link=Edit

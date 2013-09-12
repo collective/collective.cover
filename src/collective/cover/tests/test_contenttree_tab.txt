@@ -40,7 +40,7 @@ Test content tree tab
     Page Should Contain  My document
 
     Input text  name=${input_contenttree}  front
-    Page Should Contain  1 Results
+    Wait Until Page Contains  1 Results
 
     Click Link  link=Layout
     Delete Tile
