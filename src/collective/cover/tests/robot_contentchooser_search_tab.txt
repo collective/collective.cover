@@ -29,7 +29,7 @@ Test content tree tab
     Go To  ${PLONE_URL}/my-news-item
     Click Link  link=Edit
     Wait For Condition  return tinyMCE.activeEditor != null
-    Execute Javascript  tinyMCE.activeEditor.setContent('É importante notar também que no português de Portugal, "apagão" é uma palavra que pode se referir a qualquer tipo de blecaute');
+    Execute Javascript  tinyMCE.activeEditor.setContent('É importante notar também que no português de Portugal, apagão é uma palavra que pode se referir a qualquer tipo de blecaute');
     Click Button  Save
     Page Should Contain  Changes saved.
 
