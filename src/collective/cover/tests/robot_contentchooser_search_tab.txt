@@ -22,9 +22,7 @@ Test content tree tab
     # For this particular test, we need some text in contents
     Go To  ${PLONE_URL}/my-document
     Click Link  link=Edit
-    #Input Text  id=text  A crise do apagão foi uma crise nacional ocorrida no Brasil, que afetou o fornecimento e distribuição de energia elétrica. 
-    Wait For Condition  return tinyMCE.activeEditor != null
-    Execute Javascript  tinyMCE.activeEditor.setContent('A crise do apagão foi uma crise nacional ocorrida no Brasil, que afetou o fornecimento e distribuição de energia elétrica.');
+    Input Text  id=text  A crise do apagão foi uma crise nacional ocorrida no Brasil, que afetou o fornecimento e distribuição de energia elétrica. 
     Click Button  Save
     Page Should Contain  Changes saved.
 
