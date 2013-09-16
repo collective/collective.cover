@@ -3,12 +3,12 @@
 from App.Common import package_home
 from PIL import Image
 from PIL import ImageChops
+from plone.app.robotframework.testing import AUTOLOGIN_LIBRARY_FIXTURE
 from plone.app.testing import FunctionalTesting
 from plone.app.testing import IntegrationTesting
 from plone.app.testing import PLONE_FIXTURE
 from plone.app.testing import PloneSandboxLayer
-from plone.testing.z2 import installProduct
-from plone.testing.z2 import ZSERVER_FIXTURE
+from plone.testing import z2
 from StringIO import StringIO
 
 import os
@@ -74,7 +74,7 @@ class Fixture(PloneSandboxLayer):
     def setUpZope(self, app, configurationContext):
         import Products.PloneFormGen
         self.loadZCML(package=Products.PloneFormGen)
-        installProduct(app, 'Products.PloneFormGen')
+        z2.installProduct(app, 'Products.PloneFormGen')
         # Load ZCML
         import collective.cover
         self.loadZCML(package=collective.cover)
@@ -115,8 +115,11 @@ INTEGRATION_TESTING = IntegrationTesting(
     name='collective.cover:Integration',
 )
 
-
 FUNCTIONAL_TESTING = FunctionalTesting(
-    bases=(FIXTURE, ZSERVER_FIXTURE),
+    bases=(FIXTURE, z2.ZSERVER_FIXTURE),
     name='collective.cover:Functional',
 )
+
+ROBOT_TESTING = FunctionalTesting(
+    bases=(FIXTURE, AUTOLOGIN_LIBRARY_FIXTURE, z2.ZSERVER_FIXTURE),
+    name="collective.cover:Robot")

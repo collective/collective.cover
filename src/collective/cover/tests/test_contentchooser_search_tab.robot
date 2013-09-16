@@ -1,12 +1,10 @@
 *** Settings ***
 
-Library  Selenium2Library  timeout=5 seconds  implicit_wait=10 seconds
-Resource  keywords.txt
+Library  Remote  ${PLONE_URL}/RobotRemote
 Resource  cover_keywords.txt
-Variables  plone/app/testing/interfaces.py
 
-Suite Setup  Start Browser and Log In
-Suite Teardown  Close Browser
+Test Setup  Open test browser
+Test Teardown  Close all browsers
 
 *** Variables ***
 
@@ -16,6 +14,9 @@ ${input_search}  contentchooser-search
 *** Test cases ***
 
 Test content tree tab
+    Enable autologin as  Site Administrator
+    Go to  ${PLONE_URL}
+
     # XXX: should we create the cover object programmatically?
     Create Cover  Title  Description  Empty layout
 
@@ -45,7 +46,6 @@ Test content tree tab
     Wait Until Page Contains Element  css=#recent ul li a
     Xpath Should Match X Times  //div[contains(@id, 'recent')]//ul[contains(@class, 'item-list')]//li  1
 
-
     # Clear results before typing and wait they are loaded via AJAX
     Execute Javascript  $('#recent ul').empty();
     Input text  name=${input_search}  apagao
@@ -57,7 +57,6 @@ Test content tree tab
     Input text  name=${input_search}  apagão
     Wait Until Page Contains Element  css=#recent ul li a
     Xpath Should Match X Times  //div[contains(@id, 'recent')]//ul[contains(@class, 'item-list')]//li  2
-
 
     Go To  ${PLONE_URL}/my-document
     Click Link  link=Edit
