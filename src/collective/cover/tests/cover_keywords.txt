@@ -25,14 +25,6 @@ ${delete_tile_selector} =  div.cover-tile button.close
 
 *** Keywords ***
 
-Log In As Site Owner
-    Go to  ${PLONE_URL}/login_form
-    Page should contain element  __ac_name
-    Input text  __ac_name  ${SITE_OWNER_NAME}
-    Input text  __ac_password  ${SITE_OWNER_PASSWORD}
-    Click Button  Log in
-    Goto Homepage
-
 Start Browser and Log In
     Open Browser  ${PLONE_URL}  browser=${BROWSER}
     Log In As Site Owner

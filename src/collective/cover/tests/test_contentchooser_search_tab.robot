@@ -1,7 +1,7 @@
 *** Settings ***
 
-Library  Remote  ${PLONE_URL}/RobotRemote
 Resource  cover_keywords.txt
+Library  Remote  ${PLONE_URL}/RobotRemote
 
 Test Setup  Open test browser
 Test Teardown  Close all browsers
