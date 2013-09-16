@@ -1,7 +1,6 @@
 *** Settings ***
 
 Library  Selenium2Library  timeout=5 seconds  implicit_wait=3 seconds
-Resource  keywords.txt
 Resource  cover_keywords.txt
 Variables  plone/app/testing/interfaces.py
 
@@ -53,9 +52,9 @@ Test content tree tab
     Click Element  link=Content tree
     # XXX: filtering code use some slow fadeOut code, we must slow down selenium
     Input text  name=${input_contenttree}  folder
-    Set Selenium Speed  1
+#    Set Selenium Speed  1
     Wait Until Page Contains  1 Results
-    Set Selenium Speed  0
+#    Set Selenium Speed  0
 
     Page Should Contain Element  css=${folder_selector}
     Click Element  css=${folder_selector}
