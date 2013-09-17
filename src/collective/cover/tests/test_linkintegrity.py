@@ -1,20 +1,21 @@
 # -*- coding: utf-8 -*-
 # setup tests with all doctests found in docs/
 
-import unittest2 as unittest
-from zope.interface import Interface
-from Testing.ZopeTestCase import FunctionalDocFileSuite
-from Products.PloneTestCase import PloneTestCase
-from unittest import TestSuite
-from os.path import join, split, abspath, dirname
+from collective.cover.testing import LINKINTEGRITY_FUNCTIONAL_TESTING
+from collective.cover.tests import linkintegrity_docs as docs
 from os import walk
+from os.path import join, split, abspath, dirname
+from plone.app.testing.interfaces import (SITE_OWNER_NAME, SITE_OWNER_PASSWORD)
+from plone.app.textfield import RichText
+from plone.testing.z2 import Browser
+from Products.PloneTestCase import PloneTestCase
 from re import compile
 from sys import argv
-from collective.cover.tests import linkintegrity_docs as docs
-from collective.cover.testing import LINKINTEGRITY_FUNCTIONAL_TESTING
-from plone.app.textfield import RichText
-from plone.app.testing.interfaces import (SITE_OWNER_NAME, SITE_OWNER_PASSWORD)
-from plone.testing.z2 import Browser
+from Testing.ZopeTestCase import FunctionalDocFileSuite
+from unittest import TestSuite
+from zope.interface import Interface
+
+import unittest
 
 
 class IMyDexterityItem(Interface):
