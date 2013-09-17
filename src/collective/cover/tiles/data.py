@@ -8,6 +8,7 @@ from z3c.caching.purge import Purge
 from zope.component import adapts
 from zope.event import notify
 from zope.schema import getFields
+from zope.lifecycleevent import ObjectModifiedEvent
 
 import time
 
@@ -45,3 +46,4 @@ class PersistentCoverTileDataManager(PersistentTileDataManager):
                     notify(Purge(self.tile))
                     data['{0}_mtime'.format(k)] = '%f' % time.time()
         self.annotations[self.key] = PersistentDict(data)
+        notify(ObjectModifiedEvent(self.context))

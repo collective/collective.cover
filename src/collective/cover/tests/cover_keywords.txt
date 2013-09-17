@@ -28,6 +28,7 @@ ${delete_tile_selector} =  div.cover-tile button.close
 Start Browser and Log In
     Open Browser  ${PLONE_URL}  browser=${BROWSER}
     Log In As Site Owner
+    Click Link  link=Home
 
 Click Add Cover
     Open Add New Menu
