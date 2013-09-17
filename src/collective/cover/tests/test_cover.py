@@ -4,10 +4,12 @@ from collective.cover.content import ICover
 from collective.cover.testing import INTEGRATION_TESTING
 from plone.app.dexterity.behaviors.exclfromnav import IExcludeFromNavigation
 from plone.app.lockingbehavior.behaviors import ILocking
+from plone.app.referenceablebehavior.referenceable import IReferenceable
 from plone.app.stagingbehavior.interfaces import IStagingSupport
 from plone.app.testing import setRoles
 from plone.app.testing import TEST_USER_ID
 from plone.dexterity.interfaces import IDexterityFTI
+from plone.uuid.interfaces import IAttributeUUID
 from zope.component import createObject
 from zope.component import queryUtility
 
@@ -55,6 +57,10 @@ class CoverIntegrationTestCase(unittest.TestCase):
 
     def test_locking_behavior(self):
         self.assertTrue(ILocking.providedBy(self.c1))
+
+    def test_is_referenceable(self):
+        self.assertTrue(IReferenceable.providedBy(self.c1))
+        self.assertTrue(IAttributeUUID.providedBy(self.c1))
 
     def test_staging_behavior(self):
         self.assertTrue(IStagingSupport.providedBy(self.c1))
