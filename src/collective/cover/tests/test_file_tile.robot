@@ -9,7 +9,6 @@ Suite Teardown  Close all browsers
 *** Variables ***
 
 ${file_tile_location}  "collective.cover.file"
-${file_uuid}  12345
 ${file_selector}  .ui-draggable .contenttype-file
 ${tile_selector}  div.tile-container div.tile
 ${title_field_id}  collective-cover-file-title

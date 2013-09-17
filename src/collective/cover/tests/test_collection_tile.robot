@@ -9,7 +9,6 @@ Suite Teardown  Close all browsers
 *** Variables ***
 
 ${collection_tile_location}  'collective.cover.collection'
-${collection_uuid}  12345
 ${collection_selector}  .ui-draggable .contenttype-collection
 ${tile_selector}  div.tile-container div.tile
 ${title_field_id}  collective-cover-collection-header

@@ -9,7 +9,6 @@ Suite Teardown  Close all browsers
 *** Variables ***
 
 ${basic_tile_location}  'collective.cover.basic'
-${basic_uuid}  12345
 ${folder_selector}  .contenttype-folder
 ${input_contenttree}  contentchooser-content-trees
 ${tile_selector}  div.tile-container div.tile

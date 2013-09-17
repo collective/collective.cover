@@ -11,7 +11,6 @@ Suite Teardown  Close all browsers
 *** Variables ***
 
 ${basic_tile_location}  'collective.cover.basic'
-${basic_uuid}  12345
 ${document_selector}  .ui-draggable .contenttype-document
 ${file_selector}  .ui-draggable .contenttype-file
 ${image_selector}  .ui-draggable .contenttype-image

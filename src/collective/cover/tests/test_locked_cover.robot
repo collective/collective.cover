@@ -12,7 +12,6 @@ Suite Teardown  Close all browsers
 ${OWNER2_NAME}      admin2
 ${OWNER2_PASSWORD}  admin2
 ${basic_tile_location}  'collective.cover.basic'
-${basic_uuid}  12345
 ${document_selector}  .ui-draggable .contenttype-document
 ${tile_selector}  div.tile-container div.tile
 

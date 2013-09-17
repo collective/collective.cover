@@ -9,7 +9,6 @@ Suite Teardown  Close all browsers
 *** Variables ***
 
 ${basic_tile_location}  'collective.cover.basic'
-${basic_uuid}  12345
 ${tile_selector}  div.tile-container div.tile
 ${default_tile}  div.tile-default
 ${border_tile}  div.tile-edge
