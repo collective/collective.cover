@@ -1,34 +1,42 @@
 *** Settings ***
 
-Library  Selenium2Library  timeout=5 seconds  implicit_wait=3 seconds
-Resource  cover_keywords.txt
-Variables  plone/app/testing/interfaces.py
+Resource  cover.robot
+Library  Remote  ${PLONE_URL}/RobotRemote
 
-Suite Setup  Start Browser and Log In
-Suite Teardown  Close Browser
+Suite Setup  Open Test Browser
+Suite Teardown  Close all browsers
 
 *** Variables ***
 
-${embed_tile_location}  'collective.cover.embed'
-${embed_selector}  ul#item-list li.ui-draggable
+${file_tile_location}  "collective.cover.file"
+${file_selector}  .ui-draggable .contenttype-file
 ${tile_selector}  div.tile-container div.tile
-${title_field_id}  collective-cover-embed-title
+${title_field_id}  collective-cover-file-title
 ${title_sample}  Some text for title
 ${title_other_sample}  This text should never be saved
 ${edit_link_selector}  a.edit-tile-link
 
 *** Test cases ***
 
-Test Embed Tile
-    # XXX: should we create the cover object programmatically?
+Test File Tile
+    Enable Autologin as  Site Administrator
+    Go to Homepage
+
     Create Cover  Title  Description  Empty layout
     Click Link  link=Layout
 
-    Add Tile  ${embed_tile_location}
+    Add Tile  ${file_tile_location}
     Save Cover Layout
 
     Click Link  link=Compose
-    Page Should Contain  Please edit the tile to add the code to be embedded.
+    Page Should Contain  Please drag&drop a file here
+
+    Click Element  css=div#contentchooser-content-show-button
+
+    Drag And Drop  css=${file_selector}  css=${tile_selector}
+    Wait Until Page Contains  My file
+    Page Should Contain  This file was created for testing purposes
+    Page Should Contain Link  link=Download file
 
     # edit header
     Click Link  link=Compose
@@ -49,12 +57,6 @@ Test Embed Tile
     Click Button  Cancel
     Page Should Not Contain  ${title_other_sample}
     Page Should Contain  ${title_sample}
-
-    Click Element  css=div#contentchooser-content-show-button
-
-    # FIXME: current selectors suck!
-    #Drag And Drop  css=${embed_selector}  css=${tile_selector}
-    #Page Should Contain  The embed don't have any results
 
     Click Link  link=Layout
     Delete Tile

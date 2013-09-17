@@ -1,16 +1,14 @@
 *** Settings ***
 
-Library  Selenium2Library  timeout=10 seconds  implicit_wait=5 seconds
-Resource  cover_keywords.txt
-Variables  plone/app/testing/interfaces.py
+Resource  cover.robot
+Library  Remote  ${PLONE_URL}/RobotRemote
 
-Suite Setup  Start Browser and Log In
-Suite Teardown  Close Browser
+Suite Setup  Open Test Browser
+Suite Teardown  Close all browsers
 
 *** Variables ***
 
 ${banner_tile_location}  'collective.cover.banner'
-${banner_uuid}  12345
 ${image_selector}  .ui-draggable .contenttype-image
 ${link_selector}  .ui-draggable .contenttype-link
 ${news_item_selector}  .ui-draggable .contenttype-news-item
@@ -24,9 +22,11 @@ ${edit_link_selector}  a.edit-tile-link
 *** Test cases ***
 
 Test Banner Tile
+    Enable Autologin as  Site Administrator
+    Go to Homepage
     Create Cover  Title  Description  Empty layout
-    Click Link  link=Layout
 
+    Click Link  link=Layout
     Add Tile  ${banner_tile_location}
     Save Cover Layout
 
@@ -35,7 +35,7 @@ Test Banner Tile
 
     Click Element  css=div#contentchooser-content-show-button
     Drag And Drop  css=${news_item_selector}  css=${tile_selector}
-    Page Should Contain Image  css=div.banner-tile a img
+    Wait Until Page Contains Element  css=div.banner-tile a img
 
     # now we move to the default view to check the information is still there
     Click Link  link=View
@@ -47,7 +47,7 @@ Test Banner Tile
     Click Element  css=div#contentchooser-content-show-button
 
     Drag And Drop  css=${image_selector}  css=${tile_selector}
-    Page Should Contain Image  css=div.banner-tile a img
+    Wait Until Page Contains Element  css=div.banner-tile a img
 
     # now we move to the default view to check the element is still there
     Click Link  link=View
@@ -59,7 +59,7 @@ Test Banner Tile
     Click Element  css=div#contentchooser-content-show-button
 
     Drag And Drop  css=${link_selector}  css=${tile_selector}
-    Page Should Contain Link  css=div.banner-tile h2 a
+    Wait Until Page Contains Element  css=div.banner-tile h2 a
 
     # now we move to the default view to check the link is still there
     Click Link  link=View

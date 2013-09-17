@@ -1,23 +1,25 @@
 *** Settings ***
 
-Library  Selenium2Library  timeout=5 seconds  implicit_wait=3 seconds
-Resource  cover_keywords.txt
-Variables  plone/app/testing/interfaces.py
+Resource  cover.robot
+Library  Remote  ${PLONE_URL}/RobotRemote
 
-Suite Setup  Start Browser and Log In
-Suite Teardown  Close Browser
-
-*** Variables ***
+Test Setup  Open Test Browser
+Test Teardown  Close all browsers
 
 *** Test cases ***
 
 Test CRUD
+    Enable Autologin as  Site Administrator
+    Go to Homepage
+
     Create Cover  Title  Description  Empty layout
     Update  Title fixed  Description fixed
     Delete
 
 Test renderBase
+    Enable Autologin as  Site Administrator
     Goto Homepage
+
     Create Cover  Title  Description  Empty layout
     ${BASE}  Get Element Attribute  tag=base@href
     Should Be Equal  ${BASE}  ${PLONE_URL}/title-1/

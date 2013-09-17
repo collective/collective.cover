@@ -1,15 +1,14 @@
 *** Settings ***
 
-Resource  cover_keywords.txt
+Resource  cover.robot
 Library  Remote  ${PLONE_URL}/RobotRemote
 
-Test Setup  Open test browser
-Test Teardown  Close all browsers
+Suite Setup  Open Test Browser
+Suite Teardown  Close all browsers
 
 *** Variables ***
 
 ${collection_tile_location}  'collective.cover.collection'
-${collection_uuid}  12345
 ${collection_selector}  .ui-draggable .contenttype-collection
 ${tile_selector}  div.tile-container div.tile
 ${title_field_id}  collective-cover-collection-header
@@ -20,10 +19,9 @@ ${edit_link_selector}  a.edit-tile-link
 *** Test cases ***
 
 Test Collection Tile
-    Log In As Site Owner
+    Enable Autologin as  Site Administrator
     Go to Homepage
 
-    # XXX: should we create the cover object programmatically?
     Create Cover  Title  Description  Empty layout
     Click Link  link=Layout
 
@@ -58,20 +56,6 @@ Test Collection Tile
     Page Should Not Contain  ${title_other_sample}
     Page Should Contain  ${title_sample}
 
-    Click Link  My collection
-    Workflow Make Private
-    Log out
-
-    Click Link  Title
-    Page Should Not Contain  The collection doesn't have any results
-    And Page Should Not Contain  Forgot your password?
-
-    Log In As Site Owner
-    Go to Homepage
-    Click Link  My collection
-    Workflow Promote to Draft
-
-    Click Link  Title
     Click Link  link=Layout
     Delete Tile
     Save Cover Layout
