@@ -21,7 +21,7 @@ ${row_drop_area_selector} =  div.layout
 ${column_drop_area_selector} =  div.cover-row
 ${tile_drop_area_selector} =  div.cover-column
 ${tile_cancel_area_selector} =  div.modal-backdrop
-${delete_tile_selector} =  div.cover-tile button.close
+${delete_tile_selector} =  button.close
 
 *** Keywords ***
 
@@ -85,4 +85,6 @@ Select Tile to Add
     Click Element  xpath=//div[contains(@class, "tile-select-button") and contains(text(), ${tile})]
 
 Delete Tile
+    # FIXME: this seems to be pretty weak; we should be able to
+    #        specify which tile we want to delete
     Click Element  css=${delete_tile_selector}
