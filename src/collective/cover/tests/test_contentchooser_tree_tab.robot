@@ -1,16 +1,14 @@
 *** Settings ***
 
-Library  Selenium2Library  timeout=5 seconds  implicit_wait=3 seconds
-Resource  cover_keywords.txt
-Variables  plone/app/testing/interfaces.py
+Resource  cover.robot
+Library  Remote  ${PLONE_URL}/RobotRemote
 
-Suite Setup  Start Browser and Log In
-Suite Teardown  Close Browser
+Suite Setup  Open Test Browser
+Suite Teardown  Close all browsers
 
 *** Variables ***
 
 ${basic_tile_location}  'collective.cover.basic'
-${basic_uuid}  12345
 ${document_selector}  .ui-draggable .contenttype-document
 ${folder_selector}  .ui-draggable .contenttype-folder
 ${input_contenttree}  contentchooser-content-trees
@@ -20,8 +18,10 @@ ${tile_selector}  div.tile-container div.tile
 
 *** Test cases ***
 
-Test content tree tab
-    # XXX: should we create the cover object programmatically?
+Test Content Chooser Tree Tab
+    Enable Autologin as  Site Administrator
+    Go to Homepage
+
     Create Cover  Title  Description  Empty layout
     Click Link  link=Layout
 
@@ -40,7 +40,3 @@ Test content tree tab
 
     Input text  name=${input_contenttree}  front
     Wait Until Page Contains  1 Results
-
-    Click Link  link=Layout
-    Delete Tile
-    Save Cover Layout

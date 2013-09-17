@@ -1,47 +1,27 @@
 *** Settings ***
 
 Documentation  Testing locked and unlocked
-Library  Selenium2Library  timeout=5 seconds  implicit_wait=3 seconds
-Resource  cover_keywords.txt
-Variables  plone/app/testing/interfaces.py
+Resource  cover.robot
+Library  Remote  ${PLONE_URL}/RobotRemote
 
-Suite Setup  Start Browser and Log In
+Suite Setup  Open Test Browser
+Suite Teardown  Close all browsers
 
 *** Variables ***
 
-${ANOTHER_OWNER_NAME}      other_admin
-${ANOTHER_OWNER_PASSWORD}  other_admin
+${OWNER2_NAME}      admin2
+${OWNER2_PASSWORD}  admin2
 ${basic_tile_location}  'collective.cover.basic'
-${basic_uuid}  12345
 ${document_selector}  .ui-draggable .contenttype-document
 ${tile_selector}  div.tile-container div.tile
 
-*** Keywords ***
-
-Create new user
-    Open User Menu
-    Click Link  link=Site Setup
-    Page Should Contain   Configuration area for Plone and add-on Products.
-
-    Click Link  link=Users and Groups
-    Page Should Contain   Users Overview
-
-    Click Button    Add New User
-    Page should contain element  form.fullname
-
-    Input text  form.fullname  ${ANOTHER_OWNER_NAME}
-    Input text  form.username  ${ANOTHER_OWNER_PASSWORD}
-    Input text  form.email     ${ANOTHER_OWNER_NAME}@null.com
-    Input Password  form.password     ${ANOTHER_OWNER_NAME}
-    Input Password  form.password_ctl     ${ANOTHER_OWNER_PASSWORD}
-    Select Checkbox   form.groups.0
-    Click Button    Register
-
 *** Test Cases ***
 
-Test locked cover
-    Create new user
+Test Locked Cover
+    Log in as site owner
+    Goto Homepage
 
+    Create new user
     Goto Homepage
 
     Create Cover  My Cover  Description  Empty layout
@@ -62,10 +42,10 @@ Test locked cover
     Click Link  link=Compose
 
     Open Browser  http://127.0.0.1:${PORT}/plone
-    Go to  ${PLONE_URL}/login_form
+    Goto  ${PLONE_URL}/login_form
     Page should contain element  __ac_name
-    Input text  __ac_name  ${ANOTHER_OWNER_NAME}
-    Input text  __ac_password  ${ANOTHER_OWNER_PASSWORD}
+    Input text  __ac_name  ${OWNER2_NAME}
+    Input text  __ac_password  ${OWNER2_PASSWORD}
     Click Button  Log in
 
     Switch Browser  2
@@ -114,3 +94,17 @@ Test locked cover
 
     Switch Browser  2
     Close Browser
+
+*** Keywords ***
+
+Create new user
+    # XXX: there's no need to do this here; it's better to prepare it programmatically
+    Goto  ${PLONE_URL}/@@usergroup-userprefs
+    Click Button  Add New User
+    Input text  form.fullname  ${OWNER2_NAME}
+    Input text  form.username  ${OWNER2_PASSWORD}
+    Input text  form.email  ${OWNER2_NAME}@null.com
+    Input Password  form.password  ${OWNER2_NAME}
+    Input Password  form.password_ctl  ${OWNER2_PASSWORD}
+    Select Checkbox  form.groups.0
+    Click Button  Register

@@ -1,11 +1,10 @@
 *** Settings ***
 
-Library  Selenium2Library  timeout=5 seconds  implicit_wait=3 seconds
-Resource  cover_keywords.txt
-Variables  plone/app/testing/interfaces.py
+Resource  cover.robot
+Library  Remote  ${PLONE_URL}/RobotRemote
 
-Suite Setup  Start Browser and Log In
-Suite Teardown  Close Browser
+Suite Setup  Open Test Browser
+Suite Teardown  Close all browsers
 
 *** Variables ***
 
@@ -20,7 +19,9 @@ ${tile_selector}  div.tile-container div.tile
 *** Test cases ***
 
 Test List Tile
-    # XXX: should we create the cover object programmatically?
+    Enable Autologin as  Site Administrator
+    Go to Homepage
+
     Create Cover  Title  Description  Empty layout
     Click Link  link=Layout
 

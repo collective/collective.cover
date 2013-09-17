@@ -1,10 +1,10 @@
 *** Settings ***
 
-Resource  cover_keywords.txt
+Resource  cover.robot
 Library  Remote  ${PLONE_URL}/RobotRemote
 
-Test Setup  Open test browser
-Test Teardown  Close all browsers
+Suite Setup  Open Test Browser
+Suite Teardown  Close all browsers
 
 *** Variables ***
 
@@ -13,11 +13,13 @@ ${input_search}  contentchooser-search
 
 *** Test cases ***
 
-Test content tree tab
+Test Content Chooser Search Tab
+    # FIXME: https://github.com/collective/collective.cover/issues/285
+    [Tags]  Expected Failure
+
     Enable autologin as  Site Administrator
     Go to  ${PLONE_URL}
 
-    # XXX: should we create the cover object programmatically?
     Create Cover  Title  Description  Empty layout
 
     # For this particular test, we need some text in contents

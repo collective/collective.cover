@@ -1,16 +1,14 @@
 *** Settings ***
 
-Library  Selenium2Library  timeout=5 seconds  implicit_wait=3 seconds
-Resource  cover_keywords.txt
-Variables  plone/app/testing/interfaces.py
+Resource  cover.robot
+Library  Remote  ${PLONE_URL}/RobotRemote
 
-Suite Setup  Start Browser and Log In
-Suite Teardown  Close Browser
+Suite Setup  Open Test Browser
+Suite Teardown  Close all browsers
 
 *** Variables ***
 
 ${basic_tile_location}  'collective.cover.basic'
-${basic_uuid}  12345
 ${folder_selector}  .contenttype-folder
 ${input_contenttree}  contentchooser-content-trees
 ${tile_selector}  div.tile-container div.tile
@@ -18,8 +16,11 @@ ${path_selector}  div#content-trees div#internalpath
 
 *** Test cases ***
 
-Test content tree tab
-    # XXX: should we create the cover object programmatically?
+# TODO: mix with test_contentchooser_tree_tab.robot
+Test Content Chooser Tree Tab Path
+    Enable Autologin as  Site Administrator
+    Go to Homepage
+
     Create Cover  Title  Description  Empty layout
     Click Link  link=Layout
 
@@ -43,7 +44,6 @@ Test content tree tab
     Page Should Contain  Plone site → my-folder
 
     # Test searches
-    #
     Click Link  link=Compose
     Page Should Contain   Please drag&drop some content here to populate the tile.
 
@@ -52,9 +52,7 @@ Test content tree tab
     Click Element  link=Content tree
     # XXX: filtering code use some slow fadeOut code, we must slow down selenium
     Input text  name=${input_contenttree}  folder
-#    Set Selenium Speed  1
     Wait Until Page Contains  1 Results
-#    Set Selenium Speed  0
 
     Page Should Contain Element  css=${folder_selector}
     Click Element  css=${folder_selector}
@@ -75,9 +73,3 @@ Test content tree tab
     Page Should Contain Element  css=${path_selector}
     Wait Until Page Contains Element  css=div#content-trees div#internalpath a
     Page Should Contain  Plone site → my-folder
-
-    # End test
-    #
-    Click Link  link=Layout
-    Delete Tile
-    Save Cover Layout
