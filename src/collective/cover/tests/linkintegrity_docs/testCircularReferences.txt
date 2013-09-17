@@ -5,16 +5,18 @@ confirming the removal of the first object, and no further confirmation form
 are necessary: 
 
   >>> import zope.event
+  >>> import transaction
   >>> from zope.lifecycleevent import ObjectModifiedEvent
   >>> from plone.app.textfield.value import RichTextValue
   >>> from Products.Archetypes.interfaces import IReferenceable
-  >>> self.setRoles(('Manager',))
   >>> p = self.portal
-  >>> p.dexterity_item1.text = RichTextValue(raw='<a href="doc2">documents...</a>')
-  >>> zope.event.notify(ObjectModifiedEvent(p.dexterity_item1))
+  >>> from plone.tiles.interfaces import ITileDataManager
+  >>> ITileDataManager(self.tile).set({'text': RichTextValue(raw='<a href="doc2">documents...</a>')})
+  >>> zope.event.notify(ObjectModifiedEvent(self.tile))
   >>> self.setText(p.doc2, '<a href="folder1/doc3">linking...</a>')
   >>> self.setText(p.folder1.doc3, '<a href="../doc1">in circles.</a>')
-  >>> IReferenceable(p.dexterity_item1).getReferences()
+  >>> transaction.commit()
+  >>> IReferenceable(p.cover1).getReferences()
   [<ATDocument at /plone/doc2>]
   >>> p.doc2.getReferences()
   [<ATDocument at /plone/folder1/doc3>]
@@ -29,7 +31,7 @@ folder_contents), so that all tests written so far won't need modification:
 
   >>> self.setStatusCode('LinkIntegrityNotificationException', 200)
   >>> self.disableEventCountHelper()
-  >>> browser = self.getBrowser(loggedIn=True)
+  >>> browser = self.browser
   >>> browser.open('http://nohost/plone/folder_contents')
   >>> browser.getControl('Test Page 1').selected = True
   >>> browser.getControl('Test Page 2').selected = True

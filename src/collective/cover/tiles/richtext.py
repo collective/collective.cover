@@ -34,8 +34,6 @@ class RichTextTile(PersistentCoverTile):
         return text
 
     def populate_with_object(self, obj):
-        super(RichTextTile, self).populate_with_object(obj)
-
         text = obj.getRawText().decode('utf-8')
         value = RichTextValue(raw=text,
                               mimeType='text/x-html-safe',
@@ -43,6 +41,7 @@ class RichTextTile(PersistentCoverTile):
         data_mgr = ITileDataManager(self)
 
         data_mgr.set({'text': value})
+        super(RichTextTile, self).populate_with_object(obj)
 
     def accepted_ct(self):
         """ Return a list of content types accepted by the tile.
