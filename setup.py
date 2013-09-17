@@ -3,15 +3,12 @@
 from setuptools import find_packages
 from setuptools import setup
 
-import os
-
 version = '1.0a5.dev0'
 description = "An easy-to-use package to create elaborate covers for Plone sites."
 long_description = (
-    open("README.rst").read() + "\n" +
-    open(os.path.join("docs", "INSTALL.rst")).read() + "\n" +
-    open(os.path.join("docs", "CREDITS.rst")).read() + "\n" +
-    open(os.path.join("docs", "CHANGES.rst")).read()
+    open('README.rst').read() + '\n' +
+    open('CONTRIBUTORS.rst').read() + '\n' +
+    open('CHANGES.rst').read()
 )
 
 setup(name='collective.cover',

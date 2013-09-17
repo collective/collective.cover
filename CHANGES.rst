@@ -139,7 +139,7 @@ There's a frood who really knows where his towel is
 
 - Show title of object as alt attribute in image of basic tile. [hvelarde]
 
-- Ensure tile UUID does not starts with a number (fixes `#137`_). [hvelarde]
+- Ensure tile UUID does not start with a number (fixes `#137`_). [hvelarde]
 
 - Implements an original size scale to show the original image. [jpgimenez]
 
@@ -248,6 +248,7 @@ There's a frood who really knows where his towel is
 .. _`#218`: https://github.com/collective/collective.cover/issues/218
 .. _`#239`: https://github.com/collective/collective.cover/issues/239
 .. _`#241`: https://github.com/collective/collective.cover/issues/241
+.. _`#244`: https://github.com/collective/collective.cover/issues/244
 .. _`#259`: https://github.com/collective/collective.cover/issues/259
 .. _`#262`: https://github.com/collective/collective.cover/issues/262
 .. _`#274`: https://github.com/collective/collective.cover/issues/274
