@@ -56,25 +56,6 @@ Test Collection Tile
     Page Should Not Contain  ${title_other_sample}
     Page Should Contain  ${title_sample}
 
-    Click Link  My collection
-    Workflow Make Private
-
-    # log out to check collection tile doesn't show anything to anonymous user
-    # we can't use 'Log out' as we logged in automatically
-    # log out from Zope
-    Go to  ${PLONE_URL}//@@plone-root-logout
-    Click Button  Cancel
-
-    Click Link  Title
-    Page Should Not Contain  The collection doesn't have any results
-    And Page Should Not Contain  Forgot your password?
-
-    Log In As Site Owner
-    Go to Homepage
-    Click Link  My collection
-    Workflow Promote to Draft
-
-    Click Link  Title
     Click Link  link=Layout
     Delete Tile
     Save Cover Layout
