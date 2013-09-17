@@ -6,25 +6,30 @@ image via the "delete action".  The regular confirmation page mentioned above
 should appear in this case:
 
   >>> import zope.event
+  >>> import transaction
   >>> from zope.lifecycleevent import ObjectModifiedEvent
   >>> from plone.app.textfield.value import RichTextValue
   >>> from Products.Archetypes.interfaces import IReferenceable
-  >>> self.setRoles(('Manager',))
-  >>> browser = self.getBrowser(loggedIn=True)
+  >>> browser = self.browser
+  >>> portal = self.portal
   >>> browser.open('http://nohost/plone/image1/view')
   >>> browser.getLink('Delete').click()
-  >>> browser.url
-  'http://nohost/plone/image1/delete_confirmation'
+  >>> browser.url == 'http://nohost/plone/image1/delete_confirmation'
+  True
+  >>> 'Do you really want to delete this item?' in browser.contents
+  True
   >>> browser.contents
   '...Do you really want to delete this item?...
    ...Test Image 1...
    ...<form...action="http://nohost/plone/image1/delete_confirmation"...'
 
-Then we create a link to the same image from a text document and try to delete
+Then we create a link to the same image from a tile and try to delete
 it again:
 
-  >>> portal.dexterity_item1.text = RichTextValue(raw=portal.image1.tag())
-  >>> zope.event.notify(ObjectModifiedEvent(portal.dexterity_item1))
+  >>> from plone.tiles.interfaces import ITileDataManager
+  >>> ITileDataManager(self.tile).set({'text': RichTextValue(raw=portal.image1.tag())})
+  >>> zope.event.notify(ObjectModifiedEvent(self.tile))
+  >>> transaction.commit()
   >>> browser.goBack()
 
 Before we can continue we need to prevent the test framework from choking on
@@ -41,13 +46,13 @@ page:
   >>> browser.contents
   '...<a href="http://nohost/plone/image1"...Test Image 1...
    ...This...Image...is referenced by the following items:...
-   ...<li>...href="http://nohost/plone/dexterity_item1"...Dexterity Item 1...</li>...
+   ...<li>...href="http://nohost/plone/cover1"...</li>...
    ...Would you like to delete it anyway?...'
 
 We go ahead and remove the image to test if the regular confirmation page does
 not appear after the link integrity check for some curious reason:
 
-  >>> browser.getControl(name='delete').click()
+  >>> browser.getControl(name='delete_all').click()
   >>> browser.contents
   '...<dl class="portalMessage...Test Image 1 has been deleted...</dl>...'
 
