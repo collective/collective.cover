@@ -136,8 +136,6 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
             raise Unauthorized(_("You are not allowed to add content to "
                                  "this tile"))
 
-        notify(ObjectModifiedEvent(self))
-
     def replace_with_objects(self, obj):
         if not self.isAllowedToEdit():
             raise Unauthorized(_("You are not allowed to add content to "
