@@ -34,7 +34,7 @@ Test File Tile
     Click Element  css=div#contentchooser-content-show-button
 
     Drag And Drop  css=${file_selector}  css=${tile_selector}
-    Page Should Contain  My file
+    Wait Until Page Contains  My file
     Page Should Contain  This file was created for testing purposes
     Page Should Contain Link  link=Download file
 
