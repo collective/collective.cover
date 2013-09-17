@@ -4,6 +4,9 @@ There's a frood who really knows where his towel is
 1.0a5 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Fixes content-search in content chooser to correctly get the first 
+  page of results (closes `#276`_). [marcosfromero]
+
 - Added any content type support for banner tile. If it has an `image`
   or `getImage` attribute, displays that image. And always adds
   a link (closes `#241`_). [marcosfromero]
@@ -248,5 +251,6 @@ There's a frood who really knows where his towel is
 .. _`#259`: https://github.com/collective/collective.cover/issues/259
 .. _`#262`: https://github.com/collective/collective.cover/issues/262
 .. _`#274`: https://github.com/collective/collective.cover/issues/274
+.. _`#276`: https://github.com/collective/collective.cover/issues/276
 .. _`#278`: https://github.com/collective/collective.cover/issues/278
 .. _`#281`: https://github.com/collective/collective.cover/issues/281

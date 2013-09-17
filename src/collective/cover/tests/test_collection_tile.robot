@@ -1,13 +1,10 @@
 *** Settings ***
 
-Library  Selenium2Library  timeout=5 seconds  implicit_wait=3 seconds
-Resource  keywords.txt
-Resource  workflow.txt
 Resource  cover_keywords.txt
-Variables  plone/app/testing/interfaces.py
+Library  Remote  ${PLONE_URL}/RobotRemote
 
-Suite Setup  Start Browser and Log In
-Suite Teardown  Close Browser
+Test Setup  Open test browser
+Test Teardown  Close all browsers
 
 *** Variables ***
 
@@ -23,6 +20,9 @@ ${edit_link_selector}  a.edit-tile-link
 *** Test cases ***
 
 Test Collection Tile
+    Log In As Site Owner
+    Go to Homepage
+
     # XXX: should we create the cover object programmatically?
     Create Cover  Title  Description  Empty layout
     Click Link  link=Layout
@@ -67,6 +67,7 @@ Test Collection Tile
     And Page Should Not Contain  Forgot your password?
 
     Log In As Site Owner
+    Go to Homepage
     Click Link  My collection
     Workflow Promote to Draft
 
