@@ -1,10 +1,10 @@
 *** Settings ***
 
-Resource  cover_keywords.txt
+Resource  cover.robot
 Library  Remote  ${PLONE_URL}/RobotRemote
 
-Test Setup  Open test browser
-Test Teardown  Close all browsers
+Suite Setup  Open Test Browser
+Suite Teardown  Close all browsers
 
 *** Variables ***
 
@@ -17,7 +17,6 @@ Test content tree tab
     Enable autologin as  Site Administrator
     Go to  ${PLONE_URL}
 
-    # XXX: should we create the cover object programmatically?
     Create Cover  Title  Description  Empty layout
 
     # For this particular test, we need some text in contents

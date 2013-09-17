@@ -1,10 +1,10 @@
 *** Settings ***
 
-Resource  cover_keywords.txt
+Resource  cover.robot
 Library  Remote  ${PLONE_URL}/RobotRemote
 
-Test Setup  Open test browser
-Test Teardown  Close all browsers
+Suite Setup  Open Test Browser
+Suite Teardown  Close all browsers
 
 *** Variables ***
 
@@ -20,10 +20,9 @@ ${edit_link_selector}  a.edit-tile-link
 *** Test cases ***
 
 Test Collection Tile
-    Log In As Site Owner
+    Enable Autologin as  Site Administrator
     Go to Homepage
 
-    # XXX: should we create the cover object programmatically?
     Create Cover  Title  Description  Empty layout
     Click Link  link=Layout
 
@@ -60,7 +59,12 @@ Test Collection Tile
 
     Click Link  My collection
     Workflow Make Private
-    Log out
+
+    # log out to check collection tile doesn't show anything to anonymous user
+    # we can't use 'Log out' as we logged in automatically
+    # log out from Zope
+    Go to  ${PLONE_URL}//@@plone-root-logout
+    Click Button  Cancel
 
     Click Link  Title
     Page Should Not Contain  The collection doesn't have any results
