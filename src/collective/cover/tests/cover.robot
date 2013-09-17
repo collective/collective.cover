@@ -34,6 +34,7 @@ Start Browser and Autologin as
 Start Browser and Log In as Site Owner
     Open Test Browser
     Log In As Site Owner
+    Click Link  link=Home
 
 Setup Cover Test Case
     Start Browser and Log In as Site Owner
