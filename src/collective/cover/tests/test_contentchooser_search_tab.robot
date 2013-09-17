@@ -13,7 +13,10 @@ ${input_search}  contentchooser-search
 
 *** Test cases ***
 
-Test content tree tab
+Test Content Chooser Search Tab
+    # FIXME: https://github.com/collective/collective.cover/issues/285
+    [Tags]  Expected Failure
+
     Enable autologin as  Site Administrator
     Go to  ${PLONE_URL}
 

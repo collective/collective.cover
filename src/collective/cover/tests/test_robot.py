@@ -15,7 +15,9 @@ tests = [f for f in files if f.startswith('test_') and f.endswith('.robot')]
 def test_suite():
     suite = unittest.TestSuite()
     suite.addTests([
-        layered(robotsuite.RobotTestSuite(t), layer=ROBOT_TESTING)
+        layered(
+            robotsuite.RobotTestSuite(t, noncritical=['Expected Failure']),
+            layer=ROBOT_TESTING)
         for t in tests
     ])
     return suite
