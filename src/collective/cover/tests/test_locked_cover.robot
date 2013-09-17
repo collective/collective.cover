@@ -18,7 +18,7 @@ ${tile_selector}  div.tile-container div.tile
 
 *** Test Cases ***
 
-Test locked cover
+Test Locked Cover
     Log in as site owner
     Goto Homepage
 

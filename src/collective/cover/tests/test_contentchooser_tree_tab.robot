@@ -19,7 +19,7 @@ ${tile_selector}  div.tile-container div.tile
 
 *** Test cases ***
 
-Test content tree tab
+Test Content Chooser Tree Tab
     Enable Autologin as  Site Administrator
     Go to Homepage
 
@@ -41,7 +41,3 @@ Test content tree tab
 
     Input text  name=${input_contenttree}  front
     Wait Until Page Contains  1 Results
-
-    Click Link  link=Layout
-    Delete Tile
-    Save Cover Layout

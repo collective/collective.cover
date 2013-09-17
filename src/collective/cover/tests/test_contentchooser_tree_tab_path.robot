@@ -17,7 +17,8 @@ ${path_selector}  div#content-trees div#internalpath
 
 *** Test cases ***
 
-Test content tree tab
+# TODO: mix with test_contentchooser_tree_tab.robot
+Test Content Chooser Tree Tab Path
     Enable Autologin as  Site Administrator
     Go to Homepage
 
@@ -73,9 +74,3 @@ Test content tree tab
     Page Should Contain Element  css=${path_selector}
     Wait Until Page Contains Element  css=div#content-trees div#internalpath a
     Page Should Contain  Plone site → my-folder
-
-    # End test
-    #
-    Click Link  link=Layout
-    Delete Tile
-    Save Cover Layout

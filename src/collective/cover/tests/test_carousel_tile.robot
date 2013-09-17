@@ -17,7 +17,7 @@ ${edit_link_selector}  a.edit-tile-link
 
 *** Test cases ***
 
-Test File Tile
+Test Carousel Tile
     Enable Autologin as  Site Administrator
     Go to Homepage
 
