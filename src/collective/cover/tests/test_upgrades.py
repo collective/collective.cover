@@ -8,6 +8,7 @@ from collective.cover.upgrades import issue_244
 from collective.cover.upgrades import update_styles_record_4_5
 from collective.cover.upgrades import set_new_default_class_4_5
 from collective.cover.upgrades import tinymce_linkable
+from collective.cover.upgrades import unicode_lexicon
 from plone.app.testing import setRoles
 from plone.app.testing import TEST_USER_ID
 from plone.registry.interfaces import IRecordAddedEvent
@@ -16,6 +17,9 @@ from zope.component import eventtesting
 from zope.component import getUtility
 
 import unittest
+import pkg_resources
+
+PLONE_VERSION = pkg_resources.require("Plone")[0].version
 
 
 class Upgrade2to3TestCase(unittest.TestCase):
@@ -205,3 +209,23 @@ class Upgrade4to5TestCase(unittest.TestCase):
         tinymce_linkable(self.portal)
         linkables = self.tinymce.linkable.split('\n')
         self.assertIn(u'collective.cover.content', linkables)
+
+
+class Upgrade5to6TestCase(unittest.TestCase):
+
+    layer = INTEGRATION_TESTING
+
+    def setUp(self):
+        self.portal = self.layer['portal']
+        self.tinymce = self.portal.portal_tinymce
+        setRoles(self.portal, TEST_USER_ID, ['Manager'])
+
+    @unittest.skipIf(PLONE_VERSION >= '4.3', 'Products.UnicodeLexicon not needed on Plone >= 4.3')
+    def test_searchabletext_index(self):
+        catalog = self.portal['portal_catalog']
+        catalog.manage_delIndex('SearchableText')
+
+        unicode_lexicon(self.portal)
+        self.assertTrue(hasattr(catalog, 'unicode_htmltext_lexicon'))
+        self.assertIn('UnicodeLatinAccentNormalizer', catalog.unicode_htmltext_lexicon.getPipelineNames())
+        self.assertIn('SearchableText', catalog.indexes())
