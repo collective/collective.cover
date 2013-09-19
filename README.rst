@@ -92,14 +92,6 @@ To enable this package in a buildout-based installation:
     collective.js.jqueryui = 1.8.16.9
     plone.app.jquerytools = 1.5.6
 
-#. On Plone older than 4.3 you you can add Products.UnicodeLexicon to have i18n aware searches::
-
-    [buildout]
-    ...
-    eggs =
-        ...
-        Products.UnicodeLexicon        
-
 After updating the configuration you need to run ''bin/buildout'', which will
 take care of updating your system.
 

@@ -12,7 +12,10 @@ from plone.testing import z2
 from StringIO import StringIO
 
 import os
+import pkg_resources
 import random
+
+PLONE_VERSION = pkg_resources.require("Plone")[0].version
 
 
 def loadFile(name, size=0):
@@ -72,9 +75,6 @@ class Fixture(PloneSandboxLayer):
     defaultBases = (PLONE_FIXTURE,)
 
     def setUpZope(self, app, configurationContext):
-        import Products.UnicodeLexicon
-        self.loadZCML(package=Products.UnicodeLexicon)
-        z2.installProduct(app, 'Products.UnicodeLexicon')
         import Products.PloneFormGen
         self.loadZCML(package=Products.PloneFormGen)
         z2.installProduct(app, 'Products.PloneFormGen')

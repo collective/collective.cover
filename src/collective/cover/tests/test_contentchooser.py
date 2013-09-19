@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from collective.cover.testing import INTEGRATION_TESTING
+from collective.cover.testing import PLONE_VERSION
 from zope.component import getMultiAdapter
 
 import json
@@ -45,16 +46,27 @@ class ContentChooserTestCase(unittest.TestCase):
         html = """<a data-ct-type="Image" class="contenttype-image state-missing-value" rel="1">"""
         self.assertTrue(re.compile(html).search(view()))
 
-    def test_i18n_searches(self):
+    def test_unicode_aware_lexicon(self):
+        """On Plone < 4.3 we need to install Products.UnicodeLexicon to avoid
+        issues with searches.
+
+        See: https://github.com/collective/collective.cover/issues/276
+        """
+        if PLONE_VERSION < '4.3':
+            qi = self.portal['portal_quickinstaller']
+            qi.installProduct('UnicodeLexicon')
+            self.assertTrue(qi.isProductInstalled('UnicodeLexicon'))
+
         view = getMultiAdapter(
             (self.portal, self.request), name=u'content-search')
-        self.portal['my-document'].setText('A crise do apagão foi uma crise nacional ocorrida no Brasil, '
-                                           'que afetou o fornecimento e distribuição de energia elétrica.')
+        self.portal['my-document'].setText(
+            u'A crise do apagão foi uma crise nacional ocorrida no Brasil, '
+            u'que afetou o fornecimento e distribuição de energia elétrica.')
         self.portal['my-document'].reindexObject()
-        results = view.search(query='apagao')
+        results = view.search(query=u'apagao')
         self.assertEqual(len(results), 1)
         self.assertEqual(results[0].getPath(), '/plone/my-document')
-        results = view.search(query='apagão')
+        results = view.search(query=u'apagão')
         self.assertEqual(len(results), 1)
         self.assertEqual(results[0].getPath(), '/plone/my-document')
 

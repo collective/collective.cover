@@ -7,9 +7,6 @@ from Products.CMFCore.utils import getToolByName
 from zope.component import getUtility
 
 import logging
-import pkg_resources
-
-PLONE_VERSION = pkg_resources.require("Plone")[0].version
 
 
 def rename_content_chooser_resources(context, logger=None):
@@ -208,17 +205,3 @@ def tinymce_linkable(context, logger=None):
     setup = getToolByName(context, 'portal_setup')
     setup.runImportStepFromProfile(profile, 'tinymce_settings')
     logger.info("'linkable' property updated in TinyMCE settings")
-
-
-def unicode_lexicon(context, logger=None):
-    if logger is None:
-        logger = logging.getLogger(PROJECTNAME)
-
-    qi = getToolByName(context, 'portal_quickinstaller')
-    setup = getToolByName(context, 'portal_setup')
-
-    if PLONE_VERSION < '4.3' and qi.isProductInstallable('UnicodeLexicon'):
-        setup.runAllImportStepsFromProfile('profile-collective.cover:unicode_lexicon')
-        catalog = getToolByName(context, 'portal_catalog')
-        for brain in catalog():
-            catalog.reindexObject(brain.getObject(), idxs=('SearchableText',))

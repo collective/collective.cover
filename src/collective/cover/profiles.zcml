@@ -13,13 +13,6 @@
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
 
-  <genericsetup:importStep
-      name="collective.cover"
-      title="collective.cover special import handlers"
-      description=""
-      handler="collective.cover.setuphandlers.import_various"
-      />
-
   <genericsetup:registerProfile
       name="uninstall"
       title="collective.cover uninstall"
@@ -134,29 +127,6 @@
           title="Add Cover as Linkable in TinyMCE settings"
           description="Cover is now linkable"
           handler=".upgrades.tinymce_linkable"
-          />
-
-  </genericsetup:upgradeSteps>
-
-  <genericsetup:registerProfile
-      name="unicode_lexicon"
-      title="collective.cver: unicode_lexicon"
-      description="Install Products.UnicodeLexicon on Plone older than 4.3."
-      directory="profiles/unicode_lexicon"
-      provides="Products.GenericSetup.interfaces.EXTENSION"
-      zcml:condition="installed Products.UnicodeLexicon"
-      />
-
-  <genericsetup:upgradeSteps
-      source="5"
-      destination="6"
-      zcml:condition="installed Products.UnicodeLexicon"      
-      profile="collective.cover:default">
-
-      <genericsetup:upgradeStep
-          title="collective.cver: unicode_lexicon"
-          description="Install Products.UnicodeLexicon on Plone older than 4.3."
-          handler=".upgrades.unicode_lexicon"
           />
 
   </genericsetup:upgradeSteps>

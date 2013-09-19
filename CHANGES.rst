@@ -4,10 +4,6 @@ There's a frood who really knows where his towel is
 1.0a5 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
-- Add support for Products.UnicodeLexicon on Plone < 4.3, this way we have i18n aware searches.
-  Its up to the user to declare the dependency into buildout, collective.cover doesn't force
-  the installation of Products.UnicodeLexicon. (closes `#285`_). [jpgimenez]
-
 - Fixes content-search in content chooser to correctly get the first 
   page of results (closes `#276`_). [marcosfromero]
 
@@ -259,4 +255,3 @@ There's a frood who really knows where his towel is
 .. _`#276`: https://github.com/collective/collective.cover/issues/276
 .. _`#278`: https://github.com/collective/collective.cover/issues/278
 .. _`#281`: https://github.com/collective/collective.cover/issues/281
-.. _`#285`: https://github.com/collective/collective.cover/issues/285
