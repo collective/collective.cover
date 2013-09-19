@@ -45,6 +45,19 @@ class ContentChooserTestCase(unittest.TestCase):
         html = """<a data-ct-type="Image" class="contenttype-image state-missing-value" rel="1">"""
         self.assertTrue(re.compile(html).search(view()))
 
+    def test_i18n_searches(self):
+        view = getMultiAdapter(
+            (self.portal, self.request), name=u'content-search')
+        self.portal['my-document'].setText('A crise do apagão foi uma crise nacional ocorrida no Brasil, '
+                                           'que afetou o fornecimento e distribuição de energia elétrica.')
+        self.portal['my-document'].reindexObject()
+        results = view.search(query='apagao')
+        self.assertEqual(len(results), 1)
+        self.assertEqual(results[0].getPath(), '/plone/my-document')
+        results = view.search(query='apagão')
+        self.assertEqual(len(results), 1)
+        self.assertEqual(results[0].getPath(), '/plone/my-document')
+
     def test_batch_searches(self):
         self.request.set('q', 'Image')
         view = getMultiAdapter(

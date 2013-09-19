@@ -72,6 +72,9 @@ class Fixture(PloneSandboxLayer):
     defaultBases = (PLONE_FIXTURE,)
 
     def setUpZope(self, app, configurationContext):
+        import Products.UnicodeLexicon
+        self.loadZCML(package=Products.UnicodeLexicon)
+        z2.installProduct(app, 'Products.UnicodeLexicon')
         import Products.PloneFormGen
         self.loadZCML(package=Products.PloneFormGen)
         z2.installProduct(app, 'Products.PloneFormGen')
