@@ -3,6 +3,7 @@
 <object name="portal_catalog" meta_type="CMF Catalog">
   <object name="unicode_htmltext_lexicon" meta_type="ZCTextIndex Unicode Lexicon">
     <element name="HTML aware splitter" group="Word Splitter" />
+    <element name="Case normalizer" group="Case Normalizer"/>
     <element name="Normalize accented chars (Latin &amp; Western European text)"
              group="Accent Normalizer"/>
   </object>
