@@ -17,6 +17,9 @@ from zope.component import eventtesting
 from zope.component import getUtility
 
 import unittest
+import pkg_resources
+
+PLONE_VERSION = pkg_resources.require("Plone")[0].version
 
 
 class Upgrade2to3TestCase(unittest.TestCase):
@@ -217,6 +220,7 @@ class Upgrade5to6TestCase(unittest.TestCase):
         self.tinymce = self.portal.portal_tinymce
         setRoles(self.portal, TEST_USER_ID, ['Manager'])
 
+    @unittest.skipIf(PLONE_VERSION >= '4.3', 'Products.UnicodeLexicon not needed on Plone >= 4.3')
     def test_searchabletext_index(self):
         catalog = self.portal['portal_catalog']
         catalog.manage_delIndex('SearchableText')
