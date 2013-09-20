@@ -3,6 +3,11 @@ python: 2.7
 env:
   - PLONE_VERSION=4.2
   - PLONE_VERSION=4.3 QA=true
+  global:
+    - ARTIFACTS_AWS_REGION=sa-east-1
+    - ARTIFACTS_S3_BUCKET=collective-cover
+    - secure: "Ll2tTrfw0vpGlk+tfdcOD8HOylIWlyFDtNL+ShfQtAZ9wHZEOFJJyVsaSpDbdgWD1Y+muSz8I9xcvNY7ag17jm8udSEWecGaMIodeHB5hIklEi/OovKoAUgPqaVtbNE/FtyURZf7KE+Nb7zCege6XjCD635U4W2P1/072aEY3CU="
+    - secure: "dYh4zjl3YQF5U1xf7DHoC05mmA9/cnn7YK3PzQ7LtZmEgZC8lp+M5DngTVe1VGHsgYhgshj7HJQrXwnNNxDdzEbeOX2pmaphCF0BWwU7JcMnDEY949xJTYuV96SZkoJCeMx1IrnZtgvuMzXOEFK6WaNCl1zP8nwxqOKtWPrXEk4="
 install:
   - sed -ie "s#travis-4.x.cfg#travis-$PLONE_VERSION.x.cfg#" travis.cfg
   - mkdir -p buildout-cache/downloads
@@ -11,10 +16,13 @@ install:
 before_script:
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
+  - gem install travis-artifacts
 script: bin/test
 after_success:
   - test -v QA && bin/buildout -c coverage.cfg -N -q || true
   - test -v QA && bin/coverage.sh && pip install -q coveralls && coveralls || true
-after_failure: bin/buildout annotate -c travis.cfg
+after_failure:
+  - bin/buildout annotate -c travis.cfg
+  - travis-artifacts upload --target-path artifacts/$TRAVIS_BUILD_ID/$TRAVIS_JOB_ID
 notifications:
   irc: irc.freenode.org#simplesconsultoria
