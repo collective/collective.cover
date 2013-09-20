@@ -36,7 +36,7 @@ Test Collection Tile
     # drag&drop a Collection
     Open Content Chooser
     Drag And Drop  css=${collection_selector}  css=${tile_selector}
-    Page Should Contain  The collection doesn't have any results
+    Wait Until Page Contains  The collection doesn't have any results
 
     # TODO: test with a non-empty collection
 
