@@ -1,13 +1,14 @@
 language: python
 python: 2.7
 env:
-  - PLONE_VERSION=4.2
-  - PLONE_VERSION=4.3 QA=true
   global:
     - ARTIFACTS_AWS_REGION=sa-east-1
     - ARTIFACTS_S3_BUCKET=collective-cover
     - secure: "Ll2tTrfw0vpGlk+tfdcOD8HOylIWlyFDtNL+ShfQtAZ9wHZEOFJJyVsaSpDbdgWD1Y+muSz8I9xcvNY7ag17jm8udSEWecGaMIodeHB5hIklEi/OovKoAUgPqaVtbNE/FtyURZf7KE+Nb7zCege6XjCD635U4W2P1/072aEY3CU="
     - secure: "dYh4zjl3YQF5U1xf7DHoC05mmA9/cnn7YK3PzQ7LtZmEgZC8lp+M5DngTVe1VGHsgYhgshj7HJQrXwnNNxDdzEbeOX2pmaphCF0BWwU7JcMnDEY949xJTYuV96SZkoJCeMx1IrnZtgvuMzXOEFK6WaNCl1zP8nwxqOKtWPrXEk4="
+  matrix:
+    - PLONE_VERSION=4.2
+    - PLONE_VERSION=4.3 QA=true
 install:
   - sed -ie "s#travis-4.x.cfg#travis-$PLONE_VERSION.x.cfg#" travis.cfg
   - mkdir -p buildout-cache/downloads
