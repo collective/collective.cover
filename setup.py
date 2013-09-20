@@ -84,7 +84,6 @@ setup(name='collective.cover',
               'plone.cachepurging',
               'plone.testing',
               'Products.PloneFormGen',
-              'Products.UnicodeLexicon',
           ],
       },
       entry_points="""

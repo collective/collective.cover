@@ -46,17 +46,12 @@ class ContentChooserTestCase(unittest.TestCase):
         html = """<a data-ct-type="Image" class="contenttype-image state-missing-value" rel="1">"""
         self.assertTrue(re.compile(html).search(view()))
 
+    @unittest.skipIf(
+        PLONE_VERSION < '4.3',
+        "On Plone 4.2 we need to install Products.UnicodeLexicon")
     def test_unicode_aware_lexicon(self):
-        """On Plone < 4.3 we need to install Products.UnicodeLexicon to avoid
-        issues with searches.
-
-        See: https://github.com/collective/collective.cover/issues/276
+        """See: https://github.com/collective/collective.cover/issues/276
         """
-        if PLONE_VERSION < '4.3':
-            qi = self.portal['portal_quickinstaller']
-            qi.installProduct('UnicodeLexicon')
-            self.assertTrue(qi.isProductInstalled('UnicodeLexicon'))
-
         view = getMultiAdapter(
             (self.portal, self.request), name=u'content-search')
         self.portal['my-document'].setText(
