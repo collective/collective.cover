@@ -12,7 +12,10 @@ from plone.testing import z2
 from StringIO import StringIO
 
 import os
+import pkg_resources
 import random
+
+PLONE_VERSION = pkg_resources.require("Plone")[0].version
 
 
 def loadFile(name, size=0):
