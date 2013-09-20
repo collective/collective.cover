@@ -21,38 +21,41 @@ ${edit_link_selector}  a.edit-tile-link
 Test Collection Tile
     Enable Autologin as  Site Administrator
     Go to Homepage
-
     Create Cover  Title  Description  Empty layout
-    Click Link  link=Layout
 
+    # add a collection tile to the layout
+    Click Link  link=Layout
+    Page Should Contain  Export layout
     Add Tile  ${collection_tile_location}
     Save Cover Layout
 
+    # as tile is empty, we see default message
     Click Link  link=Compose
     Page Should Contain  Please drop a collection here to fill the tile
 
-    Click Element  css=div#contentchooser-content-show-button
-
+    # drag&drop a Collection
+    Open Content Chooser
     Drag And Drop  css=${collection_selector}  css=${tile_selector}
     Page Should Contain  The collection doesn't have any results
 
-    # go back to compose view to edit header
+    # TODO: test with a non-empty collection
+
+    # edit the tile and check AJAX refresh
     Click Link  link=Compose
     Click Link  css=${edit_link_selector}
     Wait until page contains element  id=${title_field_id}
     Input Text  id=${title_field_id}  ${title_sample}
     Click Button  Save
-    # save via ajax => wait until the tile has been reloaded
     Wait Until Page Contains  ${title_sample}
 
-    # edit tile but don't save it
+    # edit the tile but cancel operation
     Click Link  css=${edit_link_selector}
     Wait until page contains element  id=${title_field_id}
     Input Text  id=${title_field_id}  ${title_other_sample}
     Click Button  Cancel
-    Page Should Not Contain  ${title_other_sample}
-    Page Should Contain  ${title_sample}
+    Wait Until Page Contains  ${title_sample}
 
+    # delete the tile
     Click Link  link=Layout
     Delete Tile
     Save Cover Layout

@@ -71,7 +71,7 @@ Test Banner Tile
     Drag And Drop  css=${file_selector}  css=${tile_selector}
     Wait Until Page Contains Element  css=div.banner-tile h2 a
 
-    # edit the tile and check AJX refresh
+    # edit the tile and check AJAX refresh
     Click Link  link=Compose
     Click Link  css=${edit_link_selector}
     Wait until page contains element  id=${title_field_id}
