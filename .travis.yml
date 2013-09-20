@@ -23,6 +23,7 @@ after_success:
   - test -v QA && bin/coverage.sh && pip install -q coveralls && coveralls || true
 after_failure:
   - bin/buildout annotate -c travis.cfg
+  - firefox -v
   - gem install travis-artifacts -q
   - travis-artifacts upload --target-path artifacts/$TRAVIS_BUILD_ID/$TRAVIS_JOB_ID
 notifications:
