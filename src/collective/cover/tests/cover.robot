@@ -70,15 +70,27 @@ Delete
     Click Button  Delete
     Page Should Contain  Plone site
 
+Edit Cover Layout
+    [Documentation]  Click on Layout tab and wait until the layout has been
+    ...              loaded. Buttons related with layout operations must be
+    ...              also visible.
+    Click Link  link=Layout
+    Wait Until Page Contains Element  css=${tile_drop_area_selector}
+    Page Should Contain  Export layout
+    Page Should Contain  Saved
+
 Save Cover Layout
+    [Documentation]  Click on Save button and wait until layout has been
+    ...              saved.
     Page Should Contain  Save
     Click Element  css=a#btn-save.btn
     Wait Until Page Contains  Saved
 
 Add Tile
     [arguments]  ${tile}
-    Drag And Drop  xpath=//a[contains(@data-tile-type, ${tile})]  css=${tile_drop_area_selector}
 
+    Drag And Drop  xpath=//a[contains(@data-tile-type, ${tile})]  css=${tile_drop_area_selector}
+    Wait Until Page Contains Element  css=.tile-name
 
 Select Tile to Add
     [arguments]  ${tile}
