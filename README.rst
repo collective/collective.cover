@@ -4,8 +4,8 @@ collective.cover
 
 .. contents:: Table of Contents
 
-Life, the Universe, and Everything
-----------------------------------
+What it does
+------------
 
 ``collective.cover`` is a package that allows the creation of elaborate covers
 for website homepages, especially for news portals, government sites and
@@ -39,8 +39,8 @@ and publish the right one focused on the team that won in the end.
 These are the kind of issues we want to solve with this package; we are still
 far from it, but that is the idea.
 
-Mostly Harmless
----------------
+Caveats
+-------
 
 .. Warning::
    ``collective.cover`` is currently not compatible with standard Plone tiles;
@@ -62,8 +62,8 @@ Mostly Harmless
 
 Got an idea? Found a bug? Let us know by `opening a support ticket`_.
 
-Don't Panic
------------
+How to use
+----------
 
 Installation
 ^^^^^^^^^^^^
@@ -387,7 +387,7 @@ different aspects of the tile. From here you can specify which fields get
 rendered when viewing the tile, or the order in which they show up.
 
 In addition, each field widget can provide specific configuration options.
-For instance, an ITextLinesWidget will provide an extra configuration 
+For instance, an ITextLinesWidget will provide an extra configuration
 option, "HTML tag", which allows to specify the HTML tag to be used when
 rendering data saved in this field.
 
@@ -401,7 +401,7 @@ Writing a custom widget in "configure" mode for a field
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The configuration view uses z3c.form to automatically render a form based on
-the tile's schema definition. For that, it renders widgets in a "configure" 
+the tile's schema definition. For that, it renders widgets in a "configure"
 mode. You can see how existing ones are defined, checking the configure.zcml
 file under tiles/configuration_widgets
 
@@ -448,7 +448,7 @@ Storage
 Data and configuration for tiles are stored in an annotation of the context
 where the tile is being shown.
 
-You can see how this works by looking into data.py and configuration.py under 
+You can see how this works by looking into data.py and configuration.py under
 the tiles directory.
 
 Render view
@@ -469,7 +469,7 @@ render it. For that, you need to get some things into consideration.
 
    You can override this, in case you need a different behavior, check
    collection.py under the tiles directory and collection.pt under the
-   tiles/templates directory for an example. 
+   tiles/templates directory for an example.
 
 For additional hints on how to create a template for your tile and make it
 work, check all tiles provided by this package, under the tiles directory.
@@ -518,8 +518,8 @@ will honor the image and scales in the original object. This way the image
 data isn't duplicated and products than allow scales modifications are
 supported.
 
-Not entirely unlike
--------------------
+Similar products
+----------------
 
 Over the years there have been some packages designed to solve the problem of
 creating section covers in Plone. We have used and have taken ideas from the
