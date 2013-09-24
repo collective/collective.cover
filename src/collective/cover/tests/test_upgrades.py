@@ -8,6 +8,7 @@ from collective.cover.upgrades import issue_244
 from collective.cover.upgrades import update_styles_record_4_5
 from collective.cover.upgrades import set_new_default_class_4_5
 from collective.cover.upgrades import tinymce_linkable
+from collective.cover.upgrades import register_alternate_view
 from plone.app.testing import setRoles
 from plone.app.testing import TEST_USER_ID
 from plone.registry.interfaces import IRecordAddedEvent
@@ -205,3 +206,19 @@ class Upgrade4to5TestCase(unittest.TestCase):
         tinymce_linkable(self.portal)
         linkables = self.tinymce.linkable.split('\n')
         self.assertIn(u'collective.cover.content', linkables)
+
+    def test_register_alternate_view(self):
+        # default installation includes alternate view
+        portal_types = self.portal['portal_types']
+        view_methods = portal_types['collective.cover.content'].view_methods
+        self.assertIn(u'alternate', view_methods)
+
+        # remove alternate view to simulate version 4 state
+        portal_types['collective.cover.content'].view_methods = ('view',)
+        view_methods = portal_types['collective.cover.content'].view_methods
+        self.assertNotIn(u'alternate', view_methods)
+
+        # and now run the upgrade step to validate the update
+        register_alternate_view(self.portal)
+        view_methods = portal_types['collective.cover.content'].view_methods
+        self.assertIn(u'alternate', view_methods)
