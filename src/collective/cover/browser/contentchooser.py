@@ -99,7 +99,7 @@ class ContentSearch(grok.View):
         catalog_query['portal_type'] = searchable_types
 
         if query:
-            catalog_query = {'SearchableText': '{0}*'.format(query)}
+            catalog_query = {'SearchableText': u'{0}*'.format(query)}
 
         # XXX: not implemented, this is needed?
 #        if uids:

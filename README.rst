@@ -518,11 +518,11 @@ will honor the image and scales in the original object. This way the image
 data isn't duplicated and products than allow scales modifications are
 supported.
 
-Alternate solutions
-^^^^^^^^^^^^^^^^^^^
+Not entirely unlike
+-------------------
 
 Over the years there have been some packages designed to solve the problem of
-creating section covers in Plone. We have used, and are taking ideas from, the
+creating section covers in Plone. We have used and have taken ideas from the
 following:
 
 `CompositePack`_

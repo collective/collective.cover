@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from collective.cover.testing import INTEGRATION_TESTING
+from collective.cover.testing import PLONE_VERSION
 from zope.component import getMultiAdapter
 
 import json
@@ -44,6 +45,25 @@ class ContentChooserTestCase(unittest.TestCase):
         self.assertFalse(re.compile(html).search(view()))
         html = """<a data-ct-type="Image" class="contenttype-image state-missing-value" rel="1">"""
         self.assertTrue(re.compile(html).search(view()))
+
+    @unittest.skipIf(
+        PLONE_VERSION < '4.3',
+        "On Plone 4.2 we need to install Products.UnicodeLexicon")
+    def test_unicode_aware_lexicon(self):
+        """See: https://github.com/collective/collective.cover/issues/276
+        """
+        view = getMultiAdapter(
+            (self.portal, self.request), name=u'content-search')
+        self.portal['my-document'].setText(
+            u'A crise do apagão foi uma crise nacional ocorrida no Brasil, '
+            u'que afetou o fornecimento e distribuição de energia elétrica.')
+        self.portal['my-document'].reindexObject()
+        results = view.search(query=u'apagao')
+        self.assertEqual(len(results), 1)
+        self.assertEqual(results[0].getPath(), '/plone/my-document')
+        results = view.search(query=u'apagão')
+        self.assertEqual(len(results), 1)
+        self.assertEqual(results[0].getPath(), '/plone/my-document')
 
     def test_batch_searches(self):
         self.request.set('q', 'Image')

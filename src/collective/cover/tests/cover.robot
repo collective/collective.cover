@@ -34,6 +34,7 @@ Start Browser and Autologin as
 Start Browser and Log In as Site Owner
     Open Test Browser
     Log In As Site Owner
+    Click Link  link=Home
 
 Setup Cover Test Case
     Start Browser and Log In as Site Owner
@@ -88,3 +89,7 @@ Delete Tile
     # FIXME: this seems to be pretty weak; we should be able to
     #        specify which tile we want to delete
     Click Element  css=${delete_tile_selector}
+
+Open Content Chooser
+    Click Element  css=div#contentchooser-content-show-button
+    Wait Until Element Is Visible  css=div#contentchooser-content-search
