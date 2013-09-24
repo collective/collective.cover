@@ -1,10 +1,10 @@
-There's a frood who really knows where his towel is
----------------------------------------------------
+Changelog
+---------
 
 1.0a5 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
-- Fixes content-search in content chooser to correctly get the first 
+- Fixes content-search in content chooser to correctly get the first
   page of results (closes `#276`_). [marcosfromero]
 
 - Added any content type support for banner tile. If it has an `image`
