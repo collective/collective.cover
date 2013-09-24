@@ -32,9 +32,6 @@ Test RichText Tile
     Click Link  css=${edit_link_selector}
     Wait For Condition  return tinyMCE.activeEditor != null
     Execute Javascript  tinyMCE.activeEditor.setContent("${text_sample}");
-    # before saving, clean the banner tile to make sure it has been loaded
-    # with the new text
-    Execute Javascript  $('.tile').empty()
     Click Button  Save
     # save via ajax => wait until the tile has been reloaded
     Wait Until Page Contains  ${text_sample}
