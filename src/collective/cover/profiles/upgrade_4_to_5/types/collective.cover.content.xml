@@ -4,6 +4,6 @@
    i18n:domain="collective.cover">
 
   <property name="view_methods" purge="False">
-    <element value="alternate" />
+    <element value="standard" />
   </property>
 </object>

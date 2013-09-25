@@ -51,10 +51,10 @@ class View(grok.View):
     grok.name('view')
 
 
-class Alternate(grok.View):
+class Standard(grok.View):
     grok.context(ICover)
     grok.require('zope2.View')
-    grok.name('alternate')
+    grok.name('standard')
 
 
 class AddCTWidget(grok.View):

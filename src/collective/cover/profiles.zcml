@@ -130,7 +130,7 @@
 
       <genericsetup:upgradeStep
           title="Register alternate view"
-          description="A new view (non-frontpage view) will be registered"
+          description="The new view behaves like a standard content type view"
           handler=".upgrades.register_alternate_view"
           />
 

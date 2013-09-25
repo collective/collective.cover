@@ -211,14 +211,14 @@ class Upgrade4to5TestCase(unittest.TestCase):
         # default installation includes alternate view
         portal_types = self.portal['portal_types']
         view_methods = portal_types['collective.cover.content'].view_methods
-        self.assertIn(u'alternate', view_methods)
+        self.assertIn(u'standard', view_methods)
 
         # remove alternate view to simulate version 4 state
         portal_types['collective.cover.content'].view_methods = ('view',)
         view_methods = portal_types['collective.cover.content'].view_methods
-        self.assertNotIn(u'alternate', view_methods)
+        self.assertNotIn(u'standard', view_methods)
 
         # and now run the upgrade step to validate the update
         register_alternate_view(self.portal)
         view_methods = portal_types['collective.cover.content'].view_methods
-        self.assertIn(u'alternate', view_methods)
+        self.assertIn(u'standard', view_methods)
