@@ -66,4 +66,17 @@
         />
     </class>
 
+    <browser:menuItems
+        for="collective.cover.content.ICover"
+        menu="plone_displayviews">
+      <browser:menuItem
+          title="Front page view"
+          action="view"
+          />
+      <browser:menuItem
+          title="Standard view"
+          action="standard"
+          />
+    </browser:menuItems>
+
 </configure>

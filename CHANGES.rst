@@ -4,6 +4,10 @@ There's a frood who really knows where his towel is
 1.0a5 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Register new alternate view for covers; the new view behaves like a standard
+  content type view displaying object's title, description and viewlets on
+  Plone's main_template main slot (closes `#271`_). [hvelarde]
+
 - Fixes content-search in content chooser to correctly get the first 
   page of results (closes `#276`_). [marcosfromero]
 
@@ -251,6 +255,7 @@ There's a frood who really knows where his towel is
 .. _`#244`: https://github.com/collective/collective.cover/issues/244
 .. _`#259`: https://github.com/collective/collective.cover/issues/259
 .. _`#262`: https://github.com/collective/collective.cover/issues/262
+.. _`#271`: https://github.com/collective/collective.cover/issues/271
 .. _`#274`: https://github.com/collective/collective.cover/issues/274
 .. _`#276`: https://github.com/collective/collective.cover/issues/276
 .. _`#278`: https://github.com/collective/collective.cover/issues/278
