@@ -205,3 +205,17 @@ def tinymce_linkable(context, logger=None):
     setup = getToolByName(context, 'portal_setup')
     setup.runImportStepFromProfile(profile, 'tinymce_settings')
     logger.info("'linkable' property updated in TinyMCE settings")
+
+
+def register_alternate_view(context, logger=None):
+    """Add alternate view for collective.cover.content objects.
+    See: https://github.com/collective/collective.cover/issues/271
+    """
+
+    if logger is None:
+        logger = logging.getLogger(PROJECTNAME)
+
+    profile = 'profile-collective.cover:upgrade_4_to_5'
+    setup = getToolByName(context, 'portal_setup')
+    setup.runImportStepFromProfile(profile, 'typeinfo')
+    logger.info("Alternate view for collective.cover.content objects added.")
