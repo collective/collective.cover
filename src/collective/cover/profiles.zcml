@@ -128,6 +128,12 @@
           handler=".upgrades.tinymce_linkable"
           />
 
+      <genericsetup:upgradeStep
+          title="Register alternate view"
+          description="The new view behaves like a standard content type view"
+          handler=".upgrades.register_alternate_view"
+          />
+
   </genericsetup:upgradeSteps>
 
 </configure>
