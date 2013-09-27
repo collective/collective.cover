@@ -9,10 +9,12 @@ from collective.cover.upgrades import update_styles_record_4_5
 from collective.cover.upgrades import set_new_default_class_4_5
 from collective.cover.upgrades import tinymce_linkable
 from collective.cover.upgrades import register_alternate_view
+from plone.app.referenceablebehavior.referenceable import IReferenceable
 from plone.app.testing import setRoles
 from plone.app.testing import TEST_USER_ID
 from plone.registry.interfaces import IRecordAddedEvent
 from plone.registry.interfaces import IRegistry
+from plone.uuid.interfaces import IAttributeUUID
 from zope.component import eventtesting
 from zope.component import getUtility
 
@@ -122,15 +124,47 @@ class Upgrade4to5TestCase(unittest.TestCase):
 
     def setUp(self):
         self.portal = self.layer['portal']
+        self.setup = self.portal['portal_setup']
+        self.profile_id = u'collective.cover:default'
         self.tinymce = self.portal.portal_tinymce
         setRoles(self.portal, TEST_USER_ID, ['Manager'])
         self.portal.invokeFactory('Folder', 'test-folder')
         setRoles(self.portal, TEST_USER_ID, ['Member'])
         self.folder = self.portal['test-folder']
-        self.folder.invokeFactory('collective.cover.content', 'cover',
-                                  template_layout='Layout B')
+        self.folder.invokeFactory(
+            'collective.cover.content', 'cover', template_layout='Layout B')
         self.cover = self.folder['cover']
         self.layout_view = self.cover.restrictedTraverse('layout')
+
+    def test_upgrade_to_5_registrations(self):
+        version = self.setup.getLastVersionForProfile(self.profile_id)
+        self.assertEqual(version, u'5')
+        self.setup.setLastVersionForProfile(self.profile_id, u'4')
+        upgrades = self.setup.listUpgrades(self.profile_id)
+        self.assertEqual(len(upgrades), 1)
+        self.assertEqual(len(upgrades[0]), 5)
+
+    def _get_upgrade_step(self, title):
+        """Get one of the upgrade steps from 4 to 5.
+
+        Keyword arguments:
+        title -- the title used to register the upgrade step
+        """
+        self.setup.setLastVersionForProfile(self.profile_id, u'4')
+        upgrades = self.setup.listUpgrades(self.profile_id)
+        steps = [s for s in upgrades[0] if s['title'] == title]
+        return steps[0] if steps else None
+
+    def _do_upgrade_step(self, step):
+        """Execute an upgrade step.
+
+        Keyword arguments:
+        step -- the step we want to run
+        """
+        request = self.layer['request']
+        request.request.form['profile_id'] = self.profile_id
+        request.form['upgrades'] = [step['id']]
+        self.setup.manage_doUpgrades(request=request)
 
     def test_issue_244(self):
         css_tool = self.portal['portal_css']
@@ -206,6 +240,36 @@ class Upgrade4to5TestCase(unittest.TestCase):
         tinymce_linkable(self.portal)
         linkables = self.tinymce.linkable.split('\n')
         self.assertIn(u'collective.cover.content', linkables)
+
+    def test_issue_35(self):
+        # check if the upgrade step is registered
+        title = u'issue_35'
+        description = u"Link integrity on Rich Text tile references."
+        step = self._get_upgrade_step(title)
+        self.assertIsNotNone(step)
+        self.assertEqual(step['description'], description)
+
+        # remove behavior to simulate version 4 state
+        portal_types = self.portal['portal_types']
+        referenceable = u'plone.app.referenceablebehavior.referenceable.IReferenceable'
+        behaviors = list(portal_types['collective.cover.content'].behaviors)
+        behaviors.remove(referenceable)
+        portal_types['collective.cover.content'].behaviors = tuple(behaviors)
+        self.folder.invokeFactory(
+            'collective.cover.content', 'non-referenceable')
+        cover = self.folder['non-referenceable']
+        self.assertFalse(IReferenceable.providedBy(cover))
+        self.assertFalse(IAttributeUUID.providedBy(cover))
+
+        # and now run the upgrade step to validate the update
+        self._do_upgrade_step(step)
+        self.folder.invokeFactory(
+            'collective.cover.content', 'referenceable')
+        cover = self.folder['referenceable']
+        self.assertTrue(IReferenceable.providedBy(cover))
+        self.assertTrue(IAttributeUUID.providedBy(cover))
+
+        # XXX: make existent covers referenceable?
 
     def test_register_alternate_view(self):
         # default installation includes alternate view
