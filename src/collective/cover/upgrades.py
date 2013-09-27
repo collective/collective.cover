@@ -219,3 +219,20 @@ def register_alternate_view(context, logger=None):
     setup = getToolByName(context, 'portal_setup')
     setup.runImportStepFromProfile(profile, 'typeinfo')
     logger.info("Alternate view for collective.cover.content objects added.")
+
+
+def issue_35(context, logger=None):
+    """Link integrity on Rich Text tile references.
+    See: https://github.com/collective/collective.cover/issues/35
+    """
+
+    if logger is None:
+        logger = logging.getLogger(PROJECTNAME)
+
+    types_tool = getToolByName(context, 'portal_types')
+    referenceable = u'plone.app.referenceablebehavior.referenceable.IReferenceable'
+    behaviors = list(types_tool['collective.cover.content'].behaviors)
+    if referenceable not in behaviors:
+        behaviors.append(referenceable)
+        types_tool['collective.cover.content'].behaviors = tuple(behaviors)
+        logger.info("collective.cover objects are now referenceable.")
