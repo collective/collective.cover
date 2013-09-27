@@ -25,27 +25,27 @@ msgstr ""
 
 #: tiles/configure.zcml
 msgid "A tile that shows a file object."
-msgstr ""
+msgstr "Eine Kachel"
 
 #: tiles/configure.zcml
 msgid "A tile that shows a link object."
-msgstr "Eine Fliese die einen Link anzeigt"
+msgstr "Eine Kachel, die einen Link anzeigt"
 
 #: tiles/configure.zcml
 msgid "A tile that shows a list of items."
-msgstr "Eine Fliese die eine Liste von Items anzeigt"
+msgstr "Eine Kachel, die eine Liste von Items anzeigt"
 
 #: tiles/configure.zcml
 msgid "A tile that shows an image object."
-msgstr "Eine Fliese die ein Bild anzeigt"
+msgstr "Eine Kachel, die ein Bild anzeigt"
 
 #: tiles/configure.zcml
 msgid "A tile that shows general information about objects."
-msgstr ""
+msgstr "Eine Kachel, für allgemeine Informationen über Objekte"
 
 #: tiles/configure.zcml
 msgid "A tile that shows rich text format."
-msgstr ""
+msgstr "Eine Kachel, die rich text format anzeigt"
 
 #: tiles/configure.zcml
 msgid "A tile that shows the result of a collection."
@@ -69,11 +69,11 @@ msgstr "Automatisch abspielen"
 
 #: collective/cover/controlpanel.py:24
 msgid "Available tiles"
-msgstr "Verfügbare Fliesen"
+msgstr "Verfügbare Kacheln"
 
 #: tiles/configure.zcml
 msgid "Basic Tile"
-msgstr "Basis Fliese"
+msgstr "Basis Kachel"
 
 #: collective/cover/controlpanel.py:51
 #: collective/cover/tiles/base.py:60
@@ -87,7 +87,7 @@ msgstr "Ab­bre­chen"
 
 #: tiles/configure.zcml
 msgid "Carousel Tile"
-msgstr "karussell Fliese"
+msgstr "Karussell Kachel"
 
 #: collective/cover/models/cover.xml
 msgid "Choose one of the predefined layouts"
@@ -176,7 +176,7 @@ msgstr "Layout Exportieren"
 
 #: tiles/configure.zcml
 msgid "File Tile"
-msgstr "Fliesen Titel"
+msgstr ""
 
 #: collective/cover/browser/contentchooser_templates/content_contentchooser.pt:22
 msgid "Filter items"
@@ -202,7 +202,7 @@ msgstr "Bild"
 
 #: tiles/configure.zcml
 msgid "Image Tile"
-msgstr "Bild Fliese"
+msgstr "Bild Kachel"
 
 #: collective/cover/tiles/configuration_widgets/namedimage.pt:45
 msgid "Image size"
@@ -240,7 +240,7 @@ msgstr "Listen Fliese"
 
 #: collective/cover/tiles/collection.py:111
 msgid "More…"
-msgstr "Mehr"
+msgstr "Mehr..."
 
 #: collective/cover/controlpanel.py:18
 msgid "Name"
