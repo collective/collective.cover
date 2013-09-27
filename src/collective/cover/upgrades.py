@@ -2,6 +2,7 @@
 
 from collective.cover.config import PROJECTNAME
 from collective.cover.content import ICover
+from plone.dexterity.interfaces import IDexterityFTI
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
 from zope.component import getUtility
@@ -229,10 +230,10 @@ def issue_35(context, logger=None):
     if logger is None:
         logger = logging.getLogger(PROJECTNAME)
 
-    types_tool = getToolByName(context, 'portal_types')
+    fti = getUtility(IDexterityFTI, name='collective.cover.content')
     referenceable = u'plone.app.referenceablebehavior.referenceable.IReferenceable'
-    behaviors = list(types_tool['collective.cover.content'].behaviors)
+    behaviors = list(fti.behaviors)
     if referenceable not in behaviors:
         behaviors.append(referenceable)
-        types_tool['collective.cover.content'].behaviors = tuple(behaviors)
+        fti.behaviors = tuple(behaviors)
         logger.info("collective.cover objects are now referenceable.")

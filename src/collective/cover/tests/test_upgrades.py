@@ -9,12 +9,11 @@ from collective.cover.upgrades import update_styles_record_4_5
 from collective.cover.upgrades import set_new_default_class_4_5
 from collective.cover.upgrades import tinymce_linkable
 from collective.cover.upgrades import register_alternate_view
-from plone.app.referenceablebehavior.referenceable import IReferenceable
 from plone.app.testing import setRoles
 from plone.app.testing import TEST_USER_ID
+from plone.dexterity.interfaces import IDexterityFTI
 from plone.registry.interfaces import IRecordAddedEvent
 from plone.registry.interfaces import IRegistry
-from plone.uuid.interfaces import IAttributeUUID
 from zope.component import eventtesting
 from zope.component import getUtility
 
@@ -162,7 +161,7 @@ class Upgrade4to5TestCase(unittest.TestCase):
         step -- the step we want to run
         """
         request = self.layer['request']
-        request.request.form['profile_id'] = self.profile_id
+        request.form['profile_id'] = self.profile_id
         request.form['upgrades'] = [step['id']]
         self.setup.manage_doUpgrades(request=request)
 
@@ -250,26 +249,18 @@ class Upgrade4to5TestCase(unittest.TestCase):
         self.assertEqual(step['description'], description)
 
         # remove behavior to simulate version 4 state
-        portal_types = self.portal['portal_types']
+        fti = getUtility(IDexterityFTI, name='collective.cover.content')
         referenceable = u'plone.app.referenceablebehavior.referenceable.IReferenceable'
-        behaviors = list(portal_types['collective.cover.content'].behaviors)
+        behaviors = list(fti.behaviors)
         behaviors.remove(referenceable)
-        portal_types['collective.cover.content'].behaviors = tuple(behaviors)
-        self.folder.invokeFactory(
-            'collective.cover.content', 'non-referenceable')
-        cover = self.folder['non-referenceable']
-        self.assertFalse(IReferenceable.providedBy(cover))
-        self.assertFalse(IAttributeUUID.providedBy(cover))
+        fti.behaviors = tuple(behaviors)
+        fti = getUtility(IDexterityFTI, name='collective.cover.content')
+        self.assertNotIn(referenceable, fti.behaviors)
 
         # and now run the upgrade step to validate the update
         self._do_upgrade_step(step)
-        self.folder.invokeFactory(
-            'collective.cover.content', 'referenceable')
-        cover = self.folder['referenceable']
-        self.assertTrue(IReferenceable.providedBy(cover))
-        self.assertTrue(IAttributeUUID.providedBy(cover))
-
-        # XXX: make existent covers referenceable?
+        fti = getUtility(IDexterityFTI, name='collective.cover.content')
+        self.assertIn(referenceable, fti.behaviors)
 
     def test_register_alternate_view(self):
         # default installation includes alternate view
