@@ -22,6 +22,7 @@ ${column_drop_area_selector} =  div.cover-row
 ${tile_drop_area_selector} =  div.cover-column
 ${tile_cancel_area_selector} =  div.modal-backdrop
 ${delete_tile_selector} =  button.close
+${CONTENT_CHOOSER_SELECTOR} =  div#contentchooser-content-search
 
 *** Keywords ***
 
@@ -91,4 +92,4 @@ Delete Tile
 
 Open Content Chooser
     Click Element  css=div#contentchooser-content-show-button
-    Wait Until Element Is Visible  css=div#contentchooser-content-search
+    Wait Until Element Is Visible  css=${CONTENT_CHOOSER_SELECTOR}
