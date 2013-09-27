@@ -137,11 +137,11 @@ class Upgrade4to5TestCase(unittest.TestCase):
 
     def test_upgrade_to_5_registrations(self):
         version = self.setup.getLastVersionForProfile(self.profile_id)
-        self.assertEqual(version, u'5')
+        self.assertEqual(version, (u'5',))
         self.setup.setLastVersionForProfile(self.profile_id, u'4')
         upgrades = self.setup.listUpgrades(self.profile_id)
         self.assertEqual(len(upgrades), 1)
-        self.assertEqual(len(upgrades[0]), 5)
+        self.assertEqual(len(upgrades[0]), 6)
 
     def _get_upgrade_step(self, title):
         """Get one of the upgrade steps from 4 to 5.
