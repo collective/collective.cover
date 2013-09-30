@@ -2,6 +2,7 @@
 
 from collective.cover.config import PROJECTNAME
 from collective.cover.content import ICover
+from plone.dexterity.interfaces import IDexterityFTI
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
 from zope.component import getUtility
@@ -219,3 +220,20 @@ def register_alternate_view(context, logger=None):
     setup = getToolByName(context, 'portal_setup')
     setup.runImportStepFromProfile(profile, 'typeinfo')
     logger.info("Alternate view for collective.cover.content objects added.")
+
+
+def issue_35(context, logger=None):
+    """Link integrity on Rich Text tile references.
+    See: https://github.com/collective/collective.cover/issues/35
+    """
+
+    if logger is None:
+        logger = logging.getLogger(PROJECTNAME)
+
+    fti = getUtility(IDexterityFTI, name='collective.cover.content')
+    referenceable = u'plone.app.referenceablebehavior.referenceable.IReferenceable'
+    behaviors = list(fti.behaviors)
+    if referenceable not in behaviors:
+        behaviors.append(referenceable)
+        fti.behaviors = tuple(behaviors)
+        logger.info("collective.cover objects are now referenceable.")

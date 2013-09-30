@@ -11,6 +11,7 @@ from collective.cover.upgrades import tinymce_linkable
 from collective.cover.upgrades import register_alternate_view
 from plone.app.testing import setRoles
 from plone.app.testing import TEST_USER_ID
+from plone.dexterity.interfaces import IDexterityFTI
 from plone.registry.interfaces import IRecordAddedEvent
 from plone.registry.interfaces import IRegistry
 from zope.component import eventtesting
@@ -122,15 +123,47 @@ class Upgrade4to5TestCase(unittest.TestCase):
 
     def setUp(self):
         self.portal = self.layer['portal']
+        self.setup = self.portal['portal_setup']
+        self.profile_id = u'collective.cover:default'
         self.tinymce = self.portal.portal_tinymce
         setRoles(self.portal, TEST_USER_ID, ['Manager'])
         self.portal.invokeFactory('Folder', 'test-folder')
         setRoles(self.portal, TEST_USER_ID, ['Member'])
         self.folder = self.portal['test-folder']
-        self.folder.invokeFactory('collective.cover.content', 'cover',
-                                  template_layout='Layout B')
+        self.folder.invokeFactory(
+            'collective.cover.content', 'cover', template_layout='Layout B')
         self.cover = self.folder['cover']
         self.layout_view = self.cover.restrictedTraverse('layout')
+
+    def test_upgrade_to_5_registrations(self):
+        version = self.setup.getLastVersionForProfile(self.profile_id)
+        self.assertEqual(version, (u'5',))
+        self.setup.setLastVersionForProfile(self.profile_id, u'4')
+        upgrades = self.setup.listUpgrades(self.profile_id)
+        self.assertEqual(len(upgrades), 1)
+        self.assertEqual(len(upgrades[0]), 6)
+
+    def _get_upgrade_step(self, title):
+        """Get one of the upgrade steps from 4 to 5.
+
+        Keyword arguments:
+        title -- the title used to register the upgrade step
+        """
+        self.setup.setLastVersionForProfile(self.profile_id, u'4')
+        upgrades = self.setup.listUpgrades(self.profile_id)
+        steps = [s for s in upgrades[0] if s['title'] == title]
+        return steps[0] if steps else None
+
+    def _do_upgrade_step(self, step):
+        """Execute an upgrade step.
+
+        Keyword arguments:
+        step -- the step we want to run
+        """
+        request = self.layer['request']
+        request.form['profile_id'] = self.profile_id
+        request.form['upgrades'] = [step['id']]
+        self.setup.manage_doUpgrades(request=request)
 
     def test_issue_244(self):
         css_tool = self.portal['portal_css']
@@ -206,6 +239,28 @@ class Upgrade4to5TestCase(unittest.TestCase):
         tinymce_linkable(self.portal)
         linkables = self.tinymce.linkable.split('\n')
         self.assertIn(u'collective.cover.content', linkables)
+
+    def test_issue_35(self):
+        # check if the upgrade step is registered
+        title = u'issue_35'
+        description = u"Link integrity on Rich Text tile references."
+        step = self._get_upgrade_step(title)
+        self.assertIsNotNone(step)
+        self.assertEqual(step['description'], description)
+
+        # remove behavior to simulate version 4 state
+        fti = getUtility(IDexterityFTI, name='collective.cover.content')
+        referenceable = u'plone.app.referenceablebehavior.referenceable.IReferenceable'
+        behaviors = list(fti.behaviors)
+        behaviors.remove(referenceable)
+        fti.behaviors = tuple(behaviors)
+        fti = getUtility(IDexterityFTI, name='collective.cover.content')
+        self.assertNotIn(referenceable, fti.behaviors)
+
+        # and now run the upgrade step to validate the update
+        self._do_upgrade_step(step)
+        fti = getUtility(IDexterityFTI, name='collective.cover.content')
+        self.assertIn(referenceable, fti.behaviors)
 
     def test_register_alternate_view(self):
         # default installation includes alternate view
