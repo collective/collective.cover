@@ -93,7 +93,7 @@
 
   <genericsetup:registerProfile
       name="upgrade_4_to_5"
-      title="collective.cver: upgrade_4_to_5"
+      title="collective.cover: upgrade_4_to_5"
       directory="profiles/upgrade_4_to_5"
       description="Upgrade steps from 4 to 5."
       provides="Products.GenericSetup.interfaces.EXTENSION"
@@ -132,6 +132,12 @@
           title="Register alternate view"
           description="The new view behaves like a standard content type view"
           handler=".upgrades.register_alternate_view"
+          />
+
+      <genericsetup:upgradeStep
+          title="issue_35"
+          description="Link integrity on Rich Text tile references."
+          handler=".upgrades.issue_35"
           />
 
   </genericsetup:upgradeSteps>
