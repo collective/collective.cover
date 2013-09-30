@@ -237,3 +237,19 @@ def issue_35(context, logger=None):
         behaviors.append(referenceable)
         fti.behaviors = tuple(behaviors)
         logger.info("collective.cover objects are now referenceable.")
+
+
+def issue_294(context, logger=None):
+    """Install IRelatedItems behavior.
+    See: https://github.com/collective/collective.cover/issues/294
+    """
+    if logger is None:
+        logger = logging.getLogger(PROJECTNAME)
+
+    fti = getUtility(IDexterityFTI, name='collective.cover.content')
+    related_items = u'plone.app.relationfield.behavior.IRelatedItems'
+    behaviors = list(fti.behaviors)
+    if related_items not in behaviors:
+        behaviors.append(related_items)
+        fti.behaviors = tuple(behaviors)
+        logger.info("IRelatedItems behavior was installed.")

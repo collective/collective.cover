@@ -13,6 +13,7 @@
   <five:registerPackage package="." />
   <includeDependencies package="." />
   <include package="five.grok" />
+  <include package="plone.app.relationfield" />
 
   <permission
       id="collective.cover.CanExportLayout"

@@ -141,7 +141,7 @@ class Upgrade4to5TestCase(unittest.TestCase):
         self.setup.setLastVersionForProfile(self.profile_id, u'4')
         upgrades = self.setup.listUpgrades(self.profile_id)
         self.assertEqual(len(upgrades), 1)
-        self.assertEqual(len(upgrades[0]), 6)
+        self.assertEqual(len(upgrades[0]), 7)
 
     def _get_upgrade_step(self, title):
         """Get one of the upgrade steps from 4 to 5.
@@ -277,3 +277,25 @@ class Upgrade4to5TestCase(unittest.TestCase):
         register_alternate_view(self.portal)
         view_methods = portal_types['collective.cover.content'].view_methods
         self.assertIn(u'standard', view_methods)
+
+    def test_issue_294(self):
+        # check if the upgrade step is registered
+        title = u'issue_294'
+        description = u"Install IRelatedItems behavior."
+        step = self._get_upgrade_step(title)
+        self.assertIsNotNone(step)
+        self.assertEqual(step['description'], description)
+
+        # remove behavior to simulate version 4 state
+        fti = getUtility(IDexterityFTI, name='collective.cover.content')
+        related_items = u'plone.app.relationfield.behavior.IRelatedItems'
+        behaviors = list(fti.behaviors)
+        behaviors.remove(related_items)
+        fti.behaviors = tuple(behaviors)
+        fti = getUtility(IDexterityFTI, name='collective.cover.content')
+        self.assertNotIn(related_items, fti.behaviors)
+
+        # and now run the upgrade step to validate the update
+        self._do_upgrade_step(step)
+        fti = getUtility(IDexterityFTI, name='collective.cover.content')
+        self.assertIn(related_items, fti.behaviors)

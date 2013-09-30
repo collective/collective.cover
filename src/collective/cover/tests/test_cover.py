@@ -79,3 +79,5 @@ class CoverIntegrationTestCase(unittest.TestCase):
         setRoles(self.portal, TEST_USER_ID, ['Member'])
         self.assertFalse(self.layout_edit.can_export_layout())
         self.assertNotIn('<span>Export layout</span>', self.layout_edit())
+
+    # TODO: add test for plone.app.relationfield.behavior.IRelatedItems

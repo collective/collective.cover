@@ -131,6 +131,11 @@
         description="Link integrity on Rich Text tile references."
         handler=".upgrades.issue_35"
         />
+    <genericsetup:upgradeStep
+        title="issue_294"
+        description="Install IRelatedItems behavior."
+        handler=".upgrades.issue_294"
+        />
   </genericsetup:upgradeSteps>
 
 </configure>
