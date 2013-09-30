@@ -1,20 +1,21 @@
 # -*- coding: utf-8 -*-
-# setup tests with all doctests found in docs/
 
-from collective.cover.testing import LINKINTEGRITY_FUNCTIONAL_TESTING
+from collective.cover.testing import Fixture
+from collective.cover.testing import generate_jpeg
 from collective.cover.tests import linkintegrity_docs as docs
-from os import walk
-from os.path import join, split, abspath, dirname
-from plone.app.testing.interfaces import (SITE_OWNER_NAME, SITE_OWNER_PASSWORD)
+from plone.app.testing import FunctionalTesting
+from plone.app.testing import setRoles
+from plone.app.testing.interfaces import SITE_OWNER_NAME
+from plone.app.testing.interfaces import SITE_OWNER_PASSWORD
+from plone.app.testing.interfaces import TEST_USER_ID
 from plone.app.textfield import RichText
-from plone.testing.z2 import Browser
+from plone.dexterity.fti import DexterityFTI
+from plone.testing import z2
 from Products.PloneTestCase import PloneTestCase
-from re import compile
-from sys import argv
 from Testing.ZopeTestCase import FunctionalDocFileSuite
-from unittest import TestSuite
 from zope.interface import Interface
 
+import os
 import unittest
 
 
@@ -33,6 +34,59 @@ OPTIONFLAGS = (doctest.REPORT_ONLY_FIRST_FAILURE |
                doctest.NORMALIZE_WHITESPACE)
 
 
+class LinkintegrityFixture(Fixture):
+
+    def setUpZope(self, app, configurationContext):
+        super(LinkintegrityFixture, self).setUpZope(app, configurationContext)
+        import plone.app.linkintegrity
+        self.loadZCML(package=plone.app.linkintegrity)
+        z2.installProduct(app, 'plone.app.linkintegrity')
+
+    def setUpPloneSite(self, portal):
+        # Install into Plone site using portal_setup
+        # self.applyProfile(portal, 'plone.app.linkintegrity:default')
+        super(LinkintegrityFixture, self).setUpPloneSite(portal)
+        setRoles(portal, TEST_USER_ID, ['Manager'])
+        fti = DexterityFTI('My Dexterity Item')
+        portal.portal_types._setObject('My Dexterity Item', fti)
+        fti.klass = 'plone.dexterity.content.Item'
+        fti.schema = 'collective.cover.tests.test_linkintegrity.IMyDexterityItem'
+        fti.behaviors = ('plone.app.referenceablebehavior.referenceable.IReferenceable',)
+        fti = DexterityFTI('Non referenciable Dexterity Item')
+        portal.portal_types._setObject('Non referenciable Dexterity Item', fti)
+        fti.klass = 'plone.dexterity.content.Item'
+        fti.schema = 'collective.cover.tests.test_linkintegrity.IMyDexterityItem'
+        # Create some dexterity items to test with it
+        portal.invokeFactory('My Dexterity Item', id='dexterity_item1',
+                             title='Dexterity Item 1')
+        portal.invokeFactory('My Dexterity Item', id='dexterity_item2',
+                             title='Dexterity Item 2')
+        portal.invokeFactory('Non referenciable Dexterity Item',
+                             id='nonreferenciable_dexterity_item1',
+                             title='Non referenciable Dexterity Item 1')
+        portal.invokeFactory('Non referenciable Dexterity Item',
+                             id='nonreferenciable_dexterity_item2',
+                             title='Non referenciable Dexterity Item 2')
+        # Create an AT Image
+        portal.invokeFactory('Image', id='image1', title='Test Image 1',
+                             image=generate_jpeg(50, 50))
+        portal.invokeFactory('collective.cover.content', 'cover1')
+        # Documents
+        portal.invokeFactory('Document', id='doc1', title='Test Page 1',
+                             text='<html> <body> a test page </body> </html>')
+        portal.invokeFactory('Document', id='doc2', title='Test Page 2',
+                             text='<html> <body> another test page </body> </html>')
+        portal.invokeFactory('Folder', id='folder1', title='Test Folder 1')
+        portal.folder1.invokeFactory('Document', id='doc3', title='Test Page 3',
+                                     text='<html> <body> a test page in a subfolder </body> </html>')
+
+LINKINTEGRITY_FIXTURE = LinkintegrityFixture()
+LINKINTEGRITY_FUNCTIONAL_TESTING = FunctionalTesting(
+    bases=(LINKINTEGRITY_FIXTURE,),
+    name='collective.cover:LinkintegrityFunctional',
+)
+
+
 class LinkIntegrityFunctionalTestCase(unittest.TestCase):
 
     layer = LINKINTEGRITY_FUNCTIONAL_TESTING
@@ -45,7 +99,7 @@ class LinkIntegrityFunctionalTestCase(unittest.TestCase):
         HTTPRequest.set = set_orig
         self.portal = self.layer['portal']
         self.portal_url = self.portal.absolute_url()
-        self.browser = Browser(self.layer['app'])
+        self.browser = z2.Browser(self.layer['app'])
         self.tile = self.portal.cover1.restrictedTraverse(
             '@@{0}/{1}'.format('collective.cover.richtext', 'test-richtext-tile'))
         self.browser.handleErrors = True
@@ -72,23 +126,19 @@ class LinkIntegrityFunctionalTestCase(unittest.TestCase):
             set_orig(self, key, value)
         HTTPRequest.set = set
 
-
-# we check argv to enable testing of explicitely named doctests
-if '-t' in argv:
-    pattern = compile('.*\.(txt|rst)$')
-else:
-    pattern = compile('^test.*\.(txt|rst)$')
+dirname = os.path.dirname(__file__) + '/linkintegrity_docs'
+files = os.listdir(dirname)
+tests = [f for f in files if f.startswith('test') and f.endswith('.txt')]
 
 
 def test_suite():
-    suite = TestSuite()
-    docs_dir = abspath(dirname(docs.__file__)) + '/'
-    for path, dirs, files in walk(docs_dir):
-        for name in files:
-            relative = join(path, name)[len(docs_dir):]
-            if not '.svn' in split(path) and pattern.search(name):
-                suite.addTest(FunctionalDocFileSuite(relative,
-                              optionflags=OPTIONFLAGS,
-                              package=docs.__name__,
-                              test_class=LinkIntegrityFunctionalTestCase))
+    suite = unittest.TestSuite()
+    suite.addTests([
+        FunctionalDocFileSuite(
+            t,
+            optionflags=OPTIONFLAGS,
+            package=docs.__name__,
+            test_class=LinkIntegrityFunctionalTestCase)
+        for t in tests
+    ])
     return suite

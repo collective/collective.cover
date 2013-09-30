@@ -9,9 +9,6 @@ from plone.app.testing import IntegrationTesting
 from plone.app.testing import PLONE_FIXTURE
 from plone.app.testing import PloneSandboxLayer
 from plone.testing import z2
-from plone.app.testing import setRoles
-from plone.app.testing.interfaces import TEST_USER_ID
-from plone.dexterity.fti import DexterityFTI
 from StringIO import StringIO
 
 import os
@@ -115,66 +112,11 @@ class Fixture(PloneSandboxLayer):
             portal_kss.getResource('++resource++plone.app.z3cform').setEnabled(False)
 
 
-class LinkintegrityFixture(Fixture):
-
-    def setUpZope(self, app, configurationContext):
-        super(LinkintegrityFixture, self).setUpZope(app, configurationContext)
-        import plone.app.linkintegrity
-        self.loadZCML(package=plone.app.linkintegrity)
-        z2.installProduct(app, 'plone.app.linkintegrity')
-
-    def setUpPloneSite(self, portal):
-        # Install into Plone site using portal_setup
-        # self.applyProfile(portal, 'plone.app.linkintegrity:default')
-        super(LinkintegrityFixture, self).setUpPloneSite(portal)
-        setRoles(portal, TEST_USER_ID, ['Manager'])
-        fti = DexterityFTI('My Dexterity Item')
-        portal.portal_types._setObject('My Dexterity Item', fti)
-        fti.klass = 'plone.dexterity.content.Item'
-        fti.schema = 'collective.cover.tests.test_linkintegrity.IMyDexterityItem'
-        fti.behaviors = ('plone.app.referenceablebehavior.referenceable.IReferenceable',)
-        fti = DexterityFTI('Non referenciable Dexterity Item')
-        portal.portal_types._setObject('Non referenciable Dexterity Item', fti)
-        fti.klass = 'plone.dexterity.content.Item'
-        fti.schema = 'collective.cover.tests.test_linkintegrity.IMyDexterityItem'
-        # Create some dexterity items to test with it
-        portal.invokeFactory('My Dexterity Item', id='dexterity_item1',
-                             title='Dexterity Item 1')
-        portal.invokeFactory('My Dexterity Item', id='dexterity_item2',
-                             title='Dexterity Item 2')
-        portal.invokeFactory('Non referenciable Dexterity Item',
-                             id='nonreferenciable_dexterity_item1',
-                             title='Non referenciable Dexterity Item 1')
-        portal.invokeFactory('Non referenciable Dexterity Item',
-                             id='nonreferenciable_dexterity_item2',
-                             title='Non referenciable Dexterity Item 2')
-        # Create an AT Image
-        portal.invokeFactory('Image', id='image1', title='Test Image 1',
-                             image=generate_jpeg(50, 50))
-        portal.invokeFactory('collective.cover.content', 'cover1')
-        # Documents
-        portal.invokeFactory('Document', id='doc1', title='Test Page 1',
-                             text='<html> <body> a test page </body> </html>')
-        portal.invokeFactory('Document', id='doc2', title='Test Page 2',
-                             text='<html> <body> another test page </body> </html>')
-        portal.invokeFactory('Folder', id='folder1', title='Test Folder 1')
-        portal.folder1.invokeFactory('Document', id='doc3', title='Test Page 3',
-                                     text='<html> <body> a test page in a subfolder </body> </html>')
-
-
 FIXTURE = Fixture()
 INTEGRATION_TESTING = IntegrationTesting(
     bases=(FIXTURE,),
     name='collective.cover:Integration',
 )
-
-
-LINKINTEGRITY_FIXTURE = LinkintegrityFixture()
-LINKINTEGRITY_FUNCTIONAL_TESTING = FunctionalTesting(
-    bases=(LINKINTEGRITY_FIXTURE,),
-    name='collective.cover:LinkintegrityFunctional',
-)
-
 
 FUNCTIONAL_TESTING = FunctionalTesting(
     bases=(FIXTURE, z2.ZSERVER_FIXTURE),
