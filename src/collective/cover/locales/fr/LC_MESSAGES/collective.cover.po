@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: collective.cover\n"
-"POT-Creation-Date: 2013-07-15 21:43+0000\n"
+"POT-Creation-Date: 2013-09-30 22:55+0000\n"
 "PO-Revision-Date: 2013-05-29 18:20-0300\n"
 "Last-Translator: Bitouzé Denis <dbitouze@wanadoo.fr>\n"
 "Language-Team: French <kde-i18n-doc@kde.org>\n"
@@ -57,7 +57,7 @@ msgstr "Une tuile qui affiche le résultat d'une collection."
 msgid "A tile to embed content from a remote source."
 msgstr "Une tuile qui affiche le contenu embarqué d'un site tiers."
 
-#: collective/cover/browser/contentchooser_templates/content_contentchooser.pt:57
+#: collective/cover/browser/contentchooser_templates/content_contentchooser.pt:56
 msgid "Add Content"
 msgstr "Ajouter du contenu"
 
@@ -78,11 +78,11 @@ msgid "Basic Tile"
 msgstr "Tuile basique"
 
 #: collective/cover/controlpanel.py:51
-#: collective/cover/tiles/base.py:60
+#: collective/cover/tiles/base.py:62
 msgid "CSS Class"
 msgstr ""
 
-#: collective/cover/tiles/configuration_view.py:196
+#: collective/cover/tiles/configuration_view.py:197
 #: collective/cover/tiles/edit.py:75
 msgid "Cancel"
 msgstr "Annuler"
@@ -107,7 +107,7 @@ msgstr "Colonne"
 msgid "Compose"
 msgstr "Remplir"
 
-#: collective/cover/tiles/configuration_view.py:159
+#: collective/cover/tiles/configuration_view.py:160
 msgid "Configure ${name}"
 msgstr "Configurer ${name}"
 
@@ -188,7 +188,7 @@ msgstr "Filtrer les éléments"
 msgid "Footer"
 msgstr ""
 
-#: collective/cover/tiles/configuration_widgets/textline.pt:42
+#: collective/cover/tiles/configuration_widgets/textline.pt:50
 msgid "HTML tag"
 msgstr "Balise HTML"
 
@@ -196,7 +196,7 @@ msgstr "Balise HTML"
 msgid "Header"
 msgstr ""
 
-#: collective/cover/tiles/banner.py:23
+#: collective/cover/tiles/banner.py:28
 #: collective/cover/tiles/basic.py:36
 #: collective/cover/tiles/collection.py:50
 msgid "Image"
@@ -206,7 +206,7 @@ msgstr "Image"
 msgid "Image Tile"
 msgstr "Tuile image"
 
-#: collective/cover/tiles/configuration_widgets/namedimage.pt:45
+#: collective/cover/tiles/configuration_widgets/namedimage.pt:53
 msgid "Image size"
 msgstr "Taille de l'image"
 
@@ -248,9 +248,9 @@ msgstr ""
 msgid "Name"
 msgstr "Nom"
 
-#: collective/cover/tiles/configuration_widgets/basewidget.pt:30
-#: collective/cover/tiles/configuration_widgets/list.pt:40
-#: collective/cover/tiles/configuration_widgets/namedimage.pt:33
+#: collective/cover/tiles/configuration_widgets/basewidget.pt:33
+#: collective/cover/tiles/configuration_widgets/list.pt:41
+#: collective/cover/tiles/configuration_widgets/namedimage.pt:36
 msgid "No"
 msgstr "Non"
 
@@ -270,9 +270,9 @@ msgstr ""
 msgid "Only objects of these content types will be searched on the content chooser."
 msgstr "Seul les éléments correspondant à ces types de contenus seront recherchés."
 
-#: collective/cover/tiles/configuration_widgets/basewidget.pt:32
-#: collective/cover/tiles/configuration_widgets/list.pt:42
-#: collective/cover/tiles/configuration_widgets/namedimage.pt:35
+#: collective/cover/tiles/configuration_widgets/basewidget.pt:39
+#: collective/cover/tiles/configuration_widgets/list.pt:47
+#: collective/cover/tiles/configuration_widgets/namedimage.pt:42
 msgid "Order"
 msgstr "Ordre"
 
@@ -309,7 +309,7 @@ msgstr "Veuillez modifier la tuile pour ajouter le code embarqué."
 msgid "Please edit the tile to enter some text."
 msgstr "Veuillez modifier la tuile pour ajouter du texte."
 
-#: collective/cover/tiles/configuration_widgets/namedimage.pt:62
+#: collective/cover/tiles/configuration_widgets/namedimage.pt:70
 msgid "Position"
 msgstr "Position"
 
@@ -325,7 +325,7 @@ msgstr "Tuile texte riche"
 msgid "Row"
 msgstr "Ligne"
 
-#: collective/cover/tiles/configuration_view.py:163
+#: collective/cover/tiles/configuration_view.py:164
 #: collective/cover/tiles/edit.py:43
 msgid "Save"
 msgstr "Enregistrer"
@@ -346,7 +346,7 @@ msgstr "Configuration du module collective.cover"
 msgid "Styles"
 msgstr ""
 
-#: collective/cover/tiles/configuration_widgets/richtext.pt:42
+#: collective/cover/tiles/configuration_widgets/richtext.pt:50
 msgid "Text length"
 msgstr "Longueur du texte."
 
@@ -362,11 +362,11 @@ msgstr "La mise en page à utiliser pour afficher les groupes et les tuiles"
 msgid "This tiles will be available for layout creation."
 msgstr "Ces tuiles seront disponibles pour la création de la mise en page."
 
-#: collective/cover/tiles/configuration_view.py:205
+#: collective/cover/tiles/configuration_view.py:206
 msgid "Tile configuration cancelled."
 msgstr "Configuration de la tuile annulée."
 
-#: collective/cover/tiles/configuration_view.py:192
+#: collective/cover/tiles/configuration_view.py:193
 msgid "Tile configuration saved."
 msgstr "Configuration de la tuile enregistrée."
 
@@ -374,18 +374,18 @@ msgstr "Configuration de la tuile enregistrée."
 msgid "Tile saved"
 msgstr "Tuile enregistrée"
 
-#: collective/cover/tiles/banner.py:18
+#: collective/cover/tiles/banner.py:23
 #: collective/cover/tiles/basic.py:26
 #: collective/cover/tiles/collection.py:29
 msgid "Title"
 msgstr "Titre"
 
-#: collective/cover/tiles/banner.py:28
+#: collective/cover/tiles/banner.py:33
 #: collective/cover/tiles/link.py:33
 msgid "URL"
 msgstr "URL"
 
-#: collective/cover/tiles/basic.py:60
+#: collective/cover/tiles/basic.py:59
 #: collective/cover/tiles/collection.py:69
 #: collective/cover/tiles/file.py:57
 msgid "UUID"
@@ -395,23 +395,23 @@ msgstr "UUID"
 msgid "Uninstall profile for the collective.cover package."
 msgstr "Profil de désinstallation du module collective.cover."
 
-#: collective/cover/tiles/configuration_widgets/basewidget.pt:12
-#: collective/cover/tiles/configuration_widgets/list.pt:22
-#: collective/cover/tiles/configuration_widgets/namedimage.pt:15
+#: collective/cover/tiles/configuration_widgets/basewidget.pt:13
+#: collective/cover/tiles/configuration_widgets/list.pt:23
+#: collective/cover/tiles/configuration_widgets/namedimage.pt:16
 msgid "Visible"
 msgstr "Visible"
 
-#: collective/cover/tiles/configuration_widgets/basewidget.pt:21
-#: collective/cover/tiles/configuration_widgets/list.pt:31
-#: collective/cover/tiles/configuration_widgets/namedimage.pt:24
+#: collective/cover/tiles/configuration_widgets/basewidget.pt:22
+#: collective/cover/tiles/configuration_widgets/list.pt:32
+#: collective/cover/tiles/configuration_widgets/namedimage.pt:25
 msgid "Yes"
 msgstr "Oui"
 
-#: collective/cover/tiles/base.py:133
+#: collective/cover/tiles/base.py:136
 msgid "You are not allowed to add content to this tile"
 msgstr "Vous n'avez pas l'autorisation d'ajouter du contenu à cette tuile"
 
-#: collective/cover/tiles/base.py:147
+#: collective/cover/tiles/base.py:148
 msgid "You are not allowed to remove content of this tile"
 msgstr "Vous n'avez pas l'autorisation de supprimer le contenu de cette tuile"
 
@@ -422,11 +422,6 @@ msgstr "collective.cover"
 #: profiles.zcml
 msgid "collective.cover uninstall"
 msgstr "Désinstallation de collective.cover"
-
-#. Default: "Also known as keywords, tags or labels, these help you categorize your content."
-#: collective/cover/tiles/basic.py:53
-msgid "help_categories"
-msgstr "Aussi connu en tant que mots-clés, tags ou libellés, ils aident à catégoriser votre contenu."
 
 #. Default: "Categories"
 #: collective/cover/tiles/basic.py:52
