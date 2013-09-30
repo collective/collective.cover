@@ -4,6 +4,12 @@ There's a frood who really knows where his towel is
 1.0a5 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Install IRelatedItems behavior to avoid 'ReferenceException: Invalid target
+  UID' (fixes `#294`_). [hvelarde]
+
+- Implement link integrity on Rich Text tile references (closes `#35`_).
+  [jpgimenez]
+
 - Register new alternate view for covers; the new view behaves like a standard
   content type view displaying object's title, description and viewlets on
   Plone's main_template main slot (closes `#271`_). [hvelarde]
@@ -217,6 +223,7 @@ There's a frood who really knows where his towel is
 - Initial release.
 
 .. _`PloneFormGen`: https://pypi.python.org/pypi/Products.PloneFormGen
+.. _`#35`: https://github.com/collective/collective.cover/issues/35
 .. _`#48`: https://github.com/collective/collective.cover/issues/48
 .. _`#100`: https://github.com/collective/collective.cover/issues/100
 .. _`#114`: https://github.com/collective/collective.cover/issues/114
@@ -260,3 +267,4 @@ There's a frood who really knows where his towel is
 .. _`#276`: https://github.com/collective/collective.cover/issues/276
 .. _`#278`: https://github.com/collective/collective.cover/issues/278
 .. _`#281`: https://github.com/collective/collective.cover/issues/281
+.. _`#294`: https://github.com/collective/collective.cover/issues/294
