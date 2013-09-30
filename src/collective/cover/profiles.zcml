@@ -102,29 +102,24 @@
       profile="collective.cover:default"
       >
     <genericsetup:upgradeStep
-        title="Solves issue 244"
-        description="Add cover.css to css_registry"
+        title="issue_244"
+        description="Add cover.css to css_registry."
         handler=".upgrades.issue_244"
         />
     <genericsetup:upgradeStep
-        title="Update registry styles record"
-        description="Update the registry 'styles' record"
-        handler=".upgrades.update_styles_record_4_5"
+        title="issue_262"
+        description="Default value for css_class."
+        handler=".upgrades.issue_262"
         />
     <genericsetup:upgradeStep
-        title="Solves issue 262"
-        description="New default value for css_class"
-        handler=".upgrades.set_new_default_class_4_5"
+        title="issue_259"
+        description="Make cover linkable from TinyMCE."
+        handler=".upgrades.issue_259"
         />
     <genericsetup:upgradeStep
-        title="Add Cover as Linkable in TinyMCE settings"
-        description="Cover is now linkable"
-        handler=".upgrades.tinymce_linkable"
-        />
-    <genericsetup:upgradeStep
-        title="Register alternate view"
-        description="The new view behaves like a standard content type view"
-        handler=".upgrades.register_alternate_view"
+        title="issue_271"
+        description="Implement standard content type view."
+        handler=".upgrades.issue_271"
         />
     <genericsetup:upgradeStep
         title="issue_35"

@@ -129,7 +129,7 @@ def issue_218(context, logger=None):
 
 
 def issue_244(context, logger=None):
-    """Handler for upgrade step from 4 to 5; Add cover.css to css_registry.
+    """Add cover.css to css_registry.
     See: https://github.com/collective/collective.cover/issues/244
     """
     if logger is None:
@@ -146,9 +146,8 @@ def issue_244(context, logger=None):
         logger.debug("{0} resource already in portal_css".format(id))
 
 
-def update_styles_record_4_5(context, logger=None):
-    """Handler for upgrade step from 4 to 5; adds the 'tile-default'
-    value to the 'styles' record in the registry.
+def issue_262(context, logger=None):
+    """Default value for css_class.
     See: https://github.com/collective/collective.cover/issues/262
     """
     if logger is None:
@@ -159,19 +158,11 @@ def update_styles_record_4_5(context, logger=None):
     setup.runImportStepFromProfile(profile, 'plone.app.registry')
     logger.info("'styles' record updated in the registry")
 
-
-def set_new_default_class_4_5(context, logger=None):
-    """Sets the new default css_class value for old tiles
-    See: https://github.com/collective/collective.cover/issues/262
-    """
     new_default_value = u"tile-default"
-
-    if logger is None:
-        logger = logging.getLogger(PROJECTNAME)
-
     catalog = getToolByName(context, 'portal_catalog')
     brains = catalog(object_provides=ICover.__identifier__)
 
+    # update existing tiles with default value
     for brain in brains:
         cover = brain.getObject()
         layout_view = cover.restrictedTraverse("layout")
@@ -184,18 +175,19 @@ def set_new_default_class_4_5(context, logger=None):
         for row in layout:
             for column in row.get("children", []):
                 for tile_data in column.get("children", []):
-                    tile = cover.restrictedTraverse("{0}/{1}".format(tile_data["tile-type"], tile_data["id"]))
+                    tile = cover.restrictedTraverse("{0}/{1}".format(
+                        tile_data["tile-type"], tile_data["id"]))
                     tile_config = tile.get_tile_configuration()
                     css_class = tile_config.get("css_class", u"")
                     if not isinstance(css_class, basestring) or css_class == u"--NOVALUE--" or css_class == u"":
                         tile_config['css_class'] = new_default_value
                         tile.set_tile_configuration(tile_config)
 
-    logger.info("new default value checked in every tile's css_class")
+    logger.info("Default value was set on all 'css_class' fields")
 
 
-def tinymce_linkable(context, logger=None):
-    """Adds collective.cover.content as Linkable in TinyMCE settings
+def issue_259(context, logger=None):
+    """Make cover linkable from TinyMCE.
     See: https://github.com/collective/collective.cover/issues/259
     """
 
@@ -208,8 +200,8 @@ def tinymce_linkable(context, logger=None):
     logger.info("'linkable' property updated in TinyMCE settings")
 
 
-def register_alternate_view(context, logger=None):
-    """Add alternate view for collective.cover.content objects.
+def issue_271(context, logger=None):
+    """Implement standard content type view.
     See: https://github.com/collective/collective.cover/issues/271
     """
 

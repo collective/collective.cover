@@ -4,11 +4,6 @@ from collective.cover.testing import INTEGRATION_TESTING
 from collective.cover.upgrades import register_available_tiles_record
 from collective.cover.upgrades import register_styles_record
 from collective.cover.upgrades import rename_content_chooser_resources
-from collective.cover.upgrades import issue_244
-from collective.cover.upgrades import update_styles_record_4_5
-from collective.cover.upgrades import set_new_default_class_4_5
-from collective.cover.upgrades import tinymce_linkable
-from collective.cover.upgrades import register_alternate_view
 from plone.app.testing import setRoles
 from plone.app.testing import TEST_USER_ID
 from plone.dexterity.interfaces import IDexterityFTI
@@ -141,7 +136,7 @@ class Upgrade4to5TestCase(unittest.TestCase):
         self.setup.setLastVersionForProfile(self.profile_id, u'4')
         upgrades = self.setup.listUpgrades(self.profile_id)
         self.assertEqual(len(upgrades), 1)
-        self.assertEqual(len(upgrades[0]), 7)
+        self.assertEqual(len(upgrades[0]), 6)
 
     def _get_upgrade_step(self, title):
         """Get one of the upgrade steps from 4 to 5.
@@ -166,15 +161,32 @@ class Upgrade4to5TestCase(unittest.TestCase):
         self.setup.manage_doUpgrades(request=request)
 
     def test_issue_244(self):
+        # check if the upgrade step is registered
+        title = u'issue_244'
+        description = u"Add cover.css to css_registry."
+        step = self._get_upgrade_step(title)
+        self.assertIsNotNone(step)
+        self.assertEqual(step['description'], description)
+
         css_tool = self.portal['portal_css']
         id = '++resource++collective.cover/cover.css'
+
         # remove the resource so simulate status of profile version 4
         css_tool.unregisterResource(id)
         self.assertNotIn(id, css_tool.getResourceIds())
-        issue_244(self.portal)
+
+        # and now run the upgrade step to validate the update
+        self._do_upgrade_step(step)
         self.assertIn(id, css_tool.getResourceIds())
 
     def test_issue_262(self):
+        # check if the upgrade step is registered
+        title = u'issue_262'
+        description = u"Default value for css_class."
+        step = self._get_upgrade_step(title)
+        self.assertIsNotNone(step)
+        self.assertEqual(step['description'], description)
+
         # get tiles and assign css_class as before version 5
         layout = self.layout_view.get_layout('view')
         tile_def = layout[0]['children'][0]['children'][0]
@@ -205,26 +217,38 @@ class Upgrade4to5TestCase(unittest.TestCase):
         record = 'collective.cover.controlpanel.ICoverSettings.styles'
         default_style = u"-Default-|tile-default"
 
+        # FIXME: this must be tested outside the upgrade step also
         # default installation includes the '-Default-|tile-default' style
         self.assertIn(default_style, registry[record])
 
-        # old installations (upgraded up to version 4) didn't include default style
+        # simulate version 4 state by removing default style
         register_styles_record(self.portal)
         self.assertNotIn(default_style, registry[record])
 
-        # upgraded installations (up to version 5) include default style
-        update_styles_record_4_5(self.portal)
-        self.assertIn(default_style, registry[record])
-
         # after upgrade step, old tiles have a new default value for
         # css_class field (if they didn't have one)
-        set_new_default_class_4_5(self.portal)
-        self.assertEqual(self.tile1.get_tile_configuration()['css_class'], u"tile-default")
-        self.assertEqual(self.tile2.get_tile_configuration()['css_class'], u"tile-default")
-        self.assertEqual(self.tile3.get_tile_configuration()['css_class'], u"tile-default")
-        self.assertEqual(self.tile4.get_tile_configuration()['css_class'], u"tile-shadow")
+        self._do_upgrade_step(step)
 
-    def test_tinymce_linkables(self):
+        # upgraded installations include default style
+        self.assertIn(default_style, registry[record])
+
+        self.assertEqual(
+            self.tile1.get_tile_configuration()['css_class'], u"tile-default")
+        self.assertEqual(
+            self.tile2.get_tile_configuration()['css_class'], u"tile-default")
+        self.assertEqual(
+            self.tile3.get_tile_configuration()['css_class'], u"tile-default")
+        self.assertEqual(
+            self.tile4.get_tile_configuration()['css_class'], u"tile-shadow")
+
+    def test_issue_259(self):
+        # check if the upgrade step is registered
+        title = u'issue_259'
+        description = u"Make cover linkable from TinyMCE."
+        step = self._get_upgrade_step(title)
+        self.assertIsNotNone(step)
+        self.assertEqual(step['description'], description)
+
         # default installation includes Cover as linkable
         linkables = self.tinymce.linkable.split('\n')
         self.assertIn(u'collective.cover.content', linkables)
@@ -235,8 +259,8 @@ class Upgrade4to5TestCase(unittest.TestCase):
         linkables = self.tinymce.linkable.split('\n')
         self.assertNotIn(u'collective.cover.content', linkables)
 
-        # and now run the upgrade step to check that worked
-        tinymce_linkable(self.portal)
+        # run the upgrade step to validate the update
+        self._do_upgrade_step(step)
         linkables = self.tinymce.linkable.split('\n')
         self.assertIn(u'collective.cover.content', linkables)
 
@@ -257,12 +281,19 @@ class Upgrade4to5TestCase(unittest.TestCase):
         fti = getUtility(IDexterityFTI, name='collective.cover.content')
         self.assertNotIn(referenceable, fti.behaviors)
 
-        # and now run the upgrade step to validate the update
+        # run the upgrade step to validate the update
         self._do_upgrade_step(step)
         fti = getUtility(IDexterityFTI, name='collective.cover.content')
         self.assertIn(referenceable, fti.behaviors)
 
-    def test_register_alternate_view(self):
+    def test_issue_271(self):
+        # check if the upgrade step is registered
+        title = u'issue_271'
+        description = u"Implement standard content type view."
+        step = self._get_upgrade_step(title)
+        self.assertIsNotNone(step)
+        self.assertEqual(step['description'], description)
+
         # default installation includes alternate view
         portal_types = self.portal['portal_types']
         view_methods = portal_types['collective.cover.content'].view_methods
@@ -273,8 +304,8 @@ class Upgrade4to5TestCase(unittest.TestCase):
         view_methods = portal_types['collective.cover.content'].view_methods
         self.assertNotIn(u'standard', view_methods)
 
-        # and now run the upgrade step to validate the update
-        register_alternate_view(self.portal)
+        # run the upgrade step to validate the update
+        self._do_upgrade_step(step)
         view_methods = portal_types['collective.cover.content'].view_methods
         self.assertIn(u'standard', view_methods)
 
@@ -295,7 +326,7 @@ class Upgrade4to5TestCase(unittest.TestCase):
         fti = getUtility(IDexterityFTI, name='collective.cover.content')
         self.assertNotIn(related_items, fti.behaviors)
 
-        # and now run the upgrade step to validate the update
+        # run the upgrade step to validate the update
         self._do_upgrade_step(step)
         fti = getUtility(IDexterityFTI, name='collective.cover.content')
         self.assertIn(related_items, fti.behaviors)
