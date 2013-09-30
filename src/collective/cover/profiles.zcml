@@ -2,7 +2,8 @@
     xmlns="http://namespaces.zope.org/zope"
     xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
     xmlns:i18n="http://namespaces.zope.org/i18n"
-    i18n_domain="collective.cover">
+    i18n_domain="collective.cover"
+    >
 
   <genericsetup:registerProfile
       name="default"
@@ -48,20 +49,18 @@
   <genericsetup:upgradeSteps
       source="2"
       destination="3"
-      profile="collective.cover:default">
-
-      <genericsetup:upgradeStep
-          title="Rename resources"
-          description="Renames the screenlets resources to contentchooser"
-          handler=".upgrades.rename_content_chooser_resources"
-          />
-
+      profile="collective.cover:default"
+      >
+    <genericsetup:upgradeStep
+        title="Rename resources"
+        description="Renames the screenlets resources to contentchooser"
+        handler=".upgrades.rename_content_chooser_resources"
+        />
       <genericsetup:upgradeStep
           title="Update registry"
           description="Update the registry to register the available_tiles record"
           handler=".upgrades.register_available_tiles_record"
           />
-
   </genericsetup:upgradeSteps>
 
   <genericsetup:registerProfile
@@ -75,20 +74,18 @@
   <genericsetup:upgradeSteps
       source="3"
       destination="4"
-      profile="collective.cover:default">
-
-      <genericsetup:upgradeStep
-          title="Update registry"
-          description="Update the registry to register the 'styles' record"
-          handler=".upgrades.register_styles_record"
-          />
-
-      <genericsetup:upgradeStep
-          title="Unregister image and link tiles"
-          description="see: https://github.com/collective/collective.cover/issues/218"
-          handler=".upgrades.issue_218"
-          />
-
+      profile="collective.cover:default"
+      >
+    <genericsetup:upgradeStep
+        title="Update registry"
+        description="Update the registry to register the 'styles' record"
+        handler=".upgrades.register_styles_record"
+        />
+    <genericsetup:upgradeStep
+        title="Unregister image and link tiles"
+        description="see: https://github.com/collective/collective.cover/issues/218"
+        handler=".upgrades.issue_218"
+        />
   </genericsetup:upgradeSteps>
 
   <genericsetup:registerProfile
@@ -102,44 +99,38 @@
   <genericsetup:upgradeSteps
       source="4"
       destination="5"
-      profile="collective.cover:default">
-
-      <genericsetup:upgradeStep
-          title="Solves issue 244"
-          description="Add cover.css to css_registry"
-          handler=".upgrades.issue_244"
-          />
-
-      <genericsetup:upgradeStep
-          title="Update registry styles record"
-          description="Update the registry 'styles' record"
-          handler=".upgrades.update_styles_record_4_5"
-          />
-
-      <genericsetup:upgradeStep
-          title="Solves issue 262"
-          description="New default value for css_class"
-          handler=".upgrades.set_new_default_class_4_5"
-          />
-
-      <genericsetup:upgradeStep
-          title="Add Cover as Linkable in TinyMCE settings"
-          description="Cover is now linkable"
-          handler=".upgrades.tinymce_linkable"
-          />
-
-      <genericsetup:upgradeStep
-          title="Register alternate view"
-          description="The new view behaves like a standard content type view"
-          handler=".upgrades.register_alternate_view"
-          />
-
-      <genericsetup:upgradeStep
-          title="issue_35"
-          description="Link integrity on Rich Text tile references."
-          handler=".upgrades.issue_35"
-          />
-
+      profile="collective.cover:default"
+      >
+    <genericsetup:upgradeStep
+        title="Solves issue 244"
+        description="Add cover.css to css_registry"
+        handler=".upgrades.issue_244"
+        />
+    <genericsetup:upgradeStep
+        title="Update registry styles record"
+        description="Update the registry 'styles' record"
+        handler=".upgrades.update_styles_record_4_5"
+        />
+    <genericsetup:upgradeStep
+        title="Solves issue 262"
+        description="New default value for css_class"
+        handler=".upgrades.set_new_default_class_4_5"
+        />
+    <genericsetup:upgradeStep
+        title="Add Cover as Linkable in TinyMCE settings"
+        description="Cover is now linkable"
+        handler=".upgrades.tinymce_linkable"
+        />
+    <genericsetup:upgradeStep
+        title="Register alternate view"
+        description="The new view behaves like a standard content type view"
+        handler=".upgrades.register_alternate_view"
+        />
+    <genericsetup:upgradeStep
+        title="issue_35"
+        description="Link integrity on Rich Text tile references."
+        handler=".upgrades.issue_35"
+        />
   </genericsetup:upgradeSteps>
 
 </configure>
