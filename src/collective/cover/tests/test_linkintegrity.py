@@ -22,16 +22,17 @@ import unittest
 class IMyDexterityItem(Interface):
     text = RichText(title=u'Text')
 
-
 PloneTestCase.setupPloneSite()
 
 from ZPublisher.HTTPRequest import HTTPRequest
 set_orig = HTTPRequest.set
 
 from zope.testing import doctest
-OPTIONFLAGS = (doctest.REPORT_ONLY_FIRST_FAILURE |
-               doctest.ELLIPSIS |
-               doctest.NORMALIZE_WHITESPACE)
+OPTIONFLAGS = (
+    doctest.REPORT_ONLY_FIRST_FAILURE |
+    doctest.ELLIPSIS |
+    doctest.NORMALIZE_WHITESPACE
+)
 
 
 class LinkintegrityFixture(Fixture):
@@ -57,28 +58,36 @@ class LinkintegrityFixture(Fixture):
         fti.klass = 'plone.dexterity.content.Item'
         fti.schema = 'collective.cover.tests.test_linkintegrity.IMyDexterityItem'
         # Create some dexterity items to test with it
-        portal.invokeFactory('My Dexterity Item', id='dexterity_item1',
-                             title='Dexterity Item 1')
-        portal.invokeFactory('My Dexterity Item', id='dexterity_item2',
-                             title='Dexterity Item 2')
-        portal.invokeFactory('Non referenciable Dexterity Item',
-                             id='nonreferenciable_dexterity_item1',
-                             title='Non referenciable Dexterity Item 1')
-        portal.invokeFactory('Non referenciable Dexterity Item',
-                             id='nonreferenciable_dexterity_item2',
-                             title='Non referenciable Dexterity Item 2')
+        portal.invokeFactory(
+            'My Dexterity Item', id='dexterity_item1', title='Dexterity Item 1')
+        portal.invokeFactory(
+            'My Dexterity Item', id='dexterity_item2', title='Dexterity Item 2')
+        portal.invokeFactory(
+            'Non referenciable Dexterity Item',
+            id='nonreferenciable_dexterity_item1',
+            title='Non referenciable Dexterity Item 1'
+        )
+        portal.invokeFactory(
+            'Non referenciable Dexterity Item',
+            id='nonreferenciable_dexterity_item2',
+            title='Non referenciable Dexterity Item 2'
+        )
         # Create an AT Image
-        portal.invokeFactory('Image', id='image1', title='Test Image 1',
-                             image=generate_jpeg(50, 50))
+        image = generate_jpeg(50, 50)
+        portal.invokeFactory(
+            'Image', id='image1', title='Test Image 1', image=image)
         portal.invokeFactory('collective.cover.content', 'cover1')
         # Documents
-        portal.invokeFactory('Document', id='doc1', title='Test Page 1',
-                             text='<html> <body> a test page </body> </html>')
-        portal.invokeFactory('Document', id='doc2', title='Test Page 2',
-                             text='<html> <body> another test page </body> </html>')
+        text = '<html> <body> a test page </body> </html>'
+        portal.invokeFactory(
+            'Document', id='doc1', title='Test Page 1', text=text)
+        text = '<html> <body> another test page </body> </html>'
+        portal.invokeFactory(
+            'Document', id='doc2', title='Test Page 2', text=text)
+        text = '<html> <body> a test page in a subfolder </body> </html>'
         portal.invokeFactory('Folder', id='folder1', title='Test Folder 1')
-        portal.folder1.invokeFactory('Document', id='doc3', title='Test Page 3',
-                                     text='<html> <body> a test page in a subfolder </body> </html>')
+        portal.folder1.invokeFactory(
+            'Document', id='doc3', title='Test Page 3', text=text)
 
 LINKINTEGRITY_FIXTURE = LinkintegrityFixture()
 LINKINTEGRITY_FUNCTIONAL_TESTING = FunctionalTesting(
@@ -103,7 +112,8 @@ class LinkIntegrityFunctionalTestCase(unittest.TestCase):
         self.tile = self.portal.cover1.restrictedTraverse(
             '@@{0}/{1}'.format('collective.cover.richtext', 'test-richtext-tile'))
         self.browser.handleErrors = True
-        self.browser.addHeader('Authorization', 'Basic {0}:{1}'.format(SITE_OWNER_NAME, SITE_OWNER_PASSWORD))
+        self.browser.addHeader(
+            'Authorization', 'Basic {0}:{1}'.format(SITE_OWNER_NAME, SITE_OWNER_PASSWORD))
 
     def setStatusCode(self, key, value):
         from ZPublisher import HTTPResponse
