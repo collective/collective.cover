@@ -10,19 +10,19 @@
   <subscriber
       for="collective.cover.tiles.base.IPersistentCoverTile
            OFS.interfaces.IObjectClonedEvent"
-      handler=".handlers.modifiedCoverTile"
+      handler=".events.modifiedCoverTile"
       />
 
   <subscriber
       for="collective.cover.tiles.base.IPersistentCoverTile
            zope.lifecycleevent.interfaces.IObjectAddedEvent"
-      handler=".handlers.modifiedCoverTile"
+      handler=".events.modifiedCoverTile"
       />
 
   <subscriber
       for="collective.cover.tiles.base.IPersistentCoverTile
            zope.lifecycleevent.interfaces.IObjectModifiedEvent"
-      handler=".handlers.modifiedCoverTile"
+      handler=".events.modifiedCoverTile"
       />
 
   <subscriber
