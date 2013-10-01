@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: collective.cover\n"
 "POT-Creation-Date: 2013-09-30 22:55+0000\n"
-"PO-Revision-Date: 2013-10-01 22:29+0100\n"
+"PO-Revision-Date: 2013-10-01 23:05+0100\n"
 "Last-Translator: Espen Moe-Nilssen <espen@medialog.no>\n"
 "Language-Team: Norwegian <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -176,7 +176,7 @@ msgstr ""
 
 #: collective/cover/templates/layoutedit.pt:65
 msgid "Export layout"
-msgstr "Eksporter ayout"
+msgstr "Eksporter layout"
 
 #: tiles/configure.zcml
 msgid "File Tile"
@@ -334,7 +334,7 @@ msgstr "Lagre"
 
 #: collective/cover/templates/layoutedit.pt:71
 msgid "Saved"
-msgstr "Lagret"
+msgstr "Lagre"
 
 #: collective/cover/controlpanel.py:33
 msgid "Searchable Content Types"
