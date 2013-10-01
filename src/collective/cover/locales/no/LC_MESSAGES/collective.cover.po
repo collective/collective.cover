@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: collective.cover\n"
 "POT-Creation-Date: 2013-09-30 22:55+0000\n"
-"PO-Revision-Date: 2013-10-01 23:05+0100\n"
+"PO-Revision-Date: 2013-10-01 23:07+0100\n"
 "Last-Translator: Espen Moe-Nilssen <espen@medialog.no>\n"
 "Language-Team: Norwegian <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -45,7 +45,7 @@ msgstr "En blokk som viser et bilde"
 
 #: tiles/configure.zcml
 msgid "A tile that shows general information about objects."
-msgstr "En blokk som viser gjenerell informasjon om elementer"
+msgstr "En blokk som viser generell informasjon om elementer"
 
 #: tiles/configure.zcml
 msgid "A tile that shows rich text format."
