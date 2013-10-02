@@ -9,7 +9,7 @@
       name="default"
       title="collective.cover"
       directory="profiles/default"
-      description="An easy-to-use package to create complex cover pages for Plone sites."
+      description="A sane, working, editor-friendly way of creating front pages and other composite pages. Working now, for mere mortals."
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
 
