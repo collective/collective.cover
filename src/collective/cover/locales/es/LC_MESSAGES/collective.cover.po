@@ -170,7 +170,7 @@ msgstr "Código a incrustar"
 
 #: collective/cover/controlpanel.py:46
 msgid "Enter a list of styles to appear in the style pulldown. Format is title|className, one per line."
-msgstr "Ingrese una lista de estilos para mostrar en el menú desplegable de estilos. El formato es título|nombreDeClase, uno por línea."
+msgstr "Introduzca una lista de estilos para mostrar en el menú desplegable de estilos. El formato es título|nombreDeClase, uno por línea."
 
 #: collective/cover/templates/layoutedit.pt:65
 msgid "Export layout"
@@ -303,7 +303,7 @@ msgstr "Arrastre y suelte una colección aquí."
 
 #: collective/cover/tiles/templates/embed.pt:8
 msgid "Please edit the tile to add the code to be embedded."
-msgstr "Edite el tile para agregar el código de incrustación."
+msgstr "Edite el tile para agregar el código a incrustar."
 
 #: collective/cover/tiles/templates/richtext.pt:9
 msgid "Please edit the tile to enter some text."
@@ -405,7 +405,7 @@ msgstr "Visible"
 #: collective/cover/tiles/configuration_widgets/list.pt:32
 #: collective/cover/tiles/configuration_widgets/namedimage.pt:25
 msgid "Yes"
-msgstr "Si"
+msgstr "Sí"
 
 #: collective/cover/tiles/base.py:136
 msgid "You are not allowed to add content to this tile"
@@ -417,11 +417,11 @@ msgstr "No tiene permiso para remover contenido de este tile"
 
 #: profiles.zcml
 msgid "collective.cover"
-msgstr "Portada"
+msgstr "collective.cover"
 
 #: profiles.zcml
 msgid "collective.cover uninstall"
-msgstr "Desinstalar Portada"
+msgstr "Desinstalar collective.cover"
 
 #. Default: "Categories"
 #: collective/cover/tiles/basic.py:52

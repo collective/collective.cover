@@ -99,8 +99,7 @@ Select Tile to Add
     Click Element  xpath=//div[contains(@class, "tile-select-button") and contains(text(), ${tile})]
 
 Delete Tile
-    # FIXME: this seems to be pretty weak; we should be able to
-    #        specify which tile we want to delete
+    Wait Until Page Contains Element  css=${delete_tile_selector}
     Click Element  css=${delete_tile_selector}
 
 Open Content Chooser
