@@ -43,6 +43,7 @@ setup(name='collective.cover',
       include_package_data=True,
       zip_safe=False,
       install_requires=[
+          'collective.js.bootstrap',
           'collective.js.galleria',
           'collective.js.jqueryui',
           'five.grok',
