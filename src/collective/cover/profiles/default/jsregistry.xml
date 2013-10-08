@@ -15,7 +15,7 @@
   <javascript id="++resource++collective.cover/contentchooser.js"
       cacheable="True" compression="none" cookable="True" enabled="True"
       expression="" inline="False" authenticated="True" />
-  <javascript id="++resource++collective.cover/bootstrap.min.js"
+  <javascript id="++resource++collective.js.bootstrap/js/bootstrap.min.js"
       cacheable="True" compression="none" cookable="True" enabled="True"
       expression="" inline="False" />
   <javascript id="++resource++collective.cover/jquery.endless-scroll.js"
