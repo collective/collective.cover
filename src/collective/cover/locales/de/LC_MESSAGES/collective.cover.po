@@ -19,15 +19,15 @@ msgstr ""
 
 #: collective/cover/profiles/default/types/collective.cover.content.xml
 msgid "A cover page."
-msgstr ""
+msgstr "Umschlagseite"
 
 #: tiles/configure.zcml
 msgid "A tile that shows a carousel of images."
-msgstr ""
+msgstr "Eine Kachel, die ein Bildercarousel zeigt"
 
 #: tiles/configure.zcml
 msgid "A tile that shows a file object."
-msgstr "Eine Kachel"
+msgstr "Eine Kachel, die ein Bestandsobjekt zeigt"
 
 #: tiles/configure.zcml
 msgid "A tile that shows a link object."
