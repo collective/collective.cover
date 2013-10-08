@@ -30,6 +30,5 @@ class TilesTestCase(unittest.TestCase):
         self.assertTrue(u'collective.cover.collection' not in tiles)
         self.assertTrue(u'collective.cover.embed' not in tiles)
         self.assertTrue(u'collective.cover.file' not in tiles)
-        self.assertTrue(u'collective.cover.link' not in tiles)
         self.assertTrue(u'collective.cover.list' not in tiles)
         self.assertTrue(u'collective.cover.richtext' not in tiles)
