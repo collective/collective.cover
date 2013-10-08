@@ -132,10 +132,10 @@ class Upgrade4to5TestCase(unittest.TestCase):
 
     def test_upgrade_to_5_registrations(self):
         version = self.setup.getLastVersionForProfile(self.profile_id)
-        self.assertEqual(version, (u'5',))
+        self.assertEqual(version, (u'6',))
         self.setup.setLastVersionForProfile(self.profile_id, u'4')
         upgrades = self.setup.listUpgrades(self.profile_id)
-        self.assertEqual(len(upgrades), 1)
+        self.assertEqual(len(upgrades), 2)
         self.assertEqual(len(upgrades[0]), 6)
 
     def _get_upgrade_step(self, title):
@@ -330,3 +330,74 @@ class Upgrade4to5TestCase(unittest.TestCase):
         self._do_upgrade_step(step)
         fti = getUtility(IDexterityFTI, name='collective.cover.content')
         self.assertIn(related_items, fti.behaviors)
+
+
+class Upgrade5to6TestCase(unittest.TestCase):
+
+    layer = INTEGRATION_TESTING
+
+    def setUp(self):
+        self.portal = self.layer['portal']
+        self.setup = self.portal['portal_setup']
+        self.profile_id = u'collective.cover:default'
+
+    def test_upgrade_to_6_registrations(self):
+        version = self.setup.getLastVersionForProfile(self.profile_id)
+        self.assertEqual(version, (u'6',))
+        self.setup.setLastVersionForProfile(self.profile_id, u'5')
+        upgrades = self.setup.listUpgrades(self.profile_id)
+        self.assertEqual(len(upgrades), 1)
+        self.assertEqual(len(upgrades[0]), 1)
+
+    def _get_upgrade_step(self, title):
+        """Get one of the upgrade steps from 5 to 6.
+
+        Keyword arguments:
+        title -- the title used to register the upgrade step
+        """
+        self.setup.setLastVersionForProfile(self.profile_id, u'5')
+        upgrades = self.setup.listUpgrades(self.profile_id)
+        steps = [s for s in upgrades[0] if s['title'] == title]
+        return steps[0] if steps else None
+
+    def _do_upgrade_step(self, step):
+        """Execute an upgrade step.
+
+        Keyword arguments:
+        step -- the step we want to run
+        """
+        request = self.layer['request']
+        request.form['profile_id'] = self.profile_id
+        request.form['upgrades'] = [step['id']]
+        self.setup.manage_doUpgrades(request=request)
+
+    def test_issue_201(self):
+        # check if the upgrade step is registered
+        title = u'issue_201'
+        description = u"Depend on collective.js.bootstrap."
+        step = self._get_upgrade_step(title)
+        self.assertIsNotNone(step)
+        self.assertEqual(step['description'], description)
+
+        # run the upgrade step to validate the update
+        self._do_upgrade_step(step)
+
+        css_tool = self.portal['portal_css']
+        js_tool = self.portal['portal_javascripts']
+
+        self.assertNotIn(
+            '++resource++collective.cover/bootstrap.min.css',
+            css_tool.getResourceIds()
+        )
+        self.assertNotIn(
+            '++resource++collective.cover/bootstrap.min.js',
+            js_tool.getResourceIds()
+        )
+        self.assertIn(
+            '++resource++collective.js.bootstrap/css/bootstrap.min.css',
+            css_tool.getResourceIds()
+        )
+        self.assertIn(
+            '++resource++collective.js.bootstrap/js/bootstrap.min.js',
+            js_tool.getResourceIds()
+        )

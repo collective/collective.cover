@@ -133,4 +133,19 @@
         />
   </genericsetup:upgradeSteps>
 
+
+  <genericsetup:upgradeSteps
+      source="5"
+      destination="6"
+      profile="collective.cover:default"
+      >
+
+    <genericsetup:upgradeStep
+        title="issue_201"
+        description="Depend on collective.js.bootstrap."
+        handler=".upgrades.issue_201"
+        />
+
+  </genericsetup:upgradeSteps>
+
 </configure>
