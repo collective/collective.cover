@@ -102,30 +102,6 @@
     />
 
   <plone:tile
-      name="collective.cover.image"
-      title="Image Tile"
-      description="A tile that shows an image object."
-      icon="++resource++collective.cover/tile-image.png"
-      add_permission="cmf.ModifyPortalContent"
-      schema=".image.IImageTile"
-      class=".image.ImageTile"
-      permission="zope2.View"
-      for="*"
-    />
-
-  <plone:tile
-      name="collective.cover.link"
-      title="Link Tile"
-      description="A tile that shows a link object."
-      icon="++resource++collective.cover/tile-link.png"
-      add_permission="cmf.ModifyPortalContent"
-      schema=".link.ILinkTile"
-      class=".link.LinkTile"
-      permission="zope2.View"
-      for="*"
-      />
-
-  <plone:tile
       name="collective.cover.contentbody"
       title="Content Body Tile"
       description="A tile that display the body of a content type."
