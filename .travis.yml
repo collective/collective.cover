@@ -1,31 +1,31 @@
 language: python
 python: 2.7
-env:
-  global:
+env: 
+  global: 
   - ARTIFACTS_S3_BUCKET=collective.cover
-  - secure: R0QGeznqX3OEMzLByZKBWERupfgCz5AIBs/htSPkkYedZ9VTjUL5gQQoQAiXFYbNWvnEPCjrI3UXuST3hadTHcCCBNoYhC3VA7Nq5iJxhb5+ysosO0e/C6aGtu5LT3qxxTKhr0ZvfEjWkoTalpV7Eq25HjCOj4wiZ+rJ6KdF/ag=
-  - secure: bInMfnpGn5VHpot9GIV9uHAHkriKZBktXZZQDqMcTh+7Q9yESASgA2RYCtELLYwy1ihmSSO3raGZ6LMUcxXjU5QHA25uvf8tZLvvNI8WvD7hLTx9eGIETeRw1azVRzhFXOxgnDoEO/cMarEFZBvinTN8muG7r9NxXWuU+IaW7wc=
-  matrix:
+  - secure: leexAgFI23V7tisynIBTnLgpPDpes5eGdHW5FePEoKPH0oFDGmfSO1wUXl0mFJoM05sTxXRbpoXik4EnMFZZ2/vHUwbInQI1yPdnFFiQvDxd9ymYLp5QF9zkzFtUzwjSOz77P91MSSBQRzVeyQ+xCol8KA/aMipiZTL+KJYiCUI=
+  - secure: VUTNhNokLWGAwXs2Fe7YQa67slJfN/bTf6okK9QoWbUoUex1jOBkoUOJ6UtnnYj4MPkZ2QsxmyRlkmnIJ611C3GGUQmanEohcuA+OpBh/Q7MN3+IegHEsarwJ+g0KW4JSNV2nP1FWI9IQ6wfDNtdWzz6OWvhtZvOyruh0hieKVM=
+  matrix: 
   - PLONE_VERSION=4.2
   - PLONE_VERSION=4.3 QA=true
-install:
+install: 
 - sed -ie "s#travis-4.x.cfg#travis-$PLONE_VERSION.x.cfg#" travis.cfg
 - mkdir -p buildout-cache/downloads
 - python bootstrap.py -c travis.cfg
 - bin/buildout -c travis.cfg -N -q
-before_script:
+before_script: 
 - gem install travis-artifacts
 - export DISPLAY=:99.0
 - sh -e /etc/init.d/xvfb start
 script: bin/test
-after_success:
+after_success: 
 - test -v QA && bin/buildout -c coverage.cfg -N -q || true
 - test -v QA && bin/coverage.sh && pip install -q coveralls && coveralls || true
 - travis-artifacts upload --path parts/test --target-path ""
-after_failure:
+after_failure: 
 - bin/buildout annotate -c travis.cfg
 - firefox -v
 - gem install travis-artifacts -q
 - travis-artifacts upload --path parts/test --target-path ""
-notifications:
+notifications: 
   irc: irc.freenode.org#simplesconsultoria
