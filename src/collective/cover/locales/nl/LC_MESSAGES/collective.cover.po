@@ -1,442 +1,442 @@
 # --- PLEASE EDIT THE LINES BELOW CORRECTLY ---
-# SOME DESCRIPTIVE TITLE.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Dutch translation
+# Paul Roeland <paul@cleanclothes.org>, 2013
 msgid ""
 msgstr ""
 "Project-Id-Version: collective.cover\n"
-"POT-Creation-Date: 2013-09-30 22:55+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"POT-Creation-Date: 2013-10-07 22:22 +0000\n"
+"PO-Revision-Date: 2013-10-07 22:22 +0000\n"
+"Last-Translator: Paul Roeland <paul@cleanclothes.org>\n"
+"Language-Team: Plone Nederlands <plone-nl@lists.plone.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0\n"
-"Language-Code: en\n"
-"Language-Name: English\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"Language-Code: nl\n"
+"Language-Name: Nederlands\n"
 "Preferred-Encodings: utf-8 latin1\n"
 "Domain: collective.cover\n"
 
 #: collective/cover/profiles/default/types/collective.cover.content.xml
 msgid "A cover page."
-msgstr ""
+msgstr "Een voorpagina."
 
 #: tiles/configure.zcml
 msgid "A tile that shows a carousel of images."
-msgstr ""
+msgstr "Een tegel die een carousel van afbeeldingen toont."
 
 #: tiles/configure.zcml
 msgid "A tile that shows a file object."
-msgstr ""
+msgstr "Een tegel die een bestand toont."
 
 #: tiles/configure.zcml
 msgid "A tile that shows a link object."
-msgstr ""
+msgstr "Een tegel die een link toont."
 
 #: tiles/configure.zcml
 msgid "A tile that shows a list of items."
-msgstr ""
+msgstr "Een tegel die een lijst items toont."
 
 #: tiles/configure.zcml
 msgid "A tile that shows an image object."
-msgstr ""
+msgstr "Een tegel die een afbeelding toont."
 
 #: tiles/configure.zcml
 msgid "A tile that shows general information about objects."
-msgstr ""
+msgstr "Een tegel die algemene informatie over objecten toont."
 
 #: tiles/configure.zcml
 msgid "A tile that shows rich text format."
-msgstr ""
+msgstr "Een tegel die tekst met opmaak toont."
 
 #: tiles/configure.zcml
 msgid "A tile that shows the result of a collection."
-msgstr ""
+msgstr "Een tegel die de resultaten van een verzameling toont."
 
 #: tiles/configure.zcml
 msgid "A tile to embed content from a remote source."
-msgstr ""
+msgstr "Een tegel die inhoud van externe bronnen toont."
 
 #: collective/cover/browser/contentchooser_templates/content_contentchooser.pt:56
 msgid "Add Content"
-msgstr ""
+msgstr "Voeg inhoud toe"
 
 #: profiles.zcml
 msgid "An easy-to-use package to create complex cover pages for Plone sites."
-msgstr ""
+msgstr "Een gebruiksvriendelijk pakket om complexe voorpagina's voor Plone sites te maken."
 
 #: collective/cover/tiles/carousel.py:20
 msgid "Auto play"
-msgstr ""
+msgstr "Automatisch afspelen"
 
 #: collective/cover/controlpanel.py:24
 msgid "Available tiles"
-msgstr ""
+msgstr "Beschikbare tegels"
 
 #: tiles/configure.zcml
 msgid "Basic Tile"
-msgstr ""
+msgstr "Basis tegel"
 
 #: collective/cover/controlpanel.py:51
 #: collective/cover/tiles/base.py:62
 msgid "CSS Class"
-msgstr ""
+msgstr "CSS klasse"
 
 #: collective/cover/tiles/configuration_view.py:197
 #: collective/cover/tiles/edit.py:75
 msgid "Cancel"
-msgstr ""
+msgstr "Annuleer"
 
 #: tiles/configure.zcml
 msgid "Carousel Tile"
-msgstr ""
+msgstr "Carousel tegel"
 
 #: collective/cover/models/cover.xml
 msgid "Choose one of the predefined layouts"
-msgstr ""
+msgstr "Kies een van de bestaande opmaken"
 
 #: tiles/configure.zcml
 msgid "Collection Tile"
-msgstr ""
+msgstr "Verzameling tegel"
 
 #: collective/cover/templates/layoutedit.pt:47
 msgid "Column"
-msgstr ""
+msgstr "Kolom"
 
 #: collective/cover/profiles/default/types/collective.cover.content.xml
 msgid "Compose"
-msgstr ""
+msgstr "Stel samen"
 
 #: collective/cover/tiles/configuration_view.py:160
 msgid "Configure ${name}"
-msgstr ""
+msgstr "Configureer ${name}"
 
 #: collective/cover/browser/contentchooser_templates/content_contentchooser.pt:16
 msgid "Content tree"
-msgstr ""
+msgstr "Inhoudsoverzicht"
 
 #: collective/cover/profiles/default/types/collective.cover.content.xml
 msgid "Cover"
-msgstr ""
+msgstr "Voorpagina"
 
 #: collective/cover/models/cover.xml
 msgid "Cover Layout"
-msgstr ""
+msgstr "Voorpagina opmaak"
 
 #: collective/cover/controlpanel.py:57
 #: collective/cover/profiles/default/controlpanel.xml
 msgid "Cover Settings"
-msgstr ""
+msgstr "Voorpagina instellingen"
 
 #: collective/cover/tiles/basic.py:43
 #: collective/cover/tiles/collection.py:43
 msgid "Date"
-msgstr ""
+msgstr "Datum"
 
 #: collective/cover/tiles/basic.py:31
 #: collective/cover/tiles/collection.py:36
 #: collective/cover/tiles/embed.py:24
 msgid "Description"
-msgstr ""
+msgstr "Omschrijving"
 
 #: collective/cover/tiles/file.py:51
 msgid "Download link"
-msgstr ""
+msgstr "Download link"
 
 #: collective/cover/tiles/templates/image.pt:8
 msgid "Drag&amp;drop an image here to populate the tile."
-msgstr ""
+msgstr "Versleep een afbeelding naar hier om de tegel te vullen."
 
 #: collective/cover/tiles/templates/banner.pt:8
 msgid "Drag&amp;drop an image or link here to populate the tile."
-msgstr ""
+msgstr "Versleep een afbeelding of link naar hier om de tegel te vullen."
 
 #: collective/cover/layout_templates/tile.pt:47
 msgid "Edit"
-msgstr ""
+msgstr "Wijzig"
 
 #: collective/cover/tiles/carousel.py:27
 #: collective/cover/tiles/list.py:27
 msgid "Elements"
-msgstr ""
+msgstr "Elementen"
 
 #: tiles/configure.zcml
 msgid "Embedding Tile"
-msgstr ""
+msgstr "Embed tegel"
 
 #: collective/cover/tiles/embed.py:14
 msgid "Embedding code"
-msgstr ""
+msgstr "Embed code"
 
 #: collective/cover/controlpanel.py:46
 msgid "Enter a list of styles to appear in the style pulldown. Format is title|className, one per line."
-msgstr ""
+msgstr "Definieer een lijst van stijlen die in het stijlmenu verschijnen. Het formaat is titel|classname, een per regel."
 
 #: collective/cover/templates/layoutedit.pt:65
 msgid "Export layout"
-msgstr ""
+msgstr "Exporteer de opmaak"
 
 #: tiles/configure.zcml
 msgid "File Tile"
-msgstr ""
+msgstr "Bestands tegel"
 
 #: collective/cover/browser/contentchooser_templates/content_contentchooser.pt:22
 msgid "Filter items"
-msgstr ""
+msgstr "Filter items"
 
 #: collective/cover/tiles/collection.py:64
 msgid "Footer"
-msgstr ""
+msgstr "Voettekst"
 
 #: collective/cover/tiles/configuration_widgets/textline.pt:50
 msgid "HTML tag"
-msgstr ""
+msgstr "HTML tag"
 
 #: collective/cover/tiles/collection.py:22
 msgid "Header"
-msgstr ""
+msgstr "Header"
 
 #: collective/cover/tiles/banner.py:28
 #: collective/cover/tiles/basic.py:36
 #: collective/cover/tiles/collection.py:50
 msgid "Image"
-msgstr ""
+msgstr "Afbeelding"
 
 #: tiles/configure.zcml
 msgid "Image Tile"
-msgstr ""
+msgstr "Afbeelding tegel"
 
 #: collective/cover/tiles/configuration_widgets/namedimage.pt:53
 msgid "Image size"
-msgstr ""
+msgstr "Afbeelding grootte"
 
 #: collective/cover/controlpanel.py:19
 #: collective/cover/models/cover.xml
 #: collective/cover/profiles/default/types/collective.cover.content.xml
 msgid "Layout"
-msgstr ""
+msgstr "Indeling"
 
 #: collective/cover/widgets/selectpreview_input.pt:74
 msgid "Layout Details"
-msgstr ""
+msgstr "Indeling details"
 
 #: collective/cover/templates/layoutedit.pt:63
 msgid "Layout name"
-msgstr ""
+msgstr "Indeling naam"
 
 #: collective/cover/controlpanel.py:16
 msgid "Layouts"
-msgstr ""
+msgstr "Indelingen"
 
 #: collective/cover/widgets/textlines_sortable_configure.pt:9
 msgid "Limit"
-msgstr ""
+msgstr "Limiet"
 
 #: tiles/configure.zcml
 msgid "Link Tile"
-msgstr ""
+msgstr "Link tegel"
 
 #: tiles/configure.zcml
 msgid "List Tile"
-msgstr ""
+msgstr "Lijst tegel"
 
 #: collective/cover/tiles/collection.py:111
 msgid "More…"
-msgstr ""
+msgstr "Meer…"
 
 #: collective/cover/controlpanel.py:18
 msgid "Name"
-msgstr ""
+msgstr "Naam"
 
 #: collective/cover/tiles/configuration_widgets/basewidget.pt:33
 #: collective/cover/tiles/configuration_widgets/list.pt:41
 #: collective/cover/tiles/configuration_widgets/namedimage.pt:36
 msgid "No"
-msgstr ""
+msgstr "Nee"
 
 #: collective/cover/widgets/selectpreview_input.pt:77
 msgid "No description"
-msgstr ""
+msgstr "Geen omschrijving"
 
 #: collective/cover/tiles/configuration_widgets/list.pt:12
 msgid "Number of items"
-msgstr ""
+msgstr "Aantal items"
 
 #: collective/cover/tiles/collection.py:58
 msgid "Number of items to display"
-msgstr ""
+msgstr "Aantal items te tonen"
 
 #: collective/cover/controlpanel.py:34
 msgid "Only objects of these content types will be searched on the content chooser."
-msgstr ""
+msgstr "Alleen objecten van deze content types zullen verschijnen in de inhoudskiezer."
 
 #: collective/cover/tiles/configuration_widgets/basewidget.pt:39
 #: collective/cover/tiles/configuration_widgets/list.pt:47
 #: collective/cover/tiles/configuration_widgets/namedimage.pt:42
 msgid "Order"
-msgstr ""
+msgstr "Sortering"
 
 #: collective/cover/tiles/templates/list.pt:9
 msgid "Please add up to ${limit_objects} objects to the tile."
-msgstr ""
+msgstr "Voeg tot ${limit_objects} objecten toe aan de tegel."
 
 #: collective/cover/tiles/templates/pfg.pt:8
 msgid "Please drag&amp;drop a Form Folder here to populate the tile."
-msgstr ""
+msgstr "Versleep een Formuliermap naar hier om de tegel te vullen."
 
 #: collective/cover/tiles/templates/file.pt:8
 msgid "Please drag&amp;drop a file here."
-msgstr ""
+msgstr "Versleep een bestand naar hier."
 
 #: collective/cover/tiles/templates/link.pt:8
 msgid "Please drag&amp;drop a link here to populate the tile."
-msgstr ""
+msgstr "Versleep een link naar hier om de tegel te vullen."
 
 #: collective/cover/tiles/templates/basic.pt:9
 #: collective/cover/tiles/templates/contentbody.pt:8
 msgid "Please drag&amp;drop some content here to populate the tile."
-msgstr ""
+msgstr "Versleep een inhouds-object naar hier om de tegel te vullen."
 
 #: collective/cover/tiles/templates/collection.pt:8
 msgid "Please drop a collection here to fill the tile."
-msgstr ""
+msgstr "Versleep een verzameling naar hier om de tegel te vullen."
 
-#: collective/cover/tiles/templates/embed.pt:8
+#: collective/cover/tiles/templtes/embed.pt:8
 msgid "Please edit the tile to add the code to be embedded."
-msgstr ""
+msgstr "Wijzig de tegel en voeg de embed code toe."
 
 #: collective/cover/tiles/templates/richtext.pt:9
 msgid "Please edit the tile to enter some text."
-msgstr ""
+msgstr "Wijzig de tegel en voeg tekst toe."
 
 #: collective/cover/tiles/configuration_widgets/namedimage.pt:70
 msgid "Position"
-msgstr ""
+msgstr "Positie"
 
 #: collective/cover/browser/contentchooser_templates/content_contentchooser.pt:15
 msgid "Recent items"
-msgstr ""
+msgstr "Recente items"
 
 #: tiles/configure.zcml
 msgid "Rich Text Tile"
-msgstr ""
+msgstr "Tekst met opmaak tegel"
 
 #: collective/cover/templates/layoutedit.pt:44
 msgid "Row"
-msgstr ""
+msgstr "Rij"
 
 #: collective/cover/tiles/configuration_view.py:164
 #: collective/cover/tiles/edit.py:43
 msgid "Save"
-msgstr ""
+msgstr "Opslaan"
 
 #: collective/cover/templates/layoutedit.pt:71
 msgid "Saved"
-msgstr ""
+msgstr "Opgeslagen"
 
 #: collective/cover/controlpanel.py:33
 msgid "Searchable Content Types"
-msgstr ""
+msgstr "Doorzoekbare contenttypes"
 
 #: collective/cover/controlpanel.py:58
 msgid "Settings for the collective.cover package"
-msgstr ""
+msgstr "Instellingen voor collective.cover (voorpagina)"
 
 #: collective/cover/controlpanel.py:45
 msgid "Styles"
-msgstr ""
+msgstr "Stijlen"
 
 #: collective/cover/tiles/configuration_widgets/richtext.pt:50
 msgid "Text length"
-msgstr ""
+msgstr "Tekst lengte"
 
 #: collective/cover/tiles/templates/collection.pt:16
 msgid "The collection doesn't have any results."
-msgstr ""
+msgstr "De verzameling levert geen resultaten."
 
 #: collective/cover/models/cover.xml
 msgid "The layout to be used to render groups and tiles"
-msgstr ""
+msgstr "Te gebruiken indeling om groepen en tegels te tonen"
 
 #: collective/cover/controlpanel.py:25
 msgid "This tiles will be available for layout creation."
-msgstr ""
+msgstr "Deze tegels zijn beschikbaar om indelingen te maken."
 
 #: collective/cover/tiles/configuration_view.py:206
 msgid "Tile configuration cancelled."
-msgstr ""
+msgstr "Tegel configuratie geannuleerd."
 
 #: collective/cover/tiles/configuration_view.py:193
 msgid "Tile configuration saved."
-msgstr ""
+msgstr "Tegel configuratie opgeslagen."
 
 #: collective/cover/tiles/edit.py:71
 msgid "Tile saved"
-msgstr ""
+msgstr "Tegel opgeslagen"
 
 #: collective/cover/tiles/banner.py:23
 #: collective/cover/tiles/basic.py:26
 #: collective/cover/tiles/collection.py:29
 msgid "Title"
-msgstr ""
+msgstr "Titel"
 
 #: collective/cover/tiles/banner.py:33
 #: collective/cover/tiles/link.py:33
 msgid "URL"
-msgstr ""
+msgstr "URL"
 
 #: collective/cover/tiles/basic.py:59
 #: collective/cover/tiles/collection.py:69
 #: collective/cover/tiles/file.py:57
 msgid "UUID"
-msgstr ""
+msgstr "UUID"
 
 #: profiles.zcml
 msgid "Uninstall profile for the collective.cover package."
-msgstr ""
+msgstr "De-installeer profiel voor collective.cover (voorpagina)."
 
 #: collective/cover/tiles/configuration_widgets/basewidget.pt:13
 #: collective/cover/tiles/configuration_widgets/list.pt:23
 #: collective/cover/tiles/configuration_widgets/namedimage.pt:16
 msgid "Visible"
-msgstr ""
+msgstr "Zichtbaar"
 
 #: collective/cover/tiles/configuration_widgets/basewidget.pt:22
 #: collective/cover/tiles/configuration_widgets/list.pt:32
 #: collective/cover/tiles/configuration_widgets/namedimage.pt:25
 msgid "Yes"
-msgstr ""
+msgstr "Ja"
 
 #: collective/cover/tiles/base.py:136
 msgid "You are not allowed to add content to this tile"
-msgstr ""
+msgstr "Onvoldoende rechten om inhoud toe te voegen aan deze tegel"
 
 #: collective/cover/tiles/base.py:148
 msgid "You are not allowed to remove content of this tile"
-msgstr ""
+msgstr "Onvoldoende rechten om inhoud te verwijderen uit deze tegel"
 
 #: profiles.zcml
 msgid "collective.cover"
-msgstr ""
+msgstr "collective.cover"
 
 #: profiles.zcml
 msgid "collective.cover uninstall"
-msgstr ""
+msgstr "collective.cover uninstall"
 
 #. Default: "Categories"
 #: collective/cover/tiles/basic.py:52
 msgid "label_categories"
-msgstr ""
+msgstr "Categorieën"
 
 #: collective/cover/browser/contentchooser_templates/search_list.pt:23
 msgid "more"
-msgstr ""
+msgstr "meer"
 
 #: collective/cover/browser/contentchooser_templates/content_contentchooser.pt:27
 msgid "ok"
-msgstr ""
+msgstr "ok"
 
 #: collective/cover/layout_templates/groupselect.pt:18
 msgid "save"
-msgstr ""
+msgstr "opslaan"
 
