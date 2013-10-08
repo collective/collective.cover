@@ -4,7 +4,7 @@ There's a frood who really knows where his towel is
 1.0a6 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
-- Nothing changed yet.
+- Depend on collective.js.bootstrap (closes `#201`). [tcurvelo]
 
 
 1.0a5 (2013-10-02)
@@ -22,7 +22,7 @@ There's a frood who really knows where his towel is
   content type view displaying object's title, description and viewlets on
   Plone's main_template main slot (closes `#271`_). [hvelarde]
 
-- Fixes content-search in content chooser to correctly get the first 
+- Fixes content-search in content chooser to correctly get the first
   page of results (closes `#276`_). [marcosfromero]
 
 - Added any content type support for banner tile. If it has an `image`
