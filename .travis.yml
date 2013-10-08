@@ -2,29 +2,29 @@ language: python
 python: 2.7
 env:
   global:
-    - ARTIFACTS_AWS_REGION=sa-east-1
-    - ARTIFACTS_S3_BUCKET=collective-cover
-    - secure: "Ll2tTrfw0vpGlk+tfdcOD8HOylIWlyFDtNL+ShfQtAZ9wHZEOFJJyVsaSpDbdgWD1Y+muSz8I9xcvNY7ag17jm8udSEWecGaMIodeHB5hIklEi/OovKoAUgPqaVtbNE/FtyURZf7KE+Nb7zCege6XjCD635U4W2P1/072aEY3CU="
-    - secure: "bPiRnG3qFbWjD1zgVcTJAcOy8uuUwLKDIaVe15L6M5xLz49SfHFe6Zwc8jQ0g4J9xIDRqX4gcLnJffr0xJmBytXZGohFCjQRPUFruoy/stWWOrdgYT+9Jm9/TbVwoh+Cudo5iTNdIsaVnzcA6IyuTae/i9CJ9QQ7MBKyrjRV+T4="
+  - ARTIFACTS_S3_BUCKET=collective.cover
+  - secure: R0QGeznqX3OEMzLByZKBWERupfgCz5AIBs/htSPkkYedZ9VTjUL5gQQoQAiXFYbNWvnEPCjrI3UXuST3hadTHcCCBNoYhC3VA7Nq5iJxhb5+ysosO0e/C6aGtu5LT3qxxTKhr0ZvfEjWkoTalpV7Eq25HjCOj4wiZ+rJ6KdF/ag=
+  - secure: bInMfnpGn5VHpot9GIV9uHAHkriKZBktXZZQDqMcTh+7Q9yESASgA2RYCtELLYwy1ihmSSO3raGZ6LMUcxXjU5QHA25uvf8tZLvvNI8WvD7hLTx9eGIETeRw1azVRzhFXOxgnDoEO/cMarEFZBvinTN8muG7r9NxXWuU+IaW7wc=
   matrix:
-    - PLONE_VERSION=4.2
-    - PLONE_VERSION=4.3 QA=true
+  - PLONE_VERSION=4.2
+  - PLONE_VERSION=4.3 QA=true
 install:
-  - sed -ie "s#travis-4.x.cfg#travis-$PLONE_VERSION.x.cfg#" travis.cfg
-  - mkdir -p buildout-cache/downloads
-  - python bootstrap.py -c travis.cfg
-  - bin/buildout -c travis.cfg -N -q
+- sed -ie "s#travis-4.x.cfg#travis-$PLONE_VERSION.x.cfg#" travis.cfg
+- mkdir -p buildout-cache/downloads
+- python bootstrap.py -c travis.cfg
+- bin/buildout -c travis.cfg -N -q
 before_script:
-  - export DISPLAY=:99.0
-  - sh -e /etc/init.d/xvfb start
+- export DISPLAY=:99.0
+- sh -e /etc/init.d/xvfb start
 script: bin/test
 after_success:
-  - test -v QA && bin/buildout -c coverage.cfg -N -q || true
-  - test -v QA && bin/coverage.sh && pip install -q coveralls && coveralls || true
+- test -v QA && bin/buildout -c coverage.cfg -N -q || true
+- test -v QA && bin/coverage.sh && pip install -q coveralls && coveralls || true
+- travis-artifacts upload --path parts/test --target-path artifacts/$TRAVIS_BUILD_ID/$TRAVIS_JOB_ID
 after_failure:
-  - bin/buildout annotate -c travis.cfg
-  - firefox -v
-  - gem install travis-artifacts -q
-  - travis-artifacts upload --target-path artifacts/$TRAVIS_BUILD_ID/$TRAVIS_JOB_ID
+- bin/buildout annotate -c travis.cfg
+- firefox -v
+- gem install travis-artifacts -q
+- travis-artifacts upload --path parts/test --target-path artifacts/$TRAVIS_BUILD_ID/$TRAVIS_JOB_ID
 notifications:
   irc: irc.freenode.org#simplesconsultoria
