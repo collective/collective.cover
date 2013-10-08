@@ -4,7 +4,7 @@ There's a frood who really knows where his towel is
 1.0a6 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
-- Catalan trasnlation added. [lpmayos]
+- Catalan translation added. [lpmayos]
 
 
 1.0a5 (2013-10-02)
