@@ -9,12 +9,12 @@ from plone.browserlayer.utils import registered_layers
 import unittest
 
 JS = [
-    '++resource++collective.cover/bootstrap.min.js',
+    '++resource++collective.js.bootstrap/js/bootstrap.min.js',
     '++resource++collective.cover/contentchooser.js',
 ]
 
 CSS = [
-    '++resource++collective.cover/bootstrap.min.css',
+    '++resource++collective.js.bootstrap/css/bootstrap.min.css',
     '++resource++collective.cover/contentchooser.css',
 ]
 
