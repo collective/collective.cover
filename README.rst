@@ -152,7 +152,7 @@ steps:
 #. Select the "Compose" tab.
 
 #. Open the "Add Content" tab to the right of the green bar. A small window
-   will appears showing the most recent items added in the portal.
+   will appear showing the most recent items added in the portal.
 
 #. Select the title of any item in the list and drag it to one of the tiles
    (dotted boxes) in the content area.
@@ -200,15 +200,7 @@ locate existing content.
    find the desired content. All items listed are available to be used
    according to the steps above.
 
-Images in folderish content
-+++++++++++++++++++++++++++
-
-When you drop a 'folderish' content inside a list or a carousel tile, the tile
-will try to load the contained images. This way a folder, a collection, or some
-other kind of containers could be used to drop several images into a tile in
-just one step.
-
-Changing tile configuration
+Editing a tile
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. figure:: https://raw.github.com/collective/collective.cover/master/cover6.png
@@ -216,7 +208,7 @@ Changing tile configuration
     :height: 640px
     :width: 760px
 
-After a content is added to a cover tile, a copy of some of its information
+After content is added to a cover tile, a copy of some of its information
 will be stored in the cover and will appear to the end user. If necessary, you
 can change some of the information related to the content exclusively for the
 cover, without changing the information in the original item. This feature is
@@ -226,6 +218,8 @@ a title to better fit it into a homepage layout.
 To change the information on the cover, follow these steps:
 
 #. Select the "Compose" tab.
+
+#. Click the "Edit" link on the tile you want to change.
 
 #. Select the portion of text you want to change, like the title, the
    description or any other text element.
@@ -292,17 +286,15 @@ You can control the width of each column individually:
 
 By default, ``collective.cover`` uses a grid of 16 units. Therefore, the sum
 of the all widths in a column must not exceed 16. To make it easier to edit
-the width of all columns, adjust first the width of the smallest column.
+the width of all columns, first adjust the width of the smallest column.
 
 Adding new tiles
 ^^^^^^^^^^^^^^^^
 
 Now that you have created columns, you can add tiles to it:
 
-#. In the Layout tab, select the Tile icon and drag it to the column where you
-   want to place it.
-
-#. Choose one of the available tiles in the pop-up overlay.
+#. In the Layout tab, select one of the available Tile icons and drag it 
+   to the column where you want to place it.
 
 #. Change the configuration as desired.
 
@@ -313,7 +305,7 @@ The new tile can be used in the Compose tab to select/add content.
 Adjusting tiles
 ^^^^^^^^^^^^^^^
 
-You can change the settings from previously added tiles at any time:
+You can change the settings of previously added tiles at any time:
 
 #. In the Layout tab, select the Setup icon of the respective tile.
 
@@ -345,9 +337,11 @@ your website:
 
 #. Select the Layout tab.
 
-#. At the top of the page, enter a name for your model.
+#. Click the "Export layout" button. 
 
-#. "Save".
+#. Enter a name for your model.
+
+#. Click "Export layout"".
 
 Now this layout can be used as a model to create new covers, as explained in
 the section "Adding a cover".
@@ -456,7 +450,7 @@ Render view
 +++++++++++
 
 In order to visualize the tile's content, you need to write a view that will
-render it. For that, you need to get some things into consideration.
+render it. For that, you need to take a few things into consideration.
 
 #. The view will always be rendered, so you need to add conditions to show
    specific content based on what information the tile has, if any.
