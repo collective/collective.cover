@@ -9,12 +9,10 @@
         <element>collective.cover.contentbody</element>
         <element>collective.cover.embed</element>
         <element>collective.cover.file</element>
-        <element>collective.cover.image</element>
-        <element>collective.cover.link</element>
         <element>collective.cover.list</element>
         <element>collective.cover.richtext</element>
       </default>
-      <description>This tiles will be available for layout creation.</description>
+      <description>These tiles will be available for layout creation.</description>
       <required>False</required>
       <title>Available tiles</title>
       <value_type type="plone.registry.field.Choice">
@@ -28,8 +26,6 @@
       <element>collective.cover.contentbody</element>
       <element>collective.cover.embed</element>
       <element>collective.cover.file</element>
-      <element>collective.cover.image</element>
-      <element>collective.cover.link</element>
       <element>collective.cover.list</element>
       <element>collective.cover.richtext</element>
     </value>
