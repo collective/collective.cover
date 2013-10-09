@@ -3,8 +3,10 @@
 Resource  cover.robot
 Library  Remote  ${PLONE_URL}/RobotRemote
 
-Test Setup  Open Test Browser
-Test Teardown  Close all browsers
+#Test Setup  Open Test Browser
+#Test Teardown  Close all browsers
+Test Setup  Open SauceLabs test browser
+Test Teardown  Run keywords  Report test status  Close all browsers
 
 *** Test cases ***
 

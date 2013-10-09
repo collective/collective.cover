@@ -6,6 +6,11 @@ env:
     - ARTIFACTS_S3_BUCKET=collective-cover
     - secure: "Ll2tTrfw0vpGlk+tfdcOD8HOylIWlyFDtNL+ShfQtAZ9wHZEOFJJyVsaSpDbdgWD1Y+muSz8I9xcvNY7ag17jm8udSEWecGaMIodeHB5hIklEi/OovKoAUgPqaVtbNE/FtyURZf7KE+Nb7zCege6XjCD635U4W2P1/072aEY3CU="
     - secure: "bPiRnG3qFbWjD1zgVcTJAcOy8uuUwLKDIaVe15L6M5xLz49SfHFe6Zwc8jQ0g4J9xIDRqX4gcLnJffr0xJmBytXZGohFCjQRPUFruoy/stWWOrdgYT+9Jm9/TbVwoh+Cudo5iTNdIsaVnzcA6IyuTae/i9CJ9QQ7MBKyrjRV+T4="
+    - secure: "KDlrJnR1JklDhv/TaPGd9jNo179KTQWmT+fCy9WsxCuFxphmEhvruOnYqQ2blcarXQ9fYq+2kKD5Tgv80kD/tIZEeb0xbB7kEmSwFKfG7t7W9vXNCzfBzj3+yth0NNxJDaOvOCNU4fGM8SXFKeo3Y+mVCGBv0rFIq0CnhAfU0EY="
+    - secure: "OYIoYlN76+q4AwOK31SNGR/8u0MDqTc0JI51/Fr+INKjw5h0CI7n18lOwTYDBTPoWMZmUxydAEC5XRJIonsMfii8Mn//avxoQcgahq0nqSESeEh3Tl++OHVkDuXGgaa3nAJcsS3GaAh2Y+bXxda5GdN+E914k60zl+ceD6k/e6Y="
+    - ROBOT_BUILD_NUMBER=travis-$TRAVIS_BUILD_NUMBER
+    - ROBOT_REMOTE_URL=http://$SAUCE_USERNAME:$SAUCE_ACCESS_KEY@ondemand.saucelabs.com:80/wd/hub
+    - ROBOT_DESIRED_CAPABILITIES=tunnel-identifier:$TRAVIS_JOB_ID
   matrix:
     - PLONE_VERSION=4.2
     - PLONE_VERSION=4.3 QA=true
@@ -14,6 +19,11 @@ install:
   - mkdir -p buildout-cache/downloads
   - python bootstrap.py -c travis.cfg
   - bin/buildout -c travis.cfg -N -q
+  - curl -O http://saucelabs.com/downloads/Sauce-Connect-latest.zip
+  - unzip Sauce-Connect-latest.zip
+  - java -jar Sauce-Connect.jar $SAUCE_USERNAME $SAUCE_ACCESS_KEY -i $TRAVIS_JOB_ID -f CONNECTED &
+  - JAVA_PID=$!
+  - bash -c "while [ ! -f CONNECTED ]; do sleep 2; done"
 before_script:
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
@@ -21,10 +31,12 @@ script: bin/test
 after_success:
   - test -v QA && bin/buildout -c coverage.cfg -N -q || true
   - test -v QA && bin/coverage.sh && pip install -q coveralls && coveralls || true
+  - kill $JAVA_PID
 after_failure:
   - bin/buildout annotate -c travis.cfg
   - firefox -v
   - gem install travis-artifacts -q
   - travis-artifacts upload --path parts/test --target-path artifacts/$TRAVIS_BUILD_ID/$TRAVIS_JOB_ID
+  - kill $JAVA_PID
 notifications:
   irc: irc.freenode.org#simplesconsultoria
