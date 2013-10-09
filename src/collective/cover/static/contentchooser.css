@@ -1,6 +1,16 @@
 #content {
     position: relative;
 }
+
+#contentchooser-content-show-button {
+    -webkit-border-radius:8px;
+    -moz-border-radius:8px;
+    border-radius:8px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    padding: 0.5em 1em;
+}
+
 #contentchooser-content-search {
     background-color: #fff;
     border: 1px solid #ccc;
