@@ -4,10 +4,13 @@ There's a frood who really knows where his towel is
 1.0a6 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Remove upgrade steps from unsupported versions (closes `#295`_). [fulv]
+
+- Depend on collective.js.bootstrap(closes `#201`_). [tcurvelo]
+
+- Remove code from Image and Link tiles (closes `#301`_). [fulv]
+
 - Catalan translation added. [lpmayos]
-- Depend on collective.js.bootstrap (closes `#201`). [tcurvelo]
-- Remove code from Image and Link tiles (closes `#301`). [fulv]
-- Remove upgrade steps from unsupported versions (closes `#295`) [fulv]
 
 
 1.0a5 (2013-10-02)
@@ -263,6 +266,7 @@ There's a frood who really knows where his towel is
 .. _`#190`: https://github.com/collective/collective.cover/issues/190
 .. _`#191`: https://github.com/collective/collective.cover/issues/191
 .. _`#198`: https://github.com/collective/collective.cover/issues/198
+.. _`#201`: https://github.com/collective/collective.cover/issues/201
 .. _`#203`: https://github.com/collective/collective.cover/issues/203
 .. _`#204`: https://github.com/collective/collective.cover/issues/204
 .. _`#206`: https://github.com/collective/collective.cover/issues/206
@@ -279,3 +283,5 @@ There's a frood who really knows where his towel is
 .. _`#278`: https://github.com/collective/collective.cover/issues/278
 .. _`#281`: https://github.com/collective/collective.cover/issues/281
 .. _`#294`: https://github.com/collective/collective.cover/issues/294
+.. _`#295`: https://github.com/collective/collective.cover/issues/295
+.. _`#301`: https://github.com/collective/collective.cover/issues/301
