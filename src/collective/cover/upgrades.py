@@ -257,7 +257,7 @@ def issue_201(context, logger=None):
     # first we take care of the CSS registry
     css_tool = getToolByName(context, 'portal_css')
     old_id = '++resource++collective.cover/bootstrap.min.css'
-    new_id = '++resource++collective.js.bootstrap/bootstrap.min.css'
+    new_id = '++resource++collective.js.bootstrap/css/bootstrap.min.css'
     if old_id in css_tool.getResourceIds():
         css_tool.renameResource(old_id, new_id)
         logger.info("'{0}' resource was renamed to '{1}'".format(old_id, new_id))
@@ -269,7 +269,7 @@ def issue_201(context, logger=None):
     # now we mess with the JS registry
     js_tool = getToolByName(context, 'portal_javascripts')
     old_id = '++resource++collective.cover/bootstrap.min.js'
-    new_id = '++resource++collective.js.bootstrap/bootstrap.min.js'
+    new_id = '++resource++collective.js.bootstrap/js/bootstrap.min.js'
     if old_id in js_tool.getResourceIds():
         js_tool.renameResource(old_id, new_id)
         logger.info("'{0}' resource was renamed to '{1}'".format(old_id, new_id))
