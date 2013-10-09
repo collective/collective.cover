@@ -1,6 +1,7 @@
 *** Settings ***
 
-Resource  plone/app/robotframework/saucelabs.robot
+Resource  plone/app/robotframework/keywords.robot
+Resource  plone/app/robotframework/saucelabs.robot 
 Variables  plone/app/testing/interfaces.py
 
 *** Variables ***
