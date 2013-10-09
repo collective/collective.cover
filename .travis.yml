@@ -10,12 +10,11 @@ env:
     - secure: "OYIoYlN76+q4AwOK31SNGR/8u0MDqTc0JI51/Fr+INKjw5h0CI7n18lOwTYDBTPoWMZmUxydAEC5XRJIonsMfii8Mn//avxoQcgahq0nqSESeEh3Tl++OHVkDuXGgaa3nAJcsS3GaAh2Y+bXxda5GdN+E914k60zl+ceD6k/e6Y="
     - ROBOT_BUILD_NUMBER=travis-$TRAVIS_BUILD_NUMBER
     - ROBOT_REMOTE_URL=http://$SAUCE_USERNAME:$SAUCE_ACCESS_KEY@ondemand.saucelabs.com:80/wd/hub
+    - ROBOT_BROWSER=firefox ROBOT_DESIRED_CAPABILITIES=tunnel-identifier:$TRAVIS_JOB_NUMBER
+    - ROBOT_DESIRED_CAPABILITIES="platform:OS X 10.8,browserName:iPad,version:6,tunnel-identifier:$TRAVIS_JOB_NUMBER"
   matrix:
     - PLONE_VERSION=4.2
     - PLONE_VERSION=4.3 QA=true
-    - ROBOT_BROWSER=firefox ROBOT_DESIRED_CAPABILITIES=tunnel-identifier:$TRAVIS_JOB_NUMBER
-    - ROBOT_BROWSER=ie ROBOT_DESIRED_CAPABILITIES=tunnel-identifier:$TRAVIS_JOB_NUMBER,version:6
-    - ROBOT_DESIRED_CAPABILITIES="platform:OS X 10.8,browserName:iPad,version:6,tunnel-identifier:$TRAVIS_JOB_NUMBER"
 install:
   - sed -ie "s#travis-4.x.cfg#travis-$PLONE_VERSION.x.cfg#" travis.cfg
   - mkdir -p buildout-cache/downloads
