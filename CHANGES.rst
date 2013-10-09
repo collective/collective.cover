@@ -6,6 +6,8 @@ There's a frood who really knows where his towel is
 
 - Catalan translation added. [lpmayos]
 - Depend on collective.js.bootstrap (closes `#201`). [tcurvelo]
+- Remove code from Image and Link tiles (closes `#301`). [fulv]
+- Remove upgrade steps from unsupported versions (closes `#295`) [fulv]
 
 
 1.0a5 (2013-10-02)
