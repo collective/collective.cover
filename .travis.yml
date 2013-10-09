@@ -27,4 +27,10 @@ after_failure:
   - gem install travis-artifacts -q
   - travis-artifacts upload --path parts/test
 notifications:
-  irc: irc.freenode.org#simplesconsultoria
+  irc:
+    channels: irc.freenode.org#simplesconsultoria
+    template:
+      - "%{repository}#%{build_number} (%{branch} - %{commit} : %{author}): %{message}"
+      - "Change view : %{compare_url}"
+      - "Build details : %{build_url}"
+      - "Robot Test Report: http://collective-cover.s3-website-sa-east-1.amazonaws.com/artifacts/%{build_number}"
