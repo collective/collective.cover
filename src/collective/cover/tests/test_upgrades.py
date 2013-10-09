@@ -15,12 +15,50 @@ from zope.component import getUtility
 import unittest
 
 
-class Upgrade2to3TestCase(unittest.TestCase):
+class UpgradeTestCaseBase(unittest.TestCase):
 
     layer = INTEGRATION_TESTING
 
-    def setUp(self):
+    def setUp(self, from_version, to_version):
         self.portal = self.layer['portal']
+        self.setup = self.portal['portal_setup']
+        self.profile_id = u'collective.cover:default'
+        self.from_version = from_version
+        self.to_version = to_version
+
+    def _get_upgrade_step(self, title):
+        """Get one of the upgrade steps.
+
+        Keyword arguments:
+        title -- the title used to register the upgrade step
+        """
+        self.setup.setLastVersionForProfile(self.profile_id, self.from_version)
+        upgrades = self.setup.listUpgrades(self.profile_id)
+        steps = [s for s in upgrades[0] if s['title'] == title]
+        return steps[0] if steps else None
+
+    def _do_upgrade_step(self, step):
+        """Execute an upgrade step.
+
+        Keyword arguments:
+        step -- the step we want to run
+        """
+        request = self.layer['request']
+        request.form['profile_id'] = self.profile_id
+        request.form['upgrades'] = [step['id']]
+        self.setup.manage_doUpgrades(request=request)
+
+    def _how_many_upgrades_to_do(self):
+        self.setup.setLastVersionForProfile(self.profile_id, self.from_version)
+        upgrades = self.setup.listUpgrades(self.profile_id)
+        assert len(upgrades) > 0
+        return len(upgrades[0])
+
+
+class Upgrade2to3TestCase(UpgradeTestCaseBase):
+
+    def setUp(self):
+        UpgradeTestCaseBase.setUp(self, u'2', u'3')
 
     def test_rename_content_chooser_resources(self):
         # writing a real test for this will need a mock tool for
@@ -70,12 +108,10 @@ class Upgrade2to3TestCase(unittest.TestCase):
         eventtesting.clearEvents()
 
 
-class Upgrade3to4TestCase(unittest.TestCase):
-
-    layer = INTEGRATION_TESTING
+class Upgrade3to4TestCase(UpgradeTestCaseBase):
 
     def setUp(self):
-        self.portal = self.layer['portal']
+        UpgradeTestCaseBase.setUp(self, u'3', u'4')
 
     def test_register_styles_record(self):
         registry = getUtility(IRegistry)
@@ -112,14 +148,10 @@ class Upgrade3to4TestCase(unittest.TestCase):
         self.assertNotIn(u'collective.cover.link', registry[record])
 
 
-class Upgrade4to5TestCase(unittest.TestCase):
-
-    layer = INTEGRATION_TESTING
+class Upgrade4to5TestCase(UpgradeTestCaseBase):
 
     def setUp(self):
-        self.portal = self.layer['portal']
-        self.setup = self.portal['portal_setup']
-        self.profile_id = u'collective.cover:default'
+        UpgradeTestCaseBase.setUp(self, from_version=u'4', to_version=u'5')
         self.tinymce = self.portal.portal_tinymce
         setRoles(self.portal, TEST_USER_ID, ['Manager'])
         self.portal.invokeFactory('Folder', 'test-folder')
@@ -131,34 +163,7 @@ class Upgrade4to5TestCase(unittest.TestCase):
         self.layout_view = self.cover.restrictedTraverse('layout')
 
     def test_upgrade_to_5_registrations(self):
-        version = self.setup.getLastVersionForProfile(self.profile_id)
-        self.assertEqual(version, (u'6',))
-        self.setup.setLastVersionForProfile(self.profile_id, u'4')
-        upgrades = self.setup.listUpgrades(self.profile_id)
-        self.assertEqual(len(upgrades), 2)
-        self.assertEqual(len(upgrades[0]), 6)
-
-    def _get_upgrade_step(self, title):
-        """Get one of the upgrade steps from 4 to 5.
-
-        Keyword arguments:
-        title -- the title used to register the upgrade step
-        """
-        self.setup.setLastVersionForProfile(self.profile_id, u'4')
-        upgrades = self.setup.listUpgrades(self.profile_id)
-        steps = [s for s in upgrades[0] if s['title'] == title]
-        return steps[0] if steps else None
-
-    def _do_upgrade_step(self, step):
-        """Execute an upgrade step.
-
-        Keyword arguments:
-        step -- the step we want to run
-        """
-        request = self.layer['request']
-        request.form['profile_id'] = self.profile_id
-        request.form['upgrades'] = [step['id']]
-        self.setup.manage_doUpgrades(request=request)
+        self.assertEqual(self._how_many_upgrades_to_do(), 6)
 
     def test_issue_244(self):
         # check if the upgrade step is registered
@@ -332,44 +337,15 @@ class Upgrade4to5TestCase(unittest.TestCase):
         self.assertIn(related_items, fti.behaviors)
 
 
-class Upgrade5to6TestCase(unittest.TestCase):
-
-    layer = INTEGRATION_TESTING
+class Upgrade5to6TestCase(UpgradeTestCaseBase):
 
     def setUp(self):
-        self.portal = self.layer['portal']
-        self.setup = self.portal['portal_setup']
-        self.profile_id = u'collective.cover:default'
+        UpgradeTestCaseBase.setUp(self, u'5', u'6')
 
     def test_upgrade_to_6_registrations(self):
         version = self.setup.getLastVersionForProfile(self.profile_id)
-        self.assertEqual(version, (u'6',))
-        self.setup.setLastVersionForProfile(self.profile_id, u'5')
-        upgrades = self.setup.listUpgrades(self.profile_id)
-        self.assertEqual(len(upgrades), 1)
-        self.assertEqual(len(upgrades[0]), 1)
-
-    def _get_upgrade_step(self, title):
-        """Get one of the upgrade steps from 5 to 6.
-
-        Keyword arguments:
-        title -- the title used to register the upgrade step
-        """
-        self.setup.setLastVersionForProfile(self.profile_id, u'5')
-        upgrades = self.setup.listUpgrades(self.profile_id)
-        steps = [s for s in upgrades[0] if s['title'] == title]
-        return steps[0] if steps else None
-
-    def _do_upgrade_step(self, step):
-        """Execute an upgrade step.
-
-        Keyword arguments:
-        step -- the step we want to run
-        """
-        request = self.layer['request']
-        request.form['profile_id'] = self.profile_id
-        request.form['upgrades'] = [step['id']]
-        self.setup.manage_doUpgrades(request=request)
+        self.assertEqual(version, (self.to_version,))
+        self.assertEqual(self._how_many_upgrades_to_do(), 1)
 
     def test_issue_201(self):
         # check if the upgrade step is registered
