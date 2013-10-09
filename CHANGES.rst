@@ -16,7 +16,7 @@ There's a frood who really knows where his towel is
 1.0a5 (2013-10-02)
 ^^^^^^^^^^^^^^^^^^
 
-- Added norwegian translation. [espenmn]
+- Added Norwegian translation. [espenmn]
 
 - Install IRelatedItems behavior to avoid 'ReferenceException: Invalid target
   UID' (fixes `#294`_). [hvelarde]
