@@ -1,25 +1,25 @@
 # --- PLEASE EDIT THE LINES BELOW CORRECTLY ---
-# SOME DESCRIPTIVE TITLE.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# translation of collection.cover to German
+# Paul Roeland <paul@cleanclothes.org>, 2013
 msgid ""
 msgstr ""
 "Project-Id-Version: collective.cover\n"
-"POT-Creation-Date: YEAR-MO-DA HO:MI +ZONE\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2013-10-08 01:30 +0000\n"
+"PO-Revision-Date: 2013-10-08 01:30 +0000\n"
+"Last-Translator: Paul Roeland <paul@cleanclothes.org>, 2013\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0\n"
-"Language-Code: en\n"
-"Language-Name: English\n"
+"Language-Code: de\n"
+"Language-Name: Deutsch\n"
 "Preferred-Encodings: utf-8 latin1\n"
 "Domain: plone\n"
 
 msgid "Compose"
-msgstr ""
+msgstr "Gestalten"
 
 msgid "Layout"
-msgstr ""
+msgstr "Stilvorlagen"
 
