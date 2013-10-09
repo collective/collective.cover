@@ -40,4 +40,6 @@ after_failure:
   - travis-artifacts upload --path parts/test --target-path artifacts/$TRAVIS_BUILD_ID/$TRAVIS_JOB_ID
   - kill $JAVA_PID
 notifications:
-  irc: irc.freenode.org#simplesconsultoria
+  irc: 
+    - irc.freenode.org#simplesconsultoria
+    - irc.freenode.org#sprint
