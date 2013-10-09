@@ -8,9 +8,6 @@
   <javascript bundle="jquerytools" id="++resource++plone.app.jquerytools.rangeinput.js" />
   <javascript bundle="jquerytools" id="++resource++plone.app.jquerytools.validator.js" />
 
-  <!-- tiny bundle overrides -->
-  <javascript bundle="tinymce" id="tiny_mce.js" />
-  <javascript bundle="tinymce" id="tiny_mce_init.js" />
 
   <javascript id="++resource++collective.cover/contentchooser.js"
       cacheable="True" compression="none" cookable="True" enabled="True"

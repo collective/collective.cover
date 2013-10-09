@@ -29,8 +29,9 @@ Test RichText Tile
     Page Should Contain  Please edit the tile to enter some text.
 
     # edit tile but don't save it
+    Execute Javascript  tinyMCE = undefined
     Click Link  css=${edit_link_selector}
-    Wait For Condition  return tinyMCE.activeEditor != null
+    Wait For Condition  return tinyMCE != undefined && tinyMCE.activeEditor != null
     Execute Javascript  tinyMCE.activeEditor.setContent("${text_sample}");
     Click Button  Save
     # save via ajax => wait until the tile has been reloaded
@@ -44,8 +45,9 @@ Test RichText Tile
 
     # Compose and don't save some other text
     Click Link  link=Compose
+    Execute Javascript  tinyMCE = undefined
     Click Link  css=${edit_link_selector}
-    Wait For Condition  return tinyMCE.activeEditor != null
+    Wait For Condition  return tinyMCE != undefined && tinyMCE.activeEditor != null
     Execute Javascript  tinyMCE.activeEditor.setContent("${text_other_sample}");
     Click Button  Cancel
     Page Should Not Contain  ${text_other_sample}
