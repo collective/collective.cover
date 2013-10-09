@@ -9,13 +9,14 @@ from plone.browserlayer.utils import registered_layers
 import unittest
 
 JS = [
-    '++resource++collective.js.bootstrap/js/bootstrap.min.js',
     '++resource++collective.cover/contentchooser.js',
+    '++resource++collective.js.bootstrap/js/bootstrap.min.js',
+    '++resource++collective.cover/jquery.endless-scroll.js',
 ]
 
 CSS = [
-    '++resource++collective.js.bootstrap/css/bootstrap.min.css',
     '++resource++collective.cover/contentchooser.css',
+    '++resource++collective.cover/cover.css',
 ]
 
 

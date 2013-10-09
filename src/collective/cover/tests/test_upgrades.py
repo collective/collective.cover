@@ -66,15 +66,13 @@ class Upgrade5to6TestCase(UpgradeTestCaseBase):
         css_tool = self.portal['portal_css']
         js_tool = self.portal['portal_javascripts']
         old_css = '++resource++collective.cover/bootstrap.min.css'
-        new_css = '++resource++collective.js.bootstrap/css/bootstrap.min.css'
         old_js = '++resource++collective.cover/bootstrap.min.js'
         new_js = '++resource++collective.js.bootstrap/js/bootstrap.min.js'
 
         # simulate state on previous version
-        css_tool.renameResource(new_css, old_css)
+        css_tool.registerResource(old_css)
         js_tool.renameResource(new_js, old_js)
         self.assertIn(old_css, css_tool.getResourceIds())
-        self.assertNotIn(new_css, css_tool.getResourceIds())
         self.assertIn(old_js, js_tool.getResourceIds())
         self.assertNotIn(new_js, js_tool.getResourceIds())
 
@@ -82,6 +80,5 @@ class Upgrade5to6TestCase(UpgradeTestCaseBase):
         self._do_upgrade_step(step)
 
         self.assertNotIn(old_css, css_tool.getResourceIds())
-        self.assertIn(new_css, css_tool.getResourceIds())
         self.assertNotIn(old_js, js_tool.getResourceIds())
         self.assertIn(new_js, js_tool.getResourceIds())

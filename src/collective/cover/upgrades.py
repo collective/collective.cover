@@ -16,10 +16,9 @@ def issue_201(context, logger=None):
     # first we take care of the CSS registry
     css_tool = getToolByName(context, 'portal_css')
     old_id = '++resource++collective.cover/bootstrap.min.css'
-    new_id = '++resource++collective.js.bootstrap/css/bootstrap.min.css'
     if old_id in css_tool.getResourceIds():
-        css_tool.renameResource(old_id, new_id)
-        logger.info("'{0}' resource was renamed to '{1}'".format(old_id, new_id))
+        css_tool.unregisterResource(old_id)
+        logger.info("'{0}' resource was removed".format(old_id))
         css_tool.cookResources()
         logger.info("CSS resources were cooked")
     else:

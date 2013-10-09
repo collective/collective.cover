@@ -4,9 +4,6 @@
     enabled="1" expression="" id="++resource++collective.cover/contentchooser.css" media="screen"
     rel="stylesheet" rendering="link"/>
  <stylesheet title="" cacheable="True" compression="safe" cookable="True"
-    enabled="1" expression="" id="++resource++collective.js.bootstrap/css/bootstrap.min.css" media="screen"
-    rel="stylesheet" rendering="link"/>
- <stylesheet title="" cacheable="True" compression="safe" cookable="True"
     enabled="1" expression="" id="++resource++collective.cover/cover.css" media="screen"
     rel="stylesheet" rendering="link"/>
 </object>
