@@ -25,8 +25,7 @@
           <tal:fields repeat="field view/configured_fields">
             <tal:image define="thumbnail python:view.thumbnail(obj);"
                        condition="python:field['id'] == 'image' and thumbnail">
-              <a tal:attributes="href obj/absolute_url;
-                                 title obj/Description">
+              <a tal:attributes="href obj/absolute_url">
                 <img tal:attributes="src thumbnail/url;
                                      width thumbnail/width;
                                      height thumbnail/height;
@@ -38,26 +37,22 @@
                        condition="python:field['id'] == 'title'">
 
                 <h1 tal:condition="python:htmltag == 'h1'">
-                    <a tal:attributes="href obj/absolute_url;
-                                       title obj/Description"
+                    <a tal:attributes="href obj/absolute_url"
                        tal:content="obj/Title" />
                 </h1>
 
                 <h2 tal:condition="python:htmltag == 'h2'">
-                    <a tal:attributes="href obj/absolute_url;
-                                       title obj/Description"
+                    <a tal:attributes="href obj/absolute_url"
                        tal:content="obj/Title" />
                 </h2>
 
                 <h3 tal:condition="python:htmltag == 'h3'">
-                    <a tal:attributes="href obj/absolute_url;
-                                       title obj/Description"
+                    <a tal:attributes="href obj/absolute_url"
                        tal:content="obj/Title" />
                 </h3>
 
                 <h4 tal:condition="python:htmltag == 'h4'">
-                    <a tal:attributes="href obj/absolute_url;
-                                       title obj/Description"
+                    <a tal:attributes="href obj/absolute_url"
                        tal:content="obj/Title" />
                 </h4>
 
