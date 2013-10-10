@@ -91,7 +91,6 @@ button.close {
 .show{display:block}
 
 
-
 /*ROWS*/
 .layout .cover-row {
     outline: 1px dashed blue;
@@ -127,7 +126,7 @@ button.close {
 
 #sidebar .btn {
     cursor:pointer;
-    padding:9px;
+    padding: 0 9px;
 }
 #sidebar .btn span{
     display:block;
@@ -351,7 +350,7 @@ button.close {
     background: url(/++resource++collective.cover/tiles.png) no-repeat 0 0;
 }
 .layout-actions .icon-white {
-    height: 32px;
+    height: 28px;
     line-height: 32px;
     width: 32px;
 }
