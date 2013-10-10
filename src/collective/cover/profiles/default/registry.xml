@@ -52,29 +52,4 @@
     </value>
   </record>
 
-  <record interface="Products.ResourceRegistries.interfaces.settings.IResourceRegistriesSettings"
-          field="resourceBundlesForThemes">
-      <value purge="false">
-          <element key="Plone Classic Theme">
-              <element>jquery</element>
-              <element>jquerytools</element>
-              <element>default</element>
-              <element>tinymce</element>
-          </element>
-
-          <element key="Plone Default">
-              <element>jquery</element>
-              <element>jquerytools</element>
-              <element>default</element>
-              <element>tinymce</element>
-          </element>
-
-          <element key="Sunburst Theme">
-              <element>jquery</element>
-              <element>jquerytools</element>
-              <element>default</element>
-              <element>tinymce</element>
-          </element>
-      </value>
-  </record>
 </registry>
