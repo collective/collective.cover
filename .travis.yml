@@ -1,5 +1,9 @@
 language: python
 python: 2.7
+addons:
+  sauce_connect:
+    - username: $SAUCE_USERNAME
+    - access_key: $SAUCE_ACCESS_KEY
 env:
   global:
     - ARTIFACTS_AWS_REGION=sa-east-1
@@ -10,7 +14,7 @@ env:
     - secure: "OYIoYlN76+q4AwOK31SNGR/8u0MDqTc0JI51/Fr+INKjw5h0CI7n18lOwTYDBTPoWMZmUxydAEC5XRJIonsMfii8Mn//avxoQcgahq0nqSESeEh3Tl++OHVkDuXGgaa3nAJcsS3GaAh2Y+bXxda5GdN+E914k60zl+ceD6k/e6Y="
     - ROBOT_BUILD_NUMBER=travis-$TRAVIS_BUILD_NUMBER
     - ROBOT_REMOTE_URL=http://$SAUCE_USERNAME:$SAUCE_ACCESS_KEY@ondemand.saucelabs.com:80/wd/hub
-    - ROBOT_DESIRED_CAPABILITIES=tunnel-identifier:$TRAVIS_JOB_ID
+    - ROBOT_DESIRED_CAPABILITIES=tunnel-identifier:$TRAVIS_JOB_NUMBER
   matrix:
     - PLONE_VERSION=4.2
     - PLONE_VERSION=4.3 QA=true
@@ -19,28 +23,21 @@ install:
   - mkdir -p buildout-cache/downloads
   - python bootstrap.py -c travis.cfg
   - bin/buildout -c travis.cfg -N -q
-  - curl -O http://saucelabs.com/downloads/Sauce-Connect-latest.zip
-  - unzip Sauce-Connect-latest.zip
-  - java -jar Sauce-Connect.jar $SAUCE_USERNAME $SAUCE_ACCESS_KEY -i $TRAVIS_JOB_ID -f CONNECTED &
-  - JAVA_PID=$!
 before_script:
-  - bash -c "while [ ! -f CONNECTED ]; do sleep 2; done"
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
 script: bin/test
 after_success:
   - test -v QA && bin/buildout -c coverage.cfg -N -q || true
   - test -v QA && bin/coverage.sh && pip install -q coveralls && coveralls || true
-  - kill $JAVA_PID
 after_failure:
   - bin/buildout annotate -c travis.cfg
   - firefox -v
   - gem install travis-artifacts -q
   - travis-artifacts upload --path parts/test --target-path artifacts/$TRAVIS_BUILD_ID/$TRAVIS_JOB_ID
-  - kill $JAVA_PID
 notifications:
   irc:
-    channels: irc.freenode.org#simplesconsultoria
+    channels: irc.freenode.org#sprint
     template:
       - "%{repository}#%{build_number} (%{branch} - %{commit} : %{author}): %{message}"
       - "Change view : %{compare_url}"
