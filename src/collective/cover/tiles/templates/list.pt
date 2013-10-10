@@ -18,7 +18,7 @@
         <tal:image tal:define="thumbnail python:view.thumbnail(item);"
                    condition="thumbnail">
           <a tal:attributes="href item/absolute_url;
-                             title item/Description">
+                             alt item/Description">
             <!-- XXX -->
             <img style="float: left; margin: 0 1em 0.5em 0;"
                  tal:attributes="alt item/Description;
