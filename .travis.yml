@@ -34,10 +34,12 @@ after_failure:
   - bin/buildout annotate -c travis.cfg
   - firefox -v
   - gem install travis-artifacts -q
-  - travis-artifacts upload --path parts/test --target-path artifacts/$TRAVIS_BUILD_ID/$TRAVIS_JOB_ID
+  - travis-artifacts upload --path parts/test
 notifications:
   irc:
-    channels: irc.freenode.org#sprint
+    channels:
+      - irc.freenode.org#simplesconsultoria
+      - irc.freenode.org#sprint
     template:
       - "%{repository}#%{build_number} (%{branch} - %{commit} : %{author}): %{message}"
       - "Change view : %{compare_url}"
