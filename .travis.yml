@@ -39,6 +39,10 @@ after_failure:
   - travis-artifacts upload --path parts/test --target-path artifacts/$TRAVIS_BUILD_ID/$TRAVIS_JOB_ID
   - kill $JAVA_PID
 notifications:
-  irc: 
-    - irc.freenode.org#simplesconsultoria
-    - irc.freenode.org#sprint
+  irc:
+    channels: irc.freenode.org#simplesconsultoria
+    template:
+      - "%{repository}#%{build_number} (%{branch} - %{commit} : %{author}): %{message}"
+      - "Change view : %{compare_url}"
+      - "Build details : %{build_url}"
+      - "Robot Test Report: http://collective-cover.s3-website-sa-east-1.amazonaws.com/artifacts/%{build_number}"
