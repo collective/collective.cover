@@ -7,6 +7,7 @@ from plone.app.uuid.utils import uuidToObject
 from plone.tiles.interfaces import ITileDataManager
 from plone.uuid.interfaces import IUUID
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
+from Products.CMFPlone.utils import safe_unicode
 from zope import schema
 from zope.interface import implements
 
@@ -92,8 +93,8 @@ class FileTile(PersistentCoverTile):
         super(FileTile, self).populate_with_object(obj)  # check permissions
 
         if obj.portal_type in self.accepted_ct():
-            title = obj.Title()
-            description = obj.Description()
+            title = safe_unicode(obj.Title())
+            description = safe_unicode(obj.Description())
             uuid = IUUID(obj)
 
             data_mgr = ITileDataManager(self)
