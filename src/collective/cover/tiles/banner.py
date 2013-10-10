@@ -12,6 +12,7 @@ from plone.tiles.interfaces import ITileDataManager
 from plone.registry.interfaces import IRegistry
 from Products.CMFPlone.utils import getToolByName
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
+from Products.CMFPlone.utils import safe_unicode
 from zope import schema
 from zope.component import getUtility
 from zope.interface import implements
@@ -94,7 +95,7 @@ class BannerTile(PersistentCoverTile):
             image = NamedBlobImage(image.data)
 
         obj = aq_base(obj)  # avoid acquisition
-        title = obj.Title()
+        title = safe_unicode(obj.Title())
 
         data_mgr = ITileDataManager(self)
         data_mgr.set({
