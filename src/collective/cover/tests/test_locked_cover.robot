@@ -1,11 +1,12 @@
 *** Settings ***
 
 Documentation  Testing locked and unlocked
+
 Resource  cover.robot
 Library  Remote  ${PLONE_URL}/RobotRemote
 
-Suite Setup  Open Test Browser
-Suite Teardown  Close all browsers
+Test Setup  Open SauceLabs test browser
+Test Teardown  Run keywords  Report test status  Close all browsers
 
 *** Variables ***
 
