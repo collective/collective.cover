@@ -78,7 +78,7 @@ $(document).ready(function() {
 
     $('a.edit-tile-link, a.config-tile-link').prepOverlay({
         subtype: 'ajax',
-        filter: '.tiles-edit',
+        filter: '.tile-content',
         formselector: '#edit_tile',
         closeselector: '[name="buttons.cancel"]',
         noform: 'close',
@@ -107,7 +107,17 @@ $(document).ready(function() {
 
         },
         afterpost: function(return_value, data_parent) {
-            location.reload();
+            var tileId = data_parent.data('pbo').src.split('/').pop();
+            var tile = $('#'+tileId);
+            // Get tile type
+            var tileType = tile.data('tile-type');
+            // List of tile types that make a page reload
+            var reloadTypes = ['collective.cover.carousel'];
+            if(reloadTypes.indexOf(tileType)>-1) {
+                location.reload();
+            } else {
+                tile.html(return_value);
+            }
         },
         config: {
             onLoad: function() {
@@ -153,8 +163,8 @@ $(document).ready(function() {
                   serial_sort(textarea, sortable);
                 });
               }
-            },
-            onClose: function() { location.reload(); }
+            }/*,
+            onClose: function() { location.reload(); }*/
 
         }
     });

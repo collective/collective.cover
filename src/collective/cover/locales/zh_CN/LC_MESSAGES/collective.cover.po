@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: collective.cover\n"
-"POT-Creation-Date: 2013-07-15 21:43+0000\n"
+"POT-Creation-Date: 2013-09-30 22:55+0000\n"
 "PO-Revision-Date: 2013-06-27 21:57+0800\n"
 "Last-Translator: adam <yuejun.tang@gmail.com>\n"
 "Language-Team: Spanish <https://github.com/collective>\n"
@@ -56,7 +56,7 @@ msgstr "一个显示查询集对象的面板。"
 msgid "A tile to embed content from a remote source."
 msgstr "一个嵌入远程对象的面板。"
 
-#: collective/cover/browser/contentchooser_templates/content_contentchooser.pt:57
+#: collective/cover/browser/contentchooser_templates/content_contentchooser.pt:56
 msgid "Add Content"
 msgstr "添加内容"
 
@@ -77,11 +77,11 @@ msgid "Basic Tile"
 msgstr "基本面板"
 
 #: collective/cover/controlpanel.py:51
-#: collective/cover/tiles/base.py:60
+#: collective/cover/tiles/base.py:62
 msgid "CSS Class"
 msgstr "CSS 类"
 
-#: collective/cover/tiles/configuration_view.py:196
+#: collective/cover/tiles/configuration_view.py:197
 #: collective/cover/tiles/edit.py:75
 msgid "Cancel"
 msgstr "取消"
@@ -106,7 +106,7 @@ msgstr "列"
 msgid "Compose"
 msgstr "组建"
 
-#: collective/cover/tiles/configuration_view.py:159
+#: collective/cover/tiles/configuration_view.py:160
 msgid "Configure ${name}"
 msgstr "配置${name}"
 
@@ -187,7 +187,7 @@ msgstr "过滤内容"
 msgid "Footer"
 msgstr ""
 
-#: collective/cover/tiles/configuration_widgets/textline.pt:42
+#: collective/cover/tiles/configuration_widgets/textline.pt:50
 msgid "HTML tag"
 msgstr "HTML标签"
 
@@ -195,7 +195,7 @@ msgstr "HTML标签"
 msgid "Header"
 msgstr ""
 
-#: collective/cover/tiles/banner.py:23
+#: collective/cover/tiles/banner.py:28
 #: collective/cover/tiles/basic.py:36
 #: collective/cover/tiles/collection.py:50
 msgid "Image"
@@ -205,7 +205,7 @@ msgstr "图片"
 msgid "Image Tile"
 msgstr "图片面板"
 
-#: collective/cover/tiles/configuration_widgets/namedimage.pt:45
+#: collective/cover/tiles/configuration_widgets/namedimage.pt:53
 msgid "Image size"
 msgstr "图片大小"
 
@@ -247,9 +247,9 @@ msgstr ""
 msgid "Name"
 msgstr "名称"
 
-#: collective/cover/tiles/configuration_widgets/basewidget.pt:30
-#: collective/cover/tiles/configuration_widgets/list.pt:40
-#: collective/cover/tiles/configuration_widgets/namedimage.pt:33
+#: collective/cover/tiles/configuration_widgets/basewidget.pt:33
+#: collective/cover/tiles/configuration_widgets/list.pt:41
+#: collective/cover/tiles/configuration_widgets/namedimage.pt:36
 msgid "No"
 msgstr "不"
 
@@ -269,9 +269,9 @@ msgstr ""
 msgid "Only objects of these content types will be searched on the content chooser."
 msgstr "仅仅下面这些内容类型对象可以出现在内容选择树中。"
 
-#: collective/cover/tiles/configuration_widgets/basewidget.pt:32
-#: collective/cover/tiles/configuration_widgets/list.pt:42
-#: collective/cover/tiles/configuration_widgets/namedimage.pt:35
+#: collective/cover/tiles/configuration_widgets/basewidget.pt:39
+#: collective/cover/tiles/configuration_widgets/list.pt:47
+#: collective/cover/tiles/configuration_widgets/namedimage.pt:42
 msgid "Order"
 msgstr "排序"
 
@@ -308,7 +308,7 @@ msgstr "请编辑这个嵌入面板以添加嵌入代码。"
 msgid "Please edit the tile to enter some text."
 msgstr "请点击编辑链接以输入文本信息。"
 
-#: collective/cover/tiles/configuration_widgets/namedimage.pt:62
+#: collective/cover/tiles/configuration_widgets/namedimage.pt:70
 msgid "Position"
 msgstr "位置"
 
@@ -324,7 +324,7 @@ msgstr "富文本面板"
 msgid "Row"
 msgstr "行"
 
-#: collective/cover/tiles/configuration_view.py:163
+#: collective/cover/tiles/configuration_view.py:164
 #: collective/cover/tiles/edit.py:43
 msgid "Save"
 msgstr "保存"
@@ -345,7 +345,7 @@ msgstr "为collective.cover包的设置"
 msgid "Styles"
 msgstr "样式"
 
-#: collective/cover/tiles/configuration_widgets/richtext.pt:42
+#: collective/cover/tiles/configuration_widgets/richtext.pt:50
 msgid "Text length"
 msgstr "文本长度"
 
@@ -361,11 +361,11 @@ msgstr "这种布局用于呈现组面板"
 msgid "This tiles will be available for layout creation."
 msgstr "这些面板种类将在组合页布局中有效。"
 
-#: collective/cover/tiles/configuration_view.py:205
+#: collective/cover/tiles/configuration_view.py:206
 msgid "Tile configuration cancelled."
 msgstr "配置已取消"
 
-#: collective/cover/tiles/configuration_view.py:192
+#: collective/cover/tiles/configuration_view.py:193
 msgid "Tile configuration saved."
 msgstr "配置已保存。"
 
@@ -373,18 +373,18 @@ msgstr "配置已保存。"
 msgid "Tile saved"
 msgstr "面板已保存"
 
-#: collective/cover/tiles/banner.py:18
+#: collective/cover/tiles/banner.py:23
 #: collective/cover/tiles/basic.py:26
 #: collective/cover/tiles/collection.py:29
 msgid "Title"
 msgstr "标题"
 
-#: collective/cover/tiles/banner.py:28
+#: collective/cover/tiles/banner.py:33
 #: collective/cover/tiles/link.py:33
 msgid "URL"
 msgstr "URL"
 
-#: collective/cover/tiles/basic.py:60
+#: collective/cover/tiles/basic.py:59
 #: collective/cover/tiles/collection.py:69
 #: collective/cover/tiles/file.py:57
 msgid "UUID"
@@ -394,23 +394,23 @@ msgstr "UUID"
 msgid "Uninstall profile for the collective.cover package."
 msgstr "为collective.cover包的卸载配置文件"
 
-#: collective/cover/tiles/configuration_widgets/basewidget.pt:12
-#: collective/cover/tiles/configuration_widgets/list.pt:22
-#: collective/cover/tiles/configuration_widgets/namedimage.pt:15
+#: collective/cover/tiles/configuration_widgets/basewidget.pt:13
+#: collective/cover/tiles/configuration_widgets/list.pt:23
+#: collective/cover/tiles/configuration_widgets/namedimage.pt:16
 msgid "Visible"
 msgstr "可视"
 
-#: collective/cover/tiles/configuration_widgets/basewidget.pt:21
-#: collective/cover/tiles/configuration_widgets/list.pt:31
-#: collective/cover/tiles/configuration_widgets/namedimage.pt:24
+#: collective/cover/tiles/configuration_widgets/basewidget.pt:22
+#: collective/cover/tiles/configuration_widgets/list.pt:32
+#: collective/cover/tiles/configuration_widgets/namedimage.pt:25
 msgid "Yes"
 msgstr "确定"
 
-#: collective/cover/tiles/base.py:133
+#: collective/cover/tiles/base.py:136
 msgid "You are not allowed to add content to this tile"
 msgstr "你没有权限在这个面板中添加内容"
 
-#: collective/cover/tiles/base.py:147
+#: collective/cover/tiles/base.py:148
 msgid "You are not allowed to remove content of this tile"
 msgstr "你没有权限删除这个面板的内容"
 
@@ -421,11 +421,6 @@ msgstr ""
 #: profiles.zcml
 msgid "collective.cover uninstall"
 msgstr "卸载collective.cover"
-
-#. Default: "Also known as keywords, tags or labels, these help you categorize your content."
-#: collective/cover/tiles/basic.py:53
-msgid "help_categories"
-msgstr "Las etiquetas suelen utilizarse para la organización a medida del contenido."
 
 #. Default: "Categories"
 #: collective/cover/tiles/basic.py:52

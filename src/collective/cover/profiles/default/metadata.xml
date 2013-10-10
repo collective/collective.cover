@@ -1,12 +1,13 @@
+<?xml version="1.0"?>
 <metadata>
- <version>5</version>
- <dependencies>
-  <dependency>profile-plone.app.tiles:default</dependency>
-  <dependency>profile-plone.app.blocks:default</dependency>
-  <dependency>profile-plone.app.dexterity:default</dependency>
-  <dependency>profile-plone.app.iterate:plone.app.iterate</dependency>
-  <dependency>profile-collective.js.jqueryui:default</dependency>
-  <dependency>profile-collective.js.galleria:default</dependency>
-  <dependency>profile-plone.app.relationfield:default</dependency>
+  <version>6</version>
+  <dependencies>
+    <dependency>profile-collective.js.galleria:default</dependency>
+    <dependency>profile-collective.js.jqueryui:default</dependency>
+    <dependency>profile-plone.app.blocks:default</dependency>
+    <dependency>profile-plone.app.dexterity:default</dependency>
+    <dependency>profile-plone.app.iterate:plone.app.iterate</dependency>
+    <dependency>profile-plone.app.relationfield:default</dependency>
+    <dependency>profile-plone.app.tiles:default</dependency>
   </dependencies>
 </metadata>

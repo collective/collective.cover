@@ -22,6 +22,8 @@
     <element value="plone.app.dexterity.behaviors.metadata.IBasic" />
     <element value="plone.app.dexterity.behaviors.exclfromnav.IExcludeFromNavigation" />
     <element value="plone.app.lockingbehavior.behaviors.ILocking" />
+    <element value="plone.app.referenceablebehavior.referenceable.IReferenceable" />
+    <element value="plone.app.relationfield.behavior.IRelatedItems" />
     <element value="plone.app.stagingbehavior.interfaces.IStagingSupport" />
   </property>
 
@@ -30,7 +32,8 @@
   <property name="immediate_view">view</property>
   <property name="default_view">view</property>
   <property name="view_methods">
-    <element value="view"/>
+    <element value="view" />
+    <element value="standard" />
   </property>
   <property name="default_view_fallback">False</property>
   <property name="add_permission">cmf.AddPortalContent</property>

@@ -85,17 +85,17 @@
              * available from outside the droppable definition
              **/
             row_drop: function( $row ) {
-	            //creates a new column
-	            var column = column_dom.clone();
-	            $row.prepend(column);
-	            self.column_events(column);
-	            self.delete_manager(column);
-	            self.resize_columns_manager(column);
+                //creates a new column
+                var column = column_dom.clone();
+                $row.prepend(column);
+                self.column_events(column);
+                self.delete_manager(column);
+                self.resize_columns_manager(column);
 
-	            self.calculate_grid($row.find('.' + column_class));
+                self.calculate_grid($row.find('.' + column_class));
 
-	            le.trigger('modified.layout');
-	        },
+                le.trigger('modified.layout');
+            },
 
             /**
              * Row events binding
@@ -170,7 +170,7 @@
                                 var name_tag = $("<span />").addClass("tile-name")
                                                             .text(ui.draggable.data('tile-name'));
                                 if(is_configurable) {
-                                    new_tile.append(config_link)
+                                    new_tile.append(config_link);
                                 }
                                 new_tile.append(name_tag);
 

@@ -44,10 +44,17 @@ class Cover(Item):
     implements(IDAVAware)
 
 
+# TODO: move browser views to browser folder
 class View(grok.View):
     grok.context(ICover)
     grok.require('zope2.View')
     grok.name('view')
+
+
+class Standard(grok.View):
+    grok.context(ICover)
+    grok.require('zope2.View')
+    grok.name('standard')
 
 
 class AddCTWidget(grok.View):

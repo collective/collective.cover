@@ -10,7 +10,7 @@
   </p>
 
   <!-- FIXME: this should be configurable -->
-  <div class="sortable-tile cover-list-tile" tal:condition="not: is_empty">
+  <div class="sortable-tile cover-list-tile tile-content" tal:condition="not: is_empty">
     <tal:items repeat="item view/results"
                define="toLocalizedTime nocall:context/@@plone/toLocalizedTime">
       <div style="position:relative"

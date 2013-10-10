@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2013-07-15 21:43+0000\n"
+"POT-Creation-Date: 2013-09-30 22:55+0000\n"
 "PO-Revision-Date: 2013-07-26 10:12+0300\n"
 "Last-Translator: Asko Soukka <asko.soukka@iki.fi>\n"
 "Language-Team: Finnish <https://github.com/collective>\n"
@@ -54,7 +54,7 @@ msgstr "Tiili, joka näyttää kokoelman tulokset."
 msgid "A tile to embed content from a remote source."
 msgstr "Tiili, joka näyttää sisältöupotuksen toiselta sivustolta."
 
-#: collective/cover/browser/contentchooser_templates/content_contentchooser.pt:57
+#: collective/cover/browser/contentchooser_templates/content_contentchooser.pt:56
 msgid "Add Content"
 msgstr "Lisää sisältöä"
 
@@ -75,11 +75,11 @@ msgid "Basic Tile"
 msgstr "Perustiedot"
 
 #: collective/cover/controlpanel.py:51
-#: collective/cover/tiles/base.py:60
+#: collective/cover/tiles/base.py:62
 msgid "CSS Class"
 msgstr "CSS-luokat"
 
-#: collective/cover/tiles/configuration_view.py:196
+#: collective/cover/tiles/configuration_view.py:197
 #: collective/cover/tiles/edit.py:75
 msgid "Cancel"
 msgstr "Peruuta"
@@ -104,7 +104,7 @@ msgstr "Sarake"
 msgid "Compose"
 msgstr "Ladonta"
 
-#: collective/cover/tiles/configuration_view.py:159
+#: collective/cover/tiles/configuration_view.py:160
 msgid "Configure ${name}"
 msgstr "Muokkaa tiiltä: ${name}"
 
@@ -185,7 +185,7 @@ msgstr "Suodata sisältöä"
 msgid "Footer"
 msgstr "Alatunniste"
 
-#: collective/cover/tiles/configuration_widgets/textline.pt:42
+#: collective/cover/tiles/configuration_widgets/textline.pt:50
 msgid "HTML tag"
 msgstr "HTML-tagi"
 
@@ -193,7 +193,7 @@ msgstr "HTML-tagi"
 msgid "Header"
 msgstr "Ylätunniste"
 
-#: collective/cover/tiles/banner.py:23
+#: collective/cover/tiles/banner.py:28
 #: collective/cover/tiles/basic.py:36
 #: collective/cover/tiles/collection.py:50
 msgid "Image"
@@ -203,7 +203,7 @@ msgstr "Kuva"
 msgid "Image Tile"
 msgstr "Kuva"
 
-#: collective/cover/tiles/configuration_widgets/namedimage.pt:45
+#: collective/cover/tiles/configuration_widgets/namedimage.pt:53
 msgid "Image size"
 msgstr "Kuvakoko"
 
@@ -245,9 +245,9 @@ msgstr "Lisää…"
 msgid "Name"
 msgstr "Nimi"
 
-#: collective/cover/tiles/configuration_widgets/basewidget.pt:30
-#: collective/cover/tiles/configuration_widgets/list.pt:40
-#: collective/cover/tiles/configuration_widgets/namedimage.pt:33
+#: collective/cover/tiles/configuration_widgets/basewidget.pt:33
+#: collective/cover/tiles/configuration_widgets/list.pt:41
+#: collective/cover/tiles/configuration_widgets/namedimage.pt:36
 msgid "No"
 msgstr "Ei"
 
@@ -267,9 +267,9 @@ msgstr "Näytettävän sisällön määrä"
 msgid "Only objects of these content types will be searched on the content chooser."
 msgstr "Vain tässä valitut sisältötyypit on haettavissa sisältövalitsimella."
 
-#: collective/cover/tiles/configuration_widgets/basewidget.pt:32
-#: collective/cover/tiles/configuration_widgets/list.pt:42
-#: collective/cover/tiles/configuration_widgets/namedimage.pt:35
+#: collective/cover/tiles/configuration_widgets/basewidget.pt:39
+#: collective/cover/tiles/configuration_widgets/list.pt:47
+#: collective/cover/tiles/configuration_widgets/namedimage.pt:42
 msgid "Order"
 msgstr "Järjestys"
 
@@ -306,7 +306,7 @@ msgstr "Syötä upotuskoodi valitsemalla \"Muokkaa\"."
 msgid "Please edit the tile to enter some text."
 msgstr "Syötä tiileen muotoiltua valitsemalla \"Muokkaa\"."
 
-#: collective/cover/tiles/configuration_widgets/namedimage.pt:62
+#: collective/cover/tiles/configuration_widgets/namedimage.pt:70
 msgid "Position"
 msgstr "Sijainti"
 
@@ -322,7 +322,7 @@ msgstr "Muotoltu teksti"
 msgid "Row"
 msgstr "Rivi"
 
-#: collective/cover/tiles/configuration_view.py:163
+#: collective/cover/tiles/configuration_view.py:164
 #: collective/cover/tiles/edit.py:43
 msgid "Save"
 msgstr "Tallenna"
@@ -343,7 +343,7 @@ msgstr "Kansisivu-lisäosan asetukset"
 msgid "Styles"
 msgstr "Tyylit"
 
-#: collective/cover/tiles/configuration_widgets/richtext.pt:42
+#: collective/cover/tiles/configuration_widgets/richtext.pt:50
 msgid "Text length"
 msgstr "Tekstin pituus"
 
@@ -359,11 +359,11 @@ msgstr "Sommittelu, joka määrittää kansisivun tiilien ladonnan."
 msgid "This tiles will be available for layout creation."
 msgstr "Nämä tiilet on valittavissa kansikuvan ladonnassa."
 
-#: collective/cover/tiles/configuration_view.py:205
+#: collective/cover/tiles/configuration_view.py:206
 msgid "Tile configuration cancelled."
 msgstr "Tiilen muutokset peruttu."
 
-#: collective/cover/tiles/configuration_view.py:192
+#: collective/cover/tiles/configuration_view.py:193
 msgid "Tile configuration saved."
 msgstr "Tiilen muutokset tallennettu."
 
@@ -371,18 +371,18 @@ msgstr "Tiilen muutokset tallennettu."
 msgid "Tile saved"
 msgstr "Tiilen muutokset tallennettu."
 
-#: collective/cover/tiles/banner.py:18
+#: collective/cover/tiles/banner.py:23
 #: collective/cover/tiles/basic.py:26
 #: collective/cover/tiles/collection.py:29
 msgid "Title"
 msgstr "Nimike"
 
-#: collective/cover/tiles/banner.py:28
+#: collective/cover/tiles/banner.py:33
 #: collective/cover/tiles/link.py:33
 msgid "URL"
 msgstr "URL"
 
-#: collective/cover/tiles/basic.py:60
+#: collective/cover/tiles/basic.py:59
 #: collective/cover/tiles/collection.py:69
 #: collective/cover/tiles/file.py:57
 msgid "UUID"
@@ -392,23 +392,23 @@ msgstr "UUID"
 msgid "Uninstall profile for the collective.cover package."
 msgstr "Helppokäyttöisen kansikuvalisäosan asennuksen poistoprofiili."
 
-#: collective/cover/tiles/configuration_widgets/basewidget.pt:12
-#: collective/cover/tiles/configuration_widgets/list.pt:22
-#: collective/cover/tiles/configuration_widgets/namedimage.pt:15
+#: collective/cover/tiles/configuration_widgets/basewidget.pt:13
+#: collective/cover/tiles/configuration_widgets/list.pt:23
+#: collective/cover/tiles/configuration_widgets/namedimage.pt:16
 msgid "Visible"
 msgstr "Näkyvissä"
 
-#: collective/cover/tiles/configuration_widgets/basewidget.pt:21
-#: collective/cover/tiles/configuration_widgets/list.pt:31
-#: collective/cover/tiles/configuration_widgets/namedimage.pt:24
+#: collective/cover/tiles/configuration_widgets/basewidget.pt:22
+#: collective/cover/tiles/configuration_widgets/list.pt:32
+#: collective/cover/tiles/configuration_widgets/namedimage.pt:25
 msgid "Yes"
 msgstr "Kyllä"
 
-#: collective/cover/tiles/base.py:133
+#: collective/cover/tiles/base.py:136
 msgid "You are not allowed to add content to this tile"
 msgstr "Sinulla ei ole riittäväksi oikeuksia lisätä sisältöä tähän tiileen."
 
-#: collective/cover/tiles/base.py:147
+#: collective/cover/tiles/base.py:148
 msgid "You are not allowed to remove content of this tile"
 msgstr "Sinulla ei ole riittävästi oikeuksia poistaa sisältöä tästä tiilestä."
 
@@ -419,10 +419,6 @@ msgstr "collective.cover"
 #: profiles.zcml
 msgid "collective.cover uninstall"
 msgstr "collective.cover uninstall"
-
-#: collective/cover/tiles/basic.py:53
-msgid "help_categories"
-msgstr "Luokittele tiili syöttämällä yksi luokka per rivi."
 
 #. Default: "Categories"
 #: collective/cover/tiles/basic.py:52
@@ -440,3 +436,4 @@ msgstr "ok"
 #: collective/cover/layout_templates/groupselect.pt:18
 msgid "save"
 msgstr "tallenna"
+

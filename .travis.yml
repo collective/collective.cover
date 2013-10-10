@@ -1,19 +1,36 @@
 language: python
 python: 2.7
 env:
-  - PLONE_VERSION=4.2
-  - PLONE_VERSION=4.3 QA=true
+  global:
+    - ARTIFACTS_AWS_REGION=sa-east-1
+    - ARTIFACTS_S3_BUCKET=collective-cover
+    - secure: "Ll2tTrfw0vpGlk+tfdcOD8HOylIWlyFDtNL+ShfQtAZ9wHZEOFJJyVsaSpDbdgWD1Y+muSz8I9xcvNY7ag17jm8udSEWecGaMIodeHB5hIklEi/OovKoAUgPqaVtbNE/FtyURZf7KE+Nb7zCege6XjCD635U4W2P1/072aEY3CU="
+    - secure: "bPiRnG3qFbWjD1zgVcTJAcOy8uuUwLKDIaVe15L6M5xLz49SfHFe6Zwc8jQ0g4J9xIDRqX4gcLnJffr0xJmBytXZGohFCjQRPUFruoy/stWWOrdgYT+9Jm9/TbVwoh+Cudo5iTNdIsaVnzcA6IyuTae/i9CJ9QQ7MBKyrjRV+T4="
+  matrix:
+    - PLONE_VERSION=4.2
+    - PLONE_VERSION=4.3 QA=true
 install:
   - sed -ie "s#travis-4.x.cfg#travis-$PLONE_VERSION.x.cfg#" travis.cfg
   - mkdir -p buildout-cache/downloads
   - python bootstrap.py -c travis.cfg
-  - bin/buildout -c travis.cfg -N -q -t 3
+  - bin/buildout -c travis.cfg -N -q
 before_script:
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
 script: bin/test
 after_success:
-  - test -v QA && bin/buildout -c coverage.cfg -N -q -t 3 || true
-  - test -v QA && make coveralls basic-validation || true
+  - test -v QA && bin/buildout -c coverage.cfg -N -q || true
+  - test -v QA && bin/coverage.sh && pip install -q coveralls && coveralls || true
+after_failure:
+  - bin/buildout annotate -c travis.cfg
+  - firefox -v
+  - gem install travis-artifacts -q
+  - travis-artifacts upload --path parts/test
 notifications:
-  irc: irc.freenode.org#simplesconsultoria
+  irc:
+    channels: irc.freenode.org#simplesconsultoria
+    template:
+      - "%{repository}#%{build_number} (%{branch} - %{commit} : %{author}): %{message}"
+      - "Change view : %{compare_url}"
+      - "Build details : %{build_url}"
+      - "Robot Test Report: http://collective-cover.s3-website-sa-east-1.amazonaws.com/artifacts/%{build_number}"

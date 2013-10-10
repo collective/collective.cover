@@ -95,6 +95,28 @@ class BasicTileTestCase(unittest.TestCase):
         self.tile.populate_with_object(obj)
         self.assertEqual(title, self.tile.data['title'])
         self.assertEqual(description, self.tile.data['description'])
+        self.assertIsInstance(title, unicode)
+        self.assertIsInstance(description, unicode)
+
+    def test_populate_with_object_string(self):
+        """This test complements test_populate_with_object_unicode
+        using strings instead of unicode objects.
+        """
+        title = "This is a title test"
+        description = "This is a description test"
+        obj = self.portal['my-news-item']
+        obj.setTitle(title)
+        obj.setDescription(description)
+        obj.reindexObject()
+        self.tile.populate_with_object(obj)
+        self.assertEqual(
+            unicode(title, 'utf-8'),
+            self.tile.data['title']
+        )
+        self.assertEqual(
+            unicode(description, 'utf-8'),
+            self.tile.data['description']
+        )
 
     def test_render_empty(self):
         self.assertIn(

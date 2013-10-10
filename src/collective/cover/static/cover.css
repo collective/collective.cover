@@ -75,7 +75,8 @@
     outline:1px solid #333;
     cursor:move;
 }
-.ui-state-default {
+.template-compose #content .tile {
+    margin-bottom: 1em;
     min-height: 100px;
 }
 .ui-state-default .loading-mask{
@@ -103,8 +104,9 @@
     height: 450px;
 }
 
-/* tinyMCE table conflict */
+/* conflicts */
 table.invisible{visibility:visible;}
+.close {opacity: 1;}
 
 /*Skins*/
 .tile-edge {

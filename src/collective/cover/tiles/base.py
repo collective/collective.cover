@@ -136,8 +136,6 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
             raise Unauthorized(_("You are not allowed to add content to "
                                  "this tile"))
 
-        notify(ObjectModifiedEvent(self))
-
     def replace_with_objects(self, obj):
         if not self.isAllowedToEdit():
             raise Unauthorized(_("You are not allowed to add content to "
@@ -207,6 +205,19 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
         field_conf = tile_conf.get(field, None)
         if field_conf:
             return field_conf.get('visibility', None) == u'on'
+        else:
+            return False
+
+    def _has_image_field(self, obj):
+        """Return True if the object has an image field.
+
+        :param obj: [required]
+        :type obj: content object
+        """
+        if hasattr(obj, 'image'):  # Dexterity
+            return True
+        elif hasattr(obj, 'Schema'):  # Archetypes
+            return 'image' in obj.Schema().keys()
         else:
             return False
 
