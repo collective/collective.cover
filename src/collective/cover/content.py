@@ -9,10 +9,8 @@ from plone.dexterity.content import Item
 from plone.dexterity.events import EditBegunEvent
 from plone.directives import form
 from plone.registry.interfaces import IRegistry
-from plone.tiles.interfaces import ITileDataManager
 from Products.CMFCore.utils import getToolByName
 from Products.GenericSetup.interfaces import IDAVAware
-from zope.annotation.interfaces import IAnnotations
 from zope.component import getUtility
 from zope.container.interfaces import IObjectAddedEvent
 from zope.event import notify
@@ -50,31 +48,6 @@ class Standard(grok.View):
     grok.context(ICover)
     grok.require('zope2.View')
     grok.name('standard')
-
-
-class RemoveTileWidget(grok.View):
-    # XXX: This should be part of the plone.app.tiles package or similar
-    grok.context(ICover)
-    grok.require('cmf.ModifyPortalContent')
-    grok.name("removetilewidget")
-
-    def __call__(self):
-        template = self.template
-        if 'form.submitted' not in self.request:
-            return template.render(self)
-
-        annotations = IAnnotations(self.context)
-        current_tiles = annotations.get('current_tiles', {})
-        tile_id = self.request.get('wid', None)
-
-        if tile_id in current_tiles:
-            widget_type = current_tiles[tile_id]['type']
-            #Let's remove all traces of the value stored in the tile
-            widget_uri = '@@{0}/{1}'.format(widget_type, tile_id)
-            tile = self.context.restrictedTraverse(widget_uri)
-
-            dataManager = ITileDataManager(tile)
-            dataManager.delete()
 
 
 # TODO: implement EditCancelledEvent and EditFinishedEvent

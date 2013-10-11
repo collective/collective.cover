@@ -1,7 +1,6 @@
 [report]
 omit =
     /home/*/.buildout/eggs/*
-    /var/cache/buildout/eggs/*
     /usr/*
     bin/test
     buildout-cache/eggs/*
