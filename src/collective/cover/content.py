@@ -1,8 +1,5 @@
 # -*- coding: utf-8 -*-
 
-# XXX: remove these imports?
-#from plone.dexterity.events import EditCancelledEvent
-#from plone.dexterity.events import EditFinishedEvent
 from AccessControl import getSecurityManager
 from Acquisition import aq_inner
 from collective.cover.controlpanel import ICoverSettings
@@ -10,11 +7,9 @@ from collective.cover.utils import assign_tile_ids
 from five import grok
 from plone.dexterity.content import Item
 from plone.dexterity.events import EditBegunEvent
-from plone.dexterity.utils import createContentInContainer
 from plone.directives import form
 from plone.registry.interfaces import IRegistry
 from plone.tiles.interfaces import ITileDataManager
-from plone.uuid.interfaces import IUUIDGenerator
 from Products.CMFCore.utils import getToolByName
 from Products.GenericSetup.interfaces import IDAVAware
 from zope.annotation.interfaces import IAnnotations
@@ -55,78 +50,6 @@ class Standard(grok.View):
     grok.context(ICover)
     grok.require('zope2.View')
     grok.name('standard')
-
-
-class AddCTWidget(grok.View):
-    grok.context(ICover)
-    grok.require('cmf.ModifyPortalContent')
-
-    def render(self):
-        widget_type = self.request.get('widget_type')
-        widget_title = self.request.get('widget_title')
-        column_id = self.request.get('column_id')
-        widget = createContentInContainer(self.context,
-                                          widget_type,
-                                          title=widget_title,
-                                          checkConstraints=False)
-        widget_url = widget.absolute_url()
-        return json.dumps({'column_id': column_id,
-                           'widget_type': widget_type,
-                           'widget_title': widget_title,
-                           'widget_id': widget.id,
-                           'widget_url': widget_url})
-
-
-class AddTileWidget(grok.View):
-    grok.context(ICover)
-    grok.require('cmf.ModifyPortalContent')
-
-    def render(self):
-        uuid = getUtility(IUUIDGenerator)
-        widget_type = self.request.get('widget_type')
-        widget_title = self.request.get('widget_title')
-        column_id = self.request.get('column_id')
-
-        id = uuid()
-        context_url = self.context.absolute_url()
-        widget_url = '{0}/@@{1}/{2}'.format(context_url, widget_type, id)
-
-        # Let's store locally info regarding tiles
-        annotations = IAnnotations(self.context)
-        current_tiles = annotations.get('current_tiles', {})
-
-        current_tiles[id] = {'type': widget_type,
-                             'title': widget_title}
-        annotations['current_tiles'] = current_tiles
-
-        return json.dumps({'column_id': column_id,
-                           'widget_type': widget_type,
-                           'widget_title': widget_title,
-                           'widget_id': id,
-                           'widget_url': widget_url})
-
-
-class SetWidgetMap(grok.View):
-    grok.context(ICover)
-    grok.require('cmf.ModifyPortalContent')
-
-    def render(self):
-        widget_map = self.request.get('widget_map')
-        remove = self.request.get('remove', None)
-        self.context.set_widget_map(widget_map, remove)
-        return json.dumps('success')
-
-
-class UpdateWidget(grok.View):
-    grok.context(ICover)
-    grok.require('cmf.ModifyPortalContent')
-
-    def render(self):
-        widget_id = self.request.get('wid')
-        if widget_id in self.context:
-            return self.context[widget_id].render()
-        else:
-            return 'Widget does not exist'
 
 
 class RemoveTileWidget(grok.View):
