@@ -11,6 +11,7 @@ from plone.tiles.interfaces import ITileDataManager
 from plone.tiles.interfaces import ITileType
 from plone.uuid.interfaces import IUUID
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
+from Products.CMFPlone.utils import safe_unicode
 from zope import schema
 from zope.component import queryUtility
 from zope.schema import getFieldsInOrder
@@ -107,7 +108,7 @@ class CollectionTile(PersistentCoverTile):
         super(CollectionTile, self).populate_with_object(obj)  # check permission
 
         if obj.portal_type in self.accepted_ct():
-            header = obj.Title()  # use collection's title as header
+            header = safe_unicode(obj.Title())  # use collection's title as header
             footer = _(u'More…')  # XXX: can we use field's default?
             uuid = IUUID(obj)
 
