@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2013-09-30 22:55+0000\n"
+"POT-Creation-Date: 2013-10-11 17:54+0000\n"
 "PO-Revision-Date: 2013-07-26 10:12+0300\n"
 "Last-Translator: Asko Soukka <asko.soukka@iki.fi>\n"
 "Language-Team: Finnish <https://github.com/collective>\n"
@@ -126,29 +126,25 @@ msgid "Cover Settings"
 msgstr "Kansisivun asetukset"
 
 #: collective/cover/tiles/basic.py:43
-#: collective/cover/tiles/collection.py:43
+#: collective/cover/tiles/collection.py:44
 msgid "Date"
 msgstr "Päiväys"
 
 #: collective/cover/tiles/basic.py:31
-#: collective/cover/tiles/collection.py:36
+#: collective/cover/tiles/collection.py:37
 #: collective/cover/tiles/embed.py:24
 msgid "Description"
 msgstr "Kuvaus"
 
-#: collective/cover/tiles/file.py:51
+#: collective/cover/tiles/file.py:52
 msgid "Download link"
 msgstr "Latauslinkki"
-
-#: collective/cover/tiles/templates/image.pt:8
-msgid "Drag&amp;drop an image here to populate the tile."
-msgstr "Raahaa ja puodota tähän kuva, jonka haluat näkyvän tiilessä."
 
 #: collective/cover/tiles/templates/banner.pt:8
 msgid "Drag&amp;drop an image or link here to populate the tile."
 msgstr "Raahaa ja pudota tähän kuva, jonka haluat näkyvän tiilessä."
 
-#: collective/cover/layout_templates/tile.pt:47
+#: collective/cover/layout_templates/tile.pt:48
 msgid "Edit"
 msgstr "Muokkaa"
 
@@ -181,7 +177,7 @@ msgstr "Tiedosto"
 msgid "Filter items"
 msgstr "Suodata sisältöä"
 
-#: collective/cover/tiles/collection.py:64
+#: collective/cover/tiles/collection.py:65
 msgid "Footer"
 msgstr "Alatunniste"
 
@@ -189,13 +185,13 @@ msgstr "Alatunniste"
 msgid "HTML tag"
 msgstr "HTML-tagi"
 
-#: collective/cover/tiles/collection.py:22
+#: collective/cover/tiles/collection.py:23
 msgid "Header"
 msgstr "Ylätunniste"
 
-#: collective/cover/tiles/banner.py:28
+#: collective/cover/tiles/banner.py:29
 #: collective/cover/tiles/basic.py:36
-#: collective/cover/tiles/collection.py:50
+#: collective/cover/tiles/collection.py:51
 msgid "Image"
 msgstr "Kuva"
 
@@ -237,7 +233,7 @@ msgstr "Linkki"
 msgid "List Tile"
 msgstr "Luettelo"
 
-#: collective/cover/tiles/collection.py:111
+#: collective/cover/tiles/collection.py:112
 msgid "More…"
 msgstr "Lisää…"
 
@@ -259,7 +255,7 @@ msgstr "Ei kuvausta"
 msgid "Number of items"
 msgstr "Lukumäärä"
 
-#: collective/cover/tiles/collection.py:58
+#: collective/cover/tiles/collection.py:59
 msgid "Number of items to display"
 msgstr "Näytettävän sisällön määrä"
 
@@ -284,10 +280,6 @@ msgstr "Raahaa ja pudota tähän lomakekansio, jonka haluat näkyvän tiilessä.
 #: collective/cover/tiles/templates/file.pt:8
 msgid "Please drag&amp;drop a file here."
 msgstr "Raahaa ja pudota tähän tiedosto, jonka haluat näkyvän tiilessä."
-
-#: collective/cover/tiles/templates/link.pt:8
-msgid "Please drag&amp;drop a link here to populate the tile."
-msgstr "Raahaa ja pudota tähän linkki, jonka haluat näkyvän tiilessä."
 
 #: collective/cover/tiles/templates/basic.pt:9
 #: collective/cover/tiles/templates/contentbody.pt:8
@@ -339,6 +331,10 @@ msgstr "Haettavissa olevat sisältötyypit"
 msgid "Settings for the collective.cover package"
 msgstr "Kansisivu-lisäosan asetukset"
 
+#: collective/cover/tiles/templates/collection.pt:84
+msgid "Source Collection"
+msgstr ""
+
 #: collective/cover/controlpanel.py:45
 msgid "Styles"
 msgstr "Tyylit"
@@ -347,7 +343,7 @@ msgstr "Tyylit"
 msgid "Text length"
 msgstr "Tekstin pituus"
 
-#: collective/cover/tiles/templates/collection.pt:16
+#: collective/cover/tiles/templates/collection.pt:17
 msgid "The collection doesn't have any results."
 msgstr "Kokoelma ei palauttanut lainkaan tuloksia."
 
@@ -371,20 +367,19 @@ msgstr "Tiilen muutokset tallennettu."
 msgid "Tile saved"
 msgstr "Tiilen muutokset tallennettu."
 
-#: collective/cover/tiles/banner.py:23
+#: collective/cover/tiles/banner.py:24
 #: collective/cover/tiles/basic.py:26
-#: collective/cover/tiles/collection.py:29
+#: collective/cover/tiles/collection.py:30
 msgid "Title"
 msgstr "Nimike"
 
-#: collective/cover/tiles/banner.py:33
-#: collective/cover/tiles/link.py:33
+#: collective/cover/tiles/banner.py:34
 msgid "URL"
 msgstr "URL"
 
 #: collective/cover/tiles/basic.py:59
-#: collective/cover/tiles/collection.py:69
-#: collective/cover/tiles/file.py:57
+#: collective/cover/tiles/collection.py:70
+#: collective/cover/tiles/file.py:58
 msgid "UUID"
 msgstr "UUID"
 
