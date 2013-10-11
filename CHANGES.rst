@@ -4,6 +4,8 @@ There's a frood who really knows where his towel is
 1.0a6 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Remove bundles from portal_javascript (closes `#303`_). [jpgimenez]
+
 - Remove upgrade steps from unsupported versions (closes `#295`_). [fulv]
 
 - Depend on collective.js.bootstrap(closes `#201`_). [tcurvelo]
@@ -285,3 +287,4 @@ There's a frood who really knows where his towel is
 .. _`#294`: https://github.com/collective/collective.cover/issues/294
 .. _`#295`: https://github.com/collective/collective.cover/issues/295
 .. _`#301`: https://github.com/collective/collective.cover/issues/301
+.. _`#303`: https://github.com/collective/collective.cover/issues/303

@@ -51,9 +51,9 @@ class Upgrade5to6TestCase(UpgradeTestCaseBase):
         UpgradeTestCaseBase.setUp(self, u'5', u'6')
 
     def test_upgrade_to_6_registrations(self):
-        version = self.setup.getLastVersionForProfile(self.profile_id)
-        self.assertEqual(version, (self.to_version,))
-        self.assertEqual(self._how_many_upgrades_to_do(), 1)
+        version = self.setup.getLastVersionForProfile(self.profile_id)[0]
+        self.assertTrue(version >= self.to_version)
+        self.assertEqual(self._how_many_upgrades_to_do(), 2)
 
     def test_issue_201(self):
         # check if the upgrade step is registered
@@ -82,3 +82,39 @@ class Upgrade5to6TestCase(UpgradeTestCaseBase):
         self.assertNotIn(old_css, css_tool.getResourceIds())
         self.assertNotIn(old_js, js_tool.getResourceIds())
         self.assertIn(new_js, js_tool.getResourceIds())
+
+    def test_issue_303(self):
+        # check if the upgrade step is registered
+        title = u'issue_303'
+        description = u"Remove unused bundles from portal_javascript."
+        step = self._get_upgrade_step(title)
+        self.assertIsNotNone(step)
+        self.assertEqual(step['description'], description)
+
+        js_tool = self.portal['portal_javascripts']
+
+        # simulate state on previous version
+        JQ_JS_IDS = ["++resource++plone.app.jquerytools.js",
+                      "++resource++plone.app.jquerytools.form.js",
+                      "++resource++plone.app.jquerytools.overlayhelpers.js",
+                      "++resource++plone.app.jquerytools.plugins.js",
+                      "++resource++plone.app.jquerytools.dateinput.js",
+                      "++resource++plone.app.jquerytools.rangeinput.js",
+                      "++resource++plone.app.jquerytools.validator.js"]
+        TINYMCE_JS_IDS = ["tiny_mce.js",
+                          "tiny_mce_init.js"]
+
+        for id in js_tool.getResourceIds():
+            js = js_tool.getResource(id)
+            if id in JQ_JS_IDS:
+                js.setBundle('jquerytools')
+            elif id in TINYMCE_JS_IDS:
+                js.setBundle('tinymce')
+
+        # run the upgrade step to validate the update
+        self._do_upgrade_step(step)
+
+        for id in js_tool.getResourceIds():
+            if id in JQ_JS_IDS or id in TINYMCE_JS_IDS:
+                js = js_tool.getResource(id)
+                self.assertEqual('default', js.getBundle())
