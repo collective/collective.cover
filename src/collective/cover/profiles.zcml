@@ -41,14 +41,6 @@
         handler=".upgrades.issue_201"
         />
 
-  </genericsetup:upgradeSteps>
-
-  <genericsetup:upgradeSteps
-      source="6"
-      destination="7"
-      profile="collective.cover:default"
-      >
-
     <genericsetup:upgradeStep
         title="issue_303"
         description="Remove unused bundles from portal_javascript."

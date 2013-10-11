@@ -53,7 +53,7 @@ class Upgrade5to6TestCase(UpgradeTestCaseBase):
     def test_upgrade_to_6_registrations(self):
         version = self.setup.getLastVersionForProfile(self.profile_id)[0]
         self.assertTrue(version >= self.to_version)
-        self.assertEqual(self._how_many_upgrades_to_do(), 1)
+        self.assertEqual(self._how_many_upgrades_to_do(), 2)
 
     def test_issue_201(self):
         # check if the upgrade step is registered
@@ -82,17 +82,6 @@ class Upgrade5to6TestCase(UpgradeTestCaseBase):
         self.assertNotIn(old_css, css_tool.getResourceIds())
         self.assertNotIn(old_js, js_tool.getResourceIds())
         self.assertIn(new_js, js_tool.getResourceIds())
-
-
-class Upgrade6to7TestCase(UpgradeTestCaseBase):
-
-    def setUp(self):
-        UpgradeTestCaseBase.setUp(self, u'6', u'7')
-
-    def test_upgrade_to_7_registrations(self):
-        version = self.setup.getLastVersionForProfile(self.profile_id)[0]
-        self.assertTrue(version >= self.to_version)
-        self.assertEqual(self._how_many_upgrades_to_do(), 1)
 
     def test_issue_303(self):
         # check if the upgrade step is registered
