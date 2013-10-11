@@ -51,8 +51,8 @@ class Upgrade5to6TestCase(UpgradeTestCaseBase):
         UpgradeTestCaseBase.setUp(self, u'5', u'6')
 
     def test_upgrade_to_6_registrations(self):
-        version = self.setup.getLastVersionForProfile(self.profile_id)
-        self.assertEqual(version, (self.to_version,))
+        version = self.setup.getLastVersionForProfile(self.profile_id)[0]
+        self.assertTrue(version >= self.to_version)
         self.assertEqual(self._how_many_upgrades_to_do(), 1)
 
     def test_issue_201(self):
@@ -90,8 +90,8 @@ class Upgrade6to7TestCase(UpgradeTestCaseBase):
         UpgradeTestCaseBase.setUp(self, u'6', u'7')
 
     def test_upgrade_to_7_registrations(self):
-        version = self.setup.getLastVersionForProfile(self.profile_id)
-        self.assertEqual(version, (self.to_version,))
+        version = self.setup.getLastVersionForProfile(self.profile_id)[0]
+        self.assertTrue(version >= self.to_version)
         self.assertEqual(self._how_many_upgrades_to_do(), 1)
 
     def test_issue_303(self):
