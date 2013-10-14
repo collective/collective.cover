@@ -52,20 +52,69 @@ class BannerTileTestCase(unittest.TestCase):
             ['Collection', 'Document', 'File', 'Form Folder',
              'Image', 'Link', 'News Item'])
 
-    def test_populate_with_image(self):
+    def test_populate_with_image_object_unicode(self):
+        """We must store unicode always on schema.TextLine and schema.Text
+        fields to avoid UnicodeDecodeError.
+        """
+        title = u'El veloz murciélago hindú comía feliz cardillo y kiwi'
         obj = self.portal['my-image']
+        obj.setTitle(title)
+        obj.reindexObject()
         self.tile.populate_with_object(obj)
-        self.assertEqual("Test image", self.tile.Title())
+        self.assertEqual(self.tile.data.get('title'), title)
+        self.assertIsInstance(self.tile.data.get('title'), unicode)
         self.assertTrue(self.tile.has_image)
         self.assertIsNotNone(self.tile.getRemoteUrl())
 
-    def test_populate_with_link(self):
-        obj = self.portal['my-link']
+    def test_populate_tile_with_image_object_string(self):
+        """This test complements test_populate_with_image_object_unicode
+        using strings instead of unicode objects.
+        """
+        title = 'The quick brown fox jumps over the lazy dog'
+        obj = self.portal['my-image']
+        obj.setTitle(title)
+        obj.reindexObject()
         self.tile.populate_with_object(obj)
-        self.assertEqual('Test link', self.tile.data['title'])
+        self.assertEqual(
+            unicode(title, 'utf-8'),
+            self.tile.data.get('title')
+        )
+        self.assertTrue(self.tile.has_image)
+        self.assertIsNotNone(self.tile.getRemoteUrl())
+
+    def test_populate_with_link_object_unicode(self):
+        """We must store unicode always on schema.TextLine and schema.Text
+        fields to avoid UnicodeDecodeError.
+        """
+        title = u'El veloz murciélago hindú comía feliz cardillo y kiwi'
+        remote_url = 'http://plone.org'
+        obj = self.portal['my-link']
+        obj.setTitle(title)
+        obj.setRemoteUrl('http://plone.org')
+        obj.reindexObject()
+        self.tile.populate_with_object(obj)
+        self.assertEqual(self.tile.data.get('title'), title)
+        self.assertIsInstance(self.tile.data.get('title'), unicode)
         self.assertFalse(self.tile.has_image)
-        # FIXME: set remote_url on the object
-        self.assertEqual(self.tile.getRemoteUrl(), 'http://')
+        self.assertEqual(self.tile.getRemoteUrl(), remote_url)
+
+    def test_populate_tile_with_link_object_string(self):
+        """This test complements test_populate_with_link_object_unicode
+        using strings instead of unicode objects.
+        """
+        title = 'The quick brown fox jumps over the lazy dog'
+        remote_url = 'http://plone.org'
+        obj = self.portal['my-link']
+        obj.setTitle(title)
+        obj.setRemoteUrl('http://plone.org')
+        obj.reindexObject()
+        self.tile.populate_with_object(obj)
+        self.assertEqual(
+            unicode(title, 'utf-8'),
+            self.tile.data.get('title')
+        )
+        self.assertFalse(self.tile.has_image)
+        self.assertEqual(self.tile.getRemoteUrl(), remote_url)
 
     def test_render_empty(self):
         self.assertIn(
