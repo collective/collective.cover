@@ -29,7 +29,7 @@ Test List Tile
     Save Cover Layout
 
     # as tile is empty, we see default message
-    Click Link  link=Compose
+    Compose Cover
     Page Should Contain  Please add up to 5 objects to the tile.
 
     # drag&drop a Document

@@ -28,7 +28,7 @@ Test File Tile
     Add Tile  ${file_tile_location}
     Save Cover Layout
 
-    Click Link  link=Compose
+    Compose Cover
     Page Should Contain  Please drag&drop a file here
 
     Click Element  css=div#contentchooser-content-show-button
@@ -39,7 +39,7 @@ Test File Tile
     Page Should Contain Link  link=Download file
 
     # edit header
-    Click Link  link=Compose
+    Compose Cover
     Click Link  css=${edit_link_selector}
     Wait until page contains element  id=${title_field_id}
     Input Text  id=${title_field_id}  ${title_sample}

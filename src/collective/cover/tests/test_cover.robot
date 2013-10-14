@@ -23,7 +23,7 @@ Test renderBase
     Create Cover  Title  Description  Empty layout
     ${BASE}  Get Element Attribute  tag=base@href
     Should Be Equal  ${BASE}  ${PLONE_URL}/title-1/
-    Click Link  link=Compose
+    Compose Cover
     ${BASE}  Get Element Attribute  tag=base@href
     Should Be Equal  ${BASE}  ${PLONE_URL}/title-1/
     Edit Cover Layout

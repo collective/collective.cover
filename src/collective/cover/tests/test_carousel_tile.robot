@@ -28,7 +28,7 @@ Test Carousel Tile
     Save Cover Layout
 
     # as tile is empty, we see default message
-    Click Link  link=Compose
+    Compose Cover
     # FIXME: default message for empty tile
     Page Should Contain  Galleria.configure({ autoplay: true });
 
@@ -43,7 +43,7 @@ Test Carousel Tile
     Page Should Contain  Test image
 
     # drag&drop another Image
-    Click Link  link=Compose
+    Compose Cover
     Open Content Chooser
     Drag And Drop  css=${image_selector2}  css=${tile_selector}
     # FIXME

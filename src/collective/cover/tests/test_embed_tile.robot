@@ -30,11 +30,11 @@ Test Embed Tile
     Save Cover Layout
 
     # as tile is empty, we see default message
-    Click Link  link=Compose
+    Compose Cover
     Page Should Contain  Please edit the tile to add the code to be embedded.
 
     # edit the tile and check AJAX refresh
-    Click Link  link=Compose
+    Compose Cover
     Click Link  css=${edit_link_selector}
     Wait until page contains element  id=${title_field_id}
     Input Text  id=${title_field_id}  ${title_sample}

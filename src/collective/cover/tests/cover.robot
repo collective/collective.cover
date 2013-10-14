@@ -102,6 +102,14 @@ Delete Tile
     Wait Until Page Contains Element  css=${delete_tile_selector}
     Click Element  css=${delete_tile_selector}
 
+Compose Cover
+    [Documentation]  Click on Compose tab and wait until the layout has been
+    ...              loaded.
+    Click Link  link=Compose
+    Sleep  1s  Wait for cover compose to load
+    Wait Until Page Contains Element  css=div#contentchooser-content-show-button
+    Page Should Contain  Add Content
+
 Open Content Chooser
     Click Element  css=div#contentchooser-content-show-button
     Wait Until Element Is Visible  css=${CONTENT_CHOOSER_SELECTOR}

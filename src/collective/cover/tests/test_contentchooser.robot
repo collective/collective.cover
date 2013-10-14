@@ -32,7 +32,7 @@ Test Content Chooser
     Save Cover Layout
 
     # as tile is empty, we see default message
-    Click Link  link=Compose
+    Compose Cover
     Page Should Contain  Please drag&drop some content here to populate the tile.
 
     # Content Chooser should contain 2 tabs
