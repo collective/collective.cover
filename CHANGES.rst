@@ -289,3 +289,4 @@ There's a frood who really knows where his towel is
 .. _`#294`: https://github.com/collective/collective.cover/issues/294
 .. _`#295`: https://github.com/collective/collective.cover/issues/295
 .. _`#301`: https://github.com/collective/collective.cover/issues/301
+.. _`#303`: https://github.com/collective/collective.cover/issues/303
