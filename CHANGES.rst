@@ -4,6 +4,8 @@ There's a frood who really knows where his towel is
 1.0a6 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Remove needless code and increase testing coverage. [tcurvelo]
+
 - Remove upgrade steps from unsupported versions (closes `#295`_). [fulv]
 
 - Depend on collective.js.bootstrap(closes `#201`_). [tcurvelo]
