@@ -20,7 +20,7 @@ Test RichText Tile
     Go to Homepage
 
     Create Cover  Title  Description  Empty layout
-    Click Link  link=Layout
+    Edit Cover Layout
 
     Add Tile  ${tile_location}
     Save Cover Layout
@@ -51,6 +51,6 @@ Test RichText Tile
     Page Should Not Contain  ${text_other_sample}
     Page Should Contain  ${text_sample}
 
-    Click Link  link=Layout
+    Edit Cover Layout
     Delete Tile
     Save Cover Layout

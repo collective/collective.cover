@@ -26,7 +26,7 @@ Test Content Chooser
     Create Cover  Title  Description  Empty layout
 
     # add a Basic tile to the layout
-    Click Link  link=Layout
+    Edit Cover Layout
     Page Should Contain  Export layout
     Add Tile  ${basic_tile_location}
     Save Cover Layout

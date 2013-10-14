@@ -24,7 +24,7 @@ Test Collection Tile
     Create Cover  Title  Description  Empty layout
 
     # add a collection tile to the layout
-    Click Link  link=Layout
+    Edit Cover Layout
     Page Should Contain  Export layout
     Add Tile  ${collection_tile_location}
     Save Cover Layout
@@ -66,6 +66,6 @@ Test Collection Tile
     Wait Until Page Contains  ${title_sample}
 
     # delete the tile
-    Click Link  link=Layout
+    Edit Cover Layout
     Delete Tile
     Save Cover Layout

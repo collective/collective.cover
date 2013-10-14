@@ -30,7 +30,7 @@ Test Basic Tile
     Create Cover  Title  Description  Empty layout
 
     # add a Basic tile to the layout
-    Click Link  link=Layout
+    Edit Cover Layout
     Page Should Contain  Export layout
     Add Tile  ${basic_tile_location}
     Save Cover Layout
@@ -107,6 +107,6 @@ Test Basic Tile
     Page Should Not Contain Link  ${title_other_sample}
     Page Should Contain Link  ${title_sample}
 
-    Click Link  link=Layout
+    Edit Cover Layout
     Delete Tile
     Save Cover Layout

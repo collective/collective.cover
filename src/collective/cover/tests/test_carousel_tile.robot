@@ -23,7 +23,7 @@ Test Carousel Tile
     Create Cover  Title  Description  Empty layout
 
     # add a carousel tile to the layout
-    Click Link  link=Layout
+    Edit Cover Layout
     Add Tile  ${carousel_tile_location}
     Save Cover Layout
 
@@ -59,6 +59,6 @@ Test Carousel Tile
     #Xpath Should Match X Times  //div[contains(@class, 'textline-sortable-element')]  2
 
     # delete the tile
-    Click Link  link=Layout
+    Edit Cover Layout
     Delete Tile
     Save Cover Layout

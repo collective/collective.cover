@@ -26,7 +26,7 @@ Test renderBase
     Click Link  link=Compose
     ${BASE}  Get Element Attribute  tag=base@href
     Should Be Equal  ${BASE}  ${PLONE_URL}/title-1/
-    Click Link  link=Layout
+    Edit Cover Layout
     ${BASE}  Get Element Attribute  tag=base@href
     Should Be Equal  ${BASE}  ${PLONE_URL}/title-1/
 
