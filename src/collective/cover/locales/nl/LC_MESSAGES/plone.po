@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: collective.cover\n"
-"POT-Creation-Date: 2013-10-07 22:22 +0000\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "PO-Revision-Date: 2013-10-07 22:22 +0000\n"
 "Last-Translator: Paul Roeland <paul@cleanclothes.org>\n"
 "Language-Team: Plone Nederlands <plone-nl@lists.plone.org>\n"

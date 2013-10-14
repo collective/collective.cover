@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: collective.cover\n"
-"POT-Creation-Date: 2013-09-30 22:55+0000\n"
+"POT-Creation-Date: 2013-10-14 22:24+0000\n"
 "PO-Revision-Date: 2013-10-01 23:07+0100\n"
 "Last-Translator: Espen Moe-Nilssen <espen@medialog.no>\n"
 "Language-Team: Norwegian <LL@li.org>\n"
@@ -79,7 +79,8 @@ msgstr "Tilgjengelige blokker"
 msgid "Basic Tile"
 msgstr "Basisblokk"
 
-#: collective/cover/controlpanel.py:51 collective/cover/tiles/base.py:62
+#: collective/cover/controlpanel.py:51
+#: collective/cover/tiles/base.py:62
 msgid "CSS Class"
 msgstr "CSS klasse"
 
@@ -129,32 +130,31 @@ msgstr "Forsidelayout"
 msgid "Cover Settings"
 msgstr "Forsideinnstillinger"
 
-#: collective/cover/tiles/basic.py:43 collective/cover/tiles/collection.py:43
+#: collective/cover/tiles/basic.py:43
+#: collective/cover/tiles/collection.py:44
 msgid "Date"
 msgstr "Dato"
 
-#: collective/cover/tiles/basic.py:31 collective/cover/tiles/collection.py:36
+#: collective/cover/tiles/basic.py:31
+#: collective/cover/tiles/collection.py:37
 #: collective/cover/tiles/embed.py:24
 msgid "Description"
 msgstr "Beskrivelse"
 
-#: collective/cover/tiles/file.py:51
+#: collective/cover/tiles/file.py:52
 msgid "Download link"
 msgstr "Nedlastningslenke"
-
-#: collective/cover/tiles/templates/image.pt:8
-msgid "Drag&amp;drop an image here to populate the tile."
-msgstr "Drag&amp;drop et bilde til denne blokken."
 
 #: collective/cover/tiles/templates/banner.pt:8
 msgid "Drag&amp;drop an image or link here to populate the tile."
 msgstr "Drag&amp;drop en lenke til denne blokken."
 
-#: collective/cover/layout_templates/tile.pt:47
+#: collective/cover/layout_templates/tile.pt:48
 msgid "Edit"
 msgstr "Rediger"
 
-#: collective/cover/tiles/carousel.py:27 collective/cover/tiles/list.py:27
+#: collective/cover/tiles/carousel.py:27
+#: collective/cover/tiles/list.py:27
 msgid "Elements"
 msgstr "Elementer"
 
@@ -167,12 +167,8 @@ msgid "Embedding code"
 msgstr "Innbygningskode"
 
 #: collective/cover/controlpanel.py:46
-msgid ""
-"Enter a list of styles to appear in the style pulldown. Format is title|"
-"className, one per line."
-msgstr ""
-"Skriv en liste over stiler skal vises i nedtrekksmenyen. Formatet er tittel "
-"| className, en per linje."
+msgid "Enter a list of styles to appear in the style pulldown. Format is title|className, one per line."
+msgstr "Skriv en liste over stiler skal vises i nedtrekksmenyen. Formatet er tittel | className, en per linje."
 
 #: collective/cover/templates/layoutedit.pt:65
 msgid "Export layout"
@@ -186,20 +182,25 @@ msgstr "Filblokk"
 msgid "Filter items"
 msgstr "Filtrer elementer"
 
-#: collective/cover/tiles/collection.py:64
+#: collective/cover/tiles/collection.py:65
 msgid "Footer"
 msgstr "Bunntekst"
+
+#: collective/cover/tiles/templates/collection.pt:17
+msgid "Go to related collection"
+msgstr ""
 
 #: collective/cover/tiles/configuration_widgets/textline.pt:50
 msgid "HTML tag"
 msgstr "HTML tag"
 
-#: collective/cover/tiles/collection.py:22
+#: collective/cover/tiles/collection.py:23
 msgid "Header"
 msgstr "Topptekst"
 
-#: collective/cover/tiles/banner.py:28 collective/cover/tiles/basic.py:36
-#: collective/cover/tiles/collection.py:50
+#: collective/cover/tiles/banner.py:29
+#: collective/cover/tiles/basic.py:36
+#: collective/cover/tiles/collection.py:51
 msgid "Image"
 msgstr "Bilde"
 
@@ -211,7 +212,8 @@ msgstr "Bilde blokk"
 msgid "Image size"
 msgstr "Bildestørrelse"
 
-#: collective/cover/controlpanel.py:19 collective/cover/models/cover.xml
+#: collective/cover/controlpanel.py:19
+#: collective/cover/models/cover.xml
 #: collective/cover/profiles/default/types/collective.cover.content.xml
 msgid "Layout"
 msgstr "Layout"
@@ -240,7 +242,7 @@ msgstr "Lenkeblokk"
 msgid "List Tile"
 msgstr "Listeblokk"
 
-#: collective/cover/tiles/collection.py:111
+#: collective/cover/tiles/collection.py:112
 msgid "More…"
 msgstr "Mere…"
 
@@ -262,15 +264,13 @@ msgstr "Ingen beskrivelse"
 msgid "Number of items"
 msgstr "Antall elementer"
 
-#: collective/cover/tiles/collection.py:58
+#: collective/cover/tiles/collection.py:59
 msgid "Number of items to display"
 msgstr "Antall elementer som skal vises"
 
 #: collective/cover/controlpanel.py:34
-msgid ""
-"Only objects of these content types will be searched on the content chooser."
-msgstr ""
-"Bare gjenstander av disse innholdstyper vil bli søkt fra innholdsvelgeren."
+msgid "Only objects of these content types will be searched on the content chooser."
+msgstr "Bare gjenstander av disse innholdstyper vil bli søkt fra innholdsvelgeren."
 
 #: collective/cover/tiles/configuration_widgets/basewidget.pt:39
 #: collective/cover/tiles/configuration_widgets/list.pt:47
@@ -289,10 +289,6 @@ msgstr "Vennligst dra og slipp en FormFolder her for å fylle blokken."
 #: collective/cover/tiles/templates/file.pt:8
 msgid "Please drag&amp;drop a file here."
 msgstr "Vennligst dra og slipp en fil her"
-
-#: collective/cover/tiles/templates/link.pt:8
-msgid "Please drag&amp;drop a link here to populate the tile."
-msgstr "Vennligst dra og slipp en lenke her"
 
 #: collective/cover/tiles/templates/basic.pt:9
 #: collective/cover/tiles/templates/contentbody.pt:8
@@ -352,7 +348,7 @@ msgstr "Stiler"
 msgid "Text length"
 msgstr "Textlengde"
 
-#: collective/cover/tiles/templates/collection.pt:16
+#: collective/cover/tiles/templates/collection.pt:23
 msgid "The collection doesn't have any results."
 msgstr "Samlingen har ingenting å vise"
 
@@ -376,17 +372,19 @@ msgstr "Blokkonfigurasjon lagret"
 msgid "Tile saved"
 msgstr "Blokk lagret"
 
-#: collective/cover/tiles/banner.py:23 collective/cover/tiles/basic.py:26
-#: collective/cover/tiles/collection.py:29
-msgid "Tittel"
-msgstr "Titel"
+#: collective/cover/tiles/banner.py:24
+#: collective/cover/tiles/basic.py:26
+#: collective/cover/tiles/collection.py:30
+msgid "Title"
+msgstr ""
 
-#: collective/cover/tiles/banner.py:33 collective/cover/tiles/link.py:33
+#: collective/cover/tiles/banner.py:34
 msgid "URL"
 msgstr "URL"
 
-#: collective/cover/tiles/basic.py:59 collective/cover/tiles/collection.py:69
-#: collective/cover/tiles/file.py:57
+#: collective/cover/tiles/basic.py:59
+#: collective/cover/tiles/collection.py:70
+#: collective/cover/tiles/file.py:58
 msgid "UUID"
 msgstr "UUID"
 
@@ -438,3 +436,4 @@ msgstr "ok"
 #: collective/cover/layout_templates/groupselect.pt:18
 msgid "save"
 msgstr "lagre"
+
