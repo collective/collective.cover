@@ -57,3 +57,29 @@ class BrowserViewsTestCase(unittest.TestCase):
         # default view should show title, description and viewlets
         self.assertIn(rendered_html, 'Front page')
         self.assertIn(rendered_html, 'Should I see this?')
+
+
+class ConfigurationViewTestCase(unittest.TestCase):
+
+    layer = INTEGRATION_TESTING
+
+    def setUp(self):
+        self.portal = self.layer['portal']
+        self.request = self.layer['request']
+
+    def test_configure_tile(self):
+        traversal = self.portal.unrestrictedTraverse("@@configure-tile")
+        self.assertIsNone(traversal.view)
+
+        with self.assertRaises(KeyError):
+            traversal()
+
+        traversal = traversal.publishTraverse(self.request, 'collective.cover.list')
+        self.assertEqual(traversal.view.tileType.title, u'List Tile')
+        self.assertIsNone(traversal.view.tileId)
+
+        view = traversal.publishTraverse(self.request, '1234')
+        self.assertEqual(view.tileId, '1234')
+
+        with self.assertRaises(KeyError):
+            traversal.publishTraverse(self.request, 'too much')
