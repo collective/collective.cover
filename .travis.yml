@@ -40,7 +40,6 @@ notifications:
   irc:
     channels:
       - irc.freenode.org#simplesconsultoria
-      - irc.freenode.org#sprint
     template:
       - "%{repository}#%{build_number} (%{branch} - %{commit} : %{author}): %{message}"
       - "Change view : %{compare_url}"
