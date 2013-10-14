@@ -90,7 +90,6 @@ To enable this package in a buildout-based installation:
     [versions]
     ...
     collective.js.jqueryui = 1.8.16.9
-    plone.app.jquerytools = 1.5.6
 
 After updating the configuration you need to run ''bin/buildout'', which will
 take care of updating your system.

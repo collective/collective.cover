@@ -83,11 +83,10 @@ class BasicTileTestCase(unittest.TestCase):
 
     def test_populate_with_object_unicode(self):
         """We must store unicode always on schema.TextLine and schema.Text
-        fields to avoid UnicodeDecodeError. We could avoid this duplicate
-        this test if we create our test fixture content using unicode.
+        fields to avoid UnicodeDecodeError.
         """
-        title = u"Pangrama en español"
-        description = u"El veloz murciélago hindú comía feliz cardillo y kiwi"
+        title = u'παν γράμμα'
+        description = u'El veloz murciélago hindú comía feliz cardillo y kiwi'
         obj = self.portal['my-news-item']
         obj.setTitle(title)
         obj.setDescription(description)
@@ -95,15 +94,15 @@ class BasicTileTestCase(unittest.TestCase):
         self.tile.populate_with_object(obj)
         self.assertEqual(title, self.tile.data['title'])
         self.assertEqual(description, self.tile.data['description'])
-        self.assertIsInstance(title, unicode)
-        self.assertIsInstance(description, unicode)
+        self.assertIsInstance(self.tile.data.get('title'), unicode)
+        self.assertIsInstance(self.tile.data.get('description'), unicode)
 
     def test_populate_with_object_string(self):
         """This test complements test_populate_with_object_unicode
         using strings instead of unicode objects.
         """
-        title = "This is a title test"
-        description = "This is a description test"
+        title = 'Pangram'
+        description = 'The quick brown fox jumps over the lazy dog'
         obj = self.portal['my-news-item']
         obj.setTitle(title)
         obj.setDescription(description)
@@ -111,11 +110,11 @@ class BasicTileTestCase(unittest.TestCase):
         self.tile.populate_with_object(obj)
         self.assertEqual(
             unicode(title, 'utf-8'),
-            self.tile.data['title']
+            self.tile.data.get('title')
         )
         self.assertEqual(
             unicode(description, 'utf-8'),
-            self.tile.data['description']
+            self.tile.data.get('description')
         )
 
     def test_render_empty(self):
