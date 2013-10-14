@@ -35,3 +35,27 @@ def issue_201(context, logger=None):
         logger.info("JS resources were cooked")
     else:
         logger.debug("'{0}' resource not found in portal_javascripts".format(old_id))
+
+
+def issue_303(context, logger=None):
+    """Remove unused bundles from portal_javascripts
+    See: https://github.com/collective/collective.cover/issues/303
+    """
+    if logger is None:
+        logger = logging.getLogger(PROJECTNAME)
+
+    FIX_JS_IDS = ["++resource++plone.app.jquerytools.js",
+                  "++resource++plone.app.jquerytools.form.js",
+                  "++resource++plone.app.jquerytools.overlayhelpers.js",
+                  "++resource++plone.app.jquerytools.plugins.js",
+                  "++resource++plone.app.jquerytools.dateinput.js",
+                  "++resource++plone.app.jquerytools.rangeinput.js",
+                  "++resource++plone.app.jquerytools.validator.js",
+                  "tiny_mce.js",
+                  "tiny_mce_init.js"]
+
+    js_tool = getToolByName(context, 'portal_javascripts')
+    for id in js_tool.getResourceIds():
+        if id in FIX_JS_IDS:
+            js = js_tool.getResource(id)
+            js.setBundle('default')

@@ -177,6 +177,16 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
         """
         return None  # all content types accepted by default
 
+    def is_compose_mode(self):
+        """Return True if tile is being rendered in compose mode.
+        """
+        if 'PARENT_REQUEST' in self.context.REQUEST:
+            # the name of the template is in the parent request
+            url = self.context.REQUEST.PARENT_REQUEST.URL
+            # compose mode is the last part of the URL
+            return url.split('/')[-1] == 'compose'
+        return False
+
     def get_tile_configuration(self):
         tile_conf_adapter = getMultiAdapter(
             (self.context, self.request, self), ITilesConfigurationScreen)
