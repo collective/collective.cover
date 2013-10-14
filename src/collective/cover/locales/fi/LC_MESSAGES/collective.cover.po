@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2013-10-11 17:54+0000\n"
+"POT-Creation-Date: 2013-10-14 22:24+0000\n"
 "PO-Revision-Date: 2013-07-26 10:12+0300\n"
 "Last-Translator: Asko Soukka <asko.soukka@iki.fi>\n"
 "Language-Team: Finnish <https://github.com/collective>\n"
@@ -181,6 +181,10 @@ msgstr "Suodata sisältöä"
 msgid "Footer"
 msgstr "Alatunniste"
 
+#: collective/cover/tiles/templates/collection.pt:17
+msgid "Go to related collection"
+msgstr ""
+
 #: collective/cover/tiles/configuration_widgets/textline.pt:50
 msgid "HTML tag"
 msgstr "HTML-tagi"
@@ -331,10 +335,6 @@ msgstr "Haettavissa olevat sisältötyypit"
 msgid "Settings for the collective.cover package"
 msgstr "Kansisivu-lisäosan asetukset"
 
-#: collective/cover/tiles/templates/collection.pt:84
-msgid "Source Collection"
-msgstr ""
-
 #: collective/cover/controlpanel.py:45
 msgid "Styles"
 msgstr "Tyylit"
@@ -343,7 +343,7 @@ msgstr "Tyylit"
 msgid "Text length"
 msgstr "Tekstin pituus"
 
-#: collective/cover/tiles/templates/collection.pt:17
+#: collective/cover/tiles/templates/collection.pt:23
 msgid "The collection doesn't have any results."
 msgstr "Kokoelma ei palauttanut lainkaan tuloksia."
 

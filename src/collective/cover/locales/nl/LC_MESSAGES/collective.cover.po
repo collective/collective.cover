@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: collective.cover\n"
-"POT-Creation-Date: 2013-10-11 17:54+0000\n"
+"POT-Creation-Date: 2013-10-14 22:24+0000\n"
 "PO-Revision-Date: 2013-10-07 22:22 +0000\n"
 "Last-Translator: Paul Roeland <paul@cleanclothes.org>\n"
 "Language-Team: Plone Nederlands <plone-nl@lists.plone.org>\n"
@@ -184,6 +184,10 @@ msgstr "Filter items"
 msgid "Footer"
 msgstr "Voettekst"
 
+#: collective/cover/tiles/templates/collection.pt:17
+msgid "Go to related collection"
+msgstr ""
+
 #: collective/cover/tiles/configuration_widgets/textline.pt:50
 msgid "HTML tag"
 msgstr "HTML tag"
@@ -334,10 +338,6 @@ msgstr "Doorzoekbare contenttypes"
 msgid "Settings for the collective.cover package"
 msgstr "Instellingen voor collective.cover (voorpagina)"
 
-#: collective/cover/tiles/templates/collection.pt:84
-msgid "Source Collection"
-msgstr ""
-
 #: collective/cover/controlpanel.py:45
 msgid "Styles"
 msgstr "Stijlen"
@@ -346,7 +346,7 @@ msgstr "Stijlen"
 msgid "Text length"
 msgstr "Tekst lengte"
 
-#: collective/cover/tiles/templates/collection.pt:17
+#: collective/cover/tiles/templates/collection.pt:23
 msgid "The collection doesn't have any results."
 msgstr "De verzameling levert geen resultaten."
 

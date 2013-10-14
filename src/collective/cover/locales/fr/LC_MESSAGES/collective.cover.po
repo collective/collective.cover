@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: collective.cover\n"
-"POT-Creation-Date: 2013-10-11 17:54+0000\n"
+"POT-Creation-Date: 2013-10-14 22:24+0000\n"
 "PO-Revision-Date: 2013-05-29 18:20-0300\n"
 "Last-Translator: Bitouzé Denis <dbitouze@wanadoo.fr>\n"
 "Language-Team: French <kde-i18n-doc@kde.org>\n"
@@ -184,6 +184,10 @@ msgstr "Filtrer les éléments"
 msgid "Footer"
 msgstr ""
 
+#: collective/cover/tiles/templates/collection.pt:17
+msgid "Go to related collection"
+msgstr ""
+
 #: collective/cover/tiles/configuration_widgets/textline.pt:50
 msgid "HTML tag"
 msgstr "Balise HTML"
@@ -334,10 +338,6 @@ msgstr "Types de contenu recherchable"
 msgid "Settings for the collective.cover package"
 msgstr "Configuration du module collective.cover"
 
-#: collective/cover/tiles/templates/collection.pt:84
-msgid "Source Collection"
-msgstr ""
-
 #: collective/cover/controlpanel.py:45
 msgid "Styles"
 msgstr ""
@@ -346,7 +346,7 @@ msgstr ""
 msgid "Text length"
 msgstr "Longueur du texte."
 
-#: collective/cover/tiles/templates/collection.pt:17
+#: collective/cover/tiles/templates/collection.pt:23
 msgid "The collection doesn't have any results."
 msgstr "La collection ne remonte aucun contenu."
 

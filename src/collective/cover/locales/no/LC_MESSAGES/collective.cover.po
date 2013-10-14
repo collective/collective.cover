@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: collective.cover\n"
-"POT-Creation-Date: 2013-10-11 17:54+0000\n"
+"POT-Creation-Date: 2013-10-14 22:24+0000\n"
 "PO-Revision-Date: 2013-10-01 23:07+0100\n"
 "Last-Translator: Espen Moe-Nilssen <espen@medialog.no>\n"
 "Language-Team: Norwegian <LL@li.org>\n"
@@ -186,6 +186,10 @@ msgstr "Filtrer elementer"
 msgid "Footer"
 msgstr "Bunntekst"
 
+#: collective/cover/tiles/templates/collection.pt:17
+msgid "Go to related collection"
+msgstr ""
+
 #: collective/cover/tiles/configuration_widgets/textline.pt:50
 msgid "HTML tag"
 msgstr "HTML tag"
@@ -336,10 +340,6 @@ msgstr "Søkbare innholdstyper"
 msgid "Settings for the collective.cover package"
 msgstr "Innstillinger for collective.cover"
 
-#: collective/cover/tiles/templates/collection.pt:84
-msgid "Source Collection"
-msgstr ""
-
 #: collective/cover/controlpanel.py:45
 msgid "Styles"
 msgstr "Stiler"
@@ -348,7 +348,7 @@ msgstr "Stiler"
 msgid "Text length"
 msgstr "Textlengde"
 
-#: collective/cover/tiles/templates/collection.pt:17
+#: collective/cover/tiles/templates/collection.pt:23
 msgid "The collection doesn't have any results."
 msgstr "Samlingen har ingenting å vise"
 

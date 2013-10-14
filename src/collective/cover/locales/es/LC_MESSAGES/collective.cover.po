@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: collective.cover\n"
-"POT-Creation-Date: 2013-10-11 17:54+0000\n"
-"PO-Revision-Date: 2013-07-26 18:09-0300\n"
+"POT-Creation-Date: 2013-10-14 22:24+0000\n"
+"PO-Revision-Date: 2013-10-14 19:18-0300\n"
 "Last-Translator: Héctor Velarde <hector.velarde@gmail.com>\n"
 "Language-Team: Spanish <https://github.com/collective>\n"
 "MIME-Version: 1.0\n"
@@ -184,6 +184,10 @@ msgstr "Filtrar elementos"
 msgid "Footer"
 msgstr "Pie de página"
 
+#: collective/cover/tiles/templates/collection.pt:17
+msgid "Go to related collection"
+msgstr "Ir a la colección relacionada"
+
 #: collective/cover/tiles/configuration_widgets/textline.pt:50
 msgid "HTML tag"
 msgstr "Tag HTML"
@@ -334,10 +338,6 @@ msgstr "Tipos de contenido consultables"
 msgid "Settings for the collective.cover package"
 msgstr "Preferencias para el paquete collective.cover"
 
-#: collective/cover/tiles/templates/collection.pt:84
-msgid "Source Collection"
-msgstr ""
-
 #: collective/cover/controlpanel.py:45
 msgid "Styles"
 msgstr "Estilos"
@@ -346,7 +346,7 @@ msgstr "Estilos"
 msgid "Text length"
 msgstr "Longitud del texto"
 
-#: collective/cover/tiles/templates/collection.pt:17
+#: collective/cover/tiles/templates/collection.pt:23
 msgid "The collection doesn't have any results."
 msgstr "La colección no tiene resultados."
 

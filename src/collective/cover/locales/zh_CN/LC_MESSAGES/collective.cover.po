@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: collective.cover\n"
-"POT-Creation-Date: 2013-10-11 17:54+0000\n"
+"POT-Creation-Date: 2013-10-14 22:24+0000\n"
 "PO-Revision-Date: 2013-06-27 21:57+0800\n"
 "Last-Translator: adam <yuejun.tang@gmail.com>\n"
 "Language-Team: Spanish <https://github.com/collective>\n"
@@ -183,6 +183,10 @@ msgstr "过滤内容"
 msgid "Footer"
 msgstr ""
 
+#: collective/cover/tiles/templates/collection.pt:17
+msgid "Go to related collection"
+msgstr ""
+
 #: collective/cover/tiles/configuration_widgets/textline.pt:50
 msgid "HTML tag"
 msgstr "HTML标签"
@@ -333,10 +337,6 @@ msgstr "可搜索的内容类型"
 msgid "Settings for the collective.cover package"
 msgstr "为collective.cover包的设置"
 
-#: collective/cover/tiles/templates/collection.pt:84
-msgid "Source Collection"
-msgstr ""
-
 #: collective/cover/controlpanel.py:45
 msgid "Styles"
 msgstr "样式"
@@ -345,7 +345,7 @@ msgstr "样式"
 msgid "Text length"
 msgstr "文本长度"
 
-#: collective/cover/tiles/templates/collection.pt:17
+#: collective/cover/tiles/templates/collection.pt:23
 msgid "The collection doesn't have any results."
 msgstr "这个查询集合没有任何内容"
 
