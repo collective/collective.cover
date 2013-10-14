@@ -37,11 +37,21 @@ Test Collection Tile
     Open Content Chooser
     Drag And Drop  css=${collection_selector}  css=${tile_selector}
     Wait Until Page Contains  The collection doesn't have any results
+    # FIXME: there is a bug here as the first time this message is not shown
+    #Page Should Contain  Go to related collection
+    Page Should Not Contain  Go to related collection
 
     # TODO: test with a non-empty collection
 
+    # move to the default view and check tile persisted
+    Click Link  link=View
+    Page Should Contain  The collection doesn't have any results
+    Page Should Not Contain  Go to related collection
+
     # edit the tile and check AJAX refresh
     Click Link  link=Compose
+    # this is to demonstrate the bug mentioned above
+    Page Should Contain  Go to related collection
     Click Link  css=${edit_link_selector}
     Wait until page contains element  id=${title_field_id}
     Input Text  id=${title_field_id}  ${title_sample}
