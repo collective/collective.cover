@@ -77,7 +77,7 @@ Edit Cover Layout
     ...              loaded. Buttons related with layout operations must be
     ...              also visible.
     Click Link  link=Layout
-    Wait Until Page Contains Element  css=${tile_drop_area_selector}
+    Sleep  1s  Wait for cover layout to load
     Page Should Contain  Export layout
     Page Should Contain  Saved
 
@@ -102,6 +102,14 @@ Select Tile to Add
 Delete Tile
     Wait Until Page Contains Element  css=${delete_tile_selector}
     Click Element  css=${delete_tile_selector}
+
+Compose Cover
+    [Documentation]  Click on Compose tab and wait until the layout has been
+    ...              loaded.
+    Click Link  link=Compose
+    Sleep  1s  Wait for cover compose to load
+    Wait Until Page Contains Element  css=div#contentchooser-content-show-button
+    Page Should Contain  Add Content
 
 Open Content Chooser
     Click Element  css=div#contentchooser-content-show-button

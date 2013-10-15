@@ -22,7 +22,7 @@ Test CSS Class
     Go to Homepage
 
     Create Cover  Title  Description  Empty layout
-    Click Link  link=Layout
+    Edit Cover Layout
 
     Add Tile  ${basic_tile_location}
     Save Cover Layout
@@ -34,7 +34,7 @@ Test CSS Class
 
     # and now change style configuration
     # start with default style
-    Click Link  link=Layout
+    Edit Cover Layout
     Click Config from Tile  ${tile_class}
     Click Button  Save
     Save Cover Layout
@@ -44,7 +44,7 @@ Test CSS Class
     Page Should Contain Element  css=${default_tile}
 
     # change style
-    Click Link  link=Layout
+    Edit Cover Layout
     Click Config from Tile  ${tile_class}
     Select From List  css=select#collective-cover-basic-css_class  ${border_class}
     Click Button  Save

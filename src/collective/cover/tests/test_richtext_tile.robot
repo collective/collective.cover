@@ -20,12 +20,12 @@ Test RichText Tile
     Go to Homepage
 
     Create Cover  Title  Description  Empty layout
-    Click Link  link=Layout
+    Edit Cover Layout
 
     Add Tile  ${tile_location}
     Save Cover Layout
 
-    Click Link  link=Compose
+    Compose Cover
     Page Should Contain  Please edit the tile to enter some text.
 
     # edit tile but don't save it
@@ -43,7 +43,7 @@ Test RichText Tile
 
 
     # Compose and don't save some other text
-    Click Link  link=Compose
+    Compose Cover
     Click Link  css=${edit_link_selector}
     Wait For Condition  return typeof tinyMCE != "undefined" && tinyMCE.activeEditor != null
     Execute Javascript  tinyMCE.activeEditor.setContent("${text_other_sample}");
@@ -51,6 +51,6 @@ Test RichText Tile
     Page Should Not Contain  ${text_other_sample}
     Page Should Contain  ${text_sample}
 
-    Click Link  link=Layout
+    Edit Cover Layout
     Delete Tile
     Save Cover Layout

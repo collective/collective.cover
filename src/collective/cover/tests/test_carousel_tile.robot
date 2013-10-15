@@ -23,12 +23,12 @@ Test Carousel Tile
     Create Cover  Title  Description  Empty layout
 
     # add a carousel tile to the layout
-    Click Link  link=Layout
+    Edit Cover Layout
     Add Tile  ${carousel_tile_location}
     Save Cover Layout
 
     # as tile is empty, we see default message
-    Click Link  link=Compose
+    Compose Cover
     # FIXME: default message for empty tile
     Page Should Contain  Galleria.configure({ autoplay: true });
 
@@ -43,7 +43,7 @@ Test Carousel Tile
     Page Should Contain  Test image
 
     # drag&drop another Image
-    Click Link  link=Compose
+    Compose Cover
     Open Content Chooser
     Drag And Drop  css=${image_selector2}  css=${tile_selector}
     # FIXME
@@ -59,6 +59,6 @@ Test Carousel Tile
     #Xpath Should Match X Times  //div[contains(@class, 'textline-sortable-element')]  2
 
     # delete the tile
-    Click Link  link=Layout
+    Edit Cover Layout
     Delete Tile
     Save Cover Layout

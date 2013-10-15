@@ -24,17 +24,17 @@ Test Embed Tile
     Create Cover  Title  Description  Empty layout
 
     # add a banner tile to the layout
-    Click Link  link=Layout
+    Edit Cover Layout
     Page Should Contain  Export layout
     Add Tile  ${embed_tile_location}
     Save Cover Layout
 
     # as tile is empty, we see default message
-    Click Link  link=Compose
+    Compose Cover
     Page Should Contain  Please edit the tile to add the code to be embedded.
 
     # edit the tile and check AJAX refresh
-    Click Link  link=Compose
+    Compose Cover
     Click Link  css=${edit_link_selector}
     Wait until page contains element  id=${title_field_id}
     Input Text  id=${title_field_id}  ${title_sample}
@@ -49,6 +49,6 @@ Test Embed Tile
     Wait Until Page Contains  ${title_sample}
 
     # delete the tile
-    Click Link  link=Layout
+    Edit Cover Layout
     Delete Tile
     Save Cover Layout
