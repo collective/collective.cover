@@ -30,13 +30,13 @@ Test Basic Tile
     Create Cover  Title  Description  Empty layout
 
     # add a Basic tile to the layout
-    Click Link  link=Layout
+    Edit Cover Layout
     Page Should Contain  Export layout
     Add Tile  ${basic_tile_location}
     Save Cover Layout
 
     # as tile is empty, we see default message
-    Click Link  link=Compose
+    Compose Cover
     Page Should Contain   Please drag&drop some content here to populate the tile.
 
     # drag&drop a Document
@@ -49,7 +49,7 @@ Test Basic Tile
     Page Should Contain  My document
 
     # drag&drop a File
-    Click Link  link=Compose
+    Compose Cover
     Open Content Chooser
     Drag And Drop  css=${file_selector}  css=${tile_selector}
     Page Should Contain  My file
@@ -59,7 +59,7 @@ Test Basic Tile
     Page Should Contain  My file
 
     # drag&drop an Image
-    Click Link  link=Compose
+    Compose Cover
     Open Content Chooser
     Drag And Drop  css=${image_selector}  css=${tile_selector}
     Page Should Contain  Test image
@@ -69,7 +69,7 @@ Test Basic Tile
     Page Should Contain  Test image
 
     # drag&drop a Link
-    Click Link  link=Compose
+    Compose Cover
     Open Content Chooser
     Drag And Drop  css=${link_selector}  css=${tile_selector}
     Page Should Contain  Test link
@@ -79,7 +79,7 @@ Test Basic Tile
     Page Should Contain  Test link
 
     # drag&drop a News Item
-    Click Link  link=Compose
+    Compose Cover
     Open Content Chooser
     Drag And Drop  css=${news_item_selector}  css=${tile_selector}
     Page Should Contain  ${news_item_title}
@@ -91,7 +91,7 @@ Test Basic Tile
     Page Should Contain  ${news_item_description}
 
     # go back to compose view to edit title
-    Click Link  link=Compose
+    Compose Cover
     Click Link  css=${edit_link_selector}
     Wait until page contains element  id=${title_field_id}
     Input Text  id=${title_field_id}  ${title_sample}
@@ -107,6 +107,6 @@ Test Basic Tile
     Page Should Not Contain Link  ${title_other_sample}
     Page Should Contain Link  ${title_sample}
 
-    Click Link  link=Layout
+    Edit Cover Layout
     Delete Tile
     Save Cover Layout

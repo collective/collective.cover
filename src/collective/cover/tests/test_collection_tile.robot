@@ -24,13 +24,13 @@ Test Collection Tile
     Create Cover  Title  Description  Empty layout
 
     # add a collection tile to the layout
-    Click Link  link=Layout
+    Edit Cover Layout
     Page Should Contain  Export layout
     Add Tile  ${collection_tile_location}
     Save Cover Layout
 
     # as tile is empty, we see default message
-    Click Link  link=Compose
+    Compose Cover
     Page Should Contain  Please drop a collection here to fill the tile
 
     # drag&drop a Collection
@@ -49,7 +49,7 @@ Test Collection Tile
     Page Should Not Contain  Go to related collection
 
     # edit the tile and check AJAX refresh
-    Click Link  link=Compose
+    Compose Cover
     # this is to demonstrate the bug mentioned above
     Page Should Contain  Go to related collection
     Click Link  css=${edit_link_selector}
@@ -66,6 +66,6 @@ Test Collection Tile
     Wait Until Page Contains  ${title_sample}
 
     # delete the tile
-    Click Link  link=Layout
+    Edit Cover Layout
     Delete Tile
     Save Cover Layout
