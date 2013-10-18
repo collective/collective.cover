@@ -22,7 +22,6 @@
         BeforeUnloadHandler = function() {
             var self = this,
                 message;
-            alert(window.form_modified_message);
             this.message = window.form_modified_message ||
                 "Discard changes? If you click OK, any changes you have made will be lost.";
     
@@ -367,6 +366,7 @@
                     $('#btn-save').removeClass(function (index, css) {
                         return (css.match (/\bbtn-\S+/g) || []).join(' ');
                     });
+                    $('#btn-save').removeClass('saved error');
                     $('#btn-save').addClass('modified btn-warning');
 
                     //disable export layout
