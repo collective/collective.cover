@@ -381,6 +381,7 @@
                     $('#slider').off("slide");
                     $('#slider').on( "slide", function( event, ui ) {
                         column.attr('data-column-size', ui.value);
+                        le.trigger('modified.layout');
                     });
                     return false;
                 });
