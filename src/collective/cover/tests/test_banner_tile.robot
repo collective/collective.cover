@@ -27,13 +27,13 @@ Test Banner Tile
     Create Cover  Title  Description  Empty layout
 
     # add a banner tile to the layout
-    Click Link  link=Layout
+    Edit Cover Layout
     Page Should Contain  Export layout
     Add Tile  ${banner_tile_location}
     Save Cover Layout
 
     # as tile is empty, we see default message
-    Click Link  link=Compose
+    Compose Cover
     Page Should Contain  Drag&drop an image or link here to populate the tile.
 
     # drag&drop an Image
@@ -46,7 +46,7 @@ Test Banner Tile
     Page Should Contain Image  css=div.banner-tile a img
 
     # drag&drop a News Item; its image should populate the tile
-    Click Link  link=Compose
+    Compose Cover
     Open Content Chooser
     Drag And Drop  css=${news_item_selector}  css=${tile_selector}
     Wait Until Page Contains Element  css=div.banner-tile a img
@@ -56,7 +56,7 @@ Test Banner Tile
     Page Should Contain Image  css=div.banner-tile a img
 
     # drag&drop a Link
-    Click Link  link=Compose
+    Compose Cover
     Open Content Chooser
     Drag And Drop  css=${link_selector}  css=${tile_selector}
     Wait Until Page Contains Element  css=div.banner-tile h2 a
@@ -66,13 +66,13 @@ Test Banner Tile
     Page Should Contain  Test link
 
     # drag&drop a File; its getImage method should not break the tile
-    Click Link  link=Compose
+    Compose Cover
     Open Content Chooser
     Drag And Drop  css=${file_selector}  css=${tile_selector}
     Wait Until Page Contains Element  css=div.banner-tile h2 a
 
     # edit the tile and check AJAX refresh
-    Click Link  link=Compose
+    Compose Cover
     Click Link  css=${edit_link_selector}
     Wait until page contains element  id=${title_field_id}
     Input Text  id=${title_field_id}  ${title_sample}
@@ -87,6 +87,6 @@ Test Banner Tile
     Wait Until Page Contains  ${title_sample}
 
     # delete the tile
-    Click Link  link=Layout
+    Edit Cover Layout
     Delete Tile
     Save Cover Layout

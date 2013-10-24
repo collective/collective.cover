@@ -25,12 +25,12 @@ Test Locked Cover
     Goto Homepage
 
     Create Cover  My Cover  Description  Empty layout
-    Click Link  link=Layout
+    Edit Cover Layout
 
     Add Tile  ${basic_tile_location}
     Save Cover Layout
 
-    Click Link  link=Compose
+    Compose Cover
     Page Should Contain   Please drag&drop some content here to populate the tile.
 
     Click Element  css=div#contentchooser-content-show-button
@@ -39,7 +39,7 @@ Test Locked Cover
     Page Should Contain  My document
 
     Click Link  link=My Cover
-    Click Link  link=Compose
+    Compose Cover
 
     Open Browser  http://127.0.0.1:${PORT}/plone
     Goto  ${PLONE_URL}/login_form
@@ -59,7 +59,7 @@ Test Locked Cover
     Switch Browser  2
     Click Link  link=My Cover
     Page Should Not Contain   Locked    This item was locked by admin 1 minute ago.
-    Click Link  link=Compose
+    Compose Cover
 
     Switch Browser  1
     Click Link  link=My Cover
@@ -72,7 +72,7 @@ Test Locked Cover
     Switch Browser  1
     Click Link  link=My Cover
     Page Should Not Contain   Locked    This item was locked by admin 1 minute ago.
-    Click Link  link=Layout
+    Edit Cover Layout
 
     Switch Browser  2
     Click Link  link=My Cover
@@ -85,7 +85,7 @@ Test Locked Cover
     Switch Browser  2
     Click Link  link=My Cover
     Page Should Not Contain   Locked    This item was locked by admin 1 minute ago.
-    Click Link  link=Layout
+    Edit Cover Layout
 
     Switch Browser  1
     Click Link  link=My Cover

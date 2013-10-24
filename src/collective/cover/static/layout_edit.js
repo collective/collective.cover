@@ -16,7 +16,23 @@
             tile_class = 'cover-tile',
             tile_dom = $('<div/>').addClass(tile_class)
                                   .attr('data-layout-type', 'tile'),
-            le = $('.layout');
+            le = $('.layout'),
+            BeforeUnloadHandler;
+
+        BeforeUnloadHandler = function() {
+            var self = this,
+                message;
+            this.message = window.form_modified_message ||
+                "Discard changes? If you click OK, any changes you have made will be lost.";
+    
+            this.execute = function(event) {
+                var save_btn = $('#btn-save');
+                if (save_btn.hasClass('modified')) {
+                    event.returnValue = this.message;
+                    return message;
+                }
+            };
+        };
 
         $.extend(self, {
             init: function() {
@@ -24,6 +40,7 @@
                 self.row_events();
                 self.column_events();
                 le.bind('modified.layout', self.layout_modified);
+                window.onbeforeunload = new BeforeUnloadHandler().execute;
             },
 
             setup: function() {
@@ -349,6 +366,7 @@
                     $('#btn-save').removeClass(function (index, css) {
                         return (css.match (/\bbtn-\S+/g) || []).join(' ');
                     });
+                    $('#btn-save').removeClass('saved error');
                     $('#btn-save').addClass('modified btn-warning');
 
                     //disable export layout

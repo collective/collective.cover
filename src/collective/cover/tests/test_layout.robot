@@ -18,7 +18,7 @@ Test Basic Layout Operations
     Go to Homepage
 
     Create Cover  Title  Description  Empty layout
-    Click Link  link=Layout
+    Edit Cover Layout
     # empty layout has one column and one row by default
     # TODO: test if there is 1 row and 1 column
     #       this can be done using Xpath Should Match X Times
@@ -32,6 +32,13 @@ Test Basic Layout Operations
     #add a row after the existing one.
     #it comes with a new column
     Add Row
+
+    # trying to leave layout editing without saving must show a warning
+    Choose Cancel On Next Confirmation
+    Click Link  link=Compose
+    Confirm Action
+    # continue editing layout
+
     #add a column in the latest row
     Add Column at First Row
     Add Column at Second Row
@@ -44,7 +51,7 @@ Test Basic Layout Operations
     Save Cover Layout
 
     # load layout again, it has to be the new one
-    Click Link  link=Layout
+    Edit Cover Layout
 
     #3 columns and 2 rows
     Count Number of Columns  5

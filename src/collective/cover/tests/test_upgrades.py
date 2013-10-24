@@ -95,12 +95,12 @@ class Upgrade5to6TestCase(UpgradeTestCaseBase):
 
         # simulate state on previous version
         JQ_JS_IDS = ["++resource++plone.app.jquerytools.js",
-                      "++resource++plone.app.jquerytools.form.js",
-                      "++resource++plone.app.jquerytools.overlayhelpers.js",
-                      "++resource++plone.app.jquerytools.plugins.js",
-                      "++resource++plone.app.jquerytools.dateinput.js",
-                      "++resource++plone.app.jquerytools.rangeinput.js",
-                      "++resource++plone.app.jquerytools.validator.js"]
+                     "++resource++plone.app.jquerytools.form.js",
+                     "++resource++plone.app.jquerytools.overlayhelpers.js",
+                     "++resource++plone.app.jquerytools.plugins.js",
+                     "++resource++plone.app.jquerytools.dateinput.js",
+                     "++resource++plone.app.jquerytools.rangeinput.js",
+                     "++resource++plone.app.jquerytools.validator.js"]
         TINYMCE_JS_IDS = ["tiny_mce.js",
                           "tiny_mce_init.js"]
 

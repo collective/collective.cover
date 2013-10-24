@@ -273,8 +273,8 @@ var coveractions = {
             content_type : "application/x-www-form-urlencoded",
             type : 'POST',
             data : "searchtext=" +
-            (jQuery('input:text[id=contentchooser-content-trees][name=contentchooser-content-trees]').val()
-             || '') + "&rooted='False'" + "&document_base_url=" +
+            (jQuery('input:text[id=contentchooser-content-trees][name=contentchooser-content-trees]').val() || '') +
+             "&rooted='False'" + "&document_base_url=" +
             encodeURIComponent(d.baseURI),
             success : function(text) {
                 var html = "";

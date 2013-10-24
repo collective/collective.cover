@@ -15,6 +15,14 @@ ${tile_selector}  div.tile-container div.tile
 ${autoplay_id}  collective-cover-carousel-autoplay-0
 ${edit_link_selector}  a.edit-tile-link
 
+*** Keywords ***
+
+Get Total Carousel Images
+    [Documentation]  Total number of images in carousel is stored in this
+    ...              element (FIXME: keyword is returning an empty string)
+    ${return} =  Get Text  css=span.galleria-total
+    [Return]  ${return}
+
 *** Test cases ***
 
 Test Carousel Tile
@@ -23,42 +31,55 @@ Test Carousel Tile
     Create Cover  Title  Description  Empty layout
 
     # add a carousel tile to the layout
-    Click Link  link=Layout
+    Edit Cover Layout
     Add Tile  ${carousel_tile_location}
     Save Cover Layout
 
     # as tile is empty, we see default message
-    Click Link  link=Compose
-    # FIXME: default message for empty tile
-    Page Should Contain  Galleria.configure({ autoplay: true });
+    Compose Cover
+    Page Should Contain  This carousel is empty; open the content chooser and drag-and-drop some items here.
 
     # drag&drop an Image
     Open Content Chooser
     Drag And Drop  css=${image_selector}  css=${tile_selector}
     Wait Until Page Contains  Test image
     Page Should Contain  This image was created for testing purposes
+    # we have 1 image in the carousel
+    #${images} =  Get Total Carousel Images
+    #Should Be Equal  '${images}'  '1'
 
     # move to the default view and check tile persisted
     Click Link  link=View
-    Page Should Contain  Test image
+    Wait Until Page Contains  Test image
+    Page Should Contain  This image was created for testing purposes
 
     # drag&drop another Image
-    Click Link  link=Compose
+    Compose Cover
+    Sleep  1s  Wait for carousel to load
     Open Content Chooser
     Drag And Drop  css=${image_selector2}  css=${tile_selector}
-    # FIXME
-    #Xpath Should Match X Times  //div[contains(@class, 'galleria-image')]  2
+    Wait Until Page Contains  Test image
+    Page Should Contain  This image was created for testing purposes
+    # we now have 2 images in the carousel
+    #${images} =  Get Total Carousel Images
+    #Should Be Equal  '${images}'  '2'
+
+    # carousel autoplay is enabled
+    Page Should Contain  Galleria.configure({ autoplay: true });
 
     # edit the tile
     Click Link  css=${edit_link_selector}
     Page Should Contain Element  css=.textline-sortable-element
+    # disable carousel autoplay
     Unselect Checkbox  ${autoplay_id}
     Click Button  Save
-    Wait Until Page Contains  Galleria.configure({ autoplay: false });
-    # FIXME
-    #Xpath Should Match X Times  //div[contains(@class, 'textline-sortable-element')]  2
+    Wait Until Page Contains  Test image
+    Page Should Contain  This image was created for testing purposes
+
+    # carousel autoplay is now disabled
+    Page Should Contain  Galleria.configure({ autoplay: false });
 
     # delete the tile
-    Click Link  link=Layout
+    Edit Cover Layout
     Delete Tile
     Save Cover Layout
