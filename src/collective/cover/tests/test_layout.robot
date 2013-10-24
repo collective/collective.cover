@@ -32,6 +32,13 @@ Test Basic Layout Operations
     #add a row after the existing one.
     #it comes with a new column
     Add Row
+
+    # trying to leave layout editing without saving must show a warning
+    Choose Cancel On Next Confirmation
+    Click Link  link=Compose
+    Confirm Action
+    # continue editing layout
+
     #add a column in the latest row
     Add Column at First Row
     Add Column at Second Row
