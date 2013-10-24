@@ -128,7 +128,7 @@ $(document).ready(function() {
                   if(typeof TinyMCEConfig != 'undefined') {
                       textarea_id = $(this).attr('id');
                       var config = new TinyMCEConfig(textarea_id);
-                      delete InitializedTinyMCEInstances[textarea_id]
+                      delete InitializedTinyMCEInstances[textarea_id];
                       config.init();
 
                       // Remove unecessary link, use HTML button of editor

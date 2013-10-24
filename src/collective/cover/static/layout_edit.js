@@ -31,8 +31,8 @@
                     event.returnValue = this.message;
                     return message;
                 }
-            }
-        }
+            };
+        };
 
         $.extend(self, {
             init: function() {
