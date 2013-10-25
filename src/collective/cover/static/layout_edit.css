@@ -86,7 +86,9 @@ button.close {
     -webkit-background-clip:padding-box;
     -moz-background-clip:padding-box;
     background-clip:padding-box;
+    padding:15px;
 }
+
 .hide{display:none}
 .show{display:block}
 
@@ -458,9 +460,6 @@ input[type="submit"].btn::-moz-focus-inner {
     text-align: center;
     top: 10px;
 }
-.tiles-configuration {
-    padding:15px;
-}
 
 .btn-tile {
     float: left;
@@ -487,11 +486,9 @@ input[type="submit"].btn::-moz-focus-inner {
     width: 100%;
 }
 
-#export-layout {
-    padding:20px;
-}
 
 /* tiles config */
+.modal-fields,
 #configure_tile>div {border-bottom: 1px solid #d1d1d1; padding-bottom: 8px; position: relative;min-height: 2em;}
 #configure_tile>div>label {margin-left: 20px; margin-right: 8px; float: left;}
 #tile-configure .formControls {border-bottom: none;}
