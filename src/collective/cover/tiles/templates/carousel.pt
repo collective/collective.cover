@@ -13,7 +13,7 @@
 
 <body tal:define="tile_id view/id;
                   autoplay python:str(view.autoplay()).lower();">
-  <div class="galleria slide tile-content"
+  <div class="galleria slide cover-carousel-tile tile-content"
        tal:attributes="id string:galleria-$tile_id">
     <!-- Carousel items -->
     <div class="galleria-inner">

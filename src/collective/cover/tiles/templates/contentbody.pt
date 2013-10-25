@@ -9,7 +9,7 @@
     Please drag&amp;drop some content here to populate the tile.
   </p>
 
-  <div tal:condition="body" class="contentbody tile-content">
+  <div tal:condition="body" class="cover-contentbody-tile tile-content">
     <div class="content"
          tal:content="structure body">Body</div>
     <div class="visualClear"><!-- --></div>
