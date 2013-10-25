@@ -19,7 +19,7 @@
     This carousel is empty; open the content chooser and drag-and-drop some items here.
   </p>
 
-  <div class="galleria slide tile-content" tal:condition="not:is_empty"
+  <div class="galleria slide cover-carousel-tile tile-content" tal:condition="not:is_empty"
        tal:attributes="id string:galleria-$tile_id">
     <!-- Carousel items -->
     <div class="galleria-inner">
