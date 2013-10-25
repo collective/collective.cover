@@ -4,6 +4,9 @@ There's a frood who really knows where his towel is
 1.0a6 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Leaving layout editing tab after making changes now shows a confirmation
+  dialog (fixes `#314`_). [rristow]
+
 - Show a link to the related collection on compose view of the collection tile
   (closes `#260`_). [agnogueira, hvelarde]
 
@@ -294,3 +297,4 @@ There's a frood who really knows where his towel is
 .. _`#295`: https://github.com/collective/collective.cover/issues/295
 .. _`#301`: https://github.com/collective/collective.cover/issues/301
 .. _`#303`: https://github.com/collective/collective.cover/issues/303
+.. _`#314`: https://github.com/collective/collective.cover/issues/314

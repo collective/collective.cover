@@ -11,9 +11,15 @@
   </script>
 </head>
 
-<body tal:define="tile_id view/id;
+<body tal:define="is_empty view/is_empty;
+                  tile_id view/id;
                   autoplay python:str(view.autoplay()).lower();">
-  <div class="galleria slide cover-carousel-tile tile-content"
+
+  <p tal:condition="is_empty" i18n:translate="">
+    This carousel is empty; open the content chooser and drag-and-drop some items here.
+  </p>
+
+  <div class="galleria slide cover-carousel-tile tile-content" tal:condition="not:is_empty"
        tal:attributes="id string:galleria-$tile_id">
     <!-- Carousel items -->
     <div class="galleria-inner">
