@@ -36,7 +36,12 @@ class RichTextTile(PersistentCoverTile):
     def populate_with_object(self, obj):
         super(RichTextTile, self).populate_with_object(obj)
 
-        text = obj.getRawText().decode('utf-8')
+        if hasattr(obj, 'getRawText'):
+            text = obj.getRawText().decode('utf-8')
+        else:
+            # Probably a dexterity item.  This is already unicode.
+            text = obj.text.raw
+
         value = RichTextValue(raw=text,
                               mimeType='text/x-html-safe',
                               outputMimeType='text/x-html-safe')
