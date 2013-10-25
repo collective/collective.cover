@@ -71,7 +71,8 @@ Test Basic Layout Operations
     #add tile, and check if clicking in the config icon opens an overlay
     Add Tile  ${basic_tile_name}
     Click Config from Tile  ${tile_class}
-    Click Button  Cancel
+    Wait until element is visible  id=buttons-cancel
+    Click Button  id=buttons-cancel
 
 
 

@@ -36,7 +36,8 @@ Test CSS Class
     # start with default style
     Edit Cover Layout
     Click Config from Tile  ${tile_class}
-    Click Button  Save
+    Wait until element is visible  id=buttons-save
+    Click Button  id=buttons-save
     Save Cover Layout
 
     # go to View page and css remains
@@ -47,7 +48,8 @@ Test CSS Class
     Edit Cover Layout
     Click Config from Tile  ${tile_class}
     Select From List  css=select#collective-cover-basic-css_class  ${border_class}
-    Click Button  Save
+    Wait until element is visible  id=buttons-save
+    Click Button  id=buttons-save
     Save Cover Layout
 
     # go to View page and check new style
