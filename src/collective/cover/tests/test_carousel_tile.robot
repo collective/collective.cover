@@ -76,7 +76,8 @@ Test Carousel Tile
     Wait Until Page Contains  Test image
     Page Should Contain  This image was created for testing purposes
 
-    # carousel autoplay is now disabled
+    # carousel autoplay is now disabled. Sometimes we need to reload the page.
+    Compose Cover
     Page Should Contain  Galleria.configure({ autoplay: false });
 
     # delete the tile
