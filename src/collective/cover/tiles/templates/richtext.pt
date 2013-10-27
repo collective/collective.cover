@@ -9,7 +9,7 @@
         <p tal:condition="not:text" i18n:translate="">
             Please edit the tile to enter some text.
         </p>
-        <div class="tile-content">
+        <div class="cover-richtext-tile tile-content">
         <tal:fields repeat="field view/get_configured_fields">
             <tal:text condition="python:field['id'] == 'text'">
                 <div tal:replace="structure python:field['content']">Rich Text</div>

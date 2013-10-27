@@ -87,14 +87,17 @@
 
                 self.tile_config_manager();
 
-
-                //expor layout
+                //export layout
                 $('#btn-export').click(function(){
                     if (!$(this).hasClass('disabled') && $('#btn-save').hasClass('saved') ) {
                         $('#export-layout').modal();
                     }
                 });
 
+                $('#btn-cancel-export-layout').click(function(e){
+                    e.preventDefault();
+                    $('#export-layout').modal('hide');
+                });
             },
 
             /**
@@ -399,6 +402,7 @@
                     $('#slider').off("slide");
                     $('#slider').on( "slide", function( event, ui ) {
                         column.attr('data-column-size', ui.value);
+                        le.trigger('modified.layout');
                     });
                     return false;
                 });

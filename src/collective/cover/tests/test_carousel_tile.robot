@@ -26,6 +26,9 @@ Get Total Carousel Images
 *** Test cases ***
 
 Test Carousel Tile
+    # FIXME: https://github.com/collective/collective.cover/issues/333
+    [Tags]  Expected Failure
+
     Enable Autologin as  Site Administrator
     Go to Homepage
     Create Cover  Title  Description  Empty layout
@@ -76,7 +79,8 @@ Test Carousel Tile
     Wait Until Page Contains  Test image
     Page Should Contain  This image was created for testing purposes
 
-    # carousel autoplay is now disabled
+    # carousel autoplay is now disabled. Sometimes we need to reload the page.
+    Compose Cover
     Page Should Contain  Galleria.configure({ autoplay: false });
 
     # delete the tile

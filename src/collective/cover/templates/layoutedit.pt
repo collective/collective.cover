@@ -57,17 +57,23 @@
     <div id="group-select-list" class="modal hide" tal:replace="structure context/@@group_select"></div>
     <div id="tile-configure" class="modal hide"></div>
     <div id="export-layout" class="modal hide" tal:condition="can_export_layout">
+      <h1 class="documentFirstHeading">Export Layout</h1>
+      <p class="discreen">Save a copy of this layout under a new name</p>
       <form action="." tal:attributes="action request/URL" method="post"
           enctype="multipart/form-data">
 
-      <label for="layout-name" i18n:translate="">Layout name</label>
-      <input type="text" name="layout-name" value="" />
-      <input type="submit" value="Export layout" name="export-layout"
-             i18n:attributes="value" />
+        <div class="modal-fields">
+          <label for="layout-name" i18n:translate="">Layout name</label>
+          <input type="text" name="layout-name" value="" />
+        </div>
+
+      <div class="formControls">
+        <input type="submit" value="Save" name="export-layout" i18n:attributes="value" />
+        <input type="button" value="Cancel" id="btn-cancel-export-layout" />
       </form>
     </div>
     <div class="navbar">
-      <a id="btn-export" class="btn btn-inverse disabled" tal:condition="can_export_layout"><span i18n:translate="">Export layout</span></a>
+      <a id="btn-export" class="btn btn-inverse" tal:condition="can_export_layout"><span i18n:translate="">Export layout</span></a>
       <a id="btn-save" class="btn btn-success saved"><span i18n:translate="">Saved</span></a>
     </div>
   </tal:block>
