@@ -32,6 +32,13 @@ Test Basic Layout Operations
     #add a row after the existing one.
     #it comes with a new column
     Add Row
+
+    # trying to leave layout editing without saving must show a warning
+    Choose Cancel On Next Confirmation
+    Click Link  link=Compose
+    Confirm Action
+    # continue editing layout
+
     #add a column in the latest row
     Add Column at First Row
     Add Column at Second Row
@@ -64,7 +71,8 @@ Test Basic Layout Operations
     #add tile, and check if clicking in the config icon opens an overlay
     Add Tile  ${basic_tile_name}
     Click Config from Tile  ${tile_class}
-    Click Button  Cancel
+    Wait until element is visible  id=buttons-cancel
+    Click Button  id=buttons-cancel
 
 
 

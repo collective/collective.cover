@@ -18,6 +18,7 @@ $(document).ready(function() {
                 'type':'POST',
                 success: function(data) {
                     $this.find('span').text('Saved');
+                    $('#btn-save').removeClass('modified error');
                     $('#btn-save').addClass('saved btn-success');
                     $('#btn-export').removeClass('disabled');
                 },

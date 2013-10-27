@@ -39,27 +39,27 @@ Test Banner Tile
     # drag&drop an Image
     Open Content Chooser
     Drag And Drop  css=${image_selector}  css=${tile_selector}
-    Wait Until Page Contains Element  css=div.banner-tile a img
+    Wait Until Page Contains Element  css=div.cover-banner-tile a img
 
     # move to the default view and check tile persisted
     Click Link  link=View
-    Page Should Contain Image  css=div.banner-tile a img
+    Page Should Contain Image  css=div.cover-banner-tile a img
 
     # drag&drop a News Item; its image should populate the tile
     Compose Cover
     Open Content Chooser
     Drag And Drop  css=${news_item_selector}  css=${tile_selector}
-    Wait Until Page Contains Element  css=div.banner-tile a img
+    Wait Until Page Contains Element  css=div.cover-banner-tile a img
 
     # move to the default view and check tile persisted
     Click Link  link=View
-    Page Should Contain Image  css=div.banner-tile a img
+    Page Should Contain Image  css=div.cover-banner-tile a img
 
     # drag&drop a Link
     Compose Cover
     Open Content Chooser
     Drag And Drop  css=${link_selector}  css=${tile_selector}
-    Wait Until Page Contains Element  css=div.banner-tile h2 a
+    Wait Until Page Contains Element  css=div.cover-banner-tile h2 a
 
     # move to the default view and check tile persisted
     Click Link  link=View
@@ -69,7 +69,7 @@ Test Banner Tile
     Compose Cover
     Open Content Chooser
     Drag And Drop  css=${file_selector}  css=${tile_selector}
-    Wait Until Page Contains Element  css=div.banner-tile h2 a
+    Wait Until Page Contains Element  css=div.cover-banner-tile h2 a
 
     # edit the tile and check AJAX refresh
     Compose Cover
@@ -80,6 +80,7 @@ Test Banner Tile
     Wait Until Page Contains  ${title_sample}
 
     # edit the tile but cancel operation
+    Compose Cover
     Click Link  css=${edit_link_selector}
     Wait until page contains element  id=${title_field_id}
     Input Text  id=${title_field_id}  ${title_other_sample}

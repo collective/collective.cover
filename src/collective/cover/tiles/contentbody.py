@@ -32,7 +32,11 @@ class ContentBodyTile(PersistentCoverTile):
         except Unauthorized:
             obj = None
         if obj is not None:
-            body = obj.getText()
+            if hasattr(obj, 'getText'):
+                body = obj.getText()
+            else:
+                # Probably Dexterity.
+                body = obj.text.output
         return body
 
     def populate_with_object(self, obj):

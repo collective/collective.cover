@@ -21,7 +21,7 @@ class AvailableLayoutsVocabulary(object):
         registry = getUtility(IRegistry)
         settings = registry.forInterface(ICoverSettings)
 
-        items = [SimpleTerm(value=i, title=i) for i in settings.layouts]
+        items = [SimpleTerm(value=i, title=i) for i in sorted(settings.layouts)]
         return SimpleVocabulary(items)
 
 grok.global_utility(AvailableLayoutsVocabulary,
