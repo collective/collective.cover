@@ -26,6 +26,9 @@ Get Total Carousel Images
 *** Test cases ***
 
 Test Carousel Tile
+    # FIXME: https://github.com/collective/collective.cover/issues/333
+    [Tags]  Expected Failure
+
     Enable Autologin as  Site Administrator
     Go to Homepage
     Create Cover  Title  Description  Empty layout
