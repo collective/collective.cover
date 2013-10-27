@@ -59,6 +59,7 @@ Test Collection Tile
     Wait Until Page Contains  ${title_sample}
 
     # edit the tile but cancel operation
+    Compose Cover
     Click Link  css=${edit_link_selector}
     Wait until page contains element  id=${title_field_id}
     Input Text  id=${title_field_id}  ${title_other_sample}

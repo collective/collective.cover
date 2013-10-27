@@ -18,9 +18,6 @@ ${tile_selector}  div.tile-container div.tile
 *** Test cases ***
 
 Test Content Chooser
-    # FIXME
-    [Tags]  Expected Failure
-
     Enable Autologin as  Site Administrator
     Go to Homepage
     Create Cover  Title  Description  Empty layout

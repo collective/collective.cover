@@ -10,7 +10,7 @@
     Please drag&amp;drop some content here to populate the tile.
   </p>
 
-  <div tal:condition="not: is_empty" class="tile-content"
+  <div tal:condition="not: is_empty" class="cover-basic-tile tile-content"
        tal:define="description view/data/description|nothing">
     <tal:fields repeat="field view/get_configured_fields">
 

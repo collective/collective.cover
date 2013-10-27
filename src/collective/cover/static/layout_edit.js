@@ -16,7 +16,23 @@
             tile_class = 'cover-tile',
             tile_dom = $('<div/>').addClass(tile_class)
                                   .attr('data-layout-type', 'tile'),
-            le = $('.layout');
+            le = $('.layout'),
+            BeforeUnloadHandler;
+
+        BeforeUnloadHandler = function() {
+            var self = this,
+                message;
+            this.message = window.form_modified_message ||
+                "Discard changes? If you click OK, any changes you have made will be lost.";
+    
+            this.execute = function(event) {
+                var save_btn = $('#btn-save');
+                if (save_btn.hasClass('modified')) {
+                    event.returnValue = this.message;
+                    return message;
+                }
+            };
+        };
 
         $.extend(self, {
             init: function() {
@@ -24,6 +40,7 @@
                 self.row_events();
                 self.column_events();
                 le.bind('modified.layout', self.layout_modified);
+                window.onbeforeunload = new BeforeUnloadHandler().execute;
             },
 
             setup: function() {
@@ -70,14 +87,17 @@
 
                 self.tile_config_manager();
 
-
-                //expor layout
+                //export layout
                 $('#btn-export').click(function(){
                     if (!$(this).hasClass('disabled') && $('#btn-save').hasClass('saved') ) {
                         $('#export-layout').modal();
                     }
                 });
 
+                $('#btn-cancel-export-layout').click(function(e){
+                    e.preventDefault();
+                    $('#export-layout').modal('hide');
+                });
             },
 
             /**
@@ -349,6 +369,7 @@
                     $('#btn-save').removeClass(function (index, css) {
                         return (css.match (/\bbtn-\S+/g) || []).join(' ');
                     });
+                    $('#btn-save').removeClass('saved error');
                     $('#btn-save').addClass('modified btn-warning');
 
                     //disable export layout
@@ -381,6 +402,7 @@
                     $('#slider').off("slide");
                     $('#slider').on( "slide", function( event, ui ) {
                         column.attr('data-column-size', ui.value);
+                        le.trigger('modified.layout');
                     });
                     return false;
                 });
