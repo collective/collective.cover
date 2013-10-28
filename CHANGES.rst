@@ -4,6 +4,10 @@ There's a frood who really knows where his towel is
 1.0a6 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Add ``cover-(type)-tile`` class to all tile templates (fixes issue
+  `#189`_).
+  [warpr]
+
 - Support text from Dexterity items for the bodycontent and richtext
   tiles (fixes `#323`_). [maurits]
 
@@ -276,6 +280,7 @@ There's a frood who really knows where his towel is
 .. _`#179`: https://github.com/collective/collective.cover/issues/179
 .. _`#183`: https://github.com/collective/collective.cover/issues/183
 .. _`#188`: https://github.com/collective/collective.cover/issues/188
+.. _`#189`: https://github.com/collective/collective.cover/issues/189
 .. _`#190`: https://github.com/collective/collective.cover/issues/190
 .. _`#191`: https://github.com/collective/collective.cover/issues/191
 .. _`#198`: https://github.com/collective/collective.cover/issues/198
