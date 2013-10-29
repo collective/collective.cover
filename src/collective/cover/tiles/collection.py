@@ -61,6 +61,13 @@ class ICollectionTile(IPersistentCoverTile, form.Schema):
         required=False,
     )
 
+    form.omitted('offset')
+    form.no_omit(IDefaultConfigureForm, 'offset')
+    offset = schema.Int(
+        title=_(u'Start at item'),
+        required=False,
+    )
+
     footer = schema.TextLine(
         title=_(u'Footer'),
         required=False,
@@ -92,10 +99,15 @@ class CollectionTile(PersistentCoverTile):
         else:
             size = 4
 
+        offset = 0
+        offset_conf = [i for i in self.configured_fields if i['id'] == 'offset']
+        if offset_conf:
+            offset = int(offset_conf[0].get('offset', 0))
+
         uuid = self.data.get('uuid', None)
         obj = uuidToObject(uuid)
         if uuid and obj:
-            return obj.results(batch=False)[:size]
+            return obj.results(batch=False)[offset:offset + size]
         else:
             self.remove_relation()
             return []
@@ -153,6 +165,9 @@ class CollectionTile(PersistentCoverTile):
 
                 if 'size' in field_conf:
                     field['size'] = field_conf['size']
+
+                if 'offset' in field_conf:
+                    field['offset'] = field_conf['offset']
 
             results.append(field)
 
