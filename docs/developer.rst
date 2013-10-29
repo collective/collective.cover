@@ -63,8 +63,12 @@ How to develop a tile for collective.cover
 Follow instructions in David Glick's `Using tiles to provide more flexible
 Plone layouts`_ to understand how to develop tiles, and how they work.
 
-Instead of inheriting from plone.tiles.PersistentTile, inherit from
-``collective.cover.tile.base.PersistentCoverTile``.
+Instead of inheriting from ``zope.interface.Interface``, the tile data
+interface class should inherit from
+``collective.cover.tile.base.IPersistentCoverTile``
+
+Instead of inheriting from ``plone.tiles.PersistentTile``, the tile
+must inherit from ``collective.cover.tile.base.PersistentCoverTile``.
 
 Register your tile on the registry using the "plone.app.tiles" record::
 
