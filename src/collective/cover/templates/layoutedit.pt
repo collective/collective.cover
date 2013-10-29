@@ -70,6 +70,7 @@
       <div class="formControls">
         <input type="submit" value="Save" name="export-layout" i18n:attributes="value" />
         <input type="button" value="Cancel" id="btn-cancel-export-layout" />
+      </div>
       </form>
     </div>
     <div class="navbar">
