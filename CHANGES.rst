@@ -4,6 +4,9 @@ There's a frood who really knows where his towel is
 1.0a6 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Add offset as a configuration option to the collection tile.
+  (fixes `#298`_). [warpr]
+
 - Support text from Dexterity items for the bodycontent and richtext
   tiles (fixes `#323`_). [maurits]
 
@@ -298,6 +301,7 @@ There's a frood who really knows where his towel is
 .. _`#281`: https://github.com/collective/collective.cover/issues/281
 .. _`#294`: https://github.com/collective/collective.cover/issues/294
 .. _`#295`: https://github.com/collective/collective.cover/issues/295
+.. _`#298`: https://github.com/collective/collective.cover/issues/298
 .. _`#301`: https://github.com/collective/collective.cover/issues/301
 .. _`#303`: https://github.com/collective/collective.cover/issues/303
 .. _`#314`: https://github.com/collective/collective.cover/issues/314
