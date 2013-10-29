@@ -82,8 +82,8 @@ Register your tile on the registry using the "plone.app.tiles" record::
   </registry>
 
 There are a couple of methods defined in this base class that provide
-additional functionality expected by the cover object, that you should
-override in your class:
+additional functionality expected by the cover object, that you may
+need to override in your class, if your use case requires it:
 
 **populate_with_object(obj)**
     It takes a Plone content object as parameter, and it will store the
