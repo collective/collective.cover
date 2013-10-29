@@ -126,3 +126,56 @@ class CollectionTileTestCase(unittest.TestCase):
         self.assertFalse(self.tile.thumbnail(obj))
 
         # TODO: test against Dexterity-based content types
+
+    def test_number_of_items(self):
+        collection = self.portal['my-collection']
+        image_query = [{
+            'i': 'Type',
+            'o': 'plone.app.querystring.operation.string.is',
+            'v': 'Image',
+        }]
+        collection.setQuery(image_query)
+        collection.setSort_on('id')
+        self.tile.populate_with_object(collection)
+
+        # Collection has three images and shows them all.
+        self.assertEqual(len(self.tile.results()), 3)
+
+        tile_conf = self.tile.get_tile_configuration()
+        tile_conf['number_to_show']['size'] = 2
+        self.tile.set_tile_configuration(tile_conf)
+
+        # Collection has three images and shows the first two items.
+        items = self.tile.results()
+        self.assertEqual(len(items), 2)
+        self.assertEqual(items[0].getId(), 'my-image')
+        self.assertEqual(items[1].getId(), 'my-image1')
+
+    def test_offset(self):
+        collection = self.portal['my-collection']
+        image_query = [{
+            'i': 'Type',
+            'o': 'plone.app.querystring.operation.string.is',
+            'v': 'Image',
+        }]
+        collection.setQuery(image_query)
+        collection.setSort_on('id')
+        self.tile.populate_with_object(collection)
+
+        tile_conf = self.tile.get_tile_configuration()
+        tile_conf['offset']['offset'] = 1
+        self.tile.set_tile_configuration(tile_conf)
+
+        # Collection has three images and shows the final two.
+        items = self.tile.results()
+        self.assertEqual(len(items), 2)
+        self.assertEqual(items[0].getId(), 'my-image1')
+        self.assertEqual(items[1].getId(), 'my-image2')
+
+        # Add a size, so only one item is left.
+        tile_conf['number_to_show']['size'] = 1
+        self.tile.set_tile_configuration(tile_conf)
+
+        items = self.tile.results()
+        self.assertEqual(len(items), 1)
+        self.assertEqual(items[0].getId(), 'my-image1')
