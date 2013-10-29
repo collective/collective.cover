@@ -72,11 +72,14 @@ must inherit from ``collective.cover.tile.base.PersistentCoverTile``.
 
 Register your tile on the registry using the "plone.app.tiles" record::
 
+  <?xml version="1.0"?>
+  <registry>
     <record name="plone.app.tiles">
       <value purge="false">
         <element>my.package.mytile</element>
       </value>
     </record>
+  </registry>
 
 There are a couple of methods defined in this base class that provide
 additional functionality expected by the cover object, that you should
