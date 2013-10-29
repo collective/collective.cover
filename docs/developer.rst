@@ -169,3 +169,6 @@ content with an image into a cover tile than implements an image field, cover
 will honor the image and scales in the original object. This way the image
 data isn't duplicated and products than allow scales modifications are
 supported.
+
+
+.. _`Using tiles to provide more flexible Plone layouts`: http://glicksoftware.com/blog/using-tiles-to-provide-more-flexible-plone-layouts
