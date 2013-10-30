@@ -187,7 +187,12 @@ class LayoutEdit(grok.View):
 
                 settings = registry.forInterface(ICoverSettings)
 
-                settings.layouts[name] = unicode(layout)
+                # Store name and layout as unicode.  Note that the
+                # name must only contain ascii because it is used as
+                # value for a vocabulary.
+                name = name.decode('ascii', 'ignore')
+                layout = layout.decode('utf-8')
+                settings.layouts[name] = layout
 
         return super(LayoutEdit, self).__call__()
 
