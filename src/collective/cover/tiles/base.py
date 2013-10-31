@@ -257,27 +257,43 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
 
             field = {'id': name, 'content': content, 'title': field.title}
 
-            if name in conf:
-                field_conf = conf[name]
-                if (field_conf.get('visibility', '') == u'off'):
-                    # If the field was configured to be invisible, then just
-                    # ignore it
-                    continue
-
-                if 'htmltag' in field_conf:
-                    # If this field has the capability to change its html tag
-                    # render, save it here
-                    field['htmltag'] = field_conf['htmltag']
-
-                if 'imgsize' in field_conf:
-                    field['scale'] = field_conf['imgsize'].split()[0]
-
-                if 'position' in field_conf:
-                    field['position'] = field_conf['position']
+            if not self._include_updated_field(field, conf.get(name)):
+                continue
 
             results.append(field)
 
         return results
+
+    def _include_updated_field(self, field, field_conf):
+        # Return True or False to say if the field should be included.
+        # Possibly update the field argument that is passed in.
+
+        if not field_conf:
+            # By default all fields are included.
+            return True
+
+        if isinstance(field_conf, basestring):
+            # css_class simply has a simple string, not a dictionary,
+            # so there is nothing left to check.
+            return True
+
+        if (field_conf.get('visibility', '') == u'off'):
+            # If the field was configured to be invisible, then just
+            # ignore it
+            return False
+
+        if 'htmltag' in field_conf:
+            # If this field has the capability to change its html tag
+            # render, save it here
+            field['htmltag'] = field_conf['htmltag']
+
+        if 'imgsize' in field_conf:
+            field['scale'] = field_conf['imgsize'].split()[0]
+
+        if 'position' in field_conf:
+            field['position'] = field_conf['position']
+
+        return True
 
     def setAllowedGroupsForEdit(self, groups):
         permissions = getMultiAdapter(

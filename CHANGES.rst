@@ -4,6 +4,11 @@ There's a frood who really knows where his towel is
 1.0a6 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Fix possible problem getting the ``css_class`` when the default
+  configuration is used.  The code tried to treat this as a dictionary
+  instead of a simple string.
+  [maurits]
+
 - Add offset as a configuration option to the collection tile.
   (fixes `#298`_). [warpr]
 
