@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: collective.cover\n"
-"POT-Creation-Date: 2013-10-14 22:24+0000\n"
+"POT-Creation-Date: 2013-11-04 10:55+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: Paul Roeland <paul@cleanclothes.org>, 2013\n"
 "Language-Team: German <LL@li.org>\n"
@@ -83,7 +83,7 @@ msgid "CSS Class"
 msgstr "CSS Klasse"
 
 #: collective/cover/tiles/configuration_view.py:197
-#: collective/cover/tiles/edit.py:75
+#: collective/cover/tiles/edit.py:80
 msgid "Cancel"
 msgstr "Ab­bre­chen"
 
@@ -168,7 +168,7 @@ msgstr "Code zum Einbetten"
 msgid "Enter a list of styles to appear in the style pulldown. Format is title|className, one per line."
 msgstr "Geben Sie eine Liste von Stilen ein, die zur Auswahl stehen sollen. Das Format ist Titel|className, eins per Zeile."
 
-#: collective/cover/templates/layoutedit.pt:65
+#: collective/cover/templates/layoutedit.pt:77
 msgid "Export layout"
 msgstr "Stilvorlage Exportieren"
 
@@ -180,7 +180,7 @@ msgstr "Datei Kachel"
 msgid "Filter items"
 msgstr "Inhalte filtern"
 
-#: collective/cover/tiles/collection.py:65
+#: collective/cover/tiles/collection.py:72
 msgid "Footer"
 msgstr "Fußzeile"
 
@@ -188,7 +188,7 @@ msgstr "Fußzeile"
 msgid "Go to related collection"
 msgstr ""
 
-#: collective/cover/tiles/configuration_widgets/textline.pt:50
+#: collective/cover/tiles/configuration_widgets/textline.pt:63
 msgid "HTML tag"
 msgstr "HTML tag"
 
@@ -220,7 +220,7 @@ msgstr "Stilvorlage"
 msgid "Layout Details"
 msgstr "Details zur Stilvorlage"
 
-#: collective/cover/templates/layoutedit.pt:63
+#: collective/cover/templates/layoutedit.pt:66
 msgid "Layout name"
 msgstr "Stilvorlage name"
 
@@ -240,7 +240,7 @@ msgstr "Link Kachel"
 msgid "List Tile"
 msgstr "Listen Kachel"
 
-#: collective/cover/tiles/collection.py:112
+#: collective/cover/tiles/collection.py:124
 msgid "More…"
 msgstr "Mehr…"
 
@@ -306,6 +306,7 @@ msgid "Please edit the tile to enter some text."
 msgstr "Bearbeiten Sie diese Kachel um Text anzuzeigen."
 
 #: collective/cover/tiles/configuration_widgets/namedimage.pt:70
+#: collective/cover/tiles/configuration_widgets/textline.pt:51
 msgid "Position"
 msgstr "Position"
 
@@ -321,12 +322,13 @@ msgstr "Rich Text Kachel"
 msgid "Row"
 msgstr "Zeile"
 
+#: collective/cover/templates/layoutedit.pt:71
 #: collective/cover/tiles/configuration_view.py:164
-#: collective/cover/tiles/edit.py:43
+#: collective/cover/tiles/edit.py:48
 msgid "Save"
 msgstr "Speichern"
 
-#: collective/cover/templates/layoutedit.pt:71
+#: collective/cover/templates/layoutedit.pt:78
 msgid "Saved"
 msgstr "Gespeichert"
 
@@ -337,6 +339,10 @@ msgstr "Durchsuchbare Inhaltstypen"
 #: collective/cover/controlpanel.py:58
 msgid "Settings for the collective.cover package"
 msgstr "Konfiguration für collective.cover"
+
+#: collective/cover/tiles/collection.py:67
+msgid "Start at item"
+msgstr ""
 
 #: collective/cover/controlpanel.py:45
 msgid "Styles"
@@ -354,6 +360,10 @@ msgstr "Die Kollektion hat keine Ergebnisse"
 msgid "The layout to be used to render groups and tiles"
 msgstr "Stilvorlage für Gruppen und Kacheln"
 
+#: collective/cover/tiles/templates/carousel.pt:18
+msgid "This carousel is empty; open the content chooser and drag-and-drop some items here."
+msgstr ""
+
 #: collective/cover/controlpanel.py:25
 msgid "This tiles will be available for layout creation."
 msgstr "Verfügbare Kacheln für Stilvorlagen"
@@ -366,7 +376,7 @@ msgstr "Kachelkonfiguration abgebrochen."
 msgid "Tile configuration saved."
 msgstr "Kachelkonfiguration gespeichert."
 
-#: collective/cover/tiles/edit.py:71
+#: collective/cover/tiles/edit.py:76
 msgid "Tile saved"
 msgstr "Kachel gespeichtert"
 
@@ -381,7 +391,7 @@ msgid "URL"
 msgstr "URL"
 
 #: collective/cover/tiles/basic.py:59
-#: collective/cover/tiles/collection.py:70
+#: collective/cover/tiles/collection.py:77
 #: collective/cover/tiles/file.py:58
 msgid "UUID"
 msgstr "UUID"

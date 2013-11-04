@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: collective.cover\n"
-"POT-Creation-Date: 2013-10-14 22:24+0000\n"
+"POT-Creation-Date: 2013-11-04 10:55+0000\n"
 "PO-Revision-Date: 2013-10-01 23:07+0100\n"
 "Last-Translator: Espen Moe-Nilssen <espen@medialog.no>\n"
 "Language-Team: Norwegian <LL@li.org>\n"
@@ -85,7 +85,7 @@ msgid "CSS Class"
 msgstr "CSS klasse"
 
 #: collective/cover/tiles/configuration_view.py:197
-#: collective/cover/tiles/edit.py:75
+#: collective/cover/tiles/edit.py:80
 msgid "Cancel"
 msgstr "Avbryte"
 
@@ -170,7 +170,7 @@ msgstr "Innbygningskode"
 msgid "Enter a list of styles to appear in the style pulldown. Format is title|className, one per line."
 msgstr "Skriv en liste over stiler skal vises i nedtrekksmenyen. Formatet er tittel | className, en per linje."
 
-#: collective/cover/templates/layoutedit.pt:65
+#: collective/cover/templates/layoutedit.pt:77
 msgid "Export layout"
 msgstr "Eksporter layout"
 
@@ -182,7 +182,7 @@ msgstr "Filblokk"
 msgid "Filter items"
 msgstr "Filtrer elementer"
 
-#: collective/cover/tiles/collection.py:65
+#: collective/cover/tiles/collection.py:72
 msgid "Footer"
 msgstr "Bunntekst"
 
@@ -190,7 +190,7 @@ msgstr "Bunntekst"
 msgid "Go to related collection"
 msgstr ""
 
-#: collective/cover/tiles/configuration_widgets/textline.pt:50
+#: collective/cover/tiles/configuration_widgets/textline.pt:63
 msgid "HTML tag"
 msgstr "HTML tag"
 
@@ -222,7 +222,7 @@ msgstr "Layout"
 msgid "Layout Details"
 msgstr "Layoutdetaljer"
 
-#: collective/cover/templates/layoutedit.pt:63
+#: collective/cover/templates/layoutedit.pt:66
 msgid "Layout name"
 msgstr "Layoutnavn"
 
@@ -242,7 +242,7 @@ msgstr "Lenkeblokk"
 msgid "List Tile"
 msgstr "Listeblokk"
 
-#: collective/cover/tiles/collection.py:112
+#: collective/cover/tiles/collection.py:124
 msgid "More…"
 msgstr "Mere…"
 
@@ -308,6 +308,7 @@ msgid "Please edit the tile to enter some text."
 msgstr "Vennligst rediger blokken ved å legge til litt tekst"
 
 #: collective/cover/tiles/configuration_widgets/namedimage.pt:70
+#: collective/cover/tiles/configuration_widgets/textline.pt:51
 msgid "Position"
 msgstr "Posisjon"
 
@@ -323,12 +324,13 @@ msgstr "Rik-tekstblokk"
 msgid "Row"
 msgstr "Rad"
 
+#: collective/cover/templates/layoutedit.pt:71
 #: collective/cover/tiles/configuration_view.py:164
-#: collective/cover/tiles/edit.py:43
+#: collective/cover/tiles/edit.py:48
 msgid "Save"
 msgstr "Lagre"
 
-#: collective/cover/templates/layoutedit.pt:71
+#: collective/cover/templates/layoutedit.pt:78
 msgid "Saved"
 msgstr "Lagre"
 
@@ -339,6 +341,10 @@ msgstr "Søkbare innholdstyper"
 #: collective/cover/controlpanel.py:58
 msgid "Settings for the collective.cover package"
 msgstr "Innstillinger for collective.cover"
+
+#: collective/cover/tiles/collection.py:67
+msgid "Start at item"
+msgstr ""
 
 #: collective/cover/controlpanel.py:45
 msgid "Styles"
@@ -356,6 +362,10 @@ msgstr "Samlingen har ingenting å vise"
 msgid "The layout to be used to render groups and tiles"
 msgstr "Layout for å vise grupper og blokker"
 
+#: collective/cover/tiles/templates/carousel.pt:18
+msgid "This carousel is empty; open the content chooser and drag-and-drop some items here."
+msgstr ""
+
 #: collective/cover/controlpanel.py:25
 msgid "This tiles will be available for layout creation."
 msgstr "Disse blokkene vil bli tilgjengelig for laging av layout"
@@ -368,7 +378,7 @@ msgstr "Blokkonfigurering avbtutt"
 msgid "Tile configuration saved."
 msgstr "Blokkonfigurasjon lagret"
 
-#: collective/cover/tiles/edit.py:71
+#: collective/cover/tiles/edit.py:76
 msgid "Tile saved"
 msgstr "Blokk lagret"
 
@@ -383,7 +393,7 @@ msgid "URL"
 msgstr "URL"
 
 #: collective/cover/tiles/basic.py:59
-#: collective/cover/tiles/collection.py:70
+#: collective/cover/tiles/collection.py:77
 #: collective/cover/tiles/file.py:58
 msgid "UUID"
 msgstr "UUID"
