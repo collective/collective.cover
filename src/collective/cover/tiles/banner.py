@@ -43,6 +43,7 @@ class BannerTile(PersistentCoverTile):
     is_configurable = True
     is_editable = True
     is_droppable = True
+    short_name = _(u"msg_short_name_banner", default=u"Banner")
 
     @view.memoize
     def accepted_ct(self):

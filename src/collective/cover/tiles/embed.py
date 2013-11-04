@@ -34,6 +34,7 @@ class EmbedTile(PersistentCoverTile):
     is_configurable = True
     is_editable = True
     is_droppable = False
+    short_name = _(u"msg_short_name_embed", default=u"Embed")
 
     def is_empty(self):
         return not (self.data.get('embed', None) or

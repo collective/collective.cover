@@ -130,6 +130,9 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
     is_editable = True
     is_droppable = True
     css_class = None  # placeholder, we access it with tile's configuration
+    # Short name for the tile.  Usually title minus 'Tile'.  Please
+    # wrap this in _(...) so it can be translated.
+    short_name = u""
 
     def populate_with_object(self, obj):
         if not self.isAllowedToEdit():

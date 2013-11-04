@@ -3,6 +3,7 @@
 # Basic implementation taken from
 # http://davisagli.com/blog/using-tiles-to-provide-more-flexible-plone-layouts
 
+from collective.cover import _
 from collective.cover.tiles.base import IPersistentCoverTile
 from collective.cover.tiles.base import PersistentCoverTile
 from plone.app.textfield import RichText
@@ -22,6 +23,7 @@ class RichTextTile(PersistentCoverTile):
     index = ViewPageTemplateFile("templates/richtext.pt")
 
     is_configurable = True
+    short_name = _(u"msg_short_name_richtext", default=u"Rich Text")
 
     def getText(self):
         """ Return the rich text stored in the tile.

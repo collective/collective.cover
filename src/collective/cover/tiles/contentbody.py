@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from AccessControl import Unauthorized
+from collective.cover import _
 from collective.cover.tiles.base import IPersistentCoverTile
 from collective.cover.tiles.base import PersistentCoverTile
 from plone.app.uuid.utils import uuidToObject
@@ -23,6 +24,7 @@ class ContentBodyTile(PersistentCoverTile):
 
     is_editable = False
     is_configurable = False
+    short_name = _(u"msg_short_name_contentbody", default=u"Content Body")
 
     def body(self):
         body = ''
