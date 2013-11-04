@@ -441,52 +441,52 @@ msgstr "meer"
 #. Default: "Banner"
 #: collective/cover/tiles/banner.py:46
 msgid "msg_short_name_banner"
-msgstr ""
+msgstr "Banner"
 
 #. Default: "Basic"
 #: collective/cover/tiles/basic.py:72
 msgid "msg_short_name_basic"
-msgstr ""
+msgstr "Basis"
 
 #. Default: "Carousel"
 #: collective/cover/tiles/carousel.py:40
 msgid "msg_short_name_carousel"
-msgstr ""
+msgstr "Carousel"
 
 #. Default: "Collection"
 #: collective/cover/tiles/collection.py:88
 msgid "msg_short_name_collection"
-msgstr ""
+msgstr "Verzameling"
 
 #. Default: "Content Body"
 #: collective/cover/tiles/contentbody.py:27
 msgid "msg_short_name_contentbody"
-msgstr ""
+msgstr "Inhoud body"
 
 #. Default: "Embed"
 #: collective/cover/tiles/embed.py:37
 msgid "msg_short_name_embed"
-msgstr ""
+msgstr "Embed"
 
 #. Default: "File"
 #: collective/cover/tiles/file.py:73
 msgid "msg_short_name_file"
-msgstr ""
+msgstr "Bestand"
 
 #. Default: "List"
 #: collective/cover/tiles/list.py:60
 msgid "msg_short_name_list"
-msgstr ""
+msgstr "Lijst"
 
 #. Default: "FormGen"
 #: collective/cover/tiles/pfg.py:40
 msgid "msg_short_name_pfg"
-msgstr ""
+msgstr "Formulier"
 
 #. Default: "Rich Text"
 #: collective/cover/tiles/richtext.py:26
 msgid "msg_short_name_richtext"
-msgstr ""
+msgstr "HTML tekst"
 
 #: collective/cover/browser/contentchooser_templates/content_contentchooser.pt:27
 msgid "ok"
