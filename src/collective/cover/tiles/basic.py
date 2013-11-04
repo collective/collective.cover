@@ -69,6 +69,7 @@ class BasicTile(PersistentCoverTile):
     index = ViewPageTemplateFile("templates/basic.pt")
 
     is_configurable = True
+    short_name = _(u"msg_short_name_basic", default=u"Basic")
 
     @memoizedproperty
     def brain(self):

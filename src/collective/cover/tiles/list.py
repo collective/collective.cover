@@ -57,6 +57,7 @@ class ListTile(PersistentCoverTile):
     is_configurable = True
     is_droppable = True
     is_editable = False
+    short_name = _(u"msg_short_name_list", default=u"List")
     limit = 5
 
     def results(self):

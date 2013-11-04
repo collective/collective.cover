@@ -70,6 +70,7 @@ class FileTile(PersistentCoverTile):
     is_configurable = False  # TODO: make the tile configurable
     is_editable = True
     is_droppable = True
+    short_name = _(u"msg_short_name_file", default=u"File")
 
     # XXX: refactor this to make it easier to test
     def download_widget(self):

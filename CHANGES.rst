@@ -4,6 +4,10 @@ There's a frood who really knows where his towel is
 1.0a6 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Add ``short_name`` to all tiles.  Use this as title in the tile
+  list.  This can be translated.
+  [maurits]
+
 - Fix possible problem getting the ``css_class`` when the default
   configuration is used.  The code tried to treat this as a dictionary
   instead of a simple string.
