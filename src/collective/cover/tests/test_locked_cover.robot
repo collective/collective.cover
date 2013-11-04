@@ -18,6 +18,9 @@ ${tile_selector}  div.tile-container div.tile
 *** Test Cases ***
 
 Test Locked Cover
+    # FIXME: https://github.com/collective/collective.cover/issues/340
+    [Tags]  Expected Failure
+
     Log in as site owner
     Goto Homepage
 
