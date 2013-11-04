@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: collective.cover\n"
-"POT-Creation-Date: 2013-11-04 11:31+0000\n"
+"POT-Creation-Date: 2013-11-04 13:07+0000\n"
 "PO-Revision-Date: 2013-07-26 08:30 +0100\n"
 "Last-Translator: Giorgio Borelli <giorgio@giorgioborelli.it>\n"
 "Language-Team: Plone italian translation project <plone-italian-translation-discussion@lists.coactivate.org>\n"
@@ -21,6 +21,10 @@ msgstr ""
 msgid "A cover page."
 msgstr ""
 
+#: profiles.zcml
+msgid "A sane, working, editor-friendly way of creating front pages and other composite pages. Working now, for mere mortals."
+msgstr ""
+
 #: tiles/configure.zcml
 msgid "A tile that shows a carousel of images."
 msgstr "Un riquadro per visualizzare un carousel di immagini"
@@ -30,16 +34,16 @@ msgid "A tile that shows a file object."
 msgstr "Un riquadro che visualizza un file"
 
 #: tiles/configure.zcml
-msgid "A tile that shows a link object."
-msgstr "Un riquadro che visualizza un oggetto link"
-
-#: tiles/configure.zcml
 msgid "A tile that shows a list of items."
 msgstr "Un riquadro che visualizza una lista di elementi"
 
 #: tiles/configure.zcml
-msgid "A tile that shows an image object."
-msgstr "Un riquadro che visualizza un immagine"
+msgid "A tile that shows an embedded Form Folder from Plone FormGen."
+msgstr ""
+
+#: tiles/configure.zcml
+msgid "A tile that shows an image with a link."
+msgstr ""
 
 #: tiles/configure.zcml
 msgid "A tile that shows general information about objects."
@@ -61,10 +65,6 @@ msgstr "Un riquadro che include contenuto remoto (es. video, audio, presentazion
 msgid "Add Content"
 msgstr "Aggiungi contenuto"
 
-#: profiles.zcml
-msgid "An easy-to-use package to create complex cover pages for Plone sites."
-msgstr "Un pacchetto facile da usare per creare pagine complesse con Plone"
-
 #: collective/cover/tiles/carousel.py:20
 msgid "Auto play"
 msgstr "Auto play"
@@ -72,6 +72,10 @@ msgstr "Auto play"
 #: collective/cover/controlpanel.py:24
 msgid "Available tiles"
 msgstr "Riquadri disponibili"
+
+#: tiles/configure.zcml
+msgid "Banner Tile"
+msgstr ""
 
 #: tiles/configure.zcml
 msgid "Basic Tile"
@@ -110,6 +114,10 @@ msgstr "Componi pagina"
 #: collective/cover/tiles/configuration_view.py:160
 msgid "Configure ${name}"
 msgstr "Configura ${name}"
+
+#: tiles/configure.zcml
+msgid "Content Body Tile"
+msgstr ""
 
 #: collective/cover/browser/contentchooser_templates/content_contentchooser.pt:16
 msgid "Content tree"
@@ -184,6 +192,14 @@ msgstr "Filtra gli elementi"
 msgid "Footer"
 msgstr "Piè pagina"
 
+#: tiles/configure.zcml
+msgid "FormGen Tile"
+msgstr ""
+
+#: configure.zcml
+msgid "Front page view"
+msgstr ""
+
 #: collective/cover/tiles/templates/collection.pt:17
 msgid "Go to related collection"
 msgstr ""
@@ -201,10 +217,6 @@ msgstr "Intestaizone"
 #: collective/cover/tiles/collection.py:51
 msgid "Image"
 msgstr "Immagine"
-
-#: tiles/configure.zcml
-msgid "Image Tile"
-msgstr "Riquadro Immagine"
 
 #: collective/cover/tiles/configuration_widgets/namedimage.pt:53
 msgid "Image size"
@@ -231,10 +243,6 @@ msgstr "Layout"
 #: collective/cover/widgets/textlines_sortable_configure.pt:9
 msgid "Limit"
 msgstr "Limite"
-
-#: tiles/configure.zcml
-msgid "Link Tile"
-msgstr "Riquadro link"
 
 #: tiles/configure.zcml
 msgid "List Tile"
@@ -340,6 +348,10 @@ msgstr "Contenuti ricercabilie"
 msgid "Settings for the collective.cover package"
 msgstr "Pannello di configurazione di collective.cover"
 
+#: configure.zcml
+msgid "Standard view"
+msgstr ""
+
 #: collective/cover/tiles/collection.py:67
 msgid "Start at item"
 msgstr ""
@@ -362,6 +374,10 @@ msgstr "Il layout da usare per visualizzare gruppi e riquadri"
 
 #: collective/cover/tiles/templates/carousel.pt:18
 msgid "This carousel is empty; open the content chooser and drag-and-drop some items here."
+msgstr ""
+
+#: profiles.zcml
+msgid "This fixture creates generic content to be used in tests."
 msgstr ""
 
 #: collective/cover/controlpanel.py:25
@@ -427,6 +443,10 @@ msgstr "Collective Cover"
 #: profiles.zcml
 msgid "collective.cover uninstall"
 msgstr "Disinstalla collective.cover"
+
+#: profiles.zcml
+msgid "collective.cover: testfixture"
+msgstr ""
 
 #. Default: "Categories"
 #: collective/cover/tiles/basic.py:52

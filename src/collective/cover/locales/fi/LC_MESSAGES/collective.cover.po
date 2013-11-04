@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2013-11-04 11:31+0000\n"
+"POT-Creation-Date: 2013-11-04 13:07+0000\n"
 "PO-Revision-Date: 2013-07-26 10:12+0300\n"
 "Last-Translator: Asko Soukka <asko.soukka@iki.fi>\n"
 "Language-Team: Finnish <https://github.com/collective>\n"
@@ -18,6 +18,10 @@ msgstr ""
 msgid "A cover page."
 msgstr "Kansisivu"
 
+#: profiles.zcml
+msgid "A sane, working, editor-friendly way of creating front pages and other composite pages. Working now, for mere mortals."
+msgstr ""
+
 #: tiles/configure.zcml
 msgid "A tile that shows a carousel of images."
 msgstr "Tiili, joka näyttää kuvakarusellin."
@@ -27,16 +31,16 @@ msgid "A tile that shows a file object."
 msgstr "Tiili, joka näyttää tiedoston."
 
 #: tiles/configure.zcml
-msgid "A tile that shows a link object."
-msgstr "Tiili, joka näyttää linkin."
-
-#: tiles/configure.zcml
 msgid "A tile that shows a list of items."
 msgstr "Tiili, joka näyttää luettelon."
 
 #: tiles/configure.zcml
-msgid "A tile that shows an image object."
-msgstr "Tiili, joka näyttää kuvan."
+msgid "A tile that shows an embedded Form Folder from Plone FormGen."
+msgstr ""
+
+#: tiles/configure.zcml
+msgid "A tile that shows an image with a link."
+msgstr ""
 
 #: tiles/configure.zcml
 msgid "A tile that shows general information about objects."
@@ -58,10 +62,6 @@ msgstr "Tiili, joka näyttää sisältöupotuksen toiselta sivustolta."
 msgid "Add Content"
 msgstr "Lisää sisältöä"
 
-#: profiles.zcml
-msgid "An easy-to-use package to create complex cover pages for Plone sites."
-msgstr "Helppokäyttöinen lisäosa monipuolisten kansisivujen rakentamiseksi."
-
 #: collective/cover/tiles/carousel.py:20
 msgid "Auto play"
 msgstr "Automaattinen toisto"
@@ -69,6 +69,10 @@ msgstr "Automaattinen toisto"
 #: collective/cover/controlpanel.py:24
 msgid "Available tiles"
 msgstr "Valittavissa olevat tiilet"
+
+#: tiles/configure.zcml
+msgid "Banner Tile"
+msgstr ""
 
 #: tiles/configure.zcml
 msgid "Basic Tile"
@@ -107,6 +111,10 @@ msgstr "Ladonta"
 #: collective/cover/tiles/configuration_view.py:160
 msgid "Configure ${name}"
 msgstr "Muokkaa tiiltä: ${name}"
+
+#: tiles/configure.zcml
+msgid "Content Body Tile"
+msgstr ""
 
 #: collective/cover/browser/contentchooser_templates/content_contentchooser.pt:16
 msgid "Content tree"
@@ -181,6 +189,14 @@ msgstr "Suodata sisältöä"
 msgid "Footer"
 msgstr "Alatunniste"
 
+#: tiles/configure.zcml
+msgid "FormGen Tile"
+msgstr ""
+
+#: configure.zcml
+msgid "Front page view"
+msgstr ""
+
 #: collective/cover/tiles/templates/collection.pt:17
 msgid "Go to related collection"
 msgstr ""
@@ -197,10 +213,6 @@ msgstr "Ylätunniste"
 #: collective/cover/tiles/basic.py:36
 #: collective/cover/tiles/collection.py:51
 msgid "Image"
-msgstr "Kuva"
-
-#: tiles/configure.zcml
-msgid "Image Tile"
 msgstr "Kuva"
 
 #: collective/cover/tiles/configuration_widgets/namedimage.pt:53
@@ -228,10 +240,6 @@ msgstr "Sommittelut"
 #: collective/cover/widgets/textlines_sortable_configure.pt:9
 msgid "Limit"
 msgstr "Raja"
-
-#: tiles/configure.zcml
-msgid "Link Tile"
-msgstr "Linkki"
 
 #: tiles/configure.zcml
 msgid "List Tile"
@@ -337,6 +345,10 @@ msgstr "Haettavissa olevat sisältötyypit"
 msgid "Settings for the collective.cover package"
 msgstr "Kansisivu-lisäosan asetukset"
 
+#: configure.zcml
+msgid "Standard view"
+msgstr ""
+
 #: collective/cover/tiles/collection.py:67
 msgid "Start at item"
 msgstr ""
@@ -359,6 +371,10 @@ msgstr "Sommittelu, joka määrittää kansisivun tiilien ladonnan."
 
 #: collective/cover/tiles/templates/carousel.pt:18
 msgid "This carousel is empty; open the content chooser and drag-and-drop some items here."
+msgstr ""
+
+#: profiles.zcml
+msgid "This fixture creates generic content to be used in tests."
 msgstr ""
 
 #: collective/cover/controlpanel.py:25
@@ -424,6 +440,10 @@ msgstr "collective.cover"
 #: profiles.zcml
 msgid "collective.cover uninstall"
 msgstr "collective.cover uninstall"
+
+#: profiles.zcml
+msgid "collective.cover: testfixture"
+msgstr ""
 
 #. Default: "Categories"
 #: collective/cover/tiles/basic.py:52

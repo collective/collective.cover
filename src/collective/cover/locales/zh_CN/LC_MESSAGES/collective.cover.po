@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: collective.cover\n"
-"POT-Creation-Date: 2013-11-04 11:31+0000\n"
+"POT-Creation-Date: 2013-11-04 13:07+0000\n"
 "PO-Revision-Date: 2013-06-27 21:57+0800\n"
 "Last-Translator: adam <yuejun.tang@gmail.com>\n"
 "Language-Team: Spanish <https://github.com/collective>\n"
@@ -20,6 +20,10 @@ msgstr ""
 msgid "A cover page."
 msgstr "一个组合页"
 
+#: profiles.zcml
+msgid "A sane, working, editor-friendly way of creating front pages and other composite pages. Working now, for mere mortals."
+msgstr ""
+
 #: tiles/configure.zcml
 msgid "A tile that shows a carousel of images."
 msgstr "一个显示图片轮换的面板。"
@@ -29,16 +33,16 @@ msgid "A tile that shows a file object."
 msgstr "一个显示文件对象的面板。"
 
 #: tiles/configure.zcml
-msgid "A tile that shows a link object."
-msgstr "一个显示链接对象的面板。"
-
-#: tiles/configure.zcml
 msgid "A tile that shows a list of items."
 msgstr "一个显示列表内容的面板。"
 
 #: tiles/configure.zcml
-msgid "A tile that shows an image object."
-msgstr "一个显示图像对象的面板。"
+msgid "A tile that shows an embedded Form Folder from Plone FormGen."
+msgstr ""
+
+#: tiles/configure.zcml
+msgid "A tile that shows an image with a link."
+msgstr ""
 
 #: tiles/configure.zcml
 msgid "A tile that shows general information about objects."
@@ -60,10 +64,6 @@ msgstr "一个嵌入远程对象的面板。"
 msgid "Add Content"
 msgstr "添加内容"
 
-#: profiles.zcml
-msgid "An easy-to-use package to create complex cover pages for Plone sites."
-msgstr "一个为Plone系统创建复杂页面的模块。"
-
 #: collective/cover/tiles/carousel.py:20
 msgid "Auto play"
 msgstr "自动播放"
@@ -71,6 +71,10 @@ msgstr "自动播放"
 #: collective/cover/controlpanel.py:24
 msgid "Available tiles"
 msgstr "有效的面板种类"
+
+#: tiles/configure.zcml
+msgid "Banner Tile"
+msgstr ""
 
 #: tiles/configure.zcml
 msgid "Basic Tile"
@@ -109,6 +113,10 @@ msgstr "组建"
 #: collective/cover/tiles/configuration_view.py:160
 msgid "Configure ${name}"
 msgstr "配置${name}"
+
+#: tiles/configure.zcml
+msgid "Content Body Tile"
+msgstr ""
 
 #: collective/cover/browser/contentchooser_templates/content_contentchooser.pt:16
 msgid "Content tree"
@@ -183,6 +191,14 @@ msgstr "过滤内容"
 msgid "Footer"
 msgstr ""
 
+#: tiles/configure.zcml
+msgid "FormGen Tile"
+msgstr ""
+
+#: configure.zcml
+msgid "Front page view"
+msgstr ""
+
 #: collective/cover/tiles/templates/collection.pt:17
 msgid "Go to related collection"
 msgstr ""
@@ -200,10 +216,6 @@ msgstr ""
 #: collective/cover/tiles/collection.py:51
 msgid "Image"
 msgstr "图片"
-
-#: tiles/configure.zcml
-msgid "Image Tile"
-msgstr "图片面板"
 
 #: collective/cover/tiles/configuration_widgets/namedimage.pt:53
 msgid "Image size"
@@ -230,10 +242,6 @@ msgstr "布局"
 #: collective/cover/widgets/textlines_sortable_configure.pt:9
 msgid "Limit"
 msgstr ""
-
-#: tiles/configure.zcml
-msgid "Link Tile"
-msgstr "链接面板"
 
 #: tiles/configure.zcml
 msgid "List Tile"
@@ -339,6 +347,10 @@ msgstr "可搜索的内容类型"
 msgid "Settings for the collective.cover package"
 msgstr "为collective.cover包的设置"
 
+#: configure.zcml
+msgid "Standard view"
+msgstr ""
+
 #: collective/cover/tiles/collection.py:67
 msgid "Start at item"
 msgstr ""
@@ -361,6 +373,10 @@ msgstr "这种布局用于呈现组面板"
 
 #: collective/cover/tiles/templates/carousel.pt:18
 msgid "This carousel is empty; open the content chooser and drag-and-drop some items here."
+msgstr ""
+
+#: profiles.zcml
+msgid "This fixture creates generic content to be used in tests."
 msgstr ""
 
 #: collective/cover/controlpanel.py:25
@@ -426,6 +442,10 @@ msgstr ""
 #: profiles.zcml
 msgid "collective.cover uninstall"
 msgstr "卸载collective.cover"
+
+#: profiles.zcml
+msgid "collective.cover: testfixture"
+msgstr ""
 
 #. Default: "Categories"
 #: collective/cover/tiles/basic.py:52

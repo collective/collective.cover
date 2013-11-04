@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: collective.cover\n"
-"POT-Creation-Date: 2013-11-04 11:31+0000\n"
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2013-11-04 13:07+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,10 +12,14 @@ msgstr ""
 "Language-Code: en\n"
 "Language-Name: English\n"
 "Preferred-Encodings: utf-8 latin1\n"
-"Domain: collective.cover\n"
+"Domain: DOMAIN\n"
 
 #: collective/cover/profiles/default/types/collective.cover.content.xml
 msgid "A cover page."
+msgstr ""
+
+#: profiles.zcml
+msgid "A sane, working, editor-friendly way of creating front pages and other composite pages. Working now, for mere mortals."
 msgstr ""
 
 #: tiles/configure.zcml
@@ -27,15 +31,15 @@ msgid "A tile that shows a file object."
 msgstr ""
 
 #: tiles/configure.zcml
-msgid "A tile that shows a link object."
-msgstr ""
-
-#: tiles/configure.zcml
 msgid "A tile that shows a list of items."
 msgstr ""
 
 #: tiles/configure.zcml
-msgid "A tile that shows an image object."
+msgid "A tile that shows an embedded Form Folder from Plone FormGen."
+msgstr ""
+
+#: tiles/configure.zcml
+msgid "A tile that shows an image with a link."
 msgstr ""
 
 #: tiles/configure.zcml
@@ -58,16 +62,16 @@ msgstr ""
 msgid "Add Content"
 msgstr ""
 
-#: profiles.zcml
-msgid "An easy-to-use package to create complex cover pages for Plone sites."
-msgstr ""
-
 #: collective/cover/tiles/carousel.py:20
 msgid "Auto play"
 msgstr ""
 
 #: collective/cover/controlpanel.py:24
 msgid "Available tiles"
+msgstr ""
+
+#: tiles/configure.zcml
+msgid "Banner Tile"
 msgstr ""
 
 #: tiles/configure.zcml
@@ -106,6 +110,10 @@ msgstr ""
 
 #: collective/cover/tiles/configuration_view.py:160
 msgid "Configure ${name}"
+msgstr ""
+
+#: tiles/configure.zcml
+msgid "Content Body Tile"
 msgstr ""
 
 #: collective/cover/browser/contentchooser_templates/content_contentchooser.pt:16
@@ -181,6 +189,14 @@ msgstr ""
 msgid "Footer"
 msgstr ""
 
+#: tiles/configure.zcml
+msgid "FormGen Tile"
+msgstr ""
+
+#: configure.zcml
+msgid "Front page view"
+msgstr ""
+
 #: collective/cover/tiles/templates/collection.pt:17
 msgid "Go to related collection"
 msgstr ""
@@ -197,10 +213,6 @@ msgstr ""
 #: collective/cover/tiles/basic.py:36
 #: collective/cover/tiles/collection.py:51
 msgid "Image"
-msgstr ""
-
-#: tiles/configure.zcml
-msgid "Image Tile"
 msgstr ""
 
 #: collective/cover/tiles/configuration_widgets/namedimage.pt:53
@@ -227,10 +239,6 @@ msgstr ""
 
 #: collective/cover/widgets/textlines_sortable_configure.pt:9
 msgid "Limit"
-msgstr ""
-
-#: tiles/configure.zcml
-msgid "Link Tile"
 msgstr ""
 
 #: tiles/configure.zcml
@@ -337,6 +345,10 @@ msgstr ""
 msgid "Settings for the collective.cover package"
 msgstr ""
 
+#: configure.zcml
+msgid "Standard view"
+msgstr ""
+
 #: collective/cover/tiles/collection.py:67
 msgid "Start at item"
 msgstr ""
@@ -359,6 +371,10 @@ msgstr ""
 
 #: collective/cover/tiles/templates/carousel.pt:18
 msgid "This carousel is empty; open the content chooser and drag-and-drop some items here."
+msgstr ""
+
+#: profiles.zcml
+msgid "This fixture creates generic content to be used in tests."
 msgstr ""
 
 #: collective/cover/controlpanel.py:25
@@ -423,6 +439,10 @@ msgstr ""
 
 #: profiles.zcml
 msgid "collective.cover uninstall"
+msgstr ""
+
+#: profiles.zcml
+msgid "collective.cover: testfixture"
 msgstr ""
 
 #. Default: "Categories"

@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: collective.cover\n"
-"POT-Creation-Date: 2013-11-04 11:31+0000\n"
+"POT-Creation-Date: 2013-11-04 13:07+0000\n"
 "PO-Revision-Date: 2013-10-14 19:18-0300\n"
 "Last-Translator: Héctor Velarde <hector.velarde@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,6 +18,10 @@ msgstr ""
 msgid "A cover page."
 msgstr "Uma capa."
 
+#: profiles.zcml
+msgid "A sane, working, editor-friendly way of creating front pages and other composite pages. Working now, for mere mortals."
+msgstr ""
+
 #: tiles/configure.zcml
 msgid "A tile that shows a carousel of images."
 msgstr "Um tile que exibe um carrossel de imagens"
@@ -27,16 +31,16 @@ msgid "A tile that shows a file object."
 msgstr "Um tile que exibe um arquivo."
 
 #: tiles/configure.zcml
-msgid "A tile that shows a link object."
-msgstr "Um tile que exibe um link."
-
-#: tiles/configure.zcml
 msgid "A tile that shows a list of items."
 msgstr "Um tile que exibe uma lista de itens."
 
 #: tiles/configure.zcml
-msgid "A tile that shows an image object."
-msgstr "Um tile que exibe uma imagem."
+msgid "A tile that shows an embedded Form Folder from Plone FormGen."
+msgstr ""
+
+#: tiles/configure.zcml
+msgid "A tile that shows an image with a link."
+msgstr ""
 
 #: tiles/configure.zcml
 msgid "A tile that shows general information about objects."
@@ -58,10 +62,6 @@ msgstr "Um tile que permite incluir conteúdo de uma fonte externa."
 msgid "Add Content"
 msgstr "Adicionar conteúdo"
 
-#: profiles.zcml
-msgid "An easy-to-use package to create complex cover pages for Plone sites."
-msgstr "Um produto para criar capas complexas fácil de usar."
-
 #: collective/cover/tiles/carousel.py:20
 msgid "Auto play"
 msgstr "Reprodução automática"
@@ -69,6 +69,10 @@ msgstr "Reprodução automática"
 #: collective/cover/controlpanel.py:24
 msgid "Available tiles"
 msgstr "Tiles disponíveis"
+
+#: tiles/configure.zcml
+msgid "Banner Tile"
+msgstr ""
 
 #: tiles/configure.zcml
 msgid "Basic Tile"
@@ -107,6 +111,10 @@ msgstr "Composição"
 #: collective/cover/tiles/configuration_view.py:160
 msgid "Configure ${name}"
 msgstr "Configurar ${name}"
+
+#: tiles/configure.zcml
+msgid "Content Body Tile"
+msgstr ""
 
 #: collective/cover/browser/contentchooser_templates/content_contentchooser.pt:16
 msgid "Content tree"
@@ -181,6 +189,14 @@ msgstr "Filtrar itens"
 msgid "Footer"
 msgstr "Rodapé"
 
+#: tiles/configure.zcml
+msgid "FormGen Tile"
+msgstr ""
+
+#: configure.zcml
+msgid "Front page view"
+msgstr ""
+
 #: collective/cover/tiles/templates/collection.pt:17
 msgid "Go to related collection"
 msgstr "Ir na coleção relacionada"
@@ -198,10 +214,6 @@ msgstr "Cabeçalho"
 #: collective/cover/tiles/collection.py:51
 msgid "Image"
 msgstr "Imagem"
-
-#: tiles/configure.zcml
-msgid "Image Tile"
-msgstr "Tile de imagem"
 
 #: collective/cover/tiles/configuration_widgets/namedimage.pt:53
 msgid "Image size"
@@ -228,10 +240,6 @@ msgstr "Layouts"
 #: collective/cover/widgets/textlines_sortable_configure.pt:9
 msgid "Limit"
 msgstr "Limite"
-
-#: tiles/configure.zcml
-msgid "Link Tile"
-msgstr "Tile de link"
 
 #: tiles/configure.zcml
 msgid "List Tile"
@@ -337,6 +345,10 @@ msgstr "Tipos de conteúdo buscáveis"
 msgid "Settings for the collective.cover package"
 msgstr "Configurações do produto collective.cover"
 
+#: configure.zcml
+msgid "Standard view"
+msgstr ""
+
 #: collective/cover/tiles/collection.py:67
 msgid "Start at item"
 msgstr ""
@@ -359,6 +371,10 @@ msgstr "O layout que será utilizado"
 
 #: collective/cover/tiles/templates/carousel.pt:18
 msgid "This carousel is empty; open the content chooser and drag-and-drop some items here."
+msgstr ""
+
+#: profiles.zcml
+msgid "This fixture creates generic content to be used in tests."
 msgstr ""
 
 #: collective/cover/controlpanel.py:25
@@ -424,6 +440,10 @@ msgstr "Capa"
 #: profiles.zcml
 msgid "collective.cover uninstall"
 msgstr "Desintalação do collective.cover"
+
+#: profiles.zcml
+msgid "collective.cover: testfixture"
+msgstr ""
 
 #. Default: "Categories"
 #: collective/cover/tiles/basic.py:52
