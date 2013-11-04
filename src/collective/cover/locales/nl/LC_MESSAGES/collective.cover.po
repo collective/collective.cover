@@ -186,7 +186,7 @@ msgstr "Voettekst"
 
 #: collective/cover/tiles/templates/collection.pt:17
 msgid "Go to related collection"
-msgstr ""
+msgstr "Ga naar gerelateerde verzameling"
 
 #: collective/cover/tiles/configuration_widgets/textline.pt:50
 msgid "HTML tag"
