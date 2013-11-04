@@ -1,12 +1,13 @@
 # --- PLEASE EDIT THE LINES BELOW CORRECTLY ---
 # Dutch translation
 # Paul Roeland <paul@cleanclothes.org>, 2013
+# Maurits van Rees <m.van.rees@zestsoftware.nl>, 2013
 msgid ""
 msgstr ""
 "Project-Id-Version: collective.cover\n"
 "POT-Creation-Date: 2013-11-04 10:55+0000\n"
 "PO-Revision-Date: 2013-10-07 22:22 +0000\n"
-"Last-Translator: Paul Roeland <paul@cleanclothes.org>\n"
+"Last-Translator: Maurits van Rees <m.van.rees@zestsoftware.nl>\n"
 "Language-Team: Plone Nederlands <plone-nl@lists.plone.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -342,7 +343,7 @@ msgstr "Instellingen voor collective.cover (voorpagina)"
 
 #: collective/cover/tiles/collection.py:67
 msgid "Start at item"
-msgstr ""
+msgstr "Start met item"
 
 #: collective/cover/controlpanel.py:45
 msgid "Styles"
@@ -362,7 +363,7 @@ msgstr "Te gebruiken indeling om groepen en tegels te tonen"
 
 #: collective/cover/tiles/templates/carousel.pt:18
 msgid "This carousel is empty; open the content chooser and drag-and-drop some items here."
-msgstr ""
+msgstr "Deze carousel is leeg. Open de inhoudskiezer en versleep een aantal items hier naartoe."
 
 #: collective/cover/controlpanel.py:25
 msgid "This tiles will be available for layout creation."
