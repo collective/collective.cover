@@ -47,13 +47,6 @@ Mostly Harmless
    this will be addressed in a future realease of the package. See issues
    `#81`_ and `#112`_ for more information.
 
-.. Warning::
-    ``collective.cover`` 1.0a4 includes a new banner tile that will replace
-    image and link tiles completely, as we found them redundant. Please
-    replace manually any instance of image and link tiles in your covers with
-    banner tiles. Image and link tiles will be completely removed on next
-    release 1.0a5 (see issue `#218`_ for more information).
-
 .. image:: https://secure.travis-ci.org/collective/collective.cover.png?branch=master
     :target: http://travis-ci.org/collective/collective.cover
 
