@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from AccessControl import Unauthorized
-from collective.cover import _
 from plone.app.tiles.browser.edit import DefaultEditForm
 from plone.app.tiles.browser.edit import DefaultEditView
 from plone.app.tiles.browser.traversal import EditTile
@@ -11,9 +10,13 @@ from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.statusmessages.interfaces import IStatusMessage
 from z3c.form import button
 from zope.event import notify
+from zope.interface import implements
 from zope.lifecycleevent import ObjectModifiedEvent
 from zope.publisher.interfaces.browser import IBrowserView
 from zope.traversing.browser.absoluteurl import absoluteURL
+
+from collective.cover import _
+from collective.cover.interfaces import ITileEditForm
 
 
 class ICoverTileEditView(IBrowserView):
@@ -28,6 +31,8 @@ class CustomEditForm(DefaultEditForm):
     This form is capable of rendering the fields of any tile schema as defined
     by an ITileType utility.
     """
+
+    implements(ITileEditForm)
 
     def update(self):
         super(CustomEditForm, self).update()
