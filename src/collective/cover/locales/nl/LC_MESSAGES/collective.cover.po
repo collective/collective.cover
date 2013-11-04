@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: collective.cover\n"
 "POT-Creation-Date: 2013-11-04 13:07+0000\n"
-"PO-Revision-Date: 2013-10-07 22:22 +0000\n"
+"PO-Revision-Date: 2013-11-04 14:12 +0100\n"
 "Last-Translator: Maurits van Rees <m.van.rees@zestsoftware.nl>\n"
 "Language-Team: Plone Nederlands <plone-nl@lists.plone.org>\n"
 "MIME-Version: 1.0\n"
@@ -24,7 +24,7 @@ msgstr "Een voorpagina."
 
 #: profiles.zcml
 msgid "A sane, working, editor-friendly way of creating front pages and other composite pages. Working now, for mere mortals."
-msgstr ""
+msgstr "Een gezonde, werkende, redacteur-vriendelijke manier van aanmaken van homepages en andere samengestelde pagina's."
 
 #: tiles/configure.zcml
 msgid "A tile that shows a carousel of images."
@@ -40,11 +40,11 @@ msgstr "Een tegel die een lijst items toont."
 
 #: tiles/configure.zcml
 msgid "A tile that shows an embedded Form Folder from Plone FormGen."
-msgstr ""
+msgstr "Een tegel die een ingebed Formulier van PloneFormGen toont."
 
 #: tiles/configure.zcml
 msgid "A tile that shows an image with a link."
-msgstr ""
+msgstr "Een tegel die een afbeelding toont met een link."
 
 #: tiles/configure.zcml
 msgid "A tile that shows general information about objects."
@@ -76,7 +76,7 @@ msgstr "Beschikbare tegels"
 
 #: tiles/configure.zcml
 msgid "Banner Tile"
-msgstr ""
+msgstr "Banner tegel"
 
 #: tiles/configure.zcml
 msgid "Basic Tile"
@@ -118,7 +118,7 @@ msgstr "Configureer ${name}"
 
 #: tiles/configure.zcml
 msgid "Content Body Tile"
-msgstr ""
+msgstr "Inhoud body tegel"
 
 #: collective/cover/browser/contentchooser_templates/content_contentchooser.pt:16
 msgid "Content tree"
@@ -195,11 +195,11 @@ msgstr "Voettekst"
 
 #: tiles/configure.zcml
 msgid "FormGen Tile"
-msgstr ""
+msgstr "Formulier tegel"
 
 #: configure.zcml
 msgid "Front page view"
-msgstr ""
+msgstr "Voorpaginaweergave"
 
 #: collective/cover/tiles/templates/collection.pt:17
 msgid "Go to related collection"
@@ -351,7 +351,7 @@ msgstr "Instellingen voor collective.cover (voorpagina)"
 
 #: configure.zcml
 msgid "Standard view"
-msgstr ""
+msgstr "Standaard weergave"
 
 #: collective/cover/tiles/collection.py:67
 msgid "Start at item"
@@ -379,7 +379,7 @@ msgstr "Deze carousel is leeg. Open de inhoudskiezer en versleep een aantal item
 
 #: profiles.zcml
 msgid "This fixture creates generic content to be used in tests."
-msgstr ""
+msgstr "Dit maakt algemene content aan voor gebruik in tests."
 
 #: collective/cover/controlpanel.py:25
 msgid "This tiles will be available for layout creation."
@@ -447,7 +447,7 @@ msgstr "collective.cover uninstall"
 
 #: profiles.zcml
 msgid "collective.cover: testfixture"
-msgstr ""
+msgstr "collective.cover: testfixture"
 
 #. Default: "Categories"
 #: collective/cover/tiles/basic.py:52
