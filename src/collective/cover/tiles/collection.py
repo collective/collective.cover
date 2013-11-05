@@ -66,6 +66,7 @@ class ICollectionTile(IPersistentCoverTile, form.Schema):
     offset = schema.Int(
         title=_(u'Start at item'),
         required=False,
+        default=0,
     )
 
     footer = schema.TextLine(
@@ -103,7 +104,10 @@ class CollectionTile(PersistentCoverTile):
         offset = 0
         offset_conf = [i for i in self.configured_fields if i['id'] == 'offset']
         if offset_conf:
-            offset = int(offset_conf[0].get('offset', 0))
+            try:
+                offset = int(offset_conf[0].get('offset', 0))
+            except ValueError:
+                offset = 0
 
         uuid = self.data.get('uuid', None)
         obj = uuidToObject(uuid)

@@ -10,6 +10,7 @@ from zope.interface import Interface
 from zope.schema import getFieldNamesInOrder
 from zope.schema import getFieldsInOrder
 from zope.schema.interfaces import ITextLine
+from zope.schema.interfaces import IInt
 
 
 ANNOTATIONS_KEY_PREFIX = u'plone.tiles.configuration'
@@ -117,6 +118,8 @@ class TilesConfigurationScreen(object):
                 # field is an image, we should add 'position' and 'imgsize'
                 defaults[name]['position'] = u'left'
                 defaults[name]['imgsize'] = u'mini 200:200'
+            elif IInt.providedBy(field):
+                defaults[name][name] = field.default
 
         return defaults
 
