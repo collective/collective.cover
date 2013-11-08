@@ -15,7 +15,7 @@ class TextLinesSortableWidget(textlines.TextLinesWidget):
     system.
     """
     zope.interface.implementsOnly(ITextLinesSortableWidget)
-    klass = u"textlines-sortable-widget"
+    klass = u'textlines-sortable-widget'
     configure_template = ViewPageTemplateFile('textlines_sortable_configure.pt')
     display_template = ViewPageTemplateFile('textlines_sortable_display.pt')
     input_template = ViewPageTemplateFile('textlines_sortable_input.pt')

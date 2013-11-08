@@ -58,7 +58,7 @@ class Upgrade5to6TestCase(UpgradeTestCaseBase):
     def test_issue_201(self):
         # check if the upgrade step is registered
         title = u'issue_201'
-        description = u"Depend on collective.js.bootstrap."
+        description = u'Depend on collective.js.bootstrap.'
         step = self._get_upgrade_step(title)
         self.assertIsNotNone(step)
         self.assertEqual(step['description'], description)
@@ -86,7 +86,7 @@ class Upgrade5to6TestCase(UpgradeTestCaseBase):
     def test_issue_303(self):
         # check if the upgrade step is registered
         title = u'issue_303'
-        description = u"Remove unused bundles from portal_javascript."
+        description = u'Remove unused bundles from portal_javascript.'
         step = self._get_upgrade_step(title)
         self.assertIsNotNone(step)
         self.assertEqual(step['description'], description)
@@ -94,15 +94,14 @@ class Upgrade5to6TestCase(UpgradeTestCaseBase):
         js_tool = self.portal['portal_javascripts']
 
         # simulate state on previous version
-        JQ_JS_IDS = ["++resource++plone.app.jquerytools.js",
-                     "++resource++plone.app.jquerytools.form.js",
-                     "++resource++plone.app.jquerytools.overlayhelpers.js",
-                     "++resource++plone.app.jquerytools.plugins.js",
-                     "++resource++plone.app.jquerytools.dateinput.js",
-                     "++resource++plone.app.jquerytools.rangeinput.js",
-                     "++resource++plone.app.jquerytools.validator.js"]
-        TINYMCE_JS_IDS = ["tiny_mce.js",
-                          "tiny_mce_init.js"]
+        JQ_JS_IDS = ['++resource++plone.app.jquerytools.js',
+                     '++resource++plone.app.jquerytools.form.js',
+                     '++resource++plone.app.jquerytools.overlayhelpers.js',
+                     '++resource++plone.app.jquerytools.plugins.js',
+                     '++resource++plone.app.jquerytools.dateinput.js',
+                     '++resource++plone.app.jquerytools.rangeinput.js',
+                     '++resource++plone.app.jquerytools.validator.js']
+        TINYMCE_JS_IDS = ['tiny_mce.js', 'tiny_mce_init.js']
 
         for id in js_tool.getResourceIds():
             js = js_tool.getResource(id)

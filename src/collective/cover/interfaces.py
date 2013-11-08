@@ -30,3 +30,8 @@ class ICoverUIDsProvider(Interface):
 
         @return: iterable of UIDs
         """
+
+
+class ITileEditForm(Interface):
+    """Custom EditForm interface for a tile.
+    """

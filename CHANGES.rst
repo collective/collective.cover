@@ -4,6 +4,24 @@ There's a frood who really knows where his towel is
 1.0a6 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Let the icons sidebar fixed on top when scrolling the page. (closes `#342`_).
+  [agnogueira]
+
+- Add ``short_name`` to all tiles.  Use this as title in the tile
+  list.  This can be translated.
+  [maurits]
+
+- Fix possible problem getting the ``css_class`` when the default
+  configuration is used.  The code tried to treat this as a dictionary
+  instead of a simple string.
+  [maurits]
+
+- Add offset as a configuration option to the collection tile.
+  (fixes `#298`_). [warpr]
+
+- Add ``cover-(type)-tile`` class to all tile templates (fixes issue
+  `#189`_). [warpr]
+
 - Support text from Dexterity items for the bodycontent and richtext
   tiles (fixes `#323`_). [maurits]
 
@@ -276,6 +294,7 @@ There's a frood who really knows where his towel is
 .. _`#179`: https://github.com/collective/collective.cover/issues/179
 .. _`#183`: https://github.com/collective/collective.cover/issues/183
 .. _`#188`: https://github.com/collective/collective.cover/issues/188
+.. _`#189`: https://github.com/collective/collective.cover/issues/189
 .. _`#190`: https://github.com/collective/collective.cover/issues/190
 .. _`#191`: https://github.com/collective/collective.cover/issues/191
 .. _`#198`: https://github.com/collective/collective.cover/issues/198
@@ -298,7 +317,9 @@ There's a frood who really knows where his towel is
 .. _`#281`: https://github.com/collective/collective.cover/issues/281
 .. _`#294`: https://github.com/collective/collective.cover/issues/294
 .. _`#295`: https://github.com/collective/collective.cover/issues/295
+.. _`#298`: https://github.com/collective/collective.cover/issues/298
 .. _`#301`: https://github.com/collective/collective.cover/issues/301
 .. _`#303`: https://github.com/collective/collective.cover/issues/303
 .. _`#314`: https://github.com/collective/collective.cover/issues/314
 .. _`#323`: https://github.com/collective/collective.cover/issues/323
+.. _`#342`: https://github.com/collective/collective.cover/issues/342

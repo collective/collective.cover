@@ -576,4 +576,27 @@
         });
 
     };
+
+
+    /**
+     * Stick sidebar
+     * stick sidebar on top when scrolling
+     **/
+    var fixed = false;
+
+    $(document).scroll(function() {
+        if( $(this).scrollTop() > 200 ) {
+            if( !fixed ) {
+                fixed = true;
+                $('#sidebar').addClass("fixed");
+
+            }
+        } else {
+            if( fixed ) {
+                fixed = false;
+                $('#sidebar').removeClass("fixed");
+            }
+        }
+});
+
 })(jQuery);

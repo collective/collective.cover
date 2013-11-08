@@ -61,6 +61,14 @@ class ICollectionTile(IPersistentCoverTile, form.Schema):
         required=False,
     )
 
+    form.omitted('offset')
+    form.no_omit(IDefaultConfigureForm, 'offset')
+    offset = schema.Int(
+        title=_(u'Start at item'),
+        required=False,
+        default=0,
+    )
+
     footer = schema.TextLine(
         title=_(u'Footer'),
         required=False,
@@ -74,10 +82,11 @@ class ICollectionTile(IPersistentCoverTile, form.Schema):
 
 class CollectionTile(PersistentCoverTile):
 
-    index = ViewPageTemplateFile("templates/collection.pt")
+    index = ViewPageTemplateFile('templates/collection.pt')
 
     is_configurable = True
     is_editable = True
+    short_name = _(u'msg_short_name_collection', default=u'Collection')
     configured_fields = []
 
     def get_title(self):
@@ -92,10 +101,18 @@ class CollectionTile(PersistentCoverTile):
         else:
             size = 4
 
+        offset = 0
+        offset_conf = [i for i in self.configured_fields if i['id'] == 'offset']
+        if offset_conf:
+            try:
+                offset = int(offset_conf[0].get('offset', 0))
+            except ValueError:
+                offset = 0
+
         uuid = self.data.get('uuid', None)
         obj = uuidToObject(uuid)
         if uuid and obj:
-            return obj.results(batch=False)[:size]
+            return obj.results(batch=False)[offset:offset + size]
         else:
             self.remove_relation()
             return []
@@ -120,7 +137,7 @@ class CollectionTile(PersistentCoverTile):
             })
 
     def accepted_ct(self):
-        """ Return a list of content types accepted by the tile.
+        """Return 'Collection' as the only content type acceptedin the tile.
         """
         return ['Collection']
 
@@ -153,6 +170,9 @@ class CollectionTile(PersistentCoverTile):
 
                 if 'size' in field_conf:
                     field['size'] = field_conf['size']
+
+                if 'offset' in field_conf:
+                    field['offset'] = field_conf['offset']
 
             results.append(field)
 

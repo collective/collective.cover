@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from collective.cover.testing import ALL_CONTENT_TYPES
 from collective.cover.testing import INTEGRATION_TESTING
 from collective.cover.tiles.base import IPersistentCoverTile
 from collective.cover.tiles.list import ListTile
@@ -18,7 +19,7 @@ class ListTileTestCase(unittest.TestCase):
     def setUp(self):
         self.portal = self.layer['portal']
         self.request = self.layer['request']
-        self.name = u"collective.cover.list"
+        self.name = u'collective.cover.list'
         self.cover = self.portal['frontpage']
         self.tile = getMultiAdapter((self.cover, self.request), name=self.name)
         self.tile = self.tile['test']
@@ -91,15 +92,10 @@ class ListTileTestCase(unittest.TestCase):
         self.assertTrue(obj2 in tile.results())
 
     def test_accepted_content_types(self):
-        # all content types are accepted
-        # XXX: return None don't work
-        #self.assertEqual(self.tile.accepted_ct(), None)
-        self.assertEqual(self.tile.accepted_ct(),
-                         ['Collection', 'Document', 'File', 'Form Folder',
-                          'Image', 'Link', 'News Item'])
+        self.assertEqual(self.tile.accepted_ct(), ALL_CONTENT_TYPES)
 
     def test_render_empty(self):
-        msg = "Please add up to 5 objects to the tile."
+        msg = 'Please add up to 5 objects to the tile.'
         self.assertTrue(msg in self.tile())
 
     def test_remove_item_from_list_tile(self):
@@ -117,7 +113,7 @@ class ListTileTestCase(unittest.TestCase):
         self.request.form['tile-id'] = 'test'
         self.request.form['uid'] = obj1.UID()
         view = getMultiAdapter(
-            (self.cover, self.request), name="removeitemfromlisttile"
+            (self.cover, self.request), name='removeitemfromlisttile'
         )
         self.assertTrue(obj1 in tile.results())
         view.render()

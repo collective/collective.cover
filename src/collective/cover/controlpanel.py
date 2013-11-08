@@ -13,7 +13,7 @@ class ICoverSettings(form.Schema):
     """
 
     layouts = schema.Dict(
-        title=_(u"Layouts"),
+        title=_(u'Layouts'),
         required=True,
         key_type=schema.TextLine(title=_(u'Name')),
         value_type=schema.TextLine(title=_(u'Layout')),
@@ -21,8 +21,8 @@ class ICoverSettings(form.Schema):
     )
 
     available_tiles = schema.List(
-        title=_(u"Available tiles"),
-        description=_(u"This tiles will be available for layout creation."),
+        title=_(u'Available tiles'),
+        description=_(u'This tiles will be available for layout creation.'),
         required=True,
         default=DEFAULT_AVAILABLE_TILES,
         value_type=schema.Choice(
@@ -30,9 +30,9 @@ class ICoverSettings(form.Schema):
     )
 
     searchable_content_types = schema.List(
-        title=_(u"Searchable Content Types"),
-        description=_(u"Only objects of these content types will be searched "
-                      u"on the content chooser."),
+        title=_(u'Searchable Content Types'),
+        description=_(u'Only objects of these content types will be searched '
+                      u'on the content chooser.'),
         required=False,
         default=DEFAULT_SEARCHABLE_CONTENT_TYPES,
         # we are going to list only the main content types in the widget
@@ -40,12 +40,12 @@ class ICoverSettings(form.Schema):
             vocabulary=u'collective.cover.AvailableContentTypes'),
     )
 
-    form.widget(styles="z3c.form.browser.textlines.TextLinesFieldWidget")
+    form.widget(styles='z3c.form.browser.textlines.TextLinesFieldWidget')
     styles = schema.Set(
         title=_(u'Styles'),
         description=_(
-            u"Enter a list of styles to appear in the style pulldown. "
-            u"Format is title|className, one per line."),
+            u'Enter a list of styles to appear in the style pulldown. '
+            u'Format is title|className, one per line.'),
         required=False,
         default=set(),
         value_type=schema.ASCIILine(title=_(u'CSS Class')),

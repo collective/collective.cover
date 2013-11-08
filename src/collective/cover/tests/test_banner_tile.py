@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 
+from collective.cover.testing import ALL_CONTENT_TYPES
 from collective.cover.testing import INTEGRATION_TESTING
-from collective.cover.tiles.base import IPersistentCoverTile
 from collective.cover.tiles.banner import BannerTile
+from collective.cover.tiles.base import IPersistentCoverTile
 from plone.registry.interfaces import IRegistry
 from plone.tiles.interfaces import ITileType
 from zope.component import getUtility
@@ -47,10 +48,7 @@ class BannerTileTestCase(unittest.TestCase):
         self.assertTrue(self.tile.is_droppable)
 
     def test_accepted_content_types(self):
-        self.assertEqual(
-            self.tile.accepted_ct(),
-            ['Collection', 'Document', 'File', 'Form Folder',
-             'Image', 'Link', 'News Item'])
+        self.assertEqual(self.tile.accepted_ct(), ALL_CONTENT_TYPES)
 
     def test_populate_with_image_object_unicode(self):
         """We must store unicode always on schema.TextLine and schema.Text
@@ -118,7 +116,7 @@ class BannerTileTestCase(unittest.TestCase):
 
     def test_render_empty(self):
         self.assertIn(
-            "Drag&amp;drop an image or link here to populate the tile.", self.tile())
+            'Drag&amp;drop an image or link here to populate the tile.', self.tile())
 
     def test_render_with_image(self):
         obj = self.portal['my-image']

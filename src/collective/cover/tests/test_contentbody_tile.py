@@ -39,9 +39,7 @@ class ContentBodyTileTestCase(unittest.TestCase):
         self.assertTrue(self.tile.is_droppable)
 
     def test_accepted_content_types(self):
-        self.assertEqual(
-            self.tile.accepted_ct(),
-            ['Document', 'News Item'])
+        self.assertEqual(self.tile.accepted_ct(), ['Document', 'News Item'])
 
     def test_empty_body(self):
         obj = self.portal['my-news-item']
@@ -57,7 +55,7 @@ class ContentBodyTileTestCase(unittest.TestCase):
 
     def test_render_empty(self):
         self.assertIn(
-            "Please drag&amp;drop some content here to populate the tile.",
+            'Please drag&amp;drop some content here to populate the tile.',
             self.tile())
 
     def test_render(self):
