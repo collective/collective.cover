@@ -49,7 +49,7 @@
         </ul>
         <div tal:replace="structure context/@@tile_list"></div>
     </div>
-    <div class="layout">
+    <div class="layout" data-layoutmanager-settings='{ "ncolumns": 12 }'>
         <div tal:define="layout nocall:context/@@layout"
              tal:replace="structure layout/render_layout_edit" />
         <!--div class="content-contentchooser" tal:replace="structure context/@@select-content-contentchooser"></div-->
