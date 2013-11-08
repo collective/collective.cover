@@ -40,3 +40,7 @@ class EmbedTile(PersistentCoverTile):
         return not (self.data.get('embed', None) or
                     self.data.get('title', None) or
                     self.data.get('description', None))
+
+    def accepted_ct(self):
+        """Return an empty list as no content types are accepted."""
+        return []

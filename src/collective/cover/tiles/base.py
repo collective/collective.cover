@@ -9,6 +9,7 @@ from Acquisition import aq_inner
 from Acquisition import aq_parent
 from collective.cover import _
 from collective.cover.config import PROJECTNAME
+from collective.cover.controlpanel import ICoverSettings
 from collective.cover.tiles.configuration import ITilesConfigurationScreen
 from collective.cover.tiles.configuration_view import IDefaultConfigureForm
 from collective.cover.tiles.permissions import ITilesPermissions
@@ -18,12 +19,14 @@ from plone.app.textfield.interfaces import ITransformer
 from plone.app.textfield.value import RichTextValue
 from plone.app.uuid.utils import uuidToObject
 from plone.autoform import directives as form
+from plone.memoize import view
 from plone.namedfile.interfaces import INamedImage
 from plone.namedfile.interfaces import INamedImageField
 from plone.namedfile.scaling import ImageScale as BaseImageScale
 from plone.namedfile.scaling import ImageScaling as BaseImageScaling
 from plone.namedfile.utils import set_headers
 from plone.namedfile.utils import stream_data
+from plone.registry.interfaces import IRegistry
 from plone.rfc822.interfaces import IPrimaryFieldInfo
 from plone.scale.scale import scaleImage
 from plone.scale.storage import AnnotationStorage as BaseAnnotationStorage
@@ -80,8 +83,8 @@ class IPersistentCoverTile(Interface):
         """
 
     def accepted_ct():
-        """ Return a list of content types accepted by the tile or None if all
-        types are accepted.
+        """Return a list of content types accepted by the tile. By default,
+        all content types are acepted.
         """
 
     def get_tile_configuration():
@@ -174,11 +177,12 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
 
         notify(ObjectModifiedEvent(self.context))
 
+    @view.memoize
     def accepted_ct(self):
-        """ Return a list of content types accepted by the tile or None if all
-        types are accepted.
-        """
-        return None  # all content types accepted by default
+        """Return all content types available (default value)."""
+        registry = getUtility(IRegistry)
+        settings = registry.forInterface(ICoverSettings)
+        return settings.searchable_content_types
 
     def is_compose_mode(self):
         """Return True if tile is being rendered in compose mode.

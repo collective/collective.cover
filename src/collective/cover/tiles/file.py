@@ -106,6 +106,5 @@ class FileTile(PersistentCoverTile):
                           })
 
     def accepted_ct(self):
-        """ Return a list of content types accepted by the tile.
-        """
+        """Return 'File' as the only content type accepted in the tile."""
         return ['File']

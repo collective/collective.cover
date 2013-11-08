@@ -16,6 +16,15 @@ import pkg_resources
 import random
 
 PLONE_VERSION = pkg_resources.require("Plone")[0].version
+ALL_CONTENT_TYPES = [
+    'Collection',
+    'Document',
+    'File',
+    'Form Folder',
+    'Image',
+    'Link',
+    'News Item',
+]
 
 
 def loadFile(name, size=0):

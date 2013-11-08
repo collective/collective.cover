@@ -52,6 +52,7 @@ class ContentBodyTile(PersistentCoverTile):
         data_mgr.set(data)
 
     def accepted_ct(self):
-        """ For now we are supporting Document and News Item
+        """Return 'Document' and 'News Item' as the only content types
+        accepted in the tile.
         """
         return ['Document', 'News Item']

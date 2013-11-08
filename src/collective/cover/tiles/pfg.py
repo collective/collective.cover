@@ -63,6 +63,6 @@ class PFGTile(PersistentCoverTile):
         data_mgr.set(data)
 
     def accepted_ct(self):
-        """ For now we are supporting Document and News Item
+        """Return 'FormFolder' as the only content type accepted in the tile.
         """
         return ['FormFolder']
