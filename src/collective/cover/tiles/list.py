@@ -48,12 +48,12 @@ class ListTile(PersistentCoverTile):
 
     implements(IListTile)
 
-    index = ViewPageTemplateFile("templates/list.pt")
+    index = ViewPageTemplateFile('templates/list.pt')
 
     is_configurable = True
     is_droppable = True
     is_editable = False
-    short_name = _(u"msg_short_name_list", default=u"List")
+    short_name = _(u'msg_short_name_list', default=u'List')
     limit = 5
 
     def results(self):

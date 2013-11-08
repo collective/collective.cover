@@ -41,5 +41,5 @@ class EmbedTileTestCase(unittest.TestCase):
         self.assertEqual(self.tile.accepted_ct(), [])
 
     def test_render_empty(self):
-        msg = "Please edit the tile to add the code to be embedded."
+        msg = 'Please edit the tile to add the code to be embedded.'
         self.assertTrue(msg in self.tile())

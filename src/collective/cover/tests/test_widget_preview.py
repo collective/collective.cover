@@ -24,8 +24,8 @@ class WidgetPreviewCase(unittest.TestCase):
         portal = self.portal
         ttool = getToolByName(self.portal, 'portal_types')
         setRoles(self.portal, TEST_USER_ID, ['Manager'])
-        fti = ttool.getTypeInfo("Document")
-        obj = fti.constructInstance(portal, "test1")
+        fti = ttool.getTypeInfo('Document')
+        obj = fti.constructInstance(portal, 'test1')
 
         widget = SelectPreviewWidget(self.portal.REQUEST)
         widget.context = obj

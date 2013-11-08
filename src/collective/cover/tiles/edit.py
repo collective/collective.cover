@@ -43,9 +43,10 @@ class CustomEditForm(DefaultEditForm):
         tile = self.context.restrictedTraverse('@@{0}/{1}'.format(typeName, tileId))
 
         if not tile.isAllowedToEdit():
-            raise Unauthorized("You are not allowed to add this kind of tile")
+            raise Unauthorized(
+                _(u'You are not allowed to add this kind of tile'))
 
-    @button.buttonAndHandler(_('Save'), name='save')
+    @button.buttonAndHandler(_(u'Save'), name='save')
     def handleSave(self, action):
         data, errors = self.extractData()
         if errors:
@@ -73,14 +74,15 @@ class CustomEditForm(DefaultEditForm):
         notify(ObjectModifiedEvent(tile))
 
         # Get the tile URL, possibly with encoded data
-        IStatusMessage(self.request).addStatusMessage(_(u"Tile saved",), type=u'info')
+        IStatusMessage(self.request).addStatusMessage(
+            _(u'Tile saved'), type=u'info')
 
         self.request.response.redirect(tileURL)
 
     @button.buttonAndHandler(_(u'Cancel'), name='cancel')
     def handleCancel(self, action):
         tileDataJson = {}
-        tileDataJson['action'] = "cancel"
+        tileDataJson['action'] = 'cancel'
         url = self.request.getURL()
         url = appendJSONData(url, 'tiledata', tileDataJson)
         self.request.response.redirect(url)

@@ -39,7 +39,7 @@ class BannerTile(PersistentCoverTile):
     is_configurable = True
     is_editable = True
     is_droppable = True
-    short_name = _(u"msg_short_name_banner", default=u"Banner")
+    short_name = _(u'msg_short_name_banner', default=u'Banner')
 
     def populate_with_object(self, obj):
         """Tile can be populated with any content type with image

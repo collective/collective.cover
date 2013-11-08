@@ -19,7 +19,7 @@ class CarouselTileTestCase(unittest.TestCase):
     def setUp(self):
         self.portal = self.layer['portal']
         self.request = self.layer['request']
-        self.name = u"collective.cover.carousel"
+        self.name = u'collective.cover.carousel'
         self.cover = self.portal['frontpage']
         self.tile = getMultiAdapter((self.cover, self.request), name=self.name)
         self.tile = self.tile['test']

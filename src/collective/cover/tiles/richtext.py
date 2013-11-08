@@ -20,10 +20,10 @@ class IRichTextTileData(IPersistentCoverTile):
 
 class RichTextTile(PersistentCoverTile):
 
-    index = ViewPageTemplateFile("templates/richtext.pt")
+    index = ViewPageTemplateFile('templates/richtext.pt')
 
     is_configurable = True
-    short_name = _(u"msg_short_name_richtext", default=u"Rich Text")
+    short_name = _(u'msg_short_name_richtext', default=u'Rich Text')
 
     def getText(self):
         """ Return the rich text stored in the tile.

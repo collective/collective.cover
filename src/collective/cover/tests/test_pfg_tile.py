@@ -65,7 +65,7 @@ class PFGTileTestCase(unittest.TestCase):
 
     def test_render_empty(self):
         self.assertIn(
-            "Please drag&amp;drop a Form Folder here to populate the tile.",
+            'Please drag&amp;drop a Form Folder here to populate the tile.',
             self.tile())
 
     def test_render(self):

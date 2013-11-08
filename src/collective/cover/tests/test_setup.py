@@ -39,12 +39,12 @@ class InstallTestCase(unittest.TestCase):
     def test_jsregistry(self):
         resource_ids = self.portal.portal_javascripts.getResourceIds()
         for id in JS:
-            self.assertIn(id, resource_ids, "{0} not installed".format(id))
+            self.assertIn(id, resource_ids, '{0} not installed'.format(id))
 
     def test_cssregistry(self):
         resource_ids = self.portal.portal_css.getResourceIds()
         for id in CSS:
-            self.assertIn(id, resource_ids, "{0} not installed".format(id))
+            self.assertIn(id, resource_ids, '{0} not installed'.format(id))
 
     def test_resources_available(self):
         resources = CSS + JS
@@ -57,7 +57,7 @@ class InstallTestCase(unittest.TestCase):
         try:
             ps.runAllImportStepsFromProfile('profile-collective.cover:default')
         except AttributeError:
-            self.fail("Reinstall fails when the record was changed")
+            self.fail('Reinstall fails when the record was changed')
 
     def test_can_export_layout_permission(self):
         permission = 'collective.cover: Can Export Layout'
@@ -88,9 +88,9 @@ class UninstallTestCase(unittest.TestCase):
     def test_jsregistry_removed(self):
         resource_ids = self.portal.portal_javascripts.getResourceIds()
         for id in JS:
-            self.assertNotIn(id, resource_ids, "{0} not removed".format(id))
+            self.assertNotIn(id, resource_ids, '{0} not removed'.format(id))
 
     def test_cssregistry_removed(self):
         resource_ids = self.portal.portal_css.getResourceIds()
         for id in CSS:
-            self.assertNotIn(id, resource_ids, "{0} not removed".format(id))
+            self.assertNotIn(id, resource_ids, '{0} not removed'.format(id))

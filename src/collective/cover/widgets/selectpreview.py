@@ -18,7 +18,7 @@ class SelectPreviewWidget(select.SelectWidget):
     system.
     """
     zope.interface.implementsOnly(ISelectPreviewWidget)
-    klass = u"keyword-widget"
+    klass = u'keyword-widget'
     display_template = ViewPageTemplateFile('selectpreview_display.pt')
     input_template = ViewPageTemplateFile('selectpreview_input.pt')
 

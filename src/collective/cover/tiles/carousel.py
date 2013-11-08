@@ -34,10 +34,10 @@ class ICarouselTile(IListTile):
 class CarouselTile(ListTile):
     implements(ICarouselTile)
 
-    index = ViewPageTemplateFile("templates/carousel.pt")
+    index = ViewPageTemplateFile('templates/carousel.pt')
     is_configurable = True
     is_editable = True
-    short_name = _(u"msg_short_name_carousel", default=u"Carousel")
+    short_name = _(u'msg_short_name_carousel', default=u'Carousel')
 
     def populate_with_object(self, obj):
         super(CarouselTile, self).populate_with_object(obj)  # check permission

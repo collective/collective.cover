@@ -82,7 +82,7 @@ class VocabulariesTestCase(unittest.TestCase):
         # and the default u"tile-default" style is always first
         styles = vocabulary(self.portal)
         self.assertEqual(len(styles), 4)
-        self.assertEqual(styles.by_value.keys()[0], u"tile-default")
+        self.assertEqual(styles.by_value.keys()[0], u'tile-default')
         # let's try to put some other values on it
         registry = getUtility(IRegistry)
         settings = registry.forInterface(ICoverSettings)
@@ -96,10 +96,10 @@ class VocabulariesTestCase(unittest.TestCase):
 
         # although default style is not set, vocabulary inserts it first
         self.assertEqual(len(styles), 4)
-        self.assertEqual(styles.by_value.keys()[0], u"tile-default")
+        self.assertEqual(styles.by_value.keys()[0], u'tile-default')
         # adding a couple of not well formatted items result in no option
         # (except for the default one)
         settings.styles = set(['not well formated'])
         styles = vocabulary(self.portal)
         self.assertEqual(len(styles), 1)
-        self.assertEqual(styles.by_value.keys()[0], u"tile-default")
+        self.assertEqual(styles.by_value.keys()[0], u'tile-default')
