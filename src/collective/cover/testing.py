@@ -15,7 +15,7 @@ import os
 import pkg_resources
 import random
 
-PLONE_VERSION = pkg_resources.require("Plone")[0].version
+PLONE_VERSION = pkg_resources.require('Plone')[0].version
 ALL_CONTENT_TYPES = [
     'Collection',
     'Document',
@@ -47,7 +47,7 @@ def generate_jpeg(width, height):
     yb = 1.5
     maxIt = 25  # max iterations allowed
     # image size
-    image = Image.new("RGB", (width, height))
+    image = Image.new('RGB', (width, height))
     c = complex(random.random() * 2.0 - 1.0, random.random() - 0.5)
 
     for y in range(height):
@@ -65,7 +65,7 @@ def generate_jpeg(width, height):
             image.putpixel((x, y), b * 65536 + g * 256 + r)
 
     output = StringIO()
-    image.save(output, format="PNG")
+    image.save(output, format='PNG')
     return output.getvalue()
 
 
@@ -134,4 +134,4 @@ FUNCTIONAL_TESTING = FunctionalTesting(
 
 ROBOT_TESTING = FunctionalTesting(
     bases=(FIXTURE, AUTOLOGIN_LIBRARY_FIXTURE, z2.ZSERVER_FIXTURE),
-    name="collective.cover:Robot")
+    name='collective.cover:Robot')

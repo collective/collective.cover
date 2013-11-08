@@ -102,7 +102,7 @@ class CollectionTileTestCase(unittest.TestCase):
         self.portal.manage_delObjects(['my-collection'])
         rendered = self.tile()
 
-        self.assertIn("Please drop a collection here to fill the tile.", rendered)
+        self.assertIn('Please drop a collection here to fill the tile.', rendered)
 
     def test_thumbnail(self):
         # as a File does not have an image field, we should have no thumbnail

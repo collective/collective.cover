@@ -33,11 +33,11 @@ class PFGTile(PersistentCoverTile):
 
     implements(IPersistentCoverTile)
 
-    index = ViewPageTemplateFile("templates/pfg.pt")
+    index = ViewPageTemplateFile('templates/pfg.pt')
 
     is_editable = True
     is_configurable = True
-    short_name = _(u"msg_short_name_pfg", default=u"FormGen")
+    short_name = _(u'msg_short_name_pfg', default=u'FormGen')
 
     def body(self):
         body = ''

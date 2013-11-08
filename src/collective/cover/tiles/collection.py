@@ -82,11 +82,11 @@ class ICollectionTile(IPersistentCoverTile, form.Schema):
 
 class CollectionTile(PersistentCoverTile):
 
-    index = ViewPageTemplateFile("templates/collection.pt")
+    index = ViewPageTemplateFile('templates/collection.pt')
 
     is_configurable = True
     is_editable = True
-    short_name = _(u"msg_short_name_collection", default=u"Collection")
+    short_name = _(u'msg_short_name_collection', default=u'Collection')
     configured_fields = []
 
     def get_title(self):

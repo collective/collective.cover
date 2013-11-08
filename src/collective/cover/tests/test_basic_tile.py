@@ -117,7 +117,7 @@ class BasicTileTestCase(unittest.TestCase):
 
     def test_render_empty(self):
         self.assertIn(
-            "Please drag&amp;drop some content here to populate the tile.",
+            'Please drag&amp;drop some content here to populate the tile.',
             self.tile())
 
     def test_render_title(self):
@@ -162,7 +162,7 @@ class BasicTileTestCase(unittest.TestCase):
 
         # the description must be there
         self.assertIn(
-            "This news item was created for testing purposes", rendered)
+            'This news item was created for testing purposes', rendered)
 
         # the localized time must be there
         utils = getMultiAdapter((self.portal, self.request), name=u'plone')
@@ -228,7 +228,7 @@ class BasicTileTestCase(unittest.TestCase):
     def test_image_traverser(self):
         obj = self.portal['my-image']
         data = self.tile.data
-        scales = queryMultiAdapter((obj, self.request), name="images")
+        scales = queryMultiAdapter((obj, self.request), name='images')
         self.tile.data['image'] = NamedImageFile(str(scales.scale('image').data))
         data_mgr = ITileDataManager(self.tile)
         data_mgr.set(data)
@@ -266,7 +266,7 @@ class BasicTileTestCase(unittest.TestCase):
 
         obj = self.portal['my-image']
         data = self.tile.data
-        scales = queryMultiAdapter((obj, self.request), name="images")
+        scales = queryMultiAdapter((obj, self.request), name='images')
         self.tile.data['image'] = NamedImageFile(str(scales.scale('image').data))
         data_mgr = ITileDataManager(self.tile)
         data_mgr.set(data)

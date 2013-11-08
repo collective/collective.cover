@@ -25,7 +25,7 @@ import json
 
 VOCAB_ID = u'plone.app.vocabularies.ReallyUserFriendlyTypes'
 
-grok.templatedir("contentchooser_templates")
+grok.templatedir('contentchooser_templates')
 
 
 # XXX: what's the purpose of this view?
@@ -54,7 +54,7 @@ class SelectContent(grok.View):
         pass
 
     def post_url(self):
-        return self.context.absolute_url() + "/@@content-search"
+        return self.context.absolute_url() + '/@@content-search'
 
 
 class ContentSearch(grok.View):
@@ -111,7 +111,7 @@ class ContentSearch(grok.View):
         return results
 
     def getTermByBrain(self, brain, real_value=True):
-        portal_tool = getToolByName(self.context, "portal_url")
+        portal_tool = getToolByName(self.context, 'portal_url')
         self.portal_path = portal_tool.getPortalPath()
         value = brain.getPath()[len(self.portal_path):]
         return SimpleTerm(value, token=brain.getPath(), title=brain.Title)
@@ -193,11 +193,11 @@ class SearchItemsBrowserView(BrowserView):
         else:
             self.filter_portal_types = [i[0] for i in self._getCurrentValues()]
 
-        if INavigationRoot.providedBy(obj) or (rooted == "True" and document_base_url[:-1] == obj.absolute_url()):
+        if INavigationRoot.providedBy(obj) or (rooted == 'True' and document_base_url[:-1] == obj.absolute_url()):
             results['parent_url'] = ''
         else:
             results['parent_url'] = aq_parent(obj).absolute_url()
-        if rooted == "True":
+        if rooted == 'True':
             results['path'] = self.getBreadcrumbs(results['parent_url'])
         else:
             # get all items from siteroot to context (title and url)

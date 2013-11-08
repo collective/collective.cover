@@ -116,7 +116,7 @@ class BannerTileTestCase(unittest.TestCase):
 
     def test_render_empty(self):
         self.assertIn(
-            "Drag&amp;drop an image or link here to populate the tile.", self.tile())
+            'Drag&amp;drop an image or link here to populate the tile.', self.tile())
 
     def test_render_with_image(self):
         obj = self.portal['my-image']

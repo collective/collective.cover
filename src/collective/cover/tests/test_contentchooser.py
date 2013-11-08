@@ -48,7 +48,7 @@ class ContentChooserTestCase(unittest.TestCase):
 
     @unittest.skipIf(
         PLONE_VERSION < '4.3',
-        "On Plone 4.2 we need to install Products.UnicodeLexicon")
+        'On Plone 4.2 we need to install Products.UnicodeLexicon')
     def test_unicode_aware_lexicon(self):
         """See: https://github.com/collective/collective.cover/issues/276
         """

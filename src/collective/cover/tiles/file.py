@@ -27,11 +27,11 @@ HTML = """
 # XXX: refactor this to make it easier to test
 def get_download_html(url, portal_url, icon, mime_type, size):
     if size < 1024:
-        size_str = "{0} bytes".format(size)
+        size_str = '{0} bytes'.format(size)
     elif size >= 1024 and size < 1048576:
-        size_str = "{0} kB ({1} bytes)".format(size / 1024, size)
+        size_str = '{0} kB ({1} bytes)'.format(size / 1024, size)
     else:
-        size_str = "{0} MB ({1} bytes)".format(size / 1048576, size)
+        size_str = '{0} MB ({1} bytes)'.format(size / 1048576, size)
 
     return HTML.format(url, portal_url, icon, mime_type, size_str)
 
@@ -70,7 +70,7 @@ class FileTile(PersistentCoverTile):
     is_configurable = False  # TODO: make the tile configurable
     is_editable = True
     is_droppable = True
-    short_name = _(u"msg_short_name_file", default=u"File")
+    short_name = _(u'msg_short_name_file', default=u'File')
 
     # XXX: refactor this to make it easier to test
     def download_widget(self):

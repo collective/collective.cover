@@ -65,7 +65,7 @@ class IPersistentCoverTile(Interface):
         title=_(u'CSS Class'),
         vocabulary='collective.cover.TileStyles',
         required=True,
-        default=u"tile-default",
+        default=u'tile-default',
     )
     form.omitted('css_class')
     form.no_omit(IDefaultConfigureForm, 'css_class')
@@ -135,24 +135,24 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
     css_class = None  # placeholder, we access it with tile's configuration
     # Short name for the tile.  Usually title minus 'Tile'.  Please
     # wrap this in _(...) so it can be translated.
-    short_name = u""
+    short_name = u''
 
     def populate_with_object(self, obj):
         if not self.isAllowedToEdit():
-            raise Unauthorized(_("You are not allowed to add content to "
-                                 "this tile"))
+            raise Unauthorized(
+                _('You are not allowed to add content to this tile'))
 
     def replace_with_objects(self, obj):
         if not self.isAllowedToEdit():
-            raise Unauthorized(_("You are not allowed to add content to "
-                                 "this tile"))
+            raise Unauthorized(
+                _('You are not allowed to add content to this tile'))
 
         notify(ObjectModifiedEvent(self))
 
     def remove_item(self, uid):
         if not self.isAllowedToEdit():
-            raise Unauthorized(_("You are not allowed to remove content of "
-                                 "this tile"))
+            raise Unauthorized(
+                _('You are not allowed to remove content of this tile'))
 
     # XXX: the name of this method is really confusing as it does not deletes
     # the tile; rename it?
@@ -160,7 +160,7 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
         """ Remove the persistent data associated with the tile and notify the
         cover object was modified.
         """
-        logger.debug("Deleting tile {0}".format(self.id))
+        logger.debug('Deleting tile {0}'.format(self.id))
 
         data_mgr = ITileDataManager(self)
         data_mgr.delete()
