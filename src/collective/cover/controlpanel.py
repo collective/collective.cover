@@ -6,6 +6,7 @@ from collective.cover.config import DEFAULT_SEARCHABLE_CONTENT_TYPES
 from plone.app.registry.browser import controlpanel
 from plone.directives import form
 from zope import schema
+from zope.schema.vocabulary import SimpleVocabulary
 
 
 class ICoverSettings(form.Schema):
@@ -50,6 +51,19 @@ class ICoverSettings(form.Schema):
         default=set(),
         value_type=schema.ASCIILine(title=_(u'CSS Class')),
     )
+
+    grid_system = schema.Choice(
+        title=_(u'Grid System'),
+        description=_(u'Choose a grid system'),
+        required=True,
+        vocabulary=SimpleVocabulary.fromValues([
+            u'12, Bootstrap 3.x',
+            u'12, Bootstrap 2.x',
+            u'12, Foundation',
+            u'12, Deco (12 columns)',
+            u'16, Deco (16 columns)',
+        ]),
+        default="12, Bootstrap 3.x")
 
 
 class CoverSettingsEditForm(controlpanel.RegistryEditForm):

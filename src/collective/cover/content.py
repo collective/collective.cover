@@ -202,6 +202,13 @@ class LayoutEdit(grok.View):
         # TODO: check permission locally and not in portal context
         return sm.checkPermission('collective.cover: Can Export Layout', portal)
 
+    def layoutmanager_settings(self):
+        registry = getUtility(IRegistry)
+        settings = registry.forInterface(ICoverSettings)
+        ncolumns = int(settings.grid_system.split(',')[0])
+
+        return json.dumps({"ncolumns": ncolumns})
+
 
 class UpdateTileContent(grok.View):
     grok.context(ICover)
