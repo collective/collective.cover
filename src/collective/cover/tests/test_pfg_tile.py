@@ -52,9 +52,7 @@ class PFGTileTestCase(unittest.TestCase):
         self.assertTrue(self.tile.is_droppable)
 
     def test_accepted_content_types(self):
-        self.assertEqual(
-            self.tile.accepted_ct(),
-            ['FormFolder'])
+        self.assertEqual(self.tile.accepted_ct(), ['FormFolder'])
 
     def test_empty_body(self):
         self.assertFalse(self.tile.body())

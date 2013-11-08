@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from collective.cover.testing import ALL_CONTENT_TYPES
 from collective.cover.testing import generate_jpeg
 from collective.cover.testing import images_are_equal
 from collective.cover.testing import INTEGRATION_TESTING
@@ -54,10 +55,7 @@ class BasicTileTestCase(unittest.TestCase):
         self.assertTrue(self.tile.is_droppable)
 
     def test_accepted_content_types(self):
-        self.assertEqual(
-            self.tile.accepted_ct(),
-            ['Collection', 'Document', 'File', 'Form Folder',
-             'Image', 'Link', 'News Item'])
+        self.assertEqual(self.tile.accepted_ct(), ALL_CONTENT_TYPES)
 
     def test_is_empty(self):
         self.assertTrue(self.tile.is_empty())

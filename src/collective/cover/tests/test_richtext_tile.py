@@ -33,8 +33,7 @@ class RichTextTileTestCase(unittest.TestCase):
         self.assertTrue(self.tile.is_droppable)
 
     def test_accepted_content_types(self):
-        self.assertEqual(self.tile.accepted_ct(),
-                         ['Document', ])
+        self.assertEqual(self.tile.accepted_ct(), ['Document'])
 
     def test_populate_with_object(self):
         self.tile.populate_with_object(self.portal['my-document'])

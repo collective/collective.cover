@@ -2,19 +2,15 @@
 
 from Acquisition import aq_base
 from collective.cover import _
-from collective.cover.controlpanel import ICoverSettings
 from collective.cover.tiles.base import IPersistentCoverTile
 from collective.cover.tiles.base import PersistentCoverTile
-from plone.memoize import view
 from plone.namedfile import field
 from plone.namedfile import NamedBlobImage
 from plone.tiles.interfaces import ITileDataManager
-from plone.registry.interfaces import IRegistry
 from Products.CMFPlone.utils import getToolByName
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.CMFPlone.utils import safe_unicode
 from zope import schema
-from zope.component import getUtility
 from zope.interface import implements
 
 
@@ -44,20 +40,6 @@ class BannerTile(PersistentCoverTile):
     is_editable = True
     is_droppable = True
     short_name = _(u"msg_short_name_banner", default=u"Banner")
-
-    @view.memoize
-    def accepted_ct(self):
-        """
-            Return a list with accepted content types ids
-            basic tile accepts every content type
-            allowed by the cover control panel
-
-            this method is called for every tile in the compose view
-            please memoize if you're doing some very expensive calculation
-        """
-        registry = getUtility(IRegistry)
-        settings = registry.forInterface(ICoverSettings)
-        return settings.searchable_content_types
 
     def populate_with_object(self, obj):
         """Tile can be populated with any content type with image
