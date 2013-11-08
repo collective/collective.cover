@@ -39,6 +39,18 @@ and publish the right one focused on the team that won in the end.
 These are the kind of issues we want to solve with this package; we are still
 far from it, but that is the idea.
 
+Who is using it?
+^^^^^^^^^^^^^^^^
+
+These are some of the sites using ``collective.cover``:
+
+* `CartaCapital <http://www.cartacapital.com.br/>`_ (BR)
+* `Clean Clothes Campaign <http://www.cleanclothes.org/>`_ (NL)
+* `Conselho Federal de Administração <http://www.cfa.org.br/>`_ (BR)
+* `Portal Brasil <http://www.brasil.gov.br/>`_ (BR)
+* `Rede Brasil Atual <http://www.redebrasilatual.com.br/>`_ (BR)
+* `Venezolana de Televisión <http://www.vtv.gov.ve/>`_ (VE)
+
 Mostly Harmless
 ---------------
 
@@ -93,7 +105,6 @@ Go to the 'Site Setup' page in a Plone site and click on the 'Add-ons' link.
 Check the box next to ``collective.cover`` and click the 'Activate' button.
 
 .. Note::
-
     You may have to empty your browser cache and save your resource registries
     in order to see the effects of the product installation.
 
