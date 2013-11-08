@@ -4,6 +4,8 @@ There's a frood who really knows where his towel is
 1.0a6 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Use plone.api where possible. [hvelarde]
+
 - Let the icons sidebar fixed on top when scrolling the page. (closes `#342`_).
   [agnogueira]
 

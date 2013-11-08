@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from collective.cover.testing import INTEGRATION_TESTING
-from plone.app.testing import setRoles
-from plone.app.testing import TEST_USER_ID
+from plone import api
 from zope.component import getMultiAdapter
 
 import unittest
@@ -16,17 +15,18 @@ class BrowserViewsTestCase(unittest.TestCase):
         self.portal = self.layer['portal']
         self.request = self.layer['request']
 
-        setRoles(self.portal, TEST_USER_ID, ['Manager'])
-        self.portal.invokeFactory('Folder', 'test-folder')
-        setRoles(self.portal, TEST_USER_ID, ['Member'])
-        self.folder = self.portal['test-folder']
-        self.folder.invokeFactory(
+        with api.env.adopt_roles(['Manager']):
+            self.folder = api.content.create(
+                self.portal, 'Folder', 'test-folder')
+
+        self.c1 = api.content.create(
+            self.folder,
             'collective.cover.content',
             'c1',
             title='Front page',
             description='Should I see this?',
+            template_layout='Empty layout',
         )
-        self.c1 = self.folder['c1']
 
     def test_default_view_registration(self):
         portal_types = self.portal['portal_types']

@@ -4,12 +4,12 @@ from collective.cover import _
 from collective.cover.tiles.base import IPersistentCoverTile
 from collective.cover.tiles.base import PersistentCoverTile
 from collective.cover.tiles.configuration_view import IDefaultConfigureForm
+from plone import api
 from plone.autoform import directives as form
 from plone.memoize.instance import memoizedproperty
 from plone.namedfile.field import NamedBlobImage as NamedImage
 from plone.tiles.interfaces import ITileDataManager
 from plone.uuid.interfaces import IUUID
-from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.utils import safe_unicode
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zope import schema
@@ -69,7 +69,7 @@ class BasicTile(PersistentCoverTile):
 
     @memoizedproperty
     def brain(self):
-        catalog = getToolByName(self.context, 'portal_catalog')
+        catalog = api.portal.get_tool(name='portal_catalog')
         uuid = self.data.get('uuid')
         result = catalog(UID=uuid) if uuid is not None else []
         assert len(result) <= 1

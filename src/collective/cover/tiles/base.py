@@ -14,6 +14,7 @@ from collective.cover.tiles.configuration import ITilesConfigurationScreen
 from collective.cover.tiles.configuration_view import IDefaultConfigureForm
 from collective.cover.tiles.permissions import ITilesPermissions
 from persistent.dict import PersistentDict
+from plone import api
 from plone import tiles
 from plone.app.textfield.interfaces import ITransformer
 from plone.app.textfield.value import RichTextValue
@@ -33,7 +34,6 @@ from plone.scale.storage import AnnotationStorage as BaseAnnotationStorage
 from plone.tiles.esi import ESITile
 from plone.tiles.interfaces import ITileDataManager
 from plone.tiles.interfaces import ITileType
-from Products.CMFCore.utils import getToolByName
 from z3c.caching.interfaces import IPurgePaths
 from ZODB.POSException import ConflictError
 from zope.annotation import IAnnotations
@@ -317,7 +317,7 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
     def isAllowedToEdit(self, user=None):
         allowed = True
 
-        pm = getToolByName(self.context, 'portal_membership')
+        pm = api.portal.get_tool(name='portal_membership')
 
         if user:
             if isinstance(user, basestring):

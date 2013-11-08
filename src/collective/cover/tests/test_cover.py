@@ -2,6 +2,7 @@
 
 from collective.cover.content import ICover
 from collective.cover.testing import INTEGRATION_TESTING
+from plone import api
 from plone.app.dexterity.behaviors.exclfromnav import IExcludeFromNavigation
 from plone.app.lockingbehavior.behaviors import ILocking
 from plone.app.referenceablebehavior.referenceable import IReferenceable
@@ -22,13 +23,17 @@ class CoverIntegrationTestCase(unittest.TestCase):
 
     def setUp(self):
         self.portal = self.layer['portal']
-        setRoles(self.portal, TEST_USER_ID, ['Manager'])
-        self.portal.invokeFactory('Folder', 'test-folder')
-        setRoles(self.portal, TEST_USER_ID, ['Member'])
-        self.folder = self.portal['test-folder']
-        self.folder.invokeFactory('collective.cover.content', 'c1',
-                                  template_layout='Layout A')
-        self.c1 = self.folder['c1']
+
+        with api.env.adopt_roles(['Manager']):
+            self.folder = api.content.create(
+                self.portal, 'Folder', 'test-folder')
+
+        self.c1 = api.content.create(
+            self.folder,
+            'collective.cover.content',
+            'c1',
+            template_layout='Layout A',
+        )
         self.layout_edit = self.c1.restrictedTraverse('layoutedit')
 
     def test_adding(self):
