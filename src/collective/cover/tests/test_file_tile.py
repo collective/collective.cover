@@ -97,27 +97,24 @@ class FileTileTestCase(unittest.TestCase):
         obj = self.portal['my-file']
         self.tile.populate_with_object(obj)
         rendered = self.tile()
-        self.assertTrue('Download file' in rendered)
-        self.assertTrue('My file' in rendered)
-        self.assertTrue(
-            'This file was created for testing purposes' in rendered)
+        self.assertIn('Download file', rendered)
+        self.assertIn('My file', rendered)
+        self.assertIn('This file was created for testing purposes', rendered)
 
     def test_render_kB_file(self):
         obj = self.portal['my-file']
         obj.setFile('0' * 1024)
         self.tile.populate_with_object(obj)
         rendered = self.tile()
-        self.assertTrue('1 kB (1024 bytes)' in rendered)
-        self.assertTrue('My file' in rendered)
-        self.assertTrue(
-            'This file was created for testing purposes' in rendered)
+        self.assertIn('1 kB (1024 bytes)', rendered)
+        self.assertIn('My file', rendered)
+        self.assertIn('This file was created for testing purposes', rendered)
 
     def test_render_MB_file(self):
         obj = self.portal['my-file']
         obj.setFile('0' * 1048576)
         self.tile.populate_with_object(obj)
         rendered = self.tile()
-        self.assertTrue('1 MB (1048576 bytes)' in rendered)
-        self.assertTrue('My file' in rendered)
-        self.assertTrue(
-            'This file was created for testing purposes' in rendered)
+        self.assertIn('1 MB (1048576 bytes)', rendered)
+        self.assertIn('My file', rendered)
+        self.assertIn('This file was created for testing purposes', rendered)
