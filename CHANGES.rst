@@ -4,6 +4,9 @@ There's a frood who really knows where his towel is
 1.0a6 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Let the icons sidebar fixed on top when scrolling the page. (closes `#342`_).
+  [agnogueira]
+
 - Add ``short_name`` to all tiles.  Use this as title in the tile
   list.  This can be translated.
   [maurits]
@@ -319,3 +322,4 @@ There's a frood who really knows where his towel is
 .. _`#303`: https://github.com/collective/collective.cover/issues/303
 .. _`#314`: https://github.com/collective/collective.cover/issues/314
 .. _`#323`: https://github.com/collective/collective.cover/issues/323
+.. _`#342`: https://github.com/collective/collective.cover/issues/342
