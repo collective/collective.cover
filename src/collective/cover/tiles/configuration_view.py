@@ -47,7 +47,7 @@ class ConfigureTile(TileTraverser):
     targetInterface = ITileConfigureView
 
     def __call__(self):
-        raise KeyError("Please traverse to @@configure-tile/tilename/id")
+        raise KeyError('Please traverse to @@configure-tile/tilename/id')
 
     def publishTraverse(self, request, name):
         """Allow traversal to @@<view>/tilename/tileid
@@ -78,8 +78,7 @@ class DefaultConfigureForm(TileForm, form.Form):
     implements(IDefaultConfigureForm)
 
     mode = 'configure'
-
-    name = "configure_tile"
+    name = 'configure_tile'
 
     # Set during traversal
     tileType = None
@@ -157,7 +156,7 @@ class DefaultConfigureForm(TileForm, form.Form):
 
     @property
     def label(self):
-        return _(u"Configure ${name}", mapping={'name': self.tileType.title})
+        return _(u'Configure ${name}', mapping={'name': self.tileType.title})
 
     # Buttons/actions
 
@@ -190,7 +189,8 @@ class DefaultConfigureForm(TileForm, form.Form):
         notify(ObjectModifiedEvent(tile))
 
         # Get the tile URL, possibly with encoded data
-        IStatusMessage(self.request).addStatusMessage(_(u"Tile configuration saved.",), type=u'info')
+        IStatusMessage(self.request).addStatusMessage(
+            _(u'Tile configuration saved.'), type=u'info')
 
         self.request.response.redirect(layoutURL)
 
@@ -203,14 +203,15 @@ class DefaultConfigureForm(TileForm, form.Form):
         #notify(ObjectModifiedEvent(tile))
 
         # Get the tile URL, possibly with encoded data
-        IStatusMessage(self.request).addStatusMessage(_(u"Tile configuration cancelled.",), type=u'info')
+        IStatusMessage(self.request).addStatusMessage(
+            _(u'Tile configuration cancelled.'), type=u'info')
 
         self.request.response.redirect(layoutURL)
 
     def updateActions(self):
         super(DefaultConfigureForm, self).updateActions()
-        self.actions["save"].addClass("context")
-        self.actions["cancel"].addClass("standalone")
+        self.actions['save'].addClass('context')
+        self.actions['cancel'].addClass('standalone')
 
 
 class DefaultConfigureView(layout.FormWrapper):

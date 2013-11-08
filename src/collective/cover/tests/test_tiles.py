@@ -42,11 +42,11 @@ class PageLayoutTestCase(unittest.TestCase):
     def setUp(self):
         self.portal = self.layer['portal']
         self.request = self.layer['request']
-        self.name = u"collective.cover.carousel"
+        self.name = u'collective.cover.carousel'
         self.cover = self.portal['frontpage']
         self.tile = getMultiAdapter((self.cover, self.request), name=self.name)
         self.tile = self.tile['test']
-        self.view = self.cover.unrestrictedTraverse("@@layout")
+        self.view = self.cover.unrestrictedTraverse('@@layout')
 
     def test_is_droppable(self):
         self.assertTrue(self.view.tile_is_droppable('collective.cover.basic'))

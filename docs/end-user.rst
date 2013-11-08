@@ -1,7 +1,124 @@
+**********************
 End user documentation
 **********************
 
 .. contents:: Table of Contents
+
+Basic concepts
+--------------
+
+Tiles
+^^^^^
+
+Tiles are blocks of content used to compose pages. A standard installation of
+collective.cover includes the following tiles:
+
+Banner
+++++++
+
+A Banner tile shows an image or heading text pointing to a link; Banner tile
+fields include title, an image and a URL.
+
+You can drop any object into a Banner tile. Fields in the tile will be
+populated with the object metadata. All fields are user-editable and you can
+even upload a different image into the tile if you want.
+
+Basic
++++++
+
+A Basic tile shows almost all metadata of an object; it includes its title,
+description, date, tags and an image, if the object has one.
+
+You can drop any object into a Basic tile. Fields in the tile will be
+populated with the object metadata. All fields are user-editable (except for
+date and tags) and you can even upload a different image into the tile if you
+want. The title and image fields will include a link to the original object
+location.
+
+Carousel
+++++++++
+
+A Carousel tile shows a slideshow made with a list of individual items; every
+item will show an image, title and description. Carousel tiles are 100%
+responsive, support native-like swipe movements and use hardware optimized
+animations.
+
+You can drop any object in a Carousel tile. Right now, you can not edit
+individual items metadata in the carousel, but you can remove or reorder them.
+You can also specify if the carousel will start playing the slideshow
+automatically or not. Every item in the slideshow will have a link pointing
+back to the original object.
+
+Collection
+++++++++++
+
+A Collection tile shows a list of items resulting from a 'Collection'; every
+item will show its title, description, date and image, if the original object
+has one.
+
+Collection tiles may have a header and a footer; they also include additional
+fields that help us configure the way it behaves: you can define how many
+items the tile will shown as a maximun and an offset to start with items
+different than the first one. This way you can create very simple and yet
+powerful layout configurations with a couple of tiles and very few effort.
+
+You can only drop 'Collection' objects on a Collection tile. Right now, you
+can not edit individual items metadata directly in the tile. The title and
+image fields will include a link to the original object location.
+
+Content Body
+++++++++++++
+
+A Content Body tile shows a block of text of an object.
+
+You can only drop 'Document' and 'News Item' objects into a Content Body tile.
+Content Body tiles are not editable.
+
+Embed
++++++
+
+An Embed tile is used to embed external content in you cover page. Embed tile
+fields includes title, description and the embedding code itself.
+
+Embed tiles are only editable: you can not drop any object on it.
+
+File
+++++
+
+A File tile shows metadata about a file and a link to download it. File tile
+fields include title, description and the download link itself.
+
+You can only drop 'File' objects into a File tiles. Fields in the tile will be
+populated with the file metadata. All fields are user-editable, except for the
+download link.
+
+List
+++++
+
+A List tile shows a list of individual items; every item will show its title,
+description and image, if the original object has one.
+
+You can drop any object in a List tile. Items in the tile will be populated
+with the objects metadata; if an object has an image, it will be shown also.
+Right now, you can not edit individual items metadata in the list, but you can
+remove or reorder them. The title and image fields will include a link to the
+original object location.
+
+Rich Text
++++++++++
+
+A Rich Text tile shows a block of text; text can be edited using TinyMCE,
+Plone standard web-based WYSIWYG editor. A Rich Text tile includes only one
+text field.
+
+You can only drop 'Document' objects into a Rich Text tile. The text field
+will be populated with the object text. You can easily edit the text and you
+can add images and links to it. Rich Text tiles support link-integrity: a
+message will be shown if somebody tries to delete the object you are
+referencing on the tile, warning her there is a link pointing to that object.
+
+Using collective.cover
+----------------------
 
 Adding Cover
 ^^^^^^^^^^^^
@@ -10,7 +127,6 @@ Adding Cover
     :align: center
     :height: 312px
     :width: 367px
-
 
 You add a cover like you would any type of content in Plone:
 
@@ -100,7 +216,7 @@ locate existing content.
    according to the steps above.
 
 Editing a tile
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^
 
 .. figure:: https://raw.github.com/collective/collective.cover/master/docs/cover6.png
     :align: center

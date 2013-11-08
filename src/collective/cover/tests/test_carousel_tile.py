@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from collective.cover.testing import ALL_CONTENT_TYPES
 from collective.cover.testing import INTEGRATION_TESTING
 from collective.cover.tiles.base import IPersistentCoverTile
 from collective.cover.tiles.carousel import CarouselTile
@@ -18,7 +19,7 @@ class CarouselTileTestCase(unittest.TestCase):
     def setUp(self):
         self.portal = self.layer['portal']
         self.request = self.layer['request']
-        self.name = u"collective.cover.carousel"
+        self.name = u'collective.cover.carousel'
         self.cover = self.portal['frontpage']
         self.tile = getMultiAdapter((self.cover, self.request), name=self.name)
         self.tile = self.tile['test']
@@ -38,6 +39,9 @@ class CarouselTileTestCase(unittest.TestCase):
 
     def test_tile_is_empty(self):
         self.assertTrue(self.tile.is_empty())
+
+    def test_accepted_content_types(self):
+        self.assertEqual(self.tile.accepted_ct(), ALL_CONTENT_TYPES)
 
     def test_crud(self):
         # we start with an empty tile

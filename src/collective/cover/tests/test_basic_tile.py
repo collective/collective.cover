@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from collective.cover.testing import ALL_CONTENT_TYPES
 from collective.cover.testing import generate_jpeg
 from collective.cover.testing import images_are_equal
 from collective.cover.testing import INTEGRATION_TESTING
@@ -54,10 +55,7 @@ class BasicTileTestCase(unittest.TestCase):
         self.assertTrue(self.tile.is_droppable)
 
     def test_accepted_content_types(self):
-        self.assertEqual(
-            self.tile.accepted_ct(),
-            ['Collection', 'Document', 'File', 'Form Folder',
-             'Image', 'Link', 'News Item'])
+        self.assertEqual(self.tile.accepted_ct(), ALL_CONTENT_TYPES)
 
     def test_is_empty(self):
         self.assertTrue(self.tile.is_empty())
@@ -119,7 +117,7 @@ class BasicTileTestCase(unittest.TestCase):
 
     def test_render_empty(self):
         self.assertIn(
-            "Please drag&amp;drop some content here to populate the tile.",
+            'Please drag&amp;drop some content here to populate the tile.',
             self.tile())
 
     def test_render_title(self):
@@ -164,7 +162,7 @@ class BasicTileTestCase(unittest.TestCase):
 
         # the description must be there
         self.assertIn(
-            "This news item was created for testing purposes", rendered)
+            'This news item was created for testing purposes', rendered)
 
         # the localized time must be there
         utils = getMultiAdapter((self.portal, self.request), name=u'plone')
@@ -230,7 +228,7 @@ class BasicTileTestCase(unittest.TestCase):
     def test_image_traverser(self):
         obj = self.portal['my-image']
         data = self.tile.data
-        scales = queryMultiAdapter((obj, self.request), name="images")
+        scales = queryMultiAdapter((obj, self.request), name='images')
         self.tile.data['image'] = NamedImageFile(str(scales.scale('image').data))
         data_mgr = ITileDataManager(self.tile)
         data_mgr.set(data)
@@ -268,7 +266,7 @@ class BasicTileTestCase(unittest.TestCase):
 
         obj = self.portal['my-image']
         data = self.tile.data
-        scales = queryMultiAdapter((obj, self.request), name="images")
+        scales = queryMultiAdapter((obj, self.request), name='images')
         self.tile.data['image'] = NamedImageFile(str(scales.scale('image').data))
         data_mgr = ITileDataManager(self.tile)
         data_mgr.set(data)

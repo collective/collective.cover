@@ -33,8 +33,7 @@ class RichTextTileTestCase(unittest.TestCase):
         self.assertTrue(self.tile.is_droppable)
 
     def test_accepted_content_types(self):
-        self.assertEqual(self.tile.accepted_ct(),
-                         ['Document', ])
+        self.assertEqual(self.tile.accepted_ct(), ['Document'])
 
     def test_populate_with_object(self):
         self.tile.populate_with_object(self.portal['my-document'])
@@ -42,11 +41,11 @@ class RichTextTileTestCase(unittest.TestCase):
 
     def test_render_empty(self):
         self.assertTrue(
-            "Please edit the tile to enter some text." in self.tile())
+            'Please edit the tile to enter some text.' in self.tile())
 
     def test_render(self):
         obj = self.portal['my-document']
         obj.setText('<p>My document text...</p>')
         self.tile.populate_with_object(obj)
         rendered = self.tile()
-        self.assertTrue("<p>My document text...</p>" in rendered)
+        self.assertTrue('<p>My document text...</p>' in rendered)

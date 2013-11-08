@@ -7,7 +7,7 @@
       tal:omit-tag="">
 <body tal:omit-tag="">
 
-    <tal:mode define="mode options/mode;">
+    <tal:mode define="mode python:options.get('mode', 'view');">
         <tal:section repeat="section python:view.get_layout(mode)">
             <div tal:replace="structure python:view.render_section(section, mode)" />
         </tal:section>

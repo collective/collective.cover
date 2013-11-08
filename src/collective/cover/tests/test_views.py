@@ -68,7 +68,7 @@ class ConfigurationViewTestCase(unittest.TestCase):
         self.request = self.layer['request']
 
     def test_configure_tile(self):
-        traversal = self.portal.unrestrictedTraverse("@@configure-tile")
+        traversal = self.portal.unrestrictedTraverse('@@configure-tile')
         self.assertIsNone(traversal.view)
 
         with self.assertRaises(KeyError):

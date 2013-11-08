@@ -63,20 +63,27 @@ How to develop a tile for collective.cover
 Follow instructions in David Glick's `Using tiles to provide more flexible
 Plone layouts`_ to understand how to develop tiles, and how they work.
 
-Instead of inheriting from plone.tiles.PersistentTile, inherit from
-``collective.cover.tile.base.PersistentCoverTile``.
+Instead of inheriting from ``zope.interface.Interface``, the tile data
+interface class should inherit from
+``collective.cover.tile.base.IPersistentCoverTile``
+
+Instead of inheriting from ``plone.tiles.PersistentTile``, the tile
+must inherit from ``collective.cover.tile.base.PersistentCoverTile``.
 
 Register your tile on the registry using the "plone.app.tiles" record::
 
+  <?xml version="1.0"?>
+  <registry>
     <record name="plone.app.tiles">
       <value purge="false">
         <element>my.package.mytile</element>
       </value>
     </record>
+  </registry>
 
 There are a couple of methods defined in this base class that provide
-additional functionality expected by the cover object, that you should
-override in your class:
+additional functionality expected by the cover object, that you may
+need to override in your class, if your use case requires it:
 
 **populate_with_object(obj)**
     It takes a Plone content object as parameter, and it will store the
@@ -169,3 +176,6 @@ content with an image into a cover tile than implements an image field, cover
 will honor the image and scales in the original object. This way the image
 data isn't duplicated and products than allow scales modifications are
 supported.
+
+
+.. _`Using tiles to provide more flexible Plone layouts`: http://glicksoftware.com/blog/using-tiles-to-provide-more-flexible-plone-layouts

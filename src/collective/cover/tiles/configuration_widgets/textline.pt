@@ -47,21 +47,35 @@
                             accesskey view/accesskey|nothing;"/>
         </div>
 
-        <span i18n:translate="">HTML tag</span>
-        <select id="" name="" class=""
-            tabindex="" accesskey=""
-            tal:attributes="id string:${view/id}-htmltag;
-                            name string:${view/name}.htmltag;
-                            class view/klass;
-                            tabindex view/tabindex;
-                            accesskey view/accesskey|nothing;"
-            tal:define="values python:['h1', 'h2', 'h3', 'h4']">
+        <tal:if condition="python: isinstance (view.field, modules['zope.schema'].Int)">
+          <span i18n:translate="">Position</span>
+          <input type="text" id="" name="" class="" size="2"
+                 tabindex="" accesskey=""
+                 tal:attributes="id string:${view/id}-offset;
+                                 name string:${view/name}.offset;
+                                 class view/klass;
+                                 tabindex view/tabindex;
+                                 value python:stored_data.get('offset', None);
+                                 accesskey view/accesskey|nothing;"/>
+        </tal:if>
+
+        <tal:if condition="python: isinstance (view.field, modules['zope.schema'].TextLine)">
+          <span i18n:translate="">HTML tag</span>
+          <select id="" name="" class=""
+                  tabindex="" accesskey=""
+                  tal:attributes="id string:${view/id}-htmltag;
+                                  name string:${view/name}.htmltag;
+                                  class view/klass;
+                                  tabindex view/tabindex;
+                                  accesskey view/accesskey|nothing;"
+                  tal:define="values python:['h1', 'h2', 'h3', 'h4']">
 
             <option tal:repeat="value values"
                     tal:attributes="value value;
                                     selected python:stored_data.get('htmltag', None) == value and 'selected' or None"
                     tal:content="python:value.upper()">HTML TAG</option>
-        </select>
+          </select>
+        </tal:if>
 
     </tal:stored_data>
 </html>

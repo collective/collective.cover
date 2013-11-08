@@ -10,6 +10,7 @@ from zope.interface import Interface
 from zope.schema import getFieldNamesInOrder
 from zope.schema import getFieldsInOrder
 from zope.schema.interfaces import ITextLine
+from zope.schema.interfaces import IInt
 
 
 ANNOTATIONS_KEY_PREFIX = u'plone.tiles.configuration'
@@ -19,7 +20,14 @@ class ITilesConfigurationScreen(Interface):
 
     def _set_default_configuration():
         """Return a default configuration based on fields defined on the
-        schema; all fields must have, at least, the following attributes:
+        schema.
+
+        This should be a dictionary.  But, we have at least one
+        exception: the css_class field simply has a string.  This
+        might change in the future if this bites us.
+
+        All fields with dictionaries must have, at least, the
+        following attributes:
 
         visibility: (u'on', u'off')
             is the field visible? defaults to u'on'
@@ -46,7 +54,8 @@ class ITilesConfigurationScreen(Interface):
 
         final result will be something like this:
 
-        {'date': {'order': u'3', 'visibility': u'on'},
+        {'css_class': u'tile_default',
+         'date': {'order': u'3', 'visibility': u'on'},
          'description': {'order': u'1', 'visibility': u'on'},
          'image': {'imgsize': u'mini 200:200',
                    'order': u'2',
@@ -56,8 +65,8 @@ class ITilesConfigurationScreen(Interface):
          'title': {'htmltag': u'h2', 'order': u'0', 'visibility': u'on'},
          'uuid': {'htmltag': u'h2', 'order': u'5', 'visibility': u'on'}}
 
-        obviously some of the fields are not ment to be displayed, but that's
-        another story.
+        Obviously some of the fields are not meant to be displayed,
+        like css_class, but that's another story.
         """
 
     def get_configuration():
@@ -109,6 +118,8 @@ class TilesConfigurationScreen(object):
                 # field is an image, we should add 'position' and 'imgsize'
                 defaults[name]['position'] = u'left'
                 defaults[name]['imgsize'] = u'mini 200:200'
+            elif IInt.providedBy(field):
+                defaults[name][name] = field.default
 
         return defaults
 
