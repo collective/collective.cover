@@ -26,13 +26,13 @@ class TilesTestCase(unittest.TestCase):
         qi = self.portal['portal_quickinstaller']
         qi.uninstallProducts(products=[PROJECTNAME])
         tiles = self.registry['plone.app.tiles']
-        self.assertTrue(u'collective.cover.basic' not in tiles)
-        self.assertTrue(u'collective.cover.carousel' not in tiles)
-        self.assertTrue(u'collective.cover.collection' not in tiles)
-        self.assertTrue(u'collective.cover.embed' not in tiles)
-        self.assertTrue(u'collective.cover.file' not in tiles)
-        self.assertTrue(u'collective.cover.list' not in tiles)
-        self.assertTrue(u'collective.cover.richtext' not in tiles)
+        self.assertNotIn(u'collective.cover.basic', tiles)
+        self.assertNotIn(u'collective.cover.carousel', tiles)
+        self.assertNotIn(u'collective.cover.collection', tiles)
+        self.assertNotIn(u'collective.cover.embed', tiles)
+        self.assertNotIn(u'collective.cover.file', tiles)
+        self.assertNotIn(u'collective.cover.list', tiles)
+        self.assertNotIn(u'collective.cover.richtext', tiles)
 
 
 class PageLayoutTestCase(unittest.TestCase):
