@@ -215,8 +215,8 @@ class GridPlug(grok.View):
     grok.name('grid_plug')
     grok.require('zope2.View')
 
-    row_class = 'row'
-    column_class = 'cell'
+    row_class = 'c-row'
+    column_class = 'c-cell'
 
     def transform(self, layout):
         for element in layout:
@@ -233,8 +233,8 @@ class GridPlug(grok.View):
 
     def columns_formater(self, columns):
         #this formater works for deco, but you can implemente a custom one, for you grid system
-        w = 'width-'
-        p = 'position-'
+        w = 'cw-'
+        p = 'cp-'
         offset = 0
         for column in columns:
             width = column['data']['column-size'] if 'data' in column else 1
