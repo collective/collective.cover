@@ -35,19 +35,19 @@ class CoverIntegrationTestCase(unittest.TestCase):
         self.assertTrue(ICover.providedBy(self.c1))
 
     def test_fti(self):
-        fti = queryUtility(IDexterityFTI,
-                           name='collective.cover.content')
-        self.assertNotEqual(None, fti)
+        fti = queryUtility(
+            IDexterityFTI, name='collective.cover.content')
+        self.assertIsNotNone(fti)
 
     def test_schema(self):
-        fti = queryUtility(IDexterityFTI,
-                           name='collective.cover.content')
+        fti = queryUtility(
+            IDexterityFTI, name='collective.cover.content')
         schema = fti.lookupSchema()
         self.assertEqual(ICover, schema)
 
     def test_factory(self):
-        fti = queryUtility(IDexterityFTI,
-                           name='collective.cover.content')
+        fti = queryUtility(
+            IDexterityFTI, name='collective.cover.content')
         factory = fti.factory
         new_object = createObject(factory)
         self.assertTrue(ICover.providedBy(new_object))
@@ -67,7 +67,7 @@ class CoverIntegrationTestCase(unittest.TestCase):
 
     def test_cover_selectable_as_folder_default_view(self):
         self.folder.setDefaultPage('c1')
-        self.assertEqual(self.folder.default_page, 'c1')
+        self.assertEqual(self.folder.getDefaultPage(), 'c1')
 
     def test_export_permission(self):
         # layout export is visible for user with administrative rights

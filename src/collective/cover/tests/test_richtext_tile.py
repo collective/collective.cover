@@ -37,15 +37,14 @@ class RichTextTileTestCase(unittest.TestCase):
 
     def test_populate_with_object(self):
         self.tile.populate_with_object(self.portal['my-document'])
-        self.assertEqual('', self.tile.getText())
+        self.assertEqual(self.tile.getText(), '')
 
     def test_render_empty(self):
-        self.assertTrue(
-            'Please edit the tile to enter some text.' in self.tile())
+        self.assertIn('Please edit the tile to enter some text.', self.tile())
 
     def test_render(self):
         obj = self.portal['my-document']
         obj.setText('<p>My document text...</p>')
         self.tile.populate_with_object(obj)
         rendered = self.tile()
-        self.assertTrue('<p>My document text...</p>' in rendered)
+        self.assertIn('<p>My document text...</p>', rendered)

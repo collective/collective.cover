@@ -57,8 +57,8 @@ class CarouselTileTestCase(unittest.TestCase):
         tile = getMultiAdapter((self.cover, self.request), name=self.name)
         tile = tile['test']
         self.assertEqual(len(tile.results()), 2)
-        self.assertTrue(obj1 in tile.results())
-        self.assertTrue(obj2 in tile.results())
+        self.assertIn(obj1, tile.results())
+        self.assertIn(obj2, tile.results())
 
         # next, we replace the list of objects with a different one
         obj3 = self.portal['my-news-item']
@@ -66,9 +66,9 @@ class CarouselTileTestCase(unittest.TestCase):
         # tile's data attributed is cached so we should re-instantiate the tile
         tile = getMultiAdapter((self.cover, self.request), name=self.name)
         tile = tile['test']
-        self.assertTrue(obj1 not in tile.results())
-        self.assertTrue(obj2 not in tile.results())
-        self.assertTrue(obj3 in tile.results())
+        self.assertNotIn(obj1, tile.results())
+        self.assertNotIn(obj2, tile.results())
+        self.assertIn(obj3, tile.results())
 
         # finally, we remove it from the list; the tile must be empty again
         tile.remove_item(obj3.UID())
