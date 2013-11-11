@@ -4,6 +4,9 @@ There's a frood who really knows where his towel is
 1.0a6 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Fix image positioning in basic tile. (closes `#317`_).
+  [agnogueira]
+
 - Let the icons sidebar fixed on top when scrolling the page. (closes `#342`_).
   [agnogueira]
 
@@ -323,3 +326,4 @@ There's a frood who really knows where his towel is
 .. _`#314`: https://github.com/collective/collective.cover/issues/314
 .. _`#323`: https://github.com/collective/collective.cover/issues/323
 .. _`#342`: https://github.com/collective/collective.cover/issues/342
+.. _`#342`: https://github.com/collective/collective.cover/issues/317
