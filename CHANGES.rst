@@ -1,13 +1,16 @@
+Changelog
+---------
+
 There's a frood who really knows where his towel is
----------------------------------------------------
 
 1.0a6 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
-- Fix image positioning in basic tile. (closes `#317`_).
-  [agnogueira]
+- Fix image positioning on collection tile (closes `#318`_). [hvelarde]
 
-- Let the icons sidebar fixed on top when scrolling the page. (closes `#342`_).
+- Fix image positioning on basic tile (closes `#317`_). [agnogueira]
+
+- Let the icons sidebar fixed on top when scrolling the page (closes `#342`_).
   [agnogueira]
 
 - Add ``short_name`` to all tiles.  Use this as title in the tile
@@ -324,6 +327,7 @@ There's a frood who really knows where his towel is
 .. _`#301`: https://github.com/collective/collective.cover/issues/301
 .. _`#303`: https://github.com/collective/collective.cover/issues/303
 .. _`#314`: https://github.com/collective/collective.cover/issues/314
+.. _`#317`: https://github.com/collective/collective.cover/issues/317
+.. _`#318`: https://github.com/collective/collective.cover/issues/318
 .. _`#323`: https://github.com/collective/collective.cover/issues/323
 .. _`#342`: https://github.com/collective/collective.cover/issues/342
-.. _`#342`: https://github.com/collective/collective.cover/issues/317
