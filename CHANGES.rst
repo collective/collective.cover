@@ -6,6 +6,11 @@ There's a frood who really knows where his towel is
 1.0a6 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- List tile is now configurable: you can set ordering and visibility for all
+  fields and you can also set the preferred style for the title and the scale
+  and alignment for the image thumbnail; the date of the items was also added
+  (fixes `#339`_). [hvelarde]
+
 - Fix image positioning on collection tile (closes `#318`_). [hvelarde]
 
 - Fix image positioning on basic tile (closes `#317`_). [agnogueira]
@@ -330,4 +335,5 @@ There's a frood who really knows where his towel is
 .. _`#317`: https://github.com/collective/collective.cover/issues/317
 .. _`#318`: https://github.com/collective/collective.cover/issues/318
 .. _`#323`: https://github.com/collective/collective.cover/issues/323
+.. _`#339`: https://github.com/collective/collective.cover/issues/339
 .. _`#342`: https://github.com/collective/collective.cover/issues/342
