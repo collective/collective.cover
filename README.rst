@@ -60,10 +60,16 @@ Mostly Harmless
    `#81`_ and `#112`_ for more information.
 
 .. image:: https://secure.travis-ci.org/collective/collective.cover.png?branch=master
+    :alt: Travis CI badge
     :target: http://travis-ci.org/collective/collective.cover
 
 .. image:: https://coveralls.io/repos/collective/collective.cover/badge.png?branch=master
+    :alt: Coveralls badge
     :target: https://coveralls.io/r/collective/collective.cover
+
+.. image:: https://d2weczhvl823v0.cloudfront.net/collective/collective.cover/trend.png
+    :alt: Bitdeli badge
+    :target: https://bitdeli.com/free
 
 Got an idea? Found a bug? Let us know by `opening a support ticket`_.
 
