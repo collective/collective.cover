@@ -32,7 +32,7 @@ class ICover(form.Schema):
     """
     Composable page
     """
-    form.model("models/cover.xml")
+    form.model('models/cover.xml')
 
 
 class Cover(Item):
@@ -44,10 +44,17 @@ class Cover(Item):
     implements(IDAVAware)
 
 
+# TODO: move browser views to browser folder
 class View(grok.View):
     grok.context(ICover)
     grok.require('zope2.View')
     grok.name('view')
+
+
+class Standard(grok.View):
+    grok.context(ICover)
+    grok.require('zope2.View')
+    grok.name('standard')
 
 
 class AddCTWidget(grok.View):
@@ -126,7 +133,7 @@ class RemoveTileWidget(grok.View):
     # XXX: This should be part of the plone.app.tiles package or similar
     grok.context(ICover)
     grok.require('cmf.ModifyPortalContent')
-    grok.name("removetilewidget")
+    grok.name('removetilewidget')
 
     def __call__(self):
         template = self.template
@@ -180,13 +187,18 @@ class LayoutEdit(grok.View):
 
                 settings = registry.forInterface(ICoverSettings)
 
-                settings.layouts[name] = unicode(layout)
+                # Store name and layout as unicode.  Note that the
+                # name must only contain ascii because it is used as
+                # value for a vocabulary.
+                name = name.decode('ascii', 'ignore')
+                layout = layout.decode('utf-8')
+                settings.layouts[name] = layout
 
         return super(LayoutEdit, self).__call__()
 
     def can_export_layout(self):
         sm = getSecurityManager()
-        portal = getToolByName(self.context, "portal_url").getPortalObject()
+        portal = getToolByName(self.context, 'portal_url').getPortalObject()
         # TODO: check permission locally and not in portal context
         return sm.checkPermission('collective.cover: Can Export Layout', portal)
 
@@ -202,7 +214,7 @@ class UpdateTileContent(grok.View):
         tile_id = self.request.form.get('tile-id')
         uid = self.request.form.get('uid')
 
-        html = ""
+        html = ''
         if tile_type and tile_id and uid:
 
             tile = self.context.restrictedTraverse(tile_type)
@@ -246,7 +258,7 @@ class UpdateListTileContent(grok.View):
         tile_type = self.request.form.get('tile-type')
         tile_id = self.request.form.get('tile-id')
         uids = self.request.form.get('uids[]')
-        html = ""
+        html = ''
         if tile_type and tile_id and uids:
             tile = self.context.restrictedTraverse(tile_type)
             tile_instance = tile[tile_id]
@@ -270,7 +282,7 @@ class RemoveItemFromListTile(grok.View):
         tile_type = self.request.form.get('tile-type')
         tile_id = self.request.form.get('tile-id')
         uid = self.request.form.get('uid')
-        html = ""
+        html = ''
         if tile_type and tile_id and uid:
             tile = self.context.restrictedTraverse(tile_type)
             tile_instance = tile[tile_id]

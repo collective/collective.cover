@@ -2,13 +2,14 @@
     xmlns="http://namespaces.zope.org/zope"
     xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
     xmlns:i18n="http://namespaces.zope.org/i18n"
-    i18n_domain="collective.cover">
+    i18n_domain="collective.cover"
+    >
 
   <genericsetup:registerProfile
       name="default"
       title="collective.cover"
       directory="profiles/default"
-      description="An easy-to-use package to create complex cover pages for Plone sites."
+      description="A sane, working, editor-friendly way of creating front pages and other composite pages. Working now, for mere mortals."
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
 
@@ -28,105 +29,23 @@
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
 
-  <genericsetup:upgradeStep
-      title="Upgrade cover to Plone 4.3"
-      source="1"
-      destination="2"
-      description="Install plone.app.relationfield"
-      handler="collective.cover.setuphandlers.to_plone43"
+  <genericsetup:upgradeSteps
+      source="5"
+      destination="6"
       profile="collective.cover:default"
-      />
+      >
 
-  <genericsetup:registerProfile
-      name="upgrade_2_to_3"
-      title="collective.cover: upgrade_2_to_3"
-      directory="profiles/upgrade_2_to_3"
-      description="Upgrade steps from 2 to 3."
-      provides="Products.GenericSetup.interfaces.EXTENSION"
-      />
+    <genericsetup:upgradeStep
+        title="issue_201"
+        description="Depend on collective.js.bootstrap."
+        handler=".upgrades.issue_201"
+        />
 
-  <genericsetup:upgradeSteps
-      source="2"
-      destination="3"
-      profile="collective.cover:default">
-
-      <genericsetup:upgradeStep
-          title="Rename resources"
-          description="Renames the screenlets resources to contentchooser"
-          handler=".upgrades.rename_content_chooser_resources"
-          />
-
-      <genericsetup:upgradeStep
-          title="Update registry"
-          description="Update the registry to register the available_tiles record"
-          handler=".upgrades.register_available_tiles_record"
-          />
-
-  </genericsetup:upgradeSteps>
-
-  <genericsetup:registerProfile
-      name="upgrade_3_to_4"
-      title="collective.cover: upgrade_3_to_4"
-      directory="profiles/upgrade_3_to_4"
-      description="Upgrade steps from 3 to 4."
-      provides="Products.GenericSetup.interfaces.EXTENSION"
-      />
-
-  <genericsetup:upgradeSteps
-      source="3"
-      destination="4"
-      profile="collective.cover:default">
-
-      <genericsetup:upgradeStep
-          title="Update registry"
-          description="Update the registry to register the 'styles' record"
-          handler=".upgrades.register_styles_record"
-          />
-
-      <genericsetup:upgradeStep
-          title="Unregister image and link tiles"
-          description="see: https://github.com/collective/collective.cover/issues/218"
-          handler=".upgrades.issue_218"
-          />
-
-  </genericsetup:upgradeSteps>
-
-  <genericsetup:registerProfile
-      name="upgrade_4_to_5"
-      title="collective.cver: upgrade_4_to_5"
-      directory="profiles/upgrade_4_to_5"
-      description="Upgrade steps from 4 to 5."
-      provides="Products.GenericSetup.interfaces.EXTENSION"
-      />
-
-  <genericsetup:upgradeSteps
-      source="4"
-      destination="5"
-      profile="collective.cover:default">
-
-      <genericsetup:upgradeStep
-          title="Solves issue 244"
-          description="Add cover.css to css_registry"
-          handler=".upgrades.issue_244"
-          />
-
-      <genericsetup:upgradeStep
-          title="Update registry styles record"
-          description="Update the registry 'styles' record"
-          handler=".upgrades.update_styles_record_4_5"
-          />
-
-      <genericsetup:upgradeStep
-          title="Solves issue 262"
-          description="New default value for css_class"
-          handler=".upgrades.set_new_default_class_4_5"
-          />
-
-      <genericsetup:upgradeStep
-          title="Add Cover as Linkable in TinyMCE settings"
-          description="Cover is now linkable"
-          handler=".upgrades.tinymce_linkable"
-          />
+    <genericsetup:upgradeStep
+        title="issue_303"
+        description="Remove unused bundles from portal_javascript."
+        handler=".upgrades.issue_303"
+        />
 
   </genericsetup:upgradeSteps>
 

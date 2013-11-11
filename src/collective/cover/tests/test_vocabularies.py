@@ -43,9 +43,6 @@ class VocabulariesTestCase(unittest.TestCase):
         self.assertIn(u'collective.cover.file', tiles)
         self.assertIn(u'collective.cover.list', tiles)
         self.assertIn(u'collective.cover.richtext', tiles)
-        # XXX: tiles are now deprecated
-        self.assertNotIn(u'collective.cover.image', tiles)
-        self.assertNotIn(u'collective.cover.link', tiles)
 
     def test_enabled_tiles_vocabulary(self):
         name = u'collective.cover.EnabledTiles'
@@ -64,9 +61,6 @@ class VocabulariesTestCase(unittest.TestCase):
         self.assertIn(u'collective.cover.richtext', tiles)
         # FIXME see: https://github.com/collective/collective.cover/issues/194
         self.assertIn(u'collective.cover.pfg', tiles)
-        # XXX: tiles are now deprecated
-        self.assertNotIn(u'collective.cover.image', tiles)
-        self.assertNotIn(u'collective.cover.link', tiles)
         # XXX: https://github.com/collective/collective.cover/issues/81
         # standard tiles are not enabled... yet
         self.assertNotIn(u'plone.app.imagetile', tiles)
@@ -88,7 +82,7 @@ class VocabulariesTestCase(unittest.TestCase):
         # and the default u"tile-default" style is always first
         styles = vocabulary(self.portal)
         self.assertEqual(len(styles), 4)
-        self.assertEqual(styles.by_value.keys()[0], u"tile-default")
+        self.assertEqual(styles.by_value.keys()[0], u'tile-default')
         # let's try to put some other values on it
         registry = getUtility(IRegistry)
         settings = registry.forInterface(ICoverSettings)
@@ -102,10 +96,10 @@ class VocabulariesTestCase(unittest.TestCase):
 
         # although default style is not set, vocabulary inserts it first
         self.assertEqual(len(styles), 4)
-        self.assertEqual(styles.by_value.keys()[0], u"tile-default")
+        self.assertEqual(styles.by_value.keys()[0], u'tile-default')
         # adding a couple of not well formatted items result in no option
         # (except for the default one)
         settings.styles = set(['not well formated'])
         styles = vocabulary(self.portal)
         self.assertEqual(len(styles), 1)
-        self.assertEqual(styles.by_value.keys()[0], u"tile-default")
+        self.assertEqual(styles.by_value.keys()[0], u'tile-default')

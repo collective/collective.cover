@@ -10,16 +10,14 @@
   </p>
 
   <!-- FIXME: this should be configurable -->
-  <div class="sortable-tile cover-list-tile" tal:condition="not: is_empty">
+  <div class="sortable-tile cover-list-tile tile-content" tal:condition="not: is_empty">
     <tal:items repeat="item view/results"
                define="toLocalizedTime nocall:context/@@plone/toLocalizedTime">
       <div style="position:relative"
            tal:attributes="data-uid python:view.get_uid(item)">
         <tal:image tal:define="thumbnail python:view.thumbnail(item);"
                    condition="thumbnail">
-          <a tal:attributes="href item/absolute_url;
-                             title item/Description;
-                             alt item/Description">
+          <a tal:attributes="href item/absolute_url;">
             <!-- XXX -->
             <img style="float: left; margin: 0 1em 0.5em 0;"
                  tal:attributes="alt item/Description;
@@ -30,11 +28,11 @@
         </tal:image>
 
         <tal:title>
-          <!-- FIXME: a tag should be inside h tag -->
-          <a tal:attributes="href item/absolute_url;
-                             title item/Description">
-            <h1 tal:content="item/Title" />
-          </a>
+          
+          <h1>
+            <a tal:attributes="href item/absolute_url"
+               tal:content="item/Title" />
+          </h1>
         </tal:title>
 
         <p tal:content="item/Description" />

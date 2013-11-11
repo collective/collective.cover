@@ -47,19 +47,47 @@ class FileTileTestCase(unittest.TestCase):
     def test_tile_is_empty(self):
         self.assertTrue(self.tile.is_empty())
 
-    def test_populate_tile_with_object(self):
+    def test_populate_tile_with_object_unicode(self):
+        """We must store unicode always on schema.TextLine and schema.Text
+        fields to avoid UnicodeDecodeError.
+        """
+        title = u'παν γράμμα'
+        description = u'El veloz murciélago hindú comía feliz cardillo y kiwi'
         obj = self.portal['my-file']
+        obj.setTitle(title)
+        obj.setDescription(description)
+        obj.reindexObject()
         self.tile.populate_with_object(obj)
+        self.assertEqual(self.tile.data.get('title'), title)
+        self.assertEqual(self.tile.data.get('description'), description)
+        self.assertEqual(self.tile.data.get('uuid'), IUUID(obj))
+        self.assertIsInstance(self.tile.data.get('title'), unicode)
+        self.assertIsInstance(self.tile.data.get('description'), unicode)
 
-        self.assertEqual(self.tile.data.get('title'), obj.Title())
-        self.assertEqual(self.tile.data.get('description'), obj.Description())
+    def test_populate_tile_with_object_string(self):
+        """This test complements test_populate_with_object_unicode
+        using strings instead of unicode objects.
+        """
+        title = 'Pangram'
+        description = 'The quick brown fox jumps over the lazy dog'
+        obj = self.portal['my-file']
+        obj.setTitle(title)
+        obj.setDescription(description)
+        obj.reindexObject()
+        self.tile.populate_with_object(obj)
+        self.assertEqual(
+            unicode(title, 'utf-8'),
+            self.tile.data.get('title')
+        )
+        self.assertEqual(
+            unicode(description, 'utf-8'),
+            self.tile.data.get('description')
+        )
         self.assertEqual(self.tile.data.get('uuid'), IUUID(obj))
 
     def test_populate_tile_with_invalid_object(self):
         obj = self.portal['my-document']
         self.tile.populate_with_object(obj)
-
-        # tile must be still empty
         self.assertTrue(self.tile.is_empty())
 
     def test_accepted_content_types(self):
@@ -69,27 +97,24 @@ class FileTileTestCase(unittest.TestCase):
         obj = self.portal['my-file']
         self.tile.populate_with_object(obj)
         rendered = self.tile()
-        self.assertTrue('Download file' in rendered)
-        self.assertTrue('My file' in rendered)
-        self.assertTrue(
-            "This file was created for testing purposes" in rendered)
+        self.assertIn('Download file', rendered)
+        self.assertIn('My file', rendered)
+        self.assertIn('This file was created for testing purposes', rendered)
 
     def test_render_kB_file(self):
         obj = self.portal['my-file']
         obj.setFile('0' * 1024)
         self.tile.populate_with_object(obj)
         rendered = self.tile()
-        self.assertTrue('1 kB (1024 bytes)' in rendered)
-        self.assertTrue('My file' in rendered)
-        self.assertTrue(
-            "This file was created for testing purposes" in rendered)
+        self.assertIn('1 kB (1024 bytes)', rendered)
+        self.assertIn('My file', rendered)
+        self.assertIn('This file was created for testing purposes', rendered)
 
     def test_render_MB_file(self):
         obj = self.portal['my-file']
         obj.setFile('0' * 1048576)
         self.tile.populate_with_object(obj)
         rendered = self.tile()
-        self.assertTrue('1 MB (1048576 bytes)' in rendered)
-        self.assertTrue('My file' in rendered)
-        self.assertTrue(
-            "This file was created for testing purposes" in rendered)
+        self.assertIn('1 MB (1048576 bytes)', rendered)
+        self.assertIn('My file', rendered)
+        self.assertIn('This file was created for testing purposes', rendered)

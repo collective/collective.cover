@@ -6,10 +6,12 @@ from collective.cover.tiles.base import PersistentCoverTile
 from collective.cover.tiles.configuration_view import IDefaultConfigureForm
 from plone.app.uuid.utils import uuidToObject
 from plone.directives import form
+from plone.memoize import view
 from plone.namedfile.field import NamedBlobImage as NamedImage
 from plone.tiles.interfaces import ITileDataManager
 from plone.tiles.interfaces import ITileType
 from plone.uuid.interfaces import IUUID
+from Products.CMFPlone.utils import safe_unicode
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zope import schema
 from zope.component import queryUtility
@@ -60,6 +62,14 @@ class ICollectionTile(IPersistentCoverTile, form.Schema):
         required=False,
     )
 
+    form.omitted('offset')
+    form.no_omit(IDefaultConfigureForm, 'offset')
+    offset = schema.Int(
+        title=_(u'Start at item'),
+        required=False,
+        default=0,
+    )
+
     footer = schema.TextLine(
         title=_(u'Footer'),
         required=False,
@@ -73,29 +83,37 @@ class ICollectionTile(IPersistentCoverTile, form.Schema):
 
 class CollectionTile(PersistentCoverTile):
 
-    index = ViewPageTemplateFile("templates/collection.pt")
+    index = ViewPageTemplateFile('templates/collection.pt')
 
     is_configurable = True
     is_editable = True
-    configured_fields = {}
+    short_name = _(u'msg_short_name_collection', default=u'Collection')
+    configured_fields = []
 
     def get_title(self):
         return self.data['title']
 
     def results(self):
         self.configured_fields = self.get_configured_fields()
+        size_conf = [i for i in self.configured_fields if i['id'] == 'number_to_show']
 
-        size_conf = self.configured_fields['number_to_show']
-
-        if size_conf and 'size' in size_conf.keys():
-            size = int(size_conf['size'])
+        if size_conf and 'size' in size_conf[0].keys():
+            size = int(size_conf[0]['size'])
         else:
             size = 4
+
+        offset = 0
+        offset_conf = [i for i in self.configured_fields if i['id'] == 'offset']
+        if offset_conf:
+            try:
+                offset = int(offset_conf[0].get('offset', 0))
+            except ValueError:
+                offset = 0
 
         uuid = self.data.get('uuid', None)
         obj = uuidToObject(uuid)
         if uuid and obj:
-            return obj.results(batch=False)[:size]
+            return obj.results(batch=False)[offset:offset + size]
         else:
             self.remove_relation()
             return []
@@ -108,7 +126,7 @@ class CollectionTile(PersistentCoverTile):
         super(CollectionTile, self).populate_with_object(obj)  # check permission
 
         if obj.portal_type in self.accepted_ct():
-            header = obj.Title()  # use collection's title as header
+            header = safe_unicode(obj.Title())  # use collection's title as header
             footer = _(u'More…')  # XXX: can we use field's default?
             uuid = IUUID(obj)
 
@@ -120,7 +138,7 @@ class CollectionTile(PersistentCoverTile):
             })
 
     def accepted_ct(self):
-        """ Return a list of content types accepted by the tile.
+        """Return 'Collection' as the only content type acceptedin the tile.
         """
         return ['Collection']
 
@@ -132,9 +150,10 @@ class CollectionTile(PersistentCoverTile):
 
         fields = getFieldsInOrder(tileType.schema)
 
-        results = {}
+        results = []
         for name, obj in fields:
-            field = {'title': obj.title}
+            field = {'id': name,
+                     'title': obj.title}
             if name in conf:
                 field_conf = conf[name]
                 if ('visibility' in field_conf and field_conf['visibility'] == u'off'):
@@ -153,19 +172,36 @@ class CollectionTile(PersistentCoverTile):
                 if 'size' in field_conf:
                     field['size'] = field_conf['size']
 
-            results[name] = field
+                if 'offset' in field_conf:
+                    field['offset'] = field_conf['offset']
+
+            results.append(field)
 
         return results
 
     def thumbnail(self, item):
+        """Return a thumbnail of an image if the item has an image field and
+        the field is visible in the tile.
+
+        :param item: [required]
+        :type item: content object
+        """
+        if self._has_image_field(item) and self._field_is_visible('image'):
+            tile_conf = self.get_tile_configuration()
+            image_conf = tile_conf.get('image', None)
+            if image_conf:
+                scaleconf = image_conf['imgsize']
+                # scale string is something like: 'mini 200:200'
+                scale = scaleconf.split(' ')[0]  # we need the name only: 'mini'
+                scales = item.restrictedTraverse('@@images')
+                return scales.scale('image', scale)
+
+    @view.memoize
+    def get_image_position(self):
         tile_conf = self.get_tile_configuration()
         image_conf = tile_conf.get('image', None)
-        scales = item.restrictedTraverse('@@images')
         if image_conf:
-            scaleconf = image_conf['imgsize']
-            # scale string is something like: 'mini 200:200'
-            scale = scaleconf.split(' ')[0]  # we need the name only: 'mini'
-            return scales.scale('image', scale)
+            return image_conf['position']
 
     def remove_relation(self):
         data_mgr = ITileDataManager(self)

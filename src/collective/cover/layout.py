@@ -93,24 +93,24 @@ class PageLayout(grok.View):
     def can_compose_tile_class(self, tile_type, tile_id):
         tile = self.context.restrictedTraverse('{0}/{1}'.format(str(tile_type), str(tile_id)))
         if not tile.isAllowedToEdit():
-            return "disabled"
+            return 'disabled'
         else:
-            return ""
+            return ''
 
     def render_view(self):
         # XXX: There *must* be a better way of doing this, maybe write it
         #      in the request ? sending it as parameter is way too ugly
-        return self.pagelayout(mode="view")
+        return self.pagelayout(mode='view')
 
     def render_compose(self):
         # XXX: There *must* be a better way of doing this, maybe write it
         #      in the request ? sending it as parameter is way too ugly
-        return self.pagelayout(mode="compose")
+        return self.pagelayout(mode='compose')
 
     def render_layout_edit(self):
         # XXX: There *must* be a better way of doing this, maybe write it
         #      in the request ? sending it as parameter is way too ugly
-        return self.pagelayout(mode="layout_edit")
+        return self.pagelayout(mode='layout_edit')
 
     def accepted_ct_for_tile(self, tile_type):
         tile = self.context.restrictedTraverse(str(tile_type))
@@ -159,10 +159,13 @@ class TileList(grok.View):
     def get_tile_metadata(self, tile_name):
         tile_type = getUtility(ITileType, tile_name)
         tile = self.context.restrictedTraverse(str(tile_name))
+        title = tile.short_name
+        if not title:
+            title = tile_type.title
         tile_metadata = {
             'icon': tile_type.icon,
             'description': tile_type.description,
-            'title': tile_type.title,
+            'title': title,
             'is_configurable': tile.is_configurable and 1 or 0
         }
 
@@ -195,9 +198,9 @@ class GroupSelect(grok.View):
         vocab_name = 'plone.app.vocabularies.Groups'
         groups_factory = queryUtility(IVocabularyFactory, vocab_name)
         self.groups = groups_factory(self.context)
-        if "groups[]" in self.request.keys():
-            groups = self.request["groups[]"]
-            tile_len = int(self.request["tile_len"])
+        if 'groups[]' in self.request.keys():
+            groups = self.request['groups[]']
+            tile_len = int(self.request['tile_len'])
             i = 0
             while(i < tile_len):
                 tile_type = self.request['tiles[{0}][type]'.format(i)]

@@ -8,6 +8,7 @@ from plone.autoform import directives as form
 from plone.tiles.interfaces import ITileDataManager
 from plone.uuid.interfaces import IUUID
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
+from Products.CMFPlone.utils import safe_unicode
 from zope import schema
 from zope.interface import implements
 
@@ -32,10 +33,11 @@ class PFGTile(PersistentCoverTile):
 
     implements(IPersistentCoverTile)
 
-    index = ViewPageTemplateFile("templates/pfg.pt")
+    index = ViewPageTemplateFile('templates/pfg.pt')
 
     is_editable = True
     is_configurable = True
+    short_name = _(u'msg_short_name_pfg', default=u'FormGen')
 
     def body(self):
         body = ''
@@ -52,8 +54,8 @@ class PFGTile(PersistentCoverTile):
         super(PFGTile, self).populate_with_object(obj)
 
         data = {
-            'title': obj.Title(),
-            'description': obj.Description(),
+            'title': safe_unicode(obj.Title()),
+            'description': safe_unicode(obj.Description()),
             'uuid': IUUID(obj, None),  # XXX: can we get None here? see below
         }
 
@@ -61,6 +63,6 @@ class PFGTile(PersistentCoverTile):
         data_mgr.set(data)
 
     def accepted_ct(self):
-        """ For now we are supporting Document and News Item
+        """Return 'FormFolder' as the only content type accepted in the tile.
         """
         return ['FormFolder']

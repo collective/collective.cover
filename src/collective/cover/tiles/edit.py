@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from AccessControl import Unauthorized
-from collective.cover import _
 from plone.app.tiles.browser.edit import DefaultEditForm
 from plone.app.tiles.browser.edit import DefaultEditView
 from plone.app.tiles.browser.traversal import EditTile
@@ -11,9 +10,13 @@ from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.statusmessages.interfaces import IStatusMessage
 from z3c.form import button
 from zope.event import notify
+from zope.interface import implements
 from zope.lifecycleevent import ObjectModifiedEvent
 from zope.publisher.interfaces.browser import IBrowserView
 from zope.traversing.browser.absoluteurl import absoluteURL
+
+from collective.cover import _
+from collective.cover.interfaces import ITileEditForm
 
 
 class ICoverTileEditView(IBrowserView):
@@ -29,6 +32,8 @@ class CustomEditForm(DefaultEditForm):
     by an ITileType utility.
     """
 
+    implements(ITileEditForm)
+
     def update(self):
         super(CustomEditForm, self).update()
 
@@ -38,9 +43,10 @@ class CustomEditForm(DefaultEditForm):
         tile = self.context.restrictedTraverse('@@{0}/{1}'.format(typeName, tileId))
 
         if not tile.isAllowedToEdit():
-            raise Unauthorized("You are not allowed to add this kind of tile")
+            raise Unauthorized(
+                _(u'You are not allowed to add this kind of tile'))
 
-    @button.buttonAndHandler(_('Save'), name='save')
+    @button.buttonAndHandler(_(u'Save'), name='save')
     def handleSave(self, action):
         data, errors = self.extractData()
         if errors:
@@ -68,14 +74,15 @@ class CustomEditForm(DefaultEditForm):
         notify(ObjectModifiedEvent(tile))
 
         # Get the tile URL, possibly with encoded data
-        IStatusMessage(self.request).addStatusMessage(_(u"Tile saved",), type=u'info')
+        IStatusMessage(self.request).addStatusMessage(
+            _(u'Tile saved'), type=u'info')
 
         self.request.response.redirect(tileURL)
 
     @button.buttonAndHandler(_(u'Cancel'), name='cancel')
     def handleCancel(self, action):
         tileDataJson = {}
-        tileDataJson['action'] = "cancel"
+        tileDataJson['action'] = 'cancel'
         url = self.request.getURL()
         url = appendJSONData(url, 'tiledata', tileDataJson)
         self.request.response.redirect(url)

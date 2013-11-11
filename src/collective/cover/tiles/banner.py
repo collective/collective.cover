@@ -7,7 +7,9 @@ from collective.cover.tiles.base import PersistentCoverTile
 from plone.namedfile import field
 from plone.namedfile import NamedBlobImage
 from plone.tiles.interfaces import ITileDataManager
+from Products.CMFPlone.utils import getToolByName
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
+from Products.CMFPlone.utils import safe_unicode
 from zope import schema
 from zope.interface import implements
 
@@ -37,12 +39,11 @@ class BannerTile(PersistentCoverTile):
     is_configurable = True
     is_editable = True
     is_droppable = True
-
-    def accepted_ct(self):
-        return ['Image', 'Link']
+    short_name = _(u'msg_short_name_banner', default=u'Banner')
 
     def populate_with_object(self, obj):
-        """Tile can be populated with images and links; in this case we're not
+        """Tile can be populated with any content type with image
+        or getImage attribute; in this case we're not
         going to take care of any modification of the original object; we just
         copy the data to the tile and deal with it.
         """
@@ -50,18 +51,34 @@ class BannerTile(PersistentCoverTile):
             return
 
         super(BannerTile, self).populate_with_object(obj)  # check permissions
-        obj = aq_base(obj)  # avoid acquisition
-        title = obj.Title()
-        # if image, store a copy of its data
-        if obj.portal_type == 'Image':
-            if hasattr(obj, 'getImage'):
-                data = obj.getImage().data
-            else:
-                data = obj.image.data
-            image = NamedBlobImage(data)
+
+        if hasattr(obj, 'getRemoteUrl'):
+            remote_url = obj.getRemoteUrl()
         else:
-            image = None
-        remote_url = obj.getRemoteUrl() if obj.portal_type == 'Link' else None
+            # Get object URL
+            # For Image and File objects (or any other in typesUseViewActionInListings)
+            # we must add a /view to prevent the download of the file
+            obj_url = obj.absolute_url_path()
+            props = getToolByName(obj, 'portal_properties')
+            stp = props.site_properties
+            view_action_types = stp.getProperty('typesUseViewActionInListings', ())
+
+            if hasattr(obj, 'portal_type') and obj.portal_type in view_action_types:
+                obj_url += '/view'
+
+            remote_url = obj_url
+
+        image = None
+        # if has image, store a copy of its data
+        if self._has_image_field(obj) and self._field_is_visible('image'):
+            scales = obj.restrictedTraverse('@@images')
+            image = scales.scale('image', None)
+
+        if image is not None and image != '':
+            image = NamedBlobImage(image.data)
+
+        obj = aq_base(obj)  # avoid acquisition
+        title = safe_unicode(obj.Title())
 
         data_mgr = ITileDataManager(self)
         data_mgr.set({

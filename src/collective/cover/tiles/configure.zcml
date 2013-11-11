@@ -3,57 +3,59 @@
     xmlns:browser="http://namespaces.zope.org/browser"
     xmlns:i18n="http://namespaces.zope.org/i18n"
     xmlns:plone="http://namespaces.plone.org/plone"
-    i18n_domain="collective.cover">
+    i18n_domain="collective.cover"
+    >
 
-    <include package=".configuration_widgets" />
-    <!-- Data manager for "our" tiles -->
-    <adapter factory=".data.PersistentCoverTileDataManager" />
+  <include package=".configuration_widgets" />
 
-    <browser:page
-        name="configure-tile"
-        for="zope.annotation.interfaces.IAnnotatable"
+  <!-- Data manager for "our" tiles -->
+  <adapter factory=".data.PersistentCoverTileDataManager" />
+
+  <browser:page
+      name="configure-tile"
+      for="zope.annotation.interfaces.IAnnotatable"
+      permission="cmf.ModifyPortalContent"
+      class=".configuration_view.ConfigureTile"
+      />
+
+  <adapter
+      for="zope.annotation.interfaces.IAnnotatable
+           zope.publisher.interfaces.browser.IDefaultBrowserLayer
+           plone.tiles.interfaces.ITileType"
+      provides=".configuration_view.ITileConfigureView"
+      factory=".configuration_view.DefaultConfigureView"
+      />
+
+  <class class=".configuration_view.DefaultConfigureView">
+    <require
         permission="cmf.ModifyPortalContent"
-        class=".configuration_view.ConfigureTile"
+        interface="zope.publisher.interfaces.browser.IBrowserPage"
         />
+  </class>
 
-    <adapter
-        for="zope.annotation.interfaces.IAnnotatable
-             zope.publisher.interfaces.browser.IDefaultBrowserLayer
-             plone.tiles.interfaces.ITileType"
-        provides=".configuration_view.ITileConfigureView"
-        factory=".configuration_view.DefaultConfigureView"
-        />
+  <!-- Override for the edit-tile view -->
+  <browser:page
+      name="edit-tile"
+      for="zope.annotation.interfaces.IAnnotatable"
+      permission="cmf.ModifyPortalContent"
+      class=".edit.CoverTileEditView"
+      layer="collective.cover.interfaces.ICoverLayer"
+      />
 
-    <class class=".configuration_view.DefaultConfigureView">
-        <require
-            permission="cmf.ModifyPortalContent"
-            interface="zope.publisher.interfaces.browser.IBrowserPage"
-            />
-    </class>
+  <adapter
+      for="zope.annotation.interfaces.IAnnotatable
+           zope.publisher.interfaces.browser.IDefaultBrowserLayer
+           plone.tiles.interfaces.ITileType"
+      provides=".edit.ICoverTileEditView"
+      factory=".edit.CustomTileEdit"
+      />
 
-    <!-- Override for the edit-tile view -->
-    <browser:page
-        name="edit-tile"
-        for="zope.annotation.interfaces.IAnnotatable"
+  <class class=".edit.CustomTileEdit">
+    <require
         permission="cmf.ModifyPortalContent"
-        class=".edit.CoverTileEditView"
-        layer="collective.cover.interfaces.ICoverLayer"
+        interface="zope.publisher.interfaces.browser.IBrowserPage"
         />
-
-    <adapter
-        for="zope.annotation.interfaces.IAnnotatable
-             zope.publisher.interfaces.browser.IDefaultBrowserLayer
-             plone.tiles.interfaces.ITileType"
-        provides=".edit.ICoverTileEditView"
-        factory=".edit.CustomTileEdit"
-        />
-
-    <class class=".edit.CustomTileEdit">
-        <require
-            permission="cmf.ModifyPortalContent"
-            interface="zope.publisher.interfaces.browser.IBrowserPage"
-            />
-    </class>
+  </class>
 
   <!-- Image scale support for tile images -->
   <browser:page
@@ -66,16 +68,16 @@
   <adapter for="zope.interface.Interface
                 zope.publisher.interfaces.browser.IBrowserRequest
                 collective.cover.tiles.base.IPersistentCoverTile"
-    provides="collective.cover.tiles.configuration.ITilesConfigurationScreen"
-    factory="collective.cover.tiles.configuration.TilesConfigurationScreen"
-    />
+      provides="collective.cover.tiles.configuration.ITilesConfigurationScreen"
+      factory="collective.cover.tiles.configuration.TilesConfigurationScreen"
+      />
 
   <adapter for="zope.interface.Interface
                 zope.publisher.interfaces.browser.IBrowserRequest
                 collective.cover.tiles.base.IPersistentCoverTile"
-    provides="collective.cover.tiles.permissions.ITilesPermissions"
-    factory="collective.cover.tiles.permissions.TilesPermissions"
-    />
+      provides="collective.cover.tiles.permissions.ITilesPermissions"
+      factory="collective.cover.tiles.permissions.TilesPermissions"
+      />
 
   <subscriber handler=".handlers.notifyModified" />
 
@@ -104,9 +106,10 @@
       factory=".list.GenericUIDsProvider"
       />
 
-  <adapter factory=".base.PersistentCoverTilePurgePaths" name="collective.cover.tiles" />
-
-  <!-- Include default tiles -->
+  <adapter
+      factory=".base.PersistentCoverTilePurgePaths"
+      name="collective.cover.tiles"
+      />
 
   <include file="tiles.zcml" />
 

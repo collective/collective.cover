@@ -37,6 +37,9 @@ class EmbedTileTestCase(unittest.TestCase):
     def test_tile_is_empty(self):
         self.assertTrue(self.tile.is_empty())
 
+    def test_accepted_content_types(self):
+        self.assertEqual(self.tile.accepted_ct(), [])
+
     def test_render_empty(self):
-        msg = "Please edit the tile to add the code to be embedded."
-        self.assertTrue(msg in self.tile())
+        msg = u'Please edit the tile to add the code to be embedded.'
+        self.assertIn(msg, self.tile())

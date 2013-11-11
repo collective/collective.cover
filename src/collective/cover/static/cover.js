@@ -78,7 +78,7 @@ $(document).ready(function() {
 
     $('a.edit-tile-link, a.config-tile-link').prepOverlay({
         subtype: 'ajax',
-        filter: '.tiles-edit',
+        filter: '.tile-content',
         formselector: '#edit_tile',
         closeselector: '[name="buttons.cancel"]',
         noform: 'close',
@@ -107,23 +107,34 @@ $(document).ready(function() {
 
         },
         afterpost: function(return_value, data_parent) {
-            location.reload();
+            var tileId = data_parent.data('pbo').src.split('/').pop();
+            var tile = $('#'+tileId);
+            // Get tile type
+            var tileType = tile.data('tile-type');
+            // List of tile types that make a page reload
+            var reloadTypes = ['collective.cover.carousel'];
+            if(reloadTypes.indexOf(tileType)>-1) {
+                location.reload();
+            } else {
+                tile.html(return_value);
+            }
         },
         config: {
             onLoad: function() {
-              if(typeof initTinyMCE!='undefined'){
-                initTinyMCE(this.getOverlay());
-              }else{
-                $('textarea.mce_editable').each(function() {
-                    var config = new TinyMCEConfig($(this).attr('id'));
-                    config.init();
-
-                    // Remove unecessary link, use HTML button of editor
-                    $('div.suppressVisualEditor').remove();
-
-                });
+              if(typeof initTinyMCE != 'undefined') {
+                  initTinyMCE(this.getOverlay());
               }
+              $('textarea.mce_editable').each(function() {
+                  if(typeof TinyMCEConfig != 'undefined') {
+                      textarea_id = $(this).attr('id');
+                      var config = new TinyMCEConfig(textarea_id);
+                      delete InitializedTinyMCEInstances[textarea_id];
+                      config.init();
 
+                      // Remove unecessary link, use HTML button of editor
+                      $('div.suppressVisualEditor').remove();
+                  }
+              });
 
               //carousel
               var carousel = $('div[data-carousel="carousel-sort"]');
@@ -153,8 +164,8 @@ $(document).ready(function() {
                   serial_sort(textarea, sortable);
                 });
               }
-            },
-            onClose: function() { location.reload(); }
+            }/*,
+            onClose: function() { location.reload(); }*/
 
         }
     });

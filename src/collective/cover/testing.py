@@ -3,16 +3,28 @@
 from App.Common import package_home
 from PIL import Image
 from PIL import ImageChops
+from plone.app.robotframework.testing import AUTOLOGIN_LIBRARY_FIXTURE
 from plone.app.testing import FunctionalTesting
 from plone.app.testing import IntegrationTesting
 from plone.app.testing import PLONE_FIXTURE
 from plone.app.testing import PloneSandboxLayer
-from plone.testing.z2 import installProduct
-from plone.testing.z2 import ZSERVER_FIXTURE
+from plone.testing import z2
 from StringIO import StringIO
 
 import os
+import pkg_resources
 import random
+
+PLONE_VERSION = pkg_resources.require('Plone')[0].version
+ALL_CONTENT_TYPES = [
+    'Collection',
+    'Document',
+    'File',
+    'Form Folder',
+    'Image',
+    'Link',
+    'News Item',
+]
 
 
 def loadFile(name, size=0):
@@ -35,7 +47,7 @@ def generate_jpeg(width, height):
     yb = 1.5
     maxIt = 25  # max iterations allowed
     # image size
-    image = Image.new("RGB", (width, height))
+    image = Image.new('RGB', (width, height))
     c = complex(random.random() * 2.0 - 1.0, random.random() - 0.5)
 
     for y in range(height):
@@ -53,7 +65,7 @@ def generate_jpeg(width, height):
             image.putpixel((x, y), b * 65536 + g * 256 + r)
 
     output = StringIO()
-    image.save(output, format="PNG")
+    image.save(output, format='PNG')
     return output.getvalue()
 
 
@@ -74,7 +86,7 @@ class Fixture(PloneSandboxLayer):
     def setUpZope(self, app, configurationContext):
         import Products.PloneFormGen
         self.loadZCML(package=Products.PloneFormGen)
-        installProduct(app, 'Products.PloneFormGen')
+        z2.installProduct(app, 'Products.PloneFormGen')
         # Load ZCML
         import collective.cover
         self.loadZCML(package=collective.cover)
@@ -99,9 +111,14 @@ class Fixture(PloneSandboxLayer):
         portal['my-image2'].setImage(generate_jpeg(50, 50))
         portal['my-file'].setFile(loadFile('lorem_ipsum.txt'))
         portal['my-file'].reindexObject()
+        portal['my-news-item'].setImage(generate_jpeg(50, 50))
         portal_workflow = portal.portal_workflow
         portal_workflow.setChainForPortalTypes(['Collection'],
                                                ['plone_workflow'],)
+        # Prevent kss validation errors in Plone 4.2
+        portal_kss = getattr(portal, 'portal_kss', None)
+        if portal_kss:
+            portal_kss.getResource('++resource++plone.app.z3cform').setEnabled(False)
 
 
 FIXTURE = Fixture()
@@ -110,8 +127,11 @@ INTEGRATION_TESTING = IntegrationTesting(
     name='collective.cover:Integration',
 )
 
-
 FUNCTIONAL_TESTING = FunctionalTesting(
-    bases=(FIXTURE, ZSERVER_FIXTURE),
+    bases=(FIXTURE, z2.ZSERVER_FIXTURE),
     name='collective.cover:Functional',
 )
+
+ROBOT_TESTING = FunctionalTesting(
+    bases=(FIXTURE, AUTOLOGIN_LIBRARY_FIXTURE, z2.ZSERVER_FIXTURE),
+    name='collective.cover:Robot')

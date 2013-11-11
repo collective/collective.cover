@@ -21,7 +21,7 @@ class AvailableLayoutsVocabulary(object):
         registry = getUtility(IRegistry)
         settings = registry.forInterface(ICoverSettings)
 
-        items = [SimpleTerm(value=i, title=i) for i in settings.layouts]
+        items = [SimpleTerm(value=i, title=i) for i in sorted(settings.layouts)]
         return SimpleVocabulary(items)
 
 grok.global_utility(AvailableLayoutsVocabulary,
@@ -106,7 +106,7 @@ class TileStylesVocabulary(object):
                     title, css_class = title.strip(), css_class.strip()
 
                     # make sure that default style is always first
-                    if css_class == u"tile-default":
+                    if css_class == u'tile-default':
                         items.insert(0, SimpleTerm(value=css_class, title=title))
                         with_default = True
                     else:
@@ -114,7 +114,7 @@ class TileStylesVocabulary(object):
 
         # force default style if it was removed from configuration
         if not with_default:
-            items.insert(0, SimpleTerm(value=u"tile-default", title="-Default-"))
+            items.insert(0, SimpleTerm(value=u'tile-default', title='-Default-'))
 
         return SimpleVocabulary(items)
 

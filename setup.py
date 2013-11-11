@@ -3,15 +3,12 @@
 from setuptools import find_packages
 from setuptools import setup
 
-import os
-
-version = '1.0a5.dev0'
-description = "An easy-to-use package to create elaborate covers for Plone sites."
+version = '1.0a6.dev0'
+description = 'A sane, working, editor-friendly way of creating front pages and other composite pages. Working now, for mere mortals.'
 long_description = (
-    open("README.rst").read() + "\n" +
-    open(os.path.join("docs", "INSTALL.rst")).read() + "\n" +
-    open(os.path.join("docs", "CREDITS.rst")).read() + "\n" +
-    open(os.path.join("docs", "CHANGES.rst")).read()
+    open('README.rst').read() + '\n' +
+    open('CONTRIBUTORS.rst').read() + '\n' +
+    open('CHANGES.rst').read()
 )
 
 setup(name='collective.cover',
@@ -19,21 +16,21 @@ setup(name='collective.cover',
       description=description,
       long_description=long_description,
       classifiers=[
-          "Development Status :: 3 - Alpha",
-          "Environment :: Web Environment",
-          "Framework :: Plone",
-          "Framework :: Plone :: 4.2",
-          "Framework :: Plone :: 4.3",
-          "Intended Audience :: End Users/Desktop",
-          "Intended Audience :: System Administrators",
-          "License :: OSI Approved :: GNU General Public License v2 (GPLv2)",
-          "Operating System :: OS Independent",
-          "Programming Language :: JavaScript",
-          "Programming Language :: Python",
-          "Programming Language :: Python :: 2.6",
-          "Programming Language :: Python :: 2.7",
-          "Topic :: Office/Business :: News/Diary",
-          "Topic :: Software Development :: Libraries :: Python Modules",
+          'Development Status :: 3 - Alpha',
+          'Environment :: Web Environment',
+          'Framework :: Plone',
+          'Framework :: Plone :: 4.2',
+          'Framework :: Plone :: 4.3',
+          'Intended Audience :: End Users/Desktop',
+          'Intended Audience :: System Administrators',
+          'License :: OSI Approved :: GNU General Public License v2 (GPLv2)',
+          'Operating System :: OS Independent',
+          'Programming Language :: JavaScript',
+          'Programming Language :: Python',
+          'Programming Language :: Python :: 2.6',
+          'Programming Language :: Python :: 2.7',
+          'Topic :: Office/Business :: News/Diary',
+          'Topic :: Software Development :: Libraries :: Python Modules',
       ],
       keywords='plone cover javascript dexterity',
       author='Carlos de la Guardia et al.',
@@ -46,28 +43,38 @@ setup(name='collective.cover',
       include_package_data=True,
       zip_safe=False,
       install_requires=[
+          'collective.js.bootstrap',
           'collective.js.galleria',
           'collective.js.jqueryui',
           'five.grok',
-          'Pillow',
           'plone.app.blocks',
-          'plone.app.dexterity[grok,relations]',
-          'plone.app.jquery>=1.7.2',
-          'plone.app.jquerytools>=1.5.1',
+          'plone.app.dexterity [grok, relations]',
+          'plone.app.jquery >=1.7.2',
+          'plone.app.jquerytools >=1.5.1',
+          'plone.app.layout',
+          'plone.app.linkintegrity',
           'plone.app.lockingbehavior',
+          'plone.app.referenceablebehavior',
           'plone.app.registry',
+          'plone.app.relationfield',
           'plone.app.stagingbehavior',
           'plone.app.textfield',
           'plone.app.tiles',
+          'plone.app.uuid',
+          'plone.app.vocabularies',
+          'plone.autoform',
           'plone.dexterity',
           'plone.directives.form',
+          'plone.i18n',
           'plone.memoize',
-          'plone.namedfile[blobs]',
+          'plone.namedfile [blobs]',
           'plone.registry',
-          'plone.tiles>=1.2',
+          'plone.scale',
+          'plone.tiles >=1.2',
           'plone.uuid',
+          'Products.Archetypes',
           'Products.CMFCore',
-          'Products.CMFPlone>=4.2',
+          'Products.CMFPlone >=4.2',
           'Products.GenericSetup',
           'setuptools',
           'z3c.caching',
@@ -81,13 +88,12 @@ setup(name='collective.cover',
       ],
       extras_require={
           'test': [
-              'plone.app.testing',
+              'plone.app.robotframework',
+              'plone.app.testing [robot] >=4.2.2',
               'plone.browserlayer',
               'plone.cachepurging',
               'plone.testing',
               'Products.PloneFormGen',
-              'robotframework-selenium2library',
-              'robotsuite',
           ],
       },
       entry_points="""

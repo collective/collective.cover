@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from collective.cover.testing import ALL_CONTENT_TYPES
 from collective.cover.testing import INTEGRATION_TESTING
 from collective.cover.tiles.base import IPersistentCoverTile
 from collective.cover.tiles.list import ListTile
@@ -18,7 +19,7 @@ class ListTileTestCase(unittest.TestCase):
     def setUp(self):
         self.portal = self.layer['portal']
         self.request = self.layer['request']
-        self.name = u"collective.cover.list"
+        self.name = u'collective.cover.list'
         self.cover = self.portal['frontpage']
         self.tile = getMultiAdapter((self.cover, self.request), name=self.name)
         self.tile = self.tile['test']
@@ -53,8 +54,8 @@ class ListTileTestCase(unittest.TestCase):
         tile = getMultiAdapter((self.cover, self.request), name=self.name)
         tile = tile['test']
         self.assertEqual(len(tile.results()), 2)
-        self.assertTrue(obj1 in tile.results())
-        self.assertTrue(obj2 in tile.results())
+        self.assertIn(obj1, tile.results())
+        self.assertIn(obj2, tile.results())
 
         # next, we replace the list of objects with a different one
         obj3 = self.portal['my-news-item']
@@ -62,9 +63,9 @@ class ListTileTestCase(unittest.TestCase):
         # tile's data attributed is cached so we should re-instantiate the tile
         tile = getMultiAdapter((self.cover, self.request), name=self.name)
         tile = tile['test']
-        self.assertTrue(obj1 not in tile.results())
-        self.assertTrue(obj2 not in tile.results())
-        self.assertTrue(obj3 in tile.results())
+        self.assertNotIn(obj1, tile.results())
+        self.assertNotIn(obj2, tile.results())
+        self.assertIn(obj3, tile.results())
 
         # finally, we remove it from the list; the tile must be empty again
         tile.remove_item(obj3.UID())
@@ -80,24 +81,39 @@ class ListTileTestCase(unittest.TestCase):
         # now we add a couple of objects to the list
         obj1 = self.portal['my-document']
         obj2 = self.portal['my-image']
-        self.tile.populate_with_uids([IUUID(obj1, None),
-                                      IUUID(obj2, None)])
+        self.tile.populate_with_uids([IUUID(obj1, None), IUUID(obj2, None)])
 
         # tile's data attributed is cached so we should re-instantiate the tile
         tile = getMultiAdapter((self.cover, self.request), name=self.name)
         tile = tile['test']
         self.assertEqual(len(tile.results()), 2)
-        self.assertTrue(obj1 in tile.results())
-        self.assertTrue(obj2 in tile.results())
+        self.assertIn(obj1, tile.results())
+        self.assertIn(obj2, tile.results())
 
     def test_accepted_content_types(self):
-        # all content types are accepted
-        # XXX: return None don't work
-        #self.assertEqual(self.tile.accepted_ct(), None)
-        self.assertEqual(self.tile.accepted_ct(),
-                         ['Collection', 'Document', 'File', 'Form Folder',
-                          'Image', 'Link', 'News Item'])
+        self.assertEqual(self.tile.accepted_ct(), ALL_CONTENT_TYPES)
 
     def test_render_empty(self):
-        msg = "Please add up to 5 objects to the tile."
-        self.assertTrue(msg in self.tile())
+        msg = 'Please add up to 5 objects to the tile.'
+        self.assertIn(msg, self.tile())
+
+    def test_remove_item_from_list_tile(self):
+        # now we add a couple of objects to the list
+        obj1 = self.portal['my-document']
+        obj2 = self.portal['my-image']
+        self.tile.populate_with_object(obj1)
+        self.tile.populate_with_object(obj2)
+
+        # tile's data attributed is cached so we should re-instantiate the tile
+        tile = getMultiAdapter((self.cover, self.request), name=self.name)
+        tile = tile['test']
+
+        self.request.form['tile-type'] = 'collective.cover.list'
+        self.request.form['tile-id'] = 'test'
+        self.request.form['uid'] = obj1.UID()
+        view = getMultiAdapter(
+            (self.cover, self.request), name='removeitemfromlisttile'
+        )
+        self.assertIn(obj1, tile.results())
+        view.render()
+        self.assertNotIn(obj1, tile.results())

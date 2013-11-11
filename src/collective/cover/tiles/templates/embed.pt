@@ -9,7 +9,7 @@
     Please edit the tile to add the code to be embedded.
   </p>
 
-  <div tal:condition="not: is_empty">
+  <div tal:condition="not: is_empty" class="cover-embed-tile tile-content">
     <tal:fields repeat="field view/get_configured_fields">
       <tal:embed condition="python:field['id'] == 'embed'">
         <!-- FIXME -->

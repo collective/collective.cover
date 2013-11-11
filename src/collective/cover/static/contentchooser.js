@@ -1,7 +1,7 @@
 var ajaxSearchRequest = [];
 function contentSearchFilter(url) {
   var queryVal = $("#contentchooser-content-search-input").val();
-  var page = 1;
+  var page = 0;
   var data = {'q': queryVal, 'page': page};
   ajaxSearchRequest.push($.ajax({
     url: url,
@@ -273,8 +273,8 @@ var coveractions = {
             content_type : "application/x-www-form-urlencoded",
             type : 'POST',
             data : "searchtext=" +
-            (jQuery('input:text[id=contentchooser-content-trees][name=contentchooser-content-trees]').val()
-             || '') + "&rooted='False'" + "&document_base_url=" +
+            (jQuery('input:text[id=contentchooser-content-trees][name=contentchooser-content-trees]').val() || '') +
+             "&rooted='False'" + "&document_base_url=" +
             encodeURIComponent(d.baseURI),
             success : function(text) {
                 var html = "";

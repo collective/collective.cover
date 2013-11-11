@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from collective.cover.testing import ALL_CONTENT_TYPES
 from collective.cover.testing import generate_jpeg
 from collective.cover.testing import images_are_equal
 from collective.cover.testing import INTEGRATION_TESTING
@@ -54,10 +55,7 @@ class BasicTileTestCase(unittest.TestCase):
         self.assertTrue(self.tile.is_droppable)
 
     def test_accepted_content_types(self):
-        self.assertEqual(
-            self.tile.accepted_ct(),
-            ['Collection', 'Document', 'File', 'Form Folder',
-             'Image', 'Link', 'News Item'])
+        self.assertEqual(self.tile.accepted_ct(), ALL_CONTENT_TYPES)
 
     def test_is_empty(self):
         self.assertTrue(self.tile.is_empty())
@@ -83,11 +81,10 @@ class BasicTileTestCase(unittest.TestCase):
 
     def test_populate_with_object_unicode(self):
         """We must store unicode always on schema.TextLine and schema.Text
-        fields to avoid UnicodeDecodeError. We could avoid this duplicate
-        this test if we create our test fixture content using unicode.
+        fields to avoid UnicodeDecodeError.
         """
-        title = u"Pangrama en español"
-        description = u"El veloz murciélago hindú comía feliz cardillo y kiwi"
+        title = u'παν γράμμα'
+        description = u'El veloz murciélago hindú comía feliz cardillo y kiwi'
         obj = self.portal['my-news-item']
         obj.setTitle(title)
         obj.setDescription(description)
@@ -95,10 +92,32 @@ class BasicTileTestCase(unittest.TestCase):
         self.tile.populate_with_object(obj)
         self.assertEqual(title, self.tile.data['title'])
         self.assertEqual(description, self.tile.data['description'])
+        self.assertIsInstance(self.tile.data.get('title'), unicode)
+        self.assertIsInstance(self.tile.data.get('description'), unicode)
+
+    def test_populate_with_object_string(self):
+        """This test complements test_populate_with_object_unicode
+        using strings instead of unicode objects.
+        """
+        title = 'Pangram'
+        description = 'The quick brown fox jumps over the lazy dog'
+        obj = self.portal['my-news-item']
+        obj.setTitle(title)
+        obj.setDescription(description)
+        obj.reindexObject()
+        self.tile.populate_with_object(obj)
+        self.assertEqual(
+            unicode(title, 'utf-8'),
+            self.tile.data.get('title')
+        )
+        self.assertEqual(
+            unicode(description, 'utf-8'),
+            self.tile.data.get('description')
+        )
 
     def test_render_empty(self):
         self.assertIn(
-            "Please drag&amp;drop some content here to populate the tile.",
+            'Please drag&amp;drop some content here to populate the tile.',
             self.tile())
 
     def test_render_title(self):
@@ -143,7 +162,7 @@ class BasicTileTestCase(unittest.TestCase):
 
         # the description must be there
         self.assertIn(
-            "This news item was created for testing purposes", rendered)
+            'This news item was created for testing purposes', rendered)
 
         # the localized time must be there
         utils = getMultiAdapter((self.portal, self.request), name=u'plone')
@@ -209,7 +228,7 @@ class BasicTileTestCase(unittest.TestCase):
     def test_image_traverser(self):
         obj = self.portal['my-image']
         data = self.tile.data
-        scales = queryMultiAdapter((obj, self.request), name="images")
+        scales = queryMultiAdapter((obj, self.request), name='images')
         self.tile.data['image'] = NamedImageFile(str(scales.scale('image').data))
         data_mgr = ITileDataManager(self.tile)
         data_mgr.set(data)
@@ -247,7 +266,7 @@ class BasicTileTestCase(unittest.TestCase):
 
         obj = self.portal['my-image']
         data = self.tile.data
-        scales = queryMultiAdapter((obj, self.request), name="images")
+        scales = queryMultiAdapter((obj, self.request), name='images')
         self.tile.data['image'] = NamedImageFile(str(scales.scale('image').data))
         data_mgr = ITileDataManager(self.tile)
         data_mgr.set(data)

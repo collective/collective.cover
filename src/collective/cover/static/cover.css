@@ -35,11 +35,15 @@
 .template-compose .tile-container {
     position:relative;
 }
-.template-compose .edit-tile-link {
+.template-compose .edit-tile-link,
+.template-compose .collection-link {
     position:absolute;
     height:1em;
     line-height:1em;
     top: 0;
+}
+.template-compose .collection-link {
+    right: 0;
 }
 
 .tile-select-button {
@@ -75,7 +79,8 @@
     outline:1px solid #333;
     cursor:move;
 }
-.ui-state-default {
+.template-compose #content .tile {
+    margin-bottom: 1em;
     min-height: 100px;
 }
 .ui-state-default .loading-mask{
@@ -88,12 +93,12 @@
     background-color: #b4fca3;
 }
 
-.tile-container img.right {
+.tile img.right {
     float: right;
     margin: 0 1em 0.5em 0;
 }
 
-.tile-container img.left {
+.tile img.left {
     float: left;
     margin: 0 1em 0.5em 0;
 }
@@ -103,8 +108,9 @@
     height: 450px;
 }
 
-/* tinyMCE table conflict */
+/* conflicts */
 table.invisible{visibility:visible;}
+.close {opacity: 1;}
 
 /*Skins*/
 .tile-edge {

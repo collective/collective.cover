@@ -9,7 +9,7 @@
     Drag&amp;drop an image or link here to populate the tile.
   </p>
 
-  <div class="banner-tile"
+  <div class="cover-banner-tile tile-content"
        tal:condition="not:is_empty"
        tal:define="title view/Title;
                    has_image view/has_image;

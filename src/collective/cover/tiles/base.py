@@ -9,6 +9,7 @@ from Acquisition import aq_inner
 from Acquisition import aq_parent
 from collective.cover import _
 from collective.cover.config import PROJECTNAME
+from collective.cover.controlpanel import ICoverSettings
 from collective.cover.tiles.configuration import ITilesConfigurationScreen
 from collective.cover.tiles.configuration_view import IDefaultConfigureForm
 from collective.cover.tiles.permissions import ITilesPermissions
@@ -18,12 +19,14 @@ from plone.app.textfield.interfaces import ITransformer
 from plone.app.textfield.value import RichTextValue
 from plone.app.uuid.utils import uuidToObject
 from plone.autoform import directives as form
+from plone.memoize import view
 from plone.namedfile.interfaces import INamedImage
 from plone.namedfile.interfaces import INamedImageField
 from plone.namedfile.scaling import ImageScale as BaseImageScale
 from plone.namedfile.scaling import ImageScaling as BaseImageScaling
 from plone.namedfile.utils import set_headers
 from plone.namedfile.utils import stream_data
+from plone.registry.interfaces import IRegistry
 from plone.rfc822.interfaces import IPrimaryFieldInfo
 from plone.scale.scale import scaleImage
 from plone.scale.storage import AnnotationStorage as BaseAnnotationStorage
@@ -62,7 +65,7 @@ class IPersistentCoverTile(Interface):
         title=_(u'CSS Class'),
         vocabulary='collective.cover.TileStyles',
         required=True,
-        default=u"tile-default",
+        default=u'tile-default',
     )
     form.omitted('css_class')
     form.no_omit(IDefaultConfigureForm, 'css_class')
@@ -80,8 +83,8 @@ class IPersistentCoverTile(Interface):
         """
 
     def accepted_ct():
-        """ Return a list of content types accepted by the tile or None if all
-        types are accepted.
+        """Return a list of content types accepted by the tile. By default,
+        all content types are acepted.
         """
 
     def get_tile_configuration():
@@ -130,25 +133,26 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
     is_editable = True
     is_droppable = True
     css_class = None  # placeholder, we access it with tile's configuration
+    # Short name for the tile.  Usually title minus 'Tile'.  Please
+    # wrap this in _(...) so it can be translated.
+    short_name = u''
 
     def populate_with_object(self, obj):
         if not self.isAllowedToEdit():
-            raise Unauthorized(_("You are not allowed to add content to "
-                                 "this tile"))
-
-        notify(ObjectModifiedEvent(self))
+            raise Unauthorized(
+                _('You are not allowed to add content to this tile'))
 
     def replace_with_objects(self, obj):
         if not self.isAllowedToEdit():
-            raise Unauthorized(_("You are not allowed to add content to "
-                                 "this tile"))
+            raise Unauthorized(
+                _('You are not allowed to add content to this tile'))
 
         notify(ObjectModifiedEvent(self))
 
     def remove_item(self, uid):
         if not self.isAllowedToEdit():
-            raise Unauthorized(_("You are not allowed to remove content of "
-                                 "this tile"))
+            raise Unauthorized(
+                _('You are not allowed to remove content of this tile'))
 
     # XXX: the name of this method is really confusing as it does not deletes
     # the tile; rename it?
@@ -156,7 +160,7 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
         """ Remove the persistent data associated with the tile and notify the
         cover object was modified.
         """
-        logger.debug("Deleting tile {0}".format(self.id))
+        logger.debug('Deleting tile {0}'.format(self.id))
 
         data_mgr = ITileDataManager(self)
         data_mgr.delete()
@@ -173,11 +177,22 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
 
         notify(ObjectModifiedEvent(self.context))
 
+    @view.memoize
     def accepted_ct(self):
-        """ Return a list of content types accepted by the tile or None if all
-        types are accepted.
+        """Return all content types available (default value)."""
+        registry = getUtility(IRegistry)
+        settings = registry.forInterface(ICoverSettings)
+        return settings.searchable_content_types
+
+    def is_compose_mode(self):
+        """Return True if tile is being rendered in compose mode.
         """
-        return None  # all content types accepted by default
+        if 'PARENT_REQUEST' in self.context.REQUEST:
+            # the name of the template is in the parent request
+            url = self.context.REQUEST.PARENT_REQUEST.URL
+            # compose mode is the last part of the URL
+            return url.split('/')[-1] == 'compose'
+        return False
 
     def get_tile_configuration(self):
         tile_conf_adapter = getMultiAdapter(
@@ -210,6 +225,19 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
         else:
             return False
 
+    def _has_image_field(self, obj):
+        """Return True if the object has an image field.
+
+        :param obj: [required]
+        :type obj: content object
+        """
+        if hasattr(obj, 'image'):  # Dexterity
+            return True
+        elif hasattr(obj, 'Schema'):  # Archetypes
+            return 'image' in obj.Schema().keys()
+        else:
+            return False
+
     def get_configured_fields(self):
         context = self.context
         tileType = queryUtility(ITileType, name=self.__name__)
@@ -236,27 +264,43 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
 
             field = {'id': name, 'content': content, 'title': field.title}
 
-            if name in conf:
-                field_conf = conf[name]
-                if (field_conf.get('visibility', '') == u'off'):
-                    # If the field was configured to be invisible, then just
-                    # ignore it
-                    continue
-
-                if 'htmltag' in field_conf:
-                    # If this field has the capability to change its html tag
-                    # render, save it here
-                    field['htmltag'] = field_conf['htmltag']
-
-                if 'imgsize' in field_conf:
-                    field['scale'] = field_conf['imgsize'].split()[0]
-
-                if 'position' in field_conf:
-                    field['position'] = field_conf['position']
+            if not self._include_updated_field(field, conf.get(name)):
+                continue
 
             results.append(field)
 
         return results
+
+    def _include_updated_field(self, field, field_conf):
+        # Return True or False to say if the field should be included.
+        # Possibly update the field argument that is passed in.
+
+        if not field_conf:
+            # By default all fields are included.
+            return True
+
+        if isinstance(field_conf, basestring):
+            # css_class simply has a simple string, not a dictionary,
+            # so there is nothing left to check.
+            return True
+
+        if (field_conf.get('visibility', '') == u'off'):
+            # If the field was configured to be invisible, then just
+            # ignore it
+            return False
+
+        if 'htmltag' in field_conf:
+            # If this field has the capability to change its html tag
+            # render, save it here
+            field['htmltag'] = field_conf['htmltag']
+
+        if 'imgsize' in field_conf:
+            field['scale'] = field_conf['imgsize'].split()[0]
+
+        if 'position' in field_conf:
+            field['position'] = field_conf['position']
+
+        return True
 
     def setAllowedGroupsForEdit(self, groups):
         permissions = getMultiAdapter(
