@@ -280,9 +280,9 @@ input[type="submit"].btn::-moz-focus-inner {
 }
 
 #content .layout .resizer {
-    background: transparent url(/++resource++collective.cover/resize.png) no-repeat center center;
-    height: 18px;
-    width: 18px;
+    background: transparent url(/++resource++collective.cover/resize-hor.png) no-repeat center center;
+    height: 14px;
+    width: 24px;
     display: block;
     position: absolute;
     right: 0;
@@ -292,13 +292,17 @@ input[type="submit"].btn::-moz-focus-inner {
     background-size: 100%;
 }
 
-
-
-
-
-
-
-
+.template-layoutedit .ui-dialog .ui-dialog-titlebar-close {
+    height: 20px;
+    background: url(++resource++collective.cover/remove.png);
+    outline: none;
+    border: none;
+    cursor: pointer;
+}
+.template-layoutedit .ui-dialog .ui-dialog-titlebar-close:hover {
+    height: 20px;
+    background: url(++resource++collective.cover/remove.png) 0 20px;
+}
 
 
 
