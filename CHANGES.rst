@@ -284,9 +284,6 @@ There's a frood who really knows where his towel is
 
 - Initial release.
 
-.. _`PloneFormGen`: https://pypi.python.org/pypi/Products.PloneFormGen
-.. _`#35`: https://github.com/collective/collective.cover/issues/35
-.. _`#48`: https://github.com/collective/collective.cover/issues/48
 .. _`#100`: https://github.com/collective/collective.cover/issues/100
 .. _`#114`: https://github.com/collective/collective.cover/issues/114
 .. _`#118`: https://github.com/collective/collective.cover/issues/118
@@ -324,6 +321,7 @@ There's a frood who really knows where his towel is
 .. _`#239`: https://github.com/collective/collective.cover/issues/239
 .. _`#241`: https://github.com/collective/collective.cover/issues/241
 .. _`#244`: https://github.com/collective/collective.cover/issues/244
+.. _`#248`: https://github.com/collective/collective.cover/issues/248
 .. _`#259`: https://github.com/collective/collective.cover/issues/259
 .. _`#260`: https://github.com/collective/collective.cover/issues/260
 .. _`#262`: https://github.com/collective/collective.cover/issues/262
@@ -343,3 +341,6 @@ There's a frood who really knows where his towel is
 .. _`#323`: https://github.com/collective/collective.cover/issues/323
 .. _`#339`: https://github.com/collective/collective.cover/issues/339
 .. _`#342`: https://github.com/collective/collective.cover/issues/342
+.. _`#35`: https://github.com/collective/collective.cover/issues/35
+.. _`#48`: https://github.com/collective/collective.cover/issues/48
+.. _`PloneFormGen`: https://pypi.python.org/pypi/Products.PloneFormGen

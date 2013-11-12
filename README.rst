@@ -21,6 +21,10 @@ layout composition system for Plone.
 
 .. TODO: add a comparison between Deco and collective.cover
 
+.. _`Blocks`: https://github.com/plone/plone.app.blocks
+.. _`Deco`: https://github.com/plone/plone.app.deco
+.. _`Tiles`: https://github.com/plone/plone.app.tiles
+
 Use cases
 ^^^^^^^^^
 
@@ -54,11 +58,6 @@ These are some of the sites using ``collective.cover``:
 Mostly Harmless
 ---------------
 
-.. Warning::
-   ``collective.cover`` is currently not compatible with standard Plone tiles;
-   this will be addressed in a future realease of the package. See issues
-   `#81`_ and `#112`_ for more information.
-
 .. image:: https://secure.travis-ci.org/collective/collective.cover.png?branch=master
     :alt: Travis CI badge
     :target: http://travis-ci.org/collective/collective.cover
@@ -73,8 +72,37 @@ Mostly Harmless
 
 Got an idea? Found a bug? Let us know by `opening a support ticket`_.
 
+.. _`opening a support ticket`: https://github.com/collective/collective.cover/issues
+
+Known issues
+^^^^^^^^^^^^
+
+* `Package is not compatible with standard Plone tiles`_. This will be
+  addressed in a future realease.
+
+* `AJAX responses are wrapped after installing the package`_. This is
+  `an issue in plone.app.blocks`_.
+
+See the `complete list of bugs on GitHub`_.
+
+.. _`Package is not compatible with standard Plone tiles`: https://github.com/collective/collective.cover/issues/81
+.. _`AJAX responses are wrapped after installing the package`: https://github.com/collective/collective.cover/issues/331
+.. _`complete list of bugs on GitHub`: https://github.com/collective/collective.cover/issues?labels=bug&milestone=&page=1&state=open
+.. _`an issue in plone.app.blocks`: https://github.com/plone/plone.app.blocks/issues/5
+
 Don't Panic
 -----------
+
+We are currently working on the documentation of the package; this is what we
+have right now (contributions are always welcomed):
+
+* `Quick Tour video on YouTube`_.
+* `End user documentation`_
+* `Developer documentation`_
+
+.. _`Developer documentation`: https://github.com/collective/collective.cover/blob/master/docs/developer.rst
+.. _`End user documentation`: https://github.com/collective/collective.cover/blob/master/docs/end-user.rst
+.. _`Quick Tour video on YouTube`: https://www.youtube.com/watch?v=h_rsSL1e4i4
 
 Installation
 ^^^^^^^^^^^^
@@ -152,17 +180,10 @@ Home Page Editor of the Brazilian Chamber of Deputies Site
     facilitate inheritance. In ``collective.cover`` (this package), we don't
     want to use portlets at all.
 
-.. _`#112`: https://github.com/collective/collective.cover/issues/112
-.. _`#218`: https://github.com/collective/collective.cover/issues/218
-.. _`#81`: https://github.com/collective/collective.cover/issues/81
-.. _`Blocks`: https://github.com/plone/plone.app.blocks
 .. _`CMFContentPanels`: http://plone.org/products/cmfcontentpanels
 .. _`Collage`: http://plone.org/products/collage
 .. _`collective.panels`: https://github.com/collective/collective.panels
 .. _`CompositePack`: http://plone.org/products/compositepack
-.. _`Deco`: https://github.com/plone/plone.app.deco
-.. _`opening a support ticket`: https://github.com/collective/collective.cover/issues
 .. _`see and comment on our mockups online`: https://simples.mybalsamiq.com/projects/capas/grid
-.. _`Tiles`: https://github.com/plone/plone.app.tiles
 .. _`Using tiles to provide more flexible Plone layouts`: http://davisagli.com/blog/using-tiles-to-provide-more-flexible-plone-layouts
 .. _`World Plone Day 2012 Brasilia`: http://colab.interlegis.leg.br/wiki/WorldPloneDay
