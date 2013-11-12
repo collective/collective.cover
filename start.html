@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Collective Cover</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/docs.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body data-spy="scroll" data-target=".bs-sidenav">
+    <header class="navbar navbar-inverse navbar-fixed-top bs-docs-nav" role="banner">
+      <div class="container">
+        <div class="navbar-header">
+          <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="./index.html" class="navbar-brand">Collective.cover</a>
+        </div>
+        <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+          <ul class="nav navbar-nav">
+            <li class="active">
+              <a href="./start.html">Getting started</a>
+            </li>
+            <li>
+              <a href="./user.html">User Manual</a>
+            </li>
+            <li>
+              <a href="./dev.html">Developer Manual</a>
+            </li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+              <a href="./about.html">About</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <div class="bs-header" id="content">
+      <div class="container">
+        <h1>Getting started</h1>
+        <p class="lead">Collective Cover basic concepts.</p>
+       </div>
+    </div>
+
+
+    <div class="container bs-docs-container">
+      <div class="row">
+        <div class="col-md-3">
+          <div class="bs-sidebar hidden-print affix-top" role="complementary" data-toggle="affix" data-spy="affix" data-offset-top="200">
+            <ul class="nav bs-sidenav">
+                <li>
+                  <a href="#overview">Overview</a>
+                  <ul class="nav">
+                    <li><a href="#overview-what">What is Collective Cover</a></li>
+                    <li><a href="#overview-two">Bla</a></li>
+                  </ul>
+                </li>
+                <li>
+                  <a href="#usecases">Usecases</a>
+                  <ul class="nav">
+                    <li><a href="#usecases-lorem">Lorem</a></li>
+                  </ul>
+                </li>
+                <li>
+                  <a href="#tiles">Tiles</a>
+                  <ul class="nav">
+                    <li><a href="#tiles-banner">Banner</a></li>
+                    <li><a href="#tiles-basic">Basic</a></li>
+                    <li><a href="#tiles-carousel">Carousel</a></li>
+                    <li><a href="#tiles-collection">Collection</a></li>
+                    <li><a href="#tiles-embed">Embed</a></li>
+                    <li><a href="#tiles-file">File</a></li>
+                    <li><a href="#tiles-list">List</a></li>
+                    <li><a href="#tiles-richtext">Rich Text</a></li>
+                  </ul>
+                </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="col-md-9" role="main">
+          <!-- overview
+          ================================================== -->
+          <div class="bs-docs-section">
+
+            <div class="page-header">
+              <h1 id="overview">Overview</h1>
+            </div>
+
+            <h3 id="overview-what">What Collective.cover is?</h3>
+            <p>Lorem ipsum.</p>
+
+            <h3 id="overview-two">Bla</h3>
+            <p>Lorem ipsum.</p>
+
+
+          </div>
+
+          <!-- use
+          ================================================== -->
+          <div class="bs-docs-section">
+
+            <div class="page-header">
+              <h1 id="usecases">Use cases</h1>
+            </div>
+
+            <h3 id="usecases-lorem">lorem</h3>
+            <p>Lorem ipsum.</p>
+          </div>
+
+
+          <!-- Code
+          ================================================== -->
+          <div class="bs-docs-section">
+
+            <div class="page-header">
+              <h1 id="tiles">Tiles</h1>
+            </div>
+
+            <h3 id="tiles-banner">Banner</h3>
+            <p>A Banner tile shows an image or heading text pointing to a link; Banner tile fields include title, an image and a URL.</p>
+
+            <h3 id="tiles-basic">Basic</h3>
+            <p>A Basic tile shows almost all metadata of an object; it includes its title, description, date, tags and an image, if the object has one.</p>
+
+            <p>You can drop any object into a Basic tile. Fields in the tile will be populated with the object metadata. All fields are user-editable (except for date and tags) and you can even upload a different image into the tile if you want. The title and image fields will include a link to the original object location.</p>
+
+            <h3 id="tiles-carousel">Carousel</h3>
+            <p>A Carousel tile shows a slideshow made with a list of individual items; every item will show an image, title and description. Carousel tiles are 100% responsive, support native-like swipe movements and use hardware optimized animations.</p>
+
+            <p>You can drop any object in a Carousel tile. Right now, you can not edit individual items metadata in the carousel, but you can remove or reorder them. You can also specify if the carousel will start playing the slideshow automatically or not. Every item in the slideshow will have a link pointing back to the original object.</p>
+
+            <h3 id="tiles-collection">Collection</h3>
+            <p>A Collection tile shows a list of items resulting from a 'Collection'; every item will show its title, description, date and image, if the original object has one.</p>
+
+            <p>Collection tiles may have a header and a footer; they also include additional fields that help us configure the way it behaves: you can define how many items the tile will shown as a maximun and an offset to start with items different than the first one. This way you can create very simple and yet powerful layout configurations with a couple of tiles and very few effort.</p>
+
+            <p>You can only drop 'Collection' objects on a Collection tile. Right now, you can not edit individual items metadata directly in the tile. The title and image fields will include a link to the original object location.</p>
+
+            <h3 id="tiles-embed">Embed</h3>
+            <p>An Embed tile is used to embed external content in you cover page. Embed tile fields includes title, description and the embedding code itself.</p>
+
+            <p>Embed tiles are only editable: you can not drop any object on it.</p>
+
+            <h3 id="tiles-file">File</h3>
+            <p>A File tile shows metadata about a file and a link to download it. File tile fields include title, description and the download link itself.</p>
+
+            <p>You can only drop 'File' objects into a File tiles. Fields in the tile will be populated with the file metadata. All fields are user-editable, except for the download link.</p>
+
+            <h3 id="tiles-list">List</h3>
+            <p>A List tile shows a list of individual items; every item will show its title, description and image, if the original object has one.</p>
+
+            <p>You can drop any object in a List tile. Items in the tile will be populated with the objects metadata; if an object has an image, it will be shown also. Right now, you can not edit individual items metadata in the list, but you can remove or reorder them. The title and image fields will include a link to the original object location.</p>
+
+            <h3 id="tiles-richtext">Rich Text</h3>
+
+            <p>A Rich Text tile shows a block of text; text can be edited using TinyMCE, Plone standard web-based WYSIWYG editor. A Rich Text tile includes only one text field.</p>
+
+            <p>You can only drop 'Document' objects into a Rich Text tile. The text field will be populated with the object text. You can easily edit the text and you can add images and links to it. Rich Text tiles support link-integrity: a message will be shown if somebody tries to delete the object you are referencing on the tile, warning her there is a link pointing to that object.</p>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+
+
+      <footer class="bs-footer" role="contentinfo">
+      <div class="container">
+        <div class="bs-social">
+          <ul class="bs-social-buttons">
+            <li>
+              <iframe class="github-btn" src="http://ghbtns.com/github-btn.html?user=collective&amp;repo=collective.cover&amp;type=watch&amp;count=true" width="100" height="20" title="Star on GitHub"></iframe>
+            </li>
+            <li>
+              <iframe class="github-btn" src="http://ghbtns.com/github-btn.html?user=collective&amp;repo=collective.cover&amp;type=fork&amp;count=true" width="102" height="20" title="Fork on GitHub"></iframe>
+            </li>
+          </ul>
+        </div>
+
+
+        <p>Proudly designed by <a href="http://plone.org" target="_blank">Plone Community</a>.</p>
+        <p>Code licensed under <a href="http://www.apache.org/licenses/LICENSE-2.0" target="_blank">Apache License v2.0</a>, documentation under <a href="http://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>.</p>
+        <ul class="footer-links">
+          <li>Currently v1.0.6a</li>
+          <li class="muted">·</li>
+          <li><a href="https://github.com/collective/collective.cover/issues">Issues</a></li>
+          <li class="muted">·</li>
+          <li><a href="https://github.com/collective/collective.cover/releases">Releases</a></li>
+        </ul>
+      </div>
+    </footer>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+  </body>
+</html>
