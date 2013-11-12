@@ -28,11 +28,11 @@ function contentSearchFilter(url) {
 
 
 function contentchooserMaker(options) {
-    var windowId = options['windowId'];
-    var droppable = options['droppable'];
-    var draggable = options['draggable'];
-    var draggable_acepted = options['draggable_acepted'];
-    var dropped = options['dropped'];
+    var windowId = options.windowId;
+    var droppable = options.droppable;
+    var draggable = options.draggable;
+    var draggable_acepted = options.draggable_acepted;
+    var dropped = options.dropped;
 
     //items inside contentchooser should be draggable
     $(draggable).liveDraggable({
