@@ -6,12 +6,13 @@ from collective.cover.tiles.base import PersistentCoverTile
 from collective.cover.tiles.configuration_view import IDefaultConfigureForm
 from plone.app.uuid.utils import uuidToObject
 from plone.directives import form
+from plone.memoize import view
 from plone.namedfile.field import NamedBlobImage as NamedImage
 from plone.tiles.interfaces import ITileDataManager
 from plone.tiles.interfaces import ITileType
 from plone.uuid.interfaces import IUUID
-from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.CMFPlone.utils import safe_unicode
+from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zope import schema
 from zope.component import queryUtility
 from zope.schema import getFieldsInOrder
@@ -194,6 +195,13 @@ class CollectionTile(PersistentCoverTile):
                 scale = scaleconf.split(' ')[0]  # we need the name only: 'mini'
                 scales = item.restrictedTraverse('@@images')
                 return scales.scale('image', scale)
+
+    @view.memoize
+    def get_image_position(self):
+        tile_conf = self.get_tile_configuration()
+        image_conf = tile_conf.get('image', None)
+        if image_conf:
+            return image_conf['position']
 
     def remove_relation(self):
         data_mgr = ITileDataManager(self)

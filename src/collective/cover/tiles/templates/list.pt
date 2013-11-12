@@ -9,38 +9,36 @@
     Please add up to <span i18n:name="limit_objects" tal:replace="view/limit"/> objects to the tile.
   </p>
 
-  <!-- FIXME: this should be configurable -->
-  <div class="sortable-tile cover-list-tile tile-content" tal:condition="not: is_empty">
-    <tal:items repeat="item view/results"
-               define="toLocalizedTime nocall:context/@@plone/toLocalizedTime">
-      <div style="position:relative"
-           tal:attributes="data-uid python:view.get_uid(item)">
-        <tal:image tal:define="thumbnail python:view.thumbnail(item);"
-                   condition="thumbnail">
-          <a tal:attributes="href item/absolute_url;">
-            <!-- XXX -->
-            <img style="float: left; margin: 0 1em 0.5em 0;"
-                 tal:attributes="alt item/Description;
-                                 src thumbnail/url;
-                                 width thumbnail/width;
-                                 height thumbnail/height" />
-          </a>
-        </tal:image>
+  <div class="cover-list-tile tile-content sortable-tile" tal:condition="not:is_empty">
+    <tal:items repeat="obj view/results">
+      <div class="list-item" style="position:relative"
+           tal:attributes="data-uid python:view.get_uid(obj)">
+        <tal:fields repeat="field view/get_configured_fields">
+          <tal:image define="thumbnail python:view.thumbnail(obj);"
+                     condition="python:field['id'] == 'image' and thumbnail">
+            <a tal:attributes="href obj/absolute_url">
+              <img tal:attributes="src thumbnail/url;
+                                   width thumbnail/width;
+                                   height thumbnail/height;
+                                   class view/get_image_position;
+                                   alt obj/Title;" />
+            </a>
+          </tal:image>
 
-        <tal:title>
-          
-          <h1>
-            <a tal:attributes="href item/absolute_url"
-               tal:content="item/Title" />
-          </h1>
-        </tal:title>
+          <h2 tal:condition="python:field['id'] == 'title'"
+              tal:replace="structure python:view.get_title_tag(obj)"
+              />
 
-        <p tal:content="item/Description" />
+          <p tal:condition="python:field['id'] == 'description'"
+             tal:content="obj/Description"
+             />
 
-        <p tal:content="python:toLocalizedTime(item.Date())" />
-
+          <p tal:define="toLocalizedTime nocall:context/@@plone/toLocalizedTime"
+             tal:condition="python:field['id'] == 'date'"
+             tal:content="python:toLocalizedTime(obj.Date())"
+             />
+        </tal:fields>
       </div>
-
       <div class="visualClear"><!-- --></div>
     </tal:items>
   </div>

@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: collective.cover\n"
-"POT-Creation-Date: 2013-11-04 13:07+0000\n"
+"POT-Creation-Date: 2013-11-11 23:23+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: Paul Roeland <paul@cleanclothes.org>, 2013\n"
 "Language-Team: German <LL@li.org>\n"
@@ -82,12 +82,12 @@ msgid "Basic Tile"
 msgstr "Basis Kachel"
 
 #: collective/cover/controlpanel.py:51
-#: collective/cover/tiles/base.py:62
+#: collective/cover/tiles/base.py:65
 msgid "CSS Class"
 msgstr "CSS Klasse"
 
 #: collective/cover/tiles/configuration_view.py:197
-#: collective/cover/tiles/edit.py:80
+#: collective/cover/tiles/edit.py:82
 msgid "Cancel"
 msgstr "Ab­bre­chen"
 
@@ -111,7 +111,7 @@ msgstr "Kolumne"
 msgid "Compose"
 msgstr "Gestalten"
 
-#: collective/cover/tiles/configuration_view.py:160
+#: collective/cover/tiles/configuration_view.py:159
 msgid "Configure ${name}"
 msgstr "Konfiguriere ${name}"
 
@@ -136,13 +136,14 @@ msgstr "Cover Stilvorlage"
 msgid "Cover Settings"
 msgstr "Cover Konfiguration"
 
-#: collective/cover/tiles/basic.py:43
-#: collective/cover/tiles/collection.py:44
+#: collective/cover/tiles/basic.py:39
+#: collective/cover/tiles/collection.py:45
+#: collective/cover/tiles/list.py:63
 msgid "Date"
 msgstr "Datum"
 
-#: collective/cover/tiles/basic.py:31
-#: collective/cover/tiles/collection.py:37
+#: collective/cover/tiles/basic.py:27
+#: collective/cover/tiles/collection.py:38
 #: collective/cover/tiles/embed.py:24
 msgid "Description"
 msgstr "Beschreibung"
@@ -160,7 +161,7 @@ msgid "Edit"
 msgstr "Bearbeiten"
 
 #: collective/cover/tiles/carousel.py:27
-#: collective/cover/tiles/list.py:27
+#: collective/cover/tiles/list.py:25
 msgid "Elements"
 msgstr "Elemente"
 
@@ -188,7 +189,7 @@ msgstr "Datei Kachel"
 msgid "Filter items"
 msgstr "Inhalte filtern"
 
-#: collective/cover/tiles/collection.py:72
+#: collective/cover/tiles/collection.py:74
 msgid "Footer"
 msgstr "Fußzeile"
 
@@ -208,13 +209,13 @@ msgstr ""
 msgid "HTML tag"
 msgstr "HTML tag"
 
-#: collective/cover/tiles/collection.py:23
+#: collective/cover/tiles/collection.py:24
 msgid "Header"
 msgstr "Kopfzeile"
 
-#: collective/cover/tiles/banner.py:29
-#: collective/cover/tiles/basic.py:36
-#: collective/cover/tiles/collection.py:51
+#: collective/cover/tiles/banner.py:25
+#: collective/cover/tiles/basic.py:32
+#: collective/cover/tiles/collection.py:52
 msgid "Image"
 msgstr "Bild"
 
@@ -248,7 +249,7 @@ msgstr "Limit"
 msgid "List Tile"
 msgstr "Listen Kachel"
 
-#: collective/cover/tiles/collection.py:125
+#: collective/cover/tiles/collection.py:130
 msgid "More…"
 msgstr "Mehr…"
 
@@ -270,7 +271,8 @@ msgstr "Keine Beschreibung"
 msgid "Number of items"
 msgstr "Anzahl der Artikel"
 
-#: collective/cover/tiles/collection.py:59
+#: collective/cover/tiles/collection.py:60
+#: collective/cover/tiles/list.py:34
 msgid "Number of items to display"
 msgstr "Anzahl anzuzeigende Artikeln "
 
@@ -331,8 +333,8 @@ msgid "Row"
 msgstr "Zeile"
 
 #: collective/cover/templates/layoutedit.pt:71
-#: collective/cover/tiles/configuration_view.py:164
-#: collective/cover/tiles/edit.py:48
+#: collective/cover/tiles/configuration_view.py:163
+#: collective/cover/tiles/edit.py:49
 msgid "Save"
 msgstr "Speichern"
 
@@ -352,7 +354,7 @@ msgstr "Konfiguration für collective.cover"
 msgid "Standard view"
 msgstr ""
 
-#: collective/cover/tiles/collection.py:67
+#: collective/cover/tiles/collection.py:68
 msgid "Start at item"
 msgstr ""
 
@@ -384,7 +386,7 @@ msgstr ""
 msgid "This tiles will be available for layout creation."
 msgstr "Verfügbare Kacheln für Stilvorlagen"
 
-#: collective/cover/tiles/configuration_view.py:206
+#: collective/cover/tiles/configuration_view.py:207
 msgid "Tile configuration cancelled."
 msgstr "Kachelkonfiguration abgebrochen."
 
@@ -392,22 +394,22 @@ msgstr "Kachelkonfiguration abgebrochen."
 msgid "Tile configuration saved."
 msgstr "Kachelkonfiguration gespeichert."
 
-#: collective/cover/tiles/edit.py:76
+#: collective/cover/tiles/edit.py:78
 msgid "Tile saved"
 msgstr "Kachel gespeichtert"
 
-#: collective/cover/tiles/banner.py:24
-#: collective/cover/tiles/basic.py:26
-#: collective/cover/tiles/collection.py:30
+#: collective/cover/tiles/banner.py:20
+#: collective/cover/tiles/basic.py:22
+#: collective/cover/tiles/collection.py:31
 msgid "Title"
 msgstr "Titel"
 
-#: collective/cover/tiles/banner.py:34
+#: collective/cover/tiles/banner.py:30
 msgid "URL"
 msgstr "URL"
 
-#: collective/cover/tiles/basic.py:59
-#: collective/cover/tiles/collection.py:77
+#: collective/cover/tiles/basic.py:55
+#: collective/cover/tiles/collection.py:79
 #: collective/cover/tiles/file.py:58
 msgid "UUID"
 msgstr "UUID"
@@ -428,11 +430,15 @@ msgstr "Sichtbar"
 msgid "Yes"
 msgstr "Ja"
 
-#: collective/cover/tiles/base.py:139
+#: collective/cover/tiles/base.py:143
 msgid "You are not allowed to add content to this tile"
 msgstr "Keine Berechtigung zum ändern dieser Kachel"
 
-#: collective/cover/tiles/base.py:151
+#: collective/cover/tiles/edit.py:47
+msgid "You are not allowed to add this kind of tile"
+msgstr ""
+
+#: collective/cover/tiles/base.py:155
 msgid "You are not allowed to remove content of this tile"
 msgstr "Keine Berechtigung zum löschen dieser Kachel"
 
@@ -449,7 +455,7 @@ msgid "collective.cover: testfixture"
 msgstr ""
 
 #. Default: "Categories"
-#: collective/cover/tiles/basic.py:52
+#: collective/cover/tiles/basic.py:48
 msgid "label_categories"
 msgstr "label_categories"
 
@@ -458,12 +464,12 @@ msgid "more"
 msgstr "Mehr"
 
 #. Default: "Banner"
-#: collective/cover/tiles/banner.py:46
+#: collective/cover/tiles/banner.py:42
 msgid "msg_short_name_banner"
 msgstr ""
 
 #. Default: "Basic"
-#: collective/cover/tiles/basic.py:72
+#: collective/cover/tiles/basic.py:68
 msgid "msg_short_name_basic"
 msgstr ""
 
@@ -473,7 +479,7 @@ msgid "msg_short_name_carousel"
 msgstr ""
 
 #. Default: "Collection"
-#: collective/cover/tiles/collection.py:88
+#: collective/cover/tiles/collection.py:90
 msgid "msg_short_name_collection"
 msgstr ""
 
@@ -493,7 +499,7 @@ msgid "msg_short_name_file"
 msgstr ""
 
 #. Default: "List"
-#: collective/cover/tiles/list.py:60
+#: collective/cover/tiles/list.py:77
 msgid "msg_short_name_list"
 msgstr ""
 
