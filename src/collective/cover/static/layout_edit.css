@@ -518,3 +518,11 @@ input[type="submit"].btn::-moz-focus-inner {
 .visibility-box>span {display: none;}
 .visibility-no {background: url('visibility.png') no-repeat 0 4px;}
 .visibility-yes {background: url('visibility.png') no-repeat -22px 4px;}
+
+#tile-configure .order-box {
+	display: none;
+}
+
+#tile-configure .config-sortable {
+	cursor: move;
+}

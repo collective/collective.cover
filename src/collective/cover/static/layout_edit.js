@@ -460,6 +460,35 @@
                         data: {'ajax_load':true},
                         success: function(data) {
                             $('#tile-configure').html(data);
+                            // Make sure CSS field is in first place
+                            var css_id = 'formfield-collective-cover-basic-css_class';
+                            var first = $('#configure_tile div.field:first');
+                            if(first.attr('id')!=css_id) {
+                                $('#'+css_id).insertBefore(first);
+                            }
+                            $('#configure_tile div.field').not('#'+css_id).addClass('config-sortable');
+                            // Fields in tile config sortable
+                            $('#configure_tile').sortable({opacity: 0.6,
+                                                                cursor: 'move',
+                                                                placeholder: "ui-state-highlight",
+                                                                zIndex: 9999,
+                                                                refreshPositions: true,
+                                                                axis: 'y',
+                                                                tolerance: 'pointer',
+                                                                forcePlaceholderSize: true,
+                                                                items: 'div.config-sortable',
+                                                                update: function(e, ui){
+                                                                    var $divs = $(this).children('div.field');
+                                                                    $divs.each(function() {
+                                                                        var $div = $(this);
+                                                                        var newVal = $(this).index() + 1;
+                                                                        // TODO: Is used newVal -1 to prevent the field **Clase CSS** be counted as sortable item
+                                                                        $(this).children('div.order-box').children('input').val(newVal-1);
+                                                                    });
+                                                                }
+                            });
+                            $("#configure_tile").disableSelection();
+
                         }
                       });
                       return false;

@@ -6,9 +6,11 @@ There's a frood who really knows where his towel is
 1.0a6 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
-- CSS improvements for content chooser. [agnogueira]
+- Field order can now be set on tile configuration screen using drag-and-drop.
+  (closes `#248`_).
+  [marcosfromero, cleberjsantos]
 
-- CSS improvements for list tile in compose tab. [agnogueira]
+- CSS improvements for list tile  and content chooser. [agnogueira]
 
 - List tile is now configurable: you can set ordering and visibility for all
   fields and you can also set the preferred style for the title and the scale
