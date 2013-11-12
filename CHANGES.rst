@@ -1,15 +1,14 @@
 Changelog
 ---------
 
-There's a frood who really knows where his towel is
+There's a frood who really knows where his towel is.
 
 1.0a6 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
-- Add support to sortable fields in tile configuration (closes `#248`_).
+- Field order can now be set on tile configuration screen using drag-and-drop.
+  (closes `#248`_).
   [marcosfromero, cleberjsantos]
-
-- Fix image positioning on collection tile (closes `#318`_). [hvelarde]
 
 - List tile is now configurable: you can set ordering and visibility for all
   fields and you can also set the preferred style for the title and the scale
