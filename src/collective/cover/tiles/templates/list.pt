@@ -38,8 +38,8 @@
              tal:content="python:toLocalizedTime(obj.Date())"
              />
         </tal:fields>
+        <div class="visualClear"><!-- --></div>
       </div>
-      <div class="visualClear"><!-- --></div>
     </tal:items>
   </div>
 </body>
