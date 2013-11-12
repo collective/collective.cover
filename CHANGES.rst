@@ -1,10 +1,15 @@
 Changelog
 ---------
 
-There's a frood who really knows where his towel is
+There's a frood who really knows where his towel is.
 
 1.0a6 (unreleased)
 ^^^^^^^^^^^^^^^^^^
+
+.. Warning::
+    Release 1.0a6 removes all upgrade steps from versions no longer supported.
+    If you are upgrading from a version previous to 1.0a5 you should upgrade
+    to 1.0a5 first and then you can upgrade to 1.0a6.
 
 - Field order can now be set on tile configuration screen using drag-and-drop.
   (closes `#248`_).
