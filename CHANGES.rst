@@ -68,7 +68,7 @@ There's a frood who really knows where his towel is.
 
 - Remove bundles from portal_javascript (closes `#303`_). [jpgimenez]
 
-- Add German translataion. [polyester, pbauer, svx]
+- Add German translation. [polyester, pbauer, svx]
 
 - Remove upgrade steps from unsupported versions (closes `#295`_). [fulv]
 
@@ -101,7 +101,7 @@ There's a frood who really knows where his towel is.
   or `getImage` attribute, displays that image. And always adds
   a link (closes `#241`_). [marcosfromero]
 
-- Prevent unnecesary page reloads when saving or canceling edit overlay
+- Prevent unnecessary page reloads when saving or canceling edit overlay
   in tiles (closes `#274`_). [marcosfromero]
 
 - On collection tile, return a thumbnail only if the item has an image field
@@ -195,7 +195,7 @@ There's a frood who really knows where his towel is.
 - Gallery tile now allows sorting of items easily through a widget created for
   that purpose (closes `#198`_). [Quimera]
 
-- A custom permission for the export layout funcionality was added; exporting
+- A custom permission for the export layout functionality was added; exporting
   a cover layout to the Plone registry is now an administrative task
   accomplished only by Managers and Site Administrators (closes `#177`_).
   [Quimera]
@@ -233,7 +233,7 @@ There's a frood who really knows where his towel is.
 
 - Implements an original size scale to show the original image. [jpgimenez]
 
-- Improve the way than images are accesed from the original object,
+- Improve the way that images are accessed from the original object,
   using the standard images traversal. (issue `#158`_) [jpgimenez]
 
 - Fixed a bug with Plone 4.3 that avoided TinyMCE being displayed for
@@ -271,7 +271,7 @@ There's a frood who really knows where his towel is.
 - Refactor list tile to use adapters to get the contained items uids.
   [jpgimenez]
 
-- Implements a way to ommit fields from tiles edit form and show it at
+- Implements a way to omit fields from tiles edit form and show it at
   configure form. [jpgimenez]
 
 - Refactor of collection tile. [hvelarde]
@@ -283,7 +283,7 @@ There's a frood who really knows where his towel is.
   called for the object and not its parent (fixes `#48`_). [frapell]
 
 - In order to be able to load Dexterity items from the import content GS step,
-  we need to provide this interface manualy, until a proper fix in Dexterity
+  we need to provide this interface manually, until a proper fix in Dexterity
   is implemented. [frapell]
 
 - Make the cover object to be an Item instead of a Container (fixes `#114`_).

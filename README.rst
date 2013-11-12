@@ -78,7 +78,7 @@ Known issues
 ^^^^^^^^^^^^
 
 * `Package is not compatible with standard Plone tiles`_. This will be
-  addressed in a future realease.
+  addressed in a future release.
 
 * `AJAX responses are wrapped after installing the package`_. This is
   `an issue in plone.app.blocks`_.
