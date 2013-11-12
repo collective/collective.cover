@@ -112,8 +112,26 @@ class ListTileTestCase(unittest.TestCase):
         self.request.form['tile-id'] = 'test'
         self.request.form['uid'] = obj1.UID()
         view = getMultiAdapter(
-            (self.cover, self.request), name='removeitemfromlisttile'
-        )
+            (self.cover, self.request), name='removeitemfromlisttile')
         self.assertIn(obj1, tile.results())
         view.render()
         self.assertNotIn(obj1, tile.results())
+
+    def test_get_image_position(self):
+        # we use the private method to skip memoize cache
+        self.assertEqual(self.tile._get_image_position(), u'left')
+        tile_conf = self.tile.get_tile_configuration()
+        tile_conf['image']['position'] = u'right'
+        self.tile.set_tile_configuration(tile_conf)
+        self.assertEqual(self.tile._get_image_position(), u'right')
+
+    def test_get_title_tag(self):
+        # we use the private method to skip memoize cache
+        item = self.portal['my-news-item']
+        expected = '<h2><a href="http://nohost/plone/my-news-item">Test news item</a></h2>'
+        self.assertEqual(self.tile._get_title_tag(item), expected)
+        tile_conf = self.tile.get_tile_configuration()
+        tile_conf['title']['htmltag'] = u'h1'
+        self.tile.set_tile_configuration(tile_conf)
+        expected = '<h1><a href="http://nohost/plone/my-news-item">Test news item</a></h1>'
+        self.assertEqual(self.tile._get_title_tag(item), expected)

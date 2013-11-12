@@ -1,14 +1,25 @@
+Changelog
+---------
+
 There's a frood who really knows where his towel is
----------------------------------------------------
 
 1.0a6 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
-- Let the icons sidebar fixed on top when scrolling the page. (closes `#342`_).
+- List tile is now configurable: you can set ordering and visibility for all
+  fields and you can also set the preferred style for the title and the scale
+  and alignment for the image thumbnail; the date of the items was also added
+  (fixes `#339`_). [hvelarde]
+
+- Fix image positioning on collection tile (fixes `#318`_). [hvelarde]
+
+- Fix image positioning on basic tile (fixes `#317`_). [agnogueira]
+
+- Let the icons sidebar fixed on top when scrolling the page (closes `#342`_).
   [agnogueira]
 
 - Add ``short_name`` to all tiles.  Use this as title in the tile
-  list.  This can be translated.
+  list. This can be translated.
   [maurits]
 
 - Fix possible problem getting the ``css_class`` when the default
@@ -19,8 +30,8 @@ There's a frood who really knows where his towel is
 - Add offset as a configuration option to the collection tile.
   (fixes `#298`_). [warpr]
 
-- Add ``cover-(type)-tile`` class to all tile templates (fixes issue
-  `#189`_). [warpr]
+- Add ``cover-(type)-tile`` class to all tile templates (fixes `#189`_).
+  [warpr]
 
 - Support text from Dexterity items for the bodycontent and richtext
   tiles (fixes `#323`_). [maurits]
@@ -37,7 +48,7 @@ There's a frood who really knows where his towel is
 
 - Remove upgrade steps from unsupported versions (closes `#295`_). [fulv]
 
-- Depend on collective.js.bootstrap(closes `#201`_). [tcurvelo]
+- Depend on collective.js.bootstrap (closes `#201`_). [tcurvelo]
 
 - Remove code from Image and Link tiles (closes `#301`_). [fulv]
 
@@ -321,5 +332,8 @@ There's a frood who really knows where his towel is
 .. _`#301`: https://github.com/collective/collective.cover/issues/301
 .. _`#303`: https://github.com/collective/collective.cover/issues/303
 .. _`#314`: https://github.com/collective/collective.cover/issues/314
+.. _`#317`: https://github.com/collective/collective.cover/issues/317
+.. _`#318`: https://github.com/collective/collective.cover/issues/318
 .. _`#323`: https://github.com/collective/collective.cover/issues/323
+.. _`#339`: https://github.com/collective/collective.cover/issues/339
 .. _`#342`: https://github.com/collective/collective.cover/issues/342

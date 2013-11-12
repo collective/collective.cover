@@ -37,7 +37,8 @@
                 <img tal:attributes="src thumbnail/url;
                                      width thumbnail/width;
                                      height thumbnail/height;
-                                     alt obj/Description|obj/Title" />
+                                     class view/get_image_position;
+                                     alt obj/Title;" />
               </a>
             </tal:image>
 

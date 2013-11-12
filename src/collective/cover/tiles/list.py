@@ -4,8 +4,11 @@ from collective.cover import _
 from collective.cover.interfaces import ICoverUIDsProvider
 from collective.cover.tiles.base import IPersistentCoverTile
 from collective.cover.tiles.base import PersistentCoverTile
+from collective.cover.tiles.configuration_view import IDefaultConfigureForm
 from plone.app.uuid.utils import uuidToObject
-from plone.namedfile.field import NamedImage
+from plone.directives import form
+from plone.memoize import view
+from plone.namedfile.field import NamedBlobImage
 from plone.tiles.interfaces import ITileDataManager
 from plone.tiles.interfaces import ITileType
 from plone.uuid.interfaces import IUUID
@@ -16,7 +19,6 @@ from zope.interface import implements
 from zope.schema import getFieldsInOrder
 
 
-# XXX: we must refactor this tile
 class IListTile(IPersistentCoverTile):
 
     uuids = schema.List(
@@ -25,22 +27,41 @@ class IListTile(IPersistentCoverTile):
         required=False,
     )
 
+    # XXX: this field should be used to replace the 'limit' attribute
+    form.omitted('count')
+    form.no_omit(IDefaultConfigureForm, 'count')
+    count = schema.Int(
+        title=_(u'Number of items to display'),
+        required=False,
+        default=5,
+    )
+
+    form.omitted('title')
+    form.no_omit(IDefaultConfigureForm, 'title')
     title = schema.TextLine(
         title=_(u'Title'),
         required=False,
-        readonly=True,
     )
 
+    form.omitted('description')
+    form.no_omit(IDefaultConfigureForm, 'description')
     description = schema.Text(
         title=_(u'Description'),
         required=False,
-        readonly=True,
     )
 
-    image = NamedImage(
+    form.omitted('image')
+    form.no_omit(IDefaultConfigureForm, 'image')
+    image = NamedBlobImage(
         title=_(u'Image'),
         required=False,
-        readonly=True,
+    )
+
+    form.omitted('date')
+    form.no_omit(IDefaultConfigureForm, 'date')
+    date = schema.Datetime(
+        title=_(u'Date'),
+        required=False,
     )
 
 
@@ -57,7 +78,10 @@ class ListTile(PersistentCoverTile):
     limit = 5
 
     def results(self):
-        """ Return the list of objects stored in the tile.
+        """Return the list of objects stored in the tile as UUID. If an UUID
+        has no object associated with it, removes the UUID from the list.
+
+        :returns: a list of objects.
         """
         self.set_limit()
         uuids = self.data.get('uuids', None)
@@ -75,7 +99,7 @@ class ListTile(PersistentCoverTile):
     def is_empty(self):
         return self.results() == []
 
-    # XXX: we could get rid of this fixing the tile's schema
+    # TODO: get rid of this by replacing it with the 'count' field
     def set_limit(self):
         for field in self.get_configured_fields():
             if field and field.get('id') == 'uuids':
@@ -124,8 +148,13 @@ class ListTile(PersistentCoverTile):
         old_data['uuids'] = uids
         data_mgr.set(old_data)
 
-    # XXX: are we using this function somewhere? remove?
     def get_uid(self, obj):
+        """Return the UUID of the object.
+
+        :param obj: [required]
+        :type obj: content object
+        :returns: the object's UUID
+        """
         return IUUID(obj, None)
 
     # XXX: refactoring the tile's schema should be a way to avoid this
@@ -164,11 +193,56 @@ class ListTile(PersistentCoverTile):
         return results
 
     def thumbnail(self, item):
-        scales = item.restrictedTraverse('@@images')
-        try:
-            return scales.scale('image', 'mini')
-        except:
-            return None
+        """Return the thumbnail of an image if the item has an image field and
+        the field is visible in the tile.
+
+        :param item: [required]
+        :type item: content object
+        """
+        if self._has_image_field(item) and self._field_is_visible('image'):
+            tile_conf = self.get_tile_configuration()
+            image_conf = tile_conf.get('image', None)
+            if image_conf:
+                scaleconf = image_conf['imgsize']
+                # scale string is something like: 'mini 200:200' and
+                # we need the name only: 'mini'
+                scale = scaleconf.split(' ')[0]
+                scales = item.restrictedTraverse('@@images')
+                return scales.scale('image', scale)
+
+    def _get_image_position(self):
+        """Return the image position as configured on the tile.
+
+        :returns: 'left' or 'right'
+        """
+        tile_conf = self.get_tile_configuration()
+        image_conf = tile_conf.get('image', None)
+        if image_conf:
+            return image_conf.get('position', u'left')
+
+    @view.memoize
+    def get_image_position(self):
+        return self._get_image_position()
+
+    def _get_title_tag(self, item):
+        """Return the HTML code used for the title as configured on the tile.
+
+        :param item: [required]
+        :type item: content object
+        """
+        tag = '<{heading}><a href="{href}">{title}</a></{heading}>'
+        if self._field_is_visible('title'):
+            tile_conf = self.get_tile_configuration()
+            title_conf = tile_conf.get('title', None)
+            if title_conf:
+                heading = title_conf.get('htmltag', 'h2')
+                href = item.absolute_url()
+                title = item.Title()
+                return tag.format(heading=heading, href=href, title=title)
+
+    @view.memoize
+    def get_title_tag(self, item):
+        return self._get_title_tag(item)
 
 
 class CollectionUIDsProvider(object):
