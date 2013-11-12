@@ -6,6 +6,8 @@ There's a frood who really knows where his towel is
 1.0a6 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- CSS improvements for content chooser. [agnogueira]
+
 - CSS improvements for list tile in compose tab. [agnogueira]
 
 - List tile is now configurable: you can set ordering and visibility for all
