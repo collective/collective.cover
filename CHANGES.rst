@@ -6,6 +6,9 @@ There's a frood who really knows where his towel is
 1.0a6 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Add support to sortable fields in tile configuration (closes `#248`_).
+  [marcosfromero, cleberjsantos]
+
 - Fix image positioning on collection tile (closes `#318`_). [hvelarde]
 
 - Fix image positioning on basic tile (closes `#317`_). [agnogueira]
@@ -313,6 +316,7 @@ There's a frood who really knows where his towel is
 .. _`#239`: https://github.com/collective/collective.cover/issues/239
 .. _`#241`: https://github.com/collective/collective.cover/issues/241
 .. _`#244`: https://github.com/collective/collective.cover/issues/244
+.. _`#248`: https://github.com/collective/collective.cover/issues/248
 .. _`#259`: https://github.com/collective/collective.cover/issues/259
 .. _`#260`: https://github.com/collective/collective.cover/issues/260
 .. _`#262`: https://github.com/collective/collective.cover/issues/262
