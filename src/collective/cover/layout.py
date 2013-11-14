@@ -39,9 +39,9 @@ class PageLayout(grok.View):
         if mode == 'view' or mode == 'compose':
             registry = getUtility(IRegistry)
             settings = registry.forInterface(ICoverSettings)
-            grid_plug = getUtility(IGridSystem, name=settings.grid_system)
+            grid = getUtility(IGridSystem, name=settings.grid_system)
 
-            grid_plug.transform(layout)
+            grid.transform(layout)
         else:
             self.grid_layout_edit(layout)
 
@@ -215,8 +215,8 @@ class GroupSelect(grok.View):
                 i += 1
 
 
-class GridPlug (grok.GlobalUtility):
-    grok.name('grid_plug')
+class Deco16Grid (grok.GlobalUtility):
+    grok.name('deco16_grid')
     grok.implements(IGridSystem)
 
     title = _("Deco (16 columns, default)")
@@ -231,15 +231,15 @@ class GridPlug (grok.GlobalUtility):
                 if element['type'] == 'row':
                     element['class'] = self.row_class
                     if 'children' in element:
-                        self.transform(self.columns_formater(element['children']))
+                        self.transform(self.columns_formatter(element['children']))
                 if element['type'] == 'group' and 'children' in element:
                     self.transform(element['children'])
 
                 if element['type'] == 'tile':
                     element['class'] = 'tile'
 
-    def columns_formater(self, columns):
-        #this formater works for deco, but you can implemente a custom one, for you grid system
+    def columns_formatter(self, columns):
+        #this formatter works for deco, but you can implemente a custom one, for you grid system
         w = 'width-'
         p = 'position-'
         offset = 0
