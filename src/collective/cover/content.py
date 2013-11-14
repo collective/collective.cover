@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+import json
+
 # XXX: remove these imports?
 #from plone.dexterity.events import EditCancelledEvent
 #from plone.dexterity.events import EditFinishedEvent
@@ -18,13 +20,12 @@ from plone.uuid.interfaces import IUUIDGenerator
 from Products.CMFCore.utils import getToolByName
 from Products.GenericSetup.interfaces import IDAVAware
 from zope.annotation.interfaces import IAnnotations
-from zope.component import getMultiAdapter
 from zope.component import getUtility
 from zope.container.interfaces import IObjectAddedEvent
 from zope.event import notify
 from zope.interface import implements
 
-import json
+from .interfaces import IGridSystem
 
 grok.templatedir('templates')
 
@@ -206,10 +207,9 @@ class LayoutEdit(grok.View):
     def layoutmanager_settings(self):
         registry = getUtility(IRegistry)
         settings = registry.forInterface(ICoverSettings)
-        grid_plug = getMultiAdapter((self.context, self.request),
-                                    name=settings.grid_system)
+        grid = getUtility(IGridSystem, name=settings.grid_system)
 
-        return json.dumps({"ncolumns": grid_plug.ncolumns})
+        return json.dumps({"ncolumns": grid.ncolumns})
 
 
 class UpdateTileContent(grok.View):

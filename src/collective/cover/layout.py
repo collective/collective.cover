@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+import json
+
 from Acquisition import aq_inner
 from collective.cover.content import ICover
 from collective.cover.controlpanel import ICoverSettings
@@ -9,12 +11,12 @@ from plone.registry.interfaces import IRegistry
 from plone.tiles.interfaces import ITileType
 from plone.uuid.interfaces import IUUIDGenerator
 from zope.browserpage.viewpagetemplatefile import ViewPageTemplateFile
-from zope.component import getMultiAdapter
 from zope.component import getUtility
 from zope.component import queryUtility
 from zope.schema.interfaces import IVocabularyFactory
 
-import json
+from .interfaces import IGridSystem
+from . import _
 
 
 class PageLayout(grok.View):
@@ -37,8 +39,7 @@ class PageLayout(grok.View):
         if mode == 'view' or mode == 'compose':
             registry = getUtility(IRegistry)
             settings = registry.forInterface(ICoverSettings)
-            grid_plug = getMultiAdapter((self.context, self.request),
-                                        name=settings.grid_system)
+            grid_plug = getUtility(IGridSystem, name=settings.grid_system)
 
             grid_plug.transform(layout)
         else:
@@ -214,11 +215,11 @@ class GroupSelect(grok.View):
                 i += 1
 
 
-class GridPlug(grok.View):
-    grok.context(ICover)
+class GridPlug (grok.GlobalUtility):
     grok.name('grid_plug')
-    grok.require('zope2.View')
+    grok.implements(IGridSystem)
 
+    title = _("Deco (16 columns, default)")
     ncolumns = 16
 
     row_class = 'row'
@@ -247,27 +248,3 @@ class GridPlug(grok.View):
             column['class'] = self.column_class + ' ' + (w + str(width)) + ' ' + (p + str(offset))
             offset = offset + width
         return columns
-
-    def render(self):
-        return self
-
-
-## EXAMPLE of a usagge for a custom grid system, in this case, boostrap
-# class GridPlug(grok.View):
-#     grok.context(ICover)
-#     grok.name('grid_plug')
-#     grok.require('zope2.View')
-#     grok.layer(YOURLAYERINTERFACE)
-
-#     row_class = 'row'
-#     column_class = 'column'
-
-#     def columns_formater(self, columns):
-#         #this formater works for deco, but you can implemente a custom one, for you grid system
-#         w = 'span'
-
-#         for column in columns:
-#             width = column['data']['column-size']
-#             column['class'] = self.column_class + ' ' + (w + str(width))
-
-#         return columns

@@ -6,11 +6,12 @@ from five import grok
 from plone.app.vocabularies.types import ReallyUserFriendlyTypesVocabulary
 from plone.registry.interfaces import IRegistry
 from plone.tiles.interfaces import ITileType
-from zope.component import getUtility
+from zope.component import getUtility, getUtilitiesFor
 from zope.component import queryUtility
 from zope.schema.interfaces import IVocabularyFactory
 from zope.schema.vocabulary import SimpleTerm
 from zope.schema.vocabulary import SimpleVocabulary
+from .interfaces import IGridSystem
 
 
 class AvailableLayoutsVocabulary(object):
@@ -49,10 +50,8 @@ class GridSystemsVocabulary(object):
     grok.implements(IVocabularyFactory)
 
     def __call__(self, context):
-        registry = getUtility(IRegistry)
-        grid_systems = registry['collective.cover.grid_systems']
-
-        items = [SimpleTerm(value=i, title=i) for i in grid_systems]
+        items = [SimpleTerm(value=name, title=grid.title)
+                 for (name, grid) in getUtilitiesFor(IGridSystem)]
         return SimpleVocabulary(items)
 
 grok.global_utility(GridSystemsVocabulary,
