@@ -1,9 +1,13 @@
 # -*- coding: utf-8 -*-
 
-from collective.cover.config import PROJECTNAME
-from Products.CMFCore.utils import getToolByName
-
 import logging
+
+from Products.CMFCore.utils import getToolByName
+from plone.registry.interfaces import IRegistry
+from zope.component import getUtility
+
+from collective.cover.config import PROJECTNAME
+from collective.cover.controlpanel import ICoverSettings
 
 
 def issue_201(context, logger=None):
@@ -59,3 +63,16 @@ def issue_303(context, logger=None):
         if id in FIX_JS_IDS:
             js = js_tool.getResource(id)
             js.setBundle('default')
+
+
+def issue_330(context, logger=None):
+    """Add grid_system field to ICoverSettings registry.
+    See: https://github.com/collective/collective.cover/issues/330
+    and: https://github.com/collective/collective.cover/issues/205
+    """
+    if logger is None:
+        logger = logging.getLogger(PROJECTNAME)
+
+    # Reregister the interface.
+    registry = getUtility(IRegistry)
+    registry.registerInterface(ICoverSettings)
