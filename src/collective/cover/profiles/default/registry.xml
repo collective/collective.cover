@@ -52,4 +52,14 @@
     </value>
   </record>
 
+  <record name="collective.cover.grid_systems">
+    <field type="plone.registry.field.List">
+      <title>Grid Systems</title>
+      <value_type type="plone.registry.field.ASCIILine" />
+    </field>
+    <value purge="false">
+      <element>grid_plug</element>
+    </value>
+  </record>
+
 </registry>

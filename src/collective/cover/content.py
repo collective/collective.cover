@@ -18,6 +18,7 @@ from plone.uuid.interfaces import IUUIDGenerator
 from Products.CMFCore.utils import getToolByName
 from Products.GenericSetup.interfaces import IDAVAware
 from zope.annotation.interfaces import IAnnotations
+from zope.component import getMultiAdapter
 from zope.component import getUtility
 from zope.container.interfaces import IObjectAddedEvent
 from zope.event import notify
@@ -205,9 +206,10 @@ class LayoutEdit(grok.View):
     def layoutmanager_settings(self):
         registry = getUtility(IRegistry)
         settings = registry.forInterface(ICoverSettings)
-        ncolumns = int(settings.grid_system.split(',')[0])
+        grid_plug = getMultiAdapter((self.context, self.request),
+                                    name=settings.grid_system)
 
-        return json.dumps({"ncolumns": ncolumns})
+        return json.dumps({"ncolumns": grid_plug.ncolumns})
 
 
 class UpdateTileContent(grok.View):

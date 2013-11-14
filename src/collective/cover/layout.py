@@ -2,10 +2,12 @@
 
 from Acquisition import aq_inner
 from collective.cover.content import ICover
+from collective.cover.controlpanel import ICoverSettings
 from collective.cover.utils import assign_tile_ids
 from five import grok
-from plone.uuid.interfaces import IUUIDGenerator
+from plone.registry.interfaces import IRegistry
 from plone.tiles.interfaces import ITileType
+from plone.uuid.interfaces import IUUIDGenerator
 from zope.browserpage.viewpagetemplatefile import ViewPageTemplateFile
 from zope.component import getMultiAdapter
 from zope.component import getUtility
@@ -33,8 +35,10 @@ class PageLayout(grok.View):
         layout = json.loads(self.context.cover_layout)
 
         if mode == 'view' or mode == 'compose':
+            registry = getUtility(IRegistry)
+            settings = registry.forInterface(ICoverSettings)
             grid_plug = getMultiAdapter((self.context, self.request),
-                                        name=u'grid_plug')
+                                        name=settings.grid_system)
 
             grid_plug.transform(layout)
         else:
@@ -214,6 +218,8 @@ class GridPlug(grok.View):
     grok.context(ICover)
     grok.name('grid_plug')
     grok.require('zope2.View')
+
+    ncolumns = 16
 
     row_class = 'row'
     column_class = 'cell'

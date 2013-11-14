@@ -45,6 +45,20 @@ grok.global_utility(AvailableTilesVocabulary,
                     name=u'collective.cover.AvailableTiles')
 
 
+class GridSystemsVocabulary(object):
+    grok.implements(IVocabularyFactory)
+
+    def __call__(self, context):
+        registry = getUtility(IRegistry)
+        grid_systems = registry['collective.cover.grid_systems']
+
+        items = [SimpleTerm(value=i, title=i) for i in grid_systems]
+        return SimpleVocabulary(items)
+
+grok.global_utility(GridSystemsVocabulary,
+                    name=u'collective.cover.GridSystems')
+
+
 class EnabledTilesVocabulary(object):
     """Return a list of tiles ready to work with collective.cover.
     """
