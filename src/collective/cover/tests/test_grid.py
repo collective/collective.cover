@@ -5,7 +5,8 @@ import lxml
 
 from collective.cover.controlpanel import ICoverSettings
 from collective.cover.testing import MULTIPLE_GRIDS_INTEGRATION_TESTING
-from plone.app.testing import TEST_USER_ID, setRoles
+from plone.app.testing import setRoles
+from plone.app.testing import TEST_USER_ID
 from plone.registry.interfaces import IRegistry
 from zope.component import getUtility
 

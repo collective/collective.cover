@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from zope.interface import Attribute, Interface
+from zope.interface import Attribute
+from zope.interface import Interface
 
 
 class ICoverLayer(Interface):
