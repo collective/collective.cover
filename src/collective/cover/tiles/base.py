@@ -531,9 +531,8 @@ class PersistentCoverTilePurgePaths(object):
     def getRelativePaths(self):
         context = aq_inner(self.context)
         parent = aq_parent(context)
-        portal_state = getMultiAdapter(
-            (context, context.request), name=u'plone_portal_state')
-        prefix = context.url.replace(portal_state.portal_url(), '', 1)
+        portal_url = api.portal.get().portal_url()
+        prefix = context.url.replace(portal_url, '', 1)
         yield prefix
         for _, v in context.data.items():
             if INamedImage.providedBy(v):
