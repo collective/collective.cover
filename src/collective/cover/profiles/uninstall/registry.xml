@@ -10,4 +10,5 @@
  <record name="collective.cover.controlpanel.ICoverSettings.available_tiles" delete="true"/>
  <record name="collective.cover.controlpanel.ICoverSettings.searchable_content_types" delete="true"/>
  <record name="collective.cover.controlpanel.ICoverSettings.styles" delete="true"/>
+ <record name="collective.cover.controlpanel.ICoverSettings.grid_system" delete="true"/>
 </registry>
