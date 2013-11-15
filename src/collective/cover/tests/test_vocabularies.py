@@ -108,7 +108,7 @@ class VocabulariesTestCase(unittest.TestCase):
         self.assertEqual(styles.by_value.keys()[0], u'tile-default')
         # adding a couple of not well formatted items result in no option
         # (except for the default one)
-        settings.styles = set(['not well formated'])
+        settings.styles = set(['not well formatted'])
         styles = vocabulary(self.portal)
         self.assertEqual(len(styles), 1)
         self.assertEqual(styles.by_value.keys()[0], u'tile-default')
