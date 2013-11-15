@@ -21,7 +21,6 @@ from zope.annotation.interfaces import IAnnotations
 from zope.annotation.interfaces import IAttributeAnnotatable
 from zope.component import getMultiAdapter
 from zope.component import provideUtility
-from zope.component import queryMultiAdapter
 from zope.component import queryUtility
 from zope.component.globalregistry import provideHandler
 from zope.globalrequest import setRequest
@@ -181,8 +180,8 @@ class BasicTileTestCase(unittest.TestCase):
         obj.setImage(generate_jpeg(128, 128))
         obj.reindexObject()
         self.tile.populate_with_object(obj)
-        tile_conf_adapter = getMultiAdapter((self.tile.context, self.request, self.tile),
-                                            ITilesConfigurationScreen)
+        tile_conf_adapter = getMultiAdapter(
+            (self.tile.context, self.request, self.tile), ITilesConfigurationScreen)
         tile_conf_adapter.set_configuration({'image': {'visibility': 'on', 'imgsize': 'large'}})
         rendered = self.tile()
         self.assertIn('alt="Test news item"', rendered)
@@ -195,8 +194,7 @@ class BasicTileTestCase(unittest.TestCase):
         self.assertIn('plone.tiles.permission.test-basic-tile', annotations)
 
         configuration = getMultiAdapter(
-            (self.tile.context, self.request, self.tile),
-            ITilesConfigurationScreen)
+            (self.tile.context, self.request, self.tile), ITilesConfigurationScreen)
         configuration.set_configuration({
             'title': {'order': u'0', 'visibility': u'on'},
             'description': {'order': u'1', 'visibility': u'off'},
@@ -228,7 +226,7 @@ class BasicTileTestCase(unittest.TestCase):
     def test_image_traverser(self):
         obj = self.portal['my-image']
         data = self.tile.data
-        scales = queryMultiAdapter((obj, self.request), name='images')
+        scales = api.content.get_view(u'images', obj, self.request)
         self.tile.data['image'] = NamedImageFile(str(scales.scale('image').data))
         data_mgr = ITileDataManager(self.tile)
         data_mgr.set(data)
@@ -266,7 +264,7 @@ class BasicTileTestCase(unittest.TestCase):
 
         obj = self.portal['my-image']
         data = self.tile.data
-        scales = queryMultiAdapter((obj, self.request), name='images')
+        scales = api.content.get_view(u'images', obj, self.request)
         self.tile.data['image'] = NamedImageFile(str(scales.scale('image').data))
         data_mgr = ITileDataManager(self.tile)
         data_mgr.set(data)

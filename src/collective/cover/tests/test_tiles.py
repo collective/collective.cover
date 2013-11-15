@@ -2,10 +2,10 @@
 
 from collective.cover.config import PROJECTNAME
 from collective.cover.testing import INTEGRATION_TESTING
+from plone import api
 from plone.app.testing import setRoles
 from plone.app.testing import TEST_USER_ID
 from plone.registry.interfaces import IRegistry
-from zope.component import getMultiAdapter
 from zope.component import getUtility
 
 import unittest
@@ -20,8 +20,7 @@ class TilesTestCase(unittest.TestCase):
         self.registry = getUtility(IRegistry)
         setRoles(self.portal, TEST_USER_ID, ['Manager'])
 
-    # FIXME: remove tiles on uninstall
-    @unittest.expectedFailure
+    @unittest.expectedFailure  # FIXME: remove tiles on uninstall
     def test_tiles_removed_on_uninstall(self):
         qi = self.portal['portal_quickinstaller']
         qi.uninstallProducts(products=[PROJECTNAME])
@@ -44,7 +43,7 @@ class PageLayoutTestCase(unittest.TestCase):
         self.request = self.layer['request']
         self.name = u'collective.cover.carousel'
         self.cover = self.portal['frontpage']
-        self.tile = getMultiAdapter((self.cover, self.request), name=self.name)
+        self.tile = api.content.get_view(self.name, self.cover, self.request)
         self.tile = self.tile['test']
         self.view = self.cover.unrestrictedTraverse('@@layout')
 

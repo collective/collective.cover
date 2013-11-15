@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from collective.cover.testing import INTEGRATION_TESTING
-from plone.dexterity.utils import createContentInContainer
-from zope.component import queryMultiAdapter
+from plone import api
 
 import unittest
 
@@ -15,15 +14,19 @@ class LayoutTestCase(unittest.TestCase):
         self.portal = self.layer['portal']
         self.request = self.layer['request']
 
-        self.cover = createContentInContainer(
-            self.portal, 'collective.cover.content', checkConstraints=False)
+        with api.env.adopt_roles(['Manager']):
+            self.folder = api.content.create(self.portal, 'Folder', 'folder')
+
+        self.cover = api.content.create(
+            self.folder, 'collective.cover.content', 'cover')
 
     def test_uid_getter(self):
-        view = queryMultiAdapter((self.cover, self.request), name='uid_getter')
-        self.assertIsNotNone(view)
+        """Test our UUID do not start with a number.
 
-        # this tests our UUID don't start with a number
-        # see: https://github.com/collective/collective.cover/issues/137
+        See: https://github.com/collective/collective.cover/issues/137
+        """
+        view = api.content.get_view(u'uid_getter', self.cover, self.request)
+
         # let's generate a bunch of UUID; 16 should be enough
         for i in range(16):
             uuid = view()
