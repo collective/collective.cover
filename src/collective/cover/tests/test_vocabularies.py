@@ -2,7 +2,7 @@
 
 from collective.cover.controlpanel import ICoverSettings
 from collective.cover.testing import INTEGRATION_TESTING
-from collective.cover.testing import TWO_GRIDS_INTEGRATION_TESTING
+from collective.cover.testing import MULTIPLE_GRIDS_INTEGRATION_TESTING
 from plone.registry.interfaces import IRegistry
 from zope.component import getUtility
 from zope.component import queryUtility
@@ -116,9 +116,9 @@ class VocabulariesTestCase(unittest.TestCase):
         self.assertIn(u'deco16_grid', grids)
 
 
-class VocabulariesTwoGridsTestCase(unittest.TestCase):
+class VocabulariesMultipleGridsTestCase(unittest.TestCase):
 
-    layer = TWO_GRIDS_INTEGRATION_TESTING
+    layer = MULTIPLE_GRIDS_INTEGRATION_TESTING
 
     def setUp(self):
         self.portal = self.layer['portal']

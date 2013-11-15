@@ -3,7 +3,7 @@
 from collective.cover.content import ICover
 from collective.cover.controlpanel import ICoverSettings
 from collective.cover.testing import INTEGRATION_TESTING
-from collective.cover.testing import TWO_GRIDS_INTEGRATION_TESTING
+from collective.cover.testing import MULTIPLE_GRIDS_INTEGRATION_TESTING
 from plone.app.dexterity.behaviors.exclfromnav import IExcludeFromNavigation
 from plone.app.lockingbehavior.behaviors import ILocking
 from plone.app.referenceablebehavior.referenceable import IReferenceable
@@ -92,9 +92,9 @@ class CoverIntegrationTestCase(unittest.TestCase):
     # TODO: add test for plone.app.relationfield.behavior.IRelatedItems
 
 
-class CoverTwoGridsIntegrationTestCase(unittest.TestCase):
+class CoverMultipleGridsIntegrationTestCase(unittest.TestCase):
 
-    layer = TWO_GRIDS_INTEGRATION_TESTING
+    layer = MULTIPLE_GRIDS_INTEGRATION_TESTING
 
     def setUp(self):
         self.portal = self.layer['portal']

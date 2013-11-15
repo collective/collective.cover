@@ -130,7 +130,7 @@ class Fixture(PloneSandboxLayer):
 FIXTURE = Fixture()
 
 
-class TwoGridsFixture(Fixture):
+class MultipleGridsFixture(Fixture):
 
     defaultBases = (FIXTURE,)
 
@@ -145,10 +145,10 @@ INTEGRATION_TESTING = IntegrationTesting(
     name='collective.cover:Integration',
 )
 
-TWO_GRIDS_FIXTURE = TwoGridsFixture()
-TWO_GRIDS_INTEGRATION_TESTING = IntegrationTesting(
-    bases=(TWO_GRIDS_FIXTURE,),
-    name='collective.cover:TwoGridsIntegration',
+MULTIPLE_GRIDS_FIXTURE = MultipleGridsFixture()
+MULTIPLE_GRIDS_INTEGRATION_TESTING = IntegrationTesting(
+    bases=(MULTIPLE_GRIDS_FIXTURE,),
+    name='collective.cover:MultipleGridsIntegration',
 )
 
 FUNCTIONAL_TESTING = FunctionalTesting(
