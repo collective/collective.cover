@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from collective.cover.config import DEFAULT_AVAILABLE_TILES
+from collective.cover.config import DEFAULT_GRID_SYSTEM
 from collective.cover.config import DEFAULT_SEARCHABLE_CONTENT_TYPES
 from collective.cover.config import PROJECTNAME
 from collective.cover.controlpanel import ICoverSettings
@@ -82,6 +83,11 @@ class RegistryTestCase(unittest.TestCase):
                  'Shadow|tile-shadow'])
         )
 
+    def test_grid_system_record_in_registry(self):
+        self.assertTrue(hasattr(self.settings, 'grid_system'))
+        self.assertEqual(
+            self.settings.grid_system, DEFAULT_GRID_SYSTEM)
+
     def test_records_removed_on_uninstall(self):
         qi = self.portal['portal_quickinstaller']
         setRoles(self.portal, TEST_USER_ID, ['Manager'])
@@ -93,6 +99,7 @@ class RegistryTestCase(unittest.TestCase):
             BASE_REGISTRY + 'available_tiles',
             BASE_REGISTRY + 'searchable_content_types',
             BASE_REGISTRY + 'styles',
+            BASE_REGISTRY + 'grid_system',
         ]
 
         for r in records:

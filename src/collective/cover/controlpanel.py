@@ -2,6 +2,7 @@
 
 from collective.cover import _
 from collective.cover.config import DEFAULT_AVAILABLE_TILES
+from collective.cover.config import DEFAULT_GRID_SYSTEM
 from collective.cover.config import DEFAULT_SEARCHABLE_CONTENT_TYPES
 from plone.app.registry.browser import controlpanel
 from plone.directives import form
@@ -49,6 +50,14 @@ class ICoverSettings(form.Schema):
         required=False,
         default=set(),
         value_type=schema.ASCIILine(title=_(u'CSS Class')),
+    )
+
+    grid_system = schema.Choice(
+        title=_(u'Grid System'),
+        description=_(u'Choose a grid system'),
+        required=True,
+        default=DEFAULT_GRID_SYSTEM,
+        vocabulary=u'collective.cover.GridSystems',
     )
 
 

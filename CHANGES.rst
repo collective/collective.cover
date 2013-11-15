@@ -6,7 +6,12 @@ There's a frood who really knows where his towel is.
 1.0a7 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
-- Nothing changed yet.
+- Make the grid system flexible.  The default is still a 16 column
+  Deco grid.  You can register your own system as an `IGridSystem`
+  utility based on the `Deco16Grid` class with a different name and
+  select it in the configuration panel.  You should create a grid that
+  matches the css of the theme that you are using on your site.
+  [warpr, maurits]
 
 
 1.0a6 (2013-11-12)

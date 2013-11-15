@@ -410,7 +410,7 @@
                 $( "#slider" ).slider({
                     range: "max",
                     min: 1,
-                    max: 16,
+                    max: n_columns,
                     value: 1,
                     slide: function( event, ui ) {
                         $( "#column-size-resize span" ).html( ui.value );

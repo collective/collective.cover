@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from App.Common import package_home
+from collective.cover import _
+from collective.cover.layout import Deco16Grid
 from PIL import Image
 from PIL import ImageChops
 from plone.app.robotframework.testing import AUTOLOGIN_LIBRARY_FIXTURE
@@ -10,6 +12,7 @@ from plone.app.testing import PLONE_FIXTURE
 from plone.app.testing import PloneSandboxLayer
 from plone.testing import z2
 from StringIO import StringIO
+from zope.component import getGlobalSiteManager
 
 import os
 import pkg_resources
@@ -79,6 +82,19 @@ def images_are_equal(str1, str2):
     return ImageChops.difference(Image.open(im1), Image.open(im2)).getbbox() is None
 
 
+class Bootstrap3(Deco16Grid):
+    ncolumns = 12
+    title = _(u'Bootstrap 3')
+
+    def columns_formatter(self, columns):
+        prefix = 'col-md-'
+        for column in columns:
+            width = column['data']['column-size'] if 'data' in column else 1
+            column['class'] = self.column_class + ' ' + (prefix + str(width))
+
+        return columns
+
+
 class Fixture(PloneSandboxLayer):
 
     defaultBases = (PLONE_FIXTURE,)
@@ -120,11 +136,28 @@ class Fixture(PloneSandboxLayer):
         if portal_kss:
             portal_kss.getResource('++resource++plone.app.z3cform').setEnabled(False)
 
-
 FIXTURE = Fixture()
+
+
+class MultipleGridsFixture(Fixture):
+
+    defaultBases = (FIXTURE,)
+
+    def setUpZope(self, app, configurationContext):
+        newgrid = Bootstrap3()
+        sm = getGlobalSiteManager()
+        sm.registerUtility(newgrid, name='bootstrap3')
+
+
 INTEGRATION_TESTING = IntegrationTesting(
     bases=(FIXTURE,),
     name='collective.cover:Integration',
+)
+
+MULTIPLE_GRIDS_FIXTURE = MultipleGridsFixture()
+MULTIPLE_GRIDS_INTEGRATION_TESTING = IntegrationTesting(
+    bases=(MULTIPLE_GRIDS_FIXTURE,),
+    name='collective.cover:MultipleGridsIntegration',
 )
 
 FUNCTIONAL_TESTING = FunctionalTesting(
