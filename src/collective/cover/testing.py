@@ -16,6 +16,9 @@ import os
 import pkg_resources
 import random
 
+from collective.cover import _
+from collective.cover.layout import Deco16Grid
+
 PLONE_VERSION = pkg_resources.require('Plone')[0].version
 ALL_CONTENT_TYPES = [
     'Collection',
@@ -26,7 +29,6 @@ ALL_CONTENT_TYPES = [
     'Link',
     'News Item',
 ]
-from collective.cover.layout import Deco16Grid
 
 
 def loadFile(name, size=0):
@@ -83,7 +85,7 @@ def images_are_equal(str1, str2):
 
 class Bootstrap3(Deco16Grid):
     ncolumns = 12
-    title = "Bootstrap 3"
+    title = _(u'Bootstrap 3')
 
     def columns_formatter(self, columns):
         prefix = 'col-md-'

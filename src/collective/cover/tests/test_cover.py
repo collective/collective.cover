@@ -87,7 +87,7 @@ class CoverIntegrationTestCase(unittest.TestCase):
 
     def test_layoutmanager_settings(self):
         settings = json.loads(self.layout_edit.layoutmanager_settings())
-        self.assertEqual(settings, {"ncolumns": 16})
+        self.assertEqual(settings, {'ncolumns': 16})
 
     # TODO: add test for plone.app.relationfield.behavior.IRelatedItems
 
@@ -109,7 +109,7 @@ class CoverMultipleGridsIntegrationTestCase(unittest.TestCase):
 
     def test_layoutmanager_settings(self):
         settings = json.loads(self.layout_edit.layoutmanager_settings())
-        self.assertEqual(settings, {"ncolumns": 16})
+        self.assertEqual(settings, {'ncolumns': 16})
 
         # Choose different grid.
         registry = getUtility(IRegistry)
@@ -118,4 +118,4 @@ class CoverMultipleGridsIntegrationTestCase(unittest.TestCase):
 
         # The number of columns should be different now.
         settings = json.loads(self.layout_edit.layoutmanager_settings())
-        self.assertEqual(settings, {"ncolumns": 12})
+        self.assertEqual(settings, {'ncolumns': 12})

@@ -15,7 +15,7 @@ def _has_classes(element, classes):
     for expected in classes:
         if not expected in element_classes:
             raise Exception('expected (%s) in element classes (%s)' % (
-                " ".join(classes), " ".join(element_classes)))
+                ' '.join(classes), ' '.join(element_classes)))
     return True
 
 

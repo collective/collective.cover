@@ -209,7 +209,7 @@ class LayoutEdit(grok.View):
         settings = registry.forInterface(ICoverSettings)
         grid = getUtility(IGridSystem, name=settings.grid_system)
 
-        return json.dumps({"ncolumns": grid.ncolumns})
+        return json.dumps({'ncolumns': grid.ncolumns})
 
 
 class UpdateTileContent(grok.View):

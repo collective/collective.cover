@@ -219,7 +219,7 @@ class Deco16Grid (grok.GlobalUtility):
     grok.name('deco16_grid')
     grok.implements(IGridSystem)
 
-    title = _("Deco (16 columns, default)")
+    title = _('Deco (16 columns, default)')
     ncolumns = 16
 
     row_class = 'row'
