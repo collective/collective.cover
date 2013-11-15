@@ -4,6 +4,7 @@
  <record name="collective.cover.controlpanel.ICoverSettings.available_tiles" remove="true" />
  <record name="collective.cover.controlpanel.ICoverSettings.searchable_content_types" remove="true"/>
  <record name="collective.cover.controlpanel.ICoverSettings.styles" remove="true"/>
+ <record name="collective.cover.controlpanel.ICoverSettings.grid_system" remove="true"/>
  <!-- BBB: needed for compatibility with plone.app.registry < 1.2
            right now Plone 4.2.x uses plone.app.registry = 1.1 -->
  <record name="collective.cover.controlpanel.ICoverSettings.layouts" delete="true" />
