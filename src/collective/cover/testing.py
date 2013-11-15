@@ -10,7 +10,6 @@ from plone.app.testing import PLONE_FIXTURE
 from plone.app.testing import PloneSandboxLayer
 from plone.testing import z2
 from zope.component import getGlobalSiteManager
-from zope.interface import implements
 from StringIO import StringIO
 
 import os
@@ -27,7 +26,7 @@ ALL_CONTENT_TYPES = [
     'Link',
     'News Item',
 ]
-from collective.cover.interfaces import IGridSystem
+from collective.cover.layout import Deco16Grid
 
 
 def loadFile(name, size=0):
@@ -82,9 +81,8 @@ def images_are_equal(str1, str2):
     return ImageChops.difference(Image.open(im1), Image.open(im2)).getbbox() is None
 
 
-class NewGridSystem(object):
-    implements(IGridSystem)
-    ncolumns = 42
+class Bootstrap3(Deco16Grid):
+    ncolumns = 12
     title = "Everything"
 
 
@@ -137,9 +135,9 @@ class TwoGridsFixture(Fixture):
     defaultBases = (FIXTURE,)
 
     def setUpZope(self, app, configurationContext):
-        newgrid = NewGridSystem()
+        newgrid = Bootstrap3()
         sm = getGlobalSiteManager()
-        sm.registerUtility(newgrid, name='universe')
+        sm.registerUtility(newgrid, name='bootstrap3')
 
 
 INTEGRATION_TESTING = IntegrationTesting(

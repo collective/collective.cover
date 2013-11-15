@@ -114,8 +114,8 @@ class CoverTwoGridsIntegrationTestCase(unittest.TestCase):
         # Choose different grid.
         registry = getUtility(IRegistry)
         cover_settings = registry.forInterface(ICoverSettings)
-        cover_settings.grid_system = 'universe'
+        cover_settings.grid_system = 'bootstrap3'
 
         # The number of columns should be different now.
         settings = json.loads(self.layout_edit.layoutmanager_settings())
-        self.assertEqual(settings, {"ncolumns": 42})
+        self.assertEqual(settings, {"ncolumns": 12})

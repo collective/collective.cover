@@ -134,5 +134,5 @@ class VocabulariesTwoGridsTestCase(unittest.TestCase):
         self.assertIn(u'deco16_grid', grids)
 
         # The layer has setup a second grid.
-        self.assertIn(u'universe', grids)
-        self.assertEqual(grids.getTerm('universe').title, "Everything")
+        self.assertIn(u'bootstrap3', grids)
+        self.assertEqual(grids.getTerm('bootstrap3').title, "Everything")
