@@ -9,6 +9,7 @@ from collective.cover.tiles.basic import BasicTile
 from collective.cover.tiles.configuration import ITilesConfigurationScreen
 from collective.cover.tiles.permissions import ITilesPermissions
 from DateTime import DateTime
+from plone import api
 from plone.app.testing import setRoles
 from plone.app.testing import TEST_USER_ID
 from plone.cachepurging.hooks import queuePurge
@@ -165,8 +166,7 @@ class BasicTileTestCase(unittest.TestCase):
             'This news item was created for testing purposes', rendered)
 
         # the localized time must be there
-        utils = getMultiAdapter((self.portal, self.request), name=u'plone')
-        date = utils.toLocalizedTime(obj.Date(), True)
+        date = api.portal.get_localized_time(obj.Date(), long_format=True)
         self.assertIn(date, rendered)
 
         # the tags must be there
