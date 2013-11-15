@@ -135,4 +135,4 @@ class VocabulariesMultipleGridsTestCase(unittest.TestCase):
 
         # The layer has setup a second grid.
         self.assertIn(u'bootstrap3', grids)
-        self.assertEqual(grids.getTerm('bootstrap3').title, "Everything")
+        self.assertEqual(grids.getTerm('bootstrap3').title, "Bootstrap 3")

@@ -83,7 +83,15 @@ def images_are_equal(str1, str2):
 
 class Bootstrap3(Deco16Grid):
     ncolumns = 12
-    title = "Everything"
+    title = "Bootstrap 3"
+
+    def columns_formatter(self, columns):
+        prefix = 'col-md-'
+        for column in columns:
+            width = column['data']['column-size'] if 'data' in column else 1
+            column['class'] = self.column_class + ' ' + (prefix + str(width))
+
+        return columns
 
 
 class Fixture(PloneSandboxLayer):
