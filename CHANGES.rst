@@ -1,12 +1,34 @@
 Changelog
 ---------
 
-There's a frood who really knows where his towel is
+There's a frood who really knows where his towel is.
 
-1.0a6 (unreleased)
+1.0a7 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
 - Use plone.api where possible. [hvelarde]
+
+- Make the grid system flexible.  The default is still a 16 column
+  Deco grid.  You can register your own system as an `IGridSystem`
+  utility based on the `Deco16Grid` class with a different name and
+  select it in the configuration panel.  You should create a grid that
+  matches the css of the theme that you are using on your site.
+  [warpr, maurits]
+
+
+1.0a6 (2013-11-12)
+^^^^^^^^^^^^^^^^^^
+
+.. Warning::
+    Release 1.0a6 removes all upgrade steps from versions no longer supported.
+    If you are upgrading from a version previous to 1.0a5 you should upgrade
+    to 1.0a5 first and then you can upgrade to 1.0a6.
+
+- Field order can now be set on tile configuration screen using drag-and-drop.
+  (closes `#248`_).
+  [marcosfromero, cleberjsantos]
+
+- CSS improvements for list tile  and content chooser. [agnogueira]
 
 - List tile is now configurable: you can set ordering and visibility for all
   fields and you can also set the preferred style for the title and the scale
@@ -47,6 +69,8 @@ There's a frood who really knows where his towel is
 - Increase test coverage. [tcurvelo]
 
 - Remove bundles from portal_javascript (closes `#303`_). [jpgimenez]
+
+- Add German translataion. [polyester, pbauer, svx]
 
 - Remove upgrade steps from unsupported versions (closes `#295`_). [fulv]
 
@@ -320,6 +344,7 @@ There's a frood who really knows where his towel is
 .. _`#239`: https://github.com/collective/collective.cover/issues/239
 .. _`#241`: https://github.com/collective/collective.cover/issues/241
 .. _`#244`: https://github.com/collective/collective.cover/issues/244
+.. _`#248`: https://github.com/collective/collective.cover/issues/248
 .. _`#259`: https://github.com/collective/collective.cover/issues/259
 .. _`#260`: https://github.com/collective/collective.cover/issues/260
 .. _`#262`: https://github.com/collective/collective.cover/issues/262

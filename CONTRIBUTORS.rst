@@ -11,15 +11,20 @@ the following people:
 - Davi Lima
 - Érico Andrei
 - Franco Pellegrini
+- Fulvio Casali
 - Giorgio Borelli
 - Gonzalo Almeida
 - Héctor Velarde
+- JeanMichel FRANCOIS
 - Juan A. Díaz
 - Juan Pablo Giménez
+- Kuno Woudt
+- Laura Pérez Mayos
 - Marcos F. Romero
-- Ricardo Bánffy
+- Maurits van Rees
 - Rodrigo Ferreira de Souza
 - Silvestre Huens
+- Thiago Curvelo
 - Thiago Tamosauskas
 - `Launched Pixels`_ (icon)
 

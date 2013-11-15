@@ -49,4 +49,18 @@
 
   </genericsetup:upgradeSteps>
 
+  <genericsetup:upgradeSteps
+      source="6"
+      destination="7"
+      profile="collective.cover:default"
+      >
+
+    <genericsetup:upgradeStep
+        title="issue 330"
+        description="Add grid_system field to registry"
+        handler=".upgrades.issue_330"
+        />
+
+  </genericsetup:upgradeSteps>
+
 </configure>

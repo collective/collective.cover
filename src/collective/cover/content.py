@@ -3,6 +3,7 @@
 from AccessControl import getSecurityManager
 from Acquisition import aq_inner
 from collective.cover.controlpanel import ICoverSettings
+from collective.cover.interfaces import IGridSystem
 from collective.cover.utils import assign_tile_ids
 from five import grok
 from plone import api
@@ -197,6 +198,13 @@ class LayoutEdit(grok.View):
         portal = api.portal.get()
         # TODO: check permission locally and not in portal context
         return sm.checkPermission('collective.cover: Can Export Layout', portal)
+
+    def layoutmanager_settings(self):
+        registry = getUtility(IRegistry)
+        settings = registry.forInterface(ICoverSettings)
+        grid = getUtility(IGridSystem, name=settings.grid_system)
+
+        return json.dumps({'ncolumns': grid.ncolumns})
 
 
 class UpdateTileContent(grok.View):
