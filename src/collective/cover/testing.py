@@ -9,6 +9,8 @@ from plone.app.testing import IntegrationTesting
 from plone.app.testing import PLONE_FIXTURE
 from plone.app.testing import PloneSandboxLayer
 from plone.testing import z2
+from zope.component import getGlobalSiteManager
+from zope.interface import implements
 from StringIO import StringIO
 
 import os
@@ -25,6 +27,7 @@ ALL_CONTENT_TYPES = [
     'Link',
     'News Item',
 ]
+from collective.cover.interfaces import IGridSystem
 
 
 def loadFile(name, size=0):
@@ -79,6 +82,12 @@ def images_are_equal(str1, str2):
     return ImageChops.difference(Image.open(im1), Image.open(im2)).getbbox() is None
 
 
+class NewGridSystem(object):
+    implements(IGridSystem)
+    ncolumns = 42
+    title = "Everything"
+
+
 class Fixture(PloneSandboxLayer):
 
     defaultBases = (PLONE_FIXTURE,)
@@ -120,11 +129,28 @@ class Fixture(PloneSandboxLayer):
         if portal_kss:
             portal_kss.getResource('++resource++plone.app.z3cform').setEnabled(False)
 
-
 FIXTURE = Fixture()
+
+
+class TwoGridsFixture(Fixture):
+
+    defaultBases = (FIXTURE,)
+
+    def setUpZope(self, app, configurationContext):
+        newgrid = NewGridSystem()
+        sm = getGlobalSiteManager()
+        sm.registerUtility(newgrid, name='universe')
+
+
 INTEGRATION_TESTING = IntegrationTesting(
     bases=(FIXTURE,),
     name='collective.cover:Integration',
+)
+
+TWO_GRIDS_FIXTURE = TwoGridsFixture()
+TWO_GRIDS_INTEGRATION_TESTING = IntegrationTesting(
+    bases=(TWO_GRIDS_FIXTURE,),
+    name='collective.cover:TwoGridsIntegration',
 )
 
 FUNCTIONAL_TESTING = FunctionalTesting(

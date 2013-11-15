@@ -1,22 +1,14 @@
 # -*- coding: utf-8 -*-
 
 from collective.cover.controlpanel import ICoverSettings
-from collective.cover.interfaces import IGridSystem
 from collective.cover.testing import INTEGRATION_TESTING
+from collective.cover.testing import TWO_GRIDS_INTEGRATION_TESTING
 from plone.registry.interfaces import IRegistry
-from zope.component import getGlobalSiteManager
 from zope.component import getUtility
 from zope.component import queryUtility
-from zope.interface import implements
 from zope.schema.interfaces import IVocabularyFactory
 
 import unittest
-
-
-class NewGrid(object):
-    implements(IGridSystem)
-    ncolumns = 42
-    title = "Everything"
 
 
 class VocabulariesTestCase(unittest.TestCase):
@@ -117,14 +109,30 @@ class VocabulariesTestCase(unittest.TestCase):
         name = u'collective.cover.GridSystems'
         vocabulary = queryUtility(IVocabularyFactory, name)
         self.assertIsNotNone(vocabulary)
+
+        # Our default grid system must be in the vocabulary.
         grids = vocabulary(self.portal)
         self.assertEqual(len(grids), 1)
         self.assertIn(u'deco16_grid', grids)
-        # Register a new grid
-        newgrid = NewGrid()
-        sm = getGlobalSiteManager()
-        sm.registerUtility(newgrid, name="universe")
+
+
+class VocabulariesTwoGridsTestCase(unittest.TestCase):
+
+    layer = TWO_GRIDS_INTEGRATION_TESTING
+
+    def setUp(self):
+        self.portal = self.layer['portal']
+
+    def test_grid_systems(self):
+        name = u'collective.cover.GridSystems'
+        vocabulary = queryUtility(IVocabularyFactory, name)
+        self.assertIsNotNone(vocabulary)
         grids = vocabulary(self.portal)
         self.assertEqual(len(grids), 2)
+
+        # Our default grid system must be in the vocabulary.
+        self.assertIn(u'deco16_grid', grids)
+
+        # The layer has setup a second grid.
         self.assertIn(u'universe', grids)
         self.assertEqual(grids.getTerm('universe').title, "Everything")
