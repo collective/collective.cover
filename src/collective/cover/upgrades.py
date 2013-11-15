@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 
-import logging
-
-from Products.CMFCore.utils import getToolByName
-from plone.registry.interfaces import IRegistry
-from zope.component import getUtility
-
 from collective.cover.config import PROJECTNAME
 from collective.cover.controlpanel import ICoverSettings
+from plone.registry.interfaces import IRegistry
+from Products.CMFCore.utils import getToolByName
+from zope.component import getUtility
+
+import logging
 
 
 def issue_201(context, logger=None):

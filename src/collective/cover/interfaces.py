@@ -42,5 +42,5 @@ class IGridSystem(Interface):
     """Interface for classes that implement a grid system for collective
     cover."""
 
-    title = Attribute("""The user-visible title for this grid.""")
-    ncolums = Attribute("""Number of colums in a grid.""")
+    title = Attribute('The user-visible title for this grid.')
+    ncolums = Attribute('Number of colums in a grid.')

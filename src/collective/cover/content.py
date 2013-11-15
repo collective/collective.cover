@@ -1,13 +1,9 @@
 # -*- coding: utf-8 -*-
 
-import json
-
-# XXX: remove these imports?
-#from plone.dexterity.events import EditCancelledEvent
-#from plone.dexterity.events import EditFinishedEvent
 from AccessControl import getSecurityManager
 from Acquisition import aq_inner
 from collective.cover.controlpanel import ICoverSettings
+from collective.cover.interfaces import IGridSystem
 from collective.cover.utils import assign_tile_ids
 from five import grok
 from plone.dexterity.content import Item
@@ -25,7 +21,7 @@ from zope.container.interfaces import IObjectAddedEvent
 from zope.event import notify
 from zope.interface import implements
 
-from .interfaces import IGridSystem
+import json
 
 grok.templatedir('templates')
 

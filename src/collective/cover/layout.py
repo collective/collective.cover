@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
-import json
-
 from Acquisition import aq_inner
+from collective.cover import _
 from collective.cover.content import ICover
 from collective.cover.controlpanel import ICoverSettings
+from collective.cover.interfaces import IGridSystem
 from collective.cover.utils import assign_tile_ids
 from five import grok
 from plone.registry.interfaces import IRegistry
@@ -15,8 +15,7 @@ from zope.component import getUtility
 from zope.component import queryUtility
 from zope.schema.interfaces import IVocabularyFactory
 
-from .interfaces import IGridSystem
-from . import _
+import json
 
 
 class PageLayout(grok.View):
@@ -219,7 +218,7 @@ class Deco16Grid (grok.GlobalUtility):
     grok.name('deco16_grid')
     grok.implements(IGridSystem)
 
-    title = _('Deco (16 columns, default)')
+    title = _(u'Deco (16 columns, default)')
     ncolumns = 16
 
     row_class = 'row'
@@ -239,7 +238,8 @@ class Deco16Grid (grok.GlobalUtility):
                     element['class'] = 'tile'
 
     def columns_formatter(self, columns):
-        #this formatter works for deco, but you can implemente a custom one, for you grid system
+        # This formatter works for Deco; you can implement a custom one
+        # for you grid system
         w = 'width-'
         p = 'position-'
         offset = 0

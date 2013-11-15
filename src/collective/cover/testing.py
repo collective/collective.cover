@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from App.Common import package_home
+from collective.cover import _
+from collective.cover.layout import Deco16Grid
 from PIL import Image
 from PIL import ImageChops
 from plone.app.robotframework.testing import AUTOLOGIN_LIBRARY_FIXTURE
@@ -9,15 +11,12 @@ from plone.app.testing import IntegrationTesting
 from plone.app.testing import PLONE_FIXTURE
 from plone.app.testing import PloneSandboxLayer
 from plone.testing import z2
-from zope.component import getGlobalSiteManager
 from StringIO import StringIO
+from zope.component import getGlobalSiteManager
 
 import os
 import pkg_resources
 import random
-
-from collective.cover import _
-from collective.cover.layout import Deco16Grid
 
 PLONE_VERSION = pkg_resources.require('Plone')[0].version
 ALL_CONTENT_TYPES = [
