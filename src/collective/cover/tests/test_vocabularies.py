@@ -1,13 +1,22 @@
 # -*- coding: utf-8 -*-
 
 from collective.cover.controlpanel import ICoverSettings
+from collective.cover.interfaces import IGridSystem
 from collective.cover.testing import INTEGRATION_TESTING
 from plone.registry.interfaces import IRegistry
+from zope.component import getGlobalSiteManager
 from zope.component import getUtility
 from zope.component import queryUtility
+from zope.interface import implements
 from zope.schema.interfaces import IVocabularyFactory
 
 import unittest
+
+
+class NewGrid(object):
+    implements(IGridSystem)
+    ncolumns = 42
+    title = "Everything"
 
 
 class VocabulariesTestCase(unittest.TestCase):
@@ -103,3 +112,19 @@ class VocabulariesTestCase(unittest.TestCase):
         styles = vocabulary(self.portal)
         self.assertEqual(len(styles), 1)
         self.assertEqual(styles.by_value.keys()[0], u'tile-default')
+
+    def test_grid_systems(self):
+        name = u'collective.cover.GridSystems'
+        vocabulary = queryUtility(IVocabularyFactory, name)
+        self.assertIsNotNone(vocabulary)
+        grids = vocabulary(self.portal)
+        self.assertEqual(len(grids), 1)
+        self.assertIn(u'deco16_grid', grids)
+        # Register a new grid
+        newgrid = NewGrid()
+        sm = getGlobalSiteManager()
+        sm.registerUtility(newgrid, name="universe")
+        grids = vocabulary(self.portal)
+        self.assertEqual(len(grids), 2)
+        self.assertIn(u'universe', grids)
+        self.assertEqual(grids.getTerm('universe').title, "Everything")
