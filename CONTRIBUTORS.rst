@@ -9,6 +9,7 @@ the following people:
 - Carlos de la Guardia
 - Cleber J. Santos
 - Davi Lima
+- Denis Krienbühl
 - Érico Andrei
 - Franco Pellegrini
 - Fulvio Casali
