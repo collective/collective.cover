@@ -80,6 +80,12 @@ Test List Tile
     Should Be Equal  ${last_item_title}  Test news item
 
     # move first item to the end
+
+    # Selenium doesn't seem to handle drag&drop correctly if the
+    # drop-target is not in the viewport. This code tries to work
+    # around the issue.
+    Execute Javascript    window.scroll(0, 800)
+
     Drag And Drop  css=${first_item}  css=${last_item}
     Sleep  1s  Wait for reordering to occur
 
