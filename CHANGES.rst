@@ -13,6 +13,9 @@ There's a frood who really knows where his towel is.
   matches the css of the theme that you are using on your site.
   [warpr, maurits]
 
+- The reodering of list items is now immediately reflected in the DOM. (closes `#351`_).
+  [href]
+
 
 1.0a6 (2013-11-12)
 ^^^^^^^^^^^^^^^^^^
@@ -359,6 +362,7 @@ There's a frood who really knows where his towel is.
 .. _`#323`: https://github.com/collective/collective.cover/issues/323
 .. _`#339`: https://github.com/collective/collective.cover/issues/339
 .. _`#342`: https://github.com/collective/collective.cover/issues/342
+.. _`#351`: https://github.com/collective/collective.cover/issues/351
 .. _`#35`: https://github.com/collective/collective.cover/issues/35
 .. _`#48`: https://github.com/collective/collective.cover/issues/48
 .. _`PloneFormGen`: https://pypi.python.org/pypi/Products.PloneFormGen

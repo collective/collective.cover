@@ -84,7 +84,10 @@ class ListTile(PersistentCoverTile):
         :returns: a list of objects.
         """
         self.set_limit()
-        uuids = self.data.get('uuids', None)
+
+        # always get the latest data
+        uuids = ITileDataManager(self).get().get('uuids', None)
+
         result = []
         if uuids:
             uuids = [uuids] if type(uuids) == str else uuids
