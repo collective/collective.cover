@@ -135,6 +135,12 @@ There's a frood who really knows where his towel is.
 1.0a4 (2013-07-27)
 ^^^^^^^^^^^^^^^^^^
 
+.. Warning::
+    Release 1.0a4 includes a new banner tile that will replace image and link
+    tiles completely, as we found them redundant. Please replace manually any
+    instance of image and link tiles in your covers with banner tiles. Image
+    and link tiles will be completely removed on next release.
+
 - Add Finnish translation. [datakurre]
 
 - Add Italian translation. [gborelli]
