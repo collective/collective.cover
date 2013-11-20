@@ -59,7 +59,7 @@ class Upgrade5to6TestCase(UpgradeTestCaseBase):
 
     def test_issue_201(self):
         # check if the upgrade step is registered
-        title = u'issue_201'
+        title = u'issue 201'
         description = u'Depend on collective.js.bootstrap.'
         step = self._get_upgrade_step(title)
         self.assertIsNotNone(step)
@@ -87,7 +87,7 @@ class Upgrade5to6TestCase(UpgradeTestCaseBase):
 
     def test_issue_303(self):
         # check if the upgrade step is registered
-        title = u'issue_303'
+        title = u'issue 303'
         description = u'Remove unused bundles from portal_javascript.'
         step = self._get_upgrade_step(title)
         self.assertIsNotNone(step)
