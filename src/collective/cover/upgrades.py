@@ -8,13 +8,13 @@ from zope.component import getUtility
 
 import logging
 
+logger = logging.getLogger(PROJECTNAME)
 
-def issue_201(context, logger=None):
+
+def issue_201(context):
     """Depend on collective.js.bootstrap
     See: https://github.com/collective/collective.cover/issues/201
     """
-    if logger is None:
-        logger = logging.getLogger(PROJECTNAME)
 
     # first we take care of the CSS registry
     css_tool = getToolByName(context, 'portal_css')
@@ -40,13 +40,10 @@ def issue_201(context, logger=None):
         logger.debug('"{0}" resource not found in portal_javascripts'.format(old_id))
 
 
-def issue_303(context, logger=None):
+def issue_303(context):
     """Remove unused bundles from portal_javascripts
     See: https://github.com/collective/collective.cover/issues/303
     """
-    if logger is None:
-        logger = logging.getLogger(PROJECTNAME)
-
     FIX_JS_IDS = ['++resource++plone.app.jquerytools.js',
                   '++resource++plone.app.jquerytools.form.js',
                   '++resource++plone.app.jquerytools.overlayhelpers.js',
@@ -64,14 +61,11 @@ def issue_303(context, logger=None):
             js.setBundle('default')
 
 
-def issue_330(context, logger=None):
+def issue_330(context):
     """Add grid_system field to ICoverSettings registry.
     See: https://github.com/collective/collective.cover/issues/330
     and: https://github.com/collective/collective.cover/issues/205
     """
-    if logger is None:
-        logger = logging.getLogger(PROJECTNAME)
-
     # Reregister the interface.
     registry = getUtility(IRegistry)
     registry.registerInterface(ICoverSettings)
