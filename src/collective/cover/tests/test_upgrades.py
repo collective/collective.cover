@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 
+from collective.cover.config import DEFAULT_GRID_SYSTEM
 from collective.cover.testing import INTEGRATION_TESTING
-
+from plone.registry.interfaces import IRegistry
+from zope.component import getUtility
 import unittest
 
 
@@ -117,3 +119,33 @@ class Upgrade5to6TestCase(UpgradeTestCaseBase):
             if id in JQ_JS_IDS or id in TINYMCE_JS_IDS:
                 js = js_tool.getResource(id)
                 self.assertEqual('default', js.getBundle())
+
+
+class Upgrade6to7TestCase(UpgradeTestCaseBase):
+
+    def setUp(self):
+        UpgradeTestCaseBase.setUp(self, u'6', u'7')
+
+    def test_upgrade_to_7_registrations(self):
+        version = self.setup.getLastVersionForProfile(self.profile_id)[0]
+        self.assertTrue(version >= self.to_version)
+        self.assertEqual(self._how_many_upgrades_to_do(), 1)
+
+    def test_issue_330(self):
+        # check if the upgrade step is registered
+        title = u'issue 330'
+        description = u'Add grid_system field to registry'
+        step = self._get_upgrade_step(title)
+        self.assertIsNotNone(step)
+        self.assertEqual(step['description'], description)
+        record_name = \
+            'collective.cover.controlpanel.ICoverSettings.grid_system'
+
+        # simulate state on previous version
+        registry = getUtility(IRegistry)
+        del registry.records[record_name]
+
+        # run the upgrade step to validate the update
+        self._do_upgrade_step(step)
+        self.assertEqual(registry.records[record_name].value,
+                         DEFAULT_GRID_SYSTEM)
