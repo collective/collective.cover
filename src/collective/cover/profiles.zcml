@@ -61,6 +61,12 @@
         handler=".upgrades.issue_330"
         />
 
+    <genericsetup:upgradeStep
+        title="New permission for Layout edit tab"
+        description="Protect Layout edit tab with new permission granted to Managers and Site Admins"
+        handler=".upgrades.layout_edit_permission"
+        />
+
   </genericsetup:upgradeSteps>
 
 </configure>

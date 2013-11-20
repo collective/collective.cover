@@ -9,6 +9,7 @@ from zope.component import getUtility
 import logging
 
 logger = logging.getLogger(PROJECTNAME)
+PROFILE_ID = 'profile-collective.cover:default'
 
 
 def issue_201(context):
@@ -69,3 +70,12 @@ def issue_330(context):
     # Reregister the interface.
     registry = getUtility(IRegistry)
     registry.registerInterface(ICoverSettings)
+
+
+def layout_edit_permission(context):
+    """New permission for Layout edit tab.
+
+    We need to apply our rolemap and typeinfo for this.
+    """
+    context.runImportStepFromProfile(PROFILE_ID, 'rolemap')
+    context.runImportStepFromProfile(PROFILE_ID, 'typeinfo')

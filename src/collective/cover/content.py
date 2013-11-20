@@ -168,7 +168,7 @@ class Compose(grok.View):
 # XXX: we need to leave the view after saving or cancelling editing
 class LayoutEdit(grok.View):
     grok.context(ICover)
-    grok.require('cmf.ModifyPortalContent')
+    grok.require('collective.cover.CanEditLayout')
 
     def update(self):
         self.context = aq_inner(self.context)

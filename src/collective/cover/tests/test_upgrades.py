@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from Products.CMFCore.utils import getToolByName
 from collective.cover.config import DEFAULT_GRID_SYSTEM
 from collective.cover.testing import INTEGRATION_TESTING
 from plone.registry.interfaces import IRegistry
@@ -129,7 +130,7 @@ class Upgrade6to7TestCase(UpgradeTestCaseBase):
     def test_upgrade_to_7_registrations(self):
         version = self.setup.getLastVersionForProfile(self.profile_id)[0]
         self.assertTrue(version >= self.to_version)
-        self.assertEqual(self._how_many_upgrades_to_do(), 1)
+        self.assertEqual(self._how_many_upgrades_to_do(), 2)
 
     def test_issue_330(self):
         # check if the upgrade step is registered
@@ -149,3 +150,25 @@ class Upgrade6to7TestCase(UpgradeTestCaseBase):
         self._do_upgrade_step(step)
         self.assertEqual(registry.records[record_name].value,
                          DEFAULT_GRID_SYSTEM)
+
+    def test_layout_edit_permission(self):
+        # check if the upgrade step is registered
+        title = u'New permission for Layout edit tab'
+        description = (u'Protect Layout edit tab with new permission '
+                       u'granted to Managers and Site Admins')
+
+        step = self._get_upgrade_step(title)
+        self.assertIsNotNone(step)
+        self.assertEqual(step['description'], description)
+
+        # simulate state on previous version
+        types = getToolByName(self.portal, 'portal_types')
+        cover_type = types['collective.cover.content']
+        action = cover_type.getActionObject('object/layoutedit')
+        action.permissions = (u'Modify portal content', )
+
+        # run the upgrade step to validate the update
+        self._do_upgrade_step(step)
+        action = cover_type.getActionObject('object/layoutedit')
+        self.assertEqual(action.permissions,
+                         (u'collective.cover: Can Edit Layout', ))
