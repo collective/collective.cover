@@ -9,6 +9,7 @@ from zope.component import getUtility
 import logging
 
 logger = logging.getLogger(PROJECTNAME)
+PROFILE_ID = 'profile-collective.cover:default'
 
 
 def issue_201(context):
@@ -69,3 +70,21 @@ def issue_330(context):
     # Reregister the interface.
     registry = getUtility(IRegistry)
     registry.registerInterface(ICoverSettings)
+
+
+def layout_edit_permission(context):
+    """New permission for Layout edit tab.
+
+    We need to apply our rolemap and typeinfo for this.  Actually,
+    instead of applying the complete typeinfo we can explicitly change
+    only the permission.
+    """
+    context.runImportStepFromProfile(PROFILE_ID, 'rolemap')
+    types = getToolByName(context, 'portal_types')
+    cover_type = types.get('collective.cover.content')
+    if cover_type is None:
+        # Can probably not happen, but let's be gentle.
+        context.runImportStepFromProfile(PROFILE_ID, 'typeinfo')
+        return
+    action = cover_type.getActionObject('object/layoutedit')
+    action.permissions = (u'collective.cover: Can Edit Layout', )
