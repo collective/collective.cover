@@ -51,6 +51,7 @@ These are some of the sites using ``collective.cover``:
 * `CartaCapital <http://www.cartacapital.com.br/>`_ (BR)
 * `Clean Clothes Campaign <http://www.cleanclothes.org/>`_ (NL)
 * `Conselho Federal de Administração <http://www.cfa.org.br/>`_ (BR)
+* `La Jornada <http://www.jornada.unam.mx/ultimas>`_ (MX)
 * `Portal Brasil <http://www.brasil.gov.br/>`_ (BR)
 * `Rede Brasil Atual <http://www.redebrasilatual.com.br/>`_ (BR)
 * `Venezolana de Televisión <http://www.vtv.gov.ve/>`_ (VE)
