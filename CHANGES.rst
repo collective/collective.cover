@@ -32,9 +32,13 @@ There's a frood who really knows where his towel is.
 ^^^^^^^^^^^^^^^^^^
 
 .. Warning::
-    Release 1.0a6 removes all upgrade steps from versions no longer supported.
+    This release removes all upgrade steps from versions no longer supported.
     If you are upgrading from a version previous to 1.0a5 you should upgrade
-    to 1.0a5 first and then you can upgrade to 1.0a6.
+    to 1.0a5 first and then you can upgrade to 1.0a6. This release also
+    completely removes the code from deprecated image and link tiles; if you
+    are still using image and link tiles do not upgrade until you have
+    manually replaced both tiles instances with the new banner tile (this was
+    supposed to be done on previous release but we did not had time to do it.)
 
 - Field order can now be set on tile configuration screen using drag-and-drop.
   (closes `#248`_).
@@ -147,7 +151,7 @@ There's a frood who really knows where his towel is.
 ^^^^^^^^^^^^^^^^^^
 
 .. Warning::
-    Release 1.0a4 includes a new banner tile that will replace image and link
+    This release includes a new banner tile that will replace image and link
     tiles completely, as we found them redundant. Please replace manually any
     instance of image and link tiles in your covers with banner tiles. Image
     and link tiles will be completely removed on next release.
