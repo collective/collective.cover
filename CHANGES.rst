@@ -6,6 +6,13 @@ There's a frood who really knows where his towel is.
 1.0a7 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Hides empty tile message in all views but the compose view
+  (closes `#348`_).
+  [href]
+
+- Show the tile type on the compose tab.
+  [warpr]
+
 - Make the grid system flexible.  The default is still a 16 column
   Deco grid.  You can register your own system as an `IGridSystem`
   utility based on the `Deco16Grid` class with a different name and
@@ -13,10 +20,8 @@ There's a frood who really knows where his towel is.
   matches the css of the theme that you are using on your site.
   [warpr, maurits]
 
-- The reodering of list items is now immediately reflected in the DOM. (closes `#351`_).
-  [href]
-
-- Hides 'please add..' text in all views but the compose view. (closes `#348`_).
+- The reodering of list items is now immediately reflected in the DOM
+  (closes `#351`_).
   [href]
 
 
