@@ -35,6 +35,15 @@
 .template-compose .tile-container {
     position:relative;
 }
+
+.template-compose .tile-type-name {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    opacity: 0.3;
+    font-size: 95%;
+    font-weight: bolder;
+}
 .template-compose .edit-tile-link,
 .template-compose .collection-link {
     position:absolute;
