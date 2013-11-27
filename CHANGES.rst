@@ -15,7 +15,7 @@ There's a frood who really knows where his towel is.
   [href]
 
 - Show the type of a tile (Basic Tile, Collection Tile, etc.) in the
-  top right of the tile on the compose tab. This makes it easier for
+  top center of the tile on the compose tab. This makes it easier for
   the user to know how they can add content, especially if the user
   does not have permission to view the layout tab.
   [warpr]
