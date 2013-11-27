@@ -5,6 +5,7 @@ from collective.cover.tiles.base import IPersistentCoverTile
 from collective.cover.tiles.configuration import ITilesConfigurationScreen
 from collective.cover.tiles.permissions import ITilesPermissions
 from collective.cover.tiles.pfg import PFGTile
+from mock import Mock
 from plone.app.testing import login
 from plone.app.testing import setRoles
 from plone.app.testing import TEST_USER_ID
@@ -64,9 +65,13 @@ class PFGTileTestCase(unittest.TestCase):
                       self.tile.body())
 
     def test_render_empty(self):
-        self.assertIn(
-            'Please drag&amp;drop a Form Folder here to populate the tile.',
-            self.tile())
+        msg = 'Please drag&amp;drop a Form Folder here to populate the tile.'
+
+        self.tile.is_compose_mode = Mock(return_value=True)
+        self.assertIn(msg, self.tile())
+
+        self.tile.is_compose_mode = Mock(return_value=False)
+        self.assertNotIn(msg, self.tile())
 
     def test_render(self):
         obj = self.pfg
@@ -83,18 +88,18 @@ class PFGTileTestCase(unittest.TestCase):
         # Delete original object
         setRoles(self.portal, TEST_USER_ID, ['Manager'])
         self.portal.manage_delObjects(['my-form', ])
-        rendered = self.tile()
 
-        self.assertIn('Please drag&amp;drop', rendered)
+        self.tile.is_compose_mode = Mock(return_value=True)
+        self.assertIn('Please drag&amp;drop', self.tile())
 
     def test_render_restricted_object(self):
         obj = self.pfg
 
         self.tile.populate_with_object(obj)
         obj.manage_permission('View', [], 0)
-        rendered = self.tile()
 
-        self.assertIn('Please drag&amp;drop', rendered)
+        self.tile.is_compose_mode = Mock(return_value=True)
+        self.assertIn('Please drag&amp;drop', self.tile())
 
     def test_delete_tile_persistent_data(self):
         permissions = getMultiAdapter(

@@ -35,7 +35,12 @@ Test List Tile
     Compose Cover
     Page Should Contain  Please add up to 5 objects to the tile.
 
+    # only on the compose view though, the default view stays empty
+    Click Link  link=View
+    Page Should Not Contain  Please add up to 5 objects to the tile.
+
     # drag&drop a Document
+    Compose Cover
     Open Content Chooser
     Drag And Drop  css=${document_selector}  css=${tile_selector}
     Wait Until Page Contains  My document

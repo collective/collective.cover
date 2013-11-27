@@ -3,6 +3,7 @@
 from collective.cover.testing import INTEGRATION_TESTING
 from collective.cover.tiles.base import IPersistentCoverTile
 from collective.cover.tiles.collection import CollectionTile
+from mock import Mock
 from plone.app.imaging.interfaces import IImageScale
 from plone.app.testing import login
 from plone.app.testing import setRoles
@@ -100,9 +101,14 @@ class CollectionTileTestCase(unittest.TestCase):
         setRoles(self.portal, TEST_USER_ID, ['Manager', 'Editor', 'Reviewer'])
         login(self.portal, TEST_USER_NAME)
         self.portal.manage_delObjects(['my-collection'])
-        rendered = self.tile()
 
-        self.assertIn('Please drop a collection here to fill the tile.', rendered)
+        msg = 'Please drop a collection here to fill the tile.'
+
+        self.tile.is_compose_mode = Mock(return_value=True)
+        self.assertIn(msg, self.tile())
+
+        self.tile.is_compose_mode = Mock(return_value=False)
+        self.assertNotIn(msg, self.tile())
 
     def test_thumbnail(self):
         # as a File does not have an image field, we should have no thumbnail

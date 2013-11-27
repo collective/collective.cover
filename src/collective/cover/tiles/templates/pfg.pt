@@ -5,7 +5,7 @@
       i18n:domain="collective.cover">
 
 <body tal:define="body view/body">
-  <p tal:condition="not: body" i18n:translate="">
+  <p tal:condition="python: not body and view.is_compose_mode()" i18n:translate="">
     Please drag&amp;drop a Form Folder here to populate the tile.
   </p>
   <div class="cover-pfg-tile tile-content">
