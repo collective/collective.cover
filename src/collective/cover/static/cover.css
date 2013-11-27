@@ -38,12 +38,11 @@
 
 .template-compose .tile-type-name {
     position: absolute;
-    right:0;
-    top:0;
+    width: 100%;
+    text-align: center;
     opacity: 0.3;
     font-size: 95%;
     font-weight: bolder;
-    padding-right: 1.5em;
 }
 .template-compose .edit-tile-link,
 .template-compose .collection-link {
