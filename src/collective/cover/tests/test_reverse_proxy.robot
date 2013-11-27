@@ -32,11 +32,14 @@ Test Reverse Proxy
     Add Tile  ${basic_tile_location}
     Save Cover Layout
 
+    Click Link  link=View
+    Page Should Not Contain  Please drag&drop some content here to populate the tile.
+
     Compose Cover
     Page Should Contain   Please drag&drop some content here to populate the tile.
 
     Open Browser  http://localhost:${PORT}/VirtualHostBase/http/127.0.0.1:${PORT}/plone/VirtualHostRoot/_vh_subplone/title-1
-    Page Should Contain   Please drag&drop some content here to populate the tile.
+    Page Should Not Contain   Please drag&drop some content here to populate the tile.
 
     Switch Browser  1
     Edit Cover Layout

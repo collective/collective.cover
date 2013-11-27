@@ -88,18 +88,18 @@ class PFGTileTestCase(unittest.TestCase):
         # Delete original object
         setRoles(self.portal, TEST_USER_ID, ['Manager'])
         self.portal.manage_delObjects(['my-form', ])
-        rendered = self.tile()
 
-        self.assertIn('Please drag&amp;drop', rendered)
+        self.tile.is_compose_mode = Mock(return_value=True)
+        self.assertIn('Please drag&amp;drop', self.tile())
 
     def test_render_restricted_object(self):
         obj = self.pfg
 
         self.tile.populate_with_object(obj)
         obj.manage_permission('View', [], 0)
-        rendered = self.tile()
 
-        self.assertIn('Please drag&amp;drop', rendered)
+        self.tile.is_compose_mode = Mock(return_value=True)
+        self.assertIn('Please drag&amp;drop', self.tile())
 
     def test_delete_tile_persistent_data(self):
         permissions = getMultiAdapter(
