@@ -16,6 +16,9 @@ There's a frood who really knows where his towel is.
 - The reodering of list items is now immediately reflected in the DOM. (closes `#351`_).
   [href]
 
+- Hides 'please add..' text in all views but the compose view. (closes `#348`_).
+  [href]
+
 
 1.0a6 (2013-11-12)
 ^^^^^^^^^^^^^^^^^^
@@ -368,6 +371,7 @@ There's a frood who really knows where his towel is.
 .. _`#323`: https://github.com/collective/collective.cover/issues/323
 .. _`#339`: https://github.com/collective/collective.cover/issues/339
 .. _`#342`: https://github.com/collective/collective.cover/issues/342
+.. _`#348`: https://github.com/collective/collective.cover/issues/348
 .. _`#351`: https://github.com/collective/collective.cover/issues/351
 .. _`#35`: https://github.com/collective/collective.cover/issues/35
 .. _`#48`: https://github.com/collective/collective.cover/issues/48
