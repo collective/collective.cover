@@ -10,7 +10,10 @@ There's a frood who really knows where his towel is.
   (closes `#348`_).
   [href]
 
-- Show the tile type on the compose tab.
+- Show the type of a tile (Basic Tile, Collection Tile, etc.) in the
+  top right of the tile on the compose tab. This makes it easier for
+  the user to know how they can add content, especially if the user
+  does not have permission to view the layout tab.
   [warpr]
 
 - Make the grid system flexible.  The default is still a 16 column
