@@ -5,6 +5,7 @@ from collective.cover.tiles.base import IPersistentCoverTile
 from collective.cover.tiles.configuration import ITilesConfigurationScreen
 from collective.cover.tiles.permissions import ITilesPermissions
 from collective.cover.tiles.pfg import PFGTile
+from mock import Mock
 from plone.app.testing import login
 from plone.app.testing import setRoles
 from plone.app.testing import TEST_USER_ID
@@ -64,9 +65,13 @@ class PFGTileTestCase(unittest.TestCase):
                       self.tile.body())
 
     def test_render_empty(self):
-        self.assertIn(
-            'Please drag&amp;drop a Form Folder here to populate the tile.',
-            self.tile())
+        msg = 'Please drag&amp;drop a Form Folder here to populate the tile.'
+
+        self.tile.is_compose_mode = Mock(return_value=True)
+        self.assertIn(msg, self.tile())
+
+        self.tile.is_compose_mode = Mock(return_value=False)
+        self.assertNotIn(msg, self.tile())
 
     def test_render(self):
         obj = self.pfg

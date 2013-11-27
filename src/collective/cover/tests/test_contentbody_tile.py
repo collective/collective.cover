@@ -5,6 +5,7 @@ from collective.cover.tiles.base import IPersistentCoverTile
 from collective.cover.tiles.configuration import ITilesConfigurationScreen
 from collective.cover.tiles.contentbody import ContentBodyTile
 from collective.cover.tiles.permissions import ITilesPermissions
+from mock import Mock
 from plone.app.testing import setRoles
 from plone.app.testing import TEST_USER_ID
 from zope.annotation.interfaces import IAnnotations
@@ -54,9 +55,13 @@ class ContentBodyTileTestCase(unittest.TestCase):
         self.assertEqual(self.tile.body(), text)
 
     def test_render_empty(self):
-        self.assertIn(
-            'Please drag&amp;drop some content here to populate the tile.',
-            self.tile())
+        msg = 'Please drag&amp;drop some content here to populate the tile.'
+
+        self.tile.is_compose_mode = Mock(return_value=True)
+        self.assertIn(msg, self.tile())
+
+        self.tile.is_compose_mode = Mock(return_value=False)
+        self.assertNotIn(msg, self.tile())
 
     def test_render(self):
         text = '<h2>Peace of mind</h2>'
