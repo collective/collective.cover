@@ -6,6 +6,10 @@ There's a frood who really knows where his towel is.
 1.0a7 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Gets the carousel test working again.
+  (closes `#333`_).
+  [href]
+
 - Hides empty tile message in all views but the compose view
   (closes `#348`_).
   [href]
@@ -381,6 +385,7 @@ There's a frood who really knows where his towel is.
 .. _`#317`: https://github.com/collective/collective.cover/issues/317
 .. _`#318`: https://github.com/collective/collective.cover/issues/318
 .. _`#323`: https://github.com/collective/collective.cover/issues/323
+.. _`#333`: https://github.com/collective/collective.cover/issues/333
 .. _`#339`: https://github.com/collective/collective.cover/issues/339
 .. _`#342`: https://github.com/collective/collective.cover/issues/342
 .. _`#348`: https://github.com/collective/collective.cover/issues/348
