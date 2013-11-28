@@ -263,4 +263,7 @@ class Deco16Grid (grok.GlobalUtility):
             width = column['data']['column-size'] if 'data' in column else 1
             column['class'] = self.column_class + ' ' + (w + str(width)) + ' ' + (p + str(offset))
             offset = offset + width
+            if offset > self.ncolumns:
+                column['class'] += ' overflowing'
+
         return columns
