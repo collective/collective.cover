@@ -6,6 +6,9 @@ There's a frood who really knows where his towel is.
 1.0a7 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Fix an issue which prevented Firefox users from making selections
+  on the tile configuration dialogs. [kuno].
+
 - Gets the carousel test working again.
   (closes `#333`_).
   [href]
