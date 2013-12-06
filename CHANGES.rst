@@ -6,8 +6,10 @@ There's a frood who really knows where his towel is.
 1.0a7 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Fix two javascript issues reported by the JSHint commit hook. [warpr]
+
 - Fix an issue which prevented Firefox users from making selections
-  on the tile configuration dialogs. [kuno].
+  on the tile configuration dialogs. [warpr]
 
 - Gets the carousel test working again.
   (closes `#333`_).
