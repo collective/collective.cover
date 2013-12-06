@@ -278,7 +278,7 @@ var coveractions = {
             encodeURIComponent(d.baseURI),
             success : function(text) {
                 var html = "";
-                var data = eval('(' + text + ')');
+                var data = jQuery.parseJSON(text);
 
                 if (data.items.length > 0) {
                     for (var i = 0; i < data.items.length; i++) {
