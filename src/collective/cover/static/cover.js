@@ -140,12 +140,12 @@ $(document).ready(function() {
               var carousel = $('div[data-carousel="carousel-sort"]');
               if (carousel[0] !== undefined ){
 
-                function serial_sort(textarea, sortable) {
+                var serial_sort = function(textarea, sortable) {
                   textarea.empty();
                   sortable.find('[data-uid]').each(function(e){
                     textarea.append($(this).data('uid') + "\n");
                   });
-                }
+                };
 
                 var textarea = carousel.find('textarea');
                 var sortable = carousel.find('.sortable');
