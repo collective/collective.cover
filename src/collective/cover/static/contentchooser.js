@@ -233,7 +233,7 @@ var coveractions = {
 
             x.send(o.data);
 
-            function ready() {
+            var ready = function() {
                 if (!o.async || x.readyState == 4 || c++ > 10000) {
                     if (o.success && c < 10000 && x.status == 200){
                         o.success.call(o.success_scope, '' + x.responseText, x, o);
@@ -244,7 +244,7 @@ var coveractions = {
                 } else {
                     w.setTimeout(ready, 10);
                 }
-            }
+            };
 
             // Syncronous request
             if (!o.async){
@@ -278,7 +278,7 @@ var coveractions = {
             encodeURIComponent(d.baseURI),
             success : function(text) {
                 var html = "";
-                var data = eval('(' + text + ')');
+                var data = jQuery.parseJSON(text);
 
                 if (data.items.length > 0) {
                     for (var i = 0; i < data.items.length; i++) {
