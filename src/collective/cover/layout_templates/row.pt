@@ -14,7 +14,7 @@
             tal:attributes="class python:'%s' % section.get('class', '');
                             data-layout-type python: data['layout-type'] if 'layout-type' in data else 'row'">
 
-            <tal:children repeat="child python:section.get('children')">
+            <tal:children repeat="child python:section.get('children') or []">
                 <div tal:replace="structure python:view.render_section(child, mode)" />
             </tal:children>
 

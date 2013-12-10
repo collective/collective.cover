@@ -6,6 +6,9 @@ There's a frood who really knows where his towel is.
 1.0a7 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Fix crash on view/compose/layout tabs when viewing a cover with an
+  empty layout. [warpr].
+
 - Fix two javascript issues reported by the JSHint commit hook. [warpr]
 
 - Fix an issue which prevented Firefox users from making selections

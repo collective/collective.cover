@@ -11,7 +11,7 @@
         <div tal:define="section options/section | nothing;"
             tal:condition="section">
 
-            <tal:children repeat="child python:section.get('children')">
+            <tal:children repeat="child python:section.get('children') or []">
                 <div tal:replace="structure python:view.render_section(child, mode)" />
             </tal:children>
 
