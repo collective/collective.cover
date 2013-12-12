@@ -243,7 +243,7 @@ class Deco16Grid (grok.GlobalUtility):
     row_class = 'row'
     column_class = 'cell'
 
-    def transform(self, layout, parentWidth=None):
+    def transform(self, layout, parentData={}):
         for element in layout:
             if 'type' in element:
                 if element['type'] == 'row':
@@ -251,13 +251,12 @@ class Deco16Grid (grok.GlobalUtility):
                     if 'children' in element:
                         self.transform(self.columns_formatter(element['children']))
                 if element['type'] == 'group' and 'children' in element:
-                    self.transform(element['children'], parentWidth=element['data']['column-size'])
+                    self.transform(element['children'], parentData=element.get('data', {}))
 
                 if element['type'] == 'tile':
-                    if parentWidth:
-                        if 'data' not in element:
-                            element['data'] = {}
-                        element['data']['parent-size'] = parentWidth
+                    if 'data' not in element:
+                        element['data'] = {}
+                    element['data']['parent-column-size'] = parentData.get('column-size', 1)
                     element['class'] = 'tile'
 
     def columns_formatter(self, columns):
