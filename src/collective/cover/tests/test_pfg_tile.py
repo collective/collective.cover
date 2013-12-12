@@ -6,10 +6,7 @@ from collective.cover.tiles.configuration import ITilesConfigurationScreen
 from collective.cover.tiles.permissions import ITilesPermissions
 from collective.cover.tiles.pfg import PFGTile
 from mock import Mock
-from plone.app.testing import login
-from plone.app.testing import setRoles
-from plone.app.testing import TEST_USER_ID
-from plone.app.testing import TEST_USER_NAME
+from plone import api
 from plone.uuid.interfaces import IUUID
 from zope.annotation.interfaces import IAnnotations
 from zope.component import getMultiAdapter
@@ -23,19 +20,21 @@ class PFGTileTestCase(unittest.TestCase):
 
     layer = INTEGRATION_TESTING
 
-    def setUpUser(self):
-        setRoles(self.portal, TEST_USER_ID, ['Manager', 'Editor', 'Reviewer'])
-        login(self.portal, TEST_USER_NAME)
-
     def setUp(self):
         self.portal = self.layer['portal']
         self.request = self.layer['request']
-        self.setUpUser()
-        self.portal.invokeFactory('FormFolder',
-                                  id='my-form',
-                                  title='My Form',
-                                  description='A form form FormGen')
-        self.pfg = self.portal['my-form']
+
+        with api.env.adopt_roles(['Manager']):
+            self.folder = api.content.create(self.portal, 'Folder', 'folder')
+
+        self.pfg = api.content.create(
+            self.folder,
+            'FormFolder',
+            id='my-form',
+            title='My Form',
+            description='A form form FormGen',
+        )
+
         self.tile = self.portal.restrictedTraverse(
             '@@{0}/{1}'.format('collective.cover.pfg', 'test-pfg-tile'))
 
@@ -86,8 +85,7 @@ class PFGTileTestCase(unittest.TestCase):
 
         self.tile.populate_with_object(obj)
         # Delete original object
-        setRoles(self.portal, TEST_USER_ID, ['Manager'])
-        self.portal.manage_delObjects(['my-form', ])
+        self.folder.manage_delObjects(['my-form'])
 
         self.tile.is_compose_mode = Mock(return_value=True)
         self.assertIn('Please drag&amp;drop', self.tile())

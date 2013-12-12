@@ -89,7 +89,7 @@ class ContentSearch(grok.View):
         return self.list_template(children=self.children, level=1)
 
     def search(self, query=None, page=0, b_size=10, uids=None):
-        catalog = api.portal.get_tool(name='portal_catalog')
+        catalog = api.portal.get_tool('portal_catalog')
         registry = getUtility(IRegistry)
         settings = registry.forInterface(ICoverSettings)
         searchable_types = settings.searchable_content_types
@@ -111,7 +111,7 @@ class ContentSearch(grok.View):
         return results
 
     def getTermByBrain(self, brain, real_value=True):
-        portal_tool = api.portal.get_tool(name='portal_url')
+        portal_tool = api.portal.get_tool('portal_url')
         self.portal_path = portal_tool.getPortalPath()
         value = brain.getPath()[len(self.portal_path):]
         return SimpleTerm(value, token=brain.getPath(), title=brain.Title)
@@ -124,7 +124,7 @@ class SearchItemsBrowserView(BrowserView):
         """ Contructor """
         self.context = context
         self.request = request
-        self.catalog = api.portal.get_tool(name='portal_catalog')
+        self.catalog = api.portal.get_tool('portal_catalog')
         self.plone_view = getMultiAdapter(
             (self.context, self.request), name=u'plone')
         self.getIcon = self.plone_view.getIcon
@@ -140,7 +140,7 @@ class SearchItemsBrowserView(BrowserView):
     def _getCurrentValues(self):
         """Return enabled portal types"""
         vocab = queryUtility(IVocabularyFactory, name=VOCAB_ID)(self.context)
-        portal_types = api.portal.get_tool(name='portal_types')
+        portal_types = api.portal.get_tool('portal_types')
         result = []
         # the vocabulary returns the values sorted by their translated title
         for term in vocab._terms:
@@ -185,7 +185,7 @@ class SearchItemsBrowserView(BrowserView):
         results = {}
 
         obj = self.obj
-        catalog = api.portal.get_tool(name='portal_catalog')
+        catalog = api.portal.get_tool('portal_catalog')
         normalizer = getUtility(IIDNormalizer)
 
         if 'filter_portal_types' in self.request.keys():

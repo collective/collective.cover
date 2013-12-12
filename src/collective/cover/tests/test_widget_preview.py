@@ -22,7 +22,7 @@ class WidgetPreviewCase(unittest.TestCase):
 
     def test_layout_structure(self):
         portal = self.portal
-        ttool = api.portal.get_tool(name='portal_types')
+        ttool = api.portal.get_tool('portal_types')
         setRoles(self.portal, TEST_USER_ID, ['Manager'])
         fti = ttool.getTypeInfo('Document')
         obj = fti.constructInstance(portal, 'test1')

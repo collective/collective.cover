@@ -18,7 +18,7 @@ def issue_201(context):
     """
 
     # first we take care of the CSS registry
-    css_tool = api.portal.get_tool(name='portal_css')
+    css_tool = api.portal.get_tool('portal_css')
     old_id = '++resource++collective.cover/bootstrap.min.css'
     if old_id in css_tool.getResourceIds():
         css_tool.unregisterResource(old_id)
@@ -29,7 +29,7 @@ def issue_201(context):
         logger.debug('"{0}" resource not found in portal_css'.format(old_id))
 
     # now we mess with the JS registry
-    js_tool = api.portal.get_tool(name='portal_javascripts')
+    js_tool = api.portal.get_tool('portal_javascripts')
     old_id = '++resource++collective.cover/bootstrap.min.js'
     new_id = '++resource++collective.js.bootstrap/js/bootstrap.min.js'
     if old_id in js_tool.getResourceIds():
@@ -55,7 +55,7 @@ def issue_303(context):
                   'tiny_mce.js',
                   'tiny_mce_init.js']
 
-    js_tool = api.portal.get_tool(name='portal_javascripts')
+    js_tool = api.portal.get_tool('portal_javascripts')
     for id in js_tool.getResourceIds():
         if id in FIX_JS_IDS:
             js = js_tool.getResource(id)

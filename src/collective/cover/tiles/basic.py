@@ -69,7 +69,7 @@ class BasicTile(PersistentCoverTile):
 
     @memoizedproperty
     def brain(self):
-        catalog = api.portal.get_tool(name='portal_catalog')
+        catalog = api.portal.get_tool('portal_catalog')
         uuid = self.data.get('uuid')
         result = catalog(UID=uuid) if uuid is not None else []
         assert len(result) <= 1

@@ -2,8 +2,7 @@
 
 from collective.cover.controlpanel import ICoverSettings
 from collective.cover.testing import MULTIPLE_GRIDS_INTEGRATION_TESTING
-from plone.app.testing import setRoles
-from plone.app.testing import TEST_USER_ID
+from plone import api
 from plone.registry.interfaces import IRegistry
 from zope.component import getUtility
 
@@ -26,13 +25,18 @@ class GridTestCase(unittest.TestCase):
 
     def setUp(self):
         portal = self.layer['portal']
-        setRoles(portal, TEST_USER_ID, ['Manager'])
-        portal.invokeFactory('Folder', 'test-folder')
-        setRoles(portal, TEST_USER_ID, ['Member'])
-        folder = portal['test-folder']
-        folder.invokeFactory('collective.cover.content', 'c1',
-                             template_layout='Layout A')
-        self.view = folder.c1.restrictedTraverse('view')
+
+        with api.env.adopt_roles(['Manager']):
+            folder = api.content.create(portal, 'Folder', 'folder')
+
+        api.content.create(
+            folder,
+            'collective.cover.content',
+            'cover',
+            template_layout='Layout A',
+        )
+
+        self.view = folder.cover.restrictedTraverse('view')
 
     def test_default_grid(self):
         document = lxml.html.fromstring(self.view())

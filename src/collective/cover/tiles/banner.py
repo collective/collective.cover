@@ -59,7 +59,7 @@ class BannerTile(PersistentCoverTile):
             # For Image and File objects (or any other in typesUseViewActionInListings)
             # we must add a /view to prevent the download of the file
             obj_url = obj.absolute_url_path()
-            props = api.portal.get_tool(name='portal_properties')
+            props = api.portal.get_tool('portal_properties')
             stp = props.site_properties
             view_action_types = stp.getProperty('typesUseViewActionInListings', ())
 

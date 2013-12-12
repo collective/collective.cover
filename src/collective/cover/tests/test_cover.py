@@ -5,6 +5,7 @@ from collective.cover.content import ICover
 from collective.cover.controlpanel import ICoverSettings
 from collective.cover.testing import INTEGRATION_TESTING
 from collective.cover.testing import MULTIPLE_GRIDS_INTEGRATION_TESTING
+from plone import api
 from plone.app.dexterity.behaviors.exclfromnav import IExcludeFromNavigation
 from plone.app.lockingbehavior.behaviors import ILocking
 from plone.app.referenceablebehavior.referenceable import IReferenceable
@@ -28,63 +29,63 @@ class CoverIntegrationTestCase(unittest.TestCase):
 
     def setUp(self):
         self.portal = self.layer['portal']
-        setRoles(self.portal, TEST_USER_ID, ['Manager'])
-        self.portal.invokeFactory('Folder', 'test-folder')
-        setRoles(self.portal, TEST_USER_ID, ['Member'])
-        self.folder = self.portal['test-folder']
-        self.folder.invokeFactory('collective.cover.content', 'c1',
-                                  template_layout='Layout A')
-        self.c1 = self.folder['c1']
+
+        with api.env.adopt_roles(['Manager']):
+            self.folder = api.content.create(self.portal, 'Folder', 'folder')
+
+        self.cover = api.content.create(
+            self.folder,
+            'collective.cover.content',
+            'cover',
+            template_layout='Layout A',
+        )
 
     def test_adding(self):
-        self.assertTrue(ICover.providedBy(self.c1))
+        self.assertTrue(ICover.providedBy(self.cover))
 
     def test_fti(self):
-        fti = queryUtility(
-            IDexterityFTI, name='collective.cover.content')
+        fti = queryUtility(IDexterityFTI, name='collective.cover.content')
         self.assertIsNotNone(fti)
 
     def test_schema(self):
-        fti = queryUtility(
-            IDexterityFTI, name='collective.cover.content')
+        fti = queryUtility(IDexterityFTI, name='collective.cover.content')
         schema = fti.lookupSchema()
         self.assertEqual(ICover, schema)
 
     def test_factory(self):
-        fti = queryUtility(
-            IDexterityFTI, name='collective.cover.content')
+        fti = queryUtility(IDexterityFTI, name='collective.cover.content')
         factory = fti.factory
         new_object = createObject(factory)
         self.assertTrue(ICover.providedBy(new_object))
 
     def test_exclude_from_navigation_behavior(self):
-        self.assertTrue(IExcludeFromNavigation.providedBy(self.c1))
+        self.assertTrue(IExcludeFromNavigation.providedBy(self.cover))
 
     def test_locking_behavior(self):
-        self.assertTrue(ILocking.providedBy(self.c1))
+        self.assertTrue(ILocking.providedBy(self.cover))
 
     def test_is_referenceable(self):
-        self.assertTrue(IReferenceable.providedBy(self.c1))
-        self.assertTrue(IAttributeUUID.providedBy(self.c1))
+        self.assertTrue(IReferenceable.providedBy(self.cover))
+        self.assertTrue(IAttributeUUID.providedBy(self.cover))
 
     def test_staging_behavior(self):
-        self.assertTrue(IStagingSupport.providedBy(self.c1))
+        self.assertTrue(IStagingSupport.providedBy(self.cover))
 
     def test_cover_selectable_as_folder_default_view(self):
-        self.folder.setDefaultPage('c1')
-        self.assertEqual(self.folder.getDefaultPage(), 'c1')
+        self.folder.setDefaultPage('cover')
+        self.assertEqual(self.folder.getDefaultPage(), 'cover')
 
     def test_export_permission(self):
         # layout export is visible for user with administrative rights
         setRoles(self.portal, TEST_USER_ID, ['Manager'])
-        layout_edit = self.c1.restrictedTraverse('layoutedit')
+        layout_edit = self.cover.restrictedTraverse('layoutedit')
         self.assertTrue(layout_edit.can_export_layout())
         self.assertIn('<span>Export layout</span>', layout_edit())
 
         # Accessing layoutedit as simple Member is not allowed.
         setRoles(self.portal, TEST_USER_ID, ['Member'])
-        self.assertRaises(Unauthorized, self.c1.restrictedTraverse,
-                          'layoutedit')
+        with self.assertRaises(Unauthorized):
+            self.cover.restrictedTraverse('layoutedit')
 
         # But we can cheat a bit here by reusing the layout_edit
         # object that has been visited as a Manager above.  The
@@ -94,7 +95,7 @@ class CoverIntegrationTestCase(unittest.TestCase):
 
     def test_layoutmanager_settings(self):
         setRoles(self.portal, TEST_USER_ID, ['Manager'])
-        layout_edit = self.c1.restrictedTraverse('layoutedit')
+        layout_edit = self.cover.restrictedTraverse('layoutedit')
         settings = json.loads(layout_edit.layoutmanager_settings())
         self.assertEqual(settings, {'ncolumns': 16})
 
@@ -107,17 +108,20 @@ class CoverMultipleGridsIntegrationTestCase(unittest.TestCase):
 
     def setUp(self):
         self.portal = self.layer['portal']
-        setRoles(self.portal, TEST_USER_ID, ['Manager'])
-        self.portal.invokeFactory('Folder', 'test-folder')
-        setRoles(self.portal, TEST_USER_ID, ['Member'])
-        self.folder = self.portal['test-folder']
-        self.folder.invokeFactory('collective.cover.content', 'c1',
-                                  template_layout='Layout A')
-        self.c1 = self.folder['c1']
+
+        with api.env.adopt_roles(['Manager']):
+            self.folder = api.content.create(self.portal, 'Folder', 'folder')
+
+        self.cover = api.content.create(
+            self.folder,
+            'collective.cover.content',
+            'cover',
+            template_layout='Layout A',
+        )
 
     def test_layoutmanager_settings(self):
         setRoles(self.portal, TEST_USER_ID, ['Manager'])
-        layout_edit = self.c1.restrictedTraverse('layoutedit')
+        layout_edit = self.cover.restrictedTraverse('layoutedit')
         settings = json.loads(layout_edit.layoutmanager_settings())
         self.assertEqual(settings, {'ncolumns': 16})
 

@@ -42,12 +42,12 @@ def modifiedCoverTile(obj, event):
     obj -- Dexterity-based object that was modified
     event -- event fired
     """
-    pu = api.portal.get_tool(name='portal_url')
+    pu = api.portal.get_tool('portal_url')
     if pu is None:
         # `getObjectFromLinks` is not possible without access
         # to `portal_url`
         return
-    rc = api.portal.get_tool(name='reference_catalog')
+    rc = api.portal.get_tool('reference_catalog')
     if rc is None:
         # `updateReferences` is not possible without access
         # to `reference_catalog`

@@ -212,7 +212,7 @@ class UpdateTileContent(grok.View):
     grok.require('cmf.ModifyPortalContent')
 
     def render(self):
-        catalog = api.portal.get_tool(name='portal_catalog')
+        catalog = api.portal.get_tool('portal_catalog')
 
         tile_type = self.request.form.get('tile-type')
         tile_id = self.request.form.get('tile-id')

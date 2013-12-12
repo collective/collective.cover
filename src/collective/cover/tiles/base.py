@@ -317,7 +317,7 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
     def isAllowedToEdit(self, user=None):
         allowed = True
 
-        pm = api.portal.get_tool(name='portal_membership')
+        pm = api.portal.get_tool('portal_membership')
 
         if user:
             if isinstance(user, basestring):
