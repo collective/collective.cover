@@ -2,8 +2,7 @@
 
 from collective.cover.config import PROJECTNAME
 from collective.cover.testing import INTEGRATION_TESTING
-from plone.app.testing import setRoles
-from plone.app.testing import TEST_USER_ID
+from plone import api
 from plone.browserlayer.utils import registered_layers
 
 import unittest
@@ -28,7 +27,7 @@ class InstallTestCase(unittest.TestCase):
         self.portal = self.layer['portal']
 
     def test_installed(self):
-        qi = getattr(self.portal, 'portal_quickinstaller')
+        qi = self.portal['portal_quickinstaller']
         self.assertTrue(qi.isProductInstalled(PROJECTNAME))
 
     def test_addon_layer(self):
@@ -72,9 +71,10 @@ class UninstallTestCase(unittest.TestCase):
 
     def setUp(self):
         self.portal = self.layer['portal']
-        setRoles(self.portal, TEST_USER_ID, ['Manager'])
-        self.qi = getattr(self.portal, 'portal_quickinstaller')
-        self.qi.uninstallProducts(products=[PROJECTNAME])
+        self.qi = self.portal['portal_quickinstaller']
+
+        with api.env.adopt_roles(['Manager']):
+            self.qi.uninstallProducts(products=[PROJECTNAME])
 
     def test_uninstalled(self):
         self.assertFalse(self.qi.isProductInstalled(PROJECTNAME))

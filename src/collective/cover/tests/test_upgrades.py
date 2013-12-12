@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 
-from Products.CMFCore.utils import getToolByName
 from collective.cover.config import DEFAULT_GRID_SYSTEM
 from collective.cover.testing import INTEGRATION_TESTING
+from plone import api
 from plone.registry.interfaces import IRegistry
 from zope.component import getUtility
+
 import unittest
 
 
@@ -162,7 +163,7 @@ class Upgrade6to7TestCase(UpgradeTestCaseBase):
         self.assertEqual(step['description'], description)
 
         # simulate state on previous version
-        types = getToolByName(self.portal, 'portal_types')
+        types = api.portal.get_tool('portal_types')
         cover_type = types['collective.cover.content']
         action = cover_type.getActionObject('object/layoutedit')
         action.permissions = (u'Modify portal content', )

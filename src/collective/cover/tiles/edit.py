@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 
 from AccessControl import Unauthorized
+from plone import api
 from plone.app.tiles.browser.edit import DefaultEditForm
 from plone.app.tiles.browser.edit import DefaultEditView
 from plone.app.tiles.browser.traversal import EditTile
 from plone.app.tiles.utils import appendJSONData
 from plone.tiles.interfaces import ITileDataManager
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-from Products.statusmessages.interfaces import IStatusMessage
 from z3c.form import button
 from zope.event import notify
 from zope.interface import implements
@@ -53,30 +53,25 @@ class CustomEditForm(DefaultEditForm):
             self.status = self.formErrorsMessage
             return
 
-        typeName = self.tileType.__name__
-
         # Traverse to a new tile in the context, with no data
+        typeName = self.tileType.__name__
         tile = self.context.restrictedTraverse('@@{0}/{1}'.format(typeName, self.tileId))
 
+        # We need to check first for existing content in order not not loose
+        # fields that weren't sent with the form
         dataManager = ITileDataManager(tile)
-        # We need to check first for existing content in order to not loose
-        # fields that weren't sent with the form.
         old_data = dataManager.get()
         for item in data:
-#            if data[item] is not None:
             old_data[item] = data[item]
-
         dataManager.set(old_data)
+
+        # notify about modification
+        notify(ObjectModifiedEvent(tile))
+        api.portal.show_message(_(u'Tile saved'), self.request, type='info')
 
         # Look up the URL - we need to do this after we've set the data to
         # correctly account for transient tiles
         tileURL = absoluteURL(tile, self.request)
-        notify(ObjectModifiedEvent(tile))
-
-        # Get the tile URL, possibly with encoded data
-        IStatusMessage(self.request).addStatusMessage(
-            _(u'Tile saved'), type=u'info')
-
         self.request.response.redirect(tileURL)
 
     @button.buttonAndHandler(_(u'Cancel'), name='cancel')

@@ -6,6 +6,7 @@ from collective.cover.controlpanel import ICoverSettings
 from collective.cover.interfaces import IGridSystem
 from collective.cover.utils import assign_tile_ids
 from five import grok
+from plone import api
 from plone.dexterity.content import Item
 from plone.dexterity.events import EditBegunEvent
 from plone.dexterity.utils import createContentInContainer
@@ -13,7 +14,6 @@ from plone.directives import form
 from plone.registry.interfaces import IRegistry
 from plone.tiles.interfaces import ITileDataManager
 from plone.uuid.interfaces import IUUIDGenerator
-from Products.CMFCore.utils import getToolByName
 from Products.GenericSetup.interfaces import IDAVAware
 from zope.annotation.interfaces import IAnnotations
 from zope.component import getUtility
@@ -182,7 +182,6 @@ class LayoutEdit(grok.View):
                 layout = self.context.cover_layout
 
                 registry = getUtility(IRegistry)
-
                 settings = registry.forInterface(ICoverSettings)
 
                 # Store name and layout as unicode.  Note that the
@@ -196,7 +195,7 @@ class LayoutEdit(grok.View):
 
     def can_export_layout(self):
         sm = getSecurityManager()
-        portal = getToolByName(self.context, 'portal_url').getPortalObject()
+        portal = api.portal.get()
         # TODO: check permission locally and not in portal context
         return sm.checkPermission('collective.cover: Can Export Layout', portal)
 
@@ -213,7 +212,7 @@ class UpdateTileContent(grok.View):
     grok.require('cmf.ModifyPortalContent')
 
     def render(self):
-        pc = getToolByName(self.context, 'portal_catalog')
+        catalog = api.portal.get_tool('portal_catalog')
 
         tile_type = self.request.form.get('tile-type')
         tile_id = self.request.form.get('tile-id')
@@ -225,7 +224,7 @@ class UpdateTileContent(grok.View):
             tile = self.context.restrictedTraverse(tile_type)
             tile_instance = tile[tile_id]
 
-            results = pc(UID=uid)
+            results = catalog(UID=uid)
             if results:
                 obj = results[0].getObject()
 

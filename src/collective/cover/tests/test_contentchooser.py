@@ -2,7 +2,7 @@
 
 from collective.cover.testing import INTEGRATION_TESTING
 from collective.cover.testing import PLONE_VERSION
-from zope.component import getMultiAdapter
+from plone import api
 
 import json
 import re
@@ -39,8 +39,7 @@ class ContentChooserTestCase(unittest.TestCase):
 
     def test_searches(self):
         self.request.set('q', 'Image')
-        view = getMultiAdapter(
-            (self.portal, self.request), name=u'content-search')
+        view = api.content.get_view(u'content-search', self.portal, self.request)
         html = """<a data-ct-type="Document" class="contenttype-document state-missing-value" rel="1">"""
         self.assertFalse(re.compile(html).search(view()))
         html = """<a data-ct-type="Image" class="contenttype-image state-missing-value" rel="1">"""
@@ -52,8 +51,7 @@ class ContentChooserTestCase(unittest.TestCase):
     def test_unicode_aware_lexicon(self):
         """See: https://github.com/collective/collective.cover/issues/276
         """
-        view = getMultiAdapter(
-            (self.portal, self.request), name=u'content-search')
+        view = api.content.get_view(u'content-search', self.portal, self.request)
         self.portal['my-document'].setText(
             u'A crise do apagão foi uma crise nacional ocorrida no Brasil, '
             u'que afetou o fornecimento e distribuição de energia elétrica.')
@@ -67,8 +65,7 @@ class ContentChooserTestCase(unittest.TestCase):
 
     def test_batch_searches(self):
         self.request.set('q', 'Image')
-        view = getMultiAdapter(
-            (self.portal, self.request), name=u'content-search')
+        view = api.content.get_view(u'content-search', self.portal, self.request)
         batch = view.search(query=None, page=1, b_size=1)
         # It's a batch and respect the size
         self.assertEqual(len(list(batch)), 1)

@@ -10,6 +10,7 @@ from collective.cover.tiles.configuration import ITilesConfigurationScreen
 from collective.cover.tiles.permissions import ITilesPermissions
 from DateTime import DateTime
 from mock import Mock
+from plone import api
 from plone.app.testing import setRoles
 from plone.app.testing import TEST_USER_ID
 from plone.cachepurging.hooks import queuePurge
@@ -21,7 +22,6 @@ from zope.annotation.interfaces import IAnnotations
 from zope.annotation.interfaces import IAttributeAnnotatable
 from zope.component import getMultiAdapter
 from zope.component import provideUtility
-from zope.component import queryMultiAdapter
 from zope.component import queryUtility
 from zope.component.globalregistry import provideHandler
 from zope.globalrequest import setRequest
@@ -170,8 +170,7 @@ class BasicTileTestCase(unittest.TestCase):
             'This news item was created for testing purposes', rendered)
 
         # the localized time must be there
-        utils = getMultiAdapter((self.portal, self.request), name=u'plone')
-        date = utils.toLocalizedTime(obj.Date(), True)
+        date = api.portal.get_localized_time(obj.Date(), long_format=True)
         self.assertIn(date, rendered)
 
         # the tags must be there
@@ -233,7 +232,7 @@ class BasicTileTestCase(unittest.TestCase):
     def test_image_traverser(self):
         obj = self.portal['my-image']
         data = self.tile.data
-        scales = queryMultiAdapter((obj, self.request), name='images')
+        scales = api.content.get_view(u'images', obj, self.request)
         self.tile.data['image'] = NamedImageFile(str(scales.scale('image').data))
         data_mgr = ITileDataManager(self.tile)
         data_mgr.set(data)
@@ -271,7 +270,7 @@ class BasicTileTestCase(unittest.TestCase):
 
         obj = self.portal['my-image']
         data = self.tile.data
-        scales = queryMultiAdapter((obj, self.request), name='images')
+        scales = api.content.get_view(u'images', obj, self.request)
         self.tile.data['image'] = NamedImageFile(str(scales.scale('image').data))
         data_mgr = ITileDataManager(self.tile)
         data_mgr.set(data)

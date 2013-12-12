@@ -4,12 +4,12 @@ from Acquisition import aq_base
 from collective.cover import _
 from collective.cover.tiles.base import IPersistentCoverTile
 from collective.cover.tiles.base import PersistentCoverTile
+from plone import api
 from plone.namedfile import field
 from plone.namedfile import NamedBlobImage
 from plone.tiles.interfaces import ITileDataManager
-from Products.CMFPlone.utils import getToolByName
-from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.CMFPlone.utils import safe_unicode
+from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zope import schema
 from zope.interface import implements
 
@@ -59,7 +59,7 @@ class BannerTile(PersistentCoverTile):
             # For Image and File objects (or any other in typesUseViewActionInListings)
             # we must add a /view to prevent the download of the file
             obj_url = obj.absolute_url_path()
-            props = getToolByName(obj, 'portal_properties')
+            props = api.portal.get_tool('portal_properties')
             stp = props.site_properties
             view_action_types = stp.getProperty('typesUseViewActionInListings', ())
 

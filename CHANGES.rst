@@ -6,6 +6,9 @@ There's a frood who really knows where his towel is.
 1.0a7 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Use plone.api where possible.
+  [hvelarde]
+
 - Japanese translation added.
   [terapyon]
 

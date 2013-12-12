@@ -9,11 +9,10 @@ from plone.app.layout.navigation.root import getNavigationRoot
 from plone.i18n.normalizer.interfaces import IIDNormalizer
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.interfaces._content import IFolderish
-from Products.CMFCore.utils import getToolByName
+from plone import api
 from Products.CMFPlone.browser.navtree import SitemapNavtreeStrategy
 from Products.Five.browser import BrowserView
 from zope.browserpage.viewpagetemplatefile import ViewPageTemplateFile
-from zope.component import getMultiAdapter
 from zope.component import getUtility
 from zope.component import queryUtility
 from zope.interface import Interface
@@ -89,7 +88,7 @@ class ContentSearch(grok.View):
         return self.list_template(children=self.children, level=1)
 
     def search(self, query=None, page=0, b_size=10, uids=None):
-        catalog = getToolByName(self.context, 'portal_catalog')
+        catalog = api.portal.get_tool('portal_catalog')
         registry = getUtility(IRegistry)
         settings = registry.forInterface(ICoverSettings)
         searchable_types = settings.searchable_content_types
@@ -111,7 +110,7 @@ class ContentSearch(grok.View):
         return results
 
     def getTermByBrain(self, brain, real_value=True):
-        portal_tool = getToolByName(self.context, 'portal_url')
+        portal_tool = api.portal.get_tool('portal_url')
         self.portal_path = portal_tool.getPortalPath()
         value = brain.getPath()[len(self.portal_path):]
         return SimpleTerm(value, token=brain.getPath(), title=brain.Title)
@@ -124,12 +123,8 @@ class SearchItemsBrowserView(BrowserView):
         """ Contructor """
         self.context = context
         self.request = request
-        self.catalog = getToolByName(self.context, 'portal_catalog')
-        self.plone_view = getMultiAdapter((self.context, self.request),
-                                          name=u'plone')
-        self.getIcon = self.plone_view.getIcon
-        self.registry = getUtility(IRegistry)
-        self.settings = self.registry.forInterface(ICoverSettings)
+        util = api.content.get_view(u'plone', self.context, self.request)
+        self.getIcon = util.getIcon
 
         # check if object is a folderish object, if not, get it's parent.
         if not IFolderish.providedBy(self.context):
@@ -140,7 +135,7 @@ class SearchItemsBrowserView(BrowserView):
     def _getCurrentValues(self):
         """Return enabled portal types"""
         vocab = queryUtility(IVocabularyFactory, name=VOCAB_ID)(self.context)
-        portal_types = getToolByName(self.context, 'portal_types', None)
+        portal_types = api.portal.get_tool('portal_types')
         result = []
         # the vocabulary returns the values sorted by their translated title
         for term in vocab._terms:
@@ -185,7 +180,7 @@ class SearchItemsBrowserView(BrowserView):
         results = {}
 
         obj = self.obj
-        portal_catalog = getToolByName(obj, 'portal_catalog')
+        catalog = api.portal.get_tool('portal_catalog')
         normalizer = getUtility(IIDNormalizer)
 
         if 'filter_portal_types' in self.request.keys():
@@ -211,7 +206,7 @@ class SearchItemsBrowserView(BrowserView):
         if searchtext:
             catalog_query = {'SearchableText': '{0}*'.format(searchtext)}
 
-        for brain in portal_catalog(**catalog_query):
+        for brain in catalog(**catalog_query):
             catalog_results.append({
                 'id': brain.getId,
                 'uid': brain.UID or None,  # Maybe Missing.Value

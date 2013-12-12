@@ -4,8 +4,8 @@ from collective.cover.testing import ALL_CONTENT_TYPES
 from collective.cover.testing import INTEGRATION_TESTING
 from collective.cover.tiles.base import IPersistentCoverTile
 from collective.cover.tiles.carousel import CarouselTile
+from plone import api
 from plone.uuid.interfaces import IUUID
-from zope.component import getMultiAdapter
 from zope.interface.verify import verifyClass
 from zope.interface.verify import verifyObject
 
@@ -21,7 +21,7 @@ class CarouselTileTestCase(unittest.TestCase):
         self.request = self.layer['request']
         self.name = u'collective.cover.carousel'
         self.cover = self.portal['frontpage']
-        self.tile = getMultiAdapter((self.cover, self.request), name=self.name)
+        self.tile = api.content.get_view(self.name, self.cover, self.request)
         self.tile = self.tile['test']
 
     def test_interface(self):
@@ -54,7 +54,7 @@ class CarouselTileTestCase(unittest.TestCase):
         self.tile.populate_with_object(obj2)
 
         # tile's data attributed is cached so we should re-instantiate the tile
-        tile = getMultiAdapter((self.cover, self.request), name=self.name)
+        tile = api.content.get_view(self.name, self.cover, self.request)
         tile = tile['test']
         self.assertEqual(len(tile.results()), 2)
         self.assertIn(obj1, tile.results())
@@ -64,7 +64,7 @@ class CarouselTileTestCase(unittest.TestCase):
         obj3 = self.portal['my-news-item']
         tile.replace_with_objects([IUUID(obj3, None)])
         # tile's data attributed is cached so we should re-instantiate the tile
-        tile = getMultiAdapter((self.cover, self.request), name=self.name)
+        tile = api.content.get_view(self.name, self.cover, self.request)
         tile = tile['test']
         self.assertNotIn(obj1, tile.results())
         self.assertNotIn(obj2, tile.results())
@@ -73,6 +73,6 @@ class CarouselTileTestCase(unittest.TestCase):
         # finally, we remove it from the list; the tile must be empty again
         tile.remove_item(obj3.UID())
         # tile's data attributed is cached so we should re-instantiate the tile
-        tile = getMultiAdapter((self.cover, self.request), name=self.name)
+        tile = api.content.get_view(self.name, self.cover, self.request)
         tile = tile['test']
         self.assertTrue(tile.is_empty())

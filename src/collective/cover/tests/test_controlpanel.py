@@ -6,11 +6,9 @@ from collective.cover.config import DEFAULT_SEARCHABLE_CONTENT_TYPES
 from collective.cover.config import PROJECTNAME
 from collective.cover.controlpanel import ICoverSettings
 from collective.cover.testing import INTEGRATION_TESTING
+from plone import api
 from plone.app.testing import logout
-from plone.app.testing import setRoles
-from plone.app.testing import TEST_USER_ID
 from plone.registry.interfaces import IRegistry
-from zope.component import getMultiAdapter
 from zope.component import getUtility
 
 import unittest
@@ -23,11 +21,10 @@ class ControlPanelTestCase(unittest.TestCase):
     def setUp(self):
         self.portal = self.layer['portal']
         self.controlpanel = self.portal['portal_controlpanel']
-        setRoles(self.portal, TEST_USER_ID, ['Manager'])
 
     def test_controlpanel_has_view(self):
-        view = getMultiAdapter(
-            (self.portal, self.portal.REQUEST), name='cover-settings')
+        request = self.layer['request']
+        view = api.content.get_view(u'cover-settings', self.portal, request)
         view = view.__of__(self.portal)
         self.assertTrue(view())
 
@@ -44,7 +41,8 @@ class ControlPanelTestCase(unittest.TestCase):
 
     def test_controlpanel_removed_on_uninstall(self):
         qi = self.portal['portal_quickinstaller']
-        qi.uninstallProducts(products=[PROJECTNAME])
+        with api.env.adopt_roles(['Manager']):
+            qi.uninstallProducts(products=[PROJECTNAME])
         actions = [a.getAction(self)['id']
                    for a in self.controlpanel.listActions()]
         self.assertNotIn('cover', actions)
@@ -90,8 +88,8 @@ class RegistryTestCase(unittest.TestCase):
 
     def test_records_removed_on_uninstall(self):
         qi = self.portal['portal_quickinstaller']
-        setRoles(self.portal, TEST_USER_ID, ['Manager'])
-        qi.uninstallProducts(products=[PROJECTNAME])
+        with api.env.adopt_roles(['Manager']):
+            qi.uninstallProducts(products=[PROJECTNAME])
 
         BASE_REGISTRY = 'collective.cover.controlpanel.ICoverSettings.'
         records = [
