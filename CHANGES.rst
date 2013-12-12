@@ -8,8 +8,13 @@ There's a frood who really knows where his towel is.
 
 - Use plone.api where possible. [hvelarde]
 
+- Fix crash on view/compose/layout tabs when viewing a cover with an
+  empty layout. [warpr].
+
+- Fix two javascript issues reported by the JSHint commit hook. [warpr]
+
 - Fix an issue which prevented Firefox users from making selections
-  on the tile configuration dialogs. [kuno].
+  on the tile configuration dialogs. [warpr]
 
 - Gets the carousel test working again.
   (closes `#333`_).
