@@ -18,8 +18,6 @@ ${tile_selector}  div.tile-container div.tile
 *** Test Cases ***
 
 Test Locked Cover
-    # FIXME: https://github.com/collective/collective.cover/issues/340
-    [Tags]  Expected Failure
 
     Log in as site owner
     Goto Homepage
@@ -104,10 +102,10 @@ Create new user
     # XXX: there's no need to do this here; it's better to prepare it programmatically
     Goto  ${PLONE_URL}/@@usergroup-userprefs
     Click Button  Add New User
-    Input text  form.fullname  ${OWNER2_NAME}
-    Input text  form.username  ${OWNER2_PASSWORD}
-    Input text  form.email  ${OWNER2_NAME}@null.com
-    Input Password  form.password  ${OWNER2_NAME}
-    Input Password  form.password_ctl  ${OWNER2_PASSWORD}
+    Input text  id=form.fullname  ${OWNER2_NAME}
+    Input text  id=form.username  ${OWNER2_PASSWORD}
+    Input text  id=form.email  ${OWNER2_NAME}@null.com
+    Input Password  id=form.password  ${OWNER2_NAME}
+    Input Password  id=form.password_ctl  ${OWNER2_PASSWORD}
     Select Checkbox  form.groups.0
     Click Button  Register
