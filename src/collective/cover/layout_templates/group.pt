@@ -19,7 +19,7 @@
                                     data-layout-type python: data['layout-type'] if 'layout-type' in data else 'column'">
 
                 <tal:children repeat="child python:section.get('children') or []">
-                    <div tal:replace="structure python:view.render_section(child, mode, parent=section)" />
+                    <div tal:replace="structure python:view.render_section(child, mode)" />
                 </tal:children>
 
             </div>
@@ -29,7 +29,7 @@
                                  data-panel python: section.get('id', '')">
 
                 <tal:children repeat="child python:section.get('children') or []">
-                    <div tal:replace="structure python:view.render_section(child, mode, parent=section)" />
+                    <div tal:replace="structure python:view.render_section(child, mode)" />
                 </tal:children>
 
             </div>

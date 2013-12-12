@@ -12,7 +12,7 @@
             tal:condition="section">
 
             <tal:children repeat="child python:section.get('children') or []">
-                <div tal:replace="structure python:view.render_section(child, mode, parent=section)" />
+                <div tal:replace="structure python:view.render_section(child, mode)" />
             </tal:children>
 
         </div>
