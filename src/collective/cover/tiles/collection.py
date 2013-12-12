@@ -138,7 +138,7 @@ class CollectionTile(PersistentCoverTile):
             })
 
     def accepted_ct(self):
-        """Return 'Collection' as the only content type acceptedin the tile.
+        """Return Collection as the only content type accepted in the tile.
         """
         return ['Collection']
 

@@ -487,8 +487,6 @@
                                                                     });
                                                                 }
                             });
-                            $("#configure_tile").disableSelection();
-
                         }
                       });
                       return false;

@@ -6,6 +6,28 @@ There's a frood who really knows where his towel is.
 1.0a7 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Fix crash on view/compose/layout tabs when viewing a cover with an
+  empty layout. [warpr].
+
+- Fix two javascript issues reported by the JSHint commit hook. [warpr]
+
+- Fix an issue which prevented Firefox users from making selections
+  on the tile configuration dialogs. [warpr]
+
+- Gets the carousel test working again.
+  (closes `#333`_).
+  [href]
+
+- Hides empty tile message in all views but the compose view
+  (closes `#348`_).
+  [href]
+
+- Show the type of a tile (Basic Tile, Collection Tile, etc.) in the
+  top center of the tile on the compose tab. This makes it easier for
+  the user to know how they can add content, especially if the user
+  does not have permission to view the layout tab.
+  [warpr]
+
 - Make the grid system flexible.  The default is still a 16 column
   Deco grid.  You can register your own system as an `IGridSystem`
   utility based on the `Deco16Grid` class with a different name and
@@ -13,7 +35,8 @@ There's a frood who really knows where his towel is.
   matches the css of the theme that you are using on your site.
   [warpr, maurits]
 
-- The reodering of list items is now immediately reflected in the DOM. (closes `#351`_).
+- The reodering of list items is now immediately reflected in the DOM
+  (closes `#351`_).
   [href]
 
 
@@ -21,9 +44,13 @@ There's a frood who really knows where his towel is.
 ^^^^^^^^^^^^^^^^^^
 
 .. Warning::
-    Release 1.0a6 removes all upgrade steps from versions no longer supported.
+    This release removes all upgrade steps from versions no longer supported.
     If you are upgrading from a version previous to 1.0a5 you should upgrade
-    to 1.0a5 first and then you can upgrade to 1.0a6.
+    to 1.0a5 first and then you can upgrade to 1.0a6. This release also
+    completely removes the code from deprecated image and link tiles; if you
+    are still using image and link tiles do not upgrade until you have
+    manually replaced both tiles instances with the new banner tile (this was
+    supposed to be done on previous release but we did not had time to do it.)
 
 - Field order can now be set on tile configuration screen using drag-and-drop.
   (closes `#248`_).
@@ -136,7 +163,7 @@ There's a frood who really knows where his towel is.
 ^^^^^^^^^^^^^^^^^^
 
 .. Warning::
-    Release 1.0a4 includes a new banner tile that will replace image and link
+    This release includes a new banner tile that will replace image and link
     tiles completely, as we found them redundant. Please replace manually any
     instance of image and link tiles in your covers with banner tiles. Image
     and link tiles will be completely removed on next release.
@@ -366,8 +393,10 @@ There's a frood who really knows where his towel is.
 .. _`#317`: https://github.com/collective/collective.cover/issues/317
 .. _`#318`: https://github.com/collective/collective.cover/issues/318
 .. _`#323`: https://github.com/collective/collective.cover/issues/323
+.. _`#333`: https://github.com/collective/collective.cover/issues/333
 .. _`#339`: https://github.com/collective/collective.cover/issues/339
 .. _`#342`: https://github.com/collective/collective.cover/issues/342
+.. _`#348`: https://github.com/collective/collective.cover/issues/348
 .. _`#351`: https://github.com/collective/collective.cover/issues/351
 .. _`#35`: https://github.com/collective/collective.cover/issues/35
 .. _`#48`: https://github.com/collective/collective.cover/issues/48

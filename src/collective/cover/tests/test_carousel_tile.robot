@@ -26,8 +26,6 @@ Get Total Carousel Images
 *** Test cases ***
 
 Test Carousel Tile
-    # FIXME: https://github.com/collective/collective.cover/issues/333
-    [Tags]  Expected Failure
 
     Enable Autologin as  Site Administrator
     Go to Homepage
@@ -60,6 +58,8 @@ Test Carousel Tile
     Compose Cover
     Sleep  1s  Wait for carousel to load
     Open Content Chooser
+    Click Element  link=Content tree
+
     Drag And Drop  css=${image_selector2}  css=${tile_selector}
     Wait Until Page Contains  Test image
     Page Should Contain  This image was created for testing purposes

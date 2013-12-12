@@ -185,6 +185,5 @@ Home Page Editor of the Brazilian Chamber of Deputies Site
 .. _`Collage`: http://plone.org/products/collage
 .. _`collective.panels`: https://github.com/collective/collective.panels
 .. _`CompositePack`: http://plone.org/products/compositepack
-.. _`see and comment on our mockups online`: https://simples.mybalsamiq.com/projects/capas/grid
 .. _`Using tiles to provide more flexible Plone layouts`: http://davisagli.com/blog/using-tiles-to-provide-more-flexible-plone-layouts
 .. _`World Plone Day 2012 Brasilia`: http://colab.interlegis.leg.br/wiki/WorldPloneDay

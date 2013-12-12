@@ -10,6 +10,7 @@
                       section options/section | nothing;
                       tile_url options/tile_url;
                       tile_type python:section.get('tile-type', '');
+                      tile_title python:section.get('tile-title', '');
                       tile_id python:section.get('id', '');
                       css_id python:'tile-%s' % tile_id;">
 
@@ -39,6 +40,7 @@
 
         <tal:compose tal:condition="python:mode == 'compose'">
             <div tal:condition="section" class="tile-container">
+              <span class="tile-type-name" tal:content="tile_title" />
                 <div tal:attributes="class python:'%s %s' % (section.get('class', ''), view.can_compose_tile_class(tile_type, tile_id));
                                      data-tile python:'%s' %(tile_url);
                                      data-tile-type tile_type;

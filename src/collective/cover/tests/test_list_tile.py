@@ -4,6 +4,7 @@ from collective.cover.testing import ALL_CONTENT_TYPES
 from collective.cover.testing import INTEGRATION_TESTING
 from collective.cover.tiles.base import IPersistentCoverTile
 from collective.cover.tiles.list import ListTile
+from mock import Mock
 from plone.uuid.interfaces import IUUID
 from zope.component import getMultiAdapter
 from zope.interface.verify import verifyClass
@@ -95,7 +96,12 @@ class ListTileTestCase(unittest.TestCase):
 
     def test_render_empty(self):
         msg = 'Please add up to 5 objects to the tile.'
+
+        self.tile.is_compose_mode = Mock(return_value=True)
         self.assertIn(msg, self.tile())
+
+        self.tile.is_compose_mode = Mock(return_value=False)
+        self.assertNotIn(msg, self.tile())
 
     def test_remove_item_from_list_tile(self):
         # now we add a couple of objects to the list

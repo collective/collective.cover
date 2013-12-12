@@ -3,6 +3,7 @@
 from collective.cover.testing import INTEGRATION_TESTING
 from collective.cover.tiles.base import IPersistentCoverTile
 from collective.cover.tiles.richtext import RichTextTile
+from mock import Mock
 from zope.interface.verify import verifyClass
 from zope.interface.verify import verifyObject
 
@@ -40,7 +41,13 @@ class RichTextTileTestCase(unittest.TestCase):
         self.assertEqual(self.tile.getText(), '')
 
     def test_render_empty(self):
-        self.assertIn('Please edit the tile to enter some text.', self.tile())
+        msg = 'Please edit the tile to enter some text.'
+
+        self.tile.is_compose_mode = Mock(return_value=True)
+        self.assertIn(msg, self.tile())
+
+        self.tile.is_compose_mode = Mock(return_value=False)
+        self.assertNotIn(msg, self.tile())
 
     def test_render(self):
         obj = self.portal['my-document']

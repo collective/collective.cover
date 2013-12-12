@@ -36,6 +36,9 @@ class PageLayout(grok.View):
     def get_layout(self, mode):
         layout = json.loads(self.context.cover_layout)
 
+        if mode == 'compose' or mode == 'layout_edit':
+            self.grid_layout_common(layout)
+
         if mode == 'view' or mode == 'compose':
             registry = getUtility(IRegistry)
             settings = registry.forInterface(ICoverSettings)
@@ -46,6 +49,21 @@ class PageLayout(grok.View):
             self.grid_layout_edit(layout)
 
         return layout
+
+    def grid_layout_common(self, layout):
+        """Add things to the grid/layout structure which should be available
+        on both compose and layout tabs.
+
+        """
+
+        for element in layout:
+            if 'type' in element:
+                if element['type'] == 'tile':
+                    tile_type = getUtility(ITileType, element['tile-type'])
+                    element['tile-title'] = tile_type.title
+
+                if 'children' in element:
+                    self.grid_layout_common(element['children'])
 
     def grid_layout_edit(self, layout):
         for element in layout:
@@ -58,8 +76,6 @@ class PageLayout(grok.View):
 
                 if element['type'] == 'tile':
                     element['class'] = 'cover-tile'
-                    tile_type = getUtility(ITileType, element['tile-type'])
-                    element['tile-title'] = tile_type.title
 
                 if 'children' in element:
                     self.grid_layout_edit(element['children'])
