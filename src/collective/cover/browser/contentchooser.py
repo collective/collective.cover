@@ -20,6 +20,7 @@ from zope.interface import Interface
 from zope.schema.interfaces import IVocabularyFactory
 from zope.schema.vocabulary import SimpleTerm
 from Products.CMFPlone.PloneBatch import Batch
+from Products.CMFPlone.utils import safe_unicode
 
 import json
 
@@ -99,7 +100,7 @@ class ContentSearch(grok.View):
         catalog_query['portal_type'] = searchable_types
 
         if query:
-            catalog_query = {'SearchableText': u'{0}*'.format(query)}
+            catalog_query = {'SearchableText': u'{0}*'.format(safe_unicode(query))}
 
         # XXX: not implemented, this is needed?
 #        if uids:
@@ -145,7 +146,7 @@ class SearchItemsBrowserView(BrowserView):
         # the vocabulary returns the values sorted by their translated title
         for term in vocab._terms:
             value = portal_types[term.value].id  # portal_type
-            title = unicode(term.title)  # already translated title
+            title = safe_unicode(term.title)  # already translated title
             result.append((value, title))
 
         return result
