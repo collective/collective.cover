@@ -5,5 +5,9 @@
        <role name="Manager"/>
        <role name="Site Administrator"/>
      </permission>
+     <permission name="collective.cover: Can Edit Layout" acquire="False">
+       <role name="Manager"/>
+       <role name="Site Administrator"/>
+     </permission>
    </permissions>
  </rolemap>

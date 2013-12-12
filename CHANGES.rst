@@ -8,6 +8,23 @@ There's a frood who really knows where his towel is.
 
 - Use plone.api where possible. [hvelarde]
 
+- Fix an issue which prevented Firefox users from making selections
+  on the tile configuration dialogs. [kuno].
+
+- Gets the carousel test working again.
+  (closes `#333`_).
+  [href]
+
+- Hides empty tile message in all views but the compose view
+  (closes `#348`_).
+  [href]
+
+- Show the type of a tile (Basic Tile, Collection Tile, etc.) in the
+  top center of the tile on the compose tab. This makes it easier for
+  the user to know how they can add content, especially if the user
+  does not have permission to view the layout tab.
+  [warpr]
+
 - Make the grid system flexible.  The default is still a 16 column
   Deco grid.  You can register your own system as an `IGridSystem`
   utility based on the `Deco16Grid` class with a different name and
@@ -15,14 +32,22 @@ There's a frood who really knows where his towel is.
   matches the css of the theme that you are using on your site.
   [warpr, maurits]
 
+- The reodering of list items is now immediately reflected in the DOM
+  (closes `#351`_).
+  [href]
+
 
 1.0a6 (2013-11-12)
 ^^^^^^^^^^^^^^^^^^
 
 .. Warning::
-    Release 1.0a6 removes all upgrade steps from versions no longer supported.
+    This release removes all upgrade steps from versions no longer supported.
     If you are upgrading from a version previous to 1.0a5 you should upgrade
-    to 1.0a5 first and then you can upgrade to 1.0a6.
+    to 1.0a5 first and then you can upgrade to 1.0a6. This release also
+    completely removes the code from deprecated image and link tiles; if you
+    are still using image and link tiles do not upgrade until you have
+    manually replaced both tiles instances with the new banner tile (this was
+    supposed to be done on previous release but we did not had time to do it.)
 
 - Field order can now be set on tile configuration screen using drag-and-drop.
   (closes `#248`_).
@@ -70,7 +95,7 @@ There's a frood who really knows where his towel is.
 
 - Remove bundles from portal_javascript (closes `#303`_). [jpgimenez]
 
-- Add German translataion. [polyester, pbauer, svx]
+- Add German translation. [polyester, pbauer, svx]
 
 - Remove upgrade steps from unsupported versions (closes `#295`_). [fulv]
 
@@ -103,7 +128,7 @@ There's a frood who really knows where his towel is.
   or `getImage` attribute, displays that image. And always adds
   a link (closes `#241`_). [marcosfromero]
 
-- Prevent unnecesary page reloads when saving or canceling edit overlay
+- Prevent unnecessary page reloads when saving or canceling edit overlay
   in tiles (closes `#274`_). [marcosfromero]
 
 - On collection tile, return a thumbnail only if the item has an image field
@@ -133,6 +158,12 @@ There's a frood who really knows where his towel is.
 
 1.0a4 (2013-07-27)
 ^^^^^^^^^^^^^^^^^^
+
+.. Warning::
+    This release includes a new banner tile that will replace image and link
+    tiles completely, as we found them redundant. Please replace manually any
+    instance of image and link tiles in your covers with banner tiles. Image
+    and link tiles will be completely removed on next release.
 
 - Add Finnish translation. [datakurre]
 
@@ -197,7 +228,7 @@ There's a frood who really knows where his towel is.
 - Gallery tile now allows sorting of items easily through a widget created for
   that purpose (closes `#198`_). [Quimera]
 
-- A custom permission for the export layout funcionality was added; exporting
+- A custom permission for the export layout functionality was added; exporting
   a cover layout to the Plone registry is now an administrative task
   accomplished only by Managers and Site Administrators (closes `#177`_).
   [Quimera]
@@ -235,7 +266,7 @@ There's a frood who really knows where his towel is.
 
 - Implements an original size scale to show the original image. [jpgimenez]
 
-- Improve the way than images are accesed from the original object,
+- Improve the way that images are accessed from the original object,
   using the standard images traversal. (issue `#158`_) [jpgimenez]
 
 - Fixed a bug with Plone 4.3 that avoided TinyMCE being displayed for
@@ -273,7 +304,7 @@ There's a frood who really knows where his towel is.
 - Refactor list tile to use adapters to get the contained items uids.
   [jpgimenez]
 
-- Implements a way to ommit fields from tiles edit form and show it at
+- Implements a way to omit fields from tiles edit form and show it at
   configure form. [jpgimenez]
 
 - Refactor of collection tile. [hvelarde]
@@ -285,7 +316,7 @@ There's a frood who really knows where his towel is.
   called for the object and not its parent (fixes `#48`_). [frapell]
 
 - In order to be able to load Dexterity items from the import content GS step,
-  we need to provide this interface manualy, until a proper fix in Dexterity
+  we need to provide this interface manually, until a proper fix in Dexterity
   is implemented. [frapell]
 
 - Make the cover object to be an Item instead of a Container (fixes `#114`_).
@@ -304,9 +335,6 @@ There's a frood who really knows where his towel is.
 
 - Initial release.
 
-.. _`PloneFormGen`: https://pypi.python.org/pypi/Products.PloneFormGen
-.. _`#35`: https://github.com/collective/collective.cover/issues/35
-.. _`#48`: https://github.com/collective/collective.cover/issues/48
 .. _`#100`: https://github.com/collective/collective.cover/issues/100
 .. _`#114`: https://github.com/collective/collective.cover/issues/114
 .. _`#118`: https://github.com/collective/collective.cover/issues/118
@@ -362,5 +390,11 @@ There's a frood who really knows where his towel is.
 .. _`#317`: https://github.com/collective/collective.cover/issues/317
 .. _`#318`: https://github.com/collective/collective.cover/issues/318
 .. _`#323`: https://github.com/collective/collective.cover/issues/323
+.. _`#333`: https://github.com/collective/collective.cover/issues/333
 .. _`#339`: https://github.com/collective/collective.cover/issues/339
 .. _`#342`: https://github.com/collective/collective.cover/issues/342
+.. _`#348`: https://github.com/collective/collective.cover/issues/348
+.. _`#351`: https://github.com/collective/collective.cover/issues/351
+.. _`#35`: https://github.com/collective/collective.cover/issues/35
+.. _`#48`: https://github.com/collective/collective.cover/issues/48
+.. _`PloneFormGen`: https://pypi.python.org/pypi/Products.PloneFormGen

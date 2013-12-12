@@ -62,6 +62,6 @@
   <action title="Layout" action_id="layoutedit" category="object"
     condition_expr="not:object/@@plone_lock_info/is_locked_for_current_user|python:True"
     url_expr="string:${object_url}/layoutedit" visible="True" i18n:attributes="title">
-    <permission value="Modify portal content" />
+    <permission value="collective.cover: Can Edit Layout" />
   </action>
 </object>

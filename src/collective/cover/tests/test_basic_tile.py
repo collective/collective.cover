@@ -9,6 +9,7 @@ from collective.cover.tiles.basic import BasicTile
 from collective.cover.tiles.configuration import ITilesConfigurationScreen
 from collective.cover.tiles.permissions import ITilesPermissions
 from DateTime import DateTime
+from mock import Mock
 from plone import api
 from plone.app.testing import setRoles
 from plone.app.testing import TEST_USER_ID
@@ -116,9 +117,13 @@ class BasicTileTestCase(unittest.TestCase):
         )
 
     def test_render_empty(self):
-        self.assertIn(
-            'Please drag&amp;drop some content here to populate the tile.',
-            self.tile())
+        msg = 'Please drag&amp;drop some content here to populate the tile.'
+
+        self.tile.is_compose_mode = Mock(return_value=True)
+        self.assertIn(msg, self.tile())
+
+        self.tile.is_compose_mode = Mock(return_value=False)
+        self.assertNotIn(msg, self.tile())
 
     def test_render_title(self):
         obj = self.portal['my-news-item']
@@ -180,8 +185,8 @@ class BasicTileTestCase(unittest.TestCase):
         obj.setImage(generate_jpeg(128, 128))
         obj.reindexObject()
         self.tile.populate_with_object(obj)
-        tile_conf_adapter = getMultiAdapter(
-            (self.tile.context, self.request, self.tile), ITilesConfigurationScreen)
+        tile_conf_adapter = getMultiAdapter((self.tile.context, self.request, self.tile),
+                                            ITilesConfigurationScreen)
         tile_conf_adapter.set_configuration({'image': {'visibility': 'on', 'imgsize': 'large'}})
         rendered = self.tile()
         self.assertIn('alt="Test news item"', rendered)
@@ -194,7 +199,8 @@ class BasicTileTestCase(unittest.TestCase):
         self.assertIn('plone.tiles.permission.test-basic-tile', annotations)
 
         configuration = getMultiAdapter(
-            (self.tile.context, self.request, self.tile), ITilesConfigurationScreen)
+            (self.tile.context, self.request, self.tile),
+            ITilesConfigurationScreen)
         configuration.set_configuration({
             'title': {'order': u'0', 'visibility': u'on'},
             'description': {'order': u'1', 'visibility': u'off'},

@@ -36,13 +36,13 @@
       >
 
     <genericsetup:upgradeStep
-        title="issue_201"
+        title="issue 201"
         description="Depend on collective.js.bootstrap."
         handler=".upgrades.issue_201"
         />
 
     <genericsetup:upgradeStep
-        title="issue_303"
+        title="issue 303"
         description="Remove unused bundles from portal_javascript."
         handler=".upgrades.issue_303"
         />
@@ -59,6 +59,12 @@
         title="issue 330"
         description="Add grid_system field to registry"
         handler=".upgrades.issue_330"
+        />
+
+    <genericsetup:upgradeStep
+        title="New permission for Layout edit tab"
+        description="Protect Layout edit tab with new permission granted to Managers and Site Admins"
+        handler=".upgrades.layout_edit_permission"
         />
 
   </genericsetup:upgradeSteps>

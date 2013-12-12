@@ -51,6 +51,7 @@ These are some of the sites using ``collective.cover``:
 * `CartaCapital <http://www.cartacapital.com.br/>`_ (BR)
 * `Clean Clothes Campaign <http://www.cleanclothes.org/>`_ (NL)
 * `Conselho Federal de Administração <http://www.cfa.org.br/>`_ (BR)
+* `La Jornada <http://www.jornada.unam.mx/ultimas>`_ (MX)
 * `Portal Brasil <http://www.brasil.gov.br/>`_ (BR)
 * `Rede Brasil Atual <http://www.redebrasilatual.com.br/>`_ (BR)
 * `Venezolana de Televisión <http://www.vtv.gov.ve/>`_ (VE)
@@ -78,7 +79,7 @@ Known issues
 ^^^^^^^^^^^^
 
 * `Package is not compatible with standard Plone tiles`_. This will be
-  addressed in a future realease.
+  addressed in a future release.
 
 * `AJAX responses are wrapped after installing the package`_. This is
   `an issue in plone.app.blocks`_.
@@ -184,6 +185,5 @@ Home Page Editor of the Brazilian Chamber of Deputies Site
 .. _`Collage`: http://plone.org/products/collage
 .. _`collective.panels`: https://github.com/collective/collective.panels
 .. _`CompositePack`: http://plone.org/products/compositepack
-.. _`see and comment on our mockups online`: https://simples.mybalsamiq.com/projects/capas/grid
 .. _`Using tiles to provide more flexible Plone layouts`: http://davisagli.com/blog/using-tiles-to-provide-more-flexible-plone-layouts
 .. _`World Plone Day 2012 Brasilia`: http://colab.interlegis.leg.br/wiki/WorldPloneDay

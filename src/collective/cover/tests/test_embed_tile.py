@@ -3,6 +3,7 @@
 from collective.cover.testing import INTEGRATION_TESTING
 from collective.cover.tiles.base import IPersistentCoverTile
 from collective.cover.tiles.embed import EmbedTile
+from mock import Mock
 from zope.interface.verify import verifyClass
 from zope.interface.verify import verifyObject
 
@@ -42,4 +43,9 @@ class EmbedTileTestCase(unittest.TestCase):
 
     def test_render_empty(self):
         msg = u'Please edit the tile to add the code to be embedded.'
+
+        self.tile.is_compose_mode = Mock(return_value=True)
         self.assertIn(msg, self.tile())
+
+        self.tile.is_compose_mode = Mock(return_value=False)
+        self.assertNotIn(msg, self.tile())

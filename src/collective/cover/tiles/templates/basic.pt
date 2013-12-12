@@ -6,7 +6,7 @@
 
 <body tal:define="is_empty nocall:view/is_empty;
                   toLocalizedTime nocall:context/@@plone/toLocalizedTime">
-  <p tal:condition="is_empty" i18n:translate="">
+  <p tal:condition="python: is_empty and view.is_compose_mode()" i18n:translate="">
     Please drag&amp;drop some content here to populate the tile.
   </p>
 
