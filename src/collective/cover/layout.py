@@ -72,16 +72,16 @@ class PageLayout(grok.View):
                 return self.group(section=section, mode=mode)
             if section['type'] == u'tile':
                 tile_url = '@@{0}/{1}'.format(section.get('tile-type'), section.get('id'))
-                if parent and 'data' in parent:
-                    tile_url += '?' + urllib.urlencode([
-                        ('parent-' + k, v)
-                        for (k,v)
-                        in parent['data'].iteritems()
-                    ])
                 tile_conf = self.context.restrictedTraverse(tile_url.encode()).get_tile_configuration()
                 css_class = tile_conf.get('css_class', '')
                 section['class'] = '{0} {1}'.format(section.get('class'), css_class)
 
+                if parent and 'data' in parent:
+                    tile_url += '?' + urllib.urlencode([
+                        ('parent-' + k, v)
+                        for (k, v)
+                        in parent['data'].iteritems()
+                    ])
                 return self.tile(section=section, mode=mode, tile_url=tile_url, parent=parent)
         else:
             return self.generalmarkup(section=section, mode=mode)
