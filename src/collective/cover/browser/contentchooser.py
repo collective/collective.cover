@@ -13,7 +13,6 @@ from plone import api
 from Products.CMFPlone.browser.navtree import SitemapNavtreeStrategy
 from Products.Five.browser import BrowserView
 from zope.browserpage.viewpagetemplatefile import ViewPageTemplateFile
-from zope.component import getMultiAdapter
 from zope.component import getUtility
 from zope.component import queryUtility
 from zope.interface import Interface
@@ -124,12 +123,8 @@ class SearchItemsBrowserView(BrowserView):
         """ Contructor """
         self.context = context
         self.request = request
-        self.catalog = api.portal.get_tool('portal_catalog')
-        self.plone_view = getMultiAdapter(
-            (self.context, self.request), name=u'plone')
-        self.getIcon = self.plone_view.getIcon
-        self.registry = getUtility(IRegistry)
-        self.settings = self.registry.forInterface(ICoverSettings)
+        util = api.content.get_view(u'plone', self.context, self.request)
+        self.getIcon = util.getIcon
 
         # check if object is a folderish object, if not, get it's parent.
         if not IFolderish.providedBy(self.context):
