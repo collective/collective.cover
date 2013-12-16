@@ -44,7 +44,7 @@ Test Carousel Tile
     Open Content Chooser
     Drag And Drop  css=${image_selector}  css=${tile_selector}
     Wait Until Page Contains  Test image
-    Page Should Contain  This image was created for testing purposes
+    Wait Until Page Contains  This image was created for testing purposes
     # we have 1 image in the carousel
     #${images} =  Get Total Carousel Images
     #Should Be Equal  '${images}'  '1'
@@ -52,7 +52,7 @@ Test Carousel Tile
     # move to the default view and check tile persisted
     Click Link  link=View
     Wait Until Page Contains  Test image
-    Page Should Contain  This image was created for testing purposes
+    Wait Until Page Contains  This image was created for testing purposes
 
     # drag&drop another Image
     Compose Cover
@@ -62,7 +62,7 @@ Test Carousel Tile
 
     Drag And Drop  css=${image_selector2}  css=${tile_selector}
     Wait Until Page Contains  Test image
-    Page Should Contain  This image was created for testing purposes
+    Wait Until Page Contains  This image was created for testing purposes
     # we now have 2 images in the carousel
     #${images} =  Get Total Carousel Images
     #Should Be Equal  '${images}'  '2'
@@ -77,7 +77,7 @@ Test Carousel Tile
     Unselect Checkbox  ${autoplay_id}
     Click Button  Save
     Wait Until Page Contains  Test image
-    Page Should Contain  This image was created for testing purposes
+    Wait Until Page Contains  This image was created for testing purposes
 
     # carousel autoplay is now disabled. Sometimes we need to reload the page.
     Compose Cover
