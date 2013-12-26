@@ -6,6 +6,10 @@ There's a frood who really knows where his towel is.
 1.0a7 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Add an option to extend JS configuration to reload tile in custom
+  tiles (outside of collective.cover).
+  [rodfersou]
+
 - Use plone.api where possible.
   [hvelarde]
 
