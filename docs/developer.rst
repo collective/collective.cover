@@ -128,10 +128,24 @@ render it. For that, you need to take a few things into consideration.
 
    You can override this, in case you need a different behavior, check
    collection.py under the tiles directory and collection.pt under the
-   tiles/templates directory for an example. 
+   tiles/templates directory for an example.
+
+#. The tile template **must** include an HTML element with the `tile-content`
+   CSS class name. This way, after configuration or edition, the tile will
+   be automatically reloaded via AJAX. If you don't include this, edition
+   and configuration will missbehave.
+   Here's and example::
+
+   <div class="my-custom-tile tile-content">
+      Some really cool stuff just your tile is able to do
+   </div>
+
+   Check `this package tile templates to see more examples:`_
 
 For additional hints on how to create a template for your tile and make it
 work, check all tiles provided by this package, under the tiles directory.
+
+.. `this package tile templates to see more examples:`: https://github.com/collective/collective.cover/tree/master/src/collective/cover/tiles/templates
 
 Image field and scales
 ++++++++++++++++++++++
