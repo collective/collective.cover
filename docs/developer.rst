@@ -130,7 +130,7 @@ render it. For that, you need to take a few things into consideration.
    collection.py under the tiles directory and collection.pt under the
    tiles/templates directory for an example.
 
-#. The tile template **must** include an HTML element with the `tile-content`
+#. The tile template **must** include an HTML element with the ``tile-content``
    CSS class name. This way, after configuration or edition, the tile will
    be automatically reloaded via AJAX. If you don't include this, edition
    and configuration will missbehave.
