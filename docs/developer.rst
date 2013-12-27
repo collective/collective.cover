@@ -137,7 +137,7 @@ render it. For that, you need to take a few things into consideration.
    Here's and example::
 
    <div class="my-custom-tile tile-content">
-      Some really cool stuff just your tile is able to do
+       Some really cool stuff just your tile is able to do
    </div>
 
    Check `this package tile templates to see more examples:`_
