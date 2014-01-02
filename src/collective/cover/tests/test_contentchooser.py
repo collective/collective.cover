@@ -69,3 +69,11 @@ class ContentChooserTestCase(unittest.TestCase):
         batch = view.search(query=None, page=1, b_size=1)
         # It's a batch and respect the size
         self.assertEqual(len(list(batch)), 1)
+
+    def test_update(self):
+        # We are just testing against issue 383: next-page link in contentchooser
+        view = api.content.get_view(u'content-search', self.portal, self.request)
+        self.request.set('page', 0)
+        self.request.set('b_size', 1)
+        view.update()
+        self.assertEqual(view.nextpage, 1)

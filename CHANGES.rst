@@ -6,6 +6,9 @@ There's a frood who really knows where his towel is.
 1.0a7 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Fix next page link in content chooser (closes `#383`_).
+  [marcosfromero]
+
 - Use plone.api where possible.
   [hvelarde]
 
@@ -404,6 +407,7 @@ There's a frood who really knows where his towel is.
 .. _`#342`: https://github.com/collective/collective.cover/issues/342
 .. _`#348`: https://github.com/collective/collective.cover/issues/348
 .. _`#351`: https://github.com/collective/collective.cover/issues/351
+.. _`#383`: https://github.com/collective/collective.cover/issues/383
 .. _`#35`: https://github.com/collective/collective.cover/issues/35
 .. _`#48`: https://github.com/collective/collective.cover/issues/48
 .. _`PloneFormGen`: https://pypi.python.org/pypi/Products.PloneFormGen
