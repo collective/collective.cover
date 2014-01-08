@@ -10,6 +10,9 @@
   </p>
 
   <div class="cover-list-tile tile-content sortable-tile" tal:condition="not:is_empty">
+    <div class="tile-header" tal:condition="view/title">
+      <h2 tal:content="view/title" />
+    </div>
     <tal:items repeat="obj view/results">
       <div class="list-item" style="position:relative"
            tal:attributes="data-uid python:view.get_uid(obj)">
@@ -41,6 +44,9 @@
         <div class="visualClear"><!-- --></div>
       </div>
     </tal:items>
+    <div class="tile-footer" tal:condition="view/more_link">
+      <a tal:attributes="href view/more_link/href" tal:content="view/more_link/text"></a>
+    </div>
   </div>
 </body>
 </html>
