@@ -6,6 +6,9 @@ There's a frood who really knows where his towel is.
 1.0a7 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Fix dropping Dexterity images on banner tile.
+  [maurits & warpr]
+
 - Latest items are now properly loaded on content chooser when selecting the
   ``more`` link (fixes `#383`_).
   [marcosfromero]
