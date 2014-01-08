@@ -71,6 +71,12 @@ class CarouselTile(ListTile):
         return self.data['autoplay']
 
     def init_js(self):
+        if self.is_empty():
+            # Galleria will display scary error messages when it
+            # cannot find its <div>.  So don't start galleria unless
+            # the <div> is there and has some items in it.
+            return ''
+
         return """
 $(function() {{
     Galleria.loadTheme("++resource++collective.cover/galleria-theme/galleria.cover_theme.js");

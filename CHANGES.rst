@@ -6,6 +6,9 @@ There's a frood who really knows where his towel is.
 1.0a7 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Fix Galleria warning on empty carousel tiles.
+  [warpr]
+
 - Fix dropping Dexterity images on banner tile.
   [maurits & warpr]
 
