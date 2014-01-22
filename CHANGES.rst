@@ -6,6 +6,9 @@ There's a frood who really knows where his towel is.
 1.0a7 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Fix searching in content chooser on Japanese (fixes `#374`_).
+  [terapyon]
+
 - Fix Galleria warning on empty carousel tiles.
   [warpr]
 
@@ -55,8 +58,6 @@ There's a frood who really knows where his towel is.
   (closes `#351`_).
   [href]
 
-- Fixed for Can't search of filter items on Add Content by Japanese `#374`_
-  [terapyon]
 
 1.0a6 (2013-11-12)
 ^^^^^^^^^^^^^^^^^^
@@ -418,5 +419,6 @@ There's a frood who really knows where his towel is.
 .. _`#342`: https://github.com/collective/collective.cover/issues/342
 .. _`#348`: https://github.com/collective/collective.cover/issues/348
 .. _`#351`: https://github.com/collective/collective.cover/issues/351
+.. _`#374`: https://github.com/collective/collective.cover/issues/374
 .. _`#383`: https://github.com/collective/collective.cover/issues/383
 .. _`PloneFormGen`: https://pypi.python.org/pypi/Products.PloneFormGen
