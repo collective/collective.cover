@@ -65,6 +65,22 @@ class ContentChooserTestCase(unittest.TestCase):
         self.assertEqual(len(results), 1)
         self.assertEqual(results[0].getPath(), '/plone/my-document')
 
+    def test_asian_lang_searches(self):
+        """See: https://github.com/collective/collective.cover/issues/374
+        """
+        view = getMultiAdapter(
+            (self.portal, self.request), name=u'content-search')
+        self.portal['my-document'].setText(
+            u'日本語のコンテンツを追加します。, '
+            u'検索にかかるように設定します。')
+        self.portal['my-document'].reindexObject()
+        results = view.search(query=u'日本語')
+        self.assertEqual(len(results), 1)
+        self.assertEqual(results[0].getPath(), '/plone/my-document')
+        results = view.search(query=u'検索')
+        self.assertEqual(len(results), 1)
+        self.assertEqual(results[0].getPath(), '/plone/my-document')
+
     def test_batch_searches(self):
         self.request.set('q', 'Image')
         view = getMultiAdapter(
