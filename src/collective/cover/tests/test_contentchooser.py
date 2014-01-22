@@ -66,8 +66,7 @@ class ContentChooserTestCase(unittest.TestCase):
     def test_asian_lang_searches(self):
         """See: https://github.com/collective/collective.cover/issues/374
         """
-        view = getMultiAdapter(
-            (self.portal, self.request), name=u'content-search')
+        view = api.content.get_view(u'content-search', self.portal, self.request)
         self.portal['my-document'].setText(
             u'日本語のコンテンツを追加します。, '
             u'検索にかかるように設定します。')
