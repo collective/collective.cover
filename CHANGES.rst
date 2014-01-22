@@ -55,6 +55,8 @@ There's a frood who really knows where his towel is.
   (closes `#351`_).
   [href]
 
+- Fixed for Can't search of filter items on Add Content by Japanese `#374`_
+  [terapyon]
 
 1.0a6 (2013-11-12)
 ^^^^^^^^^^^^^^^^^^
