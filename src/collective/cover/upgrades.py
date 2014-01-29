@@ -88,3 +88,11 @@ def layout_edit_permission(context):
         return
     action = cover_type.getActionObject('object/layoutedit')
     action.permissions = (u'collective.cover: Can Edit Layout', )
+
+
+def cook_css_resources(context):
+    """Cook css resources.
+    """
+    css_tool = api.portal.get_tool('portal_css')
+    css_tool.cookResources()
+    logger.info('CSS resources were cooked')
