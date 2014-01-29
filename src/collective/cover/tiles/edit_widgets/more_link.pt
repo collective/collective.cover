@@ -32,6 +32,20 @@
                  { 'q': $field.find('input.search').val() });
          });
 
+         $field.find('.results').on('click', 'a.next', function(event) {
+             event.preventDefault();
+             $.ajax({
+                 url: "@@content-search",
+                 data: {'page': $(this).attr('data-page'),
+                        'q': $(this).attr('data-query')},
+                 async: false
+             }).done(function(data) {
+                 $('.results a.next').replaceWith(data);
+             });
+             return false;
+
+         });
+
          $field.find('.results').on('click', 'li', function() {
              $field.find('.uid').val( $(this).attr ('uid') );
              $field.find('.title').text( $(this).find ('a').text () );
