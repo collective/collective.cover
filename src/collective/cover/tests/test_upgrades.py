@@ -131,7 +131,7 @@ class Upgrade6to7TestCase(UpgradeTestCaseBase):
     def test_upgrade_to_7_registrations(self):
         version = self.setup.getLastVersionForProfile(self.profile_id)[0]
         self.assertTrue(version >= self.to_version)
-        self.assertEqual(self._how_many_upgrades_to_do(), 2)
+        self.assertEqual(self._how_many_upgrades_to_do(), 3)
 
     def test_issue_330(self):
         # check if the upgrade step is registered
