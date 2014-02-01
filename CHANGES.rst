@@ -6,6 +6,10 @@ There's a frood who really knows where his towel is.
 1.0a7 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Add ``title`` and ``show more`` to the list tile to have a consistent
+  look-and-feel with the collection tile.
+  [maurits]
+
 - Latest items are now properly loaded on content chooser when selecting the
   ``more`` link (fixes `#383`_).
   [marcosfromero]
