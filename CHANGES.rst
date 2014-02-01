@@ -10,6 +10,15 @@ There's a frood who really knows where his towel is.
   look-and-feel with the collection tile.
   [maurits]
 
+- Fix searching in content chooser on Japanese (fixes `#374`_).
+  [terapyon]
+
+- Fix Galleria warning on empty carousel tiles.
+  [warpr]
+
+- Fix dropping Dexterity images on banner tile.
+  [maurits & warpr]
+
 - Latest items are now properly loaded on content chooser when selecting the
   ``more`` link (fixes `#383`_).
   [marcosfromero]

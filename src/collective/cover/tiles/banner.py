@@ -75,7 +75,12 @@ class BannerTile(PersistentCoverTile):
             image = scales.scale('image', None)
 
         if image is not None and image != '':
-            image = NamedBlobImage(image.data)
+            if isinstance(image.data, NamedBlobImage):
+                # Dexterity
+                image = image.data
+            else:
+                # Archetypes
+                image = NamedBlobImage(image.data)
 
         obj = aq_base(obj)  # avoid acquisition
         title = safe_unicode(obj.Title())
