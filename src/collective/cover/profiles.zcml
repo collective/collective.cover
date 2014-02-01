@@ -67,6 +67,12 @@
         handler=".upgrades.layout_edit_permission"
         />
 
+    <genericsetup:upgradeStep
+        title="Cook css resources"
+        description="There were changes in the css files, so we need to cook the css resources"
+        handler=".upgrades.cook_css_resources"
+        />
+
   </genericsetup:upgradeSteps>
 
 </configure>

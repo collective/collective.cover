@@ -6,6 +6,7 @@ from collective.cover.tiles.base import IPersistentCoverTile
 from collective.cover.tiles.list import ListTile
 from mock import Mock
 from plone import api
+from plone.tiles.interfaces import ITileDataManager
 from plone.uuid.interfaces import IUUID
 from zope.interface.verify import verifyClass
 from zope.interface.verify import verifyObject
@@ -36,7 +37,7 @@ class ListTileTestCase(unittest.TestCase):
     def test_default_configuration(self):
         self.assertTrue(self.tile.is_configurable)
         self.assertTrue(self.tile.is_droppable)
-        self.assertFalse(self.tile.is_editable)
+        self.assertTrue(self.tile.is_editable)
 
     def test_tile_is_empty(self):
         self.assertTrue(self.tile.is_empty())
@@ -67,6 +68,23 @@ class ListTileTestCase(unittest.TestCase):
         self.assertNotIn(obj1, tile.results())
         self.assertNotIn(obj2, tile.results())
         self.assertIn(obj3, tile.results())
+
+        # We edit the tile to give it a title and a 'more...' link.
+        data = tile.data
+        data['title'] = 'My title'
+        data['more_link'] = IUUID(obj2)
+        data['more_link_text'] = 'Read much more...'
+        # Save the new data.
+        data_mgr = ITileDataManager(tile)
+        data_mgr.set(data)
+
+        # tile's data attributed is cached so we should re-instantiate the tile
+        tile = api.content.get_view(self.name, self.cover, self.request)
+        tile = tile['test']
+        self.assertEqual(tile.title, 'My title')
+        self.assertEqual(tile.more_link,
+                         {'href': 'http://nohost/plone/my-image',
+                          'text': 'Read much more...'})
 
         # finally, we remove it from the list; the tile must be empty again
         tile.remove_item(obj3.UID())

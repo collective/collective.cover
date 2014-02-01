@@ -6,6 +6,10 @@ There's a frood who really knows where his towel is.
 1.0a7 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Add ``title`` and ``show more`` to the list tile to have a consistent
+  look-and-feel with the collection tile.
+  [maurits]
+
 - Fix searching in content chooser on Japanese (fixes `#374`_).
   [terapyon]
 

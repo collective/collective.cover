@@ -2,6 +2,7 @@
 
 from collective.cover import _
 from collective.cover.interfaces import ICoverUIDsProvider
+from collective.cover.interfaces import ITileEditForm
 from collective.cover.tiles.base import IPersistentCoverTile
 from collective.cover.tiles.base import PersistentCoverTile
 from collective.cover.tiles.configuration_view import IDefaultConfigureForm
@@ -12,6 +13,7 @@ from plone.namedfile.field import NamedBlobImage
 from plone.tiles.interfaces import ITileDataManager
 from plone.tiles.interfaces import ITileType
 from plone.uuid.interfaces import IUUID
+from Products.CMFCore.utils import getToolByName
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zope import schema
 from zope.component import queryUtility
@@ -26,6 +28,7 @@ class IListTile(IPersistentCoverTile):
         value_type=schema.TextLine(),
         required=False,
     )
+    form.omitted('uuids')
 
     # XXX: this field should be used to replace the 'limit' attribute
     form.omitted('count')
@@ -37,7 +40,7 @@ class IListTile(IPersistentCoverTile):
     )
 
     form.omitted('title')
-    form.no_omit(IDefaultConfigureForm, 'title')
+    form.no_omit(ITileEditForm, 'title')
     title = schema.TextLine(
         title=_(u'Title'),
         required=False,
@@ -64,6 +67,15 @@ class IListTile(IPersistentCoverTile):
         required=False,
     )
 
+    more_link = schema.TextLine(title=_('Show more... link'), required=False)
+    form.omitted('more_link')
+    form.no_omit(ITileEditForm, 'more_link')
+    form.widget(more_link='collective.cover.tiles.edit_widgets.more_link.MoreLinkFieldWidget')
+
+    more_link_text = schema.TextLine(title=_('Show more... link text'), required=False)
+    form.omitted('more_link_text')
+    form.no_omit(ITileEditForm, 'more_link_text')
+
 
 class ListTile(PersistentCoverTile):
 
@@ -73,7 +85,7 @@ class ListTile(PersistentCoverTile):
 
     is_configurable = True
     is_droppable = True
-    is_editable = False
+    is_editable = True
     short_name = _(u'msg_short_name_list', default=u'List')
     limit = 5
 
@@ -222,6 +234,25 @@ class ListTile(PersistentCoverTile):
         image_conf = tile_conf.get('image', None)
         if image_conf:
             return image_conf.get('position', u'left')
+
+    @property
+    def title(self):
+        return self.data['title']
+
+    @property
+    def more_link(self):
+        if not (self.data['more_link'] and self.data['more_link_text']):
+            return None
+
+        pc = getToolByName(self.context, 'portal_catalog')
+        brainz = pc(UID=self.data['more_link'])
+        if not len(brainz):
+            return None
+
+        return {
+            'href': brainz[0].getURL(),
+            'text': self.data['more_link_text']
+        }
 
     @view.memoize
     def get_image_position(self):
