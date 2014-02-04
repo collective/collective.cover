@@ -3,7 +3,7 @@ Changelog
 
 There's a frood who really knows where his towel is.
 
-1.0a7 (unreleased)
+1.0a7 (2014-02-04)
 ^^^^^^^^^^^^^^^^^^
 
 - Add ``title`` and ``show more`` to the list tile to have a consistent
