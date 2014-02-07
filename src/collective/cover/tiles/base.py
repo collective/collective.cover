@@ -19,7 +19,7 @@ from plone import tiles
 from plone.app.textfield.interfaces import ITransformer
 from plone.app.textfield.value import RichTextValue
 from plone.app.uuid.utils import uuidToObject
-from plone.autoform import directives as form
+from plone.directives import form
 from plone.memoize import view
 from plone.namedfile.interfaces import INamedImage
 from plone.namedfile.interfaces import INamedImageField
@@ -44,7 +44,6 @@ from zope.component import queryMultiAdapter
 from zope.component import queryUtility
 from zope.event import notify
 from zope.interface import implements
-from zope.interface import Interface
 from zope.lifecycleevent import ObjectModifiedEvent
 from zope.publisher.interfaces import NotFound
 from zope.schema import Choice
@@ -56,7 +55,7 @@ import logging
 logger = logging.getLogger(PROJECTNAME)
 
 
-class IPersistentCoverTile(Interface):
+class IPersistentCoverTile(form.Schema):
     """
     Base interface for tiles that go into the cover object
     """
@@ -141,13 +140,6 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
         if not self.isAllowedToEdit():
             raise Unauthorized(
                 _('You are not allowed to add content to this tile'))
-
-    def replace_with_objects(self, obj):
-        if not self.isAllowedToEdit():
-            raise Unauthorized(
-                _('You are not allowed to add content to this tile'))
-
-        notify(ObjectModifiedEvent(self))
 
     def remove_item(self, uid):
         if not self.isAllowedToEdit():

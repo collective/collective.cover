@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from AccessControl import Unauthorized
 from collective.cover import _
 from collective.cover.interfaces import ICoverUIDsProvider
 from collective.cover.interfaces import ITileEditForm
@@ -17,7 +18,9 @@ from Products.CMFCore.utils import getToolByName
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zope import schema
 from zope.component import queryUtility
+from zope.event import notify
 from zope.interface import implements
+from zope.lifecycleevent import ObjectModifiedEvent
 from zope.schema import getFieldsInOrder
 
 
@@ -127,6 +130,9 @@ class ListTile(PersistentCoverTile):
             self.populate_with_uids(uids)
 
     def populate_with_uids(self, uuids):
+        if not self.isAllowedToEdit():
+            raise Unauthorized(
+                _('You are not allowed to add content to this tile'))
         self.set_limit()
         data_mgr = ITileDataManager(self)
 
@@ -140,9 +146,12 @@ class ListTile(PersistentCoverTile):
             else:
                 old_data['uuids'] = [uuid]
         data_mgr.set(old_data)
+        notify(ObjectModifiedEvent(self))
 
     def replace_with_objects(self, uids):
-        super(ListTile, self).replace_with_objects(uids)  # check permission
+        if not self.isAllowedToEdit():
+            raise Unauthorized(
+                _('You are not allowed to add content to this tile'))
         self.set_limit()
         data_mgr = ITileDataManager(self)
         old_data = data_mgr.get()
@@ -152,6 +161,7 @@ class ListTile(PersistentCoverTile):
             old_data['uuids'] = [uids]
 
         data_mgr.set(old_data)
+        notify(ObjectModifiedEvent(self))
 
     def remove_item(self, uid):
         super(ListTile, self).remove_item(uid)

@@ -33,6 +33,7 @@ class IBannerTile(IPersistentCoverTile):
 
 
 class BannerTile(PersistentCoverTile):
+
     implements(IBannerTile)
 
     index = ViewPageTemplateFile('templates/banner.pt')
