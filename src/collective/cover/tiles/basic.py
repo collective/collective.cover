@@ -60,7 +60,7 @@ class IBasicTile(IPersistentCoverTile):
 
 class BasicTile(PersistentCoverTile):
 
-    implements(IPersistentCoverTile)
+    implements(IBasicTile)
 
     index = ViewPageTemplateFile('templates/basic.pt')
 

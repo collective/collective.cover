@@ -29,6 +29,7 @@ class IEmbedTile(IPersistentCoverTile):
 class EmbedTile(PersistentCoverTile):
 
     implements(IEmbedTile)
+
     index = ViewPageTemplateFile('templates/embed.pt')
 
     is_configurable = True

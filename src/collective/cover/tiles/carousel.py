@@ -32,6 +32,7 @@ class ICarouselTile(IListTile):
 
 
 class CarouselTile(ListTile):
+
     implements(ICarouselTile)
 
     index = ViewPageTemplateFile('templates/carousel.pt')

@@ -18,7 +18,7 @@ class IContentBodyTile(IPersistentCoverTile):
 
 class ContentBodyTile(PersistentCoverTile):
 
-    implements(IPersistentCoverTile)
+    implements(IContentBodyTile)
 
     index = ViewPageTemplateFile('templates/contentbody.pt')
 

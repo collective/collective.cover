@@ -9,6 +9,12 @@ There's a frood who really knows where his towel is.
 - Fix for generic title for list tiles introduced in 1.0a7 (fixes `#393`).
   [fredvd]
 
+- IPersistentCoverTile inherit from plone.directives.form.Schema,
+  every tile interface inherit from IPersistentCoverTile 
+  and tiles implements its own interface (fixes `#381`_).
+  [jpgimenez]
+
+
 1.0a7 (2014-02-04)
 ^^^^^^^^^^^^^^^^^^
 
@@ -430,5 +436,6 @@ There's a frood who really knows where his towel is.
 .. _`#348`: https://github.com/collective/collective.cover/issues/348
 .. _`#351`: https://github.com/collective/collective.cover/issues/351
 .. _`#374`: https://github.com/collective/collective.cover/issues/374
+.. _`#381`: https://github.com/collective/collective.cover/issues/381
 .. _`#383`: https://github.com/collective/collective.cover/issues/383
 .. _`PloneFormGen`: https://pypi.python.org/pypi/Products.PloneFormGen

@@ -31,7 +31,7 @@ class IPFGTile(IPersistentCoverTile):
 
 class PFGTile(PersistentCoverTile):
 
-    implements(IPersistentCoverTile)
+    implements(IPFGTile)
 
     index = ViewPageTemplateFile('templates/pfg.pt')
 

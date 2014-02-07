@@ -15,10 +15,11 @@ from Products.CMFPlone.utils import safe_unicode
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zope import schema
 from zope.component import queryUtility
+from zope.interface import implements
 from zope.schema import getFieldsInOrder
 
 
-class ICollectionTile(IPersistentCoverTile, form.Schema):
+class ICollectionTile(IPersistentCoverTile):
 
     header = schema.TextLine(
         title=_(u'Header'),
@@ -82,6 +83,8 @@ class ICollectionTile(IPersistentCoverTile, form.Schema):
 
 
 class CollectionTile(PersistentCoverTile):
+
+    implements(ICollectionTile)
 
     index = ViewPageTemplateFile('templates/collection.pt')
 
