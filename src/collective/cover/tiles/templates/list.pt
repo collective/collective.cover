@@ -10,8 +10,8 @@
   </p>
 
   <div class="cover-list-tile tile-content sortable-tile" tal:condition="not:is_empty">
-    <div class="tile-header" tal:condition="view/title">
-      <h2 tal:content="view/title" />
+    <div class="tile-header" tal:condition="view/tile_title">
+      <h2 tal:content="view/tile_title" />
     </div>
     <tal:items repeat="obj view/results">
       <div class="list-item" style="position:relative"

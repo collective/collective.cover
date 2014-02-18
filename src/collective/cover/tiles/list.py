@@ -40,7 +40,7 @@ class IListTile(IPersistentCoverTile):
     )
 
     form.omitted('title')
-    form.no_omit(ITileEditForm, 'title')
+    form.no_omit(IDefaultConfigureForm, 'title')
     title = schema.TextLine(
         title=_(u'Title'),
         required=False,
@@ -66,6 +66,10 @@ class IListTile(IPersistentCoverTile):
         title=_(u'Date'),
         required=False,
     )
+
+    tile_title = schema.TextLine(title=_(u'Tile Title'), required=False)
+    form.omitted('tile_title')
+    form.no_omit(ITileEditForm, 'tile_title')
 
     more_link = schema.TextLine(title=_('Show more... link'), required=False)
     form.omitted('more_link')
@@ -236,8 +240,8 @@ class ListTile(PersistentCoverTile):
             return image_conf.get('position', u'left')
 
     @property
-    def title(self):
-        return self.data['title']
+    def tile_title(self):
+        return self.data['tile_title']
 
     @property
     def more_link(self):

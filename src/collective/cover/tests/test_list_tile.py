@@ -71,7 +71,7 @@ class ListTileTestCase(unittest.TestCase):
 
         # We edit the tile to give it a title and a 'more...' link.
         data = tile.data
-        data['title'] = 'My title'
+        data['tile_title'] = 'My title'
         data['more_link'] = IUUID(obj2)
         data['more_link_text'] = 'Read much more...'
         # Save the new data.
@@ -81,7 +81,7 @@ class ListTileTestCase(unittest.TestCase):
         # tile's data attributed is cached so we should re-instantiate the tile
         tile = api.content.get_view(self.name, self.cover, self.request)
         tile = tile['test']
-        self.assertEqual(tile.title, 'My title')
+        self.assertEqual(tile.tile_title, 'My title')
         self.assertEqual(tile.more_link,
                          {'href': 'http://nohost/plone/my-image',
                           'text': 'Read much more...'})
