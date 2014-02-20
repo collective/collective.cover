@@ -6,8 +6,8 @@ There's a frood who really knows where his towel is.
 1.0a8 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
-- Nothing changed yet.
-
+- Fix for generic title for list tiles introduced in 1.0a7 (fixes `#393`).
+  [fredvd]
 
 1.0a7 (2014-02-04)
 ^^^^^^^^^^^^^^^^^^
