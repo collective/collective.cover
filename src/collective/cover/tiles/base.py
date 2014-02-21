@@ -16,10 +16,10 @@ from collective.cover.tiles.permissions import ITilesPermissions
 from persistent.dict import PersistentDict
 from plone import api
 from plone import tiles
+from plone.autoform import directives as form
 from plone.app.textfield.interfaces import ITransformer
 from plone.app.textfield.value import RichTextValue
 from plone.app.uuid.utils import uuidToObject
-from plone.directives import form
 from plone.memoize import view
 from plone.namedfile.interfaces import INamedImage
 from plone.namedfile.interfaces import INamedImageField
@@ -31,6 +31,7 @@ from plone.registry.interfaces import IRegistry
 from plone.rfc822.interfaces import IPrimaryFieldInfo
 from plone.scale.scale import scaleImage
 from plone.scale.storage import AnnotationStorage as BaseAnnotationStorage
+from plone.supermodel import model
 from plone.tiles.esi import ESITile
 from plone.tiles.interfaces import ITileDataManager
 from plone.tiles.interfaces import ITileType
@@ -55,7 +56,7 @@ import logging
 logger = logging.getLogger(PROJECTNAME)
 
 
-class IPersistentCoverTile(form.Schema):
+class IPersistentCoverTile(model.Schema):
     """
     Base interface for tiles that go into the cover object
     """
