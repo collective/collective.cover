@@ -6,7 +6,7 @@ There's a frood who really knows where his towel is.
 1.0a8 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
-- Fix for generic title for list tiles introduced in 1.0a7 (fixes `#393`).
+- Fix for generic title for list tiles introduced in 1.0a7 (fixes `#393`_).
   [fredvd]
 
 1.0a7 (2014-02-04)
@@ -431,4 +431,5 @@ There's a frood who really knows where his towel is.
 .. _`#351`: https://github.com/collective/collective.cover/issues/351
 .. _`#374`: https://github.com/collective/collective.cover/issues/374
 .. _`#383`: https://github.com/collective/collective.cover/issues/383
+.. _`#393`: https://github.com/collective/collective.cover/issues/393
 .. _`PloneFormGen`: https://pypi.python.org/pypi/Products.PloneFormGen
