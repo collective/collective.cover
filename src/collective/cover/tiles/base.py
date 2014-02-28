@@ -16,10 +16,10 @@ from collective.cover.tiles.permissions import ITilesPermissions
 from persistent.dict import PersistentDict
 from plone import api
 from plone import tiles
-from plone.autoform import directives as form
 from plone.app.textfield.interfaces import ITransformer
 from plone.app.textfield.value import RichTextValue
 from plone.app.uuid.utils import uuidToObject
+from plone.autoform import directives as form
 from plone.memoize import view
 from plone.namedfile.interfaces import INamedImage
 from plone.namedfile.interfaces import INamedImageField
