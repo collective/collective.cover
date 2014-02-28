@@ -31,6 +31,7 @@ from plone.registry.interfaces import IRegistry
 from plone.rfc822.interfaces import IPrimaryFieldInfo
 from plone.scale.scale import scaleImage
 from plone.scale.storage import AnnotationStorage as BaseAnnotationStorage
+from plone.supermodel import model
 from plone.tiles.esi import ESITile
 from plone.tiles.interfaces import ITileDataManager
 from plone.tiles.interfaces import ITileType
@@ -44,7 +45,6 @@ from zope.component import queryMultiAdapter
 from zope.component import queryUtility
 from zope.event import notify
 from zope.interface import implements
-from zope.interface import Interface
 from zope.lifecycleevent import ObjectModifiedEvent
 from zope.publisher.interfaces import NotFound
 from zope.schema import Choice
@@ -56,7 +56,7 @@ import logging
 logger = logging.getLogger(PROJECTNAME)
 
 
-class IPersistentCoverTile(Interface):
+class IPersistentCoverTile(model.Schema):
     """
     Base interface for tiles that go into the cover object
     """
@@ -141,13 +141,6 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
         if not self.isAllowedToEdit():
             raise Unauthorized(
                 _('You are not allowed to add content to this tile'))
-
-    def replace_with_objects(self, obj):
-        if not self.isAllowedToEdit():
-            raise Unauthorized(
-                _('You are not allowed to add content to this tile'))
-
-        notify(ObjectModifiedEvent(self))
 
     def remove_item(self, uid):
         if not self.isAllowedToEdit():

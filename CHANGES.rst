@@ -6,8 +6,13 @@ There's a frood who really knows where his towel is.
 1.0a8 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Make base tile inherit from plone.supermodel.model.Schema and fix other
+  inconsistencies on tiles derivation (fixes `#381`_).
+  [jpgimenez]
+
 - Fix for generic title for list tiles introduced in 1.0a7 (fixes `#393`_).
   [fredvd]
+
 
 1.0a7 (2014-02-04)
 ^^^^^^^^^^^^^^^^^^
@@ -430,6 +435,7 @@ There's a frood who really knows where his towel is.
 .. _`#348`: https://github.com/collective/collective.cover/issues/348
 .. _`#351`: https://github.com/collective/collective.cover/issues/351
 .. _`#374`: https://github.com/collective/collective.cover/issues/374
+.. _`#381`: https://github.com/collective/collective.cover/issues/381
 .. _`#383`: https://github.com/collective/collective.cover/issues/383
 .. _`#393`: https://github.com/collective/collective.cover/issues/393
 .. _`PloneFormGen`: https://pypi.python.org/pypi/Products.PloneFormGen
