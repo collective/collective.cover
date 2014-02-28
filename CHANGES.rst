@@ -6,13 +6,12 @@ There's a frood who really knows where his towel is.
 1.0a8 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Make base tile inherit from plone.supermodel.model.Schema and fix other
+  inconsistencies on tiles derivation (fixes `#381`_).
+  [jpgimenez]
+
 - Fix for generic title for list tiles introduced in 1.0a7 (fixes `#393`_).
   [fredvd]
-
-- IPersistentCoverTile inherit from plone.directives.form.Schema,
-  every tile interface inherit from IPersistentCoverTile 
-  and tiles implements its own interface (fixes `#381`_).
-  [jpgimenez]
 
 
 1.0a7 (2014-02-04)
