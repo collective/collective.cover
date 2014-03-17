@@ -6,6 +6,9 @@ There's a frood who really knows where his towel is.
 1.0a8 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Fixed 5-> 6 upgrade when collective.js.bootrap was already installed.
+  [thomasdesvenain]
+
 - Make base tile inherit from plone.supermodel.model.Schema and fix other
   inconsistencies on tiles derivation (fixes `#381`_).
   [jpgimenez]

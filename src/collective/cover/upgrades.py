@@ -33,8 +33,13 @@ def issue_201(context):
     old_id = '++resource++collective.cover/bootstrap.min.js'
     new_id = '++resource++collective.js.bootstrap/js/bootstrap.min.js'
     if old_id in js_tool.getResourceIds():
-        js_tool.renameResource(old_id, new_id)
-        logger.info('"{0}" resource was renamed to "{1}"'.format(old_id, new_id))
+        if new_id in js_tool.getResourceIds():
+            js_tool.unregisterResource(old_id)
+            logger.info('"{0}" resource was removed"'.format(old_id))
+        else:
+            js_tool.renameResource(old_id, new_id)
+            logger.info('"{0}" resource was renamed to "{1}"'.format(old_id, new_id))
+
         js_tool.cookResources()
         logger.info('JS resources were cooked')
     else:
