@@ -20,7 +20,9 @@ from zope.component import getUtility
 from zope.container.interfaces import IObjectAddedEvent
 from zope.event import notify
 from zope.interface import implements
-
+from plone.indexer import indexer
+from Products.CMFPlone.utils import safe_unicode
+from Products.CMFCore.utils import getToolByName
 import json
 
 grok.templatedir('templates')
@@ -330,3 +332,54 @@ def assign_id_for_tiles(cover, event):
             assign_tile_ids(layout)
 
             cover.cover_layout = json.dumps(layout)
+
+# SearchAbleText helper
+def _get_richtext_value(transforms, tile, rich_text):
+    """Helper to try and get the normal value of a richtext"""
+    text = None
+    try:
+        text = transforms.convert('html_to_text', rich_text).getData()
+    except UnicodeError:
+        try:
+            text = transforms.convert('html_to_text', rich_text.encode('utf-8')).getData()
+        except UnicodeError:
+            pass
+    return text
+
+def _get_tiles(transforms, obj, section, tiles_text_list=[]):
+    """Little bit of recursive loving. Parytly copied from 
+       layout.py render_section function"""
+    if 'type' in section:  
+        if section['type'] in [u'row', u'group'] :
+            for sec in section['children']:
+                tiles_text_list = _get_tiles(transforms, obj, sec, tiles_text_list)
+        if section['type'] == u'tile':
+            tile_type = section.get('tile-type')
+            if tile_type == u'collective.cover.richtext':
+                tile_id = section.get(u'id')
+                tile = obj.restrictedTraverse('{0}/{1}'.format(str(tile_type), str(tile_id)))
+                if tile.data.get('text'):
+                    rich_text = tile.data.get('text').output
+                    text = _get_richtext_value(transforms, tile, rich_text)
+                    tiles_text_list.append(text)
+    elif type(section)==list:
+        for sec in section:
+            tiles_text_list = _get_tiles(transforms, obj, sec, tiles_text_list)
+
+                   
+    return tiles_text_list
+
+@indexer(ICover)
+def searchableText(obj):
+    """Indexer to add richtext tiles text to SearchableText"""
+    layout = json.loads(obj.cover_layout)
+    transforms = getToolByName(obj, 'portal_transforms')
+    tiles_text_list = _get_tiles(transforms, obj, layout)
+
+    searchable = obj.Title()
+    searchable = u'{0} {1}'.format(searchable, safe_unicode(obj.Description()))
+    for text in tiles_text_list:
+        searchable = u'{0} {1}'.format(searchable, safe_unicode(text))
+
+    return searchable
+grok.global_adapter(searchableText, name="SearchableText")
