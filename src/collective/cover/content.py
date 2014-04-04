@@ -333,6 +333,7 @@ def assign_id_for_tiles(cover, event):
 
             cover.cover_layout = json.dumps(layout)
 
+
 # SearchAbleText helper
 def _get_richtext_value(tile, rich_text):
     """Helper to try and get the normal value of a richtext"""
@@ -342,34 +343,37 @@ def _get_richtext_value(tile, rich_text):
         text = transforms.convert('html_to_text', rich_text).getData()
     except UnicodeError:
         try:
-            text = transforms.convert('html_to_text', rich_text.encode('utf-8')).getData()
+            rich_text = rich_text.encode('utf-8')
+            text = transforms.convert('html_to_text', rich_text).getData()
         except UnicodeError:
             pass
     return text
 
+
 def _get_tiles(obj, section, tiles_text_list=[]):
-    """Little bit of recursive loving. Parytly copied from 
+    """Little bit of recursive loving. Parytly copied from
        layout.py render_section function"""
-    
-    if 'type' in section:  
-        if section['type'] in [u'row', u'group'] :
-            for sec in section.get('children',[]):
+
+    if 'type' in section:
+        if section['type'] in [u'row', u'group']:
+            for sec in section.get('children', []):
                 tiles_text_list = _get_tiles(obj, sec, tiles_text_list)
         if section['type'] == u'tile':
             tile_type = section.get('tile-type')
             if tile_type == u'collective.cover.richtext':
                 tile_id = section.get(u'id')
-                tile = obj.restrictedTraverse('{0}/{1}'.format(str(tile_type), str(tile_id)))
+                path = '{0}/{1}'.format(str(tile_type), str(tile_id))
+                tile = obj.restrictedTraverse(path)
                 if tile.data.get('text'):
                     rich_text = tile.data.get('text').output
                     text = _get_richtext_value(tile, rich_text)
                     tiles_text_list.append(text)
-    elif type(section)==list:
+    elif type(section) == list:
         for sec in section:
             tiles_text_list = _get_tiles(obj, sec, tiles_text_list)
 
-                   
     return tiles_text_list
+
 
 @indexer(ICover)
 def searchableText(obj):
@@ -382,9 +386,10 @@ def searchableText(obj):
         tiles_text_list = _get_tiles(obj, layout)
 
         searchable = obj.Title()
-        searchable = u'{0} {1}'.format(searchable, safe_unicode(obj.Description()))
+        description = safe_unicode(obj.Description())
+        searchable = u'{0} {1}'.format(searchable, description)
         for text in tiles_text_list:
             searchable = u'{0} {1}'.format(searchable, safe_unicode(text))
 
     return searchable
-grok.global_adapter(searchableText, name="SearchableText")
+grok.global_adapter(searchableText, name='SearchableText')
