@@ -146,7 +146,7 @@ class RemoveTileWidget(grok.View):
 
         if tile_id in current_tiles:
             widget_type = current_tiles[tile_id]['type']
-            #Let's remove all traces of the value stored in the tile
+            # Let's remove all traces of the value stored in the tile
             widget_uri = '@@{0}/{1}'.format(widget_type, tile_id)
             tile = self.context.restrictedTraverse(widget_uri)
 

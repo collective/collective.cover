@@ -70,7 +70,7 @@ class BaseTileTestCase(unittest.TestCase):
         self.assertTrue(verifyObject(IPersistentCoverTile, tile))
         # cover tiles inherit from plone.tile PersistentTile
         self.assertTrue(IPersistentTile.providedBy(tile))
-        #self.assertTrue(verifyObject(IPersistentTile, tile))
+        # self.assertTrue(verifyObject(IPersistentTile, tile))
 
     def test_default_configuration(self):
         self.assertFalse(self.tile.is_configurable)

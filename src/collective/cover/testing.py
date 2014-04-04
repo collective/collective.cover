@@ -107,10 +107,10 @@ class Fixture(PloneSandboxLayer):
         import collective.cover
         self.loadZCML(package=collective.cover)
         # XXX: https://github.com/collective/collective.cover/issues/81
-        #import plone.app.imagetile
-        #self.loadZCML(package=plone.app.imagetile)
-        #import plone.app.texttile
-        #self.loadZCML(package=plone.app.imagetile)
+        # import plone.app.imagetile
+        # self.loadZCML(package=plone.app.imagetile)
+        # import plone.app.texttile
+        # self.loadZCML(package=plone.app.imagetile)
         if 'virtual_hosting' not in app.objectIds():
             # If ZopeLite was imported, we have no default virtual
             # host monster
