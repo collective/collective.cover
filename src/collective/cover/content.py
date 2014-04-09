@@ -11,18 +11,19 @@ from plone.dexterity.content import Item
 from plone.dexterity.events import EditBegunEvent
 from plone.dexterity.utils import createContentInContainer
 from plone.directives import form
+from plone.indexer import indexer
 from plone.registry.interfaces import IRegistry
 from plone.tiles.interfaces import ITileDataManager
 from plone.uuid.interfaces import IUUIDGenerator
+from Products.CMFCore.utils import getToolByName
+from Products.CMFPlone.utils import safe_unicode
 from Products.GenericSetup.interfaces import IDAVAware
 from zope.annotation.interfaces import IAnnotations
 from zope.component import getUtility
 from zope.container.interfaces import IObjectAddedEvent
 from zope.event import notify
 from zope.interface import implements
-from plone.indexer import indexer
-from Products.CMFPlone.utils import safe_unicode
-from Products.CMFCore.utils import getToolByName
+
 import json
 
 grok.templatedir('templates')
@@ -392,4 +393,5 @@ def searchableText(obj):
             searchable = u'{0} {1}'.format(searchable, safe_unicode(text))
 
     return searchable
+
 grok.global_adapter(searchableText, name='SearchableText')
