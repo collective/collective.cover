@@ -118,7 +118,7 @@ class DefaultConfigureForm(TileForm, form.Form):
         return configuration
 
     def extractData(self):
-        #XXX: Find a better way to implement this
+        # XXX: Find a better way to implement this
         data = {}
         errors = {}
         default_order = 0

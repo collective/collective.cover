@@ -94,7 +94,7 @@ class ContentSearch(grok.View):
         settings = registry.forInterface(ICoverSettings)
         searchable_types = settings.searchable_content_types
 
-        #temporary we'll only list published elements
+        # temporary we'll only list published elements
         catalog_query = {'sort_on': 'effective', 'sort_order': 'descending'}
         catalog_query['portal_type'] = searchable_types
 
@@ -102,8 +102,8 @@ class ContentSearch(grok.View):
             catalog_query = {'SearchableText': u'{0}*'.format(safe_unicode(query))}
 
         # XXX: not implemented, this is needed?
-#        if uids:
-#            catalog_query['UID'] = uids
+        # if uids:
+        #     catalog_query['UID'] = uids
 
         results = catalog(**catalog_query)
         results = Batch(results, size=b_size, start=(page * b_size), orphan=0)

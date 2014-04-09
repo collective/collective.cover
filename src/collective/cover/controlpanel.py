@@ -66,9 +66,9 @@ class CoverSettingsEditForm(controlpanel.RegistryEditForm):
     label = _(u'Cover Settings')
     description = _(u'Settings for the collective.cover package')
 
-    #def updateFields(self):
-        #super(CoverSettingsEditForm, self).updateFields()
-        #self.fields['layouts'].widgetFactory = TextLinesFieldWidget
+    # def updateFields(self):
+    #     super(CoverSettingsEditForm, self).updateFields()
+    #     self.fields['layouts'].widgetFactory = TextLinesFieldWidget
 
     def updateWidgets(self):
         super(CoverSettingsEditForm, self).updateWidgets()
