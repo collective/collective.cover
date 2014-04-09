@@ -19,7 +19,7 @@ install:
 before_script:
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
-script: bin/test && bin/code-analysis
+script: bin/code-analysis && bin/test
 after_success:
   - test $QA && bin/buildout -c coverage.cfg -N -q || true
   - test $QA && bin/coverage.sh && pip install -q coveralls && coveralls || true
