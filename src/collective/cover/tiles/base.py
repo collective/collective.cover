@@ -496,7 +496,7 @@ class ImageScaling(BaseImageScaling):
             fieldname = IPrimaryFieldInfo(self.context).fieldname
         if scale is not None:
             available = self.getAvailableSizes(fieldname)
-            if not scale in available:
+            if scale not in available:
                 return None
             width, height = available[scale]
         storage = AnnotationStorage(self.context, self.modified)
@@ -527,7 +527,7 @@ class PersistentCoverTilePurgePaths(object):
         portal_url = api.portal.get().portal_url()
         prefix = context.url.replace(portal_url, '', 1)
         yield prefix
-        for _, v in context.data.items():
+        for k, v in context.data.items():
             if INamedImage.providedBy(v):
                 yield '{0}/@@images/image'.format(prefix)
                 scales = parent.unrestrictedTraverse(

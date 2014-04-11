@@ -13,7 +13,7 @@ import unittest
 def _has_classes(element, classes):
     element_classes = [c.strip() for c in element.attrib['class'].split(' ')]
     for expected in classes:
-        if not expected in element_classes:
+        if expected not in element_classes:
             raise Exception('expected (%s) in element classes (%s)' % (
                 ' '.join(classes), ' '.join(element_classes)))
     return True
