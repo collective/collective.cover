@@ -75,4 +75,16 @@
 
   </genericsetup:upgradeSteps>
 
+  <genericsetup:upgradeSteps
+      source="7"
+      destination="8"
+      profile="collective.cover:default">
+
+    <genericsetup:upgradeStep
+        title="issue_371"
+        description="Fix carousel tile so it doesn't break cover when dropping content with no image field."
+        handler=".upgrades.cook_css_resources"
+        />
+  </genericsetup:upgradeSteps>
+
 </configure>
