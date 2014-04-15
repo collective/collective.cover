@@ -6,6 +6,10 @@ There's a frood who really knows where his towel is.
 1.0a8 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Use jQuery's ``.on`` instead of deprecated ``.live`` method. This allows
+  compatibility with jQuery 1.9+.
+  [naro]
+
 - Fix carousel tile so it does not break cover when dropping content with no
   image field (tile template was refactored and CSS class ``galleria-inner``
   was removed). As a side effect the carousel tile is now fully responsive and
@@ -26,10 +30,6 @@ There's a frood who really knows where his towel is.
 
 - Fix for generic title for list tiles introduced in 1.0a7 (fixes `#393`_).
   [fredvd]
-
-- Use jQuery's .on instead of deprecated .live method. This allows
-  compatibility with jQuery 1.9+
-  [naro]
 
 
 1.0a7 (2014-02-04)
@@ -87,7 +87,7 @@ There's a frood who really knows where his towel is.
   matches the css of the theme that you are using on your site.
   [warpr, maurits]
 
-- The reodering of list items is now immediately reflected in the DOM
+- The reordering of list items is now immediately reflected in the DOM
   (closes `#351`_).
   [href]
 
