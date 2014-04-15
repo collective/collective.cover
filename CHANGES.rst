@@ -6,6 +6,9 @@ There's a frood who really knows where his towel is.
 1.0a12 (unreleased)
 ^^^^^^^^^^^^^^^^^^^
 
+- Make package compatible with jQuery 1.9.
+  [naro]
+
 - Fix issue where page composition layer had side-effects outside cover pages by upgrading plone.app.blocks to 2.0 (fixes `#331`_);
   drop support for Plone 4.2.
   [datakurre]
