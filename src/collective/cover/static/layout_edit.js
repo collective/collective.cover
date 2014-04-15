@@ -24,7 +24,7 @@
                 message;
             this.message = window.form_modified_message ||
                 "Discard changes? If you click OK, any changes you have made will be lost.";
-    
+
             this.execute = function(event) {
                 var save_btn = $('#btn-save');
                 if (save_btn.hasClass('modified')) {
@@ -426,7 +426,7 @@
             tile_config_manager: function(){
                 //CONFIGURATION OF THE TILE
                 //when saving the configuration of the tile save it with ajax
-                $("#configure_tile #buttons-save").live("click", function(e) {
+                $(document).on("click", "#configure_tile #buttons-save", function(e) {
                     e.preventDefault();
                     var url = $("#configure_tile").attr("action");
                     var data = $("#configure_tile").serialize();
@@ -443,14 +443,14 @@
                     return false;
                 });
                 //when canceling the configuration of the tile
-                $("#configure_tile #buttons-cancel").live("click", function(e) {
+                $(document).on("click", "#configure_tile #buttons-cancel", function(e) {
                     e.preventDefault();
                     $('#tile-configure').html('');
                     $('#tile-configure').modal('hide');
                     return false;
                 });
                 //config the tile
-                $(".config-tile-link").live("click", function(e) {
+                $(document).on("click", ".config-tile-link", function(e) {
                       e.preventDefault();
                       var url = $(this).attr("href");
                       $('#tile-configure').modal();
