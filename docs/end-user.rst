@@ -49,6 +49,8 @@ You can also specify if the carousel will start playing the slideshow
 automatically or not. Every item in the slideshow will have a link pointing
 back to the original object.
 
+Carousel tile is fully responsive, so be sure to configure it to use the image size that fits better the maximum desired size.
+
 Collection
 ++++++++++
 

@@ -173,3 +173,19 @@ class Upgrade6to7TestCase(UpgradeTestCaseBase):
         action = cover_type.getActionObject('object/layoutedit')
         self.assertEqual(action.permissions,
                          (u'collective.cover: Can Edit Layout', ))
+
+
+class Upgrade7to8TestCase(UpgradeTestCaseBase):
+
+    def setUp(self):
+        UpgradeTestCaseBase.setUp(self, u'7', u'8')
+
+    def test_upgrade_to_8_registrations(self):
+        version = self.setup.getLastVersionForProfile(self.profile_id)[0]
+        self.assertTrue(version >= self.to_version)
+        self.assertEqual(self._how_many_upgrades_to_do(), 1)
+
+    def test_issue_371(self):
+        title = u'issue_371'
+        step = self._get_upgrade_step(title)
+        self.assertIsNotNone(step)
