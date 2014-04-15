@@ -6,6 +6,10 @@ There's a frood who really knows where his towel is.
 1.0a8 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Handle missing tiles so they do not bork rendering and users are able
+  to remove defunk ones.
+  [vangheem]
+
 - Fixed 5-> 6 upgrade when collective.js.bootrap was already installed.
   [thomasdesvenain]
 
