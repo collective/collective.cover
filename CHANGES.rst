@@ -6,6 +6,17 @@ There's a frood who really knows where his towel is.
 1.0a8 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Use jQuery's ``.on`` instead of deprecated ``.live`` method. This allows
+  compatibility with jQuery 1.9+.
+  [naro]
+
+- Fix carousel tile so it does not break cover when dropping content with no
+  image field (tile template was refactored and CSS class ``galleria-inner``
+  was removed). As a side effect the carousel tile is now fully responsive and
+  you can select the image size that better fits the maximum desired size. An
+  upgrade step to cook the CSS resources is provided (fixes `#371`_).
+  [hvelarde]
+
 - Handle missing tiles so they do not bork rendering and users are able
   to remove defunk ones.
   [vangheem]
@@ -19,10 +30,6 @@ There's a frood who really knows where his towel is.
 
 - Fix for generic title for list tiles introduced in 1.0a7 (fixes `#393`_).
   [fredvd]
-
-- Use jQuery's .on instead of deprecated .live method. This allows
-  compatibility with jQuery 1.9+
-  [naro]
 
 
 1.0a7 (2014-02-04)
@@ -39,7 +46,7 @@ There's a frood who really knows where his towel is.
   [warpr]
 
 - Fix dropping Dexterity images on banner tile.
-  [maurits & warpr]
+  [maurits, warpr]
 
 - Latest items are now properly loaded on content chooser when selecting the
   ``more`` link (fixes `#383`_).
@@ -80,7 +87,7 @@ There's a frood who really knows where his towel is.
   matches the css of the theme that you are using on your site.
   [warpr, maurits]
 
-- The reodering of list items is now immediately reflected in the DOM
+- The reordering of list items is now immediately reflected in the DOM
   (closes `#351`_).
   [href]
 
@@ -445,6 +452,7 @@ There's a frood who really knows where his towel is.
 .. _`#342`: https://github.com/collective/collective.cover/issues/342
 .. _`#348`: https://github.com/collective/collective.cover/issues/348
 .. _`#351`: https://github.com/collective/collective.cover/issues/351
+.. _`#371`: https://github.com/collective/collective.cover/issues/371
 .. _`#374`: https://github.com/collective/collective.cover/issues/374
 .. _`#381`: https://github.com/collective/collective.cover/issues/381
 .. _`#383`: https://github.com/collective/collective.cover/issues/383

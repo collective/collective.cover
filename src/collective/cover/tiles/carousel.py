@@ -11,9 +11,22 @@ from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zope import schema
 from zope.interface import implements
 
+# autoplay feature is enabled in view mode only
+INIT_JS = """$(function() {{
+    Galleria.loadTheme('++resource++collective.cover/galleria-theme/galleria.cover_theme.js');
+    Galleria.run('#galleria-{0}');
+
+    var options = {{ height: 1 }};
+    if ($('body').hasClass('template-view')) {{
+        options.autoplay = {1};
+    }}
+    Galleria.configure(options);
+}});
+"""
+
 
 class ICarouselTile(IListTile):
-    """
+    """A carousel based on the Galleria JavaScript image gallery framework.
     """
 
     autoplay = schema.Bool(
@@ -78,13 +91,4 @@ class CarouselTile(ListTile):
             # the <div> is there and has some items in it.
             return ''
 
-        return """
-$(function() {{
-    Galleria.loadTheme("++resource++collective.cover/galleria-theme/galleria.cover_theme.js");
-    Galleria.run('#galleria-{0} .galleria-inner');
-
-    if($('body').hasClass('template-view')) {{
-        Galleria.configure({{ autoplay: {1} }});
-    }};
-}});
-""".format(self.id, str(self.autoplay()).lower())
+        return INIT_JS.format(self.id, str(self.autoplay()).lower())
