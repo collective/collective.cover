@@ -36,6 +36,8 @@ There's a frood who really knows where his towel is.
 - Fix for generic title for list tiles introduced in 1.0a7 (fixes `#393`_).
   [fredvd]
 
+- Fix for collection tile not showing header correctly (fixes `#407`_).
+
 
 1.0a7 (2014-02-04)
 ^^^^^^^^^^^^^^^^^^
