@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from collective.cover import _
+from collective.cover.interfaces import ITileEditForm
 from collective.cover.tiles.list import IListTile
 from collective.cover.tiles.list import ListTile
 from collective.cover.widgets.textlinessortable import TextLinesSortableFieldWidget
@@ -35,6 +36,7 @@ class ICarouselTile(IListTile):
         default=True,
     )
 
+    form.no_omit(ITileEditForm, 'uuids')
     form.widget(uuids=TextLinesSortableFieldWidget)
     uuids = schema.List(
         title=_(u'Elements'),

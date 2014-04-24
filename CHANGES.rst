@@ -6,6 +6,14 @@ There's a frood who really knows where his towel is.
 1.0a8 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Add richtext tiles to the searchabletext index of the cover.
+  [thepjot]
+  
+- Re-enable item sorting on the carousel tile edit form. It was by accident
+  disabled by removing the field on the list tile schema from which the
+  carousel tile inherits.
+  [fredvd]
+
 - Use jQuery's ``.on`` instead of deprecated ``.live`` method. This allows
   compatibility with jQuery 1.9+.
   [naro]
