@@ -6,14 +6,14 @@ env:
     - ARTIFACTS_S3_BUCKET=collective-cover
     - secure: "Ll2tTrfw0vpGlk+tfdcOD8HOylIWlyFDtNL+ShfQtAZ9wHZEOFJJyVsaSpDbdgWD1Y+muSz8I9xcvNY7ag17jm8udSEWecGaMIodeHB5hIklEi/OovKoAUgPqaVtbNE/FtyURZf7KE+Nb7zCege6XjCD635U4W2P1/072aEY3CU="
     - secure: "bPiRnG3qFbWjD1zgVcTJAcOy8uuUwLKDIaVe15L6M5xLz49SfHFe6Zwc8jQ0g4J9xIDRqX4gcLnJffr0xJmBytXZGohFCjQRPUFruoy/stWWOrdgYT+9Jm9/TbVwoh+Cudo5iTNdIsaVnzcA6IyuTae/i9CJ9QQ7MBKyrjRV+T4="
+  matrix:
+    - PLONE_VERSION=4.2
+    - PLONE_VERSION=4.3 QA=true
+    - PLONE_VERSION=5.0
 matrix:
-  include:
-    - env: PLONE_VERSION=4.2
-    - env: PLONE_VERSION=4.3 QA=true
-    - env: PLONE_VERSION=5.0
   allow_failures:
-    - python: 2.7
-      env: PLONE_VERSION=5.0
+    - env: PLONE_VERSION=5.0
+  fast_finish: true
 install:
   - sed -ie "s#travis-4.x.cfg#travis-$PLONE_VERSION.x.cfg#" travis.cfg
   - test "$PLONE_VERSION" = "4.2" && sed -ie "s#plone.app.z3cform = 0.7.5#plone.app.z3cform = 0.6.3#" versions.cfg || true
