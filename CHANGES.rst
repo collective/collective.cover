@@ -6,7 +6,9 @@ There's a frood who really knows where his towel is.
 1.0a8 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
-- Add richtext tiles to the searchabletext index of the cover.
+- Fix for collection tile not showing header correctly (fixes `#407`_).
+
+- Add RichText tiles to the SearchableText index of the cover.
   [thepjot]
   
 - Re-enable item sorting on the carousel tile edit form. It was by accident
@@ -38,8 +40,6 @@ There's a frood who really knows where his towel is.
 
 - Fix for generic title for list tiles introduced in 1.0a7 (fixes `#393`_).
   [fredvd]
-
-- Fix for collection tile not showing header correctly (fixes `#407`_).
 
 
 1.0a7 (2014-02-04)
@@ -467,4 +467,5 @@ There's a frood who really knows where his towel is.
 .. _`#381`: https://github.com/collective/collective.cover/issues/381
 .. _`#383`: https://github.com/collective/collective.cover/issues/383
 .. _`#393`: https://github.com/collective/collective.cover/issues/393
+.. _`#407`: https://github.com/collective/collective.cover/issues/407
 .. _`PloneFormGen`: https://pypi.python.org/pypi/Products.PloneFormGen
