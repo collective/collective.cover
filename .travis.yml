@@ -9,9 +9,14 @@ env:
   matrix:
     - PLONE_VERSION=4.2
     - PLONE_VERSION=4.3 QA=true
+    - PLONE_VERSION=5.0
+matrix:
+  allow_failures:
+    - env: PLONE_VERSION=5.0
+  fast_finish: true
 install:
   - sed -ie "s#travis-4.x.cfg#travis-$PLONE_VERSION.x.cfg#" travis.cfg
-  - test "$PLONE_VERSION" = "4.2" && sed -ie "s#plone.app.z3cform = 0.7.5#plone.app.z3cform = 0.6.3#" versions.cfg || true
+  - sed -ie "s#versions.cfg#versions-$PLONE_VERSION.x.cfg#" travis.cfg
   - mkdir -p buildout-cache/downloads
   - python bootstrap.py -c travis.cfg
   - bin/buildout -c travis.cfg annotate
