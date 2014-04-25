@@ -3,7 +3,7 @@ Changelog
 
 There's a frood who really knows where his towel is.
 
-1.0a8 (unreleased)
+1.0a8 (2014-04-25)
 ^^^^^^^^^^^^^^^^^^
 
 - Fix for collection tile not showing header correctly (fixes `#407`_). [kcleong]
