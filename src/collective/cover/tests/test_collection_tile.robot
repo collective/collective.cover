@@ -64,17 +64,18 @@ Test Collection Tile
     Click Button  Cancel
     Wait Until Page Contains  ${title_sample}
 
-    # change criteria for so the collection shows images
+    # change criteria for collection so it shows images
     Click Link  link=My collection
     Click Link  link=Edit
     Select From List  xpath=//select[@name="addindex"]  portal_type
     Select Checkbox  xpath=//input[@value="Image"]
+    Select From List  xpath=//select[@name="sort_on"]  getId
     Click Button  Save
 
     # collection tile has results
     Click Link  link=My Cover
     Page Should Not Contain  The collection doesn't have any results
-    Page Should Contain  Test image #1
+    Page Should Contain  Test image
 
     # change header and title HTML tag
     Edit Cover Layout
@@ -86,7 +87,7 @@ Test Collection Tile
     # title and item header should be same as the one configured above
     Compose Cover
     Element Text Should Be  css=.tile-header h3  Some text for title
-    Element Text Should Be  css=.collection-item h4:first-child  Test image #2
+    Element Text Should Be  css=.collection-item h4:first-child  Test image
 
     # delete the tile
     Edit Cover Layout
