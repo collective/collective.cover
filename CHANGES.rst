@@ -6,7 +6,7 @@ There's a frood who really knows where his towel is.
 1.0a8 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
-- Fix for collection tile not showing header correctly (fixes `#407`_).
+- Fix for collection tile not showing header correctly (fixes `#407`_). [kcleong]
 
 - Add RichText tiles to the SearchableText index of the cover.
   [thepjot]
