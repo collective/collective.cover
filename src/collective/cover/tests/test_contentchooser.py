@@ -20,7 +20,7 @@ class ContentChooserTestCase(unittest.TestCase):
     # XXX: can we get rid of this?
     def test_render(self):
         rendered = self.portal.restrictedTraverse('@@test-content-contentchooser')()
-        html = """<a data-ct-type="Document" class="contenttype-document state-missing-value" rel="1">"""
+        html = """<a data-ct-type="Document" class="contenttype-document state-missing-value" rel="1" title="document:/plone/my-document">"""
         self.assertRegexpMatches(rendered, re.compile(html))
 
     def test_jsonbytype(self):
@@ -40,9 +40,9 @@ class ContentChooserTestCase(unittest.TestCase):
     def test_searches(self):
         self.request.set('q', 'Image')
         view = api.content.get_view(u'content-search', self.portal, self.request)
-        html = """<a data-ct-type="Document" class="contenttype-document state-missing-value" rel="1">"""
+        html = """<a data-ct-type="Document" class="contenttype-document state-missing-value" rel="1" title="document:/plone/my-document">"""
         self.assertFalse(re.compile(html).search(view()))
-        html = """<a data-ct-type="Image" class="contenttype-image state-missing-value" rel="1">"""
+        html = """<a data-ct-type="Image" class="contenttype-image state-missing-value" rel="1" title="image:/plone/my-image2">"""
         self.assertTrue(re.compile(html).search(view()))
 
     @unittest.skipIf(
