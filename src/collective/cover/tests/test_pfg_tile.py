@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 from collective.cover.testing import INTEGRATION_TESTING
 from collective.cover.tiles.base import IPersistentCoverTile
 from collective.cover.tiles.configuration import ITilesConfigurationScreen
@@ -126,3 +125,13 @@ class PFGTileTestCase(unittest.TestCase):
                          annotations)
         self.assertNotIn('plone.tiles.configuration.test-pfg-tile',
                          annotations)
+
+
+def test_suite():
+    # XXX: load tests only in Plone < 5
+    from collective.cover.testing import HAS_PFG
+    from collective.cover.testing import PLONE_VERSION
+    if HAS_PFG and PLONE_VERSION < '5.0':
+        return unittest.defaultTestLoader.loadTestsFromName(__name__)
+    else:
+        return unittest.TestSuite()
