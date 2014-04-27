@@ -6,7 +6,9 @@ There's a frood who really knows where his towel is.
 1.0a9 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
-- Nothing changed yet.
+- Disable SearchableText indexer for RichText tiles as it was causing
+  ``UnicodeDecodeError`` (refs. `#411`_).
+  [hvelarde]
 
 
 1.0a8 (2014-04-25)
@@ -474,4 +476,5 @@ There's a frood who really knows where his towel is.
 .. _`#383`: https://github.com/collective/collective.cover/issues/383
 .. _`#393`: https://github.com/collective/collective.cover/issues/393
 .. _`#407`: https://github.com/collective/collective.cover/issues/407
+.. _`#411`: https://github.com/collective/collective.cover/issues/411
 .. _`PloneFormGen`: https://pypi.python.org/pypi/Products.PloneFormGen

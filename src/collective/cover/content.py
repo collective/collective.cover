@@ -11,12 +11,11 @@ from plone.dexterity.content import Item
 from plone.dexterity.events import EditBegunEvent
 from plone.dexterity.utils import createContentInContainer
 from plone.directives import form
-from plone.indexer import indexer
+# from plone.indexer import indexer
 from plone.registry.interfaces import IRegistry
 from plone.tiles.interfaces import ITileDataManager
 from plone.uuid.interfaces import IUUIDGenerator
-from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone.utils import safe_unicode
+# from Products.CMFPlone.utils import safe_unicode
 from Products.GenericSetup.interfaces import IDAVAware
 from zope.annotation.interfaces import IAnnotations
 from zope.component import getUtility
@@ -339,7 +338,7 @@ def assign_id_for_tiles(cover, event):
 def _get_richtext_value(tile, rich_text):
     """Helper to try and get the normal value of a richtext"""
     text = None
-    transforms = getToolByName(tile, 'portal_transforms')
+    transforms = api.portal.get_tool('portal_transforms')
     try:
         text = transforms.convert('html_to_text', rich_text).getData()
     except UnicodeError:
@@ -376,22 +375,22 @@ def _get_tiles(obj, section, tiles_text_list=[]):
     return tiles_text_list
 
 
-@indexer(ICover)
-def searchableText(obj):
-    """Indexer to add richtext tiles text to SearchableText"""
-    cover_layout = obj.cover_layout
-    searchable = obj.Title()
-    searchable = u'{0} {1}'.format(searchable, safe_unicode(obj.Description()))
-    if cover_layout:
-        layout = json.loads(cover_layout)
-        tiles_text_list = _get_tiles(obj, layout)
+# @indexer(ICover)
+# def searchableText(obj):
+#     """Indexer to add richtext tiles text to SearchableText"""
+#     cover_layout = obj.cover_layout
+#     searchable = obj.Title()
+#     searchable = u'{0} {1}'.format(searchable, safe_unicode(obj.Description()))
+#     if cover_layout:
+#         layout = json.loads(cover_layout)
+#         tiles_text_list = _get_tiles(obj, layout)
 
-        searchable = obj.Title()
-        description = safe_unicode(obj.Description())
-        searchable = u'{0} {1}'.format(searchable, description)
-        for text in tiles_text_list:
-            searchable = u'{0} {1}'.format(searchable, safe_unicode(text))
+#         searchable = obj.Title()
+#         description = safe_unicode(obj.Description())
+#         searchable = u'{0} {1}'.format(searchable, description)
+#         for text in tiles_text_list:
+#             searchable = u'{0} {1}'.format(searchable, safe_unicode(text))
 
-    return searchable
+#     return searchable
 
-grok.global_adapter(searchableText, name='SearchableText')
+# grok.global_adapter(searchableText, name='SearchableText')

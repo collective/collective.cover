@@ -19,10 +19,11 @@ ${edit_link_selector}  a.edit-tile-link
 *** Test cases ***
 
 Test RichText Tile SearchAble
+    [Tags]  Expected Failure
     Enable Autologin as  Site Administrator
     Go to Homepage
 
-    Create Cover  Title  Description  Empty layout
+    Create Cover  Törkylempijävongahdus  Description  Empty layout
     Edit Cover Layout
 
     Add Tile  ${tile_location}
