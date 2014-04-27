@@ -71,10 +71,6 @@ Mostly Harmless
     :target: https://pypi.python.org/pypi/collective.cover/
     :alt: Downloads
 
-.. image:: https://d2weczhvl823v0.cloudfront.net/collective/collective.cover/trend.png
-    :alt: Bitdeli badge
-    :target: https://bitdeli.com/free
-
 Got an idea? Found a bug? Let us know by `opening a support ticket`_.
 
 .. _`opening a support ticket`: https://github.com/collective/collective.cover/issues
