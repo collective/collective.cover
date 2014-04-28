@@ -3,8 +3,8 @@ Changelog
 
 There's a frood who really knows where his towel is.
 
-1.0a9 (unreleased)
-^^^^^^^^^^^^^^^^^^
+1.0a8.post1 (2014-04-27)
+^^^^^^^^^^^^^^^^^^^^^^^^
 
 - Disable SearchableText indexer for RichText tiles as it was causing
   ``UnicodeDecodeError`` (refs. `#411`_).
