@@ -6,7 +6,9 @@ There's a frood who really knows where his towel is.
 1.0a9 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
-- Nothing changed yet.
+- List tile is again fully sortable; a change on the JS code used there was
+  reverted (fixes `#413`_).
+  [hvelarde]
 
 
 1.0a8.post1 (2014-04-27)
@@ -483,4 +485,5 @@ There's a frood who really knows where his towel is.
 .. _`#393`: https://github.com/collective/collective.cover/issues/393
 .. _`#407`: https://github.com/collective/collective.cover/issues/407
 .. _`#411`: https://github.com/collective/collective.cover/issues/411
+.. _`#413`: https://github.com/collective/collective.cover/issues/413
 .. _`PloneFormGen`: https://pypi.python.org/pypi/Products.PloneFormGen
