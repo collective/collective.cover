@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
-
 from AccessControl import Unauthorized
-from collective.cover.content import ICover
 from collective.cover.controlpanel import ICoverSettings
+from collective.cover.interfaces import ICover
 from collective.cover.testing import INTEGRATION_TESTING
 from collective.cover.testing import MULTIPLE_GRIDS_INTEGRATION_TESTING
 from plone import api
