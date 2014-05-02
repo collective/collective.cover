@@ -9,6 +9,8 @@ env:
   matrix:
     - PLONE_VERSION=4.2
     - PLONE_VERSION=4.3 QA=true
+    - PLONE_VERSION=4.3 JQUERY=1.8.3
+    - PLONE_VERSION=4.3 JQUERY=1.9.1
     - PLONE_VERSION=5.0
 matrix:
   allow_failures:
@@ -17,6 +19,7 @@ matrix:
 install:
   - sed -ie "s#travis-4.x.cfg#travis-$PLONE_VERSION.x.cfg#" travis.cfg
   - sed -ie "s#versions.cfg#versions-$PLONE_VERSION.x.cfg#" travis.cfg
+  - test $JQUERY && sed -ie "s#plone.app.jquery = 1.7.2#plone.app.jquery = $JQUERY#" versions-4.3.x.cfg || true
   - mkdir -p buildout-cache/downloads
   - python bootstrap.py -c travis.cfg
   - bin/buildout -c travis.cfg annotate
