@@ -21,7 +21,7 @@ ${edit_link_selector}  a.edit-tile-link
 Test Collection Tile
     Enable Autologin as  Site Administrator
     Go to Homepage
-    Create Cover  My Cover  Description  Empty layout
+    Create Cover  My Cover  Description
 
     # add a collection tile to the layout
     Edit Cover Layout

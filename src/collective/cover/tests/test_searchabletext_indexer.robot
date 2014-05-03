@@ -23,7 +23,7 @@ Test RichText Tile SearchAble
     Enable Autologin as  Site Administrator
     Go to Homepage
 
-    Create Cover  Törkylempijävongahdus  Description  Empty layout
+    Create Cover  Törkylempijävongahdus  Description
     Edit Cover Layout
 
     Add Tile  ${tile_location}

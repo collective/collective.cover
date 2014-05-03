@@ -20,11 +20,7 @@ class TestTileMixin:
 
         with api.env.adopt_roles(['Manager']):
             self.cover = api.content.create(
-                self.portal,
-                'collective.cover.content',
-                'c1',
-                template_layout='Empty layout'
-            )
+                self.portal, 'collective.cover.content', 'c1')
 
     def test_interface(self):
         self.assertTrue(self.interface.implementedBy(self.klass))

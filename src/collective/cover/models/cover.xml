@@ -13,6 +13,7 @@
               >Choose one of the predefined layouts</description>
             <title i18n:translate="">Layout</title>
             <vocabulary>collective.cover.AvailableLayouts</vocabulary>
+            <default>Empty layout</default>
         </field>
 
         <field name="cover_layout" type="zope.schema.Text"

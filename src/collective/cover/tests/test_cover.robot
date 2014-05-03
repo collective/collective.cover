@@ -12,7 +12,7 @@ Test CRUD
     Enable Autologin as  Site Administrator
     Go to Homepage
 
-    Create Cover  Title  Description  Empty layout
+    Create Cover  Title  Description
     Update  Title fixed  Description fixed
     Delete
 
@@ -20,7 +20,7 @@ Test renderBase
     Enable Autologin as  Site Administrator
     Goto Homepage
 
-    Create Cover  Title  Description  Empty layout
+    Create Cover  Title  Description
     ${BASE}  Get Element Attribute  tag=base@href
     Should Be Equal  ${BASE}  ${PLONE_URL}/title-1/
     Compose Cover

@@ -28,7 +28,6 @@ class BrowserViewsTestCase(unittest.TestCase):
             'c1',
             title='Front page',
             description='Should I see this?',
-            template_layout='Empty layout',
         )
 
     def test_default_view_registration(self):
@@ -70,11 +69,7 @@ class RemoveItemFromListTileTestCase(unittest.TestCase):
 
         with api.env.adopt_roles(['Manager']):
             self.cover = api.content.create(
-                self.portal,
-                'collective.cover.content',
-                'c1',
-                template_layout='Empty layout',
-            )
+                self.portal, 'collective.cover.content', 'c1')
 
     # XXX: refactor, this sucks!
     def test_remove_item_from_list_tile(self):

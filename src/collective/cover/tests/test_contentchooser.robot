@@ -20,7 +20,7 @@ ${tile_selector}  div.tile-container div.tile
 Test Content Chooser
     Enable Autologin as  Site Administrator
     Go to Homepage
-    Create Cover  Title  Description  Empty layout
+    Create Cover  Title  Description
 
     # add a Basic tile to the layout
     Edit Cover Layout

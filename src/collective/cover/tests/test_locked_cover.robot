@@ -24,7 +24,7 @@ Test Locked Cover
     Create new user
     Goto Homepage
 
-    Create Cover  My Cover  Description  Empty layout
+    Create Cover  My Cover  Description
     Edit Cover Layout
 
     Add Tile  ${basic_tile_location}

@@ -44,11 +44,7 @@ class PageLayoutTestCase(unittest.TestCase):
 
         with api.env.adopt_roles(['Manager']):
             self.cover = api.content.create(
-                self.portal,
-                'collective.cover.content',
-                'cover',
-                template_layout='Empty layout',
-            )
+                self.portal, 'collective.cover.content', 'c1')
         self.view = self.cover.unrestrictedTraverse('@@layout')
 
     def test_is_droppable(self):
