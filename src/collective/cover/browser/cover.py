@@ -264,15 +264,11 @@ class RemoveItemFromListTile(grok.View):
         tile_id = self.request.form.get('tile-id')
         uid = self.request.form.get('uid')
         html = ''
-        if tile_type and tile_id and uid:
-            tile = self.context.restrictedTraverse(tile_type)
+        if tile_type == u'collective.cover.list' and tile_id and uid:
+            tile = self.context.restrictedTraverse(str(tile_type))
             tile_instance = tile[tile_id]
-            try:
-                tile_instance.remove_item(uid)
-                html = tile_instance()
-            except:
-                # XXX: Pass silently ?
-                pass
+            tile_instance.remove_item(uid)
+            html = tile_instance()
 
         # XXX: Calling the tile will return the HTML with the headers, need to
         #      find out if this affects us in any way.
