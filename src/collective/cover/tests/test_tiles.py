@@ -47,6 +47,7 @@ class PageLayoutTestCase(unittest.TestCase):
                 self.portal, 'collective.cover.content', 'c1')
         self.view = self.cover.unrestrictedTraverse('@@layout')
 
+    # XXX: these methods belong to the API
     def test_is_droppable(self):
         self.assertTrue(self.view.tile_is_droppable('collective.cover.basic'))
 
