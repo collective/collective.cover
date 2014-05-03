@@ -6,6 +6,9 @@ There's a frood who really knows where his towel is.
 1.0a9 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- SearchableText indexer for RichText tiles was fixed (closes `#411`_).
+  [hvelarde]
+
 - List tile is again fully sortable; a change on the JS code used there was
   reverted (fixes `#413`_).
   [hvelarde]
