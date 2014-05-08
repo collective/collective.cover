@@ -6,6 +6,9 @@ There's a frood who really knows where his towel is.
 1.0a9 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Added missing robot test for content body tile
+  [kcleong]
+
 - SearchableText indexer for RichText tiles was fixed (closes `#411`_).
   [hvelarde]
 
