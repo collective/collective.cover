@@ -52,7 +52,15 @@ Test Content Body Tile
     Page Should Contain  ${text_sample}
     Page Should Not Contain  Please drag&drop some content here to populate the tile.
 
+    # when content chooser is opened again , the tile has a link to the referenced item
+    Compose Cover
+    Page Should Contain  Go to related item
+    Click Link  link=Go to related item
+    Page Should Contain  My document
+    Page Should Contain Element  css=body.portaltype-document
+
     # this tile has no configuration option
+    Click Link  link=My Cover
     Compose Cover
     Page Should Not Contain  css=${edit_link_selector}
 

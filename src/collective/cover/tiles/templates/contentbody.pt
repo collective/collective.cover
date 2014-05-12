@@ -9,6 +9,12 @@
     Please drag&amp;drop some content here to populate the tile.
   </p>
 
+   <div class="contentbody-link" tal:condition="view/is_compose_mode">
+    <a tal:attributes="href view/item_url" i18n:translate="">
+      Go to related item
+    </a>
+  </div>
+
   <div tal:condition="body" class="cover-contentbody-tile tile-content">
     <div class="content"
          tal:content="structure body">Body</div>

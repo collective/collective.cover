@@ -56,3 +56,13 @@ class ContentBodyTile(PersistentCoverTile):
         accepted in the tile.
         """
         return ['Document', 'News Item']
+
+    def item_url(self):
+        uuid = self.data.get('uuid', None)
+        try:
+            obj = uuidToObject(uuid)
+        except Unauthorized:
+            obj = None
+
+        if obj:
+            return obj.absolute_url()

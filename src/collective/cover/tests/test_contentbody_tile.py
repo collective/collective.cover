@@ -112,3 +112,10 @@ class ContentBodyTileTestCase(TestTileMixin, unittest.TestCase):
         # Now we should not see the stored data anymore
         self.assertNotIn('plone.tiles.permission.test', annotations)
         self.assertNotIn('plone.tiles.configuration.test', annotations)
+
+    def test_item_url(self):
+        obj = self.portal['my-news-item']
+
+        self.tile.populate_with_object(obj)
+        url = self.tile.item_url()
+        self.assertEqual(url, obj.absolute_url())
