@@ -14,6 +14,7 @@ ${document_selector}  .ui-draggable .contenttype-document
 ${tile_selector}  div.tile-container div.tile
 ${text_sample}  Some text for document
 ${edit_link_selector}  a.edit-tile-link
+${document_body}  body.portaltype-document
 
 *** Test cases ***
 
@@ -57,7 +58,7 @@ Test Content Body Tile
     Page Should Contain  Go to related item
     Click Link  link=Go to related item
     Page Should Contain  My document
-    Page Should Contain Element  css=body.portaltype-document
+    Page Should Contain Element  css=${document_body}
 
     # this tile has no configuration option
     Click Link  link=My Cover
