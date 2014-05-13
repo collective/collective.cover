@@ -6,7 +6,7 @@ There's a frood who really knows where his towel is.
 1.0a9 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
-- Added link in content body tile to related item (fixes `#381`_)
+- Added link in content body tile to related item (fixes `#415`_)
   [kcleong]
 
 - Added missing robot test for content body tile
