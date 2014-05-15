@@ -6,6 +6,11 @@ There's a frood who really knows where his towel is.
 1.0a9 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Update jss.js to 0.6 and include minified version. This fixes the layout page
+  rendering and column resizing on IE10+ which was broken. Jss.js creates on the
+  fly css from javascript. (fixes `#398`_).
+  [fredvd]
+
 - SearchableText indexer for RichText tiles was fixed (closes `#411`_).
   [hvelarde]
 
