@@ -23,8 +23,6 @@ class RichTextTile(PersistentCoverTile):
 
     implements(IRichTextTile)
 
-    index = ViewPageTemplateFile('templates/richtext.pt')
-
     is_configurable = True
     short_name = _(u'msg_short_name_richtext', default=u'Rich Text')
 

@@ -6,6 +6,11 @@ There's a frood who really knows where his towel is.
 1.0a9 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Move the tile page template configuration to zcml so it's easier for
+  integrators to customise a template without the need to override the python
+  class.
+  [fredvd]
+
 - Update jss.js to 0.6 and include minified version. This fixes the layout page
   rendering and column resizing on IE10+ which was broken. Jss.js creates on the
   fly css from javascript. (fixes `#398`_).

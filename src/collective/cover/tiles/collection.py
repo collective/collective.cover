@@ -86,8 +86,6 @@ class CollectionTile(PersistentCoverTile):
 
     implements(ICollectionTile)
 
-    index = ViewPageTemplateFile('templates/collection.pt')
-
     is_configurable = True
     is_editable = True
     short_name = _(u'msg_short_name_collection', default=u'Collection')

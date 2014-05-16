@@ -36,7 +36,6 @@ class BannerTile(PersistentCoverTile):
 
     implements(IBannerTile)
 
-    index = ViewPageTemplateFile('templates/banner.pt')
     is_configurable = True
     is_editable = True
     is_droppable = True

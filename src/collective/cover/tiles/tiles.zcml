@@ -14,6 +14,7 @@
       schema=".banner.IBannerTile"
       class=".banner.BannerTile"
       permission="zope2.View"
+      template="templates/banner.pt"
       for="*"
       />
 
@@ -26,6 +27,7 @@
       schema=".basic.IBasicTile"
       class=".basic.BasicTile"
       permission="zope2.View"
+      template="templates/basic.pt"
       for="*"
       />
 
@@ -38,6 +40,7 @@
       schema=".richtext.IRichTextTile"
       class=".richtext.RichTextTile"
       permission="zope2.View"
+      template="templates/richtext.pt"
       for="*"
       />
 
@@ -50,6 +53,7 @@
       schema=".collection.ICollectionTile"
       class=".collection.CollectionTile"
       permission="zope2.View"
+      template="templates/collection.pt"
       for="*"
       />
 
@@ -62,6 +66,7 @@
       schema=".list.IListTile"
       class=".list.ListTile"
       permission="zope2.View"
+      template="templates/list.pt"
       for="*"
       />
 
@@ -74,6 +79,7 @@
       schema=".carousel.ICarouselTile"
       class=".carousel.CarouselTile"
       permission="zope2.View"
+      template="templates/carousel.pt"
       for="*"
       />
 
@@ -86,6 +92,7 @@
       schema=".embed.IEmbedTile"
       class=".embed.EmbedTile"
       permission="zope2.View"
+      template="templates/embed.pt"
       for="*"
       />
 
@@ -98,6 +105,7 @@
       schema=".file.IFileTile"
       class=".file.FileTile"
       permission="zope2.View"
+      template="templates/file.pt"
       for="*"
     />
 
@@ -110,6 +118,7 @@
       schema=".contentbody.IContentBodyTile"
       class=".contentbody.ContentBodyTile"
       permission="zope2.View"
+      template="templates/contentbody.pt"
       for="*"
       />
 
@@ -123,6 +132,7 @@
       schema=".pfg.IPFGTile"
       class=".pfg.PFGTile"
       permission="zope2.View"
+      template="templates/pfg.pt"
       for="*"
       />
 

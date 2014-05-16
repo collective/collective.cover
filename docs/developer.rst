@@ -194,6 +194,14 @@ supported.
 
 .. _`Using tiles to provide more flexible Plone layouts`: http://glicksoftware.com/blog/using-tiles-to-provide-more-flexible-plone-layouts
 
+Tile templates
+++++++++++++++
+
+It is possible to override the default tile templates with your own version if you override or give a more specific context for the zcml definition by passing in a layer.
+
+Do note that per plone.tile documentation you should omit all tile metadata
+from the tile zcml (title, description, add permission, schema and icon) or
+otherwise you'll get a conflict error on Zope startup.
 
 Grid systems
 ++++++++++++

@@ -20,8 +20,6 @@ class ContentBodyTile(PersistentCoverTile):
 
     implements(IContentBodyTile)
 
-    index = ViewPageTemplateFile('templates/contentbody.pt')
-
     is_editable = False
     is_configurable = False
     short_name = _(u'msg_short_name_contentbody', default=u'Content Body')

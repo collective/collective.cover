@@ -65,8 +65,6 @@ class FileTile(PersistentCoverTile):
 
     implements(IFileTile)
 
-    index = ViewPageTemplateFile('templates/file.pt')
-
     is_configurable = False  # TODO: make the tile configurable
     is_editable = True
     is_droppable = True

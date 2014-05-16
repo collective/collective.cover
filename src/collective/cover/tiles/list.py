@@ -88,8 +88,6 @@ class ListTile(PersistentCoverTile):
 
     implements(IListTile)
 
-    index = ViewPageTemplateFile('templates/list.pt')
-
     is_configurable = True
     is_droppable = True
     is_editable = True
