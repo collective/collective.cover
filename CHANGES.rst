@@ -6,11 +6,14 @@ There's a frood who really knows where his towel is.
 1.0a9 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Content body tile markup was changed to handle different conditions (empty
+  tile or not) in a saner way; a text indicating when the body text of an
+  item is empty was also added.
+  [hvelarde]
+
 - Added link in content body tile to related item (fixes `#415`_)
   [kcleong]
 
-- Added missing robot test for content body tile
-  [kcleong]
 - Update jss.js to 0.6 and include minified version. This fixes the layout page
   rendering and column resizing on IE10+ which was broken. Jss.js creates on the
   fly css from javascript. (fixes `#398`_).

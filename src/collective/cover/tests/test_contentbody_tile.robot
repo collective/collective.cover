@@ -40,18 +40,18 @@ Test Content Body Tile
 
     # as tile is empty, we see default message
     Compose Cover
-    Page Should Contain  Please drag&drop some content here to populate the tile.
+    Page Should Contain  Drag&drop some content to populate the tile.
 
     # drag&drop a Document
     Open Content Chooser
     Drag And Drop  css=${document_selector}  css=${tile_selector}
     Wait Until Page Contains  ${text_sample}
-    Page Should Not Contain  Please drag&drop some content here to populate the tile.
+    Page Should Not Contain  Drag&drop some content to populate the tile.
 
     # move to the default view and check tile persisted
     Click Link  link=View
     Page Should Contain  ${text_sample}
-    Page Should Not Contain  Please drag&drop some content here to populate the tile.
+    Page Should Not Contain  Drag&drop some content to populate the tile.
 
     # when content chooser is opened again , the tile has a link to the referenced item
     Compose Cover
