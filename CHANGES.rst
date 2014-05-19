@@ -3,10 +3,36 @@ Changelog
 
 There's a frood who really knows where his towel is.
 
-1.0a8 (unreleased)
+1.0a9 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
-- Add richtext tiles to the searchabletext index of the cover.
+- Update jss.js to 0.6 and include minified version. This fixes the layout page
+  rendering and column resizing on IE10+ which was broken. Jss.js creates on the
+  fly css from javascript. (fixes `#398`_).
+  [fredvd]
+
+- SearchableText indexer for RichText tiles was fixed (closes `#411`_).
+  [hvelarde]
+
+- List tile is again fully sortable; a change on the JS code used there was
+  reverted (fixes `#413`_).
+  [hvelarde]
+
+
+1.0a8.post1 (2014-04-27)
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+- Disable SearchableText indexer for RichText tiles as it was causing
+  ``UnicodeDecodeError`` (refs. `#411`_).
+  [hvelarde]
+
+
+1.0a8 (2014-04-25)
+^^^^^^^^^^^^^^^^^^
+
+- Fix for collection tile not showing header correctly (fixes `#407`_). [kcleong]
+
+- Add RichText tiles to the SearchableText index of the cover.
   [thepjot]
   
 - Re-enable item sorting on the carousel tile edit form. It was by accident
@@ -465,4 +491,8 @@ There's a frood who really knows where his towel is.
 .. _`#381`: https://github.com/collective/collective.cover/issues/381
 .. _`#383`: https://github.com/collective/collective.cover/issues/383
 .. _`#393`: https://github.com/collective/collective.cover/issues/393
+.. _`#398`: https://github.com/collective/collective.cover/issues/398
+.. _`#407`: https://github.com/collective/collective.cover/issues/407
+.. _`#411`: https://github.com/collective/collective.cover/issues/411
+.. _`#413`: https://github.com/collective/collective.cover/issues/413
 .. _`PloneFormGen`: https://pypi.python.org/pypi/Products.PloneFormGen

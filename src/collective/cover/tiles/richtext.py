@@ -14,14 +14,14 @@ from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zope.interface import implements
 
 
-class IRichTextTileData(IPersistentCoverTile):
+class IRichTextTile(IPersistentCoverTile):
 
     text = RichText(title=u'Text')
 
 
 class RichTextTile(PersistentCoverTile):
 
-    implements(IRichTextTileData)
+    implements(IRichTextTile)
 
     index = ViewPageTemplateFile('templates/richtext.pt')
 

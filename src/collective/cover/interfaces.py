@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+from plone.directives import form
 from zope.interface import Attribute
 from zope.interface import Interface
 
@@ -7,6 +7,13 @@ from zope.interface import Interface
 class ICoverLayer(Interface):
     """ A layer specific for this add-on product.
     """
+
+
+class ICover(form.Schema):
+
+    """A composable page."""
+
+    form.model('models/cover.xml')
 
 
 class IJSONSearch(Interface):

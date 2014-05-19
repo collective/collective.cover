@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
-
 from AccessControl import Unauthorized
-from collective.cover.content import ICover
 from collective.cover.controlpanel import ICoverSettings
+from collective.cover.interfaces import ICover
 from collective.cover.testing import INTEGRATION_TESTING
 from collective.cover.testing import MULTIPLE_GRIDS_INTEGRATION_TESTING
 from plone import api
@@ -34,11 +33,7 @@ class CoverIntegrationTestCase(unittest.TestCase):
             self.folder = api.content.create(self.portal, 'Folder', 'folder')
 
         self.cover = api.content.create(
-            self.folder,
-            'collective.cover.content',
-            'cover',
-            template_layout='Layout A',
-        )
+            self.folder, 'collective.cover.content', 'c1')
 
     def test_adding(self):
         self.assertTrue(ICover.providedBy(self.cover))
@@ -72,8 +67,8 @@ class CoverIntegrationTestCase(unittest.TestCase):
         self.assertTrue(IStagingSupport.providedBy(self.cover))
 
     def test_cover_selectable_as_folder_default_view(self):
-        self.folder.setDefaultPage('cover')
-        self.assertEqual(self.folder.getDefaultPage(), 'cover')
+        self.folder.setDefaultPage('c1')
+        self.assertEqual(self.folder.getDefaultPage(), 'c1')
 
     def test_export_permission(self):
         # layout export is visible for user with administrative rights
@@ -100,6 +95,42 @@ class CoverIntegrationTestCase(unittest.TestCase):
         self.assertEqual(settings, {'ncolumns': 16})
 
     # TODO: add test for plone.app.relationfield.behavior.IRelatedItems
+
+
+class CoverAPITestCase(unittest.TestCase):
+
+    layer = INTEGRATION_TESTING
+
+    def _create_cover(self, id, layout):
+        with api.env.adopt_roles(['Manager']):
+            return api.content.create(
+                self.portal, 'collective.cover.content',
+                id,
+                template_layout=layout,
+            )
+
+    def setUp(self):
+        self.portal = self.layer['portal']
+
+    def test_get_tiles(self):
+        cover = self._create_cover('c1', 'Empty layout')
+        self.assertEqual(len(cover.get_tiles()), 0)
+        cover = self._create_cover('c2', 'Layout A')
+        self.assertEqual(len(cover.get_tiles()), 6)
+        types = u'collective.cover.carousel'
+        self.assertEqual(len(cover.get_tiles(types)), 1)
+        types = [u'collective.cover.carousel', u'collective.cover.basic']
+        self.assertEqual(len(cover.get_tiles(types)), 4)
+
+    def test_list_tiles(self):
+        cover = self._create_cover('c1', 'Empty layout')
+        self.assertEqual(len(cover.list_tiles()), 0)
+        cover = self._create_cover('c2', 'Layout A')
+        self.assertEqual(len(cover.list_tiles()), 6)
+        types = u'collective.cover.carousel'
+        self.assertEqual(len(cover.list_tiles(types)), 1)
+        types = [u'collective.cover.carousel', u'collective.cover.basic']
+        self.assertEqual(len(cover.list_tiles(types)), 4)
 
 
 class CoverMultipleGridsIntegrationTestCase(unittest.TestCase):

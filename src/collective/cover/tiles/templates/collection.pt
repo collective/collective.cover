@@ -24,7 +24,24 @@
       </div>
 
       <div class="tile-header" tal:condition="view/show_header">
-          <span tal:content="view/data/header" />
+          <tal:fields repeat="field view/configured_fields">
+            <tal:title define="htmltag python:field.get('htmltag', 'h1')"
+                       condition="python:field['id'] == 'header'">
+
+                <h1 tal:condition="python:htmltag == 'h1'" tal:content="view/data/header">
+                </h1>
+
+                <h2 tal:condition="python:htmltag == 'h2'" tal:content="view/data/header">
+                </h2>
+
+                <h3 tal:condition="python:htmltag == 'h3'" tal:content="view/data/header">
+                </h3>
+
+                <h4 tal:condition="python:htmltag == 'h4'" tal:content="view/data/header">
+                </h4>
+
+            </tal:title>
+          </tal:fields>
       </div>
 
 

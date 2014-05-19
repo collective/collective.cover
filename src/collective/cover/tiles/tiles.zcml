@@ -35,7 +35,7 @@
       description="A tile that shows rich text format."
       icon="++resource++collective.cover/tile-richtext.png"
       add_permission="cmf.ModifyPortalContent"
-      schema=".richtext.IRichTextTileData"
+      schema=".richtext.IRichTextTile"
       class=".richtext.RichTextTile"
       permission="zope2.View"
       for="*"

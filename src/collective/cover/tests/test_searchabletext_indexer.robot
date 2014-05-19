@@ -9,52 +9,40 @@ Suite Teardown  Close all browsers
 *** Variables ***
 
 ${tile_location}  'collective.cover.richtext'
-${text_sample}  Lorem ipsum Roger Wilco Charlie Echo
-${search_sample}  Charlie
-${search_sample_two}  ipsum
-${search_field_id}  searchGadget
-${text_other_sample}  This text should never be saved
-${edit_link_selector}  a.edit-tile-link
+${title}  Törkylempijävongahdus
+${description}  Albert osti fagotin ja töräytti puhkuvan melodian.
+${text}  Fahrenheit ja Celsius yrjösivät Åsan backgammon-peliin, Volkswagenissa, daiquirin ja ZX81:n yhteisvaikutuksesta.
+${edit_link_selector}  css=a.edit-tile-link
+${search_field_selector}  id=searchGadget
+${search_button_selector}  css=.searchButton
+@{search_words}  torkylempijavongahdus  Törkylempijävongahdus  töräytti  Fahrenheit  Åsan
+${search_results_number_selector}  xpath=//strong[@id='search-results-number']
 
 *** Test cases ***
 
-Test RichText Tile SearchAble
+Test RichText Tile is Searchable
     Enable Autologin as  Site Administrator
     Go to Homepage
 
-    Create Cover  Title  Description  Empty layout
+    Create Cover  ${title}  ${description}
     Edit Cover Layout
-
     Add Tile  ${tile_location}
     Save Cover Layout
 
+    # Add the text to the richtext tile
     Compose Cover
-    Page Should Contain  Please edit the tile to enter some text.
-
-    # edit tile but don't save it
-    Click Link  css=${edit_link_selector}
+    Click Link  ${edit_link_selector}
     Wait For Condition  return typeof tinyMCE != "undefined" && tinyMCE.activeEditor != null
-    Execute Javascript  tinyMCE.activeEditor.setContent("${text_sample}");
+    Execute Javascript  tinyMCE.activeEditor.setContent("${text}");
     Click Button  Save
-    # save via ajax => wait until the tile has been reloaded
-    Wait Until Page Contains  ${text_sample}
-    Page Should Contain  ${text_sample}
+    Wait Until Page Contains  ${text}
 
-    # Go to view and check it's there
-    Click Link  link=View
-    Page Should Contain  ${text_sample}
+    # Make a number of searches to verify the index
+    : FOR  ${word}  IN  @{search_words}
+    \  Input Text  ${search_field_selector}  ${word}
+    \  Click Button  ${search_button_selector}
+    \  Element Text Should Be  ${search_results_number_selector}  1
 
-
-    Edit Cover Layout
-    Delete Tile
-    Save Cover Layout
-
-    # Search for our text. Should yield our cover.
-    Input Text  id=${search_field_id}  ${search_sample} 
-    Click Button  css=.searchButton
-    Page Should Contain  Title
-
-    # Search for our text. Should yield our cover.
-    Input Text  id=${search_field_id}  ${search_sample_two} 
-    Click Button  css=.searchButton
-    Page Should Contain  Title    
+    Input Text  ${search_field_selector}  Search with no results
+    Click Button  ${search_button_selector}
+    Element Text Should Be  ${search_results_number_selector}  0

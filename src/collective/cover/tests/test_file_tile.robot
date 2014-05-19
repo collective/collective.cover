@@ -22,7 +22,7 @@ Test File Tile
     Enable Autologin as  Site Administrator
     Go to Homepage
 
-    Create Cover  Title  Description  Empty layout
+    Create Cover  Title  Description
     Edit Cover Layout
 
     Add Tile  ${file_tile_location}

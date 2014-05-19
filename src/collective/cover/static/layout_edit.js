@@ -309,19 +309,19 @@
             generate_grid_css: function(){
                 var gutter = '3';
 
-                jss('.'+row_class, {
+                jss.set('.'+row_class, {
                     width: '98%'
                 });
-                jss('.'+row_class+':after', {
+                jss.set('.'+row_class+':after', {
                     clear: 'both'
                 });
-                jss('.'+row_class+':before, .'+row_class+':after', {
+                jss.set('.'+row_class+':before, .'+row_class+':after', {
                     display: 'table',
                     'line-height': '0',
                     'content': '""'
                 });
 
-                jss('.'+column_class, {
+                jss.set('.'+column_class, {
                     'display': 'block',
                     'float':'left',
                     'width': '100%',
@@ -338,7 +338,7 @@
                     var column_width = minimun_column_width * i;
                     var margin_width = gutter * (i - 1);
 
-                    jss('[data-column-size="' + i + '"]', {
+                    jss.set('[data-column-size="' + i + '"]', {
                         'width':  column_width + margin_width + '%',
                         'margin-left': gutter + '%'
                     });
@@ -346,13 +346,13 @@
                     // var margin = (columns - 1 ) * gutter; //margin of the columns
                     // var total_space = 100 - margin; //total space to divide in columns
 
-                    // jss('[data-column-size="' + i + '"]', {
+                    // jss.set('[data-column-size="' + i + '"]', {
                     //     'width':  total_space / columns + '%',
                     //     'margin-left': gutter + '%'
                     // });
                 }
 
-                jss('.'+column_class + ':nth-of-type(1)', {
+                jss.set('.'+column_class + ':nth-of-type(1)', {
                     'margin-left':'0'
                 });
             },

@@ -1,322 +1,80 @@
 # -*- coding: utf-8 -*-
-
-from AccessControl import getSecurityManager
-from Acquisition import aq_inner
+from collective.cover.config import PROJECTNAME
 from collective.cover.controlpanel import ICoverSettings
-from collective.cover.interfaces import IGridSystem
+from collective.cover.interfaces import ICover
 from collective.cover.utils import assign_tile_ids
 from five import grok
-from plone import api
+from plone.app.textfield.interfaces import ITransformer
 from plone.dexterity.content import Item
-from plone.dexterity.events import EditBegunEvent
-from plone.dexterity.utils import createContentInContainer
-from plone.directives import form
 from plone.indexer import indexer
 from plone.registry.interfaces import IRegistry
-from plone.tiles.interfaces import ITileDataManager
-from plone.uuid.interfaces import IUUIDGenerator
-from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.utils import safe_unicode
 from Products.GenericSetup.interfaces import IDAVAware
-from zope.annotation.interfaces import IAnnotations
 from zope.component import getUtility
 from zope.container.interfaces import IObjectAddedEvent
-from zope.event import notify
 from zope.interface import implements
 
 import json
+import logging
 
-grok.templatedir('templates')
-
-
-class ICover(form.Schema):
-    """
-    Composable page
-    """
-    form.model('models/cover.xml')
+logger = logging.getLogger(PROJECTNAME)
 
 
 class Cover(Item):
-    """
-    """
+
+    """A composable page."""
+
     # XXX: Provide this so Cover items can be imported using the import
     #      content from GS, until a proper solution is found.
     #      ref: http://thread.gmane.org/gmane.comp.web.zope.plone.devel/31799
     implements(IDAVAware)
 
+    def get_tiles(self, types=None, layout=None):
+        """Traverse the layout tree and return a list of tiles on it.
 
-# TODO: move browser views to browser folder
-class View(grok.View):
-    grok.context(ICover)
-    grok.require('zope2.View')
-    grok.name('view')
+        :param types: tile types to be filtered; if none, return all tiles
+        :type types: str or list
+        :param layout: a JSON object describing sub-layout (internal use)
+        :type layout: list
+        :returns: a list of tiles; each tile is described as {id, type}
+        """
+        filter = types is not None
+        if filter and isinstance(types, str):
+            types = [types]
 
-
-class Standard(grok.View):
-    grok.context(ICover)
-    grok.require('zope2.View')
-    grok.name('standard')
-
-
-class AddCTWidget(grok.View):
-    grok.context(ICover)
-    grok.require('cmf.ModifyPortalContent')
-
-    def render(self):
-        widget_type = self.request.get('widget_type')
-        widget_title = self.request.get('widget_title')
-        column_id = self.request.get('column_id')
-        widget = createContentInContainer(self.context,
-                                          widget_type,
-                                          title=widget_title,
-                                          checkConstraints=False)
-        widget_url = widget.absolute_url()
-        return json.dumps({'column_id': column_id,
-                           'widget_type': widget_type,
-                           'widget_title': widget_title,
-                           'widget_id': widget.id,
-                           'widget_url': widget_url})
-
-
-class AddTileWidget(grok.View):
-    grok.context(ICover)
-    grok.require('cmf.ModifyPortalContent')
-
-    def render(self):
-        uuid = getUtility(IUUIDGenerator)
-        widget_type = self.request.get('widget_type')
-        widget_title = self.request.get('widget_title')
-        column_id = self.request.get('column_id')
-
-        id = uuid()
-        context_url = self.context.absolute_url()
-        widget_url = '{0}/@@{1}/{2}'.format(context_url, widget_type, id)
-
-        # Let's store locally info regarding tiles
-        annotations = IAnnotations(self.context)
-        current_tiles = annotations.get('current_tiles', {})
-
-        current_tiles[id] = {'type': widget_type,
-                             'title': widget_title}
-        annotations['current_tiles'] = current_tiles
-
-        return json.dumps({'column_id': column_id,
-                           'widget_type': widget_type,
-                           'widget_title': widget_title,
-                           'widget_id': id,
-                           'widget_url': widget_url})
-
-
-class SetWidgetMap(grok.View):
-    grok.context(ICover)
-    grok.require('cmf.ModifyPortalContent')
-
-    def render(self):
-        widget_map = self.request.get('widget_map')
-        remove = self.request.get('remove', None)
-        self.context.set_widget_map(widget_map, remove)
-        return json.dumps('success')
-
-
-class UpdateWidget(grok.View):
-    grok.context(ICover)
-    grok.require('cmf.ModifyPortalContent')
-
-    def render(self):
-        widget_id = self.request.get('wid')
-        if widget_id in self.context:
-            return self.context[widget_id].render()
+        if layout is None:
+            # normal processing, we use the object's layout
+            try:
+                layout = json.loads(self.cover_layout)
+            except TypeError:
+                # XXX: we are probably running tests so just return an
+                #      empty layout; maybe we should fix this in other
+                #      way: cover_layout should be initiated at
+                #      object's creation and not at LayoutSave view
+                logger.debug('cover_layout attribute was empty')
+                layout = []
         else:
-            return 'Widget does not exist'
+            # we are recursively processing the layout
+            assert isinstance(layout, list)
 
+        tiles = []
+        for e in layout:
+            if e['type'] == 'tile':
+                if filter and e['tile-type'] not in types:
+                    continue
+                tiles.append(dict(id=e['id'], type=e['tile-type']))
+            if 'children' in e:
+                tiles.extend(self.get_tiles(types, e['children']))
+        return tiles
 
-class RemoveTileWidget(grok.View):
-    # XXX: This should be part of the plone.app.tiles package or similar
-    grok.context(ICover)
-    grok.require('cmf.ModifyPortalContent')
-    grok.name('removetilewidget')
+    def list_tiles(self, types=None):
+        """Return a list of tile id the layout.
 
-    def __call__(self):
-        template = self.template
-        if 'form.submitted' not in self.request:
-            return template.render(self)
-
-        annotations = IAnnotations(self.context)
-        current_tiles = annotations.get('current_tiles', {})
-        tile_id = self.request.get('wid', None)
-
-        if tile_id in current_tiles:
-            widget_type = current_tiles[tile_id]['type']
-            # Let's remove all traces of the value stored in the tile
-            widget_uri = '@@{0}/{1}'.format(widget_type, tile_id)
-            tile = self.context.restrictedTraverse(widget_uri)
-
-            dataManager = ITileDataManager(tile)
-            dataManager.delete()
-
-
-# TODO: implement EditCancelledEvent and EditFinishedEvent
-# XXX: we need to leave the view after saving or cancelling editing
-class Compose(grok.View):
-    grok.context(ICover)
-    grok.require('cmf.ModifyPortalContent')
-
-    def update(self):
-        self.context = aq_inner(self.context)
-        # XXX: used to lock the object when someone is editing it
-        notify(EditBegunEvent(self.context))
-
-
-# TODO: implement EditCancelledEvent and EditFinishedEvent
-# XXX: we need to leave the view after saving or cancelling editing
-class LayoutEdit(grok.View):
-    grok.context(ICover)
-    grok.require('collective.cover.CanEditLayout')
-
-    def update(self):
-        self.context = aq_inner(self.context)
-        # XXX: used to lock the object when someone is editing it
-        notify(EditBegunEvent(self.context))
-
-    def __call__(self):
-        if 'export-layout' in self.request and self.can_export_layout():
-            name = self.request.get('layout-name', None)
-            if name:
-                layout = self.context.cover_layout
-
-                registry = getUtility(IRegistry)
-                settings = registry.forInterface(ICoverSettings)
-
-                # Store name and layout as unicode.  Note that the
-                # name must only contain ascii because it is used as
-                # value for a vocabulary.
-                name = name.decode('ascii', 'ignore')
-                layout = layout.decode('utf-8')
-                settings.layouts[name] = layout
-
-        return super(LayoutEdit, self).__call__()
-
-    def can_export_layout(self):
-        sm = getSecurityManager()
-        portal = api.portal.get()
-        # TODO: check permission locally and not in portal context
-        return sm.checkPermission('collective.cover: Can Export Layout', portal)
-
-    def layoutmanager_settings(self):
-        registry = getUtility(IRegistry)
-        settings = registry.forInterface(ICoverSettings)
-        grid = getUtility(IGridSystem, name=settings.grid_system)
-
-        return json.dumps({'ncolumns': grid.ncolumns})
-
-
-class UpdateTileContent(grok.View):
-    grok.context(ICover)
-    grok.require('cmf.ModifyPortalContent')
-
-    def render(self):
-        catalog = api.portal.get_tool('portal_catalog')
-
-        tile_type = self.request.form.get('tile-type')
-        tile_id = self.request.form.get('tile-id')
-        uid = self.request.form.get('uid')
-
-        html = ''
-        if tile_type and tile_id and uid:
-
-            tile = self.context.restrictedTraverse(tile_type)
-            tile_instance = tile[tile_id]
-
-            results = catalog(UID=uid)
-            if results:
-                obj = results[0].getObject()
-
-                try:
-                    tile_instance.populate_with_object(obj)
-                    html = tile_instance()
-                except:
-                    # XXX: Pass silently ?
-                    pass
-
-            # XXX: Calling the tile will return the HTML with the headers, need to
-            #      find out if this affects us in any way.
-        return html
-
-
-class UpdateTile(grok.View):
-    grok.context(ICover)
-    grok.require('cmf.ModifyPortalContent')
-
-    def render(self):
-        tile_type = self.request.form.get('tile-type')
-        tile_id = self.request.form.get('tile-id')
-
-        if tile_type and tile_id:
-            tile = self.context.restrictedTraverse(tile_type)
-            tile_instance = tile[tile_id]
-        return tile_instance()
-
-
-class UpdateListTileContent(grok.View):
-    grok.context(ICover)
-    grok.require('cmf.ModifyPortalContent')
-
-    def render(self):
-        tile_type = self.request.form.get('tile-type')
-        tile_id = self.request.form.get('tile-id')
-        uids = self.request.form.get('uids[]')
-        html = ''
-        if tile_type and tile_id and uids:
-            tile = self.context.restrictedTraverse(tile_type)
-            tile_instance = tile[tile_id]
-            try:
-                tile_instance.replace_with_objects(uids)
-                html = tile_instance()
-            except:
-                # XXX: Pass silently ?
-                pass
-
-        # XXX: Calling the tile will return the HTML with the headers, need to
-        #      find out if this affects us in any way.
-        return html
-
-
-class RemoveItemFromListTile(grok.View):
-    grok.context(ICover)
-    grok.require('cmf.ModifyPortalContent')
-
-    def render(self):
-        tile_type = self.request.form.get('tile-type')
-        tile_id = self.request.form.get('tile-id')
-        uid = self.request.form.get('uid')
-        html = ''
-        if tile_type and tile_id and uid:
-            tile = self.context.restrictedTraverse(tile_type)
-            tile_instance = tile[tile_id]
-            try:
-                tile_instance.remove_item(uid)
-                html = tile_instance()
-            except:
-                # XXX: Pass silently ?
-                pass
-
-        # XXX: Calling the tile will return the HTML with the headers, need to
-        #      find out if this affects us in any way.
-        return html
-
-
-class DeleteTile(grok.View):
-    grok.context(ICover)
-    grok.require('cmf.ModifyPortalContent')
-
-    def render(self):
-        tile_type = self.request.form.get('tile-type')
-        tile_id = self.request.form.get('tile-id')
-
-        if tile_type and tile_id:
-            tile = self.context.restrictedTraverse(tile_type)
-            tile_instance = tile[tile_id]
-            tile_instance.delete()
+        :param types: tile types to be filtered; if none, return all tiles
+        :type types: str or list
+        :returns: a list of tile ids
+        """
+        return [t['id'] for t in self.get_tiles(types)]
 
 
 @grok.subscribe(ICover, IObjectAddedEvent)
@@ -335,63 +93,24 @@ def assign_id_for_tiles(cover, event):
             cover.cover_layout = json.dumps(layout)
 
 
-# SearchAbleText helper
-def _get_richtext_value(tile, rich_text):
-    """Helper to try and get the normal value of a richtext"""
-    text = None
-    transforms = getToolByName(tile, 'portal_transforms')
-    try:
-        text = transforms.convert('html_to_text', rich_text).getData()
-    except UnicodeError:
-        try:
-            rich_text = rich_text.encode('utf-8')
-            text = transforms.convert('html_to_text', rich_text).getData()
-        except UnicodeError:
-            pass
-    return text
-
-
-def _get_tiles(obj, section, tiles_text_list=[]):
-    """Little bit of recursive loving. Parytly copied from
-       layout.py render_section function"""
-
-    if 'type' in section:
-        if section['type'] in [u'row', u'group']:
-            for sec in section.get('children', []):
-                tiles_text_list = _get_tiles(obj, sec, tiles_text_list)
-        if section['type'] == u'tile':
-            tile_type = section.get('tile-type')
-            if tile_type == u'collective.cover.richtext':
-                tile_id = section.get(u'id')
-                path = '{0}/{1}'.format(str(tile_type), str(tile_id))
-                tile = obj.restrictedTraverse(path)
-                if tile.data.get('text'):
-                    rich_text = tile.data.get('text').output
-                    text = _get_richtext_value(tile, rich_text)
-                    tiles_text_list.append(text)
-    elif type(section) == list:
-        for sec in section:
-            tiles_text_list = _get_tiles(obj, sec, tiles_text_list)
-
-    return tiles_text_list
-
-
 @indexer(ICover)
 def searchableText(obj):
-    """Indexer to add richtext tiles text to SearchableText"""
-    cover_layout = obj.cover_layout
-    searchable = obj.Title()
-    searchable = u'{0} {1}'.format(searchable, safe_unicode(obj.Description()))
-    if cover_layout:
-        layout = json.loads(cover_layout)
-        tiles_text_list = _get_tiles(obj, layout)
+    """Return searchable text to be used as indexer. Includes id, title,
+    description and text from Rich Text tiles."""
+    transformer = ITransformer(obj)
+    tiles_text = ''
+    for t in obj.list_tiles('collective.cover.richtext'):
+        tile = obj.restrictedTraverse(
+            '@@collective.cover.richtext/{0}'.format(str(t)))
+        tiles_text += transformer(tile.data['text'], 'text/plain')
 
-        searchable = obj.Title()
-        description = safe_unicode(obj.Description())
-        searchable = u'{0} {1}'.format(searchable, description)
-        for text in tiles_text_list:
-            searchable = u'{0} {1}'.format(searchable, safe_unicode(text))
+    searchable_text = [safe_unicode(entry) for entry in (
+        obj.id,
+        obj.Title(),
+        obj.Description(),
+        tiles_text,
+    ) if entry]
 
-    return searchable
+    return u' '.join(searchable_text)
 
 grok.global_adapter(searchableText, name='SearchableText')

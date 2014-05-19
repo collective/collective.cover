@@ -41,12 +41,13 @@ class PageLayoutTestCase(unittest.TestCase):
     def setUp(self):
         self.portal = self.layer['portal']
         self.request = self.layer['request']
-        self.name = u'collective.cover.carousel'
-        self.cover = self.portal['frontpage']
-        self.tile = api.content.get_view(self.name, self.cover, self.request)
-        self.tile = self.tile['test']
+
+        with api.env.adopt_roles(['Manager']):
+            self.cover = api.content.create(
+                self.portal, 'collective.cover.content', 'c1')
         self.view = self.cover.unrestrictedTraverse('@@layout')
 
+    # XXX: these methods belong to the API
     def test_is_droppable(self):
         self.assertTrue(self.view.tile_is_droppable('collective.cover.basic'))
 

@@ -71,10 +71,6 @@ Mostly Harmless
     :target: https://pypi.python.org/pypi/collective.cover/
     :alt: Downloads
 
-.. image:: https://d2weczhvl823v0.cloudfront.net/collective/collective.cover/trend.png
-    :alt: Bitdeli badge
-    :target: https://bitdeli.com/free
-
 Got an idea? Found a bug? Let us know by `opening a support ticket`_.
 
 .. _`opening a support ticket`: https://github.com/collective/collective.cover/issues
@@ -88,12 +84,17 @@ Known issues
 * `AJAX responses are wrapped after installing the package`_. This is
   `an issue in plone.app.blocks`_.
 
+* `LocationError: (<NamedImageWidget 'collective.cover.basic.image'>, 'file_icon')`_ when editing a basic tile.
+  This is an issue in `plone.formwidget.namedfile`_ >=1.0.8.
+
 See the `complete list of bugs on GitHub`_.
 
 .. _`Package is not compatible with standard Plone tiles`: https://github.com/collective/collective.cover/issues/81
 .. _`AJAX responses are wrapped after installing the package`: https://github.com/collective/collective.cover/issues/331
 .. _`complete list of bugs on GitHub`: https://github.com/collective/collective.cover/issues?labels=bug&milestone=&page=1&state=open
 .. _`an issue in plone.app.blocks`: https://github.com/plone/plone.app.blocks/issues/5
+.. _`LocationError: (<NamedImageWidget 'collective.cover.basic.image'>, 'file_icon')`: https://github.com/collective/collective.cover/issues/417
+.. _`plone.formwidget.namedfile`: https://github.com/plone/plone.formwidget.namedfile
 
 Don't Panic
 -----------
@@ -125,7 +126,6 @@ To enable this package in a buildout-based installation:
     ...
     plone.app.blocks = 1.1.1
     plone.app.drafts = 1.0a2
-    plone.app.jquery = 1.7.2
     plone.app.tiles = 1.0.1
     plone.tiles = 1.2
 
@@ -134,7 +134,9 @@ To enable this package in a buildout-based installation:
     [versions]
     ...
     collective.js.jqueryui = 1.8.16.9
-    plone.app.jquerytools = 1.5.6
+    plone.app.jquery = 1.7.2
+    plone.app.jquerytools = 1.5.7
+    plone.app.z3cform = 0.6.3
 
 After updating the configuration you need to run ''bin/buildout'', which will
 take care of updating your system.

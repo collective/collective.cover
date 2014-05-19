@@ -168,7 +168,7 @@ class ListTile(PersistentCoverTile):
         notify(ObjectModifiedEvent(self))
 
     def remove_item(self, uid):
-        super(ListTile, self).remove_item(uid)
+        super(ListTile, self).remove_item(uid)  # check permission
         data_mgr = ITileDataManager(self)
         old_data = data_mgr.get()
         uids = data_mgr.get()['uuids']

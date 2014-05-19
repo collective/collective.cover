@@ -1,7 +1,7 @@
 
 (function ($) {
     $.fn.liveSortable = function (opts) {
-        this.on("mouseover", function() {
+        this.live("mouseover", function() {
             if (!$(this).data("init")) {
                 $(this).data("init", true).sortable(opts);
             }

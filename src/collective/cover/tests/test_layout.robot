@@ -17,7 +17,7 @@ Test Basic Layout Operations
     Enable Autologin as  Site Administrator
     Go to Homepage
 
-    Create Cover  Title  Description  Empty layout
+    Create Cover  Title  Description
     Edit Cover Layout
     # empty layout has one column and one row by default
     # TODO: test if there is 1 row and 1 column

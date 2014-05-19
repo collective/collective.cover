@@ -32,7 +32,7 @@ Test Carousel Tile
 
     Enable Autologin as  Site Administrator
     Go to Homepage
-    Create Cover  Title  Description  Empty layout
+    Create Cover  Title  Description
 
     # add a carousel tile to the layout
     Edit Cover Layout
