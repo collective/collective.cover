@@ -11,6 +11,10 @@ There's a frood who really knows where his towel is.
 
 - Added missing robot test for content body tile
   [kcleong]
+- Update jss.js to 0.6 and include minified version. This fixes the layout page
+  rendering and column resizing on IE10+ which was broken. Jss.js creates on the
+  fly css from javascript. (fixes `#398`_).
+  [fredvd]
 
 - SearchableText indexer for RichText tiles was fixed (closes `#411`_).
   [hvelarde]
@@ -492,6 +496,7 @@ There's a frood who really knows where his towel is.
 .. _`#381`: https://github.com/collective/collective.cover/issues/381
 .. _`#383`: https://github.com/collective/collective.cover/issues/383
 .. _`#393`: https://github.com/collective/collective.cover/issues/393
+.. _`#398`: https://github.com/collective/collective.cover/issues/398
 .. _`#407`: https://github.com/collective/collective.cover/issues/407
 .. _`#411`: https://github.com/collective/collective.cover/issues/411
 .. _`#413`: https://github.com/collective/collective.cover/issues/413

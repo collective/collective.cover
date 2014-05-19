@@ -84,12 +84,17 @@ Known issues
 * `AJAX responses are wrapped after installing the package`_. This is
   `an issue in plone.app.blocks`_.
 
+* `LocationError: (<NamedImageWidget 'collective.cover.basic.image'>, 'file_icon')`_ when editing a basic tile.
+  This is an issue in `plone.formwidget.namedfile`_ >=1.0.8.
+
 See the `complete list of bugs on GitHub`_.
 
 .. _`Package is not compatible with standard Plone tiles`: https://github.com/collective/collective.cover/issues/81
 .. _`AJAX responses are wrapped after installing the package`: https://github.com/collective/collective.cover/issues/331
 .. _`complete list of bugs on GitHub`: https://github.com/collective/collective.cover/issues?labels=bug&milestone=&page=1&state=open
 .. _`an issue in plone.app.blocks`: https://github.com/plone/plone.app.blocks/issues/5
+.. _`LocationError: (<NamedImageWidget 'collective.cover.basic.image'>, 'file_icon')`: https://github.com/collective/collective.cover/issues/417
+.. _`plone.formwidget.namedfile`: https://github.com/plone/plone.formwidget.namedfile
 
 Don't Panic
 -----------
