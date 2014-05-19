@@ -503,4 +503,5 @@ There's a frood who really knows where his towel is.
 .. _`#407`: https://github.com/collective/collective.cover/issues/407
 .. _`#411`: https://github.com/collective/collective.cover/issues/411
 .. _`#413`: https://github.com/collective/collective.cover/issues/413
+.. _`#415`: https://github.com/collective/collective.cover/issues/415
 .. _`PloneFormGen`: https://pypi.python.org/pypi/Products.PloneFormGen
