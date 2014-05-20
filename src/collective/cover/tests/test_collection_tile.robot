@@ -68,6 +68,8 @@ Test Collection Tile
     Click Link  link=My collection
     Click Link  link=Edit
     Select From List  xpath=//select[@name="addindex"]  portal_type
+    # deal with AJAX delays
+    Wait Until Page Contains Element  xpath=//input[@value="Image"]
     Select Checkbox  xpath=//input[@value="Image"]
     Select From List  xpath=//select[@name="sort_on"]  getId
     Click Button  Save
