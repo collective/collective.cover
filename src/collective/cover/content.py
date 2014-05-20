@@ -95,26 +95,26 @@ class Cover(Item):
         return tile[0]['type']
 
     def get_tile(self, id):
-        """Get the tile defined by the id.
+        """Get the tile defined by id.
 
         :param id: id of the tile we want to get
-        :type id: str
+        :type id: string
         :returns: a tile
-        :rtype: Tile instance
+        :rtype: PersistentTile instance
         """
         type = str(self.get_tile_type(id))
         id = str(id)
         return self.restrictedTraverse('{0}/{1}'.format(type, id))
 
-    def set_tile_data(self, tile, **data):
-        """Set data attributes on the tile.
+    def set_tile_data(self, id, **data):
+        """Set data attributes on the tile defined by id.
 
-        :param tile: the tile we want to modify its data
-        :type tile: Tile instance
+        :param id: id of the tile we want to modify its data
+        :type id: string
         :param data: a dictionary of attributes we want to set on the tile
         :type data: dictionary
         """
-        tile = self.get_tile(tile)
+        tile = self.get_tile(id)
         data_mgr = ITileDataManager(tile)
         data_mgr.set(data)
 
