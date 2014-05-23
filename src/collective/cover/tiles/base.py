@@ -185,6 +185,14 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
             url = self.context.REQUEST.PARENT_REQUEST.URL
             # compose mode is the last part of the URL
             return url.split('/')[-1] == 'compose'
+        url = self.context.REQUEST.URL
+        action = url.split('/')[-1]
+        if action in ('@@updatelisttilecontent', '@@updatetilecontent',
+                      '@@removeitemfromlisttile'):
+            # update drag/drop, delete of list tile elements and dropping
+            # content from the contentchooser on a tile. This is done with ajax
+            # from the compose view where no PARENT_REQUEST is available
+            return True
         return False
 
     def get_tile_configuration(self):

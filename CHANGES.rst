@@ -6,6 +6,11 @@ There's a frood who really knows where his towel is.
 1.0a9 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Improve python:view.is_compose_mode() tests in tile Zope Page Templates. This
+  test would return False when content in for example list tiles is reordered
+  deleted, or dropped on from the content chooser. (fixes `#421`_).
+  [fredvd]
+
 - Content body tile markup was changed to handle different conditions (empty
   tile or not) in a saner way; a text indicating when the body text of an
   item is empty was also added.
