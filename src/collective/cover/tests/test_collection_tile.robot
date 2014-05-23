@@ -37,9 +37,7 @@ Test Collection Tile
     Open Content Chooser
     Drag And Drop  css=${collection_selector}  css=${tile_selector}
     Wait Until Page Contains  The collection doesn't have any results
-    # FIXME: there is a bug here as the first time this message is not shown
-    #Page Should Contain  Go to related collection
-    Page Should Not Contain  Go to related collection
+    Page Should Contain  Go to related collection
 
     # move to the default view and check tile persisted
     Click Link  link=View
