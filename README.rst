@@ -84,9 +84,6 @@ Known issues
 * `AJAX responses are wrapped after installing the package`_.
   This is `an issue in plone.app.blocks`_.
 
-* `LocationError: (<NamedImageWidget 'collective.cover.basic.image'>, 'file_icon')`_ when editing a basic tile.
-  This is an issue in `plone.formwidget.namedfile`_ >=1.0.8.
-
 * `Not compatible with jQuery 1.9`_.
   There is work being done to solve this and to fix `plone.app.jquerytools` also.
   We only support jQuery 1.7 and jQuery 1.8 at this time.
@@ -97,8 +94,6 @@ See the `complete list of bugs on GitHub`_.
 .. _`AJAX responses are wrapped after installing the package`: https://github.com/collective/collective.cover/issues/331
 .. _`complete list of bugs on GitHub`: https://github.com/collective/collective.cover/issues?labels=bug&milestone=&page=1&state=open
 .. _`an issue in plone.app.blocks`: https://github.com/plone/plone.app.blocks/issues/5
-.. _`LocationError: (<NamedImageWidget 'collective.cover.basic.image'>, 'file_icon')`: https://github.com/collective/collective.cover/issues/417
-.. _`plone.formwidget.namedfile`: https://github.com/plone/plone.formwidget.namedfile
 .. _`Not compatible with jQuery 1.9`: https://github.com/collective/collective.cover/issues/413
 
 Don't Panic
@@ -132,6 +127,7 @@ To enable this package in a buildout-based installation:
     plone.app.blocks = 1.1.1
     plone.app.drafts = 1.0a2
     plone.app.tiles = 1.0.1
+    plone.formwidget.namedfile = 1.0.10
     plone.tiles = 1.2
 
 #. If you are using Plone 4.2.x you need to add the following also::
