@@ -242,7 +242,6 @@ class Deco16Grid (grok.GlobalUtility):
 
     row_class = 'row'
     column_class = 'cell'
-    collective_cover_prefix = 'cc_row'
 
     def transform(self, layout):
         row_count = 0
@@ -250,9 +249,7 @@ class Deco16Grid (grok.GlobalUtility):
             if 'type' in element:
                 if element['type'] == 'row':
                     row_count = row_count + 1
-                    element['class'] = "%s %s_%s" % (self.row_class,
-                                                         self.collective_cover_prefix,
-                                                         row_count)
+                    element['class'] = "%s row-%s" % (self.row_class,row_count)
                     if 'children' in element:
                         self.transform(self.columns_formatter(element['children']))
                 if element['type'] == 'group' and 'children' in element:
@@ -267,8 +264,10 @@ class Deco16Grid (grok.GlobalUtility):
         w = 'width-'
         p = 'position-'
         offset = 0
+        col_count = 0
         for column in columns:
+            col_count = col_count + 1
             width = column['data']['column-size'] if 'data' in column else 1
-            column['class'] = self.column_class + ' ' + (w + str(width)) + ' ' + (p + str(offset))
+            column['class'] = "%s %s %s col-%s" % (self.column_class,(w + str(width)),(p + str(offset)), col_count)
             offset = offset + width
         return columns
