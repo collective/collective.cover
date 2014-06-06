@@ -242,12 +242,17 @@ class Deco16Grid (grok.GlobalUtility):
 
     row_class = 'row'
     column_class = 'cell'
+    collective_cover_prefix = 'cc_row'
 
     def transform(self, layout):
+        row_count = 0
         for element in layout:
             if 'type' in element:
                 if element['type'] == 'row':
-                    element['class'] = self.row_class
+                    row_count = row_count + 1
+                    element['class'] = "%s %s_%s" % (self.row_class,
+                                                         self.collective_cover_prefix,
+                                                         row_count)
                     if 'children' in element:
                         self.transform(self.columns_formatter(element['children']))
                 if element['type'] == 'group' and 'children' in element:
