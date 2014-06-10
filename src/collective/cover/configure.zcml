@@ -25,6 +25,13 @@
       title="collective.cover: Can Edit Layout"
       />
 
+  <permission
+      id="collective.cover.ControlPanel"
+      title="collective.cover: Control Panel">
+    <role name="Manager"/>
+    <role name="Site Administrator"/>
+  </permission>
+
   <grok:grok package="." />
 
   <include package=".tiles" />
@@ -41,7 +48,7 @@
       name="cover-settings"
       for="Products.CMFPlone.interfaces.IPloneSiteRoot"
       class=".controlpanel.CoverSettingsControlPanel"
-      permission="cmf.ManagePortal"
+      permission="collective.cover.ControlPanel"
       />
 
   <browser:pages

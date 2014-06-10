@@ -47,6 +47,13 @@ class ControlPanelTestCase(unittest.TestCase):
                    for a in self.controlpanel.listActions()]
         self.assertNotIn('cover', actions)
 
+    def test_controlpanel_configlet_permissions(self):
+        controlpanel = api.portal.get_tool('portal_controlpanel')
+        # Configlet should be listed for Site Administrator
+        with api.env.adopt_roles(['Site Administrator', ]):
+            installed = [a['id'] for a in controlpanel.enumConfiglets(group='Products')]
+            self.failUnless('cover' in installed)
+
 
 class RegistryTestCase(unittest.TestCase):
 

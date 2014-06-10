@@ -87,4 +87,16 @@
         />
   </genericsetup:upgradeSteps>
 
+  <genericsetup:upgradeSteps
+      source="8"
+      destination="9"
+      profile="collective.cover:default">
+
+    <genericsetup:upgradeStep
+        title="issue_423"
+        description="Change permission for managing Cover's control panel."
+        handler=".upgrades.change_controlpanel_permission"
+        />
+  </genericsetup:upgradeSteps>
+
 </configure>
