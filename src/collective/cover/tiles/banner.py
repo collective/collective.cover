@@ -121,6 +121,8 @@ class BannerTile(PersistentCoverTile):
         image_conf = tile_conf.get('image', None)
         if image_conf:
             scale = image_conf['imgsize']
+            if scale == '_original':
+                return None
             # scale string is something like: 'mini 200:200'
             return scale.split(' ')[0]  # we need the name only: 'mini'
 

@@ -153,7 +153,7 @@ msgstr "Datum"
 
 #: collective/cover/layout.py:241
 msgid "Deco (16 columns, default)"
-msgstr "Deco (16 klommne, standaard)"
+msgstr "Deco (16 kolommen, standaard)"
 
 #: collective/cover/tiles/basic.py:27
 #: collective/cover/tiles/collection.py:39
