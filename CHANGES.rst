@@ -6,6 +6,9 @@ There's a frood who really knows where his towel is.
 1.0a9 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Fix showing original size of images in banner and carousel tile.
+  [maurits]
+
 - Improve python:view.is_compose_mode() tests in tile Zope Page Templates. This
   test would return False when content in for example list tiles is reordered
   deleted, or dropped on from the content chooser. (fixes `#421`_).

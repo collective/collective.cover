@@ -235,7 +235,10 @@ class ListTile(PersistentCoverTile):
                 scaleconf = image_conf['imgsize']
                 # scale string is something like: 'mini 200:200' and
                 # we need the name only: 'mini'
-                scale = scaleconf.split(' ')[0]
+                if scaleconf == '_original':
+                    scale = None
+                else:
+                    scale = scaleconf.split(' ')[0]
                 scales = item.restrictedTraverse('@@images')
                 return scales.scale('image', scale)
 
