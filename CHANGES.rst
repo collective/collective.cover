@@ -6,6 +6,10 @@ There's a frood who really knows where his towel is.
 1.0a9 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Unpublished content disappears from tile after an anonymous user visits the
+  cover page (fixes `#412`_)
+  [adriana-rv]
+
 - Allow Site Administrator role to manage Cover control panel (closes `#423`_)
   [ericof]
 
