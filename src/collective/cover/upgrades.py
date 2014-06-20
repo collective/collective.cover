@@ -109,3 +109,12 @@ def cook_javascript_resources(context):
     js_tool = api.portal.get_tool('portal_javascripts')
     js_tool.cookResources()
     logger.info('Javascript resources were cooked')
+
+
+def change_controlpanel_permission(context):
+    """Change permission on configlet."""
+    cptool = api.portal.get_tool('portal_controlpanel')
+    for action in cptool._actions:
+        if action.id == 'cover':
+            action.permissions = ('collective.cover: Setup', )
+            logger.info('configlet permissions updated')

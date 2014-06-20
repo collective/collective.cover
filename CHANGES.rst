@@ -6,6 +6,9 @@ There's a frood who really knows where his towel is.
 1.0a9 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Allow Site Administrator role to manage Cover control panel (closes `#423`_)
+  [ericof]
+
 - Fix showing original size of images in banner and carousel tile.
   [maurits]
 
@@ -512,4 +515,6 @@ There's a frood who really knows where his towel is.
 .. _`#411`: https://github.com/collective/collective.cover/issues/411
 .. _`#413`: https://github.com/collective/collective.cover/issues/413
 .. _`#415`: https://github.com/collective/collective.cover/issues/415
+.. _`#421`: https://github.com/collective/collective.cover/issues/421
+.. _`#423`: https://github.com/collective/collective.cover/issues/423
 .. _`PloneFormGen`: https://pypi.python.org/pypi/Products.PloneFormGen
