@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 from collective.cover.config import DEFAULT_AVAILABLE_TILES
 from collective.cover.config import DEFAULT_GRID_SYSTEM
 from collective.cover.config import DEFAULT_SEARCHABLE_CONTENT_TYPES
@@ -47,12 +46,14 @@ class ControlPanelTestCase(unittest.TestCase):
                    for a in self.controlpanel.listActions()]
         self.assertNotIn('cover', actions)
 
-    def test_controlpanel_configlet_permissions(self):
-        controlpanel = api.portal.get_tool('portal_controlpanel')
-        # Configlet should be listed for Site Administrator
-        with api.env.adopt_roles(['Site Administrator', ]):
-            installed = [a['id'] for a in controlpanel.enumConfiglets(group='Products')]
-            self.failUnless('cover' in installed)
+    def test_controlpanel_permissions(self):
+        roles = ['Manager', 'Site Administrator']
+        for r in roles:
+            with api.env.adopt_roles([r]):
+                configlets = self.controlpanel.enumConfiglets(group='Products')
+                configlets = [a['id'] for a in configlets]
+                self.assertIn(
+                    'cover', configlets, 'configlet not listed for ' + r)
 
 
 class RegistryTestCase(unittest.TestCase):
