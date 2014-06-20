@@ -12,6 +12,6 @@
         icon_expr="string:${portal_url}/++resource++collective.cover/frontpage_icon.png"
         visible="True"
         i18n:attributes="title">
-        <permission>collective.cover: Control Panel</permission>
+      <permission>collective.cover: Setup</permission>
     </configlet>
 </object>
