@@ -22,6 +22,7 @@ from zope.event import notify
 from zope.interface import implements
 from zope.lifecycleevent import ObjectModifiedEvent
 from zope.schema import getFieldsInOrder
+from zope.site.hooks import getSite
 
 
 class IListTile(IPersistentCoverTile):
@@ -107,6 +108,7 @@ class ListTile(PersistentCoverTile):
         # always get the latest data
         uuids = ITileDataManager(self).get().get('uuids', None)
 
+        catalog = getToolByName(getSite(), 'portal_catalog', None)
         result = []
         if uuids:
             uuids = [uuids] if type(uuids) == str else uuids
@@ -115,7 +117,9 @@ class ListTile(PersistentCoverTile):
                 if obj:
                     result.append(obj)
                 else:
-                    self.remove_item(uid)
+                    brain = catalog.unrestrictedSearchResults(UID=uid)
+                    if not brain:
+                        self.remove_item(uid)
         return result[:self.limit]
 
     def is_empty(self):
