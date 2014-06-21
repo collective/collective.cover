@@ -6,6 +6,10 @@ There's a frood who really knows where his towel is.
 1.0a9 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Unpublished content was disappearing from the list tile after access from
+  anonymous user (fixes `#412`_).
+  [adriana-rv, hvelarde]
+
 - Allow Site Administrator role to manage Cover control panel (closes `#423`_)
   [ericof]
 
@@ -513,6 +517,7 @@ There's a frood who really knows where his towel is.
 .. _`#398`: https://github.com/collective/collective.cover/issues/398
 .. _`#407`: https://github.com/collective/collective.cover/issues/407
 .. _`#411`: https://github.com/collective/collective.cover/issues/411
+.. _`#412`: https://github.com/collective/collective.cover/issues/412
 .. _`#413`: https://github.com/collective/collective.cover/issues/413
 .. _`#415`: https://github.com/collective/collective.cover/issues/415
 .. _`#421`: https://github.com/collective/collective.cover/issues/421
