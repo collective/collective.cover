@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from AccessControl import Unauthorized
 from collective.cover import _
+from collective.cover.config import PROJECTNAME
 from collective.cover.interfaces import ICoverUIDsProvider
 from collective.cover.interfaces import ITileEditForm
 from collective.cover.tiles.base import IPersistentCoverTile
@@ -22,6 +23,10 @@ from zope.event import notify
 from zope.interface import implements
 from zope.lifecycleevent import ObjectModifiedEvent
 from zope.schema import getFieldsInOrder
+
+import logging
+
+logger = logging.getLogger(PROJECTNAME)
 
 
 class IListTile(IPersistentCoverTile):
@@ -107,22 +112,29 @@ class ListTile(PersistentCoverTile):
         # always get the latest data
         uuids = ITileDataManager(self).get().get('uuids', None)
 
-        result = []
+        results, remove = [], []
         if uuids:
-            uuids = [uuids] if type(uuids) == str else uuids
             for uid in uuids:
                 obj = uuidToObject(uid)
                 if obj:
-                    result.append(obj)
+                    results.append(obj)
                 else:
                     # maybe the user has no permission to access the object
                     # so we try to get it bypassing the restrictions
                     catalog = api.portal.get_tool('portal_catalog')
                     brain = catalog.unrestrictedSearchResults(UID=uid)
                     if not brain:
-                        # the object was deleted; remove it from the list
-                        self.remove_item(uid)
-        return result[:self.limit]
+                        # the object was deleted; remove it from the tile
+                        # we deal with this below as you can't modify the
+                        # list directly as it's been used on the for loop
+                        remove.append(uid)
+
+            for uid in remove:
+                self.remove_item(uid)
+                logger.debug(
+                    'Nonexistent object {0} removed from tile'.format(uid))
+
+        return results[:self.limit]
 
     def is_empty(self):
         return self.results() == []

@@ -159,6 +159,13 @@ class ListTileTestCase(TestTileMixin, unittest.TestCase):
         # for the test user, the first 5 objects should be still there
         login(self.portal, TEST_USER_NAME)
         results = self.tile.results()
-        self.assertEqual(len(results), 0)
+        self.assertEqual(len(results), 5)
         for i in range(1, 6):
+            self.assertIn(folder[str(i)], results)
+
+        # delete one object; it should be removed from the tile also
+        api.content.delete(folder['1'])
+        results = self.tile.results()
+        self.assertEqual(len(results), 5)
+        for i in range(2, 7):
             self.assertIn(folder[str(i)], results)
