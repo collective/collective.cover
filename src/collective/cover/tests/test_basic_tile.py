@@ -141,8 +141,9 @@ class BasicTileTestCase(TestTileMixin, unittest.TestCase):
             '@@{0}/{1}'.format('collective.cover.basic', 'test'))
         tile.is_empty()
         rendered = tile()
-        # Now we gracefully ignore the lack of original image
-        self.assertNotIn('@@images', rendered)
+        # if deleted object, the image should still show since it was
+        # copied over
+        self.assertIn('@@images', rendered)
 
     def test_basic_tile_render(self):
         obj = self.portal['my-news-item']
@@ -240,8 +241,7 @@ class BasicTileTestCase(TestTileMixin, unittest.TestCase):
         self.tile.populate_with_object(obj)
         rendered = self.tile()
 
-        # old code copy the image
-        self.assertNotIn('test/@@images', rendered)
+        self.assertIn('test/@@images', rendered)
 
     def test_basic_tile_purge_cache(self):
         provideHandler(queuePurge)

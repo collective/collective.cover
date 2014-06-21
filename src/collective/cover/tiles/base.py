@@ -23,6 +23,7 @@ from plone.autoform import directives as form
 from plone.memoize import view
 from plone.namedfile.interfaces import INamedImage
 from plone.namedfile.interfaces import INamedImageField
+from plone.namedfile import NamedBlobImage
 from plone.namedfile.scaling import ImageScale as BaseImageScale
 from plone.namedfile.scaling import ImageScaling as BaseImageScaling
 from plone.namedfile.utils import set_headers
@@ -335,9 +336,58 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
 
         return allowed
 
+    @property
+    def has_image(self):
+        return self.data.get('image', None) is not None
+
+    @property
+    def scale(self):
+        tile_conf = self.get_tile_configuration()
+        image_conf = tile_conf.get('image', None)
+        if image_conf:
+            scale = image_conf['imgsize']
+            if scale == '_original':
+                return None
+            # scale string is something like: 'mini 200:200'
+            return scale.split(' ')[0]  # we need the name only: 'mini'
+
+    def get_image_data(self, obj):
+        """
+        get image data from obj we're populating the tile from
+        """
+        image = None
+        # if has image, store a copy of its data
+        if self._has_image_field(obj) and self._field_is_visible('image'):
+            scales = obj.restrictedTraverse('@@images')
+            image = scales.scale('image', None)
+
+        if image is not None and image != '':
+            if isinstance(image.data, NamedBlobImage):
+                # Dexterity
+                image = image.data
+            else:
+                # Archetypes
+                data = image.data
+                if hasattr(data, 'data'):  # image data weirdness...
+                    data = data.data
+                image = NamedBlobImage(data)
+        return image
+
+    def clear_scales(self):
+        """
+        clear scales from storage
+        """
+        storage = AnnotationStorage(self)
+        for key in storage.keys():
+            try:
+                del storage[key]
+            except KeyError:
+                pass
+
 
 # XXX: these are views, we should move it away from this module
 # Image scale support for tile images
+
 
 class AnnotationStorage(BaseAnnotationStorage):
     """ An abstract storage for image scale data using annotations and

@@ -112,7 +112,12 @@ class BasicTile(PersistentCoverTile):
             'uuid': IUUID(obj, None),  # XXX: can we get None here? see below
             'date': True,
             'subjects': True,
+            'image': self.get_image_data(obj)
         }
+
+        if data['image']:
+            # clear scales if new image is getting saved
+            self.clear_scales()
 
         # TODO: if a Dexterity object does not have the IReferenceable
         # behaviour enable then it will not work here
