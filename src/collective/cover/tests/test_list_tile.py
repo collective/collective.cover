@@ -4,6 +4,10 @@ from collective.cover.tests.base import TestTileMixin
 from collective.cover.tiles.list import IListTile
 from collective.cover.tiles.list import ListTile
 from mock import Mock
+from plone import api
+from plone.app.testing import login
+from plone.app.testing import logout
+from plone.app.testing import TEST_USER_NAME
 from plone.tiles.interfaces import ITileDataManager
 from plone.uuid.interfaces import IUUID
 
@@ -129,3 +133,32 @@ class ListTileTestCase(TestTileMixin, unittest.TestCase):
         self.tile.set_tile_configuration(tile_conf)
         expected = '<h1><a href="http://nohost/plone/my-news-item">Test news item</a></h1>'
         self.assertEqual(self.tile._get_title_tag(item), expected)
+
+    def test_results(self):
+        # set standard workflow for News Items
+        wt = self.portal['portal_workflow']
+        wt.setChainForPortalTypes(['News Item'], 'simple_publication_workflow')
+        # create some testing content and add it to the tile
+        with api.env.adopt_roles(['Manager']):
+            folder = api.content.create(self.portal, 'Folder', id='test')
+        for i in range(1, 10):
+            obj = api.content.create(folder, 'News Item', id=str(i))
+            self.tile.populate_with_object(obj)
+
+        # tile should list the first 5 objects
+        results = self.tile.results()
+        self.assertEqual(len(results), 5)
+        for i in range(1, 6):
+            self.assertIn(folder[str(i)], results)
+
+        # for an anonymous user, no content is returned
+        logout()
+        results = self.tile.results()
+        self.assertEqual(len(results), 0)
+
+        # for the test user, the first 5 objects should be still there
+        login(self.portal, TEST_USER_NAME)
+        results = self.tile.results()
+        self.assertEqual(len(results), 0)
+        for i in range(1, 6):
+            self.assertIn(folder[str(i)], results)
