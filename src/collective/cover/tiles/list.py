@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 from AccessControl import Unauthorized
 from collective.cover import _
 from collective.cover.interfaces import ICoverUIDsProvider
@@ -7,6 +6,7 @@ from collective.cover.interfaces import ITileEditForm
 from collective.cover.tiles.base import IPersistentCoverTile
 from collective.cover.tiles.base import PersistentCoverTile
 from collective.cover.tiles.configuration_view import IDefaultConfigureForm
+from plone import api
 from plone.app.uuid.utils import uuidToObject
 from plone.directives import form
 from plone.memoize import view
@@ -22,7 +22,6 @@ from zope.event import notify
 from zope.interface import implements
 from zope.lifecycleevent import ObjectModifiedEvent
 from zope.schema import getFieldsInOrder
-from zope.site.hooks import getSite
 
 
 class IListTile(IPersistentCoverTile):
@@ -108,7 +107,6 @@ class ListTile(PersistentCoverTile):
         # always get the latest data
         uuids = ITileDataManager(self).get().get('uuids', None)
 
-        catalog = getToolByName(getSite(), 'portal_catalog', None)
         result = []
         if uuids:
             uuids = [uuids] if type(uuids) == str else uuids
@@ -117,8 +115,12 @@ class ListTile(PersistentCoverTile):
                 if obj:
                     result.append(obj)
                 else:
+                    # maybe the user has no permission to access the object
+                    # so we try to get it bypassing the restrictions
+                    catalog = api.portal.get_tool('portal_catalog')
                     brain = catalog.unrestrictedSearchResults(UID=uid)
                     if not brain:
+                        # the object was deleted; remove it from the list
                         self.remove_item(uid)
         return result[:self.limit]
 
