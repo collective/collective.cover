@@ -342,6 +342,12 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
 
     @property
     def scale(self):
+        """Return the thumbnail scale to be used on the image field of the
+        tile (if it has one).
+
+        :returns: scale
+        :rtype: string or None
+        """
         tile_conf = self.get_tile_configuration()
         image_conf = tile_conf.get('image', None)
         if image_conf:
@@ -352,8 +358,12 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
             return scale.split(' ')[0]  # we need the name only: 'mini'
 
     def get_image_data(self, obj):
-        """
-        get image data from obj we're populating the tile from
+        """Get image data from the object used to populate the tile.
+
+        :param obj: object used to populate the tile
+        :type obj: content type instance
+        :returns: image
+        :rtype: NamedBlobImage instance or None
         """
         image = None
         # if has image, store a copy of its data
@@ -374,9 +384,7 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
         return image
 
     def clear_scales(self):
-        """
-        clear scales from storage
-        """
+        """Clear scales from storage."""
         storage = AnnotationStorage(self)
         for key in storage.keys():
             try:
@@ -387,8 +395,6 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
 
 # XXX: these are views, we should move it away from this module
 # Image scale support for tile images
-
-
 class AnnotationStorage(BaseAnnotationStorage):
     """ An abstract storage for image scale data using annotations and
         implementing :class:`IImageScaleStorage`. Image data is stored as an
