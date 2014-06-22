@@ -119,9 +119,5 @@ class BasicTile(PersistentCoverTile):
             # clear scales if new image is getting saved
             self.clear_scales()
 
-        # TODO: if a Dexterity object does not have the IReferenceable
-        # behaviour enable then it will not work here
-        # we need to figure out how to enforce the use of
-        # plone.app.referenceablebehavior
         data_mgr = ITileDataManager(self)
         data_mgr.set(data)
