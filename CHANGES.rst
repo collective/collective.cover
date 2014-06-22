@@ -6,6 +6,11 @@ There's a frood who really knows where his towel is.
 1.0a9 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Basic tile implementation was not copying images from objects when the tile
+  was populated. This was causing an error when an image was removed from the
+  original object (fixes `#426`_).
+  [vangheem]
+
 - Unpublished content was disappearing from the list tile after access from
   anonymous user (fixes `#412`_).
   [adriana-rv, hvelarde]
@@ -522,4 +527,5 @@ There's a frood who really knows where his towel is.
 .. _`#415`: https://github.com/collective/collective.cover/issues/415
 .. _`#421`: https://github.com/collective/collective.cover/issues/421
 .. _`#423`: https://github.com/collective/collective.cover/issues/423
+.. _`#426`: https://github.com/collective/collective.cover/issues/426
 .. _`PloneFormGen`: https://pypi.python.org/pypi/Products.PloneFormGen
