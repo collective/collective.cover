@@ -90,11 +90,11 @@ msgstr ""
 #: collective/cover/tiles/configuration_view.py:188
 #: collective/cover/tiles/edit.py:77
 msgid "Cancel"
-msgstr ""
+msgstr "取消"
 
 #: tiles/configure.zcml
 msgid "Carousel Tile"
-msgstr ""
+msgstr "輪播磚"
 
 #: collective/cover/controlpanel.py:57
 msgid "Choose a grid system"
@@ -106,7 +106,7 @@ msgstr ""
 
 #: tiles/configure.zcml
 msgid "Collection Tile"
-msgstr ""
+msgstr "群集磚"
 
 #: collective/cover/browser/templates/layoutedit.pt:49
 msgid "Column"
@@ -130,7 +130,7 @@ msgstr ""
 
 #: collective/cover/profiles/default/types/collective.cover.content.xml
 msgid "Cover"
-msgstr ""
+msgstr "封面"
 
 #: collective/cover/models/cover.xml
 msgid "Cover Layout"
@@ -139,13 +139,13 @@ msgstr ""
 #: collective/cover/controlpanel.py:66
 #: collective/cover/profiles/default/controlpanel.xml
 msgid "Cover Settings"
-msgstr ""
+msgstr "封面設定"
 
 #: collective/cover/tiles/basic.py:39
 #: collective/cover/tiles/collection.py:46
 #: collective/cover/tiles/list.py:69
 msgid "Date"
-msgstr ""
+msgstr "日期"
 
 #: collective/cover/layout.py:240
 msgid "Deco (16 columns, default)"
@@ -155,7 +155,7 @@ msgstr ""
 #: collective/cover/tiles/collection.py:39
 #: collective/cover/tiles/embed.py:24
 msgid "Description"
-msgstr ""
+msgstr "描述"
 
 #: collective/cover/tiles/file.py:52
 msgid "Download link"
@@ -171,7 +171,7 @@ msgstr ""
 
 #: collective/cover/layout_templates/tile.pt:50
 msgid "Edit"
-msgstr ""
+msgstr "編輯"
 
 #: collective/cover/tiles/carousel.py:42
 #: collective/cover/tiles/list.py:30
@@ -180,11 +180,11 @@ msgstr ""
 
 #: tiles/configure.zcml
 msgid "Embedding Tile"
-msgstr ""
+msgstr "內嵌磚"
 
 #: collective/cover/tiles/embed.py:14
 msgid "Embedding code"
-msgstr ""
+msgstr "內嵌程式碼"
 
 #: collective/cover/controlpanel.py:47
 msgid "Enter a list of styles to appear in the style pulldown. Format is title|className, one per line."
@@ -346,7 +346,7 @@ msgstr ""
 
 #: tiles/configure.zcml
 msgid "Rich Text Tile"
-msgstr ""
+msgstr "內文磚"
 
 #: collective/cover/browser/templates/layoutedit.pt:46
 msgid "Row"
@@ -392,7 +392,7 @@ msgstr ""
 
 #: collective/cover/tiles/configuration_widgets/richtext.pt:50
 msgid "Text length"
-msgstr ""
+msgstr "文字長度"
 
 #: collective/cover/tiles/templates/collection.pt:23
 msgid "The collection doesn't have any results."
@@ -420,25 +420,25 @@ msgstr ""
 
 #: collective/cover/tiles/list.py:73
 msgid "Tile Title"
-msgstr ""
+msgstr "標題"
 
 #: collective/cover/tiles/configuration_view.py:191
 msgid "Tile configuration cancelled."
-msgstr ""
+msgstr "設定已取消。"
 
 #: collective/cover/tiles/configuration_view.py:180
 msgid "Tile configuration saved."
-msgstr ""
+msgstr "設定已儲存。"
 
 #: collective/cover/tiles/edit.py:70
 msgid "Tile saved"
-msgstr ""
+msgstr "編輯已儲存"
 
 #: collective/cover/tiles/banner.py:20
 #: collective/cover/tiles/basic.py:22
 #: collective/cover/tiles/collection.py:32
 msgid "Title"
-msgstr ""
+msgstr "標題"
 
 #: collective/cover/tiles/banner.py:30
 msgid "URL"
@@ -556,5 +556,5 @@ msgstr ""
 
 #: collective/cover/layout_templates/groupselect.pt:18
 msgid "save"
-msgstr ""
+msgstr "儲存"
 
