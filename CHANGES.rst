@@ -6,6 +6,9 @@ There's a frood who really knows where his towel is.
 1.0a9 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Add Traditional Chinese translation.
+  [l34marr]
+
 - Basic tile implementation was not copying images from objects when the tile
   was populated. This was causing an error when an image was removed from the
   original object (fixes `#426`_).
