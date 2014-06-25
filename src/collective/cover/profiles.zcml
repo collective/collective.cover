@@ -94,9 +94,10 @@
 
     <genericsetup:upgradeStep
         title="issue_423"
-        description="Change permission for managing Cover's control panel."
-        handler=".upgrades.change_controlpanel_permission"
+        description="Allow Site Administrator to access configlet."
+        handler=".upgrades.change_configlet_permissions"
         />
+
   </genericsetup:upgradeSteps>
 
 </configure>

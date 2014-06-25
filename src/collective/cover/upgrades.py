@@ -111,10 +111,9 @@ def cook_javascript_resources(context):
     logger.info('Javascript resources were cooked')
 
 
-def change_controlpanel_permission(context):
-    """Change permission on configlet."""
+def change_configlet_permissions(context):
+    """Allow Site Administrator to access configlet."""
     cptool = api.portal.get_tool('portal_controlpanel')
-    for action in cptool._actions:
-        if action.id == 'cover':
-            action.permissions = ('collective.cover: Setup', )
-            logger.info('configlet permissions updated')
+    configlet = cptool.getActionObject('Products/cover')
+    configlet.permissions = ('collective.cover: Setup',)
+    logger.info('configlet permissions updated')
