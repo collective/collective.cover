@@ -189,3 +189,29 @@ class Upgrade7to8TestCase(UpgradeTestCaseBase):
         title = u'issue_371'
         step = self._get_upgrade_step(title)
         self.assertIsNotNone(step)
+
+
+class Upgrade8to9TestCase(UpgradeTestCaseBase):
+
+    def setUp(self):
+        UpgradeTestCaseBase.setUp(self, u'8', u'9')
+
+    def test_upgrade_to_9_registrations(self):
+        version = self.setup.getLastVersionForProfile(self.profile_id)[0]
+        self.assertTrue(version >= self.to_version)
+        self.assertEqual(self._how_many_upgrades_to_do(), 1)
+
+    def test_issue_423(self):
+        title = u'issue_423'
+        step = self._get_upgrade_step(title)
+        self.assertIsNotNone(step)
+
+        # simulate state on previous version
+        cptool = api.portal.get_tool('portal_controlpanel')
+        configlet = cptool.getActionObject('Products/cover')
+        configlet.permissions = ('cmf.ManagePortal',)
+
+        # run the upgrade step to validate the update
+        self._do_upgrade_step(step)
+        permissions = configlet.permissions
+        self.assertEqual(permissions, ('collective.cover: Setup',))
