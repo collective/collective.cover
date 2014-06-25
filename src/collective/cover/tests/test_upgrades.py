@@ -199,7 +199,7 @@ class Upgrade8to9TestCase(UpgradeTestCaseBase):
     def test_upgrade_to_9_registrations(self):
         version = self.setup.getLastVersionForProfile(self.profile_id)[0]
         self.assertTrue(version >= self.to_version)
-        self.assertEqual(self._how_many_upgrades_to_do(), 1)
+        self.assertEqual(self._how_many_upgrades_to_do(), 3)
 
     def test_issue_423(self):
         title = u'issue_423'
