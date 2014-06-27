@@ -52,9 +52,18 @@ These are some of the sites using ``collective.cover``:
 * `Clean Clothes Campaign <http://www.cleanclothes.org/>`_ (NL)
 * `Conselho Federal de Administração <http://www.cfa.org.br/>`_ (BR)
 * `La Jornada <http://www.jornada.unam.mx/ultimas>`_ (MX)
+* `Palácio do Planalto <http://www.planalto.gov.br/>`_ (BR)
 * `Portal Brasil <http://www.brasil.gov.br/>`_ (BR)
 * `Rede Brasil Atual <http://www.redebrasilatual.com.br/>`_ (BR)
 * `Venezolana de Televisión <http://www.vtv.gov.ve/>`_ (VE)
+
+.. figure:: https://raw.github.com/collective/collective.cover/master/cover.png
+    :align: center
+    :height: 640px
+    :width: 490px
+    :target: http://www.planalto.gov.br/
+
+    The Presidency of Brazil uses ``collective.cover`` on the front page of its site.
 
 Mostly Harmless
 ---------------
