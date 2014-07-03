@@ -8,6 +8,7 @@ from plone.app.textfield.interfaces import ITransformer
 from plone.dexterity.content import Item
 from plone.indexer import indexer
 from plone.registry.interfaces import IRegistry
+from plone.tiles.interfaces import ITileDataManager
 from Products.CMFPlone.utils import safe_unicode
 from Products.GenericSetup.interfaces import IDAVAware
 from zope.component import getUtility
@@ -68,13 +69,54 @@ class Cover(Item):
         return tiles
 
     def list_tiles(self, types=None):
-        """Return a list of tile id the layout.
+        """Return a list of tile id on the layout.
 
         :param types: tile types to be filtered; if none, return all tiles
-        :type types: str or list
+        :type types: string or list
         :returns: a list of tile ids
+        :rtype: list of strings
         """
         return [t['id'] for t in self.get_tiles(types)]
+
+    def get_tile_type(self, id):
+        """Get the type of the tile defined by the id.
+
+        :param id: id of the tile we want to get its type
+        :type id: string
+        :returns: the tile type
+        :rtype: string
+        :raises:
+            ValueError
+        """
+        tile = [t for t in self.get_tiles() if t['id'] == id]
+        assert len(tile) in (0, 1)
+        if len(tile) == 0:
+            raise ValueError
+        return tile[0]['type']
+
+    def get_tile(self, id):
+        """Get the tile defined by id.
+
+        :param id: id of the tile we want to get
+        :type id: string
+        :returns: a tile
+        :rtype: PersistentTile instance
+        """
+        type = str(self.get_tile_type(id))
+        id = str(id)
+        return self.restrictedTraverse('{0}/{1}'.format(type, id))
+
+    def set_tile_data(self, id, **data):
+        """Set data attributes on the tile defined by id.
+
+        :param id: id of the tile we want to modify its data
+        :type id: string
+        :param data: a dictionary of attributes we want to set on the tile
+        :type data: dictionary
+        """
+        tile = self.get_tile(id)
+        data_mgr = ITileDataManager(tile)
+        data_mgr.set(data)
 
 
 @grok.subscribe(ICover, IObjectAddedEvent)

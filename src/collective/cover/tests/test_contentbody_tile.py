@@ -35,6 +35,9 @@ class ContentBodyTileTestCase(TestTileMixin, unittest.TestCase):
     def test_accepted_content_types(self):
         self.assertEqual(self.tile.accepted_ct(), ['Document', 'News Item'])
 
+    def test_is_empty(self):
+        self.assertTrue(self.tile.is_empty)
+
     def test_empty_body(self):
         obj = self.portal['my-news-item']
         self.tile.populate_with_object(obj)
@@ -48,7 +51,7 @@ class ContentBodyTileTestCase(TestTileMixin, unittest.TestCase):
         self.assertEqual(self.tile.body(), text)
 
     def test_render_empty(self):
-        msg = 'Please drag&amp;drop some content here to populate the tile.'
+        msg = 'Drag&amp;drop some content to populate the tile.'
 
         self.tile.is_compose_mode = Mock(return_value=True)
         self.assertIn(msg, self.tile())
@@ -78,7 +81,10 @@ class ContentBodyTileTestCase(TestTileMixin, unittest.TestCase):
         self.portal.manage_delObjects(['my-news-item', ])
 
         self.tile.is_compose_mode = Mock(return_value=True)
-        self.assertIn('Please drag&amp;drop', self.tile())
+        self.assertIn(
+            'This item does not have any body text.',
+            self.tile()
+        )
 
     def test_render_restricted_object(self):
         text = '<h2>Peace of mind</h2>'
@@ -89,7 +95,10 @@ class ContentBodyTileTestCase(TestTileMixin, unittest.TestCase):
         obj.manage_permission('View', [], 0)
 
         self.tile.is_compose_mode = Mock(return_value=True)
-        self.assertIn('Please drag&amp;drop', self.tile())
+        self.assertIn(
+            'This item does not have any body text.',
+            self.tile()
+        )
 
     def test_delete_tile_persistent_data(self):
         permissions = getMultiAdapter(
@@ -112,3 +121,10 @@ class ContentBodyTileTestCase(TestTileMixin, unittest.TestCase):
         # Now we should not see the stored data anymore
         self.assertNotIn('plone.tiles.permission.test', annotations)
         self.assertNotIn('plone.tiles.configuration.test', annotations)
+
+    def test_item_url(self):
+        obj = self.portal['my-news-item']
+
+        self.tile.populate_with_object(obj)
+        url = self.tile.item_url()
+        self.assertEqual(url, obj.absolute_url())

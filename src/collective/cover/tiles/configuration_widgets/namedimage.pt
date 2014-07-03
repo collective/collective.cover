@@ -64,7 +64,9 @@
                     tal:attributes="value value;
                                     selected python:stored_data.get('imgsize', None) == value and 'selected' or None"
                     tal:content="value">Image size</option>
-            <option value="_original">Original Size</option>
+            <option value="_original"
+                    tal:attributes="selected python:stored_data.get('imgsize', None) == '_original' and 'selected' or None"
+                    >Original Size</option>
         </select>
 
         <span i18n:translate="">Position</span>

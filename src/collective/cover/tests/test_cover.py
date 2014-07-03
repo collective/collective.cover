@@ -97,42 +97,6 @@ class CoverIntegrationTestCase(unittest.TestCase):
     # TODO: add test for plone.app.relationfield.behavior.IRelatedItems
 
 
-class CoverAPITestCase(unittest.TestCase):
-
-    layer = INTEGRATION_TESTING
-
-    def _create_cover(self, id, layout):
-        with api.env.adopt_roles(['Manager']):
-            return api.content.create(
-                self.portal, 'collective.cover.content',
-                id,
-                template_layout=layout,
-            )
-
-    def setUp(self):
-        self.portal = self.layer['portal']
-
-    def test_get_tiles(self):
-        cover = self._create_cover('c1', 'Empty layout')
-        self.assertEqual(len(cover.get_tiles()), 0)
-        cover = self._create_cover('c2', 'Layout A')
-        self.assertEqual(len(cover.get_tiles()), 6)
-        types = u'collective.cover.carousel'
-        self.assertEqual(len(cover.get_tiles(types)), 1)
-        types = [u'collective.cover.carousel', u'collective.cover.basic']
-        self.assertEqual(len(cover.get_tiles(types)), 4)
-
-    def test_list_tiles(self):
-        cover = self._create_cover('c1', 'Empty layout')
-        self.assertEqual(len(cover.list_tiles()), 0)
-        cover = self._create_cover('c2', 'Layout A')
-        self.assertEqual(len(cover.list_tiles()), 6)
-        types = u'collective.cover.carousel'
-        self.assertEqual(len(cover.list_tiles(types)), 1)
-        types = [u'collective.cover.carousel', u'collective.cover.basic']
-        self.assertEqual(len(cover.list_tiles(types)), 4)
-
-
 class CoverMultipleGridsIntegrationTestCase(unittest.TestCase):
 
     layer = MULTIPLE_GRIDS_INTEGRATION_TESTING

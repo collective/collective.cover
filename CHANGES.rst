@@ -3,8 +3,45 @@ Changelog
 
 There's a frood who really knows where his towel is.
 
-1.0a9 (unreleased)
+1.0a10 (unreleased)
+^^^^^^^^^^^^^^^^^^^
+
+- Nothing changed yet.
+
+
+1.0a9 (2014-06-27)
 ^^^^^^^^^^^^^^^^^^
+
+- Add Traditional Chinese translation.
+  [l34marr]
+
+- Basic tile implementation was not copying images from objects when the tile
+  was populated. This was causing an error when an image was removed from the
+  original object (fixes `#426`_).
+  [vangheem]
+
+- Unpublished content was disappearing from the list tile after access from
+  anonymous user (fixes `#412`_).
+  [adriana-rv, hvelarde]
+
+- Allow Site Administrator role to manage Cover control panel (closes `#423`_)
+  [ericof]
+
+- Fix showing original size of images in banner and carousel tile.
+  [maurits]
+
+- Improve python:view.is_compose_mode() tests in tile Zope Page Templates. This
+  test would return False when content in for example list tiles is reordered
+  deleted, or dropped on from the content chooser. (fixes `#421`_).
+  [fredvd]
+
+- Content body tile markup was changed to handle different conditions (empty
+  tile or not) in a saner way; a text indicating when the body text of an
+  item is empty was also added.
+  [hvelarde]
+
+- Added link in content body tile to related item (fixes `#415`_)
+  [kcleong]
 
 - Update jss.js to 0.6 and include minified version. This fixes the layout page
   rendering and column resizing on IE10+ which was broken. Jss.js creates on the
@@ -494,5 +531,10 @@ There's a frood who really knows where his towel is.
 .. _`#398`: https://github.com/collective/collective.cover/issues/398
 .. _`#407`: https://github.com/collective/collective.cover/issues/407
 .. _`#411`: https://github.com/collective/collective.cover/issues/411
+.. _`#412`: https://github.com/collective/collective.cover/issues/412
 .. _`#413`: https://github.com/collective/collective.cover/issues/413
+.. _`#415`: https://github.com/collective/collective.cover/issues/415
+.. _`#421`: https://github.com/collective/collective.cover/issues/421
+.. _`#423`: https://github.com/collective/collective.cover/issues/423
+.. _`#426`: https://github.com/collective/collective.cover/issues/426
 .. _`PloneFormGen`: https://pypi.python.org/pypi/Products.PloneFormGen

@@ -37,9 +37,7 @@ Test Collection Tile
     Open Content Chooser
     Drag And Drop  css=${collection_selector}  css=${tile_selector}
     Wait Until Page Contains  The collection doesn't have any results
-    # FIXME: there is a bug here as the first time this message is not shown
-    #Page Should Contain  Go to related collection
-    Page Should Not Contain  Go to related collection
+    Page Should Contain  Go to related collection
 
     # move to the default view and check tile persisted
     Click Link  link=View
@@ -68,6 +66,8 @@ Test Collection Tile
     Click Link  link=My collection
     Click Link  link=Edit
     Select From List  xpath=//select[@name="addindex"]  portal_type
+    # deal with AJAX delays
+    Wait Until Page Contains Element  xpath=//input[@value="Image"]
     Select Checkbox  xpath=//input[@value="Image"]
     Select From List  xpath=//select[@name="sort_on"]  getId
     Click Button  Save

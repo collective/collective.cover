@@ -112,11 +112,12 @@ class BasicTile(PersistentCoverTile):
             'uuid': IUUID(obj, None),  # XXX: can we get None here? see below
             'date': True,
             'subjects': True,
+            'image': self.get_image_data(obj)
         }
 
-        # TODO: if a Dexterity object does not have the IReferenceable
-        # behaviour enable then it will not work here
-        # we need to figure out how to enforce the use of
-        # plone.app.referenceablebehavior
+        if data['image']:
+            # clear scales if new image is getting saved
+            self.clear_scales()
+
         data_mgr = ITileDataManager(self)
         data_mgr.set(data)

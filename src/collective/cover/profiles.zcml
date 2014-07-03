@@ -87,4 +87,28 @@
         />
   </genericsetup:upgradeSteps>
 
+  <genericsetup:upgradeSteps
+      source="8"
+      destination="9"
+      profile="collective.cover:default">
+
+    <genericsetup:upgradeStep
+        title="issue_423"
+        description="Allow Site Administrator to access configlet."
+        handler=".upgrades.change_configlet_permissions"
+        />
+
+    <genericsetup:upgradeStep
+        title="Cook CSS resources"
+        description="There were changes in the CSS files, so we need to cook the resources."
+        handler=".upgrades.cook_css_resources"
+        />
+
+    <genericsetup:upgradeStep
+        title="Cook JS resources"
+        description="There were changes in the JS files, so we need to cook the resources."
+        handler=".upgrades.cook_javascript_resources"
+        />
+  </genericsetup:upgradeSteps>
+
 </configure>

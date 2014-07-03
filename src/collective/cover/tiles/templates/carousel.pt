@@ -23,7 +23,7 @@
       <img tal:define="thumbnail python:view.thumbnail(item);
                        uid python:view.get_uid(item);"
            tal:condition="python:thumbnail and uid"
-           tal:attributes="src thumbnail/url;
+           tal:attributes="src thumbnail/url|string:${item/absolute_url}/download;
                            width thumbnail/width;
                            height thumbnail/height;
                            data-title string:<a href='${item/absolute_url}'>${item/Title}</a>;

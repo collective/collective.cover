@@ -36,6 +36,14 @@ class PersistentCoverTileDataManager(PersistentTileDataManager):
                     fields[field_name].order = int(field_conf['order'])
 
     def set(self, data):
+        # when setting data, we need to purge scales/image data...
+        # XXX hack?
+        try:
+            scale_key = self.key.replace('.data.', '.scale.')
+            del self.annotations[scale_key]
+        except KeyError:
+            pass
+
         for k, v in data.items():
             if INamedImage.providedBy(v):
                 if (self.key not in self.annotations or

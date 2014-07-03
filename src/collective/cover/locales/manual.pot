@@ -115,7 +115,7 @@ msgid "Content Body Tile"
 msgstr ""
 
 #: tiles/configure.zcml
-msgid A tile that shows the body of a content type."
+msgid "A tile that shows the body of a content type."
 msgstr ""
 
 #: tiles/configure.zcml
