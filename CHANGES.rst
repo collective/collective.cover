@@ -6,7 +6,8 @@ There's a frood who really knows where his towel is.
 1.0a10 (unreleased)
 ^^^^^^^^^^^^^^^^^^^
 
-- Nothing changed yet.
+- Fix Rendering Cover Page outside its context.
+  [petschki]
 
 
 1.0a9 (2014-06-27)
@@ -71,7 +72,7 @@ There's a frood who really knows where his towel is.
 
 - Add RichText tiles to the SearchableText index of the cover.
   [thepjot]
-  
+
 - Re-enable item sorting on the carousel tile edit form. It was by accident
   disabled by removing the field on the list tile schema from which the
   carousel tile inherits.
