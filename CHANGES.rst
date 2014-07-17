@@ -6,6 +6,9 @@ There's a frood who really knows where his towel is.
 1.0a10 (unreleased)
 ^^^^^^^^^^^^^^^^^^^
 
+- Fix rendering of cover page outside its context (fixes `#430`_).
+  [petschki]
+
 - Fix ``RemoveItemFromListTile`` helper browser view to avoid failure to
   remove an object when the tile is not a List Tile but a subclass of it.
   [hvelarde]
@@ -543,4 +546,5 @@ There's a frood who really knows where his towel is.
 .. _`#421`: https://github.com/collective/collective.cover/issues/421
 .. _`#423`: https://github.com/collective/collective.cover/issues/423
 .. _`#426`: https://github.com/collective/collective.cover/issues/426
+.. _`#430`: https://github.com/collective/collective.cover/issues/430
 .. _`PloneFormGen`: https://pypi.python.org/pypi/Products.PloneFormGen
