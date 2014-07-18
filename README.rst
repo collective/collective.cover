@@ -153,6 +153,7 @@ To enable this package in a buildout-based installation:
     plone.app.jquery = 1.7.2
     plone.app.jquerytools = 1.5.7
     plone.app.z3cform = 0.6.3
+    plone.directives.form = 1.1
 
 After updating the configuration you need to run ''bin/buildout'', which will
 take care of updating your system.
