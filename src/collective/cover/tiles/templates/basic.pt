@@ -6,7 +6,7 @@
 
 <body tal:define="is_empty nocall:view/is_empty;
                   toLocalizedTime nocall:context/@@plone/toLocalizedTime">
-  <p tal:condition="is_empty" i18n:translate="">
+  <p tal:condition="python: is_empty and view.is_compose_mode()" i18n:translate="">
     Please drag&amp;drop some content here to populate the tile.
   </p>
 
@@ -36,18 +36,16 @@
           </h4>
       </tal:title>
 
-      <tal:image condition="python:field['id'] == 'image'"
-                 define="scale python:field.get('scale', 'large');
-                         position python:field.get('position', '');">
-
+      <tal:image condition="python:field['id'] == 'image' and view.has_image"
+                 define="scale view/scale;
+                         scales view/@@images;
+                         thumbnail python:scales.scale('image', scale=scale)">
         <a class="imag" tal:attributes="href view/getURL;">
-          <img tal:define="scales view/@@images;
-                               thumbnail python: scales.scale('image', scale=scale);"
-               tal:condition="thumbnail"
+          <img tal:condition="thumbnail"
                tal:attributes="src thumbnail/url;
                                width thumbnail/width;
                                height thumbnail/height;
-                               class position;
+                               class python:field.get('position', '');
                                alt view/data/title" />
         </a>
       </tal:image>

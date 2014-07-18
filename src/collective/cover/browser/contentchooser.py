@@ -9,23 +9,23 @@ from plone.app.layout.navigation.root import getNavigationRoot
 from plone.i18n.normalizer.interfaces import IIDNormalizer
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.interfaces._content import IFolderish
-from Products.CMFCore.utils import getToolByName
+from plone import api
 from Products.CMFPlone.browser.navtree import SitemapNavtreeStrategy
 from Products.Five.browser import BrowserView
 from zope.browserpage.viewpagetemplatefile import ViewPageTemplateFile
-from zope.component import getMultiAdapter
 from zope.component import getUtility
 from zope.component import queryUtility
 from zope.interface import Interface
 from zope.schema.interfaces import IVocabularyFactory
 from zope.schema.vocabulary import SimpleTerm
 from Products.CMFPlone.PloneBatch import Batch
+from Products.CMFPlone.utils import safe_unicode
 
 import json
 
 VOCAB_ID = u'plone.app.vocabularies.ReallyUserFriendlyTypes'
 
-grok.templatedir("contentchooser_templates")
+grok.templatedir('contentchooser_templates')
 
 
 # XXX: what's the purpose of this view?
@@ -54,7 +54,7 @@ class SelectContent(grok.View):
         pass
 
     def post_url(self):
-        return self.context.absolute_url() + "/@@content-search"
+        return self.context.absolute_url() + '/@@content-search'
 
 
 class ContentSearch(grok.View):
@@ -80,7 +80,7 @@ class ContentSearch(grok.View):
                              page=page,
                              b_size=b_size)
         self.has_next = result.next is not None
-        self.nextpage = result.pagenumber + 1
+        self.nextpage = result.pagenumber
         result = [strategy.decoratorFactory({'item': node}) for node in result]
         self.level = 1
         self.children = result
@@ -89,21 +89,21 @@ class ContentSearch(grok.View):
         return self.list_template(children=self.children, level=1)
 
     def search(self, query=None, page=0, b_size=10, uids=None):
-        catalog = getToolByName(self.context, 'portal_catalog')
+        catalog = api.portal.get_tool('portal_catalog')
         registry = getUtility(IRegistry)
         settings = registry.forInterface(ICoverSettings)
         searchable_types = settings.searchable_content_types
 
-        #temporary we'll only list published elements
+        # temporary we'll only list published elements
         catalog_query = {'sort_on': 'effective', 'sort_order': 'descending'}
         catalog_query['portal_type'] = searchable_types
 
         if query:
-            catalog_query = {'SearchableText': u'{0}*'.format(query)}
+            catalog_query = {'SearchableText': u'{0}*'.format(safe_unicode(query))}
 
         # XXX: not implemented, this is needed?
-#        if uids:
-#            catalog_query['UID'] = uids
+        # if uids:
+        #     catalog_query['UID'] = uids
 
         results = catalog(**catalog_query)
         results = Batch(results, size=b_size, start=(page * b_size), orphan=0)
@@ -111,7 +111,7 @@ class ContentSearch(grok.View):
         return results
 
     def getTermByBrain(self, brain, real_value=True):
-        portal_tool = getToolByName(self.context, "portal_url")
+        portal_tool = api.portal.get_tool('portal_url')
         self.portal_path = portal_tool.getPortalPath()
         value = brain.getPath()[len(self.portal_path):]
         return SimpleTerm(value, token=brain.getPath(), title=brain.Title)
@@ -124,12 +124,8 @@ class SearchItemsBrowserView(BrowserView):
         """ Contructor """
         self.context = context
         self.request = request
-        self.catalog = getToolByName(self.context, 'portal_catalog')
-        self.plone_view = getMultiAdapter((self.context, self.request),
-                                          name=u'plone')
-        self.getIcon = self.plone_view.getIcon
-        self.registry = getUtility(IRegistry)
-        self.settings = self.registry.forInterface(ICoverSettings)
+        util = api.content.get_view(u'plone', self.context, self.request)
+        self.getIcon = util.getIcon
 
         # check if object is a folderish object, if not, get it's parent.
         if not IFolderish.providedBy(self.context):
@@ -140,12 +136,12 @@ class SearchItemsBrowserView(BrowserView):
     def _getCurrentValues(self):
         """Return enabled portal types"""
         vocab = queryUtility(IVocabularyFactory, name=VOCAB_ID)(self.context)
-        portal_types = getToolByName(self.context, 'portal_types', None)
+        portal_types = api.portal.get_tool('portal_types')
         result = []
         # the vocabulary returns the values sorted by their translated title
         for term in vocab._terms:
             value = portal_types[term.value].id  # portal_type
-            title = unicode(term.title)  # already translated title
+            title = safe_unicode(term.title)  # already translated title
             result.append((value, title))
 
         return result
@@ -185,7 +181,7 @@ class SearchItemsBrowserView(BrowserView):
         results = {}
 
         obj = self.obj
-        portal_catalog = getToolByName(obj, 'portal_catalog')
+        catalog = api.portal.get_tool('portal_catalog')
         normalizer = getUtility(IIDNormalizer)
 
         if 'filter_portal_types' in self.request.keys():
@@ -193,11 +189,11 @@ class SearchItemsBrowserView(BrowserView):
         else:
             self.filter_portal_types = [i[0] for i in self._getCurrentValues()]
 
-        if INavigationRoot.providedBy(obj) or (rooted == "True" and document_base_url[:-1] == obj.absolute_url()):
+        if INavigationRoot.providedBy(obj) or (rooted == 'True' and document_base_url[:-1] == obj.absolute_url()):
             results['parent_url'] = ''
         else:
             results['parent_url'] = aq_parent(obj).absolute_url()
-        if rooted == "True":
+        if rooted == 'True':
             results['path'] = self.getBreadcrumbs(results['parent_url'])
         else:
             # get all items from siteroot to context (title and url)
@@ -211,7 +207,7 @@ class SearchItemsBrowserView(BrowserView):
         if searchtext:
             catalog_query = {'SearchableText': '{0}*'.format(searchtext)}
 
-        for brain in portal_catalog(**catalog_query):
+        for brain in catalog(**catalog_query):
             catalog_results.append({
                 'id': brain.getId,
                 'uid': brain.UID or None,  # Maybe Missing.Value

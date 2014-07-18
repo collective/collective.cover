@@ -1,11 +1,19 @@
 # -*- coding: utf-8 -*-
-
+from plone.directives import form
+from zope.interface import Attribute
 from zope.interface import Interface
 
 
 class ICoverLayer(Interface):
     """ A layer specific for this add-on product.
     """
+
+
+class ICover(form.Schema):
+
+    """A composable page."""
+
+    form.model('models/cover.xml')
 
 
 class IJSONSearch(Interface):
@@ -35,3 +43,11 @@ class ICoverUIDsProvider(Interface):
 class ITileEditForm(Interface):
     """Custom EditForm interface for a tile.
     """
+
+
+class IGridSystem(Interface):
+    """Interface for classes that implement a grid system for collective
+    cover."""
+
+    title = Attribute('The user-visible title for this grid.')
+    ncolums = Attribute('Number of colums in a grid.')

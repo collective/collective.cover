@@ -9,28 +9,33 @@ from Acquisition import aq_inner
 from Acquisition import aq_parent
 from collective.cover import _
 from collective.cover.config import PROJECTNAME
+from collective.cover.controlpanel import ICoverSettings
 from collective.cover.tiles.configuration import ITilesConfigurationScreen
 from collective.cover.tiles.configuration_view import IDefaultConfigureForm
 from collective.cover.tiles.permissions import ITilesPermissions
 from persistent.dict import PersistentDict
+from plone import api
 from plone import tiles
 from plone.app.textfield.interfaces import ITransformer
 from plone.app.textfield.value import RichTextValue
 from plone.app.uuid.utils import uuidToObject
 from plone.autoform import directives as form
+from plone.memoize import view
 from plone.namedfile.interfaces import INamedImage
 from plone.namedfile.interfaces import INamedImageField
+from plone.namedfile import NamedBlobImage
 from plone.namedfile.scaling import ImageScale as BaseImageScale
 from plone.namedfile.scaling import ImageScaling as BaseImageScaling
 from plone.namedfile.utils import set_headers
 from plone.namedfile.utils import stream_data
+from plone.registry.interfaces import IRegistry
 from plone.rfc822.interfaces import IPrimaryFieldInfo
 from plone.scale.scale import scaleImage
 from plone.scale.storage import AnnotationStorage as BaseAnnotationStorage
+from plone.supermodel import model
 from plone.tiles.esi import ESITile
 from plone.tiles.interfaces import ITileDataManager
 from plone.tiles.interfaces import ITileType
-from Products.CMFCore.utils import getToolByName
 from z3c.caching.interfaces import IPurgePaths
 from ZODB.POSException import ConflictError
 from zope.annotation import IAnnotations
@@ -41,7 +46,6 @@ from zope.component import queryMultiAdapter
 from zope.component import queryUtility
 from zope.event import notify
 from zope.interface import implements
-from zope.interface import Interface
 from zope.lifecycleevent import ObjectModifiedEvent
 from zope.publisher.interfaces import NotFound
 from zope.schema import Choice
@@ -53,7 +57,7 @@ import logging
 logger = logging.getLogger(PROJECTNAME)
 
 
-class IPersistentCoverTile(Interface):
+class IPersistentCoverTile(model.Schema):
     """
     Base interface for tiles that go into the cover object
     """
@@ -62,7 +66,7 @@ class IPersistentCoverTile(Interface):
         title=_(u'CSS Class'),
         vocabulary='collective.cover.TileStyles',
         required=True,
-        default=u"tile-default",
+        default=u'tile-default',
     )
     form.omitted('css_class')
     form.no_omit(IDefaultConfigureForm, 'css_class')
@@ -80,8 +84,8 @@ class IPersistentCoverTile(Interface):
         """
 
     def accepted_ct():
-        """ Return a list of content types accepted by the tile or None if all
-        types are accepted.
+        """Return a list of content types accepted by the tile. By default,
+        all content types are acepted.
         """
 
     def get_tile_configuration():
@@ -132,24 +136,17 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
     css_class = None  # placeholder, we access it with tile's configuration
     # Short name for the tile.  Usually title minus 'Tile'.  Please
     # wrap this in _(...) so it can be translated.
-    short_name = u""
+    short_name = u''
 
     def populate_with_object(self, obj):
         if not self.isAllowedToEdit():
-            raise Unauthorized(_("You are not allowed to add content to "
-                                 "this tile"))
-
-    def replace_with_objects(self, obj):
-        if not self.isAllowedToEdit():
-            raise Unauthorized(_("You are not allowed to add content to "
-                                 "this tile"))
-
-        notify(ObjectModifiedEvent(self))
+            raise Unauthorized(
+                _('You are not allowed to add content to this tile'))
 
     def remove_item(self, uid):
         if not self.isAllowedToEdit():
-            raise Unauthorized(_("You are not allowed to remove content of "
-                                 "this tile"))
+            raise Unauthorized(
+                _('You are not allowed to remove content of this tile'))
 
     # XXX: the name of this method is really confusing as it does not deletes
     # the tile; rename it?
@@ -157,7 +154,7 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
         """ Remove the persistent data associated with the tile and notify the
         cover object was modified.
         """
-        logger.debug("Deleting tile {0}".format(self.id))
+        logger.debug('Deleting tile {0}'.format(self.id))
 
         data_mgr = ITileDataManager(self)
         data_mgr.delete()
@@ -174,11 +171,12 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
 
         notify(ObjectModifiedEvent(self.context))
 
+    @view.memoize
     def accepted_ct(self):
-        """ Return a list of content types accepted by the tile or None if all
-        types are accepted.
-        """
-        return None  # all content types accepted by default
+        """Return all content types available (default value)."""
+        registry = getUtility(IRegistry)
+        settings = registry.forInterface(ICoverSettings)
+        return settings.searchable_content_types
 
     def is_compose_mode(self):
         """Return True if tile is being rendered in compose mode.
@@ -188,6 +186,14 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
             url = self.context.REQUEST.PARENT_REQUEST.URL
             # compose mode is the last part of the URL
             return url.split('/')[-1] == 'compose'
+        url = self.context.REQUEST.URL
+        action = url.split('/')[-1]
+        if action in ('@@updatelisttilecontent', '@@updatetilecontent',
+                      '@@removeitemfromlisttile'):
+            # update drag/drop, delete of list tile elements and dropping
+            # content from the contentchooser on a tile. This is done with ajax
+            # from the compose view where no PARENT_REQUEST is available
+            return True
         return False
 
     def get_tile_configuration(self):
@@ -313,7 +319,7 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
     def isAllowedToEdit(self, user=None):
         allowed = True
 
-        pm = getToolByName(self.context, 'portal_membership')
+        pm = api.portal.get_tool('portal_membership')
 
         if user:
             if isinstance(user, basestring):
@@ -330,10 +336,65 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
 
         return allowed
 
+    @property
+    def has_image(self):
+        return self.data.get('image', None) is not None
+
+    @property
+    def scale(self):
+        """Return the thumbnail scale to be used on the image field of the
+        tile (if it has one).
+
+        :returns: scale
+        :rtype: string or None
+        """
+        tile_conf = self.get_tile_configuration()
+        image_conf = tile_conf.get('image', None)
+        if image_conf:
+            scale = image_conf['imgsize']
+            if scale == '_original':
+                return None
+            # scale string is something like: 'mini 200:200'
+            return scale.split(' ')[0]  # we need the name only: 'mini'
+
+    def get_image_data(self, obj):
+        """Get image data from the object used to populate the tile.
+
+        :param obj: object used to populate the tile
+        :type obj: content type instance
+        :returns: image
+        :rtype: NamedBlobImage instance or None
+        """
+        image = None
+        # if has image, store a copy of its data
+        if self._has_image_field(obj) and self._field_is_visible('image'):
+            scales = obj.restrictedTraverse('@@images')
+            image = scales.scale('image', None)
+
+        if image is not None and image != '':
+            if isinstance(image.data, NamedBlobImage):
+                # Dexterity
+                image = image.data
+            else:
+                # Archetypes
+                data = image.data
+                if hasattr(data, 'data'):  # image data weirdness...
+                    data = data.data
+                image = NamedBlobImage(data)
+        return image
+
+    def clear_scales(self):
+        """Clear scales from storage."""
+        storage = AnnotationStorage(self)
+        for key in storage.keys():
+            try:
+                del storage[key]
+            except KeyError:
+                pass
+
 
 # XXX: these are views, we should move it away from this module
 # Image scale support for tile images
-
 class AnnotationStorage(BaseAnnotationStorage):
     """ An abstract storage for image scale data using annotations and
         implementing :class:`IImageScaleStorage`. Image data is stored as an
@@ -499,7 +560,7 @@ class ImageScaling(BaseImageScaling):
             fieldname = IPrimaryFieldInfo(self.context).fieldname
         if scale is not None:
             available = self.getAvailableSizes(fieldname)
-            if not scale in available:
+            if scale not in available:
                 return None
             width, height = available[scale]
         storage = AnnotationStorage(self.context, self.modified)
@@ -527,11 +588,10 @@ class PersistentCoverTilePurgePaths(object):
     def getRelativePaths(self):
         context = aq_inner(self.context)
         parent = aq_parent(context)
-        portal_state = getMultiAdapter(
-            (context, context.request), name=u'plone_portal_state')
-        prefix = context.url.replace(portal_state.portal_url(), '', 1)
+        portal_url = api.portal.get().portal_url()
+        prefix = context.url.replace(portal_url, '', 1)
         yield prefix
-        for _, v in context.data.items():
+        for k, v in context.data.items():
             if INamedImage.providedBy(v):
                 yield '{0}/@@images/image'.format(prefix)
                 scales = parent.unrestrictedTraverse(

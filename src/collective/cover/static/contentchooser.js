@@ -17,7 +17,7 @@ function contentSearchFilter(url) {
 
 (function ($) {
     $.fn.liveDraggable = function (opts) {
-        this.live("mouseover", function() {
+        $(document).on("mouseover", this.selector, function() {
             if (!$(this).data("init")) {
                 $(this).data("init", true).draggable(opts);
             }
@@ -28,11 +28,11 @@ function contentSearchFilter(url) {
 
 
 function contentchooserMaker(options) {
-    var windowId = options['windowId'];
-    var droppable = options['droppable'];
-    var draggable = options['draggable'];
-    var draggable_acepted = options['draggable_acepted'];
-    var dropped = options['dropped'];
+    var windowId = options.windowId;
+    var droppable = options.droppable;
+    var draggable = options.draggable;
+    var draggable_acepted = options.draggable_acepted;
+    var dropped = options.dropped;
 
     //items inside contentchooser should be draggable
     $(draggable).liveDraggable({
@@ -55,7 +55,7 @@ $(function() {
     // Live search content tree
     coveractions.liveSearch('#contentchooser-content-trees','.item-list li','#filter-count');
 
-    $(".item-list a.next").live("click", function(e){
+    $(document).on("click", ".item-list a.next", function(e){
         $.ajax({
             url: "@@content-search",
             data: {'page': $(e.currentTarget).attr('data-page'),
@@ -67,7 +67,7 @@ $(function() {
         return false;
     });
 
-    $("#recent .contentchooser-clear").live("click", function(e){
+    $(document).on("click", "#recent .contentchooser-clear", function(e){
         $(e.currentTarget).prev().children("input").val("");
         ajaxSearchRequest.push($.ajax({
             url: portal_url + "/@@content-search",
@@ -80,7 +80,7 @@ $(function() {
         return false;
     });
 
-    $("#content-trees .contentchooser-clear").live("click", function(e){
+    $(document).on("click", "#content-trees .contentchooser-clear", function(e){
         $(e.currentTarget).prev().children("input").val("");
         coveractions.getFolderContents(portal_url, '@@jsonbytype');
         return false;
@@ -157,10 +157,11 @@ $(function() {
     $("#contentchooser-content-search").offset({'top':offset.top});
   });
 
-  $("#contentchooser-content-search .close").click(function() {
+  $("#contentchooser-content-search .close").click(function(e) {
+    e.preventDefault();
     $("#contentchooser-content-search").css("display", "none");
   });
-  $("#contentchooser-content-search #content-tree .item-list li").live("click",function(e) {
+  $(document).on("click", "#contentchooser-content-search #content-tree .item-list li", function(e) {
     e.stopPropagation();
     var child = $(this).children("ul");
     if (child.is(":visible")) {
@@ -233,7 +234,7 @@ var coveractions = {
 
             x.send(o.data);
 
-            function ready() {
+            var ready = function() {
                 if (!o.async || x.readyState == 4 || c++ > 10000) {
                     if (o.success && c < 10000 && x.status == 200){
                         o.success.call(o.success_scope, '' + x.responseText, x, o);
@@ -244,7 +245,7 @@ var coveractions = {
                 } else {
                     w.setTimeout(ready, 10);
                 }
-            }
+            };
 
             // Syncronous request
             if (!o.async){
@@ -278,7 +279,7 @@ var coveractions = {
             encodeURIComponent(d.baseURI),
             success : function(text) {
                 var html = "";
-                var data = eval('(' + text + ')');
+                var data = jQuery.parseJSON(text);
 
                 if (data.items.length > 0) {
                     for (var i = 0; i < data.items.length; i++) {

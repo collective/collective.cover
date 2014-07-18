@@ -4,14 +4,26 @@
       xmlns:i18n="http://xml.zope.org/namespaces/i18n"
       i18n:domain="collective.cover">
 
-<body tal:define="body view/body">
-  <p tal:condition="not: body" i18n:translate="">
-    Please drag&amp;drop some content here to populate the tile.
+<body tal:define="is_empty view/is_empty">
+  <p tal:condition="python:is_empty and view.is_compose_mode()" i18n:translate="">
+    Drag&amp;drop some content to populate the tile.
   </p>
 
-  <div tal:condition="body" class="cover-contentbody-tile tile-content">
-    <div class="content"
-         tal:content="structure body">Body</div>
+  <div class="cover-contentbody-tile tile-content" tal:condition="not:is_empty">
+    <div class="contentbody-link" tal:condition="view/is_compose_mode">
+      <a tal:attributes="href view/item_url" i18n:translate="">
+        Go to related item
+      </a>
+    </div>
+
+    <tal:text define="text view/body;
+                      len_text python:len(text.strip())">
+      <div class="discreet" tal:condition="python:not len_text and view.is_compose_mode()"
+          i18n:translate="">This item does not have any body text.</div>
+      <div class="content" tal:condition="text"
+          tal:content="structure text">Body</div>
+    </tal:text>
+
     <div class="visualClear"><!-- --></div>
   </div>
 </body>

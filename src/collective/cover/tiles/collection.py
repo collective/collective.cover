@@ -6,18 +6,20 @@ from collective.cover.tiles.base import PersistentCoverTile
 from collective.cover.tiles.configuration_view import IDefaultConfigureForm
 from plone.app.uuid.utils import uuidToObject
 from plone.directives import form
+from plone.memoize import view
 from plone.namedfile.field import NamedBlobImage as NamedImage
 from plone.tiles.interfaces import ITileDataManager
 from plone.tiles.interfaces import ITileType
 from plone.uuid.interfaces import IUUID
-from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.CMFPlone.utils import safe_unicode
+from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zope import schema
 from zope.component import queryUtility
+from zope.interface import implements
 from zope.schema import getFieldsInOrder
 
 
-class ICollectionTile(IPersistentCoverTile, form.Schema):
+class ICollectionTile(IPersistentCoverTile):
 
     header = schema.TextLine(
         title=_(u'Header'),
@@ -82,11 +84,13 @@ class ICollectionTile(IPersistentCoverTile, form.Schema):
 
 class CollectionTile(PersistentCoverTile):
 
-    index = ViewPageTemplateFile("templates/collection.pt")
+    implements(ICollectionTile)
+
+    index = ViewPageTemplateFile('templates/collection.pt')
 
     is_configurable = True
     is_editable = True
-    short_name = _(u"msg_short_name_collection", default=u"Collection")
+    short_name = _(u'msg_short_name_collection', default=u'Collection')
     configured_fields = []
 
     def get_title(self):
@@ -137,7 +141,7 @@ class CollectionTile(PersistentCoverTile):
             })
 
     def accepted_ct(self):
-        """ Return a list of content types accepted by the tile.
+        """Return Collection as the only content type accepted in the tile.
         """
         return ['Collection']
 
@@ -191,9 +195,20 @@ class CollectionTile(PersistentCoverTile):
             if image_conf:
                 scaleconf = image_conf['imgsize']
                 # scale string is something like: 'mini 200:200'
-                scale = scaleconf.split(' ')[0]  # we need the name only: 'mini'
+                # we need the name only: 'mini'
+                if scaleconf == '_original':
+                    scale = None
+                else:
+                    scale = scaleconf.split(' ')[0]
                 scales = item.restrictedTraverse('@@images')
                 return scales.scale('image', scale)
+
+    @view.memoize
+    def get_image_position(self):
+        tile_conf = self.get_tile_configuration()
+        image_conf = tile_conf.get('image', None)
+        if image_conf:
+            return image_conf['position']
 
     def remove_relation(self):
         data_mgr = ITileDataManager(self)

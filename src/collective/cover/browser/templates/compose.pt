@@ -15,7 +15,9 @@
 
     <script type="text/javascript">
       jQuery(document).ready(function() {
-        jQuery(window).unload(plone.UnlockHandler.execute);
+        if (typeof(plone) !== 'undefined') {
+          jQuery(window).unload(plone.UnlockHandler.execute);
+        }
       });
     </script>
 </metal:js>

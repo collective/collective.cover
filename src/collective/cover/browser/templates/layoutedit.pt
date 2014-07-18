@@ -18,12 +18,14 @@
   </script>
   <script type="text/javascript"
           tal:define="navroot context/@@plone_portal_state/navigation_root_url"
-          tal:attributes="src string:${navroot}/++resource++collective.cover/jss.js">
+          tal:attributes="src string:${navroot}/++resource++collective.cover/jss.min.js">
   </script>
 
   <script type="text/javascript">
     jQuery(document).ready(function() {
-      jQuery(window).unload(plone.UnlockHandler.execute);
+      if (typeof(plone) !== 'undefined') {
+        jQuery(window).unload(plone.UnlockHandler.execute);
+      }
     });
   </script>
 
@@ -49,7 +51,7 @@
         </ul>
         <div tal:replace="structure context/@@tile_list"></div>
     </div>
-    <div class="layout">
+    <div class="layout" tal:attributes="data-layoutmanager-settings view/layoutmanager_settings">
         <div tal:define="layout nocall:context/@@layout"
              tal:replace="structure layout/render_layout_edit" />
         <!--div class="content-contentchooser" tal:replace="structure context/@@select-content-contentchooser"></div-->

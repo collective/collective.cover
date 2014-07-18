@@ -24,7 +24,7 @@ ${edit_link_selector}  a.edit-tile-link
 Test Banner Tile
     Enable Autologin as  Site Administrator
     Go to Homepage
-    Create Cover  Title  Description  Empty layout
+    Create Cover  Title  Description
 
     # add a banner tile to the layout
     Edit Cover Layout

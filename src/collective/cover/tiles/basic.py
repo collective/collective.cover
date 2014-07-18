@@ -1,22 +1,18 @@
 # -*- coding: utf-8 -*-
 
 from collective.cover import _
-from collective.cover.controlpanel import ICoverSettings
 from collective.cover.tiles.base import IPersistentCoverTile
 from collective.cover.tiles.base import PersistentCoverTile
 from collective.cover.tiles.configuration_view import IDefaultConfigureForm
+from plone import api
 from plone.autoform import directives as form
-from plone.memoize import view
 from plone.memoize.instance import memoizedproperty
 from plone.namedfile.field import NamedBlobImage as NamedImage
-from plone.registry.interfaces import IRegistry
 from plone.tiles.interfaces import ITileDataManager
 from plone.uuid.interfaces import IUUID
-from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.utils import safe_unicode
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zope import schema
-from zope.component import getUtility
 from zope.interface import implements
 
 
@@ -64,16 +60,16 @@ class IBasicTile(IPersistentCoverTile):
 
 class BasicTile(PersistentCoverTile):
 
-    implements(IPersistentCoverTile)
+    implements(IBasicTile)
 
-    index = ViewPageTemplateFile("templates/basic.pt")
+    index = ViewPageTemplateFile('templates/basic.pt')
 
     is_configurable = True
-    short_name = _(u"msg_short_name_basic", default=u"Basic")
+    short_name = _(u'msg_short_name_basic', default=u'Basic')
 
     @memoizedproperty
     def brain(self):
-        catalog = getToolByName(self.context, 'portal_catalog')
+        catalog = api.portal.get_tool('portal_catalog')
         uuid = self.data.get('uuid')
         result = catalog(UID=uuid) if uuid is not None else []
         assert len(result) <= 1
@@ -116,25 +112,12 @@ class BasicTile(PersistentCoverTile):
             'uuid': IUUID(obj, None),  # XXX: can we get None here? see below
             'date': True,
             'subjects': True,
+            'image': self.get_image_data(obj)
         }
 
-        # TODO: if a Dexterity object does not have the IReferenceable
-        # behaviour enable then it will not work here
-        # we need to figure out how to enforce the use of
-        # plone.app.referenceablebehavior
+        if data['image']:
+            # clear scales if new image is getting saved
+            self.clear_scales()
+
         data_mgr = ITileDataManager(self)
         data_mgr.set(data)
-
-    @view.memoize
-    def accepted_ct(self):
-        """
-            Return a list with accepted content types ids
-            basic tile accepts every content type
-            allowed by the cover control panel
-
-            this method is called for every tile in the compose view
-            please memoize if you're doing some very expensive calculation
-        """
-        registry = getUtility(IRegistry)
-        settings = registry.forInterface(ICoverSettings)
-        return settings.searchable_content_types

@@ -2,10 +2,10 @@
 
 from collective.cover.config import PROJECTNAME
 from collective.cover.testing import INTEGRATION_TESTING
+from plone import api
 from plone.app.testing import setRoles
 from plone.app.testing import TEST_USER_ID
 from plone.registry.interfaces import IRegistry
-from zope.component import getMultiAdapter
 from zope.component import getUtility
 
 import unittest
@@ -20,19 +20,18 @@ class TilesTestCase(unittest.TestCase):
         self.registry = getUtility(IRegistry)
         setRoles(self.portal, TEST_USER_ID, ['Manager'])
 
-    # FIXME: remove tiles on uninstall
-    @unittest.expectedFailure
+    @unittest.expectedFailure  # FIXME: remove tiles on uninstall
     def test_tiles_removed_on_uninstall(self):
         qi = self.portal['portal_quickinstaller']
         qi.uninstallProducts(products=[PROJECTNAME])
         tiles = self.registry['plone.app.tiles']
-        self.assertTrue(u'collective.cover.basic' not in tiles)
-        self.assertTrue(u'collective.cover.carousel' not in tiles)
-        self.assertTrue(u'collective.cover.collection' not in tiles)
-        self.assertTrue(u'collective.cover.embed' not in tiles)
-        self.assertTrue(u'collective.cover.file' not in tiles)
-        self.assertTrue(u'collective.cover.list' not in tiles)
-        self.assertTrue(u'collective.cover.richtext' not in tiles)
+        self.assertNotIn(u'collective.cover.basic', tiles)
+        self.assertNotIn(u'collective.cover.carousel', tiles)
+        self.assertNotIn(u'collective.cover.collection', tiles)
+        self.assertNotIn(u'collective.cover.embed', tiles)
+        self.assertNotIn(u'collective.cover.file', tiles)
+        self.assertNotIn(u'collective.cover.list', tiles)
+        self.assertNotIn(u'collective.cover.richtext', tiles)
 
 
 class PageLayoutTestCase(unittest.TestCase):
@@ -42,12 +41,13 @@ class PageLayoutTestCase(unittest.TestCase):
     def setUp(self):
         self.portal = self.layer['portal']
         self.request = self.layer['request']
-        self.name = u"collective.cover.carousel"
-        self.cover = self.portal['frontpage']
-        self.tile = getMultiAdapter((self.cover, self.request), name=self.name)
-        self.tile = self.tile['test']
-        self.view = self.cover.unrestrictedTraverse("@@layout")
 
+        with api.env.adopt_roles(['Manager']):
+            self.cover = api.content.create(
+                self.portal, 'collective.cover.content', 'c1')
+        self.view = self.cover.unrestrictedTraverse('@@layout')
+
+    # XXX: these methods belong to the API
     def test_is_droppable(self):
         self.assertTrue(self.view.tile_is_droppable('collective.cover.basic'))
 

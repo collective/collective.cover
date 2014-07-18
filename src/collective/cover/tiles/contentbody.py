@@ -18,13 +18,17 @@ class IContentBodyTile(IPersistentCoverTile):
 
 class ContentBodyTile(PersistentCoverTile):
 
-    implements(IPersistentCoverTile)
+    implements(IContentBodyTile)
 
-    index = ViewPageTemplateFile("templates/contentbody.pt")
+    index = ViewPageTemplateFile('templates/contentbody.pt')
 
     is_editable = False
     is_configurable = False
-    short_name = _(u"msg_short_name_contentbody", default=u"Content Body")
+    short_name = _(u'msg_short_name_contentbody', default=u'Content Body')
+
+    @property
+    def is_empty(self):
+        return not self.data.get('uuid', False)
 
     def body(self):
         body = ''
@@ -52,6 +56,17 @@ class ContentBodyTile(PersistentCoverTile):
         data_mgr.set(data)
 
     def accepted_ct(self):
-        """ For now we are supporting Document and News Item
+        """Return 'Document' and 'News Item' as the only content types
+        accepted in the tile.
         """
         return ['Document', 'News Item']
+
+    def item_url(self):
+        uuid = self.data.get('uuid', None)
+        try:
+            obj = uuidToObject(uuid)
+        except Unauthorized:
+            obj = None
+
+        if obj:
+            return obj.absolute_url()

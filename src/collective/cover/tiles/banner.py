@@ -2,19 +2,14 @@
 
 from Acquisition import aq_base
 from collective.cover import _
-from collective.cover.controlpanel import ICoverSettings
 from collective.cover.tiles.base import IPersistentCoverTile
 from collective.cover.tiles.base import PersistentCoverTile
-from plone.memoize import view
+from plone import api
 from plone.namedfile import field
-from plone.namedfile import NamedBlobImage
 from plone.tiles.interfaces import ITileDataManager
-from plone.registry.interfaces import IRegistry
-from Products.CMFPlone.utils import getToolByName
-from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.CMFPlone.utils import safe_unicode
+from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zope import schema
-from zope.component import getUtility
 from zope.interface import implements
 
 
@@ -37,27 +32,14 @@ class IBannerTile(IPersistentCoverTile):
 
 
 class BannerTile(PersistentCoverTile):
+
     implements(IBannerTile)
 
     index = ViewPageTemplateFile('templates/banner.pt')
     is_configurable = True
     is_editable = True
     is_droppable = True
-    short_name = _(u"msg_short_name_banner", default=u"Banner")
-
-    @view.memoize
-    def accepted_ct(self):
-        """
-            Return a list with accepted content types ids
-            basic tile accepts every content type
-            allowed by the cover control panel
-
-            this method is called for every tile in the compose view
-            please memoize if you're doing some very expensive calculation
-        """
-        registry = getUtility(IRegistry)
-        settings = registry.forInterface(ICoverSettings)
-        return settings.searchable_content_types
+    short_name = _(u'msg_short_name_banner', default=u'Banner')
 
     def populate_with_object(self, obj):
         """Tile can be populated with any content type with image
@@ -77,7 +59,7 @@ class BannerTile(PersistentCoverTile):
             # For Image and File objects (or any other in typesUseViewActionInListings)
             # we must add a /view to prevent the download of the file
             obj_url = obj.absolute_url_path()
-            props = getToolByName(obj, 'portal_properties')
+            props = api.portal.get_tool('portal_properties')
             stp = props.site_properties
             view_action_types = stp.getProperty('typesUseViewActionInListings', ())
 
@@ -86,14 +68,10 @@ class BannerTile(PersistentCoverTile):
 
             remote_url = obj_url
 
-        image = None
-        # if has image, store a copy of its data
-        if self._has_image_field(obj) and self._field_is_visible('image'):
-            scales = obj.restrictedTraverse('@@images')
-            image = scales.scale('image', None)
-
-        if image is not None and image != '':
-            image = NamedBlobImage(image.data)
+        image = self.get_image_data(obj)
+        if image:
+            # clear scales if new image is getting saved
+            self.clear_scales()
 
         obj = aq_base(obj)  # avoid acquisition
         title = safe_unicode(obj.Title())
@@ -107,10 +85,6 @@ class BannerTile(PersistentCoverTile):
 
     def Title(self):
         return self.data.get('title', None)
-
-    @property
-    def has_image(self):
-        return self.data.get('image', None) is not None
 
     def getRemoteUrl(self):
         return self.data.get('remote_url', None)
@@ -126,15 +100,6 @@ class BannerTile(PersistentCoverTile):
         if image_conf:
             css_class = image_conf['position']
             return css_class
-
-    @property
-    def scale(self):
-        tile_conf = self.get_tile_configuration()
-        image_conf = tile_conf.get('image', None)
-        if image_conf:
-            scale = image_conf['imgsize']
-            # scale string is something like: 'mini 200:200'
-            return scale.split(' ')[0]  # we need the name only: 'mini'
 
     @property
     def htmltag(self):

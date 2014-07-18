@@ -17,7 +17,7 @@ Test Basic Layout Operations
     Enable Autologin as  Site Administrator
     Go to Homepage
 
-    Create Cover  Title  Description  Empty layout
+    Create Cover  Title  Description
     Edit Cover Layout
     # empty layout has one column and one row by default
     # TODO: test if there is 1 row and 1 column
@@ -72,6 +72,28 @@ Test Basic Layout Operations
     Add Tile  ${basic_tile_name}
     Click Config from Tile  ${tile_class}
     Wait until element is visible  id=buttons-cancel
+    # Move Categories to second place
+    Drag And Drop  css=#formfield-collective-cover-basic-subjects  css=#configure_tile div.field:nth-child(2)
+    # Move Date over Categories
+    Drag And Drop  css=#formfield-collective-cover-basic-date  css=#formfield-collective-cover-basic-subjects
+    # Try to move Date over CSS
+    Drag And Drop  css=#formfield-collective-cover-basic-date  css=#formfield-collective-cover-basic-css_class
+    # Hide Description
+    Click Element  css=#formfield-collective-cover-basic-description .visibility-no
+    Click Button  id=buttons-save
+    Save Cover Layout
+
+    # Reopen Layout and check configuration
+    Edit Cover Layout
+    Click Config from Tile  ${tile_class}
+    Wait until element is visible  id=buttons-cancel
+    # Date should be first in order (order is 1-indexed)
+    Textfield Value Should Be  css=#collective-cover-basic-date-order  1
+    # Categories should be second in order
+    Textfield Value Should Be  css=#collective-cover-basic-subjects-order  2
+    # Description should be hidden
+    Checkbox Should Not Be Selected  css=#collective-cover-basic-description-visibility-yes
+    Checkbox Should Be Selected  css=#collective-cover-basic-description-visibility-no
     Click Button  id=buttons-cancel
 
 

@@ -1,45 +1,26 @@
 # -*- coding: utf-8 -*-
-
-from collective.cover.testing import INTEGRATION_TESTING
-from collective.cover.tiles.base import IPersistentCoverTile
+from collective.cover.testing import ALL_CONTENT_TYPES
+from collective.cover.tests.base import TestTileMixin
 from collective.cover.tiles.banner import BannerTile
-from plone.registry.interfaces import IRegistry
-from plone.tiles.interfaces import ITileType
-from zope.component import getUtility
-from zope.interface.verify import verifyClass
-from zope.interface.verify import verifyObject
+from collective.cover.tiles.banner import IBannerTile
+from mock import Mock
 
 import unittest
 
 
-class BannerTileTestCase(unittest.TestCase):
-
-    layer = INTEGRATION_TESTING
+class BannerTileTestCase(TestTileMixin, unittest.TestCase):
 
     def setUp(self):
-        self.portal = self.layer['portal']
-        self.request = self.layer['request']
-        self.name = 'collective.cover.banner'
-        self.tile = self.portal.restrictedTraverse(
-            '@@{0}/{1}'.format(self.name, 'test-tile'))
+        super(BannerTileTestCase, self).setUp()
+        self.tile = BannerTile(self.cover, self.request)
+        self.tile.__name__ = u'collective.cover.banner'
+        self.tile.id = u'test'
 
-    @unittest.expectedFailure
+    @unittest.expectedFailure  # FIXME: raises BrokenImplementation
     def test_interface(self):
-        self.assertTrue(IPersistentCoverTile.implementedBy(BannerTile))
-        self.assertTrue(verifyClass(IPersistentCoverTile, BannerTile))
-
-        tile = BannerTile(None, None)
-        self.assertTrue(IPersistentCoverTile.providedBy(tile))
-        # FIXME: @property decorator on class methods makes this test fail
-        #        how can we fix it?
-        self.assertTrue(verifyObject(IPersistentCoverTile, tile))
-
-    def test_tile_registration(self):
-        tile_type = getUtility(ITileType, self.name)
-        self.assertIsNotNone(tile_type)
-        self.assertTrue(issubclass(tile_type.schema, IPersistentCoverTile))
-        registry = getUtility(IRegistry)
-        self.assertIn(self.name, registry['plone.app.tiles'])
+        self.interface = IBannerTile
+        self.klass = BannerTile
+        super(BannerTileTestCase, self).test_interface()
 
     def test_default_configuration(self):
         self.assertTrue(self.tile.is_configurable)
@@ -47,10 +28,7 @@ class BannerTileTestCase(unittest.TestCase):
         self.assertTrue(self.tile.is_droppable)
 
     def test_accepted_content_types(self):
-        self.assertEqual(
-            self.tile.accepted_ct(),
-            ['Collection', 'Document', 'File', 'Form Folder',
-             'Image', 'Link', 'News Item'])
+        self.assertEqual(self.tile.accepted_ct(), ALL_CONTENT_TYPES)
 
     def test_populate_with_image_object_unicode(self):
         """We must store unicode always on schema.TextLine and schema.Text
@@ -117,8 +95,13 @@ class BannerTileTestCase(unittest.TestCase):
         self.assertEqual(self.tile.getRemoteUrl(), remote_url)
 
     def test_render_empty(self):
-        self.assertIn(
-            "Drag&amp;drop an image or link here to populate the tile.", self.tile())
+        msg = 'Drag&amp;drop an image or link here to populate the tile.'
+
+        self.tile.is_compose_mode = Mock(return_value=True)
+        self.assertIn(msg, self.tile())
+
+        self.tile.is_compose_mode = Mock(return_value=False)
+        self.assertNotIn(msg, self.tile())
 
     def test_render_with_image(self):
         obj = self.portal['my-image']

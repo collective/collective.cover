@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 
 from collective.cover.controlpanel import ICoverSettings
+from collective.cover.interfaces import IGridSystem
 from collective.cover.tiles.base import IPersistentCoverTile
 from five import grok
 from plone.app.vocabularies.types import ReallyUserFriendlyTypesVocabulary
 from plone.registry.interfaces import IRegistry
 from plone.tiles.interfaces import ITileType
 from zope.component import getUtility
+from zope.component import getUtilitiesFor
 from zope.component import queryUtility
 from zope.schema.interfaces import IVocabularyFactory
 from zope.schema.vocabulary import SimpleTerm
@@ -43,6 +45,18 @@ class AvailableTilesVocabulary(object):
 
 grok.global_utility(AvailableTilesVocabulary,
                     name=u'collective.cover.AvailableTiles')
+
+
+class GridSystemsVocabulary(object):
+    grok.implements(IVocabularyFactory)
+
+    def __call__(self, context):
+        items = [SimpleTerm(value=name, title=grid.title)
+                 for (name, grid) in getUtilitiesFor(IGridSystem)]
+        return SimpleVocabulary(items)
+
+grok.global_utility(GridSystemsVocabulary,
+                    name=u'collective.cover.GridSystems')
 
 
 class EnabledTilesVocabulary(object):
@@ -106,7 +120,7 @@ class TileStylesVocabulary(object):
                     title, css_class = title.strip(), css_class.strip()
 
                     # make sure that default style is always first
-                    if css_class == u"tile-default":
+                    if css_class == u'tile-default':
                         items.insert(0, SimpleTerm(value=css_class, title=title))
                         with_default = True
                     else:
@@ -114,7 +128,7 @@ class TileStylesVocabulary(object):
 
         # force default style if it was removed from configuration
         if not with_default:
-            items.insert(0, SimpleTerm(value=u"tile-default", title="-Default-"))
+            items.insert(0, SimpleTerm(value=u'tile-default', title='-Default-'))
 
         return SimpleVocabulary(items)
 

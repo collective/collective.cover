@@ -2,11 +2,11 @@
 
 from collective.cover import _
 from collective.cover.tiles.configuration import ITilesConfigurationScreen
+from plone import api
 from plone.app.tiles.browser.base import TileForm
 from plone.app.tiles.browser.traversal import TileTraverser
 from plone.z3cform import layout
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-from Products.statusmessages.interfaces import IStatusMessage
 from z3c.form import button
 from z3c.form import form
 from z3c.form.interfaces import IDataManager
@@ -47,7 +47,7 @@ class ConfigureTile(TileTraverser):
     targetInterface = ITileConfigureView
 
     def __call__(self):
-        raise KeyError("Please traverse to @@configure-tile/tilename/id")
+        raise KeyError('Please traverse to @@configure-tile/tilename/id')
 
     def publishTraverse(self, request, name):
         """Allow traversal to @@<view>/tilename/tileid
@@ -78,8 +78,7 @@ class DefaultConfigureForm(TileForm, form.Form):
     implements(IDefaultConfigureForm)
 
     mode = 'configure'
-
-    name = "configure_tile"
+    name = 'configure_tile'
 
     # Set during traversal
     tileType = None
@@ -119,7 +118,7 @@ class DefaultConfigureForm(TileForm, form.Form):
         return configuration
 
     def extractData(self):
-        #XXX: Find a better way to implement this
+        # XXX: Find a better way to implement this
         data = {}
         errors = {}
         default_order = 0
@@ -157,7 +156,7 @@ class DefaultConfigureForm(TileForm, form.Form):
 
     @property
     def label(self):
-        return _(u"Configure ${name}", mapping={'name': self.tileType.title})
+        return _(u'Configure ${name}', mapping={'name': self.tileType.title})
 
     # Buttons/actions
 
@@ -168,49 +167,37 @@ class DefaultConfigureForm(TileForm, form.Form):
             self.status = self.formErrorsMessage
             return
 
-        typeName = self.tileType.__name__
-
         # Traverse to a new tile in the context, with no data
+        typeName = self.tileType.__name__
         tile = self.context.restrictedTraverse('@@{0}/{1}'.format(typeName, self.tileId))
-
-        tile_conf_adapter = getMultiAdapter((self.context, self.request, tile),
-                                            ITilesConfigurationScreen)
-
+        tile_conf_adapter = getMultiAdapter(
+            (self.context, self.request, tile), ITilesConfigurationScreen)
         tile_conf_adapter.set_configuration(data)
 
-        #dataManager = ITileDataManager(tile)
-        #dataManager.set(data)
+        # notify about modification
+        notify(ObjectModifiedEvent(tile))
+        api.portal.show_message(
+            _(u'Tile configuration saved.'), self.request, type='info')
 
         # Look up the URL - We need to redirect to the layout view, since
         # there's the only way from where a user would access the configuration
         contextURL = absoluteURL(tile.context, self.request)
-
         layoutURL = '{0}/layoutedit'.format(contextURL)
-
-        notify(ObjectModifiedEvent(tile))
-
-        # Get the tile URL, possibly with encoded data
-        IStatusMessage(self.request).addStatusMessage(_(u"Tile configuration saved.",), type=u'info')
-
         self.request.response.redirect(layoutURL)
 
     @button.buttonAndHandler(_(u'Cancel'), name='cancel')
     def handleCancel(self, action):
+        api.portal.show_message(
+            _(u'Tile configuration cancelled.'), self.request, type='info')
+
         contextURL = absoluteURL(self.context, self.request)
         layoutURL = '{0}/layoutedit'.format(contextURL)
-
-        # XXX: We need to fire a notification ?
-        #notify(ObjectModifiedEvent(tile))
-
-        # Get the tile URL, possibly with encoded data
-        IStatusMessage(self.request).addStatusMessage(_(u"Tile configuration cancelled.",), type=u'info')
-
         self.request.response.redirect(layoutURL)
 
     def updateActions(self):
         super(DefaultConfigureForm, self).updateActions()
-        self.actions["save"].addClass("context")
-        self.actions["cancel"].addClass("standalone")
+        self.actions['save'].addClass('context')
+        self.actions['cancel'].addClass('standalone')
 
 
 class DefaultConfigureView(layout.FormWrapper):

@@ -1,19 +1,21 @@
 # -*- coding: utf-8 -*-
 
 from AccessControl import Unauthorized
+from plone import api
 from plone.app.tiles.browser.edit import DefaultEditForm
 from plone.app.tiles.browser.edit import DefaultEditView
 from plone.app.tiles.browser.traversal import EditTile
 from plone.app.tiles.utils import appendJSONData
 from plone.tiles.interfaces import ITileDataManager
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-from Products.statusmessages.interfaces import IStatusMessage
 from z3c.form import button
 from zope.event import notify
 from zope.interface import implements
 from zope.lifecycleevent import ObjectModifiedEvent
 from zope.publisher.interfaces.browser import IBrowserView
 from zope.traversing.browser.absoluteurl import absoluteURL
+from zope.component import getMultiAdapter
+from plone.z3cform.interfaces import IDeferSecurityCheck
 
 from collective.cover import _
 from collective.cover.interfaces import ITileEditForm
@@ -37,53 +39,63 @@ class CustomEditForm(DefaultEditForm):
     def update(self):
         super(CustomEditForm, self).update()
 
-        typeName = self.tileType.__name__
-        tileId = self.tileId
+        tile = self.getTile()
 
-        tile = self.context.restrictedTraverse('@@{0}/{1}'.format(typeName, tileId))
+        if (not IDeferSecurityCheck.providedBy(self.request) and
+                not tile.isAllowedToEdit()):
+            # if IDeferSecurityCheck is provided by the request,
+            # we're not going to worry about security, perms not set up yet
+            raise Unauthorized(
+                _(u'You are not allowed to add this kind of tile'))
 
-        if not tile.isAllowedToEdit():
-            raise Unauthorized("You are not allowed to add this kind of tile")
-
-    @button.buttonAndHandler(_('Save'), name='save')
+    @button.buttonAndHandler(_(u'Save'), name='save')
     def handleSave(self, action):
         data, errors = self.extractData()
         if errors:
             self.status = self.formErrorsMessage
             return
 
-        typeName = self.tileType.__name__
+        tile = self.getTile()
 
-        # Traverse to a new tile in the context, with no data
-        tile = self.context.restrictedTraverse('@@{0}/{1}'.format(typeName, self.tileId))
-
+        # We need to check first for existing content in order not not loose
+        # fields that weren't sent with the form
         dataManager = ITileDataManager(tile)
-        # We need to check first for existing content in order to not loose
-        # fields that weren't sent with the form.
         old_data = dataManager.get()
         for item in data:
-#            if data[item] is not None:
             old_data[item] = data[item]
-
         dataManager.set(old_data)
+
+        # notify about modification
+        notify(ObjectModifiedEvent(tile))
+        api.portal.show_message(_(u'Tile saved'), self.request, type='info')
 
         # Look up the URL - we need to do this after we've set the data to
         # correctly account for transient tiles
         tileURL = absoluteURL(tile, self.request)
-        notify(ObjectModifiedEvent(tile))
-
-        # Get the tile URL, possibly with encoded data
-        IStatusMessage(self.request).addStatusMessage(_(u"Tile saved",), type=u'info')
-
         self.request.response.redirect(tileURL)
 
     @button.buttonAndHandler(_(u'Cancel'), name='cancel')
     def handleCancel(self, action):
         tileDataJson = {}
-        tileDataJson['action'] = "cancel"
+        tileDataJson['action'] = 'cancel'
         url = self.request.getURL()
         url = appendJSONData(url, 'tiledata', tileDataJson)
         self.request.response.redirect(url)
+
+    def getTile(self):
+        # if IDeferSecurityCheck is provided by the request,
+        # you can't use restricted traverse, perms aren't set up yet.
+        if IDeferSecurityCheck.providedBy(self.request):
+            view = getMultiAdapter((self.context, self.request),
+                                   name=self.tileType.__name__)
+            return view[self.tileId]
+        else:
+            return self.context.restrictedTraverse('@@%s/%s' % (
+                self.tileType.__name__, self.tileId,))
+
+    def getContent(self):
+        dataManager = ITileDataManager(self.getTile())
+        return dataManager.get()
 
 
 class CustomTileEdit(DefaultEditView):

@@ -35,13 +35,24 @@
 .template-compose .tile-container {
     position:relative;
 }
+
+.template-compose .tile-type-name {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    opacity: 0.3;
+    font-size: 95%;
+    font-weight: bolder;
+}
 .template-compose .edit-tile-link,
+.template-compose .contentbody-link,
 .template-compose .collection-link {
     position:absolute;
     height:1em;
     line-height:1em;
     top: 0;
 }
+.template-compose .contentbody-link,
 .template-compose .collection-link {
     right: 0;
 }
@@ -52,16 +63,19 @@
 
 .tile-remove-item {
     position:absolute;
-    right: 10px;
+    right: 0;
     top: 0;
-    font-size: 15px;
+    font-size: 1px;
     cursor: pointer;
-    height: 20px;
-    width: 20px;
+    height: 14px;
+    width: 14px;
     background:transparent url('remove.png') scroll no-repeat top center;
+    background-size: 100%;
 }
+
 .tile-remove-item:hover {
-    background:transparent url("remove.png") no-repeat scroll center -20px;
+    background:transparent url("remove.png") no-repeat scroll center -14px;
+    background-size: 100%;
 }
 .tile-remove-item .text{
     visibility: hidden;
@@ -92,20 +106,22 @@
     display:block;
     background-color: #b4fca3;
 }
+.template-compose #content .sortable-tile .list-item:hover {
+    outline: 1px dotted #999999;
+}
+.ui-sortable>div:hover {
+    cursor: move;
+}
 
-.tile-container img.right {
+
+/* images */
+.tile img.right {
     float: right;
     margin: 0 1em 0.5em 0;
 }
-
-.tile-container img.left {
+.tile img.left {
     float: left;
     margin: 0 1em 0.5em 0;
-}
-
-.galleria-inner {
-    width: 100%;
-    height: 450px;
 }
 
 /* conflicts */

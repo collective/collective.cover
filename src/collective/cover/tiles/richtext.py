@@ -11,19 +11,22 @@ from plone.app.textfield.interfaces import ITransformer
 from plone.app.textfield.value import RichTextValue
 from plone.tiles.interfaces import ITileDataManager
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
+from zope.interface import implements
 
 
-class IRichTextTileData(IPersistentCoverTile):
+class IRichTextTile(IPersistentCoverTile):
 
     text = RichText(title=u'Text')
 
 
 class RichTextTile(PersistentCoverTile):
 
-    index = ViewPageTemplateFile("templates/richtext.pt")
+    implements(IRichTextTile)
+
+    index = ViewPageTemplateFile('templates/richtext.pt')
 
     is_configurable = True
-    short_name = _(u"msg_short_name_richtext", default=u"Rich Text")
+    short_name = _(u'msg_short_name_richtext', default=u'Rich Text')
 
     def getText(self):
         """ Return the rich text stored in the tile.
@@ -57,6 +60,5 @@ class RichTextTile(PersistentCoverTile):
         data_mgr.set({'text': value})
 
     def accepted_ct(self):
-        """ Return a list of content types accepted by the tile.
-        """
+        """Return 'Document' as the only content type accepted in the tile."""
         return ['Document']

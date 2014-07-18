@@ -128,10 +128,24 @@ render it. For that, you need to take a few things into consideration.
 
    You can override this, in case you need a different behavior, check
    collection.py under the tiles directory and collection.pt under the
-   tiles/templates directory for an example. 
+   tiles/templates directory for an example.
+
+#. The tile template **must** include an HTML element with the ``tile-content``
+   CSS class name. This way, after configuration or edition, the tile will
+   be automatically reloaded via AJAX. If you don't include this, edition
+   and configuration will missbehave.
+   Here's and example::
+
+    <div class="my-custom-tile tile-content">
+         Some really cool stuff just your tile is able to do
+    </div>
+
+   Check `this package tile templates to see more examples.`_
 
 For additional hints on how to create a template for your tile and make it
 work, check all tiles provided by this package, under the tiles directory.
+
+.. _`this package tile templates to see more examples.`: https://github.com/collective/collective.cover/tree/master/src/collective/cover/tiles/templates
 
 Image field and scales
 ++++++++++++++++++++++
@@ -179,3 +193,50 @@ supported.
 
 
 .. _`Using tiles to provide more flexible Plone layouts`: http://glicksoftware.com/blog/using-tiles-to-provide-more-flexible-plone-layouts
+
+
+Grid systems
+++++++++++++
+
+By default collective.cover uses a deco 16 column grid.
+
+If your theme provides a css framework with a different grid system
+(such as Twitter Bootstrap or Zurb Foundation) you can use that
+instead of the default deco grid.  To do so, your theme package should
+provide a new grid system class which implements the
+collective.cover.interfaces.IGridSystem interface.
+
+#. Implement a grid system::
+
+    from five import grok
+    from collective.cover.layout import Deco16Grid
+
+    class Bootstrap3(Deco16Grid):
+        grok.name('bootstrap3')
+        ncolumns = 12
+        title = _(u'Bootstrap 3')
+
+        def columns_formatter(self, columns):
+            prefix = 'col-md-'
+            for column in columns:
+                width = column['data']['column-size'] if 'data' in column else 1
+                column['class'] = self.column_class + ' ' + (prefix + str(width))
+
+            return columns
+
+#. Register your new grid system (in configure.zcml) ::
+
+    <utility factory="my.theme.module.Bootstrap3" name="bootstrap3" />
+
+#. Or using grok::
+
+    <grok:grok package="." />
+
+
+Once registered you can select your grid system on the Cover Settings
+panel.
+
+WARNING: Switching the grid system will apply to all new and existing
+covers.  If you already made layouts for a 16 column grid and switch to
+e.g. a 12 column grid, you will have to manually update all existing
+covers (their layout is not recalculated automatically).

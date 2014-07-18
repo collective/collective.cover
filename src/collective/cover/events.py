@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-
-from collective.cover.content import ICover
+from collective.cover.interfaces import ICover
 from five import grok
+from plone import api
 from plone.app.iterate.interfaces import ICheckinEvent
 from plone.app.linkintegrity.handlers import getObjectsFromLinks
 from plone.app.linkintegrity.handlers import referencedRelationship
@@ -9,7 +9,6 @@ from plone.app.linkintegrity.parser import extractLinks
 from plone.app.linkintegrity.references import updateReferences
 from plone.app.textfield.value import RichTextValue
 from Products.Archetypes.interfaces import IReferenceable
-from Products.CMFCore.utils import getToolByName
 from zope.annotation.interfaces import IAnnotations
 
 
@@ -42,12 +41,12 @@ def modifiedCoverTile(obj, event):
     obj -- Dexterity-based object that was modified
     event -- event fired
     """
-    pu = getToolByName(obj, 'portal_url', None)
+    pu = api.portal.get_tool('portal_url')
     if pu is None:
         # `getObjectFromLinks` is not possible without access
         # to `portal_url`
         return
-    rc = getToolByName(obj, 'reference_catalog', None)
+    rc = api.portal.get_tool('reference_catalog')
     if rc is None:
         # `updateReferences` is not possible without access
         # to `reference_catalog`

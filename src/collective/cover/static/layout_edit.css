@@ -69,8 +69,10 @@ button.close {
     position:fixed;
     top:10%;
     left:50%;
+    max-height:80%;
     z-index:1050;
     width:560px;
+    overflow:scroll;
     margin-left:-280px;
     background-color:#fff;
     border:1px solid #999;
@@ -170,9 +172,9 @@ input[type="submit"].btn::-moz-focus-inner {
 
 /*ROWS*/
 .layout .cover-row {
-    outline: 1px dashed blue;
-    margin: 0 0 15px;
-    min-height: 100px;
+    border-top: 1px dashed #ccc;
+    margin: 0;
+    min-height: 80px;
     padding: 15px 1%;
     position: relative;
     display: inline-block;
@@ -180,7 +182,7 @@ input[type="submit"].btn::-moz-focus-inner {
 
 /*COLUMNS*/
 .layout .cover-column {
-    min-height: 100px;
+    min-height: 80px;
     outline: 1px dashed #ccc;
     padding: 0;
     float:left;
@@ -224,6 +226,18 @@ input[type="submit"].btn::-moz-focus-inner {
     display:inline;
 }
 
+#sidebar.fixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: #fff;
+    z-index: 2;
+    padding: 17px;
+    border-bottom: 1px solid #f1f1f1;
+    opacity: 0.95;
+    box-shadow: 0 0 2px 0 #888888;
+}
+
 
 .ui-sortable-placeholder {
     background-color: #F9F9F9;
@@ -253,22 +267,23 @@ input[type="submit"].btn::-moz-focus-inner {
     top: 0 !important;
     font-size: 10px;
     line-height: 1em;
-    width: 24px;
-    height: 24px;
+    width: 16px;
+    height: 16px;
     padding: 0;
     border: medium none;
 }
 
 #content .layout .config-tile-link .config-icon {
     background: transparent url(/++resource++collective.cover/conf.png) no-repeat center center;
-    height: 24px;
-    width: 24px;
+    height: 16px;
+    width: 16px;
     display: block;
+    background-size: 100%;
 }
 
 #content .layout .resizer {
-    background: transparent url(/++resource++collective.cover/resize.png) no-repeat center center;
-    height: 24px;
+    background: transparent url(/++resource++collective.cover/resize-hor.png) no-repeat center center;
+    height: 14px;
     width: 24px;
     display: block;
     position: absolute;
@@ -276,15 +291,20 @@ input[type="submit"].btn::-moz-focus-inner {
     bottom: 0;
     /*cursor: e-resize;*/
     cursor: pointer;
+    background-size: 100%;
 }
 
-
-
-
-
-
-
-
+.template-layoutedit .ui-dialog .ui-dialog-titlebar-close {
+    height: 20px;
+    background: url(++resource++collective.cover/remove.png);
+    outline: none;
+    border: none;
+    cursor: pointer;
+}
+.template-layoutedit .ui-dialog .ui-dialog-titlebar-close:hover {
+    height: 20px;
+    background: url(++resource++collective.cover/remove.png) 0 20px;
+}
 
 
 
@@ -500,3 +520,11 @@ input[type="submit"].btn::-moz-focus-inner {
 .visibility-box>span {display: none;}
 .visibility-no {background: url('visibility.png') no-repeat 0 4px;}
 .visibility-yes {background: url('visibility.png') no-repeat -22px 4px;}
+
+#tile-configure .order-box {
+	display: none;
+}
+
+#tile-configure .config-sortable {
+	cursor: move;
+}

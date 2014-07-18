@@ -1,15 +1,13 @@
 # -*- coding: utf-8 -*-
-
 from collective.cover.config import DEFAULT_AVAILABLE_TILES
+from collective.cover.config import DEFAULT_GRID_SYSTEM
 from collective.cover.config import DEFAULT_SEARCHABLE_CONTENT_TYPES
 from collective.cover.config import PROJECTNAME
 from collective.cover.controlpanel import ICoverSettings
 from collective.cover.testing import INTEGRATION_TESTING
+from plone import api
 from plone.app.testing import logout
-from plone.app.testing import setRoles
-from plone.app.testing import TEST_USER_ID
 from plone.registry.interfaces import IRegistry
-from zope.component import getMultiAdapter
 from zope.component import getUtility
 
 import unittest
@@ -22,31 +20,40 @@ class ControlPanelTestCase(unittest.TestCase):
     def setUp(self):
         self.portal = self.layer['portal']
         self.controlpanel = self.portal['portal_controlpanel']
-        setRoles(self.portal, TEST_USER_ID, ['Manager'])
 
     def test_controlpanel_has_view(self):
-        view = getMultiAdapter(
-            (self.portal, self.portal.REQUEST), name='cover-settings')
+        request = self.layer['request']
+        view = api.content.get_view(u'cover-settings', self.portal, request)
         view = view.__of__(self.portal)
         self.assertTrue(view())
 
     def test_controlpanel_view_is_protected(self):
         from AccessControl import Unauthorized
         logout()
-        self.assertRaises(
-            Unauthorized, self.portal.restrictedTraverse, '@@cover-settings')
+        with self.assertRaises(Unauthorized):
+            self.portal.restrictedTraverse('@@cover-settings')
 
     def test_controlpanel_installed(self):
         actions = [a.getAction(self)['id']
                    for a in self.controlpanel.listActions()]
-        self.assertIn('cover', actions, 'control panel not installed')
+        self.assertIn('cover', actions)
 
     def test_controlpanel_removed_on_uninstall(self):
         qi = self.portal['portal_quickinstaller']
-        qi.uninstallProducts(products=[PROJECTNAME])
+        with api.env.adopt_roles(['Manager']):
+            qi.uninstallProducts(products=[PROJECTNAME])
         actions = [a.getAction(self)['id']
                    for a in self.controlpanel.listActions()]
-        self.assertNotIn('cover', actions, 'control panel not removed')
+        self.assertNotIn('cover', actions)
+
+    def test_controlpanel_permissions(self):
+        roles = ['Manager', 'Site Administrator']
+        for r in roles:
+            with api.env.adopt_roles([r]):
+                configlets = self.controlpanel.enumConfiglets(group='Products')
+                configlets = [a['id'] for a in configlets]
+                self.assertIn(
+                    'cover', configlets, 'configlet not listed for ' + r)
 
 
 class RegistryTestCase(unittest.TestCase):
@@ -60,7 +67,7 @@ class RegistryTestCase(unittest.TestCase):
 
     def test_sections_record_in_registry(self):
         self.assertTrue(hasattr(self.settings, 'layouts'))
-        self.assertNotEqual(self.settings.layouts, None)
+        self.assertIsNotNone(self.settings.layouts)
 
     def test_available_tiles_record_in_registry(self):
         self.assertTrue(hasattr(self.settings, 'available_tiles'))
@@ -82,17 +89,23 @@ class RegistryTestCase(unittest.TestCase):
                  'Shadow|tile-shadow'])
         )
 
+    def test_grid_system_record_in_registry(self):
+        self.assertTrue(hasattr(self.settings, 'grid_system'))
+        self.assertEqual(
+            self.settings.grid_system, DEFAULT_GRID_SYSTEM)
+
     def test_records_removed_on_uninstall(self):
         qi = self.portal['portal_quickinstaller']
-        setRoles(self.portal, TEST_USER_ID, ['Manager'])
-        qi.uninstallProducts(products=[PROJECTNAME])
+        with api.env.adopt_roles(['Manager']):
+            qi.uninstallProducts(products=[PROJECTNAME])
 
-        BASE_REGISTRY = 'collective.cover.controlpanel.ICoverSettings.{0}'
+        BASE_REGISTRY = 'collective.cover.controlpanel.ICoverSettings.'
         records = [
-            BASE_REGISTRY.format('layouts'),
-            BASE_REGISTRY.format('available_tiles'),
-            BASE_REGISTRY.format('searchable_content_types'),
-            BASE_REGISTRY.format('styles'),
+            BASE_REGISTRY + 'layouts',
+            BASE_REGISTRY + 'available_tiles',
+            BASE_REGISTRY + 'searchable_content_types',
+            BASE_REGISTRY + 'styles',
+            BASE_REGISTRY + 'grid_system',
         ]
 
         for r in records:

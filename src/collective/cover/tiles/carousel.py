@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from collective.cover import _
+from collective.cover.interfaces import ITileEditForm
 from collective.cover.tiles.list import IListTile
 from collective.cover.tiles.list import ListTile
 from collective.cover.widgets.textlinessortable import TextLinesSortableFieldWidget
@@ -11,9 +12,22 @@ from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zope import schema
 from zope.interface import implements
 
+# autoplay feature is enabled in view mode only
+INIT_JS = """$(function() {{
+    Galleria.loadTheme('++resource++collective.cover/galleria-theme/galleria.cover_theme.js');
+    Galleria.run('#galleria-{0}');
+
+    var options = {{ height: 1 }};
+    if ($('body').hasClass('template-view')) {{
+        options.autoplay = {1};
+    }}
+    Galleria.configure(options);
+}});
+"""
+
 
 class ICarouselTile(IListTile):
-    """
+    """A carousel based on the Galleria JavaScript image gallery framework.
     """
 
     autoplay = schema.Bool(
@@ -22,6 +36,7 @@ class ICarouselTile(IListTile):
         default=True,
     )
 
+    form.no_omit(ITileEditForm, 'uuids')
     form.widget(uuids=TextLinesSortableFieldWidget)
     uuids = schema.List(
         title=_(u'Elements'),
@@ -32,12 +47,13 @@ class ICarouselTile(IListTile):
 
 
 class CarouselTile(ListTile):
+
     implements(ICarouselTile)
 
-    index = ViewPageTemplateFile("templates/carousel.pt")
+    index = ViewPageTemplateFile('templates/carousel.pt')
     is_configurable = True
     is_editable = True
-    short_name = _(u"msg_short_name_carousel", default=u"Carousel")
+    short_name = _(u'msg_short_name_carousel', default=u'Carousel')
 
     def populate_with_object(self, obj):
         super(CarouselTile, self).populate_with_object(obj)  # check permission
@@ -71,13 +87,10 @@ class CarouselTile(ListTile):
         return self.data['autoplay']
 
     def init_js(self):
-        return """
-$(function() {{
-    Galleria.loadTheme("++resource++collective.cover/galleria-theme/galleria.cover_theme.js");
-    Galleria.run('#galleria-{0} .galleria-inner');
+        if self.is_empty():
+            # Galleria will display scary error messages when it
+            # cannot find its <div>.  So don't start galleria unless
+            # the <div> is there and has some items in it.
+            return ''
 
-    if($('body').hasClass('template-view')) {{
-        Galleria.configure({{ autoplay: {1} }});
-    }};
-}});
-""".format(self.id, str(self.autoplay()).lower())
+        return INIT_JS.format(self.id, str(self.autoplay()).lower())

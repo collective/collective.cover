@@ -1,13 +1,15 @@
 # -*- coding: utf-8 -*-
-
 from Acquisition import aq_inner
-from collective.cover.content import ICover
+from collective.cover import _
+from collective.cover.controlpanel import ICoverSettings
+from collective.cover.interfaces import ICover
+from collective.cover.interfaces import IGridSystem
 from collective.cover.utils import assign_tile_ids
 from five import grok
-from plone.uuid.interfaces import IUUIDGenerator
+from plone.registry.interfaces import IRegistry
 from plone.tiles.interfaces import ITileType
+from plone.uuid.interfaces import IUUIDGenerator
 from zope.browserpage.viewpagetemplatefile import ViewPageTemplateFile
-from zope.component import getMultiAdapter
 from zope.component import getUtility
 from zope.component import queryUtility
 from zope.schema.interfaces import IVocabularyFactory
@@ -32,15 +34,34 @@ class PageLayout(grok.View):
     def get_layout(self, mode):
         layout = json.loads(self.context.cover_layout)
 
-        if mode == 'view' or mode == 'compose':
-            grid_plug = getMultiAdapter((self.context, self.request),
-                                        name=u'grid_plug')
+        if mode == 'compose' or mode == 'layout_edit':
+            self.grid_layout_common(layout)
 
-            grid_plug.transform(layout)
+        if mode == 'view' or mode == 'compose':
+            registry = getUtility(IRegistry)
+            settings = registry.forInterface(ICoverSettings)
+            grid = getUtility(IGridSystem, name=settings.grid_system)
+
+            grid.transform(layout)
         else:
             self.grid_layout_edit(layout)
 
         return layout
+
+    def grid_layout_common(self, layout):
+        """Add things to the grid/layout structure which should be available
+        on both compose and layout tabs.
+
+        """
+
+        for element in layout:
+            if 'type' in element:
+                if element['type'] == 'tile':
+                    tile_type = getUtility(ITileType, element['tile-type'])
+                    element['tile-title'] = tile_type.title
+
+                if 'children' in element:
+                    self.grid_layout_common(element['children'])
 
     def grid_layout_edit(self, layout):
         for element in layout:
@@ -53,8 +74,6 @@ class PageLayout(grok.View):
 
                 if element['type'] == 'tile':
                     element['class'] = 'cover-tile'
-                    tile_type = getUtility(ITileType, element['tile-type'])
-                    element['tile-title'] = tile_type.title
 
                 if 'children' in element:
                     self.grid_layout_edit(element['children'])
@@ -66,8 +85,12 @@ class PageLayout(grok.View):
             if section['type'] == u'group':
                 return self.group(section=section, mode=mode)
             if section['type'] == u'tile':
-                tile_url = '@@{0}/{1}'.format(section.get('tile-type'), section.get('id'))
-                tile_conf = self.context.restrictedTraverse(tile_url.encode()).get_tile_configuration()
+                tile_url = '@@{0}/{1}'.format(section.get('tile-type'),
+                                              section.get('id'))
+                tile = self.context.restrictedTraverse(tile_url.encode(), None)
+                if tile is None:
+                    return '<div class="tileNotFound">Could not find tile</div>'
+                tile_conf = tile.get_tile_configuration()
                 css_class = tile_conf.get('css_class', '')
                 section['class'] = '{0} {1}'.format(section.get('class'), css_class)
 
@@ -93,24 +116,24 @@ class PageLayout(grok.View):
     def can_compose_tile_class(self, tile_type, tile_id):
         tile = self.context.restrictedTraverse('{0}/{1}'.format(str(tile_type), str(tile_id)))
         if not tile.isAllowedToEdit():
-            return "disabled"
+            return 'disabled'
         else:
-            return ""
+            return ''
 
     def render_view(self):
         # XXX: There *must* be a better way of doing this, maybe write it
         #      in the request ? sending it as parameter is way too ugly
-        return self.pagelayout(mode="view")
+        return self.pagelayout(mode='view')
 
     def render_compose(self):
         # XXX: There *must* be a better way of doing this, maybe write it
         #      in the request ? sending it as parameter is way too ugly
-        return self.pagelayout(mode="compose")
+        return self.pagelayout(mode='compose')
 
     def render_layout_edit(self):
         # XXX: There *must* be a better way of doing this, maybe write it
         #      in the request ? sending it as parameter is way too ugly
-        return self.pagelayout(mode="layout_edit")
+        return self.pagelayout(mode='layout_edit')
 
     def accepted_ct_for_tile(self, tile_type):
         tile = self.context.restrictedTraverse(str(tile_type))
@@ -198,9 +221,9 @@ class GroupSelect(grok.View):
         vocab_name = 'plone.app.vocabularies.Groups'
         groups_factory = queryUtility(IVocabularyFactory, vocab_name)
         self.groups = groups_factory(self.context)
-        if "groups[]" in self.request.keys():
-            groups = self.request["groups[]"]
-            tile_len = int(self.request["tile_len"])
+        if 'groups[]' in self.request.keys():
+            groups = self.request['groups[]']
+            tile_len = int(self.request['tile_len'])
             i = 0
             while(i < tile_len):
                 tile_type = self.request['tiles[{0}][type]'.format(i)]
@@ -210,10 +233,12 @@ class GroupSelect(grok.View):
                 i += 1
 
 
-class GridPlug(grok.View):
-    grok.context(ICover)
-    grok.name('grid_plug')
-    grok.require('zope2.View')
+class Deco16Grid (grok.GlobalUtility):
+    grok.name('deco16_grid')
+    grok.implements(IGridSystem)
+
+    title = _(u'Deco (16 columns, default)')
+    ncolumns = 16
 
     row_class = 'c-row'
     column_class = 'c-cell'
@@ -224,15 +249,16 @@ class GridPlug(grok.View):
                 if element['type'] == 'row':
                     element['class'] = self.row_class
                     if 'children' in element:
-                        self.transform(self.columns_formater(element['children']))
+                        self.transform(self.columns_formatter(element['children']))
                 if element['type'] == 'group' and 'children' in element:
                     self.transform(element['children'])
 
                 if element['type'] == 'tile':
                     element['class'] = 'tile'
 
-    def columns_formater(self, columns):
-        #this formater works for deco, but you can implemente a custom one, for you grid system
+    def columns_formatter(self, columns):
+        # This formatter works for Deco; you can implement a custom one
+        # for you grid system
         w = 'cw-'
         p = 'cp-'
         offset = 0
@@ -241,27 +267,3 @@ class GridPlug(grok.View):
             column['class'] = self.column_class + ' ' + (w + str(width)) + ' ' + (p + str(offset))
             offset = offset + width
         return columns
-
-    def render(self):
-        return self
-
-
-## EXAMPLE of a usagge for a custom grid system, in this case, boostrap
-# class GridPlug(grok.View):
-#     grok.context(ICover)
-#     grok.name('grid_plug')
-#     grok.require('zope2.View')
-#     grok.layer(YOURLAYERINTERFACE)
-
-#     row_class = 'row'
-#     column_class = 'column'
-
-#     def columns_formater(self, columns):
-#         #this formater works for deco, but you can implemente a custom one, for you grid system
-#         w = 'span'
-
-#         for column in columns:
-#             width = column['data']['column-size']
-#             column['class'] = self.column_class + ' ' + (w + str(width))
-
-#         return columns

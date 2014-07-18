@@ -1,11 +1,200 @@
-There's a frood who really knows where his towel is
----------------------------------------------------
+Changelog
+---------
 
-1.0a6 (unreleased)
+There's a frood who really knows where his towel is.
+
+1.0a10 (unreleased)
+^^^^^^^^^^^^^^^^^^^
+
+- Nothing changed yet.
+
+
+1.0a9 (2014-06-27)
 ^^^^^^^^^^^^^^^^^^
 
+- Add Traditional Chinese translation.
+  [l34marr]
+
+- Basic tile implementation was not copying images from objects when the tile
+  was populated. This was causing an error when an image was removed from the
+  original object (fixes `#426`_).
+  [vangheem]
+
+- Unpublished content was disappearing from the list tile after access from
+  anonymous user (fixes `#412`_).
+  [adriana-rv, hvelarde]
+
+- Allow Site Administrator role to manage Cover control panel (closes `#423`_)
+  [ericof]
+
+- Fix showing original size of images in banner and carousel tile.
+  [maurits]
+
+- Improve python:view.is_compose_mode() tests in tile Zope Page Templates. This
+  test would return False when content in for example list tiles is reordered
+  deleted, or dropped on from the content chooser. (fixes `#421`_).
+  [fredvd]
+
+- Content body tile markup was changed to handle different conditions (empty
+  tile or not) in a saner way; a text indicating when the body text of an
+  item is empty was also added.
+  [hvelarde]
+
+- Added link in content body tile to related item (fixes `#415`_)
+  [kcleong]
+
+- Update jss.js to 0.6 and include minified version. This fixes the layout page
+  rendering and column resizing on IE10+ which was broken. Jss.js creates on the
+  fly css from javascript. (fixes `#398`_).
+  [fredvd]
+
+- SearchableText indexer for RichText tiles was fixed (closes `#411`_).
+  [hvelarde]
+
+- List tile is again fully sortable; a change on the JS code used there was
+  reverted (fixes `#413`_).
+  [hvelarde]
+
+
+1.0a8.post1 (2014-04-27)
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+- Disable SearchableText indexer for RichText tiles as it was causing
+  ``UnicodeDecodeError`` (refs. `#411`_).
+  [hvelarde]
+
+
+1.0a8 (2014-04-25)
+^^^^^^^^^^^^^^^^^^
+
+- Fix for collection tile not showing header correctly (fixes `#407`_). [kcleong]
+
+- Add RichText tiles to the SearchableText index of the cover.
+  [thepjot]
+  
+- Re-enable item sorting on the carousel tile edit form. It was by accident
+  disabled by removing the field on the list tile schema from which the
+  carousel tile inherits.
+  [fredvd]
+
+- Use jQuery's ``.on`` instead of deprecated ``.live`` method. This allows
+  compatibility with jQuery 1.9+.
+  [naro]
+
+- Fix carousel tile so it does not break cover when dropping content with no
+  image field (tile template was refactored and CSS class ``galleria-inner``
+  was removed). As a side effect the carousel tile is now fully responsive and
+  you can select the image size that better fits the maximum desired size. An
+  upgrade step to cook the CSS resources is provided (fixes `#371`_).
+  [hvelarde]
+
+- Handle missing tiles so they do not bork rendering and users are able
+  to remove defunk ones.
+  [vangheem]
+
+- Fixed 5-> 6 upgrade when collective.js.bootrap was already installed.
+  [thomasdesvenain]
+
+- Make base tile inherit from plone.supermodel.model.Schema and fix other
+  inconsistencies on tiles derivation (fixes `#381`_).
+  [jpgimenez]
+
+- Fix for generic title for list tiles introduced in 1.0a7 (fixes `#393`_).
+  [fredvd]
+
+
+1.0a7 (2014-02-04)
+^^^^^^^^^^^^^^^^^^
+
+- Add ``title`` and ``show more`` to the list tile to have a consistent
+  look-and-feel with the collection tile.
+  [maurits]
+
+- Fix searching in content chooser on Japanese (fixes `#374`_).
+  [terapyon]
+
+- Fix Galleria warning on empty carousel tiles.
+  [warpr]
+
+- Fix dropping Dexterity images on banner tile.
+  [maurits, warpr]
+
+- Latest items are now properly loaded on content chooser when selecting the
+  ``more`` link (fixes `#383`_).
+  [marcosfromero]
+
+- Use plone.api where possible.
+  [hvelarde]
+
+- Japanese translation added.
+  [terapyon]
+
+- Fix crash on view/compose/layout tabs when viewing a cover with an
+  empty layout. [warpr].
+
+- Fix two javascript issues reported by the JSHint commit hook. [warpr]
+
+- Fix an issue which prevented Firefox users from making selections
+  on the tile configuration dialogs. [warpr]
+
+- Gets the carousel test working again.
+  (closes `#333`_).
+  [href]
+
+- Hides empty tile message in all views but the compose view
+  (closes `#348`_).
+  [href]
+
+- Show the type of a tile (Basic Tile, Collection Tile, etc.) in the
+  top center of the tile on the compose tab. This makes it easier for
+  the user to know how they can add content, especially if the user
+  does not have permission to view the layout tab.
+  [warpr]
+
+- Make the grid system flexible.  The default is still a 16 column
+  Deco grid.  You can register your own system as an `IGridSystem`
+  utility based on the `Deco16Grid` class with a different name and
+  select it in the configuration panel.  You should create a grid that
+  matches the css of the theme that you are using on your site.
+  [warpr, maurits]
+
+- The reordering of list items is now immediately reflected in the DOM
+  (closes `#351`_).
+  [href]
+
+
+1.0a6 (2013-11-12)
+^^^^^^^^^^^^^^^^^^
+
+.. Warning::
+    This release removes all upgrade steps from versions no longer supported.
+    If you are upgrading from a version previous to 1.0a5 you should upgrade
+    to 1.0a5 first and then you can upgrade to 1.0a6. This release also
+    completely removes the code from deprecated image and link tiles; if you
+    are still using image and link tiles do not upgrade until you have
+    manually replaced both tiles instances with the new banner tile (this was
+    supposed to be done on previous release but we did not had time to do it.)
+
+- Field order can now be set on tile configuration screen using drag-and-drop.
+  (closes `#248`_).
+  [marcosfromero, cleberjsantos]
+
+- CSS improvements for list tile  and content chooser. [agnogueira]
+
+- List tile is now configurable: you can set ordering and visibility for all
+  fields and you can also set the preferred style for the title and the scale
+  and alignment for the image thumbnail; the date of the items was also added
+  (fixes `#339`_). [hvelarde]
+
+- Fix image positioning on collection tile (fixes `#318`_). [hvelarde]
+
+- Fix image positioning on basic tile (fixes `#317`_). [agnogueira]
+
+- Let the icons sidebar fixed on top when scrolling the page (closes `#342`_).
+  [agnogueira]
+
 - Add ``short_name`` to all tiles.  Use this as title in the tile
-  list.  This can be translated.
+  list. This can be translated.
   [maurits]
 
 - Fix possible problem getting the ``css_class`` when the default
@@ -16,8 +205,8 @@ There's a frood who really knows where his towel is
 - Add offset as a configuration option to the collection tile.
   (fixes `#298`_). [warpr]
 
-- Add ``cover-(type)-tile`` class to all tile templates (fixes issue
-  `#189`_). [warpr]
+- Add ``cover-(type)-tile`` class to all tile templates (fixes `#189`_).
+  [warpr]
 
 - Support text from Dexterity items for the bodycontent and richtext
   tiles (fixes `#323`_). [maurits]
@@ -32,9 +221,11 @@ There's a frood who really knows where his towel is
 
 - Remove bundles from portal_javascript (closes `#303`_). [jpgimenez]
 
+- Add German translation. [polyester, pbauer, svx]
+
 - Remove upgrade steps from unsupported versions (closes `#295`_). [fulv]
 
-- Depend on collective.js.bootstrap(closes `#201`_). [tcurvelo]
+- Depend on collective.js.bootstrap (closes `#201`_). [tcurvelo]
 
 - Remove code from Image and Link tiles (closes `#301`_). [fulv]
 
@@ -63,7 +254,7 @@ There's a frood who really knows where his towel is
   or `getImage` attribute, displays that image. And always adds
   a link (closes `#241`_). [marcosfromero]
 
-- Prevent unnecesary page reloads when saving or canceling edit overlay
+- Prevent unnecessary page reloads when saving or canceling edit overlay
   in tiles (closes `#274`_). [marcosfromero]
 
 - On collection tile, return a thumbnail only if the item has an image field
@@ -93,6 +284,12 @@ There's a frood who really knows where his towel is
 
 1.0a4 (2013-07-27)
 ^^^^^^^^^^^^^^^^^^
+
+.. Warning::
+    This release includes a new banner tile that will replace image and link
+    tiles completely, as we found them redundant. Please replace manually any
+    instance of image and link tiles in your covers with banner tiles. Image
+    and link tiles will be completely removed on next release.
 
 - Add Finnish translation. [datakurre]
 
@@ -157,7 +354,7 @@ There's a frood who really knows where his towel is
 - Gallery tile now allows sorting of items easily through a widget created for
   that purpose (closes `#198`_). [Quimera]
 
-- A custom permission for the export layout funcionality was added; exporting
+- A custom permission for the export layout functionality was added; exporting
   a cover layout to the Plone registry is now an administrative task
   accomplished only by Managers and Site Administrators (closes `#177`_).
   [Quimera]
@@ -195,7 +392,7 @@ There's a frood who really knows where his towel is
 
 - Implements an original size scale to show the original image. [jpgimenez]
 
-- Improve the way than images are accesed from the original object,
+- Improve the way that images are accessed from the original object,
   using the standard images traversal. (issue `#158`_) [jpgimenez]
 
 - Fixed a bug with Plone 4.3 that avoided TinyMCE being displayed for
@@ -233,7 +430,7 @@ There's a frood who really knows where his towel is
 - Refactor list tile to use adapters to get the contained items uids.
   [jpgimenez]
 
-- Implements a way to ommit fields from tiles edit form and show it at
+- Implements a way to omit fields from tiles edit form and show it at
   configure form. [jpgimenez]
 
 - Refactor of collection tile. [hvelarde]
@@ -245,7 +442,7 @@ There's a frood who really knows where his towel is
   called for the object and not its parent (fixes `#48`_). [frapell]
 
 - In order to be able to load Dexterity items from the import content GS step,
-  we need to provide this interface manualy, until a proper fix in Dexterity
+  we need to provide this interface manually, until a proper fix in Dexterity
   is implemented. [frapell]
 
 - Make the cover object to be an Item instead of a Container (fixes `#114`_).
@@ -264,7 +461,6 @@ There's a frood who really knows where his towel is
 
 - Initial release.
 
-.. _`PloneFormGen`: https://pypi.python.org/pypi/Products.PloneFormGen
 .. _`#35`: https://github.com/collective/collective.cover/issues/35
 .. _`#48`: https://github.com/collective/collective.cover/issues/48
 .. _`#100`: https://github.com/collective/collective.cover/issues/100
@@ -304,6 +500,7 @@ There's a frood who really knows where his towel is
 .. _`#239`: https://github.com/collective/collective.cover/issues/239
 .. _`#241`: https://github.com/collective/collective.cover/issues/241
 .. _`#244`: https://github.com/collective/collective.cover/issues/244
+.. _`#248`: https://github.com/collective/collective.cover/issues/248
 .. _`#259`: https://github.com/collective/collective.cover/issues/259
 .. _`#260`: https://github.com/collective/collective.cover/issues/260
 .. _`#262`: https://github.com/collective/collective.cover/issues/262
@@ -318,4 +515,26 @@ There's a frood who really knows where his towel is
 .. _`#301`: https://github.com/collective/collective.cover/issues/301
 .. _`#303`: https://github.com/collective/collective.cover/issues/303
 .. _`#314`: https://github.com/collective/collective.cover/issues/314
+.. _`#317`: https://github.com/collective/collective.cover/issues/317
+.. _`#318`: https://github.com/collective/collective.cover/issues/318
 .. _`#323`: https://github.com/collective/collective.cover/issues/323
+.. _`#333`: https://github.com/collective/collective.cover/issues/333
+.. _`#339`: https://github.com/collective/collective.cover/issues/339
+.. _`#342`: https://github.com/collective/collective.cover/issues/342
+.. _`#348`: https://github.com/collective/collective.cover/issues/348
+.. _`#351`: https://github.com/collective/collective.cover/issues/351
+.. _`#371`: https://github.com/collective/collective.cover/issues/371
+.. _`#374`: https://github.com/collective/collective.cover/issues/374
+.. _`#381`: https://github.com/collective/collective.cover/issues/381
+.. _`#383`: https://github.com/collective/collective.cover/issues/383
+.. _`#393`: https://github.com/collective/collective.cover/issues/393
+.. _`#398`: https://github.com/collective/collective.cover/issues/398
+.. _`#407`: https://github.com/collective/collective.cover/issues/407
+.. _`#411`: https://github.com/collective/collective.cover/issues/411
+.. _`#412`: https://github.com/collective/collective.cover/issues/412
+.. _`#413`: https://github.com/collective/collective.cover/issues/413
+.. _`#415`: https://github.com/collective/collective.cover/issues/415
+.. _`#421`: https://github.com/collective/collective.cover/issues/421
+.. _`#423`: https://github.com/collective/collective.cover/issues/423
+.. _`#426`: https://github.com/collective/collective.cover/issues/426
+.. _`PloneFormGen`: https://pypi.python.org/pypi/Products.PloneFormGen

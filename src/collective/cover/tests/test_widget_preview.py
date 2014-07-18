@@ -3,10 +3,10 @@
 from collective.cover.controlpanel import ICoverSettings
 from collective.cover.testing import INTEGRATION_TESTING
 from collective.cover.widgets.selectpreview import SelectPreviewWidget
+from plone import api
 from plone.app.testing import setRoles
 from plone.app.testing import TEST_USER_ID
 from plone.registry.interfaces import IRegistry
-from Products.CMFCore.utils import getToolByName
 from zope.component import getUtility
 
 import json
@@ -22,10 +22,10 @@ class WidgetPreviewCase(unittest.TestCase):
 
     def test_layout_structure(self):
         portal = self.portal
-        ttool = getToolByName(self.portal, 'portal_types')
+        ttool = api.portal.get_tool('portal_types')
         setRoles(self.portal, TEST_USER_ID, ['Manager'])
-        fti = ttool.getTypeInfo("Document")
-        obj = fti.constructInstance(portal, "test1")
+        fti = ttool.getTypeInfo('Document')
+        obj = fti.constructInstance(portal, 'test1')
 
         widget = SelectPreviewWidget(self.portal.REQUEST)
         widget.context = obj

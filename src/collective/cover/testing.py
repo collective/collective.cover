@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from App.Common import package_home
+from collective.cover import _
+from collective.cover.layout import Deco16Grid
 from PIL import Image
 from PIL import ImageChops
 from plone.app.robotframework.testing import AUTOLOGIN_LIBRARY_FIXTURE
@@ -10,12 +12,30 @@ from plone.app.testing import PLONE_FIXTURE
 from plone.app.testing import PloneSandboxLayer
 from plone.testing import z2
 from StringIO import StringIO
+from zope.component import getGlobalSiteManager
 
 import os
 import pkg_resources
 import random
 
-PLONE_VERSION = pkg_resources.require("Plone")[0].version
+PLONE_VERSION = pkg_resources.require('Plone')[0].version
+
+try:
+    pkg_resources.get_distribution('Products.PloneFormGen')
+except pkg_resources.DistributionNotFound:
+    HAS_PFG = False
+else:
+    HAS_PFG = True
+
+ALL_CONTENT_TYPES = [
+    'Collection',
+    'Document',
+    'File',
+    'Form Folder',
+    'Image',
+    'Link',
+    'News Item',
+]
 
 
 def loadFile(name, size=0):
@@ -38,7 +58,7 @@ def generate_jpeg(width, height):
     yb = 1.5
     maxIt = 25  # max iterations allowed
     # image size
-    image = Image.new("RGB", (width, height))
+    image = Image.new('RGB', (width, height))
     c = complex(random.random() * 2.0 - 1.0, random.random() - 0.5)
 
     for y in range(height):
@@ -56,7 +76,7 @@ def generate_jpeg(width, height):
             image.putpixel((x, y), b * 65536 + g * 256 + r)
 
     output = StringIO()
-    image.save(output, format="PNG")
+    image.save(output, format='PNG')
     return output.getvalue()
 
 
@@ -70,22 +90,34 @@ def images_are_equal(str1, str2):
     return ImageChops.difference(Image.open(im1), Image.open(im2)).getbbox() is None
 
 
+class Bootstrap3(Deco16Grid):
+    ncolumns = 12
+    title = _(u'Bootstrap 3')
+
+    def columns_formatter(self, columns):
+        prefix = 'col-md-'
+        for column in columns:
+            width = column['data']['column-size'] if 'data' in column else 1
+            column['class'] = self.column_class + ' ' + (prefix + str(width))
+
+        return columns
+
+
 class Fixture(PloneSandboxLayer):
 
     defaultBases = (PLONE_FIXTURE,)
 
     def setUpZope(self, app, configurationContext):
-        import Products.PloneFormGen
-        self.loadZCML(package=Products.PloneFormGen)
-        z2.installProduct(app, 'Products.PloneFormGen')
+        # XXX: do not install (yet) PFG in Plone 5
+        if HAS_PFG and PLONE_VERSION < '5.0':
+            import Products.PloneFormGen
+            self.loadZCML(package=Products.PloneFormGen)
+            z2.installProduct(app, 'Products.PloneFormGen')
+
         # Load ZCML
         import collective.cover
         self.loadZCML(package=collective.cover)
-        # XXX: https://github.com/collective/collective.cover/issues/81
-        #import plone.app.imagetile
-        #self.loadZCML(package=plone.app.imagetile)
-        #import plone.app.texttile
-        #self.loadZCML(package=plone.app.imagetile)
+
         if 'virtual_hosting' not in app.objectIds():
             # If ZopeLite was imported, we have no default virtual
             # host monster
@@ -94,6 +126,10 @@ class Fixture(PloneSandboxLayer):
             manage_addVirtualHostMonster(app, 'virtual_hosting')
 
     def setUpPloneSite(self, portal):
+        # XXX: do not install (yet) PFG in Plone 5
+        if HAS_PFG and PLONE_VERSION < '5.0':
+            self.applyProfile(portal, 'Products.PloneFormGen:default')
+
         # Install into Plone site using portal_setup
         self.applyProfile(portal, 'collective.cover:default')
         self.applyProfile(portal, 'collective.cover:testfixture')
@@ -106,16 +142,34 @@ class Fixture(PloneSandboxLayer):
         portal_workflow = portal.portal_workflow
         portal_workflow.setChainForPortalTypes(['Collection'],
                                                ['plone_workflow'],)
+
         # Prevent kss validation errors in Plone 4.2
         portal_kss = getattr(portal, 'portal_kss', None)
         if portal_kss:
             portal_kss.getResource('++resource++plone.app.z3cform').setEnabled(False)
 
-
 FIXTURE = Fixture()
+
+
+class MultipleGridsFixture(Fixture):
+
+    defaultBases = (FIXTURE,)
+
+    def setUpZope(self, app, configurationContext):
+        newgrid = Bootstrap3()
+        sm = getGlobalSiteManager()
+        sm.registerUtility(newgrid, name='bootstrap3')
+
+
 INTEGRATION_TESTING = IntegrationTesting(
     bases=(FIXTURE,),
     name='collective.cover:Integration',
+)
+
+MULTIPLE_GRIDS_FIXTURE = MultipleGridsFixture()
+MULTIPLE_GRIDS_INTEGRATION_TESTING = IntegrationTesting(
+    bases=(MULTIPLE_GRIDS_FIXTURE,),
+    name='collective.cover:MultipleGridsIntegration',
 )
 
 FUNCTIONAL_TESTING = FunctionalTesting(
@@ -125,4 +179,4 @@ FUNCTIONAL_TESTING = FunctionalTesting(
 
 ROBOT_TESTING = FunctionalTesting(
     bases=(FIXTURE, AUTOLOGIN_LIBRARY_FIXTURE, z2.ZSERVER_FIXTURE),
-    name="collective.cover:Robot")
+    name='collective.cover:Robot')
