@@ -246,8 +246,8 @@ class Deco16Grid (grok.GlobalUtility):
     title = _(u'Deco (16 columns, default)')
     ncolumns = 16
 
-    row_class = 'row'
-    column_class = 'cell'
+    row_class = 'c-row'
+    column_class = 'c-cell'
 
     def transform(self, layout):
         for element in layout:
@@ -265,8 +265,8 @@ class Deco16Grid (grok.GlobalUtility):
     def columns_formatter(self, columns):
         # This formatter works for Deco; you can implement a custom one
         # for you grid system
-        w = 'width-'
-        p = 'position-'
+        w = 'cw-'
+        p = 'cp-'
         offset = 0
         for column in columns:
             width = column['data']['column-size'] if 'data' in column else 1

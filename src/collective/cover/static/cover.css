@@ -149,3 +149,49 @@ table.invisible{visibility:visible;}
     -webkit-box-shadow: 0 5px 10px #C3C3C3;
     box-shadow: 0 5px 10px #C3C3C3;
 }
+
+/* Cover grid system
+ * Based on The 12-column Deco Grid System, see http://deco.gs
+ */
+
+div.c-row {
+  float: left;
+  width: 100%;
+  display: block;
+  position: relative;
+}
+div.c-cell {
+  position: relative;
+  float: left;
+  left: 100%;
+}
+
+/* Width classes. */
+div.cw-1  { width: 6.2500%   }
+div.cw-2  { width: 14.583% }
+div.cw-3  { width: 22.916% }
+div.cw-4  { width: 31.250% }
+div.cw-5  { width: 39.583% }
+div.cw-6  { width: 47.916% }
+div.cw-7  { width: 56.249% }
+div.cw-8  { width: 64.583% }
+div.cw-9  { width: 72.916% }
+div.cw-10 { width: 81.249% }
+div.cw-11 { width: 89.583% }
+div.cw-12 { width: 97.916% }
+
+/* Positioning classes */
+div.cp-0  { margin-left: -100%    }
+div.cp-1  { margin-left: -91.667% }
+div.cp-2  { margin-left: -83.334% }
+div.cp-3  { margin-left: -75.001% }
+div.cp-4  { margin-left: -66.668% }
+div.cp-5  { margin-left: -58.335% }
+div.cp-6  { margin-left: -50.002% }
+div.cp-7  { margin-left: -41.669% }
+div.cp-8  { margin-left: -33.336% }
+div.cp-9  { margin-left: -25.003% }
+div.cp-10 { margin-left: -16.67% }
+div.cp-11 { margin-left: -8.337% }
+
+/* End of the Cover Grid System */

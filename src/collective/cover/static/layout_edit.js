@@ -410,7 +410,7 @@
                 $( "#slider" ).slider({
                     range: "max",
                     min: 1,
-                    max: n_columns,
+                    max: 12,
                     value: 1,
                     slide: function( event, ui ) {
                         $( "#column-size-resize span" ).html( ui.value );
@@ -562,7 +562,7 @@
             settings = default_settings;
         } else {
             settings = {
-                'ncolumns': 16,
+                'ncolumns': 12,
             };
         }
 
