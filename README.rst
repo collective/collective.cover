@@ -25,6 +25,12 @@ layout composition system for Plone.
 .. _`Deco`: https://github.com/plone/plone.app.deco
 .. _`Tiles`: https://github.com/plone/plone.app.tiles
 
+Demo
+^^^^
+
+For impatient types, here is a demo installation of collective.cover: http://collective-cover.herokuapp.com.
+It needs about 60 seconds to spin up and it will purge all changes after about an hour of non-usage.
+
 Use cases
 ^^^^^^^^^
 
