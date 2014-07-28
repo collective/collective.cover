@@ -4,14 +4,6 @@ collective.cover
 
 .. contents:: Table of Contents
 
-Demo
-----
-
-For impatient types, here is a demo installation of collective.cover:
-http://collective-cover.herokuapp.com. It needs about 60 seconds to spin up and
-it will purge all changes after about an hour of non-usage.
-
-
 Life, the Universe, and Everything
 ----------------------------------
 
@@ -32,6 +24,12 @@ layout composition system for Plone.
 .. _`Blocks`: https://github.com/plone/plone.app.blocks
 .. _`Deco`: https://github.com/plone/plone.app.deco
 .. _`Tiles`: https://github.com/plone/plone.app.tiles
+
+Demo
+^^^^
+
+For impatient types, here is a demo installation of collective.cover: http://collective-cover.herokuapp.com.
+It needs about 60 seconds to spin up and it will purge all changes after about an hour of non-usage.
 
 Use cases
 ^^^^^^^^^
