@@ -139,12 +139,11 @@ def assign_id_for_tiles(cover, event):
 def searchableText(obj):
     """Return searchable text to be used as indexer. Includes id, title,
     description and text from Rich Text tiles."""
-    transformer = ITransformer(obj)
     tiles_text = ''
     for t in obj.list_tiles('collective.cover.richtext'):
         tile = obj.restrictedTraverse(
             '@@collective.cover.richtext/{0}'.format(str(t)))
-        tiles_text += transformer(tile.data['text'], 'text/plain')
+        tiles_text += tile.data['text'].output
 
     searchable_text = [safe_unicode(entry) for entry in (
         obj.id,
