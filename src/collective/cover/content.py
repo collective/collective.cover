@@ -4,7 +4,6 @@ from collective.cover.controlpanel import ICoverSettings
 from collective.cover.interfaces import ICover
 from collective.cover.utils import assign_tile_ids
 from five import grok
-from plone.app.textfield.interfaces import ITransformer
 from plone.dexterity.content import Item
 from plone.indexer import indexer
 from plone.registry.interfaces import IRegistry
