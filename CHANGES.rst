@@ -8,6 +8,10 @@ There's a frood who really knows where his towel is.
 
 - Fix rendering of cover page outside its context (fixes `#430`_).
   [petschki]
+  
+- Remove PloneFormGen's 'Form Folder' from default searchable types 
+  (fixes `#438`_).
+  [djowett]
 
 
 1.0a9 (2014-06-27)
