@@ -185,35 +185,30 @@ class LayoutEdit(grok.View):
 
 
 class UpdateTileContent(grok.View):
+
+    """Helper browser view to update the content of a tile."""
+
     grok.context(ICover)
     grok.require('cmf.ModifyPortalContent')
 
     def render(self):
-        catalog = api.portal.get_tool('portal_catalog')
-
+        """Render a tile after populating it with an object."""
         tile_type = self.request.form.get('tile-type')
         tile_id = self.request.form.get('tile-id')
         uid = self.request.form.get('uid')
 
         html = ''
         if tile_type and tile_id and uid:
-
-            tile = self.context.restrictedTraverse(tile_type)
-            tile_instance = tile[tile_id]
-
+            catalog = api.portal.get_tool('portal_catalog')
             results = catalog(UID=uid)
             if results:
                 obj = results[0].getObject()
+                tile = self.context.restrictedTraverse('{0}/{1}'.format(tile_type, tile_id))
+                tile.populate_with_object(obj)
+                # reinstantiate the tile to update its content on AJAX calls
+                tile = self.context.restrictedTraverse('{0}/{1}'.format(tile_type, tile_id))
+                html = tile()
 
-                try:
-                    tile_instance.populate_with_object(obj)
-                    html = tile_instance()
-                except:
-                    # XXX: Pass silently ?
-                    pass
-
-            # XXX: Calling the tile will return the HTML with the headers, need to
-            #      find out if this affects us in any way.
         return html
 
 
