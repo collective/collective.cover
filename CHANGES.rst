@@ -6,7 +6,11 @@ There's a frood who really knows where his towel is.
 1.0a10 (unreleased)
 ^^^^^^^^^^^^^^^^^^^
 
-- Refactor ``UpdateTileContent`` helper browser view to avoid returning the
+- Fix ``RemoveItemFromListTile`` helper browser view to avoid failure to
+  remove an object when the tile is not a List Tile but a subclass of it.
+  [hvelarde]
+
+- Fix ``UpdateTileContent`` helper browser view to avoid returning the
   rendering of previous object in tile on AJAX calls.
   [hvelarde]
 
