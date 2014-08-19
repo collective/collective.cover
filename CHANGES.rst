@@ -6,8 +6,7 @@ There's a frood who really knows where his towel is.
 1.0a10 (unreleased)
 ^^^^^^^^^^^^^^^^^^^
 
-- Remove PloneFormGen's 'Form Folder' from default searchable types 
-  (fixes `#438`_).
+- Remove PloneFormGen's 'Form Folder' from default searchable types (fixes `#438`_).
   [djowett]
 
 - Fix ``RemoveItemFromListTile`` helper browser view to avoid failure to
@@ -547,4 +546,5 @@ There's a frood who really knows where his towel is.
 .. _`#421`: https://github.com/collective/collective.cover/issues/421
 .. _`#423`: https://github.com/collective/collective.cover/issues/423
 .. _`#426`: https://github.com/collective/collective.cover/issues/426
+.. _`#438`: https://github.com/collective/collective.cover/issues/438
 .. _`PloneFormGen`: https://pypi.python.org/pypi/Products.PloneFormGen
