@@ -14,6 +14,10 @@ There's a frood who really knows where his towel is.
   rendering of previous object in tile on AJAX calls.
   [hvelarde]
 
+- Fix AttributeError caused by editing a basic tile and not populating the
+  image field.
+  [enfold-josh]
+
 
 1.0a9 (2014-06-27)
 ^^^^^^^^^^^^^^^^^^

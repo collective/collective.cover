@@ -36,7 +36,8 @@
           </h4>
       </tal:title>
 
-      <tal:image condition="python:field['id'] == 'image' and view.has_image"
+      <tal:image condition="python:field['id'] == 'image' and view.has_image">
+      <tal:scales
                  define="scale view/scale;
                          scales view/@@images;
                          thumbnail python:scales.scale('image', scale=scale)">
@@ -48,6 +49,7 @@
                                class python:field.get('position', '');
                                alt view/data/title" />
         </a>
+      </tal:scales>
       </tal:image>
 
       <tal:description condition="python:field['id'] == 'description'">
