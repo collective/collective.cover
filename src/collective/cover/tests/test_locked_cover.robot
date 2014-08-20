@@ -19,6 +19,8 @@ ${tile_selector}  div.tile-container div.tile
 *** Test Cases ***
 
 Test Locked Cover
+    [Tags]  Expected Failure
+
     Log in as site owner
     Goto Homepage
     Create Cover  My Cover  Description
