@@ -1,0 +1,13 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser">
+
+    <browser:page
+        name="cover_helper"
+        for="*"
+        permission="zope.Public"
+        class=".utils.Helper"
+        allowed_interface=".interfaces.IHelper"
+        />
+
+</configure>

@@ -2,7 +2,8 @@
 <object name="portal_javascripts">
   <javascript id="++resource++collective.cover/contentchooser.js"
       cacheable="True" compression="none" cookable="True" enabled="True"
-      expression="" inline="False" authenticated="True" />
+      expression="python:portal.restrictedTraverse('@@cover_helper').is_compose_mode()"
+      inline="False" authenticated="True" />
   <javascript id="++resource++collective.js.bootstrap/js/bootstrap.min.js"
       cacheable="True" compression="none" cookable="True" enabled="True"
       expression="" inline="False" />

@@ -22,6 +22,7 @@
   <include file="profiles.zcml" />
   <include file="subscribers.zcml" />
 
+  <include package=".browser" />
   <!-- five.grok 1.3.2 will not register this by itself -->
   <browser:resourceDirectory
       name="collective.cover"
