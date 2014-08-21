@@ -6,6 +6,10 @@ There's a frood who really knows where his towel is.
 1.0a10 (unreleased)
 ^^^^^^^^^^^^^^^^^^^
 
+- Fix AttributeError caused by editing a basic tile and not populating the
+  image field.
+  [enfold-josh]
+
 - Fix ``RemoveItemFromListTile`` helper browser view to avoid failure to
   remove an object when the tile is not a List Tile but a subclass of it.
   [hvelarde]
