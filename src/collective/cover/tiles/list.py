@@ -25,6 +25,7 @@ from zope.lifecycleevent import ObjectModifiedEvent
 from zope.schema import getFieldsInOrder
 
 import logging
+import Missing
 
 logger = logging.getLogger(PROJECTNAME)
 
@@ -138,6 +139,39 @@ class ListTile(PersistentCoverTile):
 
     def is_empty(self):
         return self.results() == []
+
+    def Date(self, obj):
+        """Return the date of publication of the object; if it has not been
+        published yet, it will return its modification date. If the object is
+        an Event, then return the start date.
+
+        :param obj: [required]
+        :type obj: AT or DX-based content type object
+        :returns: the object's publication/modification date or the event's
+                  start date in case of an Event-like object
+        """
+        # XXX: different from Collection tile, List tile returns objects
+        #      instead of brains in its `results` function. I think we
+        #      were looking for some performace gains there but in this
+        #      case we need to go back to brains to avoid crazy stuff on
+        #      trying to guess the name of the method returning the
+        #      start date of an Event or an Event-like content type. We
+        #      probably want to rewrite the `results` funtion but we have
+        #      to be careful because there must be tiles derived from it,
+        #      like the Carousel tile
+        catalog = api.portal.get_tool('portal_catalog')
+        brain = catalog(UID=self.get_uid(obj))
+        assert len(brain) == 1
+        brain = brain[0]
+
+        calendar = api.portal.get_tool('portal_calendar')
+        # calendar_types lists all Event-like content types
+        if brain.portal_type not in calendar.calendar_types:
+            return brain.Date
+        else:
+            # Events must have a start date
+            assert brain.start is not Missing.Value
+            return brain.start
 
     # TODO: get rid of this by replacing it with the 'count' field
     def set_limit(self):

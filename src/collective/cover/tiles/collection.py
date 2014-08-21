@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-
 from collective.cover import _
 from collective.cover.tiles.base import IPersistentCoverTile
 from collective.cover.tiles.base import PersistentCoverTile
 from collective.cover.tiles.configuration_view import IDefaultConfigureForm
+from plone import api
 from plone.app.uuid.utils import uuidToObject
 from plone.directives import form
 from plone.memoize import view
@@ -17,6 +17,8 @@ from zope import schema
 from zope.component import queryUtility
 from zope.interface import implements
 from zope.schema import getFieldsInOrder
+
+import Missing
 
 
 class ICollectionTile(IPersistentCoverTile):
@@ -124,6 +126,25 @@ class CollectionTile(PersistentCoverTile):
     def is_empty(self):
         return self.data.get('uuid', None) is None or \
             uuidToObject(self.data.get('uuid')) is None
+
+    def Date(self, brain):
+        """Return the date of publication of the object; if it has not been
+        published yet, it will return its modification date. If the object is
+        an Event, then return the start date.
+
+        :param brain: [required]
+        :type brain: catalog brain
+        :returns: the object's publication/modification date or the event's
+                  start date in case of an Event-like object
+        """
+        calendar = api.portal.get_tool('portal_calendar')
+        # calendar_types lists all Event-like content types
+        if brain.portal_type not in calendar.calendar_types:
+            return brain.Date
+        else:
+            # Events must have a start date
+            assert brain.start is not Missing.Value
+            return brain.start
 
     def populate_with_object(self, obj):
         super(CollectionTile, self).populate_with_object(obj)  # check permission
