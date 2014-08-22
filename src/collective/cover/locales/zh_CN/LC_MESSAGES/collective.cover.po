@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: collective.cover\n"
-"POT-Creation-Date: 2014-08-22 20:31+0000\n"
+"POT-Creation-Date: 2014-08-22 21:24+0000\n"
 "PO-Revision-Date: 2013-06-27 21:57+0800\n"
 "Last-Translator: adam <yuejun.tang@gmail.com>\n"
 "Language-Team: Spanish <https://github.com/collective>\n"
@@ -68,6 +68,10 @@ msgstr "一个嵌入远程对象的面板。"
 msgid "Add Content"
 msgstr "添加内容"
 
+#: behaviors/configure.zcml
+msgid "Adds the possibility of having a background image on the default view of the item."
+msgstr ""
+
 #: collective/cover/tiles/carousel.py:34
 msgid "Auto play"
 msgstr "自动播放"
@@ -75,6 +79,10 @@ msgstr "自动播放"
 #: collective/cover/controlpanel.py:25
 msgid "Available tiles"
 msgstr "有效的面板种类"
+
+#: collective/cover/behaviors/interfaces.py:14
+msgid "Background image"
+msgstr ""
 
 #: tiles/configure.zcml
 msgid "Banner Tile"
@@ -371,6 +379,10 @@ msgstr "已保存"
 #: collective/cover/controlpanel.py:34
 msgid "Searchable Content Types"
 msgstr "可搜索的内容类型"
+
+#: collective/cover/behaviors/interfaces.py:15
+msgid "Sets the background image to be used on the item. For accessibility reasons, you should not use background images as the sole method of conveying important information."
+msgstr ""
 
 #: collective/cover/controlpanel.py:67
 msgid "Settings for the collective.cover package"

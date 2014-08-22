@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: collective.cover\n"
-"POT-Creation-Date: 2014-08-22 20:31+0000\n"
+"POT-Creation-Date: 2014-08-22 21:24+0000\n"
 "PO-Revision-Date: 2013-10-01 23:07+0100\n"
 "Last-Translator: Espen Moe-Nilssen <espen@medialog.no>\n"
 "Language-Team: Norwegian <LL@li.org>\n"
@@ -71,6 +71,10 @@ msgstr "En blokk for å bygge inn innhold fra en ekstern kilde"
 msgid "Add Content"
 msgstr "Legg til innhold"
 
+#: behaviors/configure.zcml
+msgid "Adds the possibility of having a background image on the default view of the item."
+msgstr ""
+
 #: collective/cover/tiles/carousel.py:34
 msgid "Auto play"
 msgstr "Automatisk avspilling"
@@ -78,6 +82,10 @@ msgstr "Automatisk avspilling"
 #: collective/cover/controlpanel.py:25
 msgid "Available tiles"
 msgstr "Tilgjengelige blokker"
+
+#: collective/cover/behaviors/interfaces.py:14
+msgid "Background image"
+msgstr ""
 
 #: tiles/configure.zcml
 msgid "Banner Tile"
@@ -374,6 +382,10 @@ msgstr "Lagre"
 #: collective/cover/controlpanel.py:34
 msgid "Searchable Content Types"
 msgstr "Søkbare innholdstyper"
+
+#: collective/cover/behaviors/interfaces.py:15
+msgid "Sets the background image to be used on the item. For accessibility reasons, you should not use background images as the sole method of conveying important information."
+msgstr ""
 
 #: collective/cover/controlpanel.py:67
 msgid "Settings for the collective.cover package"

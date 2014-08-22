@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: collective.cover\n"
-"POT-Creation-Date: 2014-08-22 20:31+0000\n"
+"POT-Creation-Date: 2014-08-22 21:24+0000\n"
 "PO-Revision-Date: 2014-06-23 10:50+0800\n"
 "Last-Translator: TsungWei Hu <marr.tw@gmail.com>\n"
 "Language-Team: Plone I18N <plone-i18n@lists.sourceforge.net>\n"
@@ -66,12 +66,20 @@ msgstr ""
 msgid "Add Content"
 msgstr "新增圖磚內容"
 
+#: behaviors/configure.zcml
+msgid "Adds the possibility of having a background image on the default view of the item."
+msgstr ""
+
 #: collective/cover/tiles/carousel.py:34
 msgid "Auto play"
 msgstr ""
 
 #: collective/cover/controlpanel.py:25
 msgid "Available tiles"
+msgstr ""
+
+#: collective/cover/behaviors/interfaces.py:14
+msgid "Background image"
 msgstr ""
 
 #: tiles/configure.zcml
@@ -368,6 +376,10 @@ msgstr ""
 
 #: collective/cover/controlpanel.py:34
 msgid "Searchable Content Types"
+msgstr ""
+
+#: collective/cover/behaviors/interfaces.py:15
+msgid "Sets the background image to be used on the item. For accessibility reasons, you should not use background images as the sole method of conveying important information."
 msgstr ""
 
 #: collective/cover/controlpanel.py:67

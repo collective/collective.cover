@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from collective.cover.behaviors.interfaces import IBackgroundImage
 from collective.cover.config import PROJECTNAME
 from collective.cover.controlpanel import ICoverSettings
 from collective.cover.interfaces import ICover
@@ -29,6 +30,15 @@ class Cover(Item):
     #      content from GS, until a proper solution is found.
     #      ref: http://thread.gmane.org/gmane.comp.web.zope.plone.devel/31799
     implements(IDAVAware)
+
+    @property
+    def background(self):
+        """Return the style to be used on the item, if the IBackgroundImage
+        behavior is enabled and a background image has been set.
+        """
+        background = IBackgroundImage(self, None)
+        if background is not None and background.background_image is not None:
+            return '#content {background: url("@@images/background_image") no-repeat}'
 
     def get_tiles(self, types=None, layout=None):
         """Traverse the layout tree and return a list of tiles on it.

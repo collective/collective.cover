@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: collective.cover\n"
-"POT-Creation-Date: 2014-08-22 20:31+0000\n"
+"POT-Creation-Date: 2014-08-22 21:24+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: Paul Roeland <paul@cleanclothes.org>, 2013\n"
 "Language-Team: German <LL@li.org>\n"
@@ -69,6 +69,10 @@ msgstr "Eine Kachel, die externe Inhalte einbettet."
 msgid "Add Content"
 msgstr "Inhalt zufügen"
 
+#: behaviors/configure.zcml
+msgid "Adds the possibility of having a background image on the default view of the item."
+msgstr ""
+
 #: collective/cover/tiles/carousel.py:34
 msgid "Auto play"
 msgstr "Automatisch abspielen"
@@ -76,6 +80,10 @@ msgstr "Automatisch abspielen"
 #: collective/cover/controlpanel.py:25
 msgid "Available tiles"
 msgstr "Verfügbare Kacheln"
+
+#: collective/cover/behaviors/interfaces.py:14
+msgid "Background image"
+msgstr ""
 
 #: tiles/configure.zcml
 msgid "Banner Tile"
@@ -372,6 +380,10 @@ msgstr "Gespeichert"
 #: collective/cover/controlpanel.py:34
 msgid "Searchable Content Types"
 msgstr "Durchsuchbare Inhaltstypen"
+
+#: collective/cover/behaviors/interfaces.py:15
+msgid "Sets the background image to be used on the item. For accessibility reasons, you should not use background images as the sole method of conveying important information."
+msgstr ""
 
 #: collective/cover/controlpanel.py:67
 msgid "Settings for the collective.cover package"

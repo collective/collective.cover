@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: collective.cover\n"
-"POT-Creation-Date: 2014-08-22 20:31+0000\n"
-"PO-Revision-Date: 2014-08-22 17:57-0300\n"
+"POT-Creation-Date: 2014-08-22 21:24+0000\n"
+"PO-Revision-Date: 2014-08-22 18:27-0300\n"
 "Last-Translator: Héctor Velarde <hector.velarde@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -72,6 +72,13 @@ msgstr "Um tile que permite incluir conteúdo de uma fonte externa."
 msgid "Add Content"
 msgstr "Adicionar conteúdo"
 
+#: behaviors/configure.zcml
+msgid ""
+"Adds the possibility of having a background image on the default view of the "
+"item."
+msgstr ""
+"Adiciona a possibilidade de ter uma imagem de fundo na vista padrão do item."
+
 #: collective/cover/tiles/carousel.py:34
 msgid "Auto play"
 msgstr "Reprodução automática"
@@ -79,6 +86,10 @@ msgstr "Reprodução automática"
 #: collective/cover/controlpanel.py:25
 msgid "Available tiles"
 msgstr "Tiles disponíveis"
+
+#: collective/cover/behaviors/interfaces.py:14
+msgid "Background image"
+msgstr "Imagem de fundo"
 
 #: tiles/configure.zcml
 msgid "Banner Tile"
@@ -373,6 +384,16 @@ msgstr "Salvo"
 #: collective/cover/controlpanel.py:34
 msgid "Searchable Content Types"
 msgstr "Tipos de conteúdo buscáveis"
+
+#: collective/cover/behaviors/interfaces.py:15
+msgid ""
+"Sets the background image to be used on the item. For accessibility reasons, "
+"you should not use background images as the sole method of conveying "
+"important information."
+msgstr ""
+"Estabelece a imagem de fundo que será usada no item. Por razões de "
+"acessibilidade, no deveria usar imagens de fundo como o único método de "
+"transmitir informação importante."
 
 #: collective/cover/controlpanel.py:67
 msgid "Settings for the collective.cover package"

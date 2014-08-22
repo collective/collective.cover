@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: collective.cover\n"
-"POT-Creation-Date: 2014-08-22 20:31+0000\n"
-"PO-Revision-Date: 2014-08-22 17:57-0300\n"
+"POT-Creation-Date: 2014-08-22 21:24+0000\n"
+"PO-Revision-Date: 2014-08-22 18:26-0300\n"
 "Last-Translator: Héctor Velarde <hector.velarde@gmail.com>\n"
 "Language-Team: Spanish <https://github.com/collective>\n"
 "MIME-Version: 1.0\n"
@@ -74,6 +74,14 @@ msgstr "Un tile para integrar contenido de una fuente remota."
 msgid "Add Content"
 msgstr "Agregar contenido"
 
+#: behaviors/configure.zcml
+msgid ""
+"Adds the possibility of having a background image on the default view of the "
+"item."
+msgstr ""
+"Agraga la posibilidad de tener una imagen de fondo en la vista por defecto "
+"del elemento."
+
 #: collective/cover/tiles/carousel.py:34
 msgid "Auto play"
 msgstr "Reproducción automática"
@@ -81,6 +89,10 @@ msgstr "Reproducción automática"
 #: collective/cover/controlpanel.py:25
 msgid "Available tiles"
 msgstr "Tiles disponibles"
+
+#: collective/cover/behaviors/interfaces.py:14
+msgid "Background image"
+msgstr "Imagen de fondo"
 
 #: tiles/configure.zcml
 msgid "Banner Tile"
@@ -159,7 +171,7 @@ msgstr "Fecha"
 
 #: collective/cover/layout.py:240
 msgid "Deco (16 columns, default)"
-msgstr "Deco (16 columnas, por omisión)"
+msgstr "Deco (16 columnas, por defecto)"
 
 #: collective/cover/tiles/basic.py:27 collective/cover/tiles/collection.py:39
 #: collective/cover/tiles/embed.py:24
@@ -376,6 +388,16 @@ msgstr "Guardado"
 #: collective/cover/controlpanel.py:34
 msgid "Searchable Content Types"
 msgstr "Tipos de contenido consultables"
+
+#: collective/cover/behaviors/interfaces.py:15
+msgid ""
+"Sets the background image to be used on the item. For accessibility reasons, "
+"you should not use background images as the sole method of conveying "
+"important information."
+msgstr ""
+"Establece la imagen de fondo que será usada para el elemento. Por razones de "
+"accesibilidad, no debería utilizar imágenes de fondo como el único método de "
+"transmitir información importante."
 
 #: collective/cover/controlpanel.py:67
 msgid "Settings for the collective.cover package"

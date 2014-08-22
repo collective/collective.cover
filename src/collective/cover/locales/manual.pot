@@ -46,6 +46,10 @@ msgstr ""
 msgid "Standard view"
 msgstr ""
 
+#: behaviors/configure.zcml
+msgid "Adds the possibility of having a background image on the default view of the item."
+msgstr ""
+
 #: tiles/configure.zcml
 msgid "Banner Tile"
 msgstr ""

@@ -1,0 +1,16 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:i18n="http://namespaces.zope.org/i18n"
+    xmlns:plone="http://namespaces.plone.org/plone"
+    i18n_domain="collective.cover">
+
+  <include package="plone.behavior" file="meta.zcml" />
+
+  <plone:behavior
+      title="Background image"
+      description="Adds the possibility of having a background image on the default view of the item."
+      provides="collective.cover.behaviors.interfaces.IBackgroundImage"
+      for="collective.cover.interfaces.ICover"
+      />
+
+</configure>

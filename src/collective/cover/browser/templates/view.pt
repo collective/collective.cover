@@ -5,13 +5,19 @@
       lang="en"
       metal:use-macro="context/main_template/macros/master"
       i18n:domain="collective.cover">
+<head>
+<metal:styles fill-slot="style_slot">
+    <style type="text/css"
+        tal:condition="context/background"
+        tal:content="context/background" />
+</metal:styles>
+</head>
 
 <body>
-
 <metal:main fill-slot="main">
     <div tal:define="layout nocall:context/@@layout"
          tal:replace="structure layout/render_view" />
+    <div class="visualClear"><!-- --></div>
 </metal:main>
-
 </body>
 </html>
