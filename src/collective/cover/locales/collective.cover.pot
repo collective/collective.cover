@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2014-05-19 15:01+0000\n"
+"Project-Id-Version: collective.cover\n"
+"POT-Creation-Date: 2014-08-22 20:31+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Language-Code: en\n"
 "Language-Name: English\n"
 "Preferred-Encodings: utf-8 latin1\n"
-"Domain: DOMAIN\n"
+"Domain: collective.cover\n"
 
 #: collective/cover/profiles/default/types/collective.cover.content.xml
 msgid "A cover page."
@@ -51,6 +51,10 @@ msgid "A tile that shows rich text format."
 msgstr ""
 
 #: tiles/configure.zcml
+msgid "A tile that shows the body of a content type."
+msgstr ""
+
+#: tiles/configure.zcml
 msgid "A tile that shows the result of a collection."
 msgstr ""
 
@@ -83,7 +87,7 @@ msgid "Bootstrap 3"
 msgstr ""
 
 #: collective/cover/controlpanel.py:52
-#: collective/cover/tiles/base.py:65
+#: collective/cover/tiles/base.py:66
 msgid "CSS Class"
 msgstr ""
 
@@ -143,7 +147,7 @@ msgstr ""
 
 #: collective/cover/tiles/basic.py:39
 #: collective/cover/tiles/collection.py:46
-#: collective/cover/tiles/list.py:69
+#: collective/cover/tiles/list.py:74
 msgid "Date"
 msgstr ""
 
@@ -174,7 +178,7 @@ msgid "Edit"
 msgstr ""
 
 #: collective/cover/tiles/carousel.py:42
-#: collective/cover/tiles/list.py:30
+#: collective/cover/tiles/list.py:35
 msgid "Elements"
 msgstr ""
 
@@ -234,7 +238,7 @@ msgstr ""
 msgid "Header"
 msgstr ""
 
-#: collective/cover/tiles/banner.py:25
+#: collective/cover/tiles/banner.py:24
 #: collective/cover/tiles/basic.py:32
 #: collective/cover/tiles/collection.py:53
 msgid "Image"
@@ -293,7 +297,7 @@ msgid "Number of items"
 msgstr ""
 
 #: collective/cover/tiles/collection.py:61
-#: collective/cover/tiles/list.py:40
+#: collective/cover/tiles/list.py:45
 msgid "Number of items to display"
 msgstr ""
 
@@ -335,7 +339,7 @@ msgstr ""
 msgid "Please edit the tile to enter some text."
 msgstr ""
 
-#: collective/cover/tiles/configuration_widgets/namedimage.pt:70
+#: collective/cover/tiles/configuration_widgets/namedimage.pt:72
 #: collective/cover/tiles/configuration_widgets/textline.pt:51
 msgid "Position"
 msgstr ""
@@ -354,7 +358,7 @@ msgstr ""
 
 #: collective/cover/browser/templates/layoutedit.pt:73
 #: collective/cover/tiles/configuration_view.py:163
-#: collective/cover/tiles/edit.py:49
+#: collective/cover/tiles/edit.py:51
 msgid "Save"
 msgstr ""
 
@@ -370,11 +374,11 @@ msgstr ""
 msgid "Settings for the collective.cover package"
 msgstr ""
 
-#: collective/cover/tiles/list.py:77
+#: collective/cover/tiles/list.py:82
 msgid "Show more... link"
 msgstr ""
 
-#: collective/cover/tiles/list.py:82
+#: collective/cover/tiles/list.py:87
 msgid "Show more... link text"
 msgstr ""
 
@@ -418,7 +422,7 @@ msgstr ""
 msgid "This tiles will be available for layout creation."
 msgstr ""
 
-#: collective/cover/tiles/list.py:73
+#: collective/cover/tiles/list.py:78
 msgid "Tile Title"
 msgstr ""
 
@@ -434,13 +438,13 @@ msgstr ""
 msgid "Tile saved"
 msgstr ""
 
-#: collective/cover/tiles/banner.py:20
+#: collective/cover/tiles/banner.py:19
 #: collective/cover/tiles/basic.py:22
 #: collective/cover/tiles/collection.py:32
 msgid "Title"
 msgstr ""
 
-#: collective/cover/tiles/banner.py:30
+#: collective/cover/tiles/banner.py:29
 msgid "URL"
 msgstr ""
 
@@ -466,16 +470,16 @@ msgstr ""
 msgid "Yes"
 msgstr ""
 
-#: collective/cover/tiles/base.py:143
-#: collective/cover/tiles/list.py:139
+#: collective/cover/tiles/base.py:144
+#: collective/cover/tiles/list.py:157
 msgid "You are not allowed to add content to this tile"
 msgstr ""
 
-#: collective/cover/tiles/edit.py:47
+#: collective/cover/tiles/edit.py:49
 msgid "You are not allowed to add this kind of tile"
 msgstr ""
 
-#: collective/cover/tiles/base.py:148
+#: collective/cover/tiles/base.py:149
 msgid "You are not allowed to remove content of this tile"
 msgstr ""
 
@@ -501,7 +505,7 @@ msgid "more"
 msgstr ""
 
 #. Default: "Banner"
-#: collective/cover/tiles/banner.py:43
+#: collective/cover/tiles/banner.py:42
 msgid "msg_short_name_banner"
 msgstr ""
 
@@ -536,7 +540,7 @@ msgid "msg_short_name_file"
 msgstr ""
 
 #. Default: "List"
-#: collective/cover/tiles/list.py:96
+#: collective/cover/tiles/list.py:101
 msgid "msg_short_name_list"
 msgstr ""
 
