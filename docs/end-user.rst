@@ -249,6 +249,26 @@ The changes will be applied to your cover immediately.
     As mentioned before, the changes will be applied only to the cover tile,
     not to the original content.
 
+Background image behavior
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The package includes a behavior that adds the possibility of having a background image on the default view of the item.
+
+To enable the behavior go to 'Site Setup' and select 'Dexterity content types'.
+Look for 'Cover' content type, select it and then select 'Behaviors'.
+Look for the 'Background image' behavior and enable it.
+Now, when you add or edit a Cover item you will see a new field called 'Background image'.
+
+.. figure:: https://raw.github.com/collective/collective.cover/master/docs/background-image-behavior-field.png
+    :align: center
+    :height: 480px
+    :width: 728px
+
+.. Tip::
+    The background image will be shown using an inline style rule that is applied to the ``content`` ID selector.
+
+Remember that, for accessibility reasons, you should not use background images as the sole method of conveying important information.
+
 Advanced Actions
 ----------------
 
