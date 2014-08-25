@@ -12,18 +12,17 @@ import unittest
 class BackgroundImageTestCase(unittest.TestCase):
 
     layer = INTEGRATION_TESTING
-    name = 'collective.cover.behaviors.interfaces.IBackgroundImage'
 
     def _enable_background_image_behavior(self):
         fti = queryUtility(IDexterityFTI, name='collective.cover.content')
         behaviors = list(fti.behaviors)
-        behaviors.append(self.name)
+        behaviors.append(IBackgroundImage.__identifier__)
         fti.behaviors = tuple(behaviors)
 
     def _disable_background_image_behavior(self):
         fti = queryUtility(IDexterityFTI, name='collective.cover.content')
         behaviors = list(fti.behaviors)
-        behaviors.remove(self.name)
+        behaviors.remove(IBackgroundImage.__identifier__)
         fti.behaviors = tuple(behaviors)
 
     def setUp(self):
@@ -37,14 +36,13 @@ class BackgroundImageTestCase(unittest.TestCase):
             self.folder, 'collective.cover.content', 'c1')
 
     def test_background_registration(self):
-        registration = queryUtility(IBehavior, name=self.name)
+        registration = queryUtility(IBehavior, name=IBackgroundImage.__identifier__)
         self.assertIsNotNone(registration)
 
     def test_background_in_cover(self):
         fti = queryUtility(IDexterityFTI, name='collective.cover.content')
-        self.assertIn(self.name, fti.behaviors)
+        self.assertIn(IBackgroundImage.__identifier__, fti.behaviors)
 
-    @unittest.expectedFailure  # FIXME
     def test_adapt_content(self):
         background = IBackgroundImage(self.cover, None)
         self.assertIsNotNone(background)
@@ -54,10 +52,3 @@ class BackgroundImageTestCase(unittest.TestCase):
             self.folder, 'collective.cover.content', 'c2')
         background = IBackgroundImage(cover, None)
         self.assertIsNone(background)
-
-    def test_background_image_field(self):
-        from plone.namedfile.file import NamedImage
-        background = IBackgroundImage(self.cover)
-        self.assertIsNone(background.background_image)
-        background.background_image = NamedImage()
-        self.assertIsInstance(background.background_image, NamedImage)
