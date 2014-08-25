@@ -4,7 +4,9 @@ from collective.cover.testing import INTEGRATION_TESTING
 from plone import api
 from plone.behavior.interfaces import IBehavior
 from plone.dexterity.interfaces import IDexterityFTI
+from plone.dexterity.schema import SchemaInvalidatedEvent
 from zope.component import queryUtility
+from zope.event import notify
 
 import unittest
 
@@ -18,12 +20,16 @@ class BackgroundImageTestCase(unittest.TestCase):
         behaviors = list(fti.behaviors)
         behaviors.append(IBackgroundImage.__identifier__)
         fti.behaviors = tuple(behaviors)
+        # invalidate schema cache
+        notify(SchemaInvalidatedEvent('collective.cover.content'))
 
     def _disable_background_image_behavior(self):
         fti = queryUtility(IDexterityFTI, name='collective.cover.content')
         behaviors = list(fti.behaviors)
         behaviors.remove(IBackgroundImage.__identifier__)
         fti.behaviors = tuple(behaviors)
+        # invalidate schema cache
+        notify(SchemaInvalidatedEvent('collective.cover.content'))
 
     def setUp(self):
         self.portal = self.layer['portal']
