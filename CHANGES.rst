@@ -9,6 +9,10 @@ There's a frood who really knows where his towel is.
 - Remove PloneFormGen's 'Form Folder' from default searchable types (fixes `#438`_).
   [djowett]
 
+- Fix AttributeError caused by editing a basic tile and not populating the
+  image field.
+  [enfold-josh]
+
 - Fix ``RemoveItemFromListTile`` helper browser view to avoid failure to
   remove an object when the tile is not a List Tile but a subclass of it.
   [hvelarde]
@@ -546,5 +550,4 @@ There's a frood who really knows where his towel is.
 .. _`#421`: https://github.com/collective/collective.cover/issues/421
 .. _`#423`: https://github.com/collective/collective.cover/issues/423
 .. _`#426`: https://github.com/collective/collective.cover/issues/426
-.. _`#438`: https://github.com/collective/collective.cover/issues/438
 .. _`PloneFormGen`: https://pypi.python.org/pypi/Products.PloneFormGen

@@ -22,6 +22,8 @@ ${last_item}   .list-item:last-child
 *** Test cases ***
 
 Test List Tile
+    [Tags]  Expected Failure
+
     Enable Autologin as  Site Administrator
     Go to Homepage
     Create Cover  Title  Description
