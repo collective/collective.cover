@@ -5,6 +5,8 @@ There's a frood who really knows where his towel is.
 
 1.0a10 (unreleased)
 ^^^^^^^^^^^^^^^^^^^
+- Fix modification time disappearing from context data and handling missing value
+  [mhora]
 
 - Fix AttributeError caused by editing a basic tile and not populating the
   image field.

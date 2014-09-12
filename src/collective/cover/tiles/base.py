@@ -534,7 +534,7 @@ class ImageScaling(BaseImageScaling):
         mtime = ''
         for k, v in self.context.data.items():
             if INamedImage.providedBy(v):
-                mtime += self.context.data.get('{0}_mtime'.format(k), 0)
+                mtime += self.context.data.get('{0}_mtime'.format(k), '')
 
         return mtime
 
