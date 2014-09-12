@@ -19,7 +19,7 @@ matrix:
   fast_finish: true
 install:
   - sed -ie "s#travis-4.x.cfg#travis-$PLONE_VERSION.x.cfg#" travis.cfg
-  - sed -ie "s#versions.cfg#versions-$PLONE_VERSION.x.cfg#" travis.cfg
+  - sed -ie "s#versions-4.x.cfg#versions-$PLONE_VERSION.x.cfg#" travis.cfg
   - test $JQUERY && sed -ie "s#plone.app.jquery = 1.7.2#plone.app.jquery = $JQUERY#" versions-4.3.x.cfg || true
   - mkdir -p buildout-cache/downloads
   - python bootstrap.py -c travis.cfg
@@ -43,5 +43,5 @@ notifications:
       - "%{repository}#%{build_number} (%{branch} - %{commit} : %{author}): %{message}"
       - "Change view : %{compare_url}"
       - "Build details : %{build_url}"
-      - "Robot Test Report for Plone 4.2: http://collective-cover.s3-website-sa-east-1.amazonaws.com/artifacts/%{build_number}.1"
-      - "Robot Test Report for Plone 4.3: http://collective-cover.s3-website-sa-east-1.amazonaws.com/artifacts/%{build_number}.2"
+      - "Robot Test Report for Plone 4.2: http://collective-cover.s3-website-sa-east-1.amazonaws.com/artifacts/%{build_number}/%{build_number}.1/robot_report.html"
+      - "Robot Test Report for Plone 4.3: http://collective-cover.s3-website-sa-east-1.amazonaws.com/artifacts/%{build_number}/%{build_number}.2/robot_report.html"

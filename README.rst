@@ -25,6 +25,12 @@ layout composition system for Plone.
 .. _`Deco`: https://github.com/plone/plone.app.deco
 .. _`Tiles`: https://github.com/plone/plone.app.tiles
 
+Demo
+^^^^
+
+For impatient types, here is a demo installation of collective.cover: http://collective-cover.herokuapp.com.
+It needs about 60 seconds to spin up and it will purge all changes after about an hour of non-usage.
+
 Use cases
 ^^^^^^^^^
 
@@ -147,6 +153,7 @@ To enable this package in a buildout-based installation:
     plone.app.jquery = 1.7.2
     plone.app.jquerytools = 1.5.7
     plone.app.z3cform = 0.6.3
+    plone.directives.form = 1.1
 
 After updating the configuration you need to run ''bin/buildout'', which will
 take care of updating your system.

@@ -6,7 +6,17 @@ There's a frood who really knows where his towel is.
 1.0a10 (unreleased)
 ^^^^^^^^^^^^^^^^^^^
 
-- Nothing changed yet.
+- Fix AttributeError caused by editing a basic tile and not populating the
+  image field.
+  [enfold-josh]
+
+- Fix ``RemoveItemFromListTile`` helper browser view to avoid failure to
+  remove an object when the tile is not a List Tile but a subclass of it.
+  [hvelarde]
+
+- Fix ``UpdateTileContent`` helper browser view to avoid returning the
+  rendering of previous object in tile on AJAX calls.
+  [hvelarde]
 
 
 1.0a9 (2014-06-27)
@@ -71,7 +81,7 @@ There's a frood who really knows where his towel is.
 
 - Add RichText tiles to the SearchableText index of the cover.
   [thepjot]
-  
+
 - Re-enable item sorting on the carousel tile edit form. It was by accident
   disabled by removing the field on the list tile schema from which the
   carousel tile inherits.
