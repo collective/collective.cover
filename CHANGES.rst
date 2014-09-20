@@ -18,6 +18,8 @@ There's a frood who really knows where his towel is.
   rendering of previous object in tile on AJAX calls.
   [hvelarde]
 
+- Carousel extra space problem fix (fixes `#414`_). [terapyon]
+
 
 1.0a9 (2014-06-27)
 ^^^^^^^^^^^^^^^^^^
