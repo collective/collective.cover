@@ -115,15 +115,15 @@ class CarouselTile(ListTile):
         items = self.results()
         for item in items:
             thumb = self.thumbnail(item)
-            ratio = max(ratio, float(thumb.height)/float(thumb.width))
+            ratio = max(ratio, float(thumb.height) / float(thumb.width))
         if ratio:
             return ratio
         else:
             return 1
 
     def show_info(self):
-        if not self._field_is_visible('title') and not self._field_is_visible('description'):
+        if not self._field_is_visible('title') and \
+                not self._field_is_visible('description'):
             return 'false'
         else:
             return 'true'
-
