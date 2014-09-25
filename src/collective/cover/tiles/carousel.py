@@ -56,29 +56,14 @@ class CarouselTile(ListTile):
     short_name = _(u'msg_short_name_carousel', default=u'Carousel')
 
     def populate_with_object(self, obj):
-        super(CarouselTile, self).populate_with_object(obj)  # check permission
         try:
             scale = obj.restrictedTraverse('@@images').scale('image')
         except:
             scale = None
         if not scale:
             return
-        self.set_limit()
-        uuid = IUUID(obj, None)
-        data_mgr = ITileDataManager(self)
 
-        old_data = data_mgr.get()
-        if data_mgr.get()['uuids']:
-            uuids = data_mgr.get()['uuids']
-            if type(uuids) != list:
-                uuids = [uuid]
-            elif uuid not in uuids:
-                uuids.append(uuid)
-
-            old_data['uuids'] = uuids[:self.limit]
-        else:
-            old_data['uuids'] = [uuid]
-        data_mgr.set(old_data)
+        super(CarouselTile, self).populate_with_object(obj)
 
     def autoplay(self):
         if self.data['autoplay'] is None:

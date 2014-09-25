@@ -7,6 +7,7 @@ from collective.cover.interfaces import ITileEditForm
 from collective.cover.tiles.base import IPersistentCoverTile
 from collective.cover.tiles.base import PersistentCoverTile
 from collective.cover.tiles.configuration_view import IDefaultConfigureForm
+from persistent.mapping import PersistentMapping
 from plone import api
 from plone.app.uuid.utils import uuidToObject
 from plone.directives import form
@@ -112,9 +113,12 @@ class ListTile(PersistentCoverTile):
         # always get the latest data
         uuids = ITileDataManager(self).get().get('uuids', None)
 
-        results, remove = [], []
+        results = list()
         if uuids:
-            for uid in uuids:
+            ordered_uuids = [(k,v) for k,v in uuids.items()]
+            ordered_uuids.sort(key=lambda x:x[1]['order'])
+
+            for uid in [i[0] for i in ordered_uuids]:
                 obj = uuidToObject(uid)
                 if obj:
                     results.append(obj)
@@ -125,14 +129,11 @@ class ListTile(PersistentCoverTile):
                     brain = catalog.unrestrictedSearchResults(UID=uid)
                     if not brain:
                         # the object was deleted; remove it from the tile
-                        # we deal with this below as you can't modify the
-                        # list directly as it's been used on the for loop
-                        remove.append(uid)
-
-            for uid in remove:
-                self.remove_item(uid)
-                logger.debug(
-                    'Nonexistent object {0} removed from tile'.format(uid))
+                        self.remove_item(uid)
+                        logger.debug(
+                            'Nonexistent object {0} removed from '
+                            'tile'.format(uid)
+                        )
 
         return results[:self.limit]
 
@@ -159,14 +160,36 @@ class ListTile(PersistentCoverTile):
         data_mgr = ITileDataManager(self)
 
         old_data = data_mgr.get()
+        if old_data['uuids'] is None:
+            # If there is no content yet, just assign an empty dict
+            old_data['uuids'] = PersistentMapping()
+
+        uuids_dict = old_data.get('uuids')
+        if not isinstance(uuids_dict, PersistentMapping):
+            # Make sure this is a PersistentMapping
+            uuids_dict = old_data['uuids'] = PersistentMapping()
+
+        if uuids_dict and len(uuids_dict) > self.limit:
+            # Do not allow adding more objects than the defined limit
+            return
+
+        order_list = [val.get('order', 0) for key, val in uuids_dict.items()]
+        if len(order_list) == 0:
+            # First entry
+            order = 0
+        else:
+            # Get last order position and increment 1
+            order_list.sort()
+            order = order_list.pop() + 1
+
         for uuid in uuids:
-            if old_data['uuids']:
-                if type(old_data['uuids']) != list:
-                    old_data['uuids'] = [uuid]
-                elif uuid not in old_data['uuids']:
-                    old_data['uuids'].append(uuid)
-            else:
-                old_data['uuids'] = [uuid]
+            if uuid not in uuids_dict.keys():
+                entry = PersistentMapping()
+                entry['order'] = order
+                uuids_dict[uuid] = entry
+                order += 1
+
+        old_data['uuids'] = uuids_dict
         data_mgr.set(old_data)
         notify(ObjectModifiedEvent(self))
 
@@ -174,25 +197,22 @@ class ListTile(PersistentCoverTile):
         if not self.isAllowedToEdit():
             raise Unauthorized(
                 _('You are not allowed to add content to this tile'))
-        self.set_limit()
         data_mgr = ITileDataManager(self)
         old_data = data_mgr.get()
-        if type(uids) == list:
-            old_data['uuids'] = [i for i in uids][:self.limit]
-        else:
-            old_data['uuids'] = [uids]
-
+        # Clean old data
+        old_data['uuids'] = PersistentMapping()
         data_mgr.set(old_data)
-        notify(ObjectModifiedEvent(self))
+        # Repopulate with clean list
+        self.populate_with_uids(uids)
 
     def remove_item(self, uid):
         super(ListTile, self).remove_item(uid)  # check permission
         data_mgr = ITileDataManager(self)
         old_data = data_mgr.get()
-        uids = data_mgr.get()['uuids']
-        if uid in uids:
-            del uids[uids.index(uid)]
-        old_data['uuids'] = uids
+        uuids = data_mgr.get()['uuids']
+        if uid in uuids.keys():
+            del uuids[uid]
+        old_data['uuids'] = uuids
         data_mgr.set(old_data)
 
     def get_uid(self, obj):

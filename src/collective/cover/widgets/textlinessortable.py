@@ -31,7 +31,10 @@ class TextLinesSortableWidget(textlines.TextLinesWidget):
     def sort_results(self):
         uuids = self.context['uuids']
         if uuids:
-            return [{'obj': uuidToObject(x), 'uuid': x} for x in uuids]
+            ordered_uuids = [(k,v) for k,v in uuids.items()]
+            ordered_uuids.sort(key=lambda x:x[1]['order'])
+            return [{'obj': uuidToObject(x[0]), 'uuid': x[0]}
+                    for x in ordered_uuids]
         else:
             return []
 
