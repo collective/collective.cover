@@ -10,7 +10,7 @@ from plone.autoform import directives as form
 from plone.tiles.interfaces import ITileDataManager
 from Products.CMFCore.utils import getToolByName
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-from z3c.form.converter import DictMultiConverter
+from z3c.form.converter import BaseDataConverter
 from zope import schema
 from zope.component import adapts
 from zope.interface import implements
@@ -86,7 +86,7 @@ class CarouselTile(ListTile):
         return INIT_JS.format(self.id, str(self.autoplay()).lower())
 
 
-class UUIDSFieldDataConverter(DictMultiConverter):
+class UUIDSFieldDataConverter(BaseDataConverter):
     """A data converter using the field's ``fromUnicode()`` method."""
     adapts(IDict, ITextLinesSortableWidget)
 
