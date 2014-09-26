@@ -4,13 +4,18 @@ from collective.cover import _
 from collective.cover.interfaces import ITileEditForm
 from collective.cover.tiles.list import IListTile
 from collective.cover.tiles.list import ListTile
+from collective.cover.widgets.interfaces import ITextLinesSortableWidget
 from collective.cover.widgets.textlinessortable import TextLinesSortableFieldWidget
 from plone.autoform import directives as form
 from plone.tiles.interfaces import ITileDataManager
-from plone.uuid.interfaces import IUUID
+from Products.CMFCore.utils import getToolByName
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
+from z3c.form.converter import DictMultiConverter
 from zope import schema
+from zope.component import adapts
 from zope.interface import implements
+from zope.schema.interfaces import IDict
+
 
 # autoplay feature is enabled in view mode only
 INIT_JS = """$(function() {{
@@ -38,12 +43,6 @@ class ICarouselTile(IListTile):
 
     form.no_omit(ITileEditForm, 'uuids')
     form.widget(uuids=TextLinesSortableFieldWidget)
-    uuids = schema.List(
-        title=_(u'Elements'),
-        value_type=schema.TextLine(),
-        required=False,
-        readonly=False,
-    )
 
 
 class CarouselTile(ListTile):
@@ -62,7 +61,6 @@ class CarouselTile(ListTile):
             scale = None
         if not scale:
             return
-
         super(CarouselTile, self).populate_with_object(obj)
 
     def autoplay(self):
@@ -70,6 +68,22 @@ class CarouselTile(ListTile):
             return True  # default value
 
         return self.data['autoplay']
+
+    def get_url(self, item):
+        portal_properties = getToolByName(self.context, 'portal_properties')
+        use_view_action = portal_properties.site_properties.getProperty(
+            'typesUseViewActionInListings', ())
+        url = item.absolute_url()
+        if item.portal_type in use_view_action:
+            url = url + '/view'
+        uuid = self.get_uid(item)
+        data_mgr = ITileDataManager(self)
+        data = data_mgr.get()
+        uuids = data['uuids']
+        if uuid in uuids:
+            if uuids[uuid].get('custom_url', u""):
+                url = uuids[uuid].get('custom_url')
+        return url
 
     def init_js(self):
         if self.is_empty():
@@ -79,3 +93,20 @@ class CarouselTile(ListTile):
             return ''
 
         return INIT_JS.format(self.id, str(self.autoplay()).lower())
+
+
+class UUIDSFieldDataConverter(DictMultiConverter):
+    """A data converter using the field's ``fromUnicode()`` method."""
+    adapts(IDict, ITextLinesSortableWidget)
+
+    def toWidgetValue(self, value):
+        """Just dispatch it."""
+        ordered_uuids = [(k, v) for k, v in value.items()]
+        ordered_uuids.sort(key=lambda x: x[1]['order'])
+        return '\r\n'.join([i[0] for i in ordered_uuids])
+
+    def toFieldValue(self, value):
+        """Just dispatch it."""
+        if not len(value) or not isinstance(value, dict):
+            return self.field.missing_value
+        return value

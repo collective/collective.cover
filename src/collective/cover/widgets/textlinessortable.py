@@ -31,8 +31,8 @@ class TextLinesSortableWidget(textlines.TextLinesWidget):
     def sort_results(self):
         uuids = self.context['uuids']
         if uuids:
-            ordered_uuids = [(k,v) for k,v in uuids.items()]
-            ordered_uuids.sort(key=lambda x:x[1]['order'])
+            ordered_uuids = [(k, v) for k, v in uuids.items()]
+            ordered_uuids.sort(key=lambda x: x[1]['order'])
             return [{'obj': uuidToObject(x[0]), 'uuid': x[0]}
                     for x in ordered_uuids]
         else:
@@ -44,6 +44,29 @@ class TextLinesSortableWidget(textlines.TextLinesWidget):
             return scales.scale('image', 'tile')
         except:
             return None
+
+    def get_custom_url(self, uuid):
+        url = u''
+        uuids = self.context['uuids']
+        if uuid in uuids:
+            values = uuids.get(uuid)
+            url = values.get('custom_url', u'')
+        return url
+
+    def extract(self):
+        values = self.request.get(self.name).split('\r\n')
+        uuids = [i for i in values if i]
+        results = dict()
+        for index, uuid in enumerate(uuids):
+            if uuid:
+                custom_url = self.request.get(
+                    '%s.custom_url.%s' % (self.name, uuid), ""
+                )
+                results[uuid] = {
+                    u'order': unicode(index),
+                    u'custom_url': unicode(custom_url)
+                }
+        return results
 
 
 @zope.interface.implementer(interfaces.IFieldWidget)

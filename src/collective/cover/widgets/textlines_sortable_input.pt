@@ -61,6 +61,10 @@
                                      height thumbnail/height" />
             <h3 tal:content="obj/Title" />
             <p tal:content="obj/Description" />
+
+            <span i18n:translate="">Custom URL</span>
+            <input tal:attributes="name python:view.name+'.custom_url.%s' % uuid;
+                                   value python:view.get_custom_url(uuid)">
           </div>
 
           <div class="visualClear"><!-- --></div>

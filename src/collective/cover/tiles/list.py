@@ -32,9 +32,13 @@ logger = logging.getLogger(PROJECTNAME)
 
 class IListTile(IPersistentCoverTile):
 
-    uuids = schema.List(
+    uuids = schema.Dict(
         title=_(u'Elements'),
-        value_type=schema.TextLine(),
+        key_type=schema.TextLine(),
+        value_type=schema.Dict(
+            key_type=schema.TextLine(),
+            value_type=schema.TextLine(),
+        ),
         required=False,
     )
     form.omitted('uuids')
@@ -115,8 +119,8 @@ class ListTile(PersistentCoverTile):
 
         results = list()
         if uuids:
-            ordered_uuids = [(k,v) for k,v in uuids.items()]
-            ordered_uuids.sort(key=lambda x:x[1]['order'])
+            ordered_uuids = [(k, v) for k, v in uuids.items()]
+            ordered_uuids.sort(key=lambda x: x[1]['order'])
 
             for uid in [i[0] for i in ordered_uuids]:
                 obj = uuidToObject(uid)
@@ -215,6 +219,7 @@ class ListTile(PersistentCoverTile):
         old_data['uuids'] = uuids
         data_mgr.set(old_data)
 
+    @view.memoize
     def get_uid(self, obj):
         """Return the UUID of the object.
 
