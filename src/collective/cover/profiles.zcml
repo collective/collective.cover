@@ -14,6 +14,14 @@
       />
 
   <genericsetup:registerProfile
+      name="enablecycle2carousel"
+      title="collective.cover: enable cycle2 carousel"
+      directory="profiles/enablecycle2carousel"
+      description="Enable Cycle2 Carousel Tiles in collective.cover"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      />
+
+  <genericsetup:registerProfile
       name="uninstall"
       title="collective.cover uninstall"
       directory="profiles/uninstall"

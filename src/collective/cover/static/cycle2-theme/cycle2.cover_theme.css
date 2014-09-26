@@ -1,0 +1,21 @@
+.cycle-pager {
+  overflow: hidden;
+  text-align: center;
+  top: 10px;
+  width: 100%;
+  z-index: 500;
+}
+.cycle-pager span {
+  background: url("++resource++collective.cover/galleria-theme/dot.png") no-repeat;
+  display: inline-block;
+  font-size: 0;
+  height: 16px;
+  opacity: 0.6;
+  width: 16px;
+}
+.cycle-pager > span {
+  cursor: pointer;
+}
+.cycle-pager .cycle-pager-active {
+  opacity: 1;
+}
