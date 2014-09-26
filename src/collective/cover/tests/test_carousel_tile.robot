@@ -105,6 +105,8 @@ Test Carousel Tile
     Compose Cover
     Page Should Contain  Galleria.configure({ autoplay: false });
 
+    # Need to add functional test for the custom URL here
+
     # delete the tile
     Edit Cover Layout
     Delete Tile
