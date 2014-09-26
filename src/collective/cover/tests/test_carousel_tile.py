@@ -3,6 +3,8 @@ from collective.cover.testing import ALL_CONTENT_TYPES
 from collective.cover.tests.base import TestTileMixin
 from collective.cover.tiles.carousel import CarouselTile
 from collective.cover.tiles.carousel import ICarouselTile
+from persistent.mapping import PersistentMapping
+from plone.tiles.interfaces import ITileDataManager
 from plone.uuid.interfaces import IUUID
 
 import unittest
@@ -40,6 +42,7 @@ class CarouselTileTestCase(TestTileMixin, unittest.TestCase):
         # now we add a couple of objects to the list
         obj1 = self.portal['my-document']
         obj2 = self.portal['my-image']
+
         self.tile.populate_with_object(obj1)
         self.tile.populate_with_object(obj2)
 
@@ -51,7 +54,7 @@ class CarouselTileTestCase(TestTileMixin, unittest.TestCase):
         self.assertIn(obj2, self.tile.results())
 
         # next, we replace the list of objects with a different one
-        obj3 = self.portal['my-news-item']
+        obj3 = self.portal['my-image1']
         self.tile.replace_with_objects([IUUID(obj3, None)])
         # tile's data attribute is cached; reinstantiate it
         self.tile = self.cover.restrictedTraverse(
@@ -66,3 +69,33 @@ class CarouselTileTestCase(TestTileMixin, unittest.TestCase):
         self.tile = self.cover.restrictedTraverse(
             '@@{0}/{1}'.format('collective.cover.carousel', 'test'))
         self.assertTrue(self.tile.is_empty())
+
+    def test_internal_structure(self):
+        # we start with an empty tile
+        self.assertTrue(self.tile.is_empty())
+        uuids = ITileDataManager(self.tile).get().get('uuids', None)
+
+        self.assertIsNone(uuids)
+
+        # now we add an image
+        obj1 = self.portal['my-image']
+
+        self.tile.populate_with_object(obj1)
+
+        uuids = ITileDataManager(self.tile).get().get('uuids', None)
+
+        self.assertTrue(isinstance(uuids, PersistentMapping))
+        self.assertTrue(len(uuids) == 1)
+        self.assertTrue(uuids[obj1.UID()]['order'] == u'0')
+
+        # now we add a second image
+        obj2 = self.portal['my-image1']
+
+        self.tile.populate_with_object(obj2)
+
+        uuids = ITileDataManager(self.tile).get().get('uuids', None)
+
+        self.assertTrue(isinstance(uuids, PersistentMapping))
+        self.assertTrue(len(uuids) == 2)
+        self.assertTrue(uuids[obj1.UID()]['order'] == u'0')
+        self.assertTrue(uuids[obj2.UID()]['order'] == u'1')

@@ -54,15 +54,6 @@ class CarouselTile(ListTile):
     is_editable = True
     short_name = _(u'msg_short_name_carousel', default=u'Carousel')
 
-    def populate_with_object(self, obj):
-        try:
-            scale = obj.restrictedTraverse('@@images').scale('image')
-        except:
-            scale = None
-        if not scale:
-            return
-        super(CarouselTile, self).populate_with_object(obj)
-
     def autoplay(self):
         if self.data['autoplay'] is None:
             return True  # default value

@@ -76,7 +76,7 @@ def generate_jpeg(width, height):
 
     output = StringIO()
     image.save(output, format='PNG')
-    return output.getvalue()
+    return output
 
 
 def images_are_equal(str1, str2):

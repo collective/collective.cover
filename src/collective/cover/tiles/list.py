@@ -177,7 +177,8 @@ class ListTile(PersistentCoverTile):
             # Do not allow adding more objects than the defined limit
             return
 
-        order_list = [val.get('order', 0) for key, val in uuids_dict.items()]
+        order_list = [int(val.get('order', 0))
+                      for key, val in uuids_dict.items()]
         if len(order_list) == 0:
             # First entry
             order = 0
@@ -189,7 +190,7 @@ class ListTile(PersistentCoverTile):
         for uuid in uuids:
             if uuid not in uuids_dict.keys():
                 entry = PersistentMapping()
-                entry['order'] = order
+                entry[u'order'] = unicode(order)
                 uuids_dict[uuid] = entry
                 order += 1
 
@@ -197,6 +198,7 @@ class ListTile(PersistentCoverTile):
         data_mgr.set(old_data)
         notify(ObjectModifiedEvent(self))
 
+    # XXX: This should be renamed to replace_with_uuids
     def replace_with_objects(self, uids):
         if not self.isAllowedToEdit():
             raise Unauthorized(
