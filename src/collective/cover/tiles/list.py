@@ -151,12 +151,23 @@ class ListTile(PersistentCoverTile):
                 self.limit = int(field.get('size', self.limit))
 
     def populate_with_object(self, obj):
+        """ Add an object to the list of items
+
+        :param obj: [required] The object to be added
+        :type obj: Content object
+        """
         super(ListTile, self).populate_with_object(obj)  # check permission
         uids = ICoverUIDsProvider(obj).getUIDs()
         if uids:
             self.populate_with_uids(uids)
 
     def populate_with_uids(self, uuids):
+        """ Add a list of elements to the list of items. This method will
+        append new elements to the already existing list of items
+
+        :param uuids: The list of objects' UUIDs to be used
+        :type uuids: List of strings
+        """
         if not self.isAllowedToEdit():
             raise Unauthorized(
                 _('You are not allowed to add content to this tile'))
@@ -199,7 +210,12 @@ class ListTile(PersistentCoverTile):
         notify(ObjectModifiedEvent(self))
 
     # XXX: This should be renamed to replace_with_uuids
-    def replace_with_objects(self, uids):
+    def replace_with_objects(self, uuids):
+        """ Replaces the whole list of items with a new list of items
+
+        :param uuids: The list of objects' UUIDs to be used
+        :type uuids: List of strings
+        """
         if not self.isAllowedToEdit():
             raise Unauthorized(
                 _('You are not allowed to add content to this tile'))
@@ -209,9 +225,14 @@ class ListTile(PersistentCoverTile):
         old_data['uuids'] = PersistentMapping()
         data_mgr.set(old_data)
         # Repopulate with clean list
-        self.populate_with_uids(uids)
+        self.populate_with_uids(uuids)
 
     def remove_item(self, uid):
+        """ Removes an item from the list
+
+        :param uid: [required] uid for the object that wants to be removed
+        :type uid: string
+        """
         super(ListTile, self).remove_item(uid)  # check permission
         data_mgr = ITileDataManager(self)
         old_data = data_mgr.get()

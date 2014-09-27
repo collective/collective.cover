@@ -6,9 +6,9 @@ from collective.cover.tiles.list import IListTile
 from collective.cover.tiles.list import ListTile
 from collective.cover.widgets.interfaces import ITextLinesSortableWidget
 from collective.cover.widgets.textlinessortable import TextLinesSortableFieldWidget
+from plone import api
 from plone.autoform import directives as form
 from plone.tiles.interfaces import ITileDataManager
-from Products.CMFCore.utils import getToolByName
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from z3c.form.converter import BaseDataConverter
 from zope import schema
@@ -61,9 +61,17 @@ class CarouselTile(ListTile):
         return self.data['autoplay']
 
     def get_url(self, item):
-        portal_properties = getToolByName(self.context, 'portal_properties')
+        """ Gets the URL for the item. It will return the "Custom URL", if
+        it was set, if not, the URL for the item will be returned
+
+        :param item: [required] The item for which we want the URL to
+        :type item: Content object
+        :returns: URL for the item
+        """
+        portal_properties = api.portal.get_tool(name='portal_properties')
         use_view_action = portal_properties.site_properties.getProperty(
             'typesUseViewActionInListings', ())
+        # First we get the url for the item itself
         url = item.absolute_url()
         if item.portal_type in use_view_action:
             url = url + '/view'
@@ -73,6 +81,7 @@ class CarouselTile(ListTile):
         uuids = data['uuids']
         if uuid in uuids:
             if uuids[uuid].get('custom_url', u""):
+                # If we had a custom url set, then get that
                 url = uuids[uuid].get('custom_url')
         return url
 
@@ -91,13 +100,25 @@ class UUIDSFieldDataConverter(BaseDataConverter):
     adapts(IDict, ITextLinesSortableWidget)
 
     def toWidgetValue(self, value):
-        """Just dispatch it."""
+        """ Converts the internal stored value into something that a z3c.form
+        widget understands
+
+        :param value: [required] The internally stored value
+        :type value: Dict
+        :returns: A string with UUIDs separated by \r\n
+        """
         ordered_uuids = [(k, v) for k, v in value.items()]
         ordered_uuids.sort(key=lambda x: x[1]['order'])
         return '\r\n'.join([i[0] for i in ordered_uuids])
 
     def toFieldValue(self, value):
-        """Just dispatch it."""
+        """ Passes the value extracted from the widget to the internal
+        structure. In this case, the value expected is already formatted
+
+        :param value: [required] The data extracted from the widget
+        :type value: Dict
+        :returns: The value to be stored in the tile
+        """
         if not len(value) or not isinstance(value, dict):
             return self.field.missing_value
         return value
