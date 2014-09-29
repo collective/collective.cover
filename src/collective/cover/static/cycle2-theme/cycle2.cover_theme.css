@@ -1,3 +1,27 @@
+/* Prev/Next arrows */
+.cycle-prev, .cycle-next {
+  cursor: pointer;
+  height: 100%;
+  opacity: 0.7;
+  position: absolute;
+  top: 0;
+  width: 8%;
+  z-index: 800;
+}
+.cycle-prev {
+    background: url("++resource++collective.cover/cycle2-theme/prev-arrow.png") no-repeat scroll 10% 50% rgba(0, 0, 0, 0);
+    left: 0;
+    padding-right: 17%;
+}
+.cycle-next {
+    background: url("++resource++collective.cover/cycle2-theme/next-arrow.png") no-repeat scroll 90% 50% rgba(0, 0, 0, 0);
+    right: 0;
+    padding-left: 17%;
+}
+.cycle-prev:hover, .cycle-next:hover {
+    opacity: 1;
+}
+
 .cycle-pager {
   overflow: hidden;
   text-align: center;
@@ -6,7 +30,7 @@
   z-index: 500;
 }
 .cycle-pager span {
-  background: url("++resource++collective.cover/galleria-theme/dot.png") no-repeat;
+  background: url("++resource++collective.cover/cycle2-theme/dot.png") no-repeat;
   display: inline-block;
   font-size: 0;
   height: 16px;
