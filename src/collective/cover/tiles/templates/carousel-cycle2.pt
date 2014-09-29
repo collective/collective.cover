@@ -16,11 +16,11 @@
     This carousel is empty; open the content chooser and drag-and-drop some items here.
   </p>
 
-  <div id="" class="cycle-slideshow cover-carousel-tile tile-content" 
+  <div id="" class="cycle2-carousel cover-carousel-tile tile-content" 
        data-cycle-caption-plugin="caption2"
        data-cycle-slides="> div.slide"
        tal:condition="not:is_empty"
-       tal:attributes="id string:cycle-${view/id}">
+       tal:attributes="id string:cycle-${view/id};">
     <div class="cycle-pager"></div>        
     <tal:items repeat="item view/results">
       <div class="slide"
@@ -46,5 +46,8 @@
        </div>
     </tal:items>
   </div>
+  <script type="text/javascript">
+    $( '.cycle2-carousel' ).cycle();
+  </script>
 </body>
 </html>

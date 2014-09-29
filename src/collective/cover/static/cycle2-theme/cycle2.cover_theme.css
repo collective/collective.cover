@@ -19,3 +19,11 @@
 .cycle-pager .cycle-pager-active {
   opacity: 1;
 }
+
+/* Stop Flash of unstyled content */
+.cycle2-carousel .slide { 
+  display: none;
+}
+.cycle2-carousel .cycle-pager + .slide { 
+  display: block;
+}
