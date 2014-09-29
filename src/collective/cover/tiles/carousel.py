@@ -101,4 +101,3 @@ class Cycle2CarouselTile(CarouselTile):
     implements(ICarouselTile)
 
     index = ViewPageTemplateFile('templates/carousel-cycle2.pt')
-    

@@ -8,6 +8,7 @@ class ICoverLayer(Interface):
     """ A layer specific for this add-on product.
     """
 
+
 class ICycle2EnabledLayer(ICoverLayer):
     """ A layer indicating that Cycle2 Carousels are to be used in this add-on.
     """
