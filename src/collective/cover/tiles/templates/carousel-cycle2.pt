@@ -20,7 +20,8 @@
        data-cycle-caption-plugin="caption2"
        data-cycle-slides="> div.slide"
        tal:condition="not:is_empty"
-       tal:attributes="id string:cycle-${view/id};">
+       tal:attributes="id string:cycle-${view/id};
+                       data-cycle-paused not:view/autoplay;">
     <div class="cycle-pager"></div>        
     <tal:items repeat="item view/results">
       <div class="slide"
