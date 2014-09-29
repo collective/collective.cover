@@ -604,8 +604,8 @@ $.fn.cycle.API = {
 // default logger
 $.fn.cycle.log = function log() {
     /*global console:true */
-    if (window.console && console.log)
-        console.log('[cycle2] ' + Array.prototype.join.call(arguments, ' ') );
+    if (window.console && console.log)  // noqa
+        console.log('[cycle2] ' + Array.prototype.join.call(arguments, ' ') );  // noqa
 };
 
 $.fn.cycle.version = function() { return 'Cycle2: ' + version; };
