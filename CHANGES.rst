@@ -9,6 +9,9 @@ There's a frood who really knows where his towel is.
 - Show event's start date (instead of publication date) for Event-like objects in Basic, Collection and List tiles.
   [hvelarde]
 
+- Remove PloneFormGen's 'Form Folder' from default searchable types (fixes `#438`_).
+  [djowett]
+
 - Fix AttributeError caused by editing a basic tile and not populating the
   image field.
   [enfold-josh]
