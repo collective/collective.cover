@@ -6,6 +6,9 @@ There's a frood who really knows where his towel is.
 1.0a10 (unreleased)
 ^^^^^^^^^^^^^^^^^^^
 
+- Remove PloneFormGen's 'Form Folder' from default searchable types (fixes `#438`_).
+  [djowett]
+
 - Fix AttributeError caused by editing a basic tile and not populating the
   image field.
   [enfold-josh]
