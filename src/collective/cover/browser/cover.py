@@ -4,6 +4,7 @@ from Acquisition import aq_inner
 from collective.cover.controlpanel import ICoverSettings
 from collective.cover.interfaces import ICover
 from collective.cover.interfaces import IGridSystem
+from collective.cover.tiles.list import ListTile
 from five import grok
 from plone import api
 from plone.dexterity.events import EditBegunEvent
@@ -11,6 +12,7 @@ from plone.dexterity.utils import createContentInContainer
 from plone.registry.interfaces import IRegistry
 from plone.tiles.interfaces import ITileDataManager
 from plone.uuid.interfaces import IUUIDGenerator
+from Products.CMFCore.exceptions import BadRequest
 from zope.annotation.interfaces import IAnnotations
 from zope.component import getUtility
 from zope.event import notify
@@ -185,36 +187,29 @@ class LayoutEdit(grok.View):
 
 
 class UpdateTileContent(grok.View):
+
+    """Helper browser view to update the content of a tile."""
+
     grok.context(ICover)
     grok.require('cmf.ModifyPortalContent')
 
     def render(self):
-        catalog = api.portal.get_tool('portal_catalog')
-
+        """Render a tile after populating it with an object."""
         tile_type = self.request.form.get('tile-type')
         tile_id = self.request.form.get('tile-id')
         uid = self.request.form.get('uid')
-
-        html = ''
         if tile_type and tile_id and uid:
-
-            tile = self.context.restrictedTraverse(tile_type)
-            tile_instance = tile[tile_id]
-
+            catalog = api.portal.get_tool('portal_catalog')
             results = catalog(UID=uid)
             if results:
                 obj = results[0].getObject()
-
-                try:
-                    tile_instance.populate_with_object(obj)
-                    html = tile_instance()
-                except:
-                    # XXX: Pass silently ?
-                    pass
-
-            # XXX: Calling the tile will return the HTML with the headers, need to
-            #      find out if this affects us in any way.
-        return html
+                tile = self.context.restrictedTraverse('{0}/{1}'.format(tile_type, tile_id))
+                tile.populate_with_object(obj)
+                # reinstantiate the tile to update its content on AJAX calls
+                tile = self.context.restrictedTraverse('{0}/{1}'.format(tile_type, tile_id))
+                return tile()
+        else:
+            raise BadRequest('Invalid parameters')
 
 
 class UpdateTile(grok.View):
@@ -256,23 +251,24 @@ class UpdateListTileContent(grok.View):
 
 
 class RemoveItemFromListTile(grok.View):
+
+    """Helper browser view to remove an object from a list tile."""
+
     grok.context(ICover)
     grok.require('cmf.ModifyPortalContent')
 
     def render(self):
+        """Render a tile after removing an object from it."""
         tile_type = self.request.form.get('tile-type')
         tile_id = self.request.form.get('tile-id')
         uid = self.request.form.get('uid')
-        html = ''
-        if tile_type == u'collective.cover.list' and tile_id and uid:
-            tile = self.context.restrictedTraverse(str(tile_type))
-            tile_instance = tile[tile_id]
-            tile_instance.remove_item(uid)
-            html = tile_instance()
-
-        # XXX: Calling the tile will return the HTML with the headers, need to
-        #      find out if this affects us in any way.
-        return html
+        if tile_type and tile_id and uid:
+            tile = self.context.restrictedTraverse('{0}/{1}'.format(tile_type, tile_id))
+            if isinstance(tile, ListTile):
+                tile.remove_item(uid)
+                return tile()
+        else:
+            raise BadRequest('Invalid parameters')
 
 
 class DeleteTile(grok.View):
