@@ -14,8 +14,6 @@ from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zope import schema
 from zope.interface import implements
 
-import Missing
-
 
 class IBasicTile(IPersistentCoverTile):
 
@@ -77,23 +75,9 @@ class BasicTile(PersistentCoverTile):
         return result[0] if result else None
 
     def Date(self):
-        """Return the date of publication of the object; if it has not been
-        published yet, it will return its modification date. If the object is
-        an Event, then return the start date.
-
-        :returns: the object's publication/modification date or the event's
-                  start date in case of an Event-like object
-        """
-        # brain is None if the tile was populated by editing it
+        # self.brain is None when the tile was populated by editing it
         if self.brain is not None:
-            calendar = api.portal.get_tool('portal_calendar')
-            # calendar_types lists all Event-like content types
-            if self.brain.portal_type not in calendar.calendar_types:
-                return self.brain.Date
-            else:
-                # Events must have a start date
-                assert self.brain.start is not Missing.Value
-                return self.brain.start
+            return super(BasicTile, self).Date(self.brain)
 
     def is_empty(self):
         return self.brain is None and \
