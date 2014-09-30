@@ -94,6 +94,41 @@ class CoverIntegrationTestCase(unittest.TestCase):
         settings = json.loads(layout_edit.layoutmanager_settings())
         self.assertEqual(settings, {'ncolumns': 16})
 
+    def test_searchabletext_indexer(self):
+        from collective.cover.content import searchableText
+        from plone.app.textfield.value import RichTextValue
+        from plone.tiles.interfaces import ITileDataManager
+        self.cover.title = u'Lorem ipsum'
+        self.cover.description = u'Neque porro'
+        # set up a simple layout with a couple of RichText tiles
+        self.cover.cover_layout = u"""
+[{"children": [{"children": [{"class": "tile",
+                              "id": "test1",
+                              "tile-type": "collective.cover.richtext",
+                              "type": "tile"},
+                             {"class": "tile",
+                              "id": "test2",
+                              "tile-type": "collective.cover.richtext",
+                              "type": "tile"}],
+                "data": {"column-size": 8, "layout-type": "column"},
+                "id": "group1",
+                "roles": ["Manager"],
+                "type": "group"}],
+  "class": "row",
+  "type": "row"}]
+"""
+        tile = self.cover.restrictedTraverse('collective.cover.richtext/test1')
+        data_mgr = ITileDataManager(tile)
+        data_mgr.set({'text': RichTextValue(u'<p>01234</p>')})
+        tile = self.cover.restrictedTraverse('collective.cover.richtext/test2')
+        data_mgr = ITileDataManager(tile)
+        data_mgr.set({'text': RichTextValue(u'<p>56789</p>')})
+        # indexer should contain id, title, description and text in tiles
+        self.assertEqual(
+            searchableText(self.cover)(),
+            u'c1 Lorem ipsum Neque porro 01234 56789'
+        )
+
     # TODO: add test for plone.app.relationfield.behavior.IRelatedItems
 
 
