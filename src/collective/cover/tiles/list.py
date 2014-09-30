@@ -139,6 +139,21 @@ class ListTile(PersistentCoverTile):
     def is_empty(self):
         return self.results() == []
 
+    def Date(self, obj):
+        # XXX: different from Collection tile, List tile returns objects
+        #      instead of brains in its `results` function. I think we
+        #      were looking for some performace gains there but in this
+        #      case we need to go back to brains to avoid crazy stuff on
+        #      trying to guess the name of the method returning the
+        #      start date of an Event or an Event-like content type. We
+        #      probably want to rewrite the `results` funtion but we have
+        #      to be careful because there must be tiles derived from it,
+        #      like the Carousel tile
+        catalog = api.portal.get_tool('portal_catalog')
+        brain = catalog(UID=self.get_uid(obj))
+        assert len(brain) == 1
+        return super(ListTile, self).Date(brain[0])
+
     # TODO: get rid of this by replacing it with the 'count' field
     def set_limit(self):
         for field in self.get_configured_fields():

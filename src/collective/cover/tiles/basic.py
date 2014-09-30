@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 from collective.cover import _
 from collective.cover.tiles.base import IPersistentCoverTile
 from collective.cover.tiles.base import PersistentCoverTile
@@ -76,11 +75,9 @@ class BasicTile(PersistentCoverTile):
         return result[0] if result else None
 
     def Date(self):
-        """ Return the date of publication of the original object; if it has
-        not been published yet, it will return its modification date.
-        """
+        # self.brain is None when the tile was populated by editing it
         if self.brain is not None:
-            return self.brain.Date
+            return super(BasicTile, self).Date(self.brain)
 
     def is_empty(self):
         return self.brain is None and \
