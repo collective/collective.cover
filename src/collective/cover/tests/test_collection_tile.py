@@ -176,3 +176,27 @@ class CollectionTileTestCase(TestTileMixin, unittest.TestCase):
         items = self.tile.results()
         self.assertEqual(len(items), 1)
         self.assertEqual(items[0].getId(), 'my-image1')
+
+    def test_show_start_date_on_events(self):
+        from DateTime import DateTime
+        from plone import api
+        tomorrow = DateTime() + 1
+        # create an Event starting tomorrow and a Collection listing it
+        with api.env.adopt_roles(['Manager']):
+            event = api.content.create(
+                self.portal, 'Event', 'event', startDate=tomorrow)
+            api.content.transition(event, 'publish')
+            query = [dict(
+                i='portal_type',
+                o='plone.app.querystring.operation.selection.is',
+                v='Event',
+            )]
+            collection = api.content.create(
+                self.portal, 'Collection', 'collection', query=query)
+            api.content.transition(collection, 'publish')
+            self.assertEqual(len(collection.results()), 1)
+
+        self.tile.populate_with_object(collection)
+        rendered = self.tile()
+        tomorrow = api.portal.get_localized_time(tomorrow, long_format=True)
+        self.assertIn(tomorrow, rendered)
