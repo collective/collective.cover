@@ -243,6 +243,20 @@ class BasicTileTestCase(TestTileMixin, unittest.TestCase):
 
         self.assertIn('test/@@images', rendered)
 
+    def test_double_assign_tile_image(self):
+        obj = self.portal['my-dexterity-item']
+        obj.image = NamedImageFile(generate_jpeg(128, 128))
+
+        data_mgr = ITileDataManager(self.tile)
+
+        self.tile.populate_with_object(obj)
+        self.assertTrue('image_mtime' in data_mgr.get())
+        mtime = data_mgr.get()['image_mtime']
+
+        self.tile.populate_with_object(obj)
+        self.assertTrue('image_mtime' in data_mgr.get(), 'Image mtime was removed from data')
+        self.assertEqual(mtime, data_mgr.get()['image_mtime'])
+
     def test_basic_tile_purge_cache(self):
         provideHandler(queuePurge)
 
