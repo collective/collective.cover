@@ -243,16 +243,20 @@ class BasicTileTestCase(TestTileMixin, unittest.TestCase):
 
         self.assertIn('test/@@images', rendered)
 
-    def test_double_assign_tile_image(self):
-        obj = self.portal['my-dexterity-item']
+    def test_double_assign_tile_dexterity_image(self):
+        # https://github.com/collective/collective.cover/issues/449
+        from plone.namedfile.file import NamedBlobImage
+        from plone.namedfile.tests.test_image import zptlogo
+        with api.env.adopt_roles(['Manager']):
+            obj = api.content.create(self.portal, 'Dexterity Image', 'foo')
+            obj.image = NamedBlobImage(zptlogo)
+
         data_mgr = ITileDataManager(self.tile)
-
         self.tile.populate_with_object(obj)
-        self.assertTrue('image_mtime' in data_mgr.get())
+        self.assertIn('image_mtime', data_mgr.get())
         mtime = data_mgr.get()['image_mtime']
-
         self.tile.populate_with_object(obj)
-        self.assertTrue('image_mtime' in data_mgr.get(), 'Image mtime was removed from data')
+        self.assertIn('image_mtime', data_mgr.get())
         self.assertEqual(mtime, data_mgr.get()['image_mtime'])
 
     def test_basic_tile_purge_cache(self):

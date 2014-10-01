@@ -137,19 +137,7 @@ class Fixture(PloneSandboxLayer):
         portal['my-image2'].setImage(generate_jpeg(50, 50))
         portal['my-file'].setFile(loadFile('lorem_ipsum.txt'))
         portal['my-file'].reindexObject()
-
         portal['my-news-item'].setImage(generate_jpeg(50, 50))
-
-        # Setup one a dexterity item
-        from plone.dexterity.utils import createContent, addContentToContainer
-        from plone.namedfile.file import NamedBlobImage as NamedImageFile
-        context = createContent('testcontent',
-                                id='my-dexterity-item',
-                                title=u'My dexterity item')
-
-        context.image = NamedImageFile(generate_jpeg(128, 128))
-        addContentToContainer(portal, context, checkConstraints=False)
-
         portal_workflow = portal.portal_workflow
         portal_workflow.setChainForPortalTypes(
             ['Collection', 'Event'], ['simple_publication_workflow'])
