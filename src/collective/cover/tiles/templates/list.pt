@@ -38,7 +38,7 @@
 
           <p tal:define="toLocalizedTime nocall:context/@@plone/toLocalizedTime"
              tal:condition="python:field['id'] == 'date'"
-             tal:content="python:toLocalizedTime(obj.Date())"
+             tal:content="python:toLocalizedTime(view.Date(obj), True)"
              />
         </tal:fields>
         <div class="visualClear"><!-- --></div>

@@ -12,6 +12,9 @@ There's a frood who really knows where his towel is.
 - If an Image content is included, redirect to view and not the image itself
   [frapell]
 
+- Show event's start date (instead of publication date) for Event-like objects in Basic, Collection and List tiles.
+  [hvelarde]
+
 - Remove PloneFormGen's 'Form Folder' from default searchable types (fixes `#438`_).
   [djowett]
 

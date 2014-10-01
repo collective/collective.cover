@@ -277,3 +277,16 @@ class BasicTileTestCase(TestTileMixin, unittest.TestCase):
                 '/c1/@@collective.cover.basic/test/@@images/preview',
                 '/c1/@@collective.cover.basic/test/@@images/tile']),
             IAnnotations(request)['plone.cachepurging.urls'])
+
+    def test_show_start_date_on_events(self):
+        tomorrow = DateTime() + 1
+        # create an Event starting tomorrow
+        with api.env.adopt_roles(['Manager']):
+            event = api.content.create(
+                self.portal, 'Event', 'event', startDate=tomorrow)
+            api.content.transition(event, 'publish')
+
+        self.tile.populate_with_object(event)
+        rendered = self.tile()
+        tomorrow = api.portal.get_localized_time(tomorrow, long_format=True)
+        self.assertIn(tomorrow, rendered)
