@@ -14,9 +14,9 @@
       />
 
   <genericsetup:registerProfile
-      name="enablecycle2carousel"
-      title="collective.cover: enable cycle2 carousel"
-      directory="profiles/enablecycle2carousel"
+      name="galleriacarousel"
+      title="collective.cover: using deprecated galleria carousel tile"
+      directory="profiles/galleriacarousel"
       description="Enable Cycle2 Carousel Tiles in collective.cover"
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />

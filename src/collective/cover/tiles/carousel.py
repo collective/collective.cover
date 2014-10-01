@@ -27,7 +27,7 @@ INIT_JS = """$(function() {{
 
 
 class ICarouselTile(IListTile):
-    """A carousel based on the Galleria JavaScript image gallery framework.
+    """A carousel based on the Cycle2 plugin (or optionally Galleria)
     """
 
     autoplay = schema.Bool(
@@ -86,6 +86,13 @@ class CarouselTile(ListTile):
 
         return self.data['autoplay']
 
+
+class GalleriaCarouselTile(CarouselTile):
+
+    implements(ICarouselTile)
+
+    index = ViewPageTemplateFile('templates/carousel-galleria.pt')
+
     def init_js(self):
         if self.is_empty():
             # Galleria will display scary error messages when it
@@ -95,9 +102,3 @@ class CarouselTile(ListTile):
 
         return INIT_JS.format(self.id, str(self.autoplay()).lower())
 
-
-class Cycle2CarouselTile(CarouselTile):
-
-    implements(ICarouselTile)
-
-    index = ViewPageTemplateFile('templates/carousel-cycle2.pt')

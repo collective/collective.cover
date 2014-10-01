@@ -1,0 +1,36 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      i18n:domain="collective.cover">
+
+<head>
+  <link rel="stylesheet" type="text/css"
+      tal:attributes="href string:${context/@@plone_portal_state/portal_url}/++resource++collective.cover/galleria-theme/galleria.cover_theme.css" />
+  <script type="text/javascript" tal:content="structure view/init_js">
+  </script>
+</head>
+
+<body tal:define="is_empty view/is_empty">
+
+  <p tal:condition="python: is_empty and view.is_compose_mode()" i18n:translate="">
+    This carousel is empty; open the content chooser and drag-and-drop some items here.
+  </p>
+
+  <div id="" class="galleria slide cover-carousel-tile tile-content" tal:condition="not:is_empty"
+      tal:attributes="id string:galleria-${view/id}">
+    <tal:items repeat="item view/results">
+      <img tal:define="thumbnail python:view.thumbnail(item);
+                       uid python:view.get_uid(item);"
+           tal:condition="python:thumbnail and uid"
+           tal:attributes="src thumbnail/url|string:${item/absolute_url}/download;
+                           width thumbnail/width;
+                           height thumbnail/height;
+                           data-title string:<a href='${item/absolute_url}'>${item/Title}</a>;
+                           data-description item/Description;
+                           data-link item/absolute_url;
+                           data-uid uid;" />
+    </tal:items>
+  </div>
+</body>
+</html>
