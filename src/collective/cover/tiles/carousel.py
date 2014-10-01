@@ -101,4 +101,3 @@ class GalleriaCarouselTile(CarouselTile):
             return ''
 
         return INIT_JS.format(self.id, str(self.autoplay()).lower())
-
