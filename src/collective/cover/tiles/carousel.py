@@ -54,6 +54,23 @@ class CarouselTile(ListTile):
     is_editable = True
     short_name = _(u'msg_short_name_carousel', default=u'Carousel')
 
+    def populate_with_object(self, obj):
+        """ Add a list of elements to the list of items. This method will
+        append new elements to the already existing list of items.
+        If the object doesn't have an image associated, it will not be
+        included
+
+        :param uuids: The list of objects' UUIDs to be used
+        :type uuids: List of strings
+        """
+        try:
+            image_size = obj.restrictedTraverse('@@images').getImageSize()
+        except:
+            image_size = None
+        if not image_size:
+            return
+        super(CarouselTile, self).populate_with_object(obj)
+
     def autoplay(self):
         if self.data['autoplay'] is None:
             return True  # default value
