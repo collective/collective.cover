@@ -51,8 +51,10 @@ class CarouselTileTestCase(TestTileMixin, unittest.TestCase):
         # tile's data attribute is cached; reinstantiate it
         self.tile = self.cover.restrictedTraverse(
             '@@{0}/{1}'.format('collective.cover.carousel', 'test'))
-        self.assertEqual(len(self.tile.results()), 2)
-        self.assertIn(obj1, self.tile.results())
+
+        # Document should not have been added
+        self.assertEqual(len(self.tile.results()), 1)
+        self.assertNotIn(obj1, self.tile.results())
         self.assertIn(obj2, self.tile.results())
 
         # next, we replace the list of objects with a different one
