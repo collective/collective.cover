@@ -5,6 +5,8 @@ There's a frood who really knows where his towel is.
 
 1.0a10 (unreleased)
 ^^^^^^^^^^^^^^^^^^^
+- Fix modification time disappearing from context data and handling missing value
+  [mhora]
 
 - Show event's start date (instead of publication date) for Event-like objects in Basic, Collection and List tiles.
   [hvelarde]
