@@ -245,8 +245,6 @@ class BasicTileTestCase(TestTileMixin, unittest.TestCase):
 
     def test_double_assign_tile_image(self):
         obj = self.portal['my-dexterity-item']
-        obj.image = NamedImageFile(generate_jpeg(128, 128))
-
         data_mgr = ITileDataManager(self.tile)
 
         self.tile.populate_with_object(obj)
