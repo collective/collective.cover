@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
-
 # Basic implementation taken from
 # http://davisagli.com/blog/using-tiles-to-provide-more-flexible-plone-layouts
-
 from AccessControl import Unauthorized
 from Acquisition import aq_base
 from Acquisition import aq_inner
@@ -53,6 +51,7 @@ from zope.schema import getFieldNamesInOrder
 from zope.schema import getFieldsInOrder
 
 import logging
+import Missing
 
 logger = logging.getLogger(PROJECTNAME)
 
@@ -335,6 +334,28 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
                 allowed = False
 
         return allowed
+
+    def Date(self, brain):
+        """Return the date of publication of the object referenced by
+        brain. If the object has not been published yet, return its
+        modification date. If the object is an Event, then return the
+        start date.
+
+        :param brain: [required] brain of the cataloged object
+            referenced in the tile
+        :type brain: AbstractCatalogBrain
+        :returns: the object's publication/modification date or the
+            event's start date in case of an Event-like object
+        :rtype: str or DateTime
+        """
+        calendar = api.portal.get_tool('portal_calendar')
+        # calendar_types lists all Event-like content types
+        if brain.portal_type not in calendar.calendar_types:
+            return brain.Date
+        else:
+            # an Event must have a start date
+            assert brain.start is not Missing.Value
+            return brain.start
 
     @property
     def has_image(self):

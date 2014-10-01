@@ -169,3 +169,17 @@ class ListTileTestCase(TestTileMixin, unittest.TestCase):
         self.assertEqual(len(results), 5)
         for i in range(2, 7):
             self.assertIn(folder[str(i)], results)
+
+    def test_show_start_date_on_events(self):
+        from DateTime import DateTime
+        tomorrow = DateTime() + 1
+        # create an Event starting tomorrow
+        with api.env.adopt_roles(['Manager']):
+            event = api.content.create(
+                self.portal, 'Event', 'event', startDate=tomorrow)
+            api.content.transition(event, 'publish')
+
+        self.tile.populate_with_object(event)
+        rendered = self.tile()
+        tomorrow = api.portal.get_localized_time(tomorrow, long_format=True)
+        self.assertIn(tomorrow, rendered)
