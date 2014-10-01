@@ -9,11 +9,9 @@ Suite Teardown  Close all browsers
 *** Variables ***
 
 ${carousel_tile_location}  "collective.cover.carousel"
-#${document_selector}  #content-trees .ui-draggable .contenttype-document
-${document_selector}  (//div[@id="content-trees"]//li[@class="ui-draggable"]/a[@data-ct-type="Document"])[1]
-#${image_selector}  #content-trees .ui-draggable .contenttype-image
-${image_selector}  (//div[@id="content-trees"]//li[@class="ui-draggable"]/a[@data-ct-type="Image"])[1]
-${image_selector2}  (//div[@id="content-trees"]//li[@class="ui-draggable"]/a[@data-ct-type="Image"])[2]
+${document_selector}  //div[@id="content-trees"]//li[@class="ui-draggable"]/a[@data-ct-type="Document"]/span[text()='My document']/..
+${image_selector}  //div[@id="content-trees"]//li[@class="ui-draggable"]/a[@data-ct-type="Image"]/span[text()='my-image']/..
+${image_selector2}  //div[@id="content-trees"]//li[@class="ui-draggable"]/a[@data-ct-type="Image"]/span[text()='my-image1']/..
 ${tile_selector}  div.tile-container div.tile
 ${autoplay_id}  collective-cover-carousel-autoplay-0
 ${edit_link_selector}  a.edit-tile-link
@@ -47,16 +45,17 @@ Test Carousel Tile
     Open Content Chooser
     Click Element  link=Content tree
     Drag And Drop  xpath=${image_selector}  css=${tile_selector}
-    Wait Until Page Contains  Test image
-    Page Should Contain  This image was created for testing purposes
-    # we have 1 image in the carousel
-    ${images} =  Get Total Carousel Images
-    Should Be Equal  '${images}'  '1'
+    # The carousel was previously empty, so autoplay=false, so we might not see the carousel updated
+    # Wait Until Page Contains  Test image
+    # Page Should Contain  This image was created for testing purposes
 
     # move to the default view and check tile persisted
     Click Link  link=View
     Wait Until Page Contains  Test image
     Page Should Contain  This image was created for testing purposes
+    # we have 1 image in the carousel
+    ${images} =  Get Total Carousel Images
+    Should Be Equal  '${images}'  '1'
 
     # drag&drop another Image
     Compose Cover
