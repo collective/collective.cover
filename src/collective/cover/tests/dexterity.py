@@ -8,10 +8,10 @@ class ITestContent(model.Schema):
     """
 
     title = schema.TextLine(
-            title=u"Title",
+        title=u'Title',
     )
 
     image = NamedBlobImage(
-        title=u"Image",
+        title=u'Image',
         required=False,
     )
