@@ -46,7 +46,6 @@ setup(name='collective.cover',
           'AccessControl',
           'Acquisition',
           'collective.js.bootstrap',
-          'collective.js.galleria',
           'collective.js.jqueryui',
           'five.grok',
           'Missing',
@@ -95,6 +94,9 @@ setup(name='collective.cover',
           'zope.schema',
       ],
       extras_require={
+          'galleria': [
+              'collective.js.galleria',
+          ],
           'test': [
               'mock',
               'plone.app.robotframework',

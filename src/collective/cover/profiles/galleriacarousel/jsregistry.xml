@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<object name="portal_javascripts">
+  <javascript id="++resource++collective.cover/cycle2-theme/jquery.cycle2.js"
+      enabled="False" />
+  <javascript id="++resource++collective.cover/cycle2-theme/jquery.cycle2.caption2.min.js"
+      enabled="False" />
+</object>

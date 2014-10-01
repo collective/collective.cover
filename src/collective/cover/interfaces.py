@@ -9,8 +9,8 @@ class ICoverLayer(Interface):
     """
 
 
-class ICycle2EnabledLayer(ICoverLayer):
-    """ A layer indicating that Cycle2 Carousels are to be used in this add-on.
+class IGalleriaEnabledLayer(ICoverLayer):
+    """ A layer indicating that Galleria Carousels are to be used in this add-on.
     """
 
 
