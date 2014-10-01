@@ -46,17 +46,16 @@ Test Carousel Tile
     Open Content Chooser
     Click Element  link=Content tree
     Drag And Drop  xpath=${image_selector1}  css=${tile_selector}
-    # The carousel was previously empty, so autoplay=false, so we might not see the carousel updated
-    # Wait Until Page Contains  Test image #1
-    # Page Should Contain  This image was created for testing purposes
-
-    # move to the default view and check tile persisted
-    Click Link  link=View
     Wait Until Page Contains  Test image #1
     Page Should Contain  This image #1 was created for testing purposes
     # we have 1 image in the carousel
     ${images} =  Get Total Carousel Images
     Should Be Equal  '${images}'  '1'
+
+    # move to the default view and check tile persisted
+    Click Link  link=View
+    Wait Until Page Contains  Test image #1
+    Page Should Contain  This image #1 was created for testing purposes
 
     # drag&drop another Image
     Compose Cover
