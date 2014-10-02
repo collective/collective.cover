@@ -94,6 +94,9 @@ setup(name='collective.cover',
           'zope.schema',
       ],
       extras_require={
+          'galleria': [
+              'collective.js.galleria',
+          ],
           'test': [
               'mock',
               'plone.app.robotframework',

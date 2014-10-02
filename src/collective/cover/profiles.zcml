@@ -2,6 +2,7 @@
     xmlns="http://namespaces.zope.org/zope"
     xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
     xmlns:i18n="http://namespaces.zope.org/i18n"
+    xmlns:zcml="http://namespaces.zope.org/zcml"
     i18n_domain="collective.cover"
     >
 
@@ -14,6 +15,7 @@
       />
 
   <genericsetup:registerProfile
+      zcml:condition="installed collective.js.galleria"
       name="galleriacarousel"
       title="collective.cover: using deprecated galleria carousel tile"
       directory="profiles/galleriacarousel"
