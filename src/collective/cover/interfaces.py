@@ -9,7 +9,7 @@ class ICoverLayer(Interface):
     """
 
 
-class IGalleriaEnabledLayer(ICoverLayer):
+class IGalleriaCarouselsLayer(ICoverLayer):
     """ A layer indicating that Galleria Carousels are to be used in this add-on.
     """
 
