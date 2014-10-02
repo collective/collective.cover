@@ -26,6 +26,7 @@ Test List Tile
 
     Enable Autologin as  Site Administrator
     Go to Homepage
+
     Create Cover  Title  Description
 
     # add a list tile to the layout
@@ -101,6 +102,14 @@ Test List Tile
     ${last_item_title} =  Get Text  css=${last_item} h2
     Should Be Equal  ${first_item_title}  My file
     Should Be Equal  ${last_item_title}  My document
+
+    # first item is now last. Let's move it back to the top
+    Drag And Drop  css=${last_item}  css=${first_item}
+    Sleep  1s  Wait for reordering to occur
+
+    # ensure that the reodering is reflected in the DOM
+    ${first_item_title} =  Get Text  css=${first_item} h2
+    Should Be Equal  ${first_item_title}  My document
 
     # delete the tile
     Edit Cover Layout
