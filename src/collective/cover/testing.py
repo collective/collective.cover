@@ -27,6 +27,13 @@ except pkg_resources.DistributionNotFound:
 else:
     HAS_PFG = True
 
+try:
+    pkg_resources.get_distribution('collective.js.galleria')
+except pkg_resources.DistributionNotFound:
+    HAS_GALLERIA = False
+else:
+    HAS_GALLERIA = True
+
 ALL_CONTENT_TYPES = [
     'Collection',
     'Document',
@@ -117,7 +124,8 @@ class Fixture(PloneSandboxLayer):
         import collective.cover
         self.loadZCML(package=collective.cover)
 
-        if 'virtual_hosting' not in app.objectIds():
+        if ('virtual_hosting' not in app.objectIds() and
+                'VHM' not in app.objectIds()):
             # If ZopeLite was imported, we have no default virtual
             # host monster
             from Products.SiteAccess.VirtualHostMonster \
@@ -160,6 +168,45 @@ class MultipleGridsFixture(Fixture):
         sm.registerUtility(newgrid, name='bootstrap3')
 
 
+class GalleriaFixture(Fixture):
+
+    defaultBases = (FIXTURE,)
+
+    def setUpZope(self, app, configurationContext):
+
+        # Load ZCML
+        import collective.js.galleria
+        self.loadZCML(package=collective.js.galleria)
+        z2.installProduct(app, 'collective.js.galleria')
+
+        import collective.cover
+        self.loadZCML(package=collective.cover)
+
+        if ('virtual_hosting' not in app.objectIds() and
+                'VHM' not in app.objectIds()):
+            # If ZopeLite was imported, we have no default virtual
+            # host monster
+            from Products.SiteAccess.VirtualHostMonster \
+                import manage_addVirtualHostMonster
+            manage_addVirtualHostMonster(app, 'virtual_hosting')
+
+    def setUpPloneSite(self, portal):
+        # Install with Generic Setup
+        self.applyProfile(portal, 'collective.cover:galleriacarousel')
+        self.applyProfile(portal, 'collective.cover:testfixture')
+        portal['my-image'].setImage(generate_jpeg(50, 50))
+        portal['my-image1'].setImage(generate_jpeg(50, 50))
+        portal['my-image2'].setImage(generate_jpeg(50, 50))
+        portal_workflow = portal.portal_workflow
+        portal_workflow.setChainForPortalTypes(
+            ['Collection', 'Event'], ['simple_publication_workflow'])
+
+        # Prevent kss validation errors in Plone 4.2
+        portal_kss = getattr(portal, 'portal_kss', None)
+        if portal_kss:
+            portal_kss.getResource('++resource++plone.app.z3cform').setEnabled(False)
+
+
 INTEGRATION_TESTING = IntegrationTesting(
     bases=(FIXTURE,),
     name='collective.cover:Integration',
@@ -179,3 +226,9 @@ FUNCTIONAL_TESTING = FunctionalTesting(
 ROBOT_TESTING = FunctionalTesting(
     bases=(FIXTURE, AUTOLOGIN_LIBRARY_FIXTURE, z2.ZSERVER_FIXTURE),
     name='collective.cover:Robot')
+
+if HAS_GALLERIA:
+    GALLERIA_FIXTURE = GalleriaFixture()
+    GALLERIA_FUNCTIONAL_TESTING = FunctionalTesting(
+        bases=(GALLERIA_FIXTURE, AUTOLOGIN_LIBRARY_FIXTURE, z2.ZSERVER_FIXTURE),
+        name='collective.cover:GalleriaFunctional')
