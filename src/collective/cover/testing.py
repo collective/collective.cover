@@ -173,32 +173,13 @@ class GalleriaFixture(Fixture):
         self.loadZCML(package=collective.js.galleria)
         z2.installProduct(app, 'collective.js.galleria')
 
-        import collective.cover
-        self.loadZCML(package=collective.cover)
-
-        if ('virtual_hosting' not in app.objectIds() and
-                'VHM' not in app.objectIds()):
-            # If ZopeLite was imported, we have no default virtual
-            # host monster
-            from Products.SiteAccess.VirtualHostMonster \
-                import manage_addVirtualHostMonster
-            manage_addVirtualHostMonster(app, 'virtual_hosting')
+        super(GalleriaFixture, self).setUpZope(app, configurationContext)
 
     def setUpPloneSite(self, portal):
-        # Install with Generic Setup
-        self.applyProfile(portal, 'collective.cover:galleriacarousel')
-        self.applyProfile(portal, 'collective.cover:testfixture')
-        portal['my-image'].setImage(generate_jpeg(50, 50))
-        portal['my-image1'].setImage(generate_jpeg(50, 50))
-        portal['my-image2'].setImage(generate_jpeg(50, 50))
-        portal_workflow = portal.portal_workflow
-        portal_workflow.setChainForPortalTypes(
-            ['Collection', 'Event'], ['simple_publication_workflow'])
 
-        # Prevent kss validation errors in Plone 4.2
-        portal_kss = getattr(portal, 'portal_kss', None)
-        if portal_kss:
-            portal_kss.getResource('++resource++plone.app.z3cform').setEnabled(False)
+        super(GalleriaFixture, self).setUpPloneSite(portal)
+        # Install extra Generic Setup profile
+        self.applyProfile(portal, 'collective.cover:galleriacarousel')
 
 
 INTEGRATION_TESTING = IntegrationTesting(
