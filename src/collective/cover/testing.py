@@ -27,13 +27,6 @@ except pkg_resources.DistributionNotFound:
 else:
     HAS_PFG = True
 
-try:
-    pkg_resources.get_distribution('collective.js.galleria')
-except pkg_resources.DistributionNotFound:
-    HAS_GALLERIA = False
-else:
-    HAS_GALLERIA = True
-
 ALL_CONTENT_TYPES = [
     'Collection',
     'Document',
@@ -175,6 +168,7 @@ class GalleriaFixture(Fixture):
     def setUpZope(self, app, configurationContext):
 
         # Load ZCML
+        pkg_resources.get_distribution('collective.js.galleria')
         import collective.js.galleria
         self.loadZCML(package=collective.js.galleria)
         z2.installProduct(app, 'collective.js.galleria')
@@ -227,8 +221,7 @@ ROBOT_TESTING = FunctionalTesting(
     bases=(FIXTURE, AUTOLOGIN_LIBRARY_FIXTURE, z2.ZSERVER_FIXTURE),
     name='collective.cover:Robot')
 
-if HAS_GALLERIA:
-    GALLERIA_FIXTURE = GalleriaFixture()
-    GALLERIA_FUNCTIONAL_TESTING = FunctionalTesting(
-        bases=(GALLERIA_FIXTURE, AUTOLOGIN_LIBRARY_FIXTURE, z2.ZSERVER_FIXTURE),
-        name='collective.cover:GalleriaFunctional')
+GALLERIA_FIXTURE = GalleriaFixture()
+GALLERIA_FUNCTIONAL_TESTING = FunctionalTesting(
+    bases=(GALLERIA_FIXTURE, AUTOLOGIN_LIBRARY_FIXTURE, z2.ZSERVER_FIXTURE),
+    name='collective.cover:GalleriaFunctional')
