@@ -94,9 +94,6 @@ setup(name='collective.cover',
           'zope.schema',
       ],
       extras_require={
-          'galleria': [
-              'collective.js.galleria',
-          ],
           'test': [
               'mock',
               'plone.app.robotframework',
@@ -105,6 +102,7 @@ setup(name='collective.cover',
               'plone.cachepurging',
               'plone.testing',
               'Products.PloneFormGen',
+              'collective.js.galleria',
           ],
       },
       entry_points="""

@@ -3,5 +3,6 @@
   <version>1</version>
   <dependencies>
     <dependency>profile-collective.cover:default</dependency>
+    <dependency>profile-collective.js.galleria:default</dependency>
   </dependencies>
 </metadata>
