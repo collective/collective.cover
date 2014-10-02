@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
 <layers>
- <layer name="collective.cover.cycle2enabled"
-    interface="collective.cover.interfaces.IGalleriaEnabledLayer" />
+ <layer name="collective.cover.galleriacarousels"
+    interface="collective.cover.interfaces.IGalleriaCarouselsLayer" />
 </layers>

@@ -2,4 +2,9 @@
 <layers>
  <layer name="collective.cover"
     interface="collective.cover.interfaces.ICoverLayer" />
+
+ <!-- Reinstalling the product should revert to Cycle2 carousels -->
+ <layer name="collective.cover.galleriacarousels"
+    interface="collective.cover.interfaces.IGalleriaCarouselsLayer" 
+    remove="True"/>
 </layers>
