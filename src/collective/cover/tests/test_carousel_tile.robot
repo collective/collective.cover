@@ -29,7 +29,7 @@ Get Total Carousel Images
 *** Test cases ***
 
 Test Carousel Tile
-    # [Tags]  Expected Failure
+    [Tags]  Expected Failure
 
     Enable Autologin as  Site Administrator
     Go to Homepage
