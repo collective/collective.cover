@@ -27,9 +27,7 @@
 
     <div class="cycle-pager"></div>        
     <tal:items repeat="item view/results">
-      <div class="slide"
-         tal:attributes="data-cycle-title item/Title;
-                         data-cycle-desc item/Description;">
+      <div class="slide">
         <a href="#"
            tal:attributes="href item/absolute_url;">
           <img tal:define="thumbnail python:view.thumbnail(item);
