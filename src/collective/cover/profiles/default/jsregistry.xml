@@ -16,4 +16,7 @@
   <javascript id="++resource++collective.cover/cycle2-theme/jquery.cycle2.caption2.min.js"
       cacheable="True" compression="none" cookable="True" enabled="True"
       expression="" inline="False" />
+  <javascript id="++resource++collective.cover/cycle2-theme/jquery.cycle2.swipe.min.js"
+      cacheable="True" compression="none" cookable="True" enabled="True"
+      expression="" inline="False" />
 </object>

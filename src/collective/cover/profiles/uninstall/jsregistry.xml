@@ -13,4 +13,6 @@
       remove="True" />
   <javascript id="++resource++collective.cover/cycle2-theme/jquery.cycle2.caption2.min.js"
       remove="True" />
+  <javascript id="++resource++collective.cover/cycle2-theme/jquery.cycle2.swipe.min.js"
+      remove="True" />
 </object>
