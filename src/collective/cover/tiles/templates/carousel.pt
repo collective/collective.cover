@@ -19,6 +19,8 @@
   <div id="" class="cycle2-carousel cover-carousel-tile tile-content" 
        data-cycle-caption-plugin="caption2"
        data-cycle-slides="> div.slide"
+       data-cycle-swipe="true"
+       data-cycle-swipe-fx="scrollHorz"
        tal:condition="not:is_empty"
        tal:attributes="id string:cycle-${view/id};
                        data-cycle-paused python:str(not view.autoplay()).lower();">
