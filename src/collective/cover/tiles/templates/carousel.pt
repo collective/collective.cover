@@ -29,25 +29,36 @@
 
     <div class="cycle-pager"></div>        
     <tal:items repeat="item view/results">
-      <div class="slide">
-        <a href="#"
-           tal:attributes="href item/absolute_url;">
-          <img tal:define="thumbnail python:view.thumbnail(item);
-                           uid python:view.get_uid(item);"
-               tal:condition="python:thumbnail and uid"
-               tal:attributes="src thumbnail/url|string:${item/absolute_url}/download;
-                               data-uid uid;" />
-        </a>
-        <div class="cycle-overlay">
-          <a href="#"
-             tal:attributes="href item/absolute_url;">
-            <div class="slide-title"
-                 tal:content="item/Title">title</div>
-          </a>
-          <div class="slide-desc"
-               tal:content="item/Description">description</div>
-         </div>
-       </div>
+      <div class="slide"
+           tal:attributes="data-uid python:view.get_uid(item)">
+          <tal:image define="thumbnail python:view.thumbnail(item);"
+                     condition="python:thumbnail">
+            <a href="#"
+               tal:attributes="href item/absolute_url;">
+              <img tal:attributes="src thumbnail/url|string:${item/absolute_url}/download;
+                                   width thumbnail/width;
+                                   height thumbnail/height;
+                                   alt item/Title;" />
+            </a>
+          </tal:image>
+        <div class="non-image-fields">
+          <tal:fields repeat="field view/get_configured_fields">
+            <h2 class="slide-title"
+                tal:condition="python:field['id'] == 'title'"
+                tal:replace="structure python:view.get_title_tag(item)"
+                />
+
+            <p class="slide-desc" 
+               tal:condition="python:field['id'] == 'description'"
+               tal:content="item/Description"
+               />
+            <p tal:define="toLocalizedTime nocall:context/@@plone/toLocalizedTime"
+               tal:condition="python:field['id'] == 'date'"
+               tal:content="python:toLocalizedTime(view.Date(item), True)"
+               />
+          </tal:fields>
+        </div>
+      </div>
     </tal:items>
   </div>
   <script type="text/javascript"
