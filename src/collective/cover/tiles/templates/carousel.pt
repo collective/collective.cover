@@ -50,7 +50,8 @@
        </div>
     </tal:items>
   </div>
-  <script type="text/javascript">
+  <script type="text/javascript"
+          tal:condition="not:is_empty">
     $( '.cycle2-carousel' ).cycle();
   </script>
 </body>
