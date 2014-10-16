@@ -56,7 +56,7 @@ class Upgrade5to6TestCase(UpgradeTestCaseBase):
 
     def test_upgrade_to_6_registrations(self):
         version = self.setup.getLastVersionForProfile(self.profile_id)[0]
-        self.assertTrue(version >= self.to_version)
+        self.assertGreaterEqual(int(version), int(self.to_version))
         self.assertEqual(self._how_many_upgrades_to_do(), 2)
 
     def test_issue_201(self):
@@ -130,7 +130,7 @@ class Upgrade6to7TestCase(UpgradeTestCaseBase):
 
     def test_upgrade_to_7_registrations(self):
         version = self.setup.getLastVersionForProfile(self.profile_id)[0]
-        self.assertTrue(version >= self.to_version)
+        self.assertGreaterEqual(int(version), int(self.to_version))
         self.assertEqual(self._how_many_upgrades_to_do(), 3)
 
     def test_issue_330(self):
@@ -182,7 +182,7 @@ class Upgrade7to8TestCase(UpgradeTestCaseBase):
 
     def test_upgrade_to_8_registrations(self):
         version = self.setup.getLastVersionForProfile(self.profile_id)[0]
-        self.assertTrue(version >= self.to_version)
+        self.assertGreaterEqual(int(version), int(self.to_version))
         self.assertEqual(self._how_many_upgrades_to_do(), 1)
 
     def test_issue_371(self):
@@ -198,7 +198,7 @@ class Upgrade8to9TestCase(UpgradeTestCaseBase):
 
     def test_upgrade_to_9_registrations(self):
         version = self.setup.getLastVersionForProfile(self.profile_id)[0]
-        self.assertTrue(version >= self.to_version)
+        self.assertGreaterEqual(int(version), int(self.to_version))
         self.assertEqual(self._how_many_upgrades_to_do(), 3)
 
     def test_issue_423(self):
@@ -215,3 +215,29 @@ class Upgrade8to9TestCase(UpgradeTestCaseBase):
         self._do_upgrade_step(step)
         permissions = configlet.permissions
         self.assertEqual(permissions, ('collective.cover: Setup',))
+
+
+class Upgrade9to10TestCase(UpgradeTestCaseBase):
+
+    def setUp(self):
+        UpgradeTestCaseBase.setUp(self, u'9', u'10')
+
+    def test_upgrade_to_9_registrations(self):
+        version = self.setup.getLastVersionForProfile(self.profile_id)[0]
+        self.assertGreaterEqual(int(version), int(self.to_version))
+        self.assertEqual(self._how_many_upgrades_to_do(), 1)
+
+    def test_install_cycle2(self):
+        cycle2 = 'collective.js.cycle2'
+        title = u'Install collective.js.cycle2'
+        step = self._get_upgrade_step(title)
+        self.assertIsNotNone(step)
+
+        # simulate state on previous version
+        qi = api.portal.get_tool('portal_quickinstaller')
+        qi.uninstallProducts([cycle2])
+        self.assertFalse(qi.isProductInstalled(cycle2))
+
+        # run the upgrade step to validate the update
+        self._do_upgrade_step(step)
+        self.assertTrue(qi.isProductInstalled(cycle2))
