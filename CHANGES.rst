@@ -6,6 +6,15 @@ There's a frood who really knows where his towel is.
 1.0a10 (unreleased)
 ^^^^^^^^^^^^^^^^^^^
 
+- Fix modification time disappearing from context data and handling missing value (fixes `#449`_).
+  [mhora]
+
+- Show event's start date (instead of publication date) for Event-like objects in Basic, Collection and List tiles.
+  [hvelarde]
+
+- Remove PloneFormGen's 'Form Folder' from default searchable types (fixes `#438`_).
+  [djowett]
+
 - Fix AttributeError caused by editing a basic tile and not populating the
   image field.
   [enfold-josh]
@@ -547,4 +556,5 @@ There's a frood who really knows where his towel is.
 .. _`#421`: https://github.com/collective/collective.cover/issues/421
 .. _`#423`: https://github.com/collective/collective.cover/issues/423
 .. _`#426`: https://github.com/collective/collective.cover/issues/426
+.. _`#449`: https://github.com/collective/collective.cover/issues/449
 .. _`PloneFormGen`: https://pypi.python.org/pypi/Products.PloneFormGen

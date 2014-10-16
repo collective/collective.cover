@@ -85,8 +85,7 @@ class Cover(Item):
         :type id: string
         :returns: the tile type
         :rtype: string
-        :raises:
-            ValueError
+        :raises ValueError: if the tile does not exists
         """
         tile = [t for t in self.get_tiles() if t['id'] == id]
         assert len(tile) in (0, 1)
