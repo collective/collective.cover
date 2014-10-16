@@ -21,14 +21,12 @@ ${edit_link_selector}  a.edit-tile-link
 Get Total Carousel Images
     [Documentation]  Total number of images in carousel is stored in this
     ...              element
-    # Note: we are a bit lazy about adding concat here, but then how long do you want this line to be?
-    ${return} =  Get Matching XPath Count  //div[contains(@class,"cycle2-carousel")]//div[contains(concat(" ", @class," "), " slide ") and not(contains(@class, "sentinel"))]
+    ${return} =  Get Matching XPath Count  //div[@class="galleria-stage"]//div[@class="galleria-image"]/img
     [Return]  ${return}
 
 *** Test cases ***
 
 Test Carousel Tile
-    [Tags]  Expected Failure
 
     Enable Autologin as  Site Administrator
     Go to Homepage
@@ -47,16 +45,17 @@ Test Carousel Tile
     Open Content Chooser
     Click Element  link=Content tree
     Drag And Drop  xpath=${image_selector1}  css=${tile_selector}
+    # The carousel was previously empty, so autoplay=false, so we might not see the carousel updated
     Wait Until Page Contains  Test image #1
     Page Should Contain  This image #1 was created for testing purposes
-    # we have 1 image in the carousel
-    ${images} =  Get Total Carousel Images
-    Should Be Equal  '${images}'  '1'
 
     # move to the default view and check tile persisted
     Click Link  link=View
     Wait Until Page Contains  Test image #1
     Page Should Contain  This image #1 was created for testing purposes
+    # we have 1 image in the carousel
+    ${images} =  Get Total Carousel Images
+    Should Be Equal  '${images}'  '1'
 
     # drag&drop another Image
     Compose Cover
@@ -84,13 +83,14 @@ Test Carousel Tile
 
     Drag And Drop  xpath=${document_selector}  css=${tile_selector}
 
-    # Documents are (at least slightly) revived in Carousel thanks to Cycle2
+    # No point to test Documents - they are not used in carousel
+    # see: https://github.com/collective/collective.cover/commit/8df37e04d7299a0cb1a90e9f0a8ace746859c49c
     Click Link  link=View
-    Wait Until Page Contains  My document
-    Page Should Contain  This document was created for testing purposes
+    #Wait Until Page Contains  My document
+    #Page Should Contain  This document was created for testing purposes
 
     # carousel autoplay is enabled
-    Page Should Contain Element  xpath=//div[contains(@class,"cycle2-carousel") and @data-cycle-paused="false"]
+    Page Should Contain  options.autoplay = true;
 
     # edit the tile
     Compose Cover
@@ -104,7 +104,7 @@ Test Carousel Tile
 
     # carousel autoplay is now disabled. Sometimes we need to reload the page.
     Reload Page
-    Page Should Contain Element  xpath=//div[contains(@class,"cycle2-carousel") and @data-cycle-paused="true"]
+    Page Should Contain  options.autoplay = false;
 
     # delete the tile
     Edit Cover Layout

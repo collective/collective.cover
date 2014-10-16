@@ -117,7 +117,8 @@ class Fixture(PloneSandboxLayer):
         import collective.cover
         self.loadZCML(package=collective.cover)
 
-        if 'virtual_hosting' not in app.objectIds():
+        if ('virtual_hosting' not in app.objectIds() and
+                'VHM' not in app.objectIds()):
             # If ZopeLite was imported, we have no default virtual
             # host monster
             from Products.SiteAccess.VirtualHostMonster \
@@ -160,6 +161,27 @@ class MultipleGridsFixture(Fixture):
         sm.registerUtility(newgrid, name='bootstrap3')
 
 
+class GalleriaFixture(Fixture):
+
+    defaultBases = (FIXTURE,)
+
+    def setUpZope(self, app, configurationContext):
+
+        # Load ZCML
+        pkg_resources.get_distribution('collective.js.galleria')
+        import collective.js.galleria
+        self.loadZCML(package=collective.js.galleria)
+        z2.installProduct(app, 'collective.js.galleria')
+
+        super(GalleriaFixture, self).setUpZope(app, configurationContext)
+
+    def setUpPloneSite(self, portal):
+
+        super(GalleriaFixture, self).setUpPloneSite(portal)
+        # Install extra Generic Setup profile
+        self.applyProfile(portal, 'collective.cover:galleriacarousel')
+
+
 INTEGRATION_TESTING = IntegrationTesting(
     bases=(FIXTURE,),
     name='collective.cover:Integration',
@@ -179,3 +201,8 @@ FUNCTIONAL_TESTING = FunctionalTesting(
 ROBOT_TESTING = FunctionalTesting(
     bases=(FIXTURE, AUTOLOGIN_LIBRARY_FIXTURE, z2.ZSERVER_FIXTURE),
     name='collective.cover:Robot')
+
+GALLERIA_FIXTURE = GalleriaFixture()
+GALLERIA_FUNCTIONAL_TESTING = FunctionalTesting(
+    bases=(GALLERIA_FIXTURE, AUTOLOGIN_LIBRARY_FIXTURE, z2.ZSERVER_FIXTURE),
+    name='collective.cover:GalleriaFunctional')

@@ -6,7 +6,7 @@
   position: absolute;
   top: 0;
   width: 8%;
-  z-index: 800;
+  z-index: 110;
 }
 .cycle-prev {
     background: url("++resource++collective.cover/cycle2-theme/prev-arrow.png") no-repeat scroll 10% 50% rgba(0, 0, 0, 0);
@@ -27,7 +27,7 @@
   text-align: center;
   top: 10px;
   width: 100%;
-  z-index: 500;
+  z-index: 110;
 }
 .cycle-pager span {
   background: url("++resource++collective.cover/cycle2-theme/dot.png") no-repeat;
@@ -43,11 +43,15 @@
 .cycle-pager .cycle-pager-active {
   opacity: 1;
 }
+.contentActions {
+  z-index: 130;
+}
 
 /* Stop Flash of unstyled content */
 .cycle2-carousel .slide { 
   display: none;
 }
+
 .cycle2-carousel .cycle-pager + .slide { 
   display: block;
 }

@@ -1,14 +1,6 @@
 <?xml version="1.0"?>
 <object name="portal_javascripts">
-  <javascript id="++resource++collective.cover/contentchooser.js"
-      remove="True" />
-  <!-- Maybe...
-  <javascript id="++resource++collective.js.bootstrap/js/bootstrap.min.js"
-      remove="True" />
-      -->
-  <javascript id="++resource++collective.cover/jquery.endless-scroll.js"
-      remove="True" />
-
+  <!-- These are not required if we are using Galleria for carousels -->
   <javascript id="++resource++collective.cover/cycle2-theme/jquery.cycle2.js"
       remove="True" />
   <javascript id="++resource++collective.cover/cycle2-theme/jquery.cycle2.caption2.min.js"

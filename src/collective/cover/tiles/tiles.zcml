@@ -78,11 +78,12 @@
       />
 
   <plone:tile
+      zcml:condition="installed collective.js.galleria"
       name="collective.cover.carousel"
-      class=".carousel.Cycle2CarouselTile"
+      class=".carousel.GalleriaCarouselTile"
       permission="zope2.View"
       for="*"
-      layer="collective.cover.interfaces.ICycle2EnabledLayer"
+      layer="collective.cover.interfaces.IGalleriaCarouselsLayer"
       />
 
   <plone:tile
