@@ -106,7 +106,6 @@ setup(name='collective.cover',
               'plone.cachepurging',
               'plone.testing',
               'Products.PloneFormGen',
-              'collective.js.galleria',
           ],
       },
       entry_points="""
