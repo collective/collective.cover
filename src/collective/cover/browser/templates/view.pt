@@ -9,7 +9,7 @@
 <metal:headslot fill-slot="head_slot">
   <meta http-equiv="refresh" content="300"
       tal:condition="context/refresh"
-      tal:attributes="content context/ttl|nothing" />
+      tal:attributes="content context/ttl|default" />
 </metal:headslot>
 </head>
 <body>
