@@ -1,0 +1,8 @@
+<?xml version="1.0" ?>
+<model xmlns="http://namespaces.plone.org/supermodel/schema">
+  <schema>
+    <field name="image" type="plone.namedfile.field.NamedBlobImage">
+      <title>Image</title>
+    </field>
+  </schema>
+</model>

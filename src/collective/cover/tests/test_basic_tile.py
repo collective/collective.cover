@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from collective.cover.testing import ALL_CONTENT_TYPES
+from collective.cover.testing import PLONE_VERSION
 from collective.cover.testing import generate_jpeg
 from collective.cover.testing import images_are_equal
 from collective.cover.tests.base import TestTileMixin
@@ -243,6 +244,23 @@ class BasicTileTestCase(TestTileMixin, unittest.TestCase):
 
         self.assertIn('test/@@images', rendered)
 
+    @unittest.skipIf(PLONE_VERSION < '4.3', 'zptlogo not available')
+    def test_double_assign_tile_dexterity_image(self):
+        # https://github.com/collective/collective.cover/issues/449
+        from plone.namedfile.file import NamedBlobImage
+        from plone.namedfile.tests.test_image import zptlogo
+        with api.env.adopt_roles(['Manager']):
+            obj = api.content.create(self.portal, 'Dexterity Image', 'foo')
+            obj.image = NamedBlobImage(zptlogo)
+
+        data_mgr = ITileDataManager(self.tile)
+        self.tile.populate_with_object(obj)
+        self.assertIn('image_mtime', data_mgr.get())
+        mtime = data_mgr.get()['image_mtime']
+        self.tile.populate_with_object(obj)
+        self.assertIn('image_mtime', data_mgr.get())
+        self.assertEqual(mtime, data_mgr.get()['image_mtime'])
+
     def test_basic_tile_purge_cache(self):
         provideHandler(queuePurge)
 
@@ -277,3 +295,16 @@ class BasicTileTestCase(TestTileMixin, unittest.TestCase):
                 '/c1/@@collective.cover.basic/test/@@images/preview',
                 '/c1/@@collective.cover.basic/test/@@images/tile']),
             IAnnotations(request)['plone.cachepurging.urls'])
+
+    def test_show_start_date_on_events(self):
+        tomorrow = DateTime() + 1
+        # create an Event starting tomorrow
+        with api.env.adopt_roles(['Manager']):
+            event = api.content.create(
+                self.portal, 'Event', 'event', startDate=tomorrow)
+            api.content.transition(event, 'publish')
+
+        self.tile.populate_with_object(event)
+        rendered = self.tile()
+        tomorrow = api.portal.get_localized_time(tomorrow, long_format=True)
+        self.assertIn(tomorrow, rendered)

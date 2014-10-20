@@ -88,9 +88,8 @@
                tal:condition="python:field['id'] == 'description'"
                tal:content="obj/Description" />
 
-            <p class=""
-               tal:content="python:toLocalizedTime(obj.Date())"
-               tal:condition="python:field['id'] == 'date' and (hasattr(obj, 'Date') or hasattr(obj,'Schema') and 'Date' in obj.Schema().keys())" />
+            <p tal:condition="python:field['id'] == 'date'"
+               tal:content="python:toLocalizedTime(view.Date(item), True)" />
           </tal:fields>
         </tal:items>
         <div class="visualClear"><!-- --></div>

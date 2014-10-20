@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 from collective.cover.config import PROJECTNAME
 from collective.cover.controlpanel import ICoverSettings
 from plone import api
