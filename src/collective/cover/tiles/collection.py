@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 from collective.cover import _
 from collective.cover.tiles.base import IPersistentCoverTile
 from collective.cover.tiles.base import PersistentCoverTile
@@ -15,10 +14,11 @@ from Products.CMFPlone.utils import safe_unicode
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zope import schema
 from zope.component import queryUtility
+from zope.interface import implements
 from zope.schema import getFieldsInOrder
 
 
-class ICollectionTile(IPersistentCoverTile, form.Schema):
+class ICollectionTile(IPersistentCoverTile):
 
     header = schema.TextLine(
         title=_(u'Header'),
@@ -82,6 +82,8 @@ class ICollectionTile(IPersistentCoverTile, form.Schema):
 
 
 class CollectionTile(PersistentCoverTile):
+
+    implements(ICollectionTile)
 
     index = ViewPageTemplateFile('templates/collection.pt')
 
@@ -192,7 +194,11 @@ class CollectionTile(PersistentCoverTile):
             if image_conf:
                 scaleconf = image_conf['imgsize']
                 # scale string is something like: 'mini 200:200'
-                scale = scaleconf.split(' ')[0]  # we need the name only: 'mini'
+                # we need the name only: 'mini'
+                if scaleconf == '_original':
+                    scale = None
+                else:
+                    scale = scaleconf.split(' ')[0]
                 scales = item.restrictedTraverse('@@images')
                 return scales.scale('image', scale)
 

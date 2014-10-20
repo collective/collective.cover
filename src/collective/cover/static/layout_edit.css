@@ -69,8 +69,10 @@ button.close {
     position:fixed;
     top:10%;
     left:50%;
+    max-height:80%;
     z-index:1050;
     width:560px;
+    overflow:auto;
     margin-left:-280px;
     background-color:#fff;
     border:1px solid #999;

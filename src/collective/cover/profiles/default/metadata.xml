@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <metadata>
-  <version>7</version>
+  <version>9</version>
   <dependencies>
     <dependency>profile-collective.js.galleria:default</dependency>
     <dependency>profile-collective.js.jqueryui:default</dependency>

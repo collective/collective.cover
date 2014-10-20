@@ -19,6 +19,7 @@ from zope.interface import Interface
 from zope.schema.interfaces import IVocabularyFactory
 from zope.schema.vocabulary import SimpleTerm
 from Products.CMFPlone.PloneBatch import Batch
+from Products.CMFPlone.utils import safe_unicode
 
 import json
 
@@ -79,7 +80,7 @@ class ContentSearch(grok.View):
                              page=page,
                              b_size=b_size)
         self.has_next = result.next is not None
-        self.nextpage = result.pagenumber + 1
+        self.nextpage = result.pagenumber
         result = [strategy.decoratorFactory({'item': node}) for node in result]
         self.level = 1
         self.children = result
@@ -93,16 +94,16 @@ class ContentSearch(grok.View):
         settings = registry.forInterface(ICoverSettings)
         searchable_types = settings.searchable_content_types
 
-        #temporary we'll only list published elements
+        # temporary we'll only list published elements
         catalog_query = {'sort_on': 'effective', 'sort_order': 'descending'}
         catalog_query['portal_type'] = searchable_types
 
         if query:
-            catalog_query = {'SearchableText': u'{0}*'.format(query)}
+            catalog_query = {'SearchableText': u'{0}*'.format(safe_unicode(query))}
 
         # XXX: not implemented, this is needed?
-#        if uids:
-#            catalog_query['UID'] = uids
+        # if uids:
+        #     catalog_query['UID'] = uids
 
         results = catalog(**catalog_query)
         results = Batch(results, size=b_size, start=(page * b_size), orphan=0)
@@ -140,7 +141,7 @@ class SearchItemsBrowserView(BrowserView):
         # the vocabulary returns the values sorted by their translated title
         for term in vocab._terms:
             value = portal_types[term.value].id  # portal_type
-            title = unicode(term.title)  # already translated title
+            title = safe_unicode(term.title)  # already translated title
             result.append((value, title))
 
         return result

@@ -47,7 +47,7 @@ Click Add Cover
     Page Should Contain  Add Cover
 
 Create Cover
-    [arguments]  ${title}  ${description}  ${layout}
+    [arguments]  ${title}  ${description}  ${layout}=Empty layout
 
     Click Add Cover
     Input Text  css=${title_selector}  ${title}

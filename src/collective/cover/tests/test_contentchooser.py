@@ -20,7 +20,7 @@ class ContentChooserTestCase(unittest.TestCase):
     # XXX: can we get rid of this?
     def test_render(self):
         rendered = self.portal.restrictedTraverse('@@test-content-contentchooser')()
-        html = """<a data-ct-type="Document" class="contenttype-document state-missing-value" rel="1">"""
+        html = """<a data-ct-type="Document" class="contenttype-document state-missing-value" rel="1" title="document:/plone/my-document">"""
         self.assertRegexpMatches(rendered, re.compile(html))
 
     def test_jsonbytype(self):
@@ -40,9 +40,9 @@ class ContentChooserTestCase(unittest.TestCase):
     def test_searches(self):
         self.request.set('q', 'Image')
         view = api.content.get_view(u'content-search', self.portal, self.request)
-        html = """<a data-ct-type="Document" class="contenttype-document state-missing-value" rel="1">"""
+        html = """<a data-ct-type="Document" class="contenttype-document state-missing-value" rel="1" title="document:/plone/my-document">"""
         self.assertFalse(re.compile(html).search(view()))
-        html = """<a data-ct-type="Image" class="contenttype-image state-missing-value" rel="1">"""
+        html = """<a data-ct-type="Image" class="contenttype-image state-missing-value" rel="1" title="image:/plone/my-image2">"""
         self.assertTrue(re.compile(html).search(view()))
 
     @unittest.skipIf(
@@ -63,9 +63,32 @@ class ContentChooserTestCase(unittest.TestCase):
         self.assertEqual(len(results), 1)
         self.assertEqual(results[0].getPath(), '/plone/my-document')
 
+    def test_asian_lang_searches(self):
+        """See: https://github.com/collective/collective.cover/issues/374
+        """
+        view = api.content.get_view(u'content-search', self.portal, self.request)
+        self.portal['my-document'].setText(
+            u'日本語のコンテンツを追加します。, '
+            u'検索にかかるように設定します。')
+        self.portal['my-document'].reindexObject()
+        results = view.search(query=u'日本語')
+        self.assertEqual(len(results), 1)
+        self.assertEqual(results[0].getPath(), '/plone/my-document')
+        results = view.search(query=u'検索')
+        self.assertEqual(len(results), 1)
+        self.assertEqual(results[0].getPath(), '/plone/my-document')
+
     def test_batch_searches(self):
         self.request.set('q', 'Image')
         view = api.content.get_view(u'content-search', self.portal, self.request)
         batch = view.search(query=None, page=1, b_size=1)
         # It's a batch and respect the size
         self.assertEqual(len(list(batch)), 1)
+
+    def test_update(self):
+        # We are just testing against issue 383: next-page link in contentchooser
+        view = api.content.get_view(u'content-search', self.portal, self.request)
+        self.request.set('page', 0)
+        self.request.set('b_size', 1)
+        view.update()
+        self.assertEqual(view.nextpage, 1)

@@ -3,12 +3,147 @@ Changelog
 
 There's a frood who really knows where his towel is.
 
-1.0a7 (unreleased)
+1.0a10 (unreleased)
+^^^^^^^^^^^^^^^^^^^
+
+- Add an option to extend JS configuration to reload tile in custom tiles (outside of collective.cover).
+  [rodfersou]
+
+- Fix modification time disappearing from context data and handling missing value (fixes `#449`_).
+  [mhora]
+
+- Show event's start date (instead of publication date) for Event-like objects in Basic, Collection and List tiles.
+  [hvelarde]
+
+- Remove PloneFormGen's 'Form Folder' from default searchable types (fixes `#438`_).
+  [djowett]
+
+- Fix AttributeError caused by editing a basic tile and not populating the
+  image field.
+  [enfold-josh]
+
+- Fix ``RemoveItemFromListTile`` helper browser view to avoid failure to
+  remove an object when the tile is not a List Tile but a subclass of it.
+  [hvelarde]
+
+- Fix ``UpdateTileContent`` helper browser view to avoid returning the
+  rendering of previous object in tile on AJAX calls.
+  [hvelarde]
+
+
+1.0a9 (2014-06-27)
 ^^^^^^^^^^^^^^^^^^
 
-- Add an option to extend JS configuration to reload tile in custom
-  tiles (outside of collective.cover).
-  [rodfersou]
+- Add Traditional Chinese translation.
+  [l34marr]
+
+- Basic tile implementation was not copying images from objects when the tile
+  was populated. This was causing an error when an image was removed from the
+  original object (fixes `#426`_).
+  [vangheem]
+
+- Unpublished content was disappearing from the list tile after access from
+  anonymous user (fixes `#412`_).
+  [adriana-rv, hvelarde]
+
+- Allow Site Administrator role to manage Cover control panel (closes `#423`_)
+  [ericof]
+
+- Fix showing original size of images in banner and carousel tile.
+  [maurits]
+
+- Improve python:view.is_compose_mode() tests in tile Zope Page Templates. This
+  test would return False when content in for example list tiles is reordered
+  deleted, or dropped on from the content chooser. (fixes `#421`_).
+  [fredvd]
+
+- Content body tile markup was changed to handle different conditions (empty
+  tile or not) in a saner way; a text indicating when the body text of an
+  item is empty was also added.
+  [hvelarde]
+
+- Added link in content body tile to related item (fixes `#415`_)
+  [kcleong]
+
+- Update jss.js to 0.6 and include minified version. This fixes the layout page
+  rendering and column resizing on IE10+ which was broken. Jss.js creates on the
+  fly css from javascript. (fixes `#398`_).
+  [fredvd]
+
+- SearchableText indexer for RichText tiles was fixed (closes `#411`_).
+  [hvelarde]
+
+- List tile is again fully sortable; a change on the JS code used there was
+  reverted (fixes `#413`_).
+  [hvelarde]
+
+
+1.0a8.post1 (2014-04-27)
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+- Disable SearchableText indexer for RichText tiles as it was causing
+  ``UnicodeDecodeError`` (refs. `#411`_).
+  [hvelarde]
+
+
+1.0a8 (2014-04-25)
+^^^^^^^^^^^^^^^^^^
+
+- Fix for collection tile not showing header correctly (fixes `#407`_). [kcleong]
+
+- Add RichText tiles to the SearchableText index of the cover.
+  [thepjot]
+
+- Re-enable item sorting on the carousel tile edit form. It was by accident
+  disabled by removing the field on the list tile schema from which the
+  carousel tile inherits.
+  [fredvd]
+
+- Use jQuery's ``.on`` instead of deprecated ``.live`` method. This allows
+  compatibility with jQuery 1.9+.
+  [naro]
+
+- Fix carousel tile so it does not break cover when dropping content with no
+  image field (tile template was refactored and CSS class ``galleria-inner``
+  was removed). As a side effect the carousel tile is now fully responsive and
+  you can select the image size that better fits the maximum desired size. An
+  upgrade step to cook the CSS resources is provided (fixes `#371`_).
+  [hvelarde]
+
+- Handle missing tiles so they do not bork rendering and users are able
+  to remove defunk ones.
+  [vangheem]
+
+- Fixed 5-> 6 upgrade when collective.js.bootrap was already installed.
+  [thomasdesvenain]
+
+- Make base tile inherit from plone.supermodel.model.Schema and fix other
+  inconsistencies on tiles derivation (fixes `#381`_).
+  [jpgimenez]
+
+- Fix for generic title for list tiles introduced in 1.0a7 (fixes `#393`_).
+  [fredvd]
+
+
+1.0a7 (2014-02-04)
+^^^^^^^^^^^^^^^^^^
+
+- Add ``title`` and ``show more`` to the list tile to have a consistent
+  look-and-feel with the collection tile.
+  [maurits]
+
+- Fix searching in content chooser on Japanese (fixes `#374`_).
+  [terapyon]
+
+- Fix Galleria warning on empty carousel tiles.
+  [warpr]
+
+- Fix dropping Dexterity images on banner tile.
+  [maurits, warpr]
+
+- Latest items are now properly loaded on content chooser when selecting the
+  ``more`` link (fixes `#383`_).
+  [marcosfromero]
 
 - Use plone.api where possible.
   [hvelarde]
@@ -45,7 +180,7 @@ There's a frood who really knows where his towel is.
   matches the css of the theme that you are using on your site.
   [warpr, maurits]
 
-- The reodering of list items is now immediately reflected in the DOM
+- The reordering of list items is now immediately reflected in the DOM
   (closes `#351`_).
   [href]
 
@@ -348,6 +483,8 @@ There's a frood who really knows where his towel is.
 
 - Initial release.
 
+.. _`#35`: https://github.com/collective/collective.cover/issues/35
+.. _`#48`: https://github.com/collective/collective.cover/issues/48
 .. _`#100`: https://github.com/collective/collective.cover/issues/100
 .. _`#114`: https://github.com/collective/collective.cover/issues/114
 .. _`#118`: https://github.com/collective/collective.cover/issues/118
@@ -408,6 +545,19 @@ There's a frood who really knows where his towel is.
 .. _`#342`: https://github.com/collective/collective.cover/issues/342
 .. _`#348`: https://github.com/collective/collective.cover/issues/348
 .. _`#351`: https://github.com/collective/collective.cover/issues/351
-.. _`#35`: https://github.com/collective/collective.cover/issues/35
-.. _`#48`: https://github.com/collective/collective.cover/issues/48
+.. _`#371`: https://github.com/collective/collective.cover/issues/371
+.. _`#374`: https://github.com/collective/collective.cover/issues/374
+.. _`#381`: https://github.com/collective/collective.cover/issues/381
+.. _`#383`: https://github.com/collective/collective.cover/issues/383
+.. _`#393`: https://github.com/collective/collective.cover/issues/393
+.. _`#398`: https://github.com/collective/collective.cover/issues/398
+.. _`#407`: https://github.com/collective/collective.cover/issues/407
+.. _`#411`: https://github.com/collective/collective.cover/issues/411
+.. _`#412`: https://github.com/collective/collective.cover/issues/412
+.. _`#413`: https://github.com/collective/collective.cover/issues/413
+.. _`#415`: https://github.com/collective/collective.cover/issues/415
+.. _`#421`: https://github.com/collective/collective.cover/issues/421
+.. _`#423`: https://github.com/collective/collective.cover/issues/423
+.. _`#426`: https://github.com/collective/collective.cover/issues/426
+.. _`#449`: https://github.com/collective/collective.cover/issues/449
 .. _`PloneFormGen`: https://pypi.python.org/pypi/Products.PloneFormGen

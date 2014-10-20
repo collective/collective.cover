@@ -1,0 +1,65 @@
+<html lang="en"
+     xml:lang="en"
+     xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:tal="http://xml.zope.org/namespaces/tal"
+     xmlns:metal="http://xml.zope.org/namespaces/metal"
+     xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+     i18n:domain="collective.cover"
+     tal:omit-tag="">
+
+    <div id="more-link-field">
+        <div class="selection">
+            <input class="uid" type="hidden" tal:attributes="name view/name; value view/value" />
+            <span class="title" tal:content="view/link_title"> </span>
+            <button type="button" class="unlink">Unlink</button>
+        </div>
+        <div class="search">
+            <input class="search" />
+            <button tal:attributes="data-url view/form/context/absolute_url"
+                    class="search" type="button">Search</button>
+        </div>
+        <ul class="results"></ul>
+        <script>
+         var $field = $('#more-link-field');
+
+         var toggle_unlink = function() {
+             $field.find('.unlink').toggle( $field.find('.uid').val() !== '' );
+         }
+
+         $field.find('button.search').on('click', function() {
+             $field.find('.results').load(
+                 $(this).data('url') + '/@@content-search',
+                 { 'q': $field.find('input.search').val() });
+         });
+
+         $field.find('.results').on('click', 'a.next', function(event) {
+             event.preventDefault();
+             $.ajax({
+                 url: "@@content-search",
+                 data: {'page': $(this).attr('data-page'),
+                        'q': $(this).attr('data-query')},
+                 async: false
+             }).done(function(data) {
+                 $('.results a.next').replaceWith(data);
+             });
+             return false;
+
+         });
+
+         $field.find('.results').on('click', 'li', function() {
+             $field.find('.uid').val( $(this).attr ('uid') );
+             $field.find('.title').text( $(this).find ('a').text () );
+             toggle_unlink();
+         });
+
+         $field.find('.unlink').on('click', function() {
+             $field.find('.uid').val('');
+             $field.find('.title').text('');
+             toggle_unlink();
+         });
+
+         toggle_unlink();
+        </script>
+    </div>
+
+</html>

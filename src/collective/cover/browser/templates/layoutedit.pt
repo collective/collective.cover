@@ -10,7 +10,7 @@
 <metal:js fill-slot="javascript_head_slot">
   <script type="text/javascript"
           tal:define="navroot context/@@plone_portal_state/navigation_root_url"
-          tal:attributes="src string:${navroot}/++resource++collective.cover/layout_edit.js">
+          tal:attributes="src string:${navroot}/++resource++collective.cover/jss.min.js">
   </script>
   <script type="text/javascript"
           tal:define="navroot context/@@plone_portal_state/navigation_root_url"
@@ -18,12 +18,14 @@
   </script>
   <script type="text/javascript"
           tal:define="navroot context/@@plone_portal_state/navigation_root_url"
-          tal:attributes="src string:${navroot}/++resource++collective.cover/jss.js">
+          tal:attributes="src string:${navroot}/++resource++collective.cover/layout_edit.js">
   </script>
 
   <script type="text/javascript">
     jQuery(document).ready(function() {
-      jQuery(window).unload(plone.UnlockHandler.execute);
+      if (typeof(plone) !== 'undefined') {
+        jQuery(window).unload(plone.UnlockHandler.execute);
+      }
     });
   </script>
 

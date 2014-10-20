@@ -14,6 +14,8 @@ from zope.interface import implements
 from zope.lifecycleevent import ObjectModifiedEvent
 from zope.publisher.interfaces.browser import IBrowserView
 from zope.traversing.browser.absoluteurl import absoluteURL
+from zope.component import getMultiAdapter
+from plone.z3cform.interfaces import IDeferSecurityCheck
 
 from collective.cover import _
 from collective.cover.interfaces import ITileEditForm
@@ -37,12 +39,12 @@ class CustomEditForm(DefaultEditForm):
     def update(self):
         super(CustomEditForm, self).update()
 
-        typeName = self.tileType.__name__
-        tileId = self.tileId
+        tile = self.getTile()
 
-        tile = self.context.restrictedTraverse('@@{0}/{1}'.format(typeName, tileId))
-
-        if not tile.isAllowedToEdit():
+        if (not IDeferSecurityCheck.providedBy(self.request) and
+                not tile.isAllowedToEdit()):
+            # if IDeferSecurityCheck is provided by the request,
+            # we're not going to worry about security, perms not set up yet
             raise Unauthorized(
                 _(u'You are not allowed to add this kind of tile'))
 
@@ -53,9 +55,7 @@ class CustomEditForm(DefaultEditForm):
             self.status = self.formErrorsMessage
             return
 
-        # Traverse to a new tile in the context, with no data
-        typeName = self.tileType.__name__
-        tile = self.context.restrictedTraverse('@@{0}/{1}'.format(typeName, self.tileId))
+        tile = self.getTile()
 
         # We need to check first for existing content in order not not loose
         # fields that weren't sent with the form
@@ -81,6 +81,21 @@ class CustomEditForm(DefaultEditForm):
         url = self.request.getURL()
         url = appendJSONData(url, 'tiledata', tileDataJson)
         self.request.response.redirect(url)
+
+    def getTile(self):
+        # if IDeferSecurityCheck is provided by the request,
+        # you can't use restricted traverse, perms aren't set up yet.
+        if IDeferSecurityCheck.providedBy(self.request):
+            view = getMultiAdapter((self.context, self.request),
+                                   name=self.tileType.__name__)
+            return view[self.tileId]
+        else:
+            return self.context.restrictedTraverse('@@%s/%s' % (
+                self.tileType.__name__, self.tileId,))
+
+    def getContent(self):
+        dataManager = ITileDataManager(self.getTile())
+        return dataManager.get()
 
 
 class CustomTileEdit(DefaultEditView):

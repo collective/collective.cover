@@ -15,18 +15,10 @@
   <include package="five.grok" />
   <include package="plone.app.relationfield" />
 
-  <permission
-      id="collective.cover.CanExportLayout"
-      title="collective.cover: Can Export Layout"
-      />
-
-  <permission
-      id="collective.cover.CanEditLayout"
-      title="collective.cover: Can Edit Layout"
-      />
-
+  <include file="permissions.zcml" />
   <grok:grok package="." />
 
+  <include package=".behaviors" />
   <include package=".tiles" />
   <include file="profiles.zcml" />
   <include file="subscribers.zcml" />
@@ -41,7 +33,7 @@
       name="cover-settings"
       for="Products.CMFPlone.interfaces.IPloneSiteRoot"
       class=".controlpanel.CoverSettingsControlPanel"
-      permission="cmf.ManagePortal"
+      permission="collective.cover.Setup"
       />
 
   <browser:pages

@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
-
 from AccessControl import Unauthorized
-from collective.cover.content import ICover
 from collective.cover.controlpanel import ICoverSettings
+from collective.cover.interfaces import ICover
 from collective.cover.testing import INTEGRATION_TESTING
 from collective.cover.testing import MULTIPLE_GRIDS_INTEGRATION_TESTING
 from plone import api
@@ -34,11 +33,7 @@ class CoverIntegrationTestCase(unittest.TestCase):
             self.folder = api.content.create(self.portal, 'Folder', 'folder')
 
         self.cover = api.content.create(
-            self.folder,
-            'collective.cover.content',
-            'cover',
-            template_layout='Layout A',
-        )
+            self.folder, 'collective.cover.content', 'c1')
 
     def test_adding(self):
         self.assertTrue(ICover.providedBy(self.cover))
@@ -72,8 +67,8 @@ class CoverIntegrationTestCase(unittest.TestCase):
         self.assertTrue(IStagingSupport.providedBy(self.cover))
 
     def test_cover_selectable_as_folder_default_view(self):
-        self.folder.setDefaultPage('cover')
-        self.assertEqual(self.folder.getDefaultPage(), 'cover')
+        self.folder.setDefaultPage('c1')
+        self.assertEqual(self.folder.getDefaultPage(), 'c1')
 
     def test_export_permission(self):
         # layout export is visible for user with administrative rights

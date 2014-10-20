@@ -25,6 +25,12 @@ layout composition system for Plone.
 .. _`Deco`: https://github.com/plone/plone.app.deco
 .. _`Tiles`: https://github.com/plone/plone.app.tiles
 
+Demo
+^^^^
+
+For impatient types, here is a demo installation of collective.cover: http://collective-cover.herokuapp.com.
+It needs about 60 seconds to spin up and it will purge all changes after about an hour of non-usage.
+
 Use cases
 ^^^^^^^^^
 
@@ -52,9 +58,18 @@ These are some of the sites using ``collective.cover``:
 * `Clean Clothes Campaign <http://www.cleanclothes.org/>`_ (NL)
 * `Conselho Federal de Administração <http://www.cfa.org.br/>`_ (BR)
 * `La Jornada <http://www.jornada.unam.mx/ultimas>`_ (MX)
+* `Palácio do Planalto <http://www.planalto.gov.br/>`_ (BR)
 * `Portal Brasil <http://www.brasil.gov.br/>`_ (BR)
 * `Rede Brasil Atual <http://www.redebrasilatual.com.br/>`_ (BR)
 * `Venezolana de Televisión <http://www.vtv.gov.ve/>`_ (VE)
+
+.. figure:: https://raw.github.com/collective/collective.cover/master/cover.png
+    :align: center
+    :height: 640px
+    :width: 490px
+    :target: http://www.planalto.gov.br/
+
+    The Presidency of Brazil uses ``collective.cover`` on the front page of its site.
 
 Mostly Harmless
 ---------------
@@ -67,9 +82,9 @@ Mostly Harmless
     :alt: Coveralls badge
     :target: https://coveralls.io/r/collective/collective.cover
 
-.. image:: https://d2weczhvl823v0.cloudfront.net/collective/collective.cover/trend.png
-    :alt: Bitdeli badge
-    :target: https://bitdeli.com/free
+.. image:: https://pypip.in/d/collective.cover/badge.png
+    :target: https://pypi.python.org/pypi/collective.cover/
+    :alt: Downloads
 
 Got an idea? Found a bug? Let us know by `opening a support ticket`_.
 
@@ -78,11 +93,15 @@ Got an idea? Found a bug? Let us know by `opening a support ticket`_.
 Known issues
 ^^^^^^^^^^^^
 
-* `Package is not compatible with standard Plone tiles`_. This will be
-  addressed in a future release.
+* `Package is not compatible with standard Plone tiles`_.
+  This will be addressed in a future release, if we get an sponsor.
 
-* `AJAX responses are wrapped after installing the package`_. This is
-  `an issue in plone.app.blocks`_.
+* `AJAX responses are wrapped after installing the package`_.
+  This is `an issue in plone.app.blocks`_.
+
+* `Not compatible with jQuery 1.9`_.
+  There is work being done to solve this and to fix `plone.app.jquerytools` also.
+  We only support jQuery 1.7 and jQuery 1.8 at this time.
 
 See the `complete list of bugs on GitHub`_.
 
@@ -90,6 +109,7 @@ See the `complete list of bugs on GitHub`_.
 .. _`AJAX responses are wrapped after installing the package`: https://github.com/collective/collective.cover/issues/331
 .. _`complete list of bugs on GitHub`: https://github.com/collective/collective.cover/issues?labels=bug&milestone=&page=1&state=open
 .. _`an issue in plone.app.blocks`: https://github.com/plone/plone.app.blocks/issues/5
+.. _`Not compatible with jQuery 1.9`: https://github.com/collective/collective.cover/issues/413
 
 Don't Panic
 -----------
@@ -121,8 +141,8 @@ To enable this package in a buildout-based installation:
     ...
     plone.app.blocks = 1.1.1
     plone.app.drafts = 1.0a2
-    plone.app.jquery = 1.7.2
     plone.app.tiles = 1.0.1
+    plone.formwidget.namedfile = 1.0.10
     plone.tiles = 1.2
 
 #. If you are using Plone 4.2.x you need to add the following also::
@@ -130,7 +150,10 @@ To enable this package in a buildout-based installation:
     [versions]
     ...
     collective.js.jqueryui = 1.8.16.9
-    plone.app.jquerytools = 1.5.6
+    plone.app.jquery = 1.7.2
+    plone.app.jquerytools = 1.5.7
+    plone.app.z3cform = 0.6.3
+    plone.directives.form = 1.1
 
 After updating the configuration you need to run ''bin/buildout'', which will
 take care of updating your system.

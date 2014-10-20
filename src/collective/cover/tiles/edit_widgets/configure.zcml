@@ -1,0 +1,14 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:z3c="http://namespaces.zope.org/z3c">
+
+    <class class=".more_link.MoreLinkWidget">
+        <require permission="zope.Public" interface=".interfaces.IMoreLinkWidget" />
+    </class>
+
+    <z3c:widgetTemplate mode="input"
+        widget=".more_link.MoreLinkWidget"
+        layer="z3c.form.interfaces.IFormLayer"
+        template="more_link.pt" />
+
+</configure>

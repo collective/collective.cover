@@ -1,16 +1,12 @@
 # -*- coding: utf-8 -*-
-
 from collective.cover.testing import ALL_CONTENT_TYPES
-from collective.cover.testing import INTEGRATION_TESTING
+from collective.cover.tests.base import TestTileMixin
 from collective.cover.tiles.base import IPersistentCoverTile
 from collective.cover.tiles.base import PersistentCoverTile
 from cStringIO import StringIO
-from plone.tiles.interfaces import IPersistentTile
 from plone.tiles.interfaces import ITileDataManager
 from zope.component import eventtesting
 from zope.configuration.xmlconfig import xmlconfig
-from zope.interface.verify import verifyClass
-from zope.interface.verify import verifyObject
 
 import unittest
 
@@ -41,36 +37,26 @@ ZCML = """
 """
 
 
-class BaseTileTestCase(unittest.TestCase):
-
-    layer = INTEGRATION_TESTING
+class BaseTileTestCase(TestTileMixin, unittest.TestCase):
 
     def _register_tile(self):
         xmlconfig(StringIO(ZCML))
 
     def setUp(self):
-        self.portal = self.layer['portal']
-        self.request = self.layer['request']
-
+        super(BaseTileTestCase, self).setUp()
         eventtesting.setUp()
-
         self._register_tile()
-        self.tile = PersistentCoverTile(self.portal, self.request)
-        # XXX: tile initialization
-        self.tile.__name__ = 'collective.cover.base'
+        self.tile = PersistentCoverTile(self.cover, self.request)
+        self.tile.__name__ = u'collective.cover.base'
+        self.tile.id = u'test'
 
     def test_interface(self):
-        self.assertTrue(IPersistentCoverTile.implementedBy(PersistentCoverTile))
-        self.assertTrue(verifyClass(IPersistentCoverTile, PersistentCoverTile))
-        # cover tiles inherit from plone.tile PersistentTile
-        self.assertTrue(IPersistentTile.implementedBy(PersistentCoverTile))
+        self.interface = IPersistentCoverTile
+        self.klass = PersistentCoverTile
+        super(BaseTileTestCase, self).test_interface()
 
-        tile = PersistentCoverTile(None, None)
-        self.assertTrue(IPersistentCoverTile.providedBy(tile))
-        self.assertTrue(verifyObject(IPersistentCoverTile, tile))
-        # cover tiles inherit from plone.tile PersistentTile
-        self.assertTrue(IPersistentTile.providedBy(tile))
-        #self.assertTrue(verifyObject(IPersistentTile, tile))
+    def test_tile_registration(self):
+        pass
 
     def test_default_configuration(self):
         self.assertFalse(self.tile.is_configurable)
@@ -82,8 +68,7 @@ class BaseTileTestCase(unittest.TestCase):
 
     def test_delete_tile_persistent_data(self):
         eventtesting.clearEvents()
-        # First, let's assign an id to the tile and store some data
-        self.tile.id = 'test-tile'
+        # First, let's store some data on the tile
         data_mgr = ITileDataManager(self.tile)
         data_mgr.set({'test': 'data'})
 
@@ -100,4 +85,4 @@ class BaseTileTestCase(unittest.TestCase):
         events = eventtesting.getEvents()
 
         # Finally, test that ObjectModifiedEvent was fired for the cover
-        self.assertEqual(events[0].object, self.portal)
+        self.assertEqual(events[0].object, self.cover)

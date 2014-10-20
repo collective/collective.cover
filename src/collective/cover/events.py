@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
-
-from collective.cover.content import ICover
+from collective.cover.interfaces import ICover
 from five import grok
 from plone import api
 from plone.app.iterate.interfaces import ICheckinEvent

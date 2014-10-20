@@ -21,7 +21,7 @@ Test CSS Class
     Enable Autologin as  Site Administrator
     Go to Homepage
 
-    Create Cover  Title  Description  Empty layout
+    Create Cover  Title  Description
     Edit Cover Layout
 
     Add Tile  ${basic_tile_location}

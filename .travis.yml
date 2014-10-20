@@ -9,21 +9,28 @@ env:
   matrix:
     - PLONE_VERSION=4.2
     - PLONE_VERSION=4.3 QA=true
+    - PLONE_VERSION=4.3 JQUERY=1.8.3
+    - PLONE_VERSION=5.0
+matrix:
+  allow_failures:
+    - env: PLONE_VERSION=5.0
+  fast_finish: true
 install:
   - sed -ie "s#travis-4.x.cfg#travis-$PLONE_VERSION.x.cfg#" travis.cfg
-  - test "$PLONE_VERSION" = "4.2" && sed -ie "s#plone.app.z3cform = 0.7.5#plone.app.z3cform = 0.6.3#" versions.cfg || true
+  - sed -ie "s#versions-4.x.cfg#versions-$PLONE_VERSION.x.cfg#" travis.cfg
+  - test $JQUERY && sed -ie "s#plone.app.jquery = 1.7.2#plone.app.jquery = $JQUERY#" versions-4.3.x.cfg || true
   - mkdir -p buildout-cache/downloads
   - python bootstrap.py -c travis.cfg
+  - bin/buildout -c travis.cfg annotate
   - bin/buildout -c travis.cfg -N -q
 before_script:
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
-script: bin/test && bin/code-analysis
+script: bin/code-analysis && bin/test
 after_success:
-  - test -v QA && bin/buildout -c coverage.cfg -N -q || true
-  - test -v QA && bin/coverage.sh && pip install -q coveralls && coveralls || true
+  - test $QA && bin/buildout -c coverage.cfg -N -q || true
+  - test $QA && bin/coverage.sh && pip install -q coveralls && coveralls || true
 after_failure:
-  - bin/buildout annotate -c travis.cfg
   - firefox -v
   - gem install travis-artifacts -q
   - travis-artifacts upload --path parts/test
@@ -34,4 +41,5 @@ notifications:
       - "%{repository}#%{build_number} (%{branch} - %{commit} : %{author}): %{message}"
       - "Change view : %{compare_url}"
       - "Build details : %{build_url}"
-      - "Robot Test Report: http://collective-cover.s3-website-sa-east-1.amazonaws.com/artifacts/%{build_number}"
+      - "Robot Test Report for Plone 4.2: http://collective-cover.s3-website-sa-east-1.amazonaws.com/artifacts/%{build_number}/%{build_number}.1/robot_report.html"
+      - "Robot Test Report for Plone 4.3: http://collective-cover.s3-website-sa-east-1.amazonaws.com/artifacts/%{build_number}/%{build_number}.2/robot_report.html"

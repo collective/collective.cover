@@ -11,14 +11,17 @@ from plone.app.textfield.interfaces import ITransformer
 from plone.app.textfield.value import RichTextValue
 from plone.tiles.interfaces import ITileDataManager
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
+from zope.interface import implements
 
 
-class IRichTextTileData(IPersistentCoverTile):
+class IRichTextTile(IPersistentCoverTile):
 
     text = RichText(title=u'Text')
 
 
 class RichTextTile(PersistentCoverTile):
+
+    implements(IRichTextTile)
 
     index = ViewPageTemplateFile('templates/richtext.pt')
 

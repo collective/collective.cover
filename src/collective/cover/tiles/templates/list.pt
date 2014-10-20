@@ -10,6 +10,9 @@
   </p>
 
   <div class="cover-list-tile tile-content sortable-tile" tal:condition="not:is_empty">
+    <div class="tile-header" tal:condition="view/tile_title">
+      <h2 tal:content="view/tile_title" />
+    </div>
     <tal:items repeat="obj view/results">
       <div class="list-item" style="position:relative"
            tal:attributes="data-uid python:view.get_uid(obj)">
@@ -17,7 +20,7 @@
           <tal:image define="thumbnail python:view.thumbnail(obj);"
                      condition="python:field['id'] == 'image' and thumbnail">
             <a tal:attributes="href obj/absolute_url">
-              <img tal:attributes="src thumbnail/url;
+              <img tal:attributes="src thumbnail/url|string:${item/absolute_url}/download;
                                    width thumbnail/width;
                                    height thumbnail/height;
                                    class view/get_image_position;
@@ -35,12 +38,15 @@
 
           <p tal:define="toLocalizedTime nocall:context/@@plone/toLocalizedTime"
              tal:condition="python:field['id'] == 'date'"
-             tal:content="python:toLocalizedTime(obj.Date())"
+             tal:content="python:toLocalizedTime(view.Date(obj), True)"
              />
         </tal:fields>
         <div class="visualClear"><!-- --></div>
       </div>
     </tal:items>
+    <div class="tile-footer" tal:condition="view/more_link">
+      <a tal:attributes="href view/more_link/href" tal:content="view/more_link/text"></a>
+    </div>
   </div>
 </body>
 </html>

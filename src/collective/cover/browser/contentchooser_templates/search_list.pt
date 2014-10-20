@@ -12,6 +12,7 @@
               <tal:block>
                 <a tal:attributes="rel level;
                                    class string:$item_class;
+                                   title string:${node/normalized_portal_type}:${node/path};
                                    data-ct-type content_type">
                     <img tal:replace="structure item_icon/html_tag|item_icon" />
                     <span tal:content="node/Title">Selected Item Title</span>

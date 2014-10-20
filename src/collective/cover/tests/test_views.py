@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from collective.cover.interfaces import ICoverLayer
+from collective.cover.tiles.list import ListTile
 from collective.cover.testing import INTEGRATION_TESTING
 from plone import api
 from zope.interface import directlyProvides
@@ -27,7 +28,6 @@ class BrowserViewsTestCase(unittest.TestCase):
             'c1',
             title='Front page',
             description='Should I see this?',
-            template_layout='Empty layout',
         )
 
     def test_default_view_registration(self):
@@ -57,6 +57,42 @@ class BrowserViewsTestCase(unittest.TestCase):
         # default view should show title, description and viewlets
         self.assertIn('Front page', rendered_html)
         self.assertIn('Should I see this?', rendered_html)
+
+
+class RemoveItemFromListTileTestCase(unittest.TestCase):
+
+    layer = INTEGRATION_TESTING
+
+    def setUp(self):
+        self.portal = self.layer['portal']
+        self.request = self.layer['request']
+
+        with api.env.adopt_roles(['Manager']):
+            self.cover = api.content.create(
+                self.portal, 'collective.cover.content', 'c1')
+
+    # XXX: refactor, this sucks!
+    def test_remove_item_from_list_tile(self):
+        # add a list tile
+        tile = ListTile(self.cover, self.request)
+        tile.__name__ = u'collective.cover.list'
+        tile.id = u'test'
+
+        # add a couple of objects to the list
+        obj1 = self.portal['my-document']
+        obj2 = self.portal['my-image']
+        tile.populate_with_object(obj1)
+        tile.populate_with_object(obj2)
+
+        self.request.form['tile-type'] = u'collective.cover.list'
+        self.request.form['tile-id'] = u'test'
+        self.request.form['uid'] = obj1.UID()
+        view = api.content.get_view(
+            u'removeitemfromlisttile', self.cover, self.request)
+
+        self.assertIn(obj1, tile.results())
+        view.render()
+        self.assertNotIn(obj1, tile.results())
 
 
 class ConfigurationViewTestCase(unittest.TestCase):

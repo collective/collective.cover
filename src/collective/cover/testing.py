@@ -19,11 +19,18 @@ import pkg_resources
 import random
 
 PLONE_VERSION = pkg_resources.require('Plone')[0].version
+
+try:
+    pkg_resources.get_distribution('Products.PloneFormGen')
+except pkg_resources.DistributionNotFound:
+    HAS_PFG = False
+else:
+    HAS_PFG = True
+
 ALL_CONTENT_TYPES = [
     'Collection',
     'Document',
     'File',
-    'Form Folder',
     'Image',
     'Link',
     'News Item',
@@ -100,17 +107,16 @@ class Fixture(PloneSandboxLayer):
     defaultBases = (PLONE_FIXTURE,)
 
     def setUpZope(self, app, configurationContext):
-        import Products.PloneFormGen
-        self.loadZCML(package=Products.PloneFormGen)
-        z2.installProduct(app, 'Products.PloneFormGen')
+        # XXX: do not install (yet) PFG in Plone 5
+        if HAS_PFG and PLONE_VERSION < '5.0':
+            import Products.PloneFormGen
+            self.loadZCML(package=Products.PloneFormGen)
+            z2.installProduct(app, 'Products.PloneFormGen')
+
         # Load ZCML
         import collective.cover
         self.loadZCML(package=collective.cover)
-        # XXX: https://github.com/collective/collective.cover/issues/81
-        #import plone.app.imagetile
-        #self.loadZCML(package=plone.app.imagetile)
-        #import plone.app.texttile
-        #self.loadZCML(package=plone.app.imagetile)
+
         if 'virtual_hosting' not in app.objectIds():
             # If ZopeLite was imported, we have no default virtual
             # host monster
@@ -119,6 +125,10 @@ class Fixture(PloneSandboxLayer):
             manage_addVirtualHostMonster(app, 'virtual_hosting')
 
     def setUpPloneSite(self, portal):
+        # XXX: do not install (yet) PFG in Plone 5
+        if HAS_PFG and PLONE_VERSION < '5.0':
+            self.applyProfile(portal, 'Products.PloneFormGen:default')
+
         # Install into Plone site using portal_setup
         self.applyProfile(portal, 'collective.cover:default')
         self.applyProfile(portal, 'collective.cover:testfixture')
@@ -129,8 +139,9 @@ class Fixture(PloneSandboxLayer):
         portal['my-file'].reindexObject()
         portal['my-news-item'].setImage(generate_jpeg(50, 50))
         portal_workflow = portal.portal_workflow
-        portal_workflow.setChainForPortalTypes(['Collection'],
-                                               ['plone_workflow'],)
+        portal_workflow.setChainForPortalTypes(
+            ['Collection', 'Event'], ['simple_publication_workflow'])
+
         # Prevent kss validation errors in Plone 4.2
         portal_kss = getattr(portal, 'portal_kss', None)
         if portal_kss:

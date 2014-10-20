@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 from collective.cover import _
 from collective.cover.tiles.base import IPersistentCoverTile
 from collective.cover.tiles.base import PersistentCoverTile
@@ -60,7 +59,7 @@ class IBasicTile(IPersistentCoverTile):
 
 class BasicTile(PersistentCoverTile):
 
-    implements(IPersistentCoverTile)
+    implements(IBasicTile)
 
     index = ViewPageTemplateFile('templates/basic.pt')
 
@@ -76,11 +75,9 @@ class BasicTile(PersistentCoverTile):
         return result[0] if result else None
 
     def Date(self):
-        """ Return the date of publication of the original object; if it has
-        not been published yet, it will return its modification date.
-        """
+        # self.brain is None when the tile was populated by editing it
         if self.brain is not None:
-            return self.brain.Date
+            return super(BasicTile, self).Date(self.brain)
 
     def is_empty(self):
         return self.brain is None and \
@@ -112,11 +109,12 @@ class BasicTile(PersistentCoverTile):
             'uuid': IUUID(obj, None),  # XXX: can we get None here? see below
             'date': True,
             'subjects': True,
+            'image': self.get_image_data(obj)
         }
 
-        # TODO: if a Dexterity object does not have the IReferenceable
-        # behaviour enable then it will not work here
-        # we need to figure out how to enforce the use of
-        # plone.app.referenceablebehavior
+        if data['image']:
+            # clear scales if new image is getting saved
+            self.clear_scales()
+
         data_mgr = ITileDataManager(self)
         data_mgr.set(data)

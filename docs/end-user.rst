@@ -49,6 +49,8 @@ You can also specify if the carousel will start playing the slideshow
 automatically or not. Every item in the slideshow will have a link pointing
 back to the original object.
 
+Carousel tile is fully responsive, so be sure to configure it to use the image size that fits better the maximum desired size.
+
 Collection
 ++++++++++
 
@@ -246,6 +248,20 @@ The changes will be applied to your cover immediately.
 .. Important::
     As mentioned before, the changes will be applied only to the cover tile,
     not to the original content.
+
+Behaviors
+^^^^^^^^^
+
+Refresh
++++++++
+
+The Refresh behavior adds a couple of fields that enable reloading the current page after a certain amount of time.
+
+.. figure:: https://raw.github.com/collective/collective.cover/master/docs/refresh-behavior.png
+    :align: center
+    :height: 400px
+    :width: 400px
+    :alt: A cover object with the Refresh behavior enabled
 
 Advanced Actions
 ----------------

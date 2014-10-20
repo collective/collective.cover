@@ -36,20 +36,20 @@
           </h4>
       </tal:title>
 
-      <tal:image condition="python:field['id'] == 'image'"
-                 define="scale python:field.get('scale', 'large');
-                         position python:field.get('position', '');">
-
+      <tal:image condition="python:field['id'] == 'image' and view.has_image">
+      <tal:scales
+                 define="scale view/scale;
+                         scales view/@@images;
+                         thumbnail python:scales.scale('image', scale=scale)">
         <a class="imag" tal:attributes="href view/getURL;">
-          <img tal:define="scales view/@@images;
-                               thumbnail python: scales.scale('image', scale=scale);"
-               tal:condition="thumbnail"
+          <img tal:condition="thumbnail"
                tal:attributes="src thumbnail/url;
                                width thumbnail/width;
                                height thumbnail/height;
-                               class position;
+                               class python:field.get('position', '');
                                alt view/data/title" />
         </a>
+      </tal:scales>
       </tal:image>
 
       <tal:description condition="python:field['id'] == 'description'">

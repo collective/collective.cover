@@ -1,6 +1,7 @@
+include *.cfg
 include *.rst
 
 graft src
-recursive-include docs LICENSE.*
+graft docs
 
 global-exclude *.pyc

@@ -120,3 +120,8 @@ input[type="text"]#contentchooser-content-trees {
     height: 13px;
     margin-left: -25px;
 }
+
+#more-link-field > .results > li { display: block; cursor: pointer; margin-bottom: 0.25em; }
+#more-link-field > .results > li:hover { background-color: #205C90; }
+#more-link-field > div { margin-bottom: 0.5em; }
+#more-link-field button { padding: 0 0.5em; }

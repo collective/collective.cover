@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 from collective.cover.config import DEFAULT_GRID_SYSTEM
 from collective.cover.testing import INTEGRATION_TESTING
 from plone import api
@@ -56,7 +55,7 @@ class Upgrade5to6TestCase(UpgradeTestCaseBase):
 
     def test_upgrade_to_6_registrations(self):
         version = self.setup.getLastVersionForProfile(self.profile_id)[0]
-        self.assertTrue(version >= self.to_version)
+        self.assertGreaterEqual(int(version), int(self.to_version))
         self.assertEqual(self._how_many_upgrades_to_do(), 2)
 
     def test_issue_201(self):
@@ -130,8 +129,8 @@ class Upgrade6to7TestCase(UpgradeTestCaseBase):
 
     def test_upgrade_to_7_registrations(self):
         version = self.setup.getLastVersionForProfile(self.profile_id)[0]
-        self.assertTrue(version >= self.to_version)
-        self.assertEqual(self._how_many_upgrades_to_do(), 2)
+        self.assertGreaterEqual(int(version), int(self.to_version))
+        self.assertEqual(self._how_many_upgrades_to_do(), 3)
 
     def test_issue_330(self):
         # check if the upgrade step is registered
@@ -173,3 +172,45 @@ class Upgrade6to7TestCase(UpgradeTestCaseBase):
         action = cover_type.getActionObject('object/layoutedit')
         self.assertEqual(action.permissions,
                          (u'collective.cover: Can Edit Layout', ))
+
+
+class Upgrade7to8TestCase(UpgradeTestCaseBase):
+
+    def setUp(self):
+        UpgradeTestCaseBase.setUp(self, u'7', u'8')
+
+    def test_upgrade_to_8_registrations(self):
+        version = self.setup.getLastVersionForProfile(self.profile_id)[0]
+        self.assertGreaterEqual(int(version), int(self.to_version))
+        self.assertEqual(self._how_many_upgrades_to_do(), 1)
+
+    def test_issue_371(self):
+        title = u'issue_371'
+        step = self._get_upgrade_step(title)
+        self.assertIsNotNone(step)
+
+
+class Upgrade8to9TestCase(UpgradeTestCaseBase):
+
+    def setUp(self):
+        UpgradeTestCaseBase.setUp(self, u'8', u'9')
+
+    def test_upgrade_to_9_registrations(self):
+        version = self.setup.getLastVersionForProfile(self.profile_id)[0]
+        self.assertGreaterEqual(int(version), int(self.to_version))
+        self.assertEqual(self._how_many_upgrades_to_do(), 3)
+
+    def test_issue_423(self):
+        title = u'issue_423'
+        step = self._get_upgrade_step(title)
+        self.assertIsNotNone(step)
+
+        # simulate state on previous version
+        cptool = api.portal.get_tool('portal_controlpanel')
+        configlet = cptool.getActionObject('Products/cover')
+        configlet.permissions = ('cmf.ManagePortal',)
+
+        # run the upgrade step to validate the update
+        self._do_upgrade_step(step)
+        permissions = configlet.permissions
+        self.assertEqual(permissions, ('collective.cover: Setup',))

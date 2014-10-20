@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 from collective.cover.config import PROJECTNAME
 from collective.cover.controlpanel import ICoverSettings
 from plone import api
@@ -33,8 +32,13 @@ def issue_201(context):
     old_id = '++resource++collective.cover/bootstrap.min.js'
     new_id = '++resource++collective.js.bootstrap/js/bootstrap.min.js'
     if old_id in js_tool.getResourceIds():
-        js_tool.renameResource(old_id, new_id)
-        logger.info('"{0}" resource was renamed to "{1}"'.format(old_id, new_id))
+        if new_id in js_tool.getResourceIds():
+            js_tool.unregisterResource(old_id)
+            logger.info('"{0}" resource was removed"'.format(old_id))
+        else:
+            js_tool.renameResource(old_id, new_id)
+            logger.info('"{0}" resource was renamed to "{1}"'.format(old_id, new_id))
+
         js_tool.cookResources()
         logger.info('JS resources were cooked')
     else:
@@ -88,3 +92,27 @@ def layout_edit_permission(context):
         return
     action = cover_type.getActionObject('object/layoutedit')
     action.permissions = (u'collective.cover: Can Edit Layout', )
+
+
+def cook_css_resources(context):
+    """Cook css resources.
+    """
+    css_tool = api.portal.get_tool('portal_css')
+    css_tool.cookResources()
+    logger.info('CSS resources were cooked')
+
+
+def cook_javascript_resources(context):
+    """Cook javascript resources.
+    """
+    js_tool = api.portal.get_tool('portal_javascripts')
+    js_tool.cookResources()
+    logger.info('Javascript resources were cooked')
+
+
+def change_configlet_permissions(context):
+    """Allow Site Administrator to access configlet."""
+    cptool = api.portal.get_tool('portal_controlpanel')
+    configlet = cptool.getActionObject('Products/cover')
+    configlet.permissions = ('collective.cover: Setup',)
+    logger.info('configlet permissions updated')

@@ -1,47 +1,26 @@
 # -*- coding: utf-8 -*-
-
 from collective.cover.testing import ALL_CONTENT_TYPES
-from collective.cover.testing import INTEGRATION_TESTING
+from collective.cover.tests.base import TestTileMixin
 from collective.cover.tiles.banner import BannerTile
-from collective.cover.tiles.base import IPersistentCoverTile
+from collective.cover.tiles.banner import IBannerTile
 from mock import Mock
-from plone.registry.interfaces import IRegistry
-from plone.tiles.interfaces import ITileType
-from zope.component import getUtility
-from zope.interface.verify import verifyClass
-from zope.interface.verify import verifyObject
 
 import unittest
 
 
-class BannerTileTestCase(unittest.TestCase):
-
-    layer = INTEGRATION_TESTING
+class BannerTileTestCase(TestTileMixin, unittest.TestCase):
 
     def setUp(self):
-        self.portal = self.layer['portal']
-        self.request = self.layer['request']
-        self.name = 'collective.cover.banner'
-        self.tile = self.portal.restrictedTraverse(
-            '@@{0}/{1}'.format(self.name, 'test-tile'))
+        super(BannerTileTestCase, self).setUp()
+        self.tile = BannerTile(self.cover, self.request)
+        self.tile.__name__ = u'collective.cover.banner'
+        self.tile.id = u'test'
 
-    @unittest.expectedFailure
+    @unittest.expectedFailure  # FIXME: raises BrokenImplementation
     def test_interface(self):
-        self.assertTrue(IPersistentCoverTile.implementedBy(BannerTile))
-        self.assertTrue(verifyClass(IPersistentCoverTile, BannerTile))
-
-        tile = BannerTile(None, None)
-        self.assertTrue(IPersistentCoverTile.providedBy(tile))
-        # FIXME: @property decorator on class methods makes this test fail
-        #        how can we fix it?
-        self.assertTrue(verifyObject(IPersistentCoverTile, tile))
-
-    def test_tile_registration(self):
-        tile_type = getUtility(ITileType, self.name)
-        self.assertIsNotNone(tile_type)
-        self.assertTrue(issubclass(tile_type.schema, IPersistentCoverTile))
-        registry = getUtility(IRegistry)
-        self.assertIn(self.name, registry['plone.app.tiles'])
+        self.interface = IBannerTile
+        self.klass = BannerTile
+        super(BannerTileTestCase, self).test_interface()
 
     def test_default_configuration(self):
         self.assertTrue(self.tile.is_configurable)

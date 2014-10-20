@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
-
+from AccessControl import Unauthorized
 from collective.cover import _
+from collective.cover.config import PROJECTNAME
 from collective.cover.interfaces import ICoverUIDsProvider
+from collective.cover.interfaces import ITileEditForm
 from collective.cover.tiles.base import IPersistentCoverTile
 from collective.cover.tiles.base import PersistentCoverTile
 from collective.cover.tiles.configuration_view import IDefaultConfigureForm
+from plone import api
 from plone.app.uuid.utils import uuidToObject
 from plone.directives import form
 from plone.memoize import view
@@ -12,11 +15,18 @@ from plone.namedfile.field import NamedBlobImage
 from plone.tiles.interfaces import ITileDataManager
 from plone.tiles.interfaces import ITileType
 from plone.uuid.interfaces import IUUID
+from Products.CMFCore.utils import getToolByName
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zope import schema
 from zope.component import queryUtility
+from zope.event import notify
 from zope.interface import implements
+from zope.lifecycleevent import ObjectModifiedEvent
 from zope.schema import getFieldsInOrder
+
+import logging
+
+logger = logging.getLogger(PROJECTNAME)
 
 
 class IListTile(IPersistentCoverTile):
@@ -26,6 +36,7 @@ class IListTile(IPersistentCoverTile):
         value_type=schema.TextLine(),
         required=False,
     )
+    form.omitted('uuids')
 
     # XXX: this field should be used to replace the 'limit' attribute
     form.omitted('count')
@@ -64,6 +75,19 @@ class IListTile(IPersistentCoverTile):
         required=False,
     )
 
+    tile_title = schema.TextLine(title=_(u'Tile Title'), required=False)
+    form.omitted('tile_title')
+    form.no_omit(ITileEditForm, 'tile_title')
+
+    more_link = schema.TextLine(title=_('Show more... link'), required=False)
+    form.omitted('more_link')
+    form.no_omit(ITileEditForm, 'more_link')
+    form.widget(more_link='collective.cover.tiles.edit_widgets.more_link.MoreLinkFieldWidget')
+
+    more_link_text = schema.TextLine(title=_('Show more... link text'), required=False)
+    form.omitted('more_link_text')
+    form.no_omit(ITileEditForm, 'more_link_text')
+
 
 class ListTile(PersistentCoverTile):
 
@@ -73,7 +97,7 @@ class ListTile(PersistentCoverTile):
 
     is_configurable = True
     is_droppable = True
-    is_editable = False
+    is_editable = True
     short_name = _(u'msg_short_name_list', default=u'List')
     limit = 5
 
@@ -88,19 +112,47 @@ class ListTile(PersistentCoverTile):
         # always get the latest data
         uuids = ITileDataManager(self).get().get('uuids', None)
 
-        result = []
+        results, remove = [], []
         if uuids:
-            uuids = [uuids] if type(uuids) == str else uuids
             for uid in uuids:
                 obj = uuidToObject(uid)
                 if obj:
-                    result.append(obj)
+                    results.append(obj)
                 else:
-                    self.remove_item(uid)
-        return result[:self.limit]
+                    # maybe the user has no permission to access the object
+                    # so we try to get it bypassing the restrictions
+                    catalog = api.portal.get_tool('portal_catalog')
+                    brain = catalog.unrestrictedSearchResults(UID=uid)
+                    if not brain:
+                        # the object was deleted; remove it from the tile
+                        # we deal with this below as you can't modify the
+                        # list directly as it's been used on the for loop
+                        remove.append(uid)
+
+            for uid in remove:
+                self.remove_item(uid)
+                logger.debug(
+                    'Nonexistent object {0} removed from tile'.format(uid))
+
+        return results[:self.limit]
 
     def is_empty(self):
         return self.results() == []
+
+    def Date(self, obj):
+        # XXX: different from Collection tile, List tile returns objects
+        #      instead of brains in its `results` function. I think we
+        #      were looking for some performace gains there but in this
+        #      case we need to go back to brains to avoid crazy stuff on
+        #      trying to guess the name of the method returning the
+        #      start date of an Event or an Event-like content type. We
+        #      probably want to rewrite the `results` funtion but we have
+        #      to be careful because there must be tiles derived from it,
+        #      like the Carousel tile
+        catalog = api.portal.get_tool('portal_catalog')
+        brain = catalog(UID=self.get_uid(obj))
+        assert len(brain) == 1
+        return super(ListTile, self).Date(brain[0])
 
     # TODO: get rid of this by replacing it with the 'count' field
     def set_limit(self):
@@ -115,6 +167,9 @@ class ListTile(PersistentCoverTile):
             self.populate_with_uids(uids)
 
     def populate_with_uids(self, uuids):
+        if not self.isAllowedToEdit():
+            raise Unauthorized(
+                _('You are not allowed to add content to this tile'))
         self.set_limit()
         data_mgr = ITileDataManager(self)
 
@@ -128,9 +183,12 @@ class ListTile(PersistentCoverTile):
             else:
                 old_data['uuids'] = [uuid]
         data_mgr.set(old_data)
+        notify(ObjectModifiedEvent(self))
 
     def replace_with_objects(self, uids):
-        super(ListTile, self).replace_with_objects(uids)  # check permission
+        if not self.isAllowedToEdit():
+            raise Unauthorized(
+                _('You are not allowed to add content to this tile'))
         self.set_limit()
         data_mgr = ITileDataManager(self)
         old_data = data_mgr.get()
@@ -140,9 +198,10 @@ class ListTile(PersistentCoverTile):
             old_data['uuids'] = [uids]
 
         data_mgr.set(old_data)
+        notify(ObjectModifiedEvent(self))
 
     def remove_item(self, uid):
-        super(ListTile, self).remove_item(uid)
+        super(ListTile, self).remove_item(uid)  # check permission
         data_mgr = ITileDataManager(self)
         old_data = data_mgr.get()
         uids = data_mgr.get()['uuids']
@@ -209,7 +268,10 @@ class ListTile(PersistentCoverTile):
                 scaleconf = image_conf['imgsize']
                 # scale string is something like: 'mini 200:200' and
                 # we need the name only: 'mini'
-                scale = scaleconf.split(' ')[0]
+                if scaleconf == '_original':
+                    scale = None
+                else:
+                    scale = scaleconf.split(' ')[0]
                 scales = item.restrictedTraverse('@@images')
                 return scales.scale('image', scale)
 
@@ -222,6 +284,25 @@ class ListTile(PersistentCoverTile):
         image_conf = tile_conf.get('image', None)
         if image_conf:
             return image_conf.get('position', u'left')
+
+    @property
+    def tile_title(self):
+        return self.data['tile_title']
+
+    @property
+    def more_link(self):
+        if not (self.data['more_link'] and self.data['more_link_text']):
+            return None
+
+        pc = getToolByName(self.context, 'portal_catalog')
+        brainz = pc(UID=self.data['more_link'])
+        if not len(brainz):
+            return None
+
+        return {
+            'href': brainz[0].getURL(),
+            'text': self.data['more_link_text']
+        }
 
     @view.memoize
     def get_image_position(self):

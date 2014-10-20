@@ -3,7 +3,7 @@
 from setuptools import find_packages
 from setuptools import setup
 
-version = '1.0a7.dev0'
+version = '1.0a10.dev0'
 description = 'A sane, working, editor-friendly way of creating front pages and other composite pages. Working now, for mere mortals.'
 long_description = (
     open('README.rst').read() + '\n' +
@@ -43,13 +43,17 @@ setup(name='collective.cover',
       include_package_data=True,
       zip_safe=False,
       install_requires=[
+          'AccessControl',
+          'Acquisition',
           'collective.js.bootstrap',
           'collective.js.galleria',
           'collective.js.jqueryui',
           'five.grok',
+          'Missing',
           'plone.api',
           'plone.app.blocks',
           'plone.app.dexterity [grok, relations]',
+          'plone.app.iterate',
           'plone.app.jquery >=1.7.2',
           'plone.app.jquerytools >=1.5.1',
           'plone.app.layout',
@@ -64,15 +68,19 @@ setup(name='collective.cover',
           'plone.app.uuid',
           'plone.app.vocabularies',
           'plone.autoform',
+          'plone.behavior',
           'plone.dexterity',
-          'plone.directives.form',
+          'plone.directives.form >=1.1',
           'plone.i18n',
+          'plone.indexer',
           'plone.memoize',
           'plone.namedfile [blobs]',
           'plone.registry',
           'plone.scale',
+          'plone.supermodel',
           'plone.tiles >=1.2',
           'plone.uuid',
+          'plone.z3cform',
           'Products.Archetypes',
           'Products.CMFCore',
           'Products.CMFPlone >=4.2',
