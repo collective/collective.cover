@@ -6,13 +6,18 @@
       metal:use-macro="context/main_template/macros/master"
       i18n:domain="collective.cover">
 <head>
+<metal:headslot fill-slot="head_slot">
+  <meta http-equiv="refresh" content="300"
+      tal:condition="context/refresh"
+      tal:attributes="content context/ttl|default" />
+</metal:headslot>
+
 <metal:styles fill-slot="style_slot">
-    <style type="text/css"
-        tal:condition="context/background"
-        tal:content="context/background" />
+  <style type="text/css"
+      tal:condition="context/background"
+      tal:content="context/background" />
 </metal:styles>
 </head>
-
 <body>
 <metal:main fill-slot="main">
     <div tal:define="layout nocall:context/@@layout"

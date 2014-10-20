@@ -7,6 +7,14 @@
   <include package="plone.behavior" file="meta.zcml" />
 
   <plone:behavior
+      title="Page refresh"
+      description="Reload the current page after a certain amount of time."
+      provides="collective.cover.behaviors.interfaces.IRefresh"
+      for="collective.cover.interfaces.ICover"
+      i18n:attributes="title; description"
+      />
+
+  <plone:behavior
       title="Background image"
       description="Adds the possibility of having a background image on the default view of the item."
       provides="collective.cover.behaviors.interfaces.IBackgroundImage"
