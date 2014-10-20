@@ -6,6 +6,9 @@ There's a frood who really knows where his towel is.
 1.0a10 (unreleased)
 ^^^^^^^^^^^^^^^^^^^
 
+- Add an option to extend JS configuration to reload tile in custom tiles (outside of collective.cover).
+  [rodfersou]
+
 - Fix modification time disappearing from context data and handling missing value (fixes `#449`_).
   [mhora]
 
