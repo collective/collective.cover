@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<object name="Dexterity Image" meta_type="Dexterity FTI">
+  <property name="title">Dexterity Image</property>
+  <property name="immediate_view">view</property>
+  <property name="global_allow">True</property>
+  <property name="filter_content_types">True</property>
+  <property name="allow_discussion">False</property>
+  <property name="default_view">view</property>
+  <property name="view_methods">
+    <element value="view" />
+  </property>
+  <property name="default_view_fallback">False</property>
+  <property name="add_permission">cmf.AddPortalContent</property>
+  <property name="klass">plone.dexterity.content.Item</property>
+  <property name="model_file">collective.cover.tests:Dexterity_Image.xml</property>
+  <alias from="(Default)" to="(dynamic view)" />
+  <alias from="view" to="(selected layout)" />
+  <action title="View" action_id="view" category="object" condition_expr=""
+      icon_expr="" link_target="" url_expr="string:${object_url}"
+      visible="True">
+    <permission value="View" />
+  </action>
+</object>

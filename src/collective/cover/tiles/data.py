@@ -46,12 +46,16 @@ class PersistentCoverTileDataManager(PersistentTileDataManager):
 
         for k, v in data.items():
             if INamedImage.providedBy(v):
+                mtime_key = '{0}_mtime'.format(k)
                 if (self.key not in self.annotations or
                     k not in self.annotations[self.key] or
                     (self.key in self.annotations and
                      data[k] != self.annotations[self.key][k])):
                     # set modification time of the image
                     notify(Purge(self.tile))
-                    data['{0}_mtime'.format(k)] = '%f' % time.time()
+                    data[mtime_key] = '%f' % time.time()
+                else:
+                    data[mtime_key] = self.annotations[self.key].get(mtime_key, '')
+
         self.annotations[self.key] = PersistentDict(data)
         notify(ObjectModifiedEvent(self.context))

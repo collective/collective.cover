@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from collective.cover.behaviors.interfaces import IRefresh
 from collective.cover.config import PROJECTNAME
 from collective.cover.controlpanel import ICoverSettings
 from collective.cover.interfaces import ICover
@@ -28,6 +29,16 @@ class Cover(Item):
     #      content from GS, until a proper solution is found.
     #      ref: http://thread.gmane.org/gmane.comp.web.zope.plone.devel/31799
     implements(IDAVAware)
+
+    @property
+    def refresh(self):
+        """Return the value of the enable_refresh field if the IRefresh
+        behavior is applied to the object, or False if not.
+
+        :returns: True if refresh of the current page is enabled
+        :rtype: bool
+        """
+        return self.enable_refresh if IRefresh.providedBy(self) else False
 
     def get_tiles(self, types=None, layout=None):
         """Traverse the layout tree and return a list of tiles on it.
@@ -84,8 +95,7 @@ class Cover(Item):
         :type id: string
         :returns: the tile type
         :rtype: string
-        :raises:
-            ValueError
+        :raises ValueError: if the tile does not exists
         """
         tile = [t for t in self.get_tiles() if t['id'] == id]
         assert len(tile) in (0, 1)
