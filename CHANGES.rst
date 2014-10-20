@@ -6,6 +6,9 @@ There's a frood who really knows where his towel is.
 1.0a10 (unreleased)
 ^^^^^^^^^^^^^^^^^^^
 
+- Fix rendering of cover page outside its context (fixes `#430`_).
+  [petschki]
+
 - Fix modification time disappearing from context data and handling missing value (fixes `#449`_).
   [mhora]
 
@@ -556,5 +559,6 @@ There's a frood who really knows where his towel is.
 .. _`#421`: https://github.com/collective/collective.cover/issues/421
 .. _`#423`: https://github.com/collective/collective.cover/issues/423
 .. _`#426`: https://github.com/collective/collective.cover/issues/426
+.. _`#430`: https://github.com/collective/collective.cover/issues/430
 .. _`#449`: https://github.com/collective/collective.cover/issues/449
 .. _`PloneFormGen`: https://pypi.python.org/pypi/Products.PloneFormGen

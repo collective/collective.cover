@@ -85,11 +85,17 @@ class PageLayout(grok.View):
             if section['type'] == u'group':
                 return self.group(section=section, mode=mode)
             if section['type'] == u'tile':
-                tile_url = '@@{0}/{1}'.format(section.get('tile-type'),
-                                              section.get('id'))
-                tile = self.context.restrictedTraverse(tile_url.encode(), None)
+                tile_path = '{0}/@@{1}/{2}'.format(
+                    '/'.join(self.context.getPhysicalPath()),
+                    section.get('tile-type'),
+                    section.get('id'))
+                tile = self.context.restrictedTraverse(tile_path.encode(), None)
                 if tile is None:
                     return '<div class="tileNotFound">Could not find tile</div>'
+                tile_url = '{0}/@@{1}/{2}'.format(
+                    self.context.absolute_url(),
+                    section.get('tile-type'),
+                    section.get('id'))
                 tile_conf = tile.get_tile_configuration()
                 css_class = tile_conf.get('css_class', '')
                 section['class'] = '{0} {1}'.format(section.get('class'), css_class)
