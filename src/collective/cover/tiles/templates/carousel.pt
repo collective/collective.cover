@@ -16,7 +16,7 @@
     This carousel is empty; open the content chooser and drag-and-drop some items here.
   </p>
 
-  <div id="" class="cycle2-carousel cover-carousel-tile tile-content" 
+  <div id="" class="cycle2-carousel cover-carousel-tile tile-content"
        data-cycle-slides="> div.slide"
        data-cycle-swipe="true"
        data-cycle-swipe-fx="scrollHorz"
@@ -47,11 +47,11 @@
                 tal:replace="structure python:view.get_title_tag(item)"
                 />
 
-            <p class="slide-desc" 
+            <p class="slide-desc"
                tal:condition="python:field['id'] == 'description'"
                tal:content="item/Description"
                />
-            <p class="slide-datetime" 
+            <p class="slide-datetime"
                tal:define="toLocalizedTime nocall:context/@@plone/toLocalizedTime"
                tal:condition="python:field['id'] == 'date'"
                tal:content="python:toLocalizedTime(view.Date(item), True)"

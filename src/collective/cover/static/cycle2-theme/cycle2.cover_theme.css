@@ -53,10 +53,10 @@
 }
 
 /* Stop Flash of unstyled content */
-.cycle2-carousel .slide { 
+.cycle2-carousel .slide {
   display: none;
 }
 
-.cycle2-carousel .cycle-pager + .slide { 
+.cycle2-carousel .cycle-pager + .slide {
   display: block;
 }
