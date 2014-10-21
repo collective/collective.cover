@@ -30,6 +30,8 @@ class ICarouselTile(IListTile):
     """A carousel based on the Cycle2 plugin (or optionally Galleria)
     """
 
+    form.omitted('autoplay')
+    form.no_omit(ITileEditForm, 'autoplay')
     autoplay = schema.Bool(
         title=_(u'Auto play'),
         required=False,
