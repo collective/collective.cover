@@ -30,8 +30,8 @@ class CarouselTileTestCase(TestTileMixin, unittest.TestCase):
     def test_accepted_content_types(self):
         self.assertEqual(self.tile.accepted_ct(), ALL_CONTENT_TYPES)
 
-    def test_tile_is_empty(self):
-        self.assertTrue(self.tile.is_empty())
+    def test_paused(self):
+        self.assertTrue(self.tile.paused)
 
     def test_crud(self):
         # we start with an empty tile

@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 from collective.cover import _
 from collective.cover.interfaces import ITileEditForm
 from collective.cover.tiles.list import IListTile
@@ -21,8 +20,8 @@ class ICarouselTile(IListTile):
     form.no_omit(ITileEditForm, 'autoplay')
     autoplay = schema.Bool(
         title=_(u'Auto play'),
+        default=False,
         required=False,
-        default=True,
     )
 
     form.no_omit(ITileEditForm, 'uuids')
@@ -37,8 +36,9 @@ class ICarouselTile(IListTile):
 
 class CarouselTile(ListTile):
 
-    implements(ICarouselTile)
+    """A carousel based on the Cycle2 slideshow plugin for jQuery."""
 
+    implements(ICarouselTile)
     index = ViewPageTemplateFile('templates/carousel.pt')
     is_configurable = True
     is_editable = True
@@ -46,12 +46,7 @@ class CarouselTile(ListTile):
 
     def populate_with_object(self, obj):
         super(CarouselTile, self).populate_with_object(obj)  # check permission
-        try:
-            scale = obj.restrictedTraverse('@@images').scale('image')
-        except:
-            scale = None
-        if not scale:
-            return
+
         self.set_limit()
         uuid = IUUID(obj, None)
         data_mgr = ITileDataManager(self)
@@ -69,8 +64,8 @@ class CarouselTile(ListTile):
             old_data['uuids'] = [uuid]
         data_mgr.set(old_data)
 
-    def autoplay(self):
-        if self.data['autoplay'] is None:
-            return True  # default value
-
-        return self.data['autoplay']
+    @property
+    def paused(self):
+        """Return True if the carousel will begin in a paused state."""
+        paused = not self.data.get('autoplay', False)
+        return str(paused).lower()

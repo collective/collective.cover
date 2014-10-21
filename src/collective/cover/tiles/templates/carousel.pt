@@ -16,14 +16,20 @@
     This carousel is empty; open the content chooser and drag-and-drop some items here.
   </p>
 
-  <div id="" class="cycle2-carousel cover-carousel-tile tile-content"
-       data-cycle-slides="> div.slide"
-       data-cycle-swipe="true"
-       data-cycle-swipe-fx="scrollHorz"
-       data-cycle-pager=".cycle-pager"
-       tal:condition="not:is_empty"
-       tal:attributes="id string:cycle-${view/id};
--                      data-cycle-paused python:str(not view.autoplay()).lower();">
+  <div
+      id=""
+      class="cycle2-carousel cover-carousel-tile tile-content"
+      data-cycle-timeout="4000"
+      data-cycle-center-horz="true"
+      data-cycle-center-vert="true"
+      data-cycle-paused="true"
+      data-cycle-pause-on-hover="true"
+      data-cycle-slides="> div.slide"
+      data-cycle-swipe="true"
+      data-cycle-swipe-fx="scrollHorz"
+      tal:condition="not:is_empty"
+      tal:attributes="id string:cycle-${view/id};
+                      data-cycle-paused view/paused|default">
     <div class="cycle-prev"></div>
     <div class="cycle-next"></div>
 
