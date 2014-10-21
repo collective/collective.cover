@@ -47,6 +47,7 @@ setup(name='collective.cover',
           'Acquisition',
           'collective.js.bootstrap',
           'collective.js.cycle2',
+          'collective.js.galleria',  # XXX: will be removed on next release
           'collective.js.jqueryui',
           'five.grok',
           'Missing',
@@ -96,9 +97,6 @@ setup(name='collective.cover',
           'zope.schema',
       ],
       extras_require={
-          'galleria': [
-              'collective.js.galleria',
-          ],
           'test': [
               'mock',
               'plone.app.robotframework',
@@ -107,7 +105,6 @@ setup(name='collective.cover',
               'plone.cachepurging',
               'plone.testing',
               'Products.PloneFormGen',
-              'collective.js.galleria',
           ],
       },
       entry_points="""

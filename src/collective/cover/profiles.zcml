@@ -2,7 +2,6 @@
     xmlns="http://namespaces.zope.org/zope"
     xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
     xmlns:i18n="http://namespaces.zope.org/i18n"
-    xmlns:zcml="http://namespaces.zope.org/zcml"
     i18n_domain="collective.cover"
     >
 
@@ -11,15 +10,6 @@
       title="collective.cover"
       directory="profiles/default"
       description="A sane, working, editor-friendly way of creating front pages and other composite pages. Working now, for mere mortals."
-      provides="Products.GenericSetup.interfaces.EXTENSION"
-      />
-
-  <genericsetup:registerProfile
-      zcml:condition="installed collective.js.galleria"
-      name="galleriacarousel"
-      title="collective.cover: using deprecated galleria carousel tile"
-      directory="profiles/galleriacarousel"
-      description="Enable Cycle2 Carousel Tiles in collective.cover"
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
 

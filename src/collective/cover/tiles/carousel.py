@@ -12,23 +12,10 @@ from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zope import schema
 from zope.interface import implements
 
-# autoplay feature is enabled in view mode only
-INIT_JS = """$(function() {{
-    Galleria.loadTheme('++resource++collective.cover/galleria-theme/galleria.cover_theme.js');
-    Galleria.run('#galleria-{0}');
-
-    var options = {{ height: 1 }};
-    if ($('body').hasClass('template-view')) {{
-        options.autoplay = {1};
-    }}
-    Galleria.configure(options);
-}});
-"""
-
 
 class ICarouselTile(IListTile):
-    """A carousel based on the Cycle2 plugin (or optionally Galleria)
-    """
+
+    """A carousel based on the Cycle2 slideshow plugin for jQuery."""
 
     form.omitted('autoplay')
     form.no_omit(ITileEditForm, 'autoplay')
@@ -87,19 +74,3 @@ class CarouselTile(ListTile):
             return True  # default value
 
         return self.data['autoplay']
-
-
-class GalleriaCarouselTile(CarouselTile):
-
-    implements(ICarouselTile)
-
-    index = ViewPageTemplateFile('templates/carousel-galleria.pt')
-
-    def init_js(self):
-        if self.is_empty():
-            # Galleria will display scary error messages when it
-            # cannot find its <div>.  So don't start galleria unless
-            # the <div> is there and has some items in it.
-            return ''
-
-        return INIT_JS.format(self.id, str(self.autoplay()).lower())

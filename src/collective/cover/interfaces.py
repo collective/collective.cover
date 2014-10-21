@@ -9,11 +9,6 @@ class ICoverLayer(Interface):
     """
 
 
-class IGalleriaCarouselsLayer(ICoverLayer):
-    """ A layer indicating that Galleria Carousels are to be used in this add-on.
-    """
-
-
 class ICover(form.Schema):
 
     """A composable page."""

@@ -1,5 +1,0 @@
-<?xml version="1.0"?>
-<layers>
- <layer name="collective.cover.galleriacarousels"
-    interface="collective.cover.interfaces.IGalleriaCarouselsLayer" />
-</layers>
