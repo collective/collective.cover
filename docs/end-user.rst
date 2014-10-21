@@ -252,6 +252,11 @@ The changes will be applied to your cover immediately.
 Behaviors
 ^^^^^^^^^
 
+To enable behaviors go to 'Site Setup' and select 'Dexterity content types'.
+Look for 'Cover' content type, select it and then select 'Behaviors'.
+
+The following behaviors are included in this package:
+
 Refresh
 +++++++
 

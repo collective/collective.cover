@@ -14,12 +14,7 @@ offer. However, despite offering rich resources to build a cover,
 ``collective.cover`` also provides a very easy mechanism for managing its
 contents, built around a drag-and-drop interface.
 
-``collective.cover`` is based on `Blocks`_ and `Tiles`_, like `Deco`_, the new
-layout composition system for Plone.
-
-.. TODO: explain why we need cover instead of just using Deco itself.
-
-.. TODO: add a comparison between Deco and collective.cover
+``collective.cover`` is based on `Blocks`_ and `Tiles`_, like `Deco`_, the layout composition system proposed for Plone.
 
 .. _`Blocks`: https://github.com/plone/plone.app.blocks
 .. _`Deco`: https://github.com/plone/plone.app.deco
@@ -28,17 +23,19 @@ layout composition system for Plone.
 Demo
 ^^^^
 
-For impatient types, here is a demo installation of collective.cover: http://collective-cover.herokuapp.com.
+For impatient types, there is a demo installation of collective.cover on `Heroku`_.
 It needs about 60 seconds to spin up and it will purge all changes after about an hour of non-usage.
+
+.. _`Heroku`: http://collective-cover.herokuapp.com
 
 Use cases
 ^^^^^^^^^
 
-Suppose you are running The Planet, a news site that has a bunch of editors
+Suppose you are running The Planet, a news portal that has a bunch of editors
 focused on getting news on different topics, like Economy, Health or Sports.
 
 If you are the main publisher of the site, you may want to delegate the
-construction of the cover page of the Economy section to the people working on
+construction of the front page of the Economy section to the people working on
 that content area, but you might not want them messing around the Sports
 section as well.
 
@@ -83,8 +80,8 @@ Mostly Harmless
     :target: https://coveralls.io/r/collective/collective.cover
 
 .. image:: https://pypip.in/d/collective.cover/badge.png
-    :target: https://pypi.python.org/pypi/collective.cover/
     :alt: Downloads
+    :target: https://pypi.python.org/pypi/collective.cover/
 
 Got an idea? Found a bug? Let us know by `opening a support ticket`_.
 
@@ -114,8 +111,7 @@ See the `complete list of bugs on GitHub`_.
 Don't Panic
 -----------
 
-We are currently working on the documentation of the package; this is what we
-have right now (contributions are always welcomed):
+We are currently working on the documentation of the package; this is what we have right now (contributions are always welcomed):
 
 * `Quick Tour video on YouTube`_.
 * `End user documentation`_

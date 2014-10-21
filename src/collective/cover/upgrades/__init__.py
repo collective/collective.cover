@@ -24,8 +24,6 @@ def issue_201(context):
         logger.info('"{0}"" resource was removed'.format(old_id))
         css_tool.cookResources()
         logger.info('CSS resources were cooked')
-    else:
-        logger.debug('"{0}" resource not found in portal_css'.format(old_id))
 
     # now we mess with the JS registry
     js_tool = api.portal.get_tool('portal_javascripts')
@@ -41,8 +39,6 @@ def issue_201(context):
 
         js_tool.cookResources()
         logger.info('JS resources were cooked')
-    else:
-        logger.debug('"{0}" resource not found in portal_javascripts'.format(old_id))
 
 
 def issue_303(context):
