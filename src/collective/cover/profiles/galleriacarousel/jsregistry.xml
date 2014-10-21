@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<object name="portal_javascripts">
+  <!-- These are not required if we are using Galleria for carousels -->
+  <javascript id="++resource++collective.cover/cycle2-theme/jquery.cycle2.js"
+      remove="True" />
+  <javascript id="++resource++collective.cover/cycle2-theme/jquery.cycle2.swipe.min.js"
+      remove="True" />
+</object>

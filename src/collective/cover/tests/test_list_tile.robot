@@ -11,7 +11,7 @@ Suite Teardown  Close all browsers
 ${list_tile_location}  'collective.cover.list'
 ${document_selector}  .ui-draggable .contenttype-document
 ${file_selector}  .ui-draggable .contenttype-file
-${image_selector}  .ui-draggable .contenttype-image
+${image_selector1}  //li[@class="ui-draggable"]/a[@data-ct-type="Image"]/span[text()='my-image1']/..
 ${link_selector}  .ui-draggable .contenttype-link
 ${news-item_selector}  .ui-draggable .contenttype-news-item
 ${tile_selector}  div.tile-container div.tile
@@ -54,9 +54,9 @@ Test List Tile
     Page Should Contain  This file was created for testing purposes
 
     # drag&drop an Image
-    Drag And Drop  css=${image_selector}  css=${tile_selector}
-    Wait Until Page Contains  Test image
-    Page Should Contain  This image was created for testing purposes
+    Drag And Drop  xpath=${image_selector1}  css=${tile_selector}
+    Wait Until Page Contains  Test image #1
+    Page Should Contain  This image #1 was created for testing purposes
 
     # drag&drop a Link
     Drag And Drop  css=${link_selector}  css=${tile_selector}
@@ -73,7 +73,7 @@ Test List Tile
     Page Should Not Contain  Please add up to 5 objects to the tile.
     Page Should Contain  My document
     Page Should Contain  My file
-    Page Should Contain  Test image
+    Page Should Contain  Test image #1
     Page Should Contain  Test link
     Page Should Contain  Test news item
 

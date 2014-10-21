@@ -151,12 +151,34 @@ To enable this package in a buildout-based installation:
     plone.app.z3cform = 0.6.3
     plone.directives.form = 1.1
 
+#. The carousel slide now defaults to use Cycle2 rather than Galleria, but if 
+   you (still) want to use Galleria, then use::
+
+    [buildout]
+    ...
+    eggs =
+        collective.cover[galleria]
+        
+    [versions]
+    ...
+    (as above)
+
 After updating the configuration you need to run ''bin/buildout'', which will
 take care of updating your system.
 
 Go to the 'Site Setup' page in a Plone site and click on the 'Add-ons' link.
 
 Check the box next to ``collective.cover`` and click the 'Activate' button.
+
+If you want to use Galleria slides, then load the Generic Setup profile as follows:
+
+#. Go to the ZMI (Zope Management Interface) 
+#. Go to portal_setup 
+#. Click the Import tab
+#. Select "collective.cover: using deprecated galleria carousel tile" in the
+   drop down field
+#. At the bottom of the page uncheck "Include dependencies", then click "Import
+   all steps"
 
 .. Note::
     You may have to empty your browser cache and save your resource registries

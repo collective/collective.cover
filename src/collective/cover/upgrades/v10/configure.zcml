@@ -1,0 +1,18 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+    xmlns:i18n="http://namespaces.zope.org/i18n"
+    i18n_domain="collective.cover">
+
+  <genericsetup:upgradeSteps
+      source="9"
+      destination="10"
+      profile="collective.cover:default">
+    <genericsetup:upgradeStep
+        title="Install collective.js.cycle2"
+        handler=".install_cycle2"
+        i18n:attributes="title"
+        />
+  </genericsetup:upgradeSteps>
+
+</configure>

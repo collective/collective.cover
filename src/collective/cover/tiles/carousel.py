@@ -27,9 +27,11 @@ INIT_JS = """$(function() {{
 
 
 class ICarouselTile(IListTile):
-    """A carousel based on the Galleria JavaScript image gallery framework.
+    """A carousel based on the Cycle2 plugin (or optionally Galleria)
     """
 
+    form.omitted('autoplay')
+    form.no_omit(ITileEditForm, 'autoplay')
     autoplay = schema.Bool(
         title=_(u'Auto play'),
         required=False,
@@ -85,6 +87,13 @@ class CarouselTile(ListTile):
             return True  # default value
 
         return self.data['autoplay']
+
+
+class GalleriaCarouselTile(CarouselTile):
+
+    implements(ICarouselTile)
+
+    index = ViewPageTemplateFile('templates/carousel-galleria.pt')
 
     def init_js(self):
         if self.is_empty():

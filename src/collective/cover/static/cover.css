@@ -19,7 +19,7 @@
     background-color:#000;
     opacity: 0.6 !important;
     display: none;
-    z-index: 99;
+    z-index: 120;
 }
 .loading-mask.show {
     display:block;
