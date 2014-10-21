@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 from collective.cover.config import DEFAULT_GRID_SYSTEM
 from collective.cover.testing import INTEGRATION_TESTING
 from plone import api
