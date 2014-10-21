@@ -22,12 +22,17 @@
     opacity: 1;
 }
 
-.cycle-pager {
-  overflow: hidden;
-  text-align: center;
-  top: 10px;
+.cycle-pager-container {
+  position: absolute;
+  bottom: 0;
   width: 100%;
   z-index: 110;
+  text-align: center;
+}
+.cycle-pager {
+  display: inline-block;
+  margin: 0 auto;
+  padding: 8px;
 }
 .cycle-pager span {
   background: url("++resource++collective.cover/cycle2-theme/dot.png") no-repeat;

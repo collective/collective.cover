@@ -17,27 +17,26 @@
   </p>
 
   <div id="" class="cycle2-carousel cover-carousel-tile tile-content" 
-       data-cycle-caption-plugin="caption2"
        data-cycle-slides="> div.slide"
        data-cycle-swipe="true"
        data-cycle-swipe-fx="scrollHorz"
+       data-cycle-pager=".cycle-pager"
        tal:condition="not:is_empty"
        tal:attributes="id string:cycle-${view/id};
-                       data-cycle-paused python:str(not view.autoplay()).lower();">
+-                      data-cycle-paused python:str(not view.autoplay()).lower();">
     <div class="cycle-prev"></div>
     <div class="cycle-next"></div>
 
-    <div class="cycle-pager"></div>        
     <tal:items repeat="item view/results">
       <div class="slide"
-           tal:attributes="data-uid python:view.get_uid(item)">
-          <tal:image define="thumbnail python:view.thumbnail(item);"
-                     condition="python:thumbnail">
+           tal:define="slideimg python:view.thumbnail(item);"
+           tal:attributes="data-uid python:view.get_uid(item);">
+          <tal:image condition="python:slideimg">
             <a href="#"
                tal:attributes="href item/absolute_url;">
-              <img tal:attributes="src thumbnail/url|string:${item/absolute_url}/download;
-                                   width thumbnail/width;
-                                   height thumbnail/height;
+              <img tal:attributes="src slideimg/url|string:${item/absolute_url}/download;
+                                   width slideimg/width;
+                                   height slideimg/height;
                                    alt item/Title;" />
             </a>
           </tal:image>
@@ -52,7 +51,8 @@
                tal:condition="python:field['id'] == 'description'"
                tal:content="item/Description"
                />
-            <p tal:define="toLocalizedTime nocall:context/@@plone/toLocalizedTime"
+            <p class="slide-datetime" 
+               tal:define="toLocalizedTime nocall:context/@@plone/toLocalizedTime"
                tal:condition="python:field['id'] == 'date'"
                tal:content="python:toLocalizedTime(view.Date(item), True)"
                />
@@ -60,6 +60,9 @@
         </div>
       </div>
     </tal:items>
+  </div>
+  <div class="cycle-pager-container">
+    <div class="cycle-pager"></div>
   </div>
   <script type="text/javascript"
           tal:condition="not:is_empty">
