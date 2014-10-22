@@ -1,3 +1,7 @@
+.slide.cycle-slide {
+  max-width: 100%;
+  overflow: hidden;
+}
 /* Prev/Next arrows */
 .cycle-prev, .cycle-next {
   cursor: pointer;
