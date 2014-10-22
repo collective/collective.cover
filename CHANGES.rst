@@ -6,6 +6,18 @@ There's a frood who really knows where his towel is.
 1.0a10 (unreleased)
 ^^^^^^^^^^^^^^^^^^^
 
+.. Warning::
+    Carousel tile is now based on the `Cycle2`_ slideshow plugin for jQuery.
+    If you are using the standard carousel template and CSS only you can safely proceed.
+    Otherwise, do not upgrade until you have reviewed `Cycle2 API`_ and updated your template and CSS.
+    An upgrade step is provided to install the ``collective.js.cycle2`` add-on.
+    You should manually uninstall ``collective.js.galleria`` in Site Setup if the add-on is no longer used in your site.
+
+- The Carousel tile is now based on the Cycle2 slideshow plugin for jQuery (closes `#442`_).
+  Carousels can now display items without images.
+  Auto play feature is now disabled by default.
+  [djowett, hvelarde]
+
 - Add an option to extend JS configuration to reload tile in custom tiles (outside of collective.cover).
   [rodfersou]
 
@@ -564,5 +576,8 @@ There's a frood who really knows where his towel is.
 .. _`#423`: https://github.com/collective/collective.cover/issues/423
 .. _`#426`: https://github.com/collective/collective.cover/issues/426
 .. _`#438`: https://github.com/collective/collective.cover/issues/438
+.. _`#442`: https://github.com/collective/collective.cover/issues/442
 .. _`#449`: https://github.com/collective/collective.cover/issues/449
+.. _`Cycle2`: http://jquery.malsup.com/cycle2/
+.. _`Cycle2 API`: http://jquery.malsup.com/cycle2/api/
 .. _`PloneFormGen`: https://pypi.python.org/pypi/Products.PloneFormGen

@@ -1,0 +1,66 @@
+.slide.cycle-slide {
+  max-width: 100%;
+  overflow: hidden;
+}
+/* Prev/Next arrows */
+.cycle-prev, .cycle-next {
+  cursor: pointer;
+  height: 50%;
+  opacity: 0.7;
+  position: absolute;
+  top: 25%;
+  width: 8%;
+  z-index: 110;
+}
+.cycle-prev {
+    background: url("++resource++collective.cover/cycle2-theme/prev-arrow.png") no-repeat scroll 10% 50% rgba(0, 0, 0, 0);
+    left: 0;
+    padding-right: 17%;
+}
+.cycle-next {
+    background: url("++resource++collective.cover/cycle2-theme/next-arrow.png") no-repeat scroll 90% 50% rgba(0, 0, 0, 0);
+    right: 0;
+    padding-left: 17%;
+}
+.cycle-prev:hover, .cycle-next:hover {
+    opacity: 1;
+}
+
+.cycle-pager-container {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 110;
+  text-align: center;
+}
+.cycle-pager {
+  display: inline-block;
+  margin: 0 auto;
+  padding: 8px;
+}
+.cycle-pager span {
+  background: url("++resource++collective.cover/cycle2-theme/dot.png") no-repeat;
+  display: inline-block;
+  font-size: 0;
+  height: 16px;
+  opacity: 0.6;
+  width: 16px;
+}
+.cycle-pager > span {
+  cursor: pointer;
+}
+.cycle-pager .cycle-pager-active {
+  opacity: 1;
+}
+.contentActions {
+  z-index: 130;
+}
+
+/* Stop Flash of unstyled content */
+.cycle2-carousel .slide {
+  display: none;
+}
+
+.cycle2-carousel .cycle-pager + .slide {
+  display: block;
+}

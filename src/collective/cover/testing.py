@@ -117,7 +117,8 @@ class Fixture(PloneSandboxLayer):
         import collective.cover
         self.loadZCML(package=collective.cover)
 
-        if 'virtual_hosting' not in app.objectIds():
+        if ('virtual_hosting' not in app.objectIds() and
+                'VHM' not in app.objectIds()):
             # If ZopeLite was imported, we have no default virtual
             # host monster
             from Products.SiteAccess.VirtualHostMonster \
@@ -158,7 +159,6 @@ class MultipleGridsFixture(Fixture):
         newgrid = Bootstrap3()
         sm = getGlobalSiteManager()
         sm.registerUtility(newgrid, name='bootstrap3')
-
 
 INTEGRATION_TESTING = IntegrationTesting(
     bases=(FIXTURE,),

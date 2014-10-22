@@ -126,12 +126,12 @@ class ListTileTestCase(TestTileMixin, unittest.TestCase):
     def test_get_title_tag(self):
         # we use the private method to skip memoize cache
         item = self.portal['my-news-item']
-        expected = '<h2><a href="http://nohost/plone/my-news-item">Test news item</a></h2>'
+        expected = '<h2 class="tile-item-title"><a href="http://nohost/plone/my-news-item">Test news item</a></h2>'
         self.assertEqual(self.tile._get_title_tag(item), expected)
         tile_conf = self.tile.get_tile_configuration()
         tile_conf['title']['htmltag'] = u'h1'
         self.tile.set_tile_configuration(tile_conf)
-        expected = '<h1><a href="http://nohost/plone/my-news-item">Test news item</a></h1>'
+        expected = '<h1 class="tile-item-title"><a href="http://nohost/plone/my-news-item">Test news item</a></h1>'
         self.assertEqual(self.tile._get_title_tag(item), expected)
 
     def test_results(self):

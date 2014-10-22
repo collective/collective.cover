@@ -111,4 +111,6 @@
         />
   </genericsetup:upgradeSteps>
 
+  <include package=".upgrades" />
+
 </configure>

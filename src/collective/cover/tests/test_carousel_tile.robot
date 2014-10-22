@@ -10,8 +10,8 @@ Suite Teardown  Close all browsers
 
 ${carousel_tile_location}  "collective.cover.carousel"
 ${document_selector}  //div[@id="content-trees"]//li[@class="ui-draggable"]/a[@data-ct-type="Document"]/span[text()='My document']/..
-${image_selector}  //div[@id="content-trees"]//li[@class="ui-draggable"]/a[@data-ct-type="Image"]/span[text()='my-image']/..
-${image_selector2}  //div[@id="content-trees"]//li[@class="ui-draggable"]/a[@data-ct-type="Image"]/span[text()='my-image1']/..
+${image_selector1}  //div[@id="content-trees"]//li[@class="ui-draggable"]/a[@data-ct-type="Image"]/span[text()='my-image1']/..
+${image_selector2}  //div[@id="content-trees"]//li[@class="ui-draggable"]/a[@data-ct-type="Image"]/span[text()='my-image2']/..
 ${tile_selector}  div.tile-container div.tile
 ${autoplay_id}  collective-cover-carousel-autoplay-0
 ${edit_link_selector}  a.edit-tile-link
@@ -21,7 +21,8 @@ ${edit_link_selector}  a.edit-tile-link
 Get Total Carousel Images
     [Documentation]  Total number of images in carousel is stored in this
     ...              element
-    ${return} =  Get Matching XPath Count  //div[@class="galleria-stage"]//div[@class="galleria-image"]/img
+    # Note: we are a bit lazy about adding concat here, but then how long do you want this line to be?
+    ${return} =  Get Matching XPath Count  //div[contains(@class,"cycle2-carousel")]//div[contains(concat(" ", @class," "), " slide ") and not(contains(@class, "sentinel"))]
     [Return]  ${return}
 
 *** Test cases ***
@@ -45,18 +46,17 @@ Test Carousel Tile
     # drag&drop an Image
     Open Content Chooser
     Click Element  link=Content tree
-    Drag And Drop  xpath=${image_selector}  css=${tile_selector}
-    # The carousel was previously empty, so autoplay=false, so we might not see the carousel updated
-    # Wait Until Page Contains  Test image
-    # Page Should Contain  This image was created for testing purposes
-
-    # move to the default view and check tile persisted
-    Click Link  link=View
-    Wait Until Page Contains  Test image
-    Page Should Contain  This image was created for testing purposes
+    Drag And Drop  xpath=${image_selector1}  css=${tile_selector}
+    Wait Until Page Contains  Test image #1
+    Page Should Contain  This image #1 was created for testing purposes
     # we have 1 image in the carousel
     ${images} =  Get Total Carousel Images
     Should Be Equal  '${images}'  '1'
+
+    # move to the default view and check tile persisted
+    Click Link  link=View
+    Wait Until Page Contains  Test image #1
+    Page Should Contain  This image #1 was created for testing purposes
 
     # drag&drop another Image
     Compose Cover
@@ -70,8 +70,8 @@ Test Carousel Tile
     # move to the default view and check tile persisted
     Click Link  link=View
     Sleep  5s  Wait for carousel to load
-    Wait Until Page Contains  Test image #1
-    Page Should Contain  This image #1 was created for testing purposes
+    Wait Until Page Contains  Test image #2
+    Page Should Contain  This image #2 was created for testing purposes
     # we now have 2 images in the carousel
     ${images} =  Get Total Carousel Images
     Should Be Equal  '${images}'  '2'
@@ -84,14 +84,13 @@ Test Carousel Tile
 
     Drag And Drop  xpath=${document_selector}  css=${tile_selector}
 
-    # No point to test Documents - they are not used in carousel
-    # see: https://github.com/collective/collective.cover/commit/8df37e04d7299a0cb1a90e9f0a8ace746859c49c
+    # Documents are (at least slightly) revived in Carousel thanks to Cycle2
     Click Link  link=View
-    #Wait Until Page Contains  My document
-    #Page Should Contain  This document was created for testing purposes
+    Wait Until Page Contains  My document
+    Page Should Contain  This document was created for testing purposes
 
     # carousel autoplay is enabled
-    Page Should Contain  options.autoplay = true;
+    Page Should Contain Element  xpath=//div[contains(@class,"cycle2-carousel") and @data-cycle-paused="false"]
 
     # edit the tile
     Compose Cover
@@ -100,12 +99,12 @@ Test Carousel Tile
     # disable carousel autoplay
     Unselect Checkbox  ${autoplay_id}
     Click Button  Save
-    Wait Until Page Contains  Test image
-    Page Should Contain  This image was created for testing purposes
+    Wait Until Page Contains  Test image #1
+    Page Should Contain  This image #1 was created for testing purposes
 
     # carousel autoplay is now disabled. Sometimes we need to reload the page.
-    Compose Cover
-    Page Should Contain  options.autoplay = false;
+    Reload Page
+    Page Should Contain Element  xpath=//div[contains(@class,"cycle2-carousel") and @data-cycle-paused="true"]
 
     # delete the tile
     Edit Cover Layout
