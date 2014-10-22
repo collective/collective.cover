@@ -49,7 +49,7 @@
           </tal:image>
         <div class="non-image-fields">
           <tal:fields repeat="field view/get_configured_fields">
-            <h2 class="slide-title"
+            <h2 class="tile-item-title"
                 tal:condition="python:field['id'] == 'title'"
                 tal:replace="structure python:view.get_title_tag(item)"
                 />

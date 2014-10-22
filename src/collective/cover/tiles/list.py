@@ -314,7 +314,8 @@ class ListTile(PersistentCoverTile):
         :param item: [required]
         :type item: content object
         """
-        tag = '<{heading}><a href="{href}">{title}</a></{heading}>'
+        klass = 'tile-item-title'
+        tag = '<{heading} class="{klass}"><a href="{href}">{title}</a></{heading}>'
         if self._field_is_visible('title'):
             tile_conf = self.get_tile_configuration()
             title_conf = tile_conf.get('title', None)
@@ -322,7 +323,7 @@ class ListTile(PersistentCoverTile):
                 heading = title_conf.get('htmltag', 'h2')
                 href = item.absolute_url()
                 title = item.Title()
-                return tag.format(heading=heading, href=href, title=title)
+                return tag.format(heading=heading, klass=klass, href=href, title=title)
 
     @view.memoize
     def get_title_tag(self, item):

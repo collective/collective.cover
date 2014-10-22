@@ -28,7 +28,8 @@
             </a>
           </tal:image>
 
-          <h2 tal:condition="python:field['id'] == 'title'"
+          <h2 class="tile-item-title"
+              tal:condition="python:field['id'] == 'title'"
               tal:replace="structure python:view.get_title_tag(obj)"
               />
 
