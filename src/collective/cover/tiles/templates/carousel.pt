@@ -27,6 +27,7 @@
       data-cycle-slides="> div.slide"
       data-cycle-swipe="true"
       data-cycle-swipe-fx="scrollHorz"
+      data-cycle-pager=".cycle-pager"
       tal:condition="not:is_empty"
       tal:attributes="id string:cycle-${view/id};
                       data-cycle-paused view/paused|default">
