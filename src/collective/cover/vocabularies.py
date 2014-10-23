@@ -133,3 +133,16 @@ class TileStylesVocabulary(object):
         return SimpleVocabulary(items)
 
 grok.global_utility(TileStylesVocabulary, name=u'collective.cover.TileStyles')
+
+
+PAGER_STYLES = [u'Dots', u'Numbers', u'Thumbnails']
+
+class PagerStylesVocabulary(object):
+    """ Types of Pager style used in Carousel Tiles
+    """
+    grok.implements(IVocabularyFactory)
+
+    def __call__(self, context):
+        return SimpleVocabulary.fromValues(PAGER_STYLES)
+
+grok.global_utility(PagerStylesVocabulary, name=u'collective.cover.PagerStyles')

@@ -28,7 +28,7 @@
 
 .cycle-pager-container {
   position: absolute;
-  top: 0;
+  bottom: 0;
   width: 100%;
   z-index: 110;
   text-align: center;
@@ -37,6 +37,10 @@
   display: inline-block;
   margin: 0 auto;
   padding: 8px;
+}
+.cycle-pager-container.thumbnails .cycle-pager {
+  background: white;
+  border-radius: 5px 5px 0 0;
 }
 .cycle-pager span {
   background: url("++resource++collective.cover/cycle2-theme/dot.png") no-repeat;
@@ -51,6 +55,13 @@
 }
 .cycle-pager .cycle-pager-active {
   opacity: 1;
+}
+.cycle-pager-container.thumbnails .cycle-pager img {
+  border-radius: 5px;
+  margin-right: 8px;
+}
+.cycle-pager-container.thumbnails .cycle-pager a:last-child img {
+  margin-right: 0;
 }
 .contentActions {
   z-index: 130;
