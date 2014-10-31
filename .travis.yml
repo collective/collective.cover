@@ -20,7 +20,7 @@ install:
   - sed -ie "s#versions-4.x.cfg#versions-$PLONE_VERSION.x.cfg#" travis.cfg
   - test $JQUERY && sed -ie "s#plone.app.jquery = 1.7.2#plone.app.jquery = $JQUERY#" versions-4.3.x.cfg || true
   - mkdir -p buildout-cache/downloads
-  - python bootstrap.py -c travis.cfg
+  - python bootstrap.py -c travis.cfg -v 2.2.1
   - bin/buildout -c travis.cfg annotate
   - bin/buildout -c travis.cfg -N -q
 before_script:
