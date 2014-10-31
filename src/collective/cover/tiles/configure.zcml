@@ -12,6 +12,9 @@
   <!-- Data manager for "our" tiles -->
   <adapter factory=".data.PersistentCoverTileDataManager" />
 
+  <!-- Data converters -->
+  <adapter factory=".carousel.UUIDSFieldDataConverter" />
+
   <browser:page
       name="configure-tile"
       for="zope.annotation.interfaces.IAnnotatable"

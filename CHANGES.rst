@@ -6,6 +6,12 @@ There's a frood who really knows where his towel is.
 1.0a10 (unreleased)
 ^^^^^^^^^^^^^^^^^^^
 
+- Allow to set a custom URL on elements for a Carousel (solves `#377`_).
+  [frapell]
+
+- If an Image content is included, redirect to view and not the image itself
+  [frapell]
+
 - Add an option to extend JS configuration to reload tile in custom tiles (outside of collective.cover).
   [rodfersou]
 
@@ -551,6 +557,7 @@ There's a frood who really knows where his towel is.
 .. _`#351`: https://github.com/collective/collective.cover/issues/351
 .. _`#371`: https://github.com/collective/collective.cover/issues/371
 .. _`#374`: https://github.com/collective/collective.cover/issues/374
+.. _`#377`: https://github.com/collective/collective.cover/issues/377
 .. _`#381`: https://github.com/collective/collective.cover/issues/381
 .. _`#383`: https://github.com/collective/collective.cover/issues/383
 .. _`#393`: https://github.com/collective/collective.cover/issues/393

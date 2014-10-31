@@ -10,8 +10,10 @@ Suite Teardown  Close all browsers
 
 ${carousel_tile_location}  "collective.cover.carousel"
 ${document_selector}  //div[@id="content-trees"]//li[@class="ui-draggable"]/a[@data-ct-type="Document"]/span[text()='My document']/..
-${image_selector}  //div[@id="content-trees"]//li[@class="ui-draggable"]/a[@data-ct-type="Image"]/span[text()='my-image']/..
-${image_selector2}  //div[@id="content-trees"]//li[@class="ui-draggable"]/a[@data-ct-type="Image"]/span[text()='my-image1']/..
+${image_selector}  //div[@id="content-trees"]//li[@class="ui-draggable"]/a[@data-ct-type="Image"]/span[text()='Test image']/..
+${image_title}  //div[@class="galleria-info-title"]/a[text()='Test image']/..
+${image_selector2}  //div[@id="content-trees"]//li[@class="ui-draggable"]/a[@data-ct-type="Image"]/span[text()='Test image #1']/..
+${image_title2}  //div[@class="galleria-info-title"]/a[text()='Test image #1']/..
 ${tile_selector}  div.tile-container div.tile
 ${autoplay_id}  collective-cover-carousel-autoplay-0
 ${edit_link_selector}  a.edit-tile-link
@@ -21,7 +23,7 @@ ${edit_link_selector}  a.edit-tile-link
 Get Total Carousel Images
     [Documentation]  Total number of images in carousel is stored in this
     ...              element
-    ${return} =  Get Matching XPath Count  //div[@class="galleria-stage"]//div[@class="galleria-image"]/img
+    ${return} =  Get Element Attribute  xpath=//div[@class="galleria-stage"]/div[@class="galleria-counter"]/span[@class="galleria-total"]@innerHTML
     [Return]  ${return}
 
 *** Test cases ***
@@ -52,7 +54,8 @@ Test Carousel Tile
 
     # move to the default view and check tile persisted
     Click Link  link=View
-    Wait Until Page Contains  Test image
+    # Wait Until Page Contains would always work because of the top navigation
+    Wait Until Page Contains Element  xpath=${image_title}
     Page Should Contain  This image was created for testing purposes
     # we have 1 image in the carousel
     ${images} =  Get Total Carousel Images
@@ -63,14 +66,14 @@ Test Carousel Tile
     Sleep  1s  Wait for carousel to load
     Open Content Chooser
     Click Element  link=Content tree
-
     Drag And Drop  xpath=${image_selector2}  css=${tile_selector}
+
     # Need to change view before second image is loaded
 
     # move to the default view and check tile persisted
     Click Link  link=View
-    Sleep  5s  Wait for carousel to load
-    Wait Until Page Contains  Test image #1
+    # Wait Until Page Contains would always work because of the top navigation
+    Wait Until Page Contains Element  xpath=${image_title2}
     Page Should Contain  This image #1 was created for testing purposes
     # we now have 2 images in the carousel
     ${images} =  Get Total Carousel Images
@@ -84,11 +87,10 @@ Test Carousel Tile
 
     Drag And Drop  xpath=${document_selector}  css=${tile_selector}
 
-    # No point to test Documents - they are not used in carousel
-    # see: https://github.com/collective/collective.cover/commit/8df37e04d7299a0cb1a90e9f0a8ace746859c49c
     Click Link  link=View
-    #Wait Until Page Contains  My document
-    #Page Should Contain  This document was created for testing purposes
+    # We should still have 2 images in the carousel
+    ${images} =  Get Total Carousel Images
+    Should Be Equal  '${images}'  '2'
 
     # carousel autoplay is enabled
     Page Should Contain  options.autoplay = true;
@@ -106,6 +108,34 @@ Test Carousel Tile
     # carousel autoplay is now disabled. Sometimes we need to reload the page.
     Compose Cover
     Page Should Contain  options.autoplay = false;
+
+    # Test Custom URL functionality
+    Click Link  link=View
+    ${image_url} =  Get Element Attribute  xpath=.//div[@class='galleria-info-title']/a@href
+    Should Be Equal  ${image_url}  ${PLONE_URL}/my-image/view
+
+    # Go to the right
+    Click Element  xpath=.//div[@class='galleria-image-nav-right']
+    Wait Until Page Contains Element  xpath=${image_title2}
+    ${image_url} =  Get Element Attribute  xpath=.//div[@class='galleria-info-title']/a@href
+    Should Be Equal  ${image_url}  ${PLONE_URL}/my-image1/view
+
+
+    Compose Cover
+    Click Link  css=${edit_link_selector}
+    Input Text  xpath=.//div[@class='textline-sortable-element'][2]/input  http://www.google.com
+    Click Button  Save
+    Sleep  2s  Wait for carousel to load
+
+    Click Link  link=View
+    ${image_url} =  Get Element Attribute  xpath=.//div[@class='galleria-info-title']/a@href
+    Should Be Equal  ${image_url}  ${PLONE_URL}/my-image/view
+
+    # Go to the right
+    Click Element  xpath=.//div[@class='galleria-image-nav-right']
+    Wait Until Page Contains Element  xpath=${image_title2}
+    ${image_url} =  Get Element Attribute  xpath=.//div[@class='galleria-info-title']/a@href
+    Should Be Equal  ${image_url}  http://www.google.com/
 
     # delete the tile
     Edit Cover Layout
