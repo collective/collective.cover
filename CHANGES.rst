@@ -3,7 +3,7 @@ Changelog
 
 There's a frood who really knows where his towel is.
 
-1.0a10 (unreleased)
+1.0a10 (2014-10-31)
 ^^^^^^^^^^^^^^^^^^^
 
 - Allow to set a custom URL on elements for a Carousel (solves `#377`_).
