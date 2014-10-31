@@ -12,6 +12,9 @@ There's a frood who really knows where his towel is.
 - If an Image content is included, redirect to view and not the image itself
   [frapell]
 
+- Modifying annotations, while iterating through them, caused their size to be reduced and the loop to end early, leaving annotations in the object.
+  [cguardia]
+
 - Add an option to extend JS configuration to reload tile in custom tiles (outside of collective.cover).
   [rodfersou]
 
