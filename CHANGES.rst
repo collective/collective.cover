@@ -12,6 +12,16 @@ There's a frood who really knows where his towel is.
 - If an Image content is included, redirect to view and not the image itself
   [frapell]
 
+- Add an option to extend JS configuration to reload tile in custom tiles (outside of collective.cover).
+  [rodfersou]
+
+- Include a behavior to add a couple of fields that enable reloading the current page after a certain amount of time.
+  Typical use case is a news portal that wants to keep the front page updated and increase the number of page views.
+  [hvelarde]
+
+- Fix modification time disappearing from context data and handling missing value (fixes `#449`_).
+  [mhora]
+
 - Show event's start date (instead of publication date) for Event-like objects in Basic, Collection and List tiles.
   [hvelarde]
 
@@ -560,4 +570,6 @@ There's a frood who really knows where his towel is.
 .. _`#421`: https://github.com/collective/collective.cover/issues/421
 .. _`#423`: https://github.com/collective/collective.cover/issues/423
 .. _`#426`: https://github.com/collective/collective.cover/issues/426
+.. _`#438`: https://github.com/collective/collective.cover/issues/438
+.. _`#449`: https://github.com/collective/collective.cover/issues/449
 .. _`PloneFormGen`: https://pypi.python.org/pypi/Products.PloneFormGen

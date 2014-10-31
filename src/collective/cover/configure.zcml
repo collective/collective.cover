@@ -18,6 +18,7 @@
   <include file="permissions.zcml" />
   <grok:grok package="." />
 
+  <include package=".behaviors" />
   <include package=".tiles" />
   <include file="profiles.zcml" />
   <include file="subscribers.zcml" />

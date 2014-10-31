@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 from collective.cover.config import DEFAULT_GRID_SYSTEM
 from collective.cover.testing import INTEGRATION_TESTING
 from persistent.mapping import PersistentMapping
@@ -58,7 +57,7 @@ class Upgrade5to6TestCase(UpgradeTestCaseBase):
 
     def test_upgrade_to_6_registrations(self):
         version = self.setup.getLastVersionForProfile(self.profile_id)[0]
-        self.assertTrue(int(version) >= int(self.to_version))
+        self.assertGreaterEqual(int(version), int(self.to_version))
         self.assertEqual(self._how_many_upgrades_to_do(), 2)
 
     def test_issue_201(self):
@@ -132,7 +131,7 @@ class Upgrade6to7TestCase(UpgradeTestCaseBase):
 
     def test_upgrade_to_7_registrations(self):
         version = self.setup.getLastVersionForProfile(self.profile_id)[0]
-        self.assertTrue(int(version) >= int(self.to_version))
+        self.assertGreaterEqual(int(version), int(self.to_version))
         self.assertEqual(self._how_many_upgrades_to_do(), 3)
 
     def test_issue_330(self):
@@ -184,7 +183,7 @@ class Upgrade7to8TestCase(UpgradeTestCaseBase):
 
     def test_upgrade_to_8_registrations(self):
         version = self.setup.getLastVersionForProfile(self.profile_id)[0]
-        self.assertTrue(int(version) >= int(self.to_version))
+        self.assertGreaterEqual(int(version), int(self.to_version))
         self.assertEqual(self._how_many_upgrades_to_do(), 1)
 
     def test_issue_371(self):
@@ -200,7 +199,7 @@ class Upgrade8to9TestCase(UpgradeTestCaseBase):
 
     def test_upgrade_to_9_registrations(self):
         version = self.setup.getLastVersionForProfile(self.profile_id)[0]
-        self.assertTrue(int(version) >= int(self.to_version))
+        self.assertGreaterEqual(int(version), int(self.to_version))
         self.assertEqual(self._how_many_upgrades_to_do(), 3)
 
     def test_issue_423(self):

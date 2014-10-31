@@ -249,6 +249,25 @@ The changes will be applied to your cover immediately.
     As mentioned before, the changes will be applied only to the cover tile,
     not to the original content.
 
+Behaviors
+^^^^^^^^^
+
+To enable behaviors go to 'Site Setup' and select 'Dexterity content types'.
+Look for 'Cover' content type, select it and then select 'Behaviors'.
+
+The following behaviors are included in this package:
+
+Refresh
++++++++
+
+The Refresh behavior adds a couple of fields that enable reloading the current page after a certain amount of time.
+
+.. figure:: https://raw.github.com/collective/collective.cover/master/docs/refresh-behavior.png
+    :align: center
+    :height: 400px
+    :width: 400px
+    :alt: A cover object with the Refresh behavior enabled
+
 Advanced Actions
 ----------------
 

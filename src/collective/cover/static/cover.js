@@ -50,6 +50,8 @@ function TitleMarkupSetup(){
 }
 
 $(document).ready(function() {
+    var root = typeof exports !== "undefined" && exports !== null ? exports : this;
+    root.reloadTypes = ['collective.cover.carousel'];
 
     $(".sortable-tile").liveSortable({
         stop:function(event, ui) {
@@ -112,8 +114,7 @@ $(document).ready(function() {
             // Get tile type
             var tileType = tile.data('tile-type');
             // List of tile types that make a page reload
-            var reloadTypes = ['collective.cover.carousel'];
-            if(reloadTypes.indexOf(tileType)>-1) {
+            if(root.reloadTypes.indexOf(tileType)>-1) {
                 location.reload();
             } else {
                 tile.html(return_value);

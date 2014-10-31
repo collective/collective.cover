@@ -23,7 +23,8 @@ def override_object_annotations(cover, event):
     old_annotations = IAnnotations(event.baseline)
     new_annotations = IAnnotations(event.object)
 
-    for key in old_annotations:
+    old_keys = list(old_annotations.keys())
+    for key in old_keys:
         # First remove all annotations in relation to tiles
         if key.startswith('plone.tiles.'):
             del old_annotations[key]
