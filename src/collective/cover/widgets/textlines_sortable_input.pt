@@ -59,12 +59,17 @@
                      tal:attributes="src thumbnail/url;
                                      width thumbnail/width;
                                      height thumbnail/height" />
-            <h3 tal:content="obj/Title" />
-            <p tal:content="obj/Description" />
-
+            <span i18n:translate="">Custom Title</span>
+            <input class="custom-title-input"
+                   tal:attributes="name python:'{0}.custom_title.{1}'.format(view.name, uuid);
+                                   value python:view.get_custom_title(uuid)">
+            <span i18n:translate="">Custom Description</span>
+            <input class="custom-description-input"
+                   tal:attributes="name python:'{0}.custom_description.{1}'.format(view.name, uuid);
+                                   value python:view.get_custom_description(uuid)">
             <span i18n:translate="">Custom URL</span>
             <input class="custom-url-input"
-                   tal:attributes="name python:view.name+'.custom_url.%s' % uuid;
+                   tal:attributes="name python:'{0}.custom_url.{1}'.format(view.name, uuid);
                                    value python:view.get_custom_url(uuid)">
           </div>
 

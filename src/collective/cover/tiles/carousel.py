@@ -77,6 +77,47 @@ class CarouselTile(ListTile):
 
         return self.data['autoplay']
 
+    def get_title(self, item):
+        """ Gets the Title for the item. It will return the "Custom Title", if
+        it was set, if not, the Title for the item will be returned
+
+        :param item: [required] The item for which we want the Title to
+        :type item: Content object
+        :returns: Title for the item
+        """
+        # First we get the title for the item itself
+        title = item.Title()
+        uuid = self.get_uid(item)
+        data_mgr = ITileDataManager(self)
+        data = data_mgr.get()
+        uuids = data['uuids']
+        if uuid in uuids:
+            if uuids[uuid].get('custom_title', u''):
+                # If we had a custom title set, then get that
+                title = uuids[uuid].get('custom_title')
+        return title
+
+    def get_description(self, item):
+        """ Gets the Description for the item. It will return the
+        "Custom Desciption", if it was set, if not, the URL for the item will
+        be returned
+
+        :param item: [required] The item for which we want the Description to
+        :type item: Content object
+        :returns: Description for the item
+        """
+        # First we get the url for the item itself
+        description = item.Description()
+        uuid = self.get_uid(item)
+        data_mgr = ITileDataManager(self)
+        data = data_mgr.get()
+        uuids = data['uuids']
+        if uuid in uuids:
+            if uuids[uuid].get('custom_description', u''):
+                # If we had a custom description set, then get that
+                description = uuids[uuid].get('custom_description')
+        return description
+
     def get_url(self, item):
         """ Gets the URL for the item. It will return the "Custom URL", if
         it was set, if not, the URL for the item will be returned
@@ -97,7 +138,7 @@ class CarouselTile(ListTile):
         data = data_mgr.get()
         uuids = data['uuids']
         if uuid in uuids:
-            if uuids[uuid].get('custom_url', u""):
+            if uuids[uuid].get('custom_url', u''):
                 # If we had a custom url set, then get that
                 url = uuids[uuid].get('custom_url')
         return url

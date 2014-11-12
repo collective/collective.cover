@@ -55,6 +55,34 @@ class TextLinesSortableWidget(textlines.TextLinesWidget):
         except:
             return None
 
+    def get_custom_title(self, uuid):
+        """ Returns the custom Title assigned to a specific item
+
+        :param uuid: [required] The object's UUID
+        :type uuid: string
+        :returns: The custom Title
+        """
+        title = u''
+        uuids = self.context['uuids']
+        if uuid in uuids:
+            values = uuids.get(uuid)
+            title = values.get('custom_title', u'')
+        return title
+
+    def get_custom_description(self, uuid):
+        """ Returns the custom Description assigned to a specific item
+
+        :param uuid: [required] The object's UUID
+        :type uuid: string
+        :returns: The custom Description
+        """
+        description = u''
+        uuids = self.context['uuids']
+        if uuid in uuids:
+            values = uuids.get(uuid)
+            description = values.get('custom_description', u'')
+        return description
+
     def get_custom_url(self, uuid):
         """ Returns the custom URL assigned to a specific item
 
@@ -78,14 +106,21 @@ class TextLinesSortableWidget(textlines.TextLinesWidget):
         uuids = [i for i in values if i]
         results = dict()
         for index, uuid in enumerate(uuids):
-            if uuid:
-                custom_url = self.request.get(
-                    '%s.custom_url.%s' % (self.name, uuid), ""
-                )
-                results[uuid] = {
-                    u'order': unicode(index),
-                    u'custom_url': unicode(custom_url)
-                }
+            custom_title = self.request.get(
+                '{0}.custom_title.{1}'.format(self.name, uuid), ''
+            )
+            custom_description = self.request.get(
+                '{0}.custom_description.{1}'.format(self.name, uuid), ''
+            )
+            custom_url = self.request.get(
+                '{0}.custom_url.{1}'.format(self.name, uuid), ''
+            )
+            results[uuid] = {
+                u'order': unicode(index),
+                u'custom_title': unicode(custom_title),
+                u'custom_description': unicode(custom_description),
+                u'custom_url': unicode(custom_url)
+            }
         return results
 
 
