@@ -11,7 +11,7 @@ Suite Teardown  Close all browsers
 ${basic_tile_location}  'collective.cover.basic'
 ${document_selector}  .ui-draggable .contenttype-document
 ${file_selector}  .ui-draggable .contenttype-file
-${image_selector}  .ui-draggable .contenttype-image
+${image_selector}  .ui-draggable .contenttype-image:first-child
 ${link_selector}  .ui-draggable .contenttype-link
 ${tile_selector}  div.tile-container div.tile
 ${news_item_selector}  .ui-draggable .contenttype-news-item

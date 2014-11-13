@@ -9,7 +9,7 @@ Suite Teardown  Close all browsers
 *** Variables ***
 
 ${banner_tile_location}  'collective.cover.banner'
-${image_selector}  .ui-draggable .contenttype-image
+${image_selector}  .ui-draggable .contenttype-image:first-child
 ${link_selector}  .ui-draggable .contenttype-link
 ${news_item_selector}  .ui-draggable .contenttype-news-item
 ${file_selector}  .ui-draggable .contenttype-file
