@@ -11,7 +11,7 @@ Suite Teardown  Close all browsers
 ${basic_tile_location}  'collective.cover.basic'
 ${document_selector}  .ui-draggable .contenttype-document
 ${file_selector}  .ui-draggable .contenttype-file
-${image_selector}  .ui-draggable .contenttype-image:first-child
+${image_selector}  .ui-draggable .contenttype-image
 ${link_selector}  .ui-draggable .contenttype-link
 ${tile_selector}  div.tile-container div.tile
 ${news_item_selector}  .ui-draggable .contenttype-news-item
@@ -62,7 +62,7 @@ Test Basic Tile
     Compose Cover
     Open Content Chooser
     Drag And Drop  css=${image_selector}  css=${tile_selector}
-    Page Should Contain  Test image
+    Wait Until Page Contains Element  css=div.cover-basic-tile a img
 
     # move to the default view and check tile persisted
     Click Link  link=View

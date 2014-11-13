@@ -11,7 +11,7 @@ Suite Teardown  Close all browsers
 ${list_tile_location}  'collective.cover.list'
 ${document_selector}  .ui-draggable .contenttype-document
 ${file_selector}  .ui-draggable .contenttype-file
-${image_selector}  .ui-draggable .contenttype-image:first-child
+${image_selector}  .ui-draggable .contenttype-image
 ${link_selector}  .ui-draggable .contenttype-link
 ${news-item_selector}  .ui-draggable .contenttype-news-item
 ${tile_selector}  div.tile-container div.tile
@@ -56,7 +56,7 @@ Test List Tile
     # drag&drop an Image
     Drag And Drop  css=${image_selector}  css=${tile_selector}
     Wait Until Page Contains  Test image
-    Page Should Contain  This image was created for testing purposes
+    Wait Until Page Contains Element  css=div.cover-list-tile a img
 
     # drag&drop a Link
     Drag And Drop  css=${link_selector}  css=${tile_selector}
