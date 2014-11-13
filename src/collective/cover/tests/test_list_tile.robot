@@ -56,7 +56,7 @@ Test List Tile
     # drag&drop an Image
     Drag And Drop  css=${image_selector}  css=${tile_selector}
     Wait Until Page Contains  Test image
-    Page Should Contain  This image was created for testing purposes
+    Page Should Contain  This image #2 was created for testing purposes
 
     # drag&drop a Link
     Drag And Drop  css=${link_selector}  css=${tile_selector}
