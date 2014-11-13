@@ -120,10 +120,10 @@ Test Carousel Tile
     ${image_url} =  Get Element Attribute  xpath=.//div[@class='galleria-info-title']/a@href
     Should Be Equal  ${image_url}  ${PLONE_URL}/my-image1/view
 
-
+    # Set custom URL
     Compose Cover
     Click Link  css=${edit_link_selector}
-    Input Text  xpath=.//div[@class='textline-sortable-element'][2]/input  http://www.google.com
+    Input Text  xpath=.//div[@class='textline-sortable-element'][2]//input[@class='custom-url-input']  http://www.google.com
     Click Button  Save
     Sleep  2s  Wait for carousel to load
 
