@@ -7,7 +7,6 @@ from collective.cover.interfaces import ITileEditForm
 from collective.cover.tiles.base import IPersistentCoverTile
 from collective.cover.tiles.base import PersistentCoverTile
 from collective.cover.tiles.configuration_view import IDefaultConfigureForm
-from persistent.mapping import PersistentMapping
 from plone import api
 from plone.app.uuid.utils import uuidToObject
 from plone.directives import form
@@ -192,12 +191,12 @@ class ListTile(PersistentCoverTile):
         old_data = data_mgr.get()
         if old_data['uuids'] is None:
             # If there is no content yet, just assign an empty dict
-            old_data['uuids'] = PersistentMapping()
+            old_data['uuids'] = dict()
 
         uuids_dict = old_data.get('uuids')
-        if not isinstance(uuids_dict, PersistentMapping):
-            # Make sure this is a PersistentMapping
-            uuids_dict = old_data['uuids'] = PersistentMapping()
+        if not isinstance(uuids_dict, dict):
+            # Make sure this is a dict
+            uuids_dict = old_data['uuids'] = dict()
 
         if uuids_dict and len(uuids_dict) > self.limit:
             # Do not allow adding more objects than the defined limit
@@ -215,7 +214,7 @@ class ListTile(PersistentCoverTile):
 
         for uuid in uuids:
             if uuid not in uuids_dict.keys():
-                entry = PersistentMapping()
+                entry = dict()
                 entry[u'order'] = unicode(order)
                 uuids_dict[uuid] = entry
                 order += 1
@@ -237,7 +236,7 @@ class ListTile(PersistentCoverTile):
         data_mgr = ITileDataManager(self)
         old_data = data_mgr.get()
         # Clean old data
-        old_data['uuids'] = PersistentMapping()
+        old_data['uuids'] = dict()
         data_mgr.set(old_data)
         # Repopulate with clean list
         self.populate_with_uids(uuids)
