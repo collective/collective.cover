@@ -5,7 +5,6 @@ from collective.cover.tiles.carousel import CarouselTile
 from collective.cover.tiles.carousel import ICarouselTile
 from collective.cover.tiles.carousel import UUIDSFieldDataConverter
 from collective.cover.widgets.textlinessortable import TextLinesSortableWidget
-from persistent.mapping import PersistentMapping
 from plone.tiles.interfaces import ITileDataManager
 from plone.uuid.interfaces import IUUID
 
@@ -88,7 +87,7 @@ class CarouselTileTestCase(TestTileMixin, unittest.TestCase):
 
         uuids = ITileDataManager(self.tile).get().get('uuids', None)
 
-        self.assertTrue(isinstance(uuids, PersistentMapping))
+        self.assertTrue(isinstance(uuids, dict))
         self.assertTrue(len(uuids) == 1)
         self.assertTrue(uuids[obj1.UID()]['order'] == u'0')
 
@@ -99,7 +98,7 @@ class CarouselTileTestCase(TestTileMixin, unittest.TestCase):
 
         uuids = ITileDataManager(self.tile).get().get('uuids', None)
 
-        self.assertTrue(isinstance(uuids, PersistentMapping))
+        self.assertTrue(isinstance(uuids, dict))
         self.assertTrue(len(uuids) == 2)
         self.assertTrue(uuids[obj1.UID()]['order'] == u'0')
         self.assertTrue(uuids[obj2.UID()]['order'] == u'1')
