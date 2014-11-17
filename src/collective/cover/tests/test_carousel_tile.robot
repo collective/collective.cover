@@ -138,12 +138,14 @@ Test Carousel Tile
 
     ### Test Custom Description functionality
     Click Link  link=View
-    Textarea Value Should Be  xpath=.//div[@class='galleria-info-description']  This image was created for testing purposes
+    ${description} =  Get Text  xpath=.//div[@class='galleria-info-description']
+    Should Be Equal  ${description}  This image was created for testing purposes
 
     # Go to the right
     Click Element  xpath=.//div[@class='galleria-image-nav-right']
     Wait Until Page Contains Element  xpath=${image_title_test}
-    Textarea Value Should Be  xpath=.//div[@class='galleria-info-description']  This image #1 was created for testing purposes
+    ${description} =  Get Text  xpath=.//div[@class='galleria-info-description']
+    Should Be Equal  ${description}  This image #1 was created for testing purposes
 
     # Set custom Description
     Compose Cover
@@ -153,13 +155,14 @@ Test Carousel Tile
     Sleep  2s  Wait for carousel to load
 
     Click Link  link=View
-    Click Link  link=View
-    Textarea Value Should Be  xpath=.//div[@class='galleria-info-description']  This image was created for testing purposes
+    ${description} =  Get Text  xpath=.//div[@class='galleria-info-description']
+    Should Be Equal  ${description}  This image was created for testing purposes
 
     # Go to the right
     Click Element  xpath=.//div[@class='galleria-image-nav-right']
     Wait Until Page Contains Element  xpath=${image_title_test}
-    Textarea Value Should Be  xpath=.//div[@class='galleria-info-description']  New Description
+    ${description} =  Get Text  xpath=.//div[@class='galleria-info-description']
+    Should Be Equal  ${description}  New Description
 
     ### Test Custom URL functionality
     Click Link  link=View
