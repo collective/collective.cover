@@ -110,6 +110,7 @@ Test Carousel Tile
 
     ### Test Custom Title functionality
     Click Link  link=View
+    Wait Until Page Contains Element  xpath=${image_title}
     ${title} =  Get Text  xpath=.//div[@class='galleria-info-title']/a
     Should Be Equal  ${title}  Test image
 
@@ -127,6 +128,7 @@ Test Carousel Tile
     Sleep  2s  Wait for carousel to load
 
     Click Link  link=View
+    Wait Until Page Contains Element  xpath=${image_title}
     ${title} =  Get Text  xpath=.//div[@class='galleria-info-title']/a
     Should Be Equal  ${title}  Test image
 
@@ -138,6 +140,7 @@ Test Carousel Tile
 
     ### Test Custom Description functionality
     Click Link  link=View
+    Wait Until Page Contains Element  xpath=${image_title}
     ${description} =  Get Text  xpath=.//div[@class='galleria-info-description']
     Should Be Equal  ${description}  This image was created for testing purposes
 
@@ -155,6 +158,7 @@ Test Carousel Tile
     Sleep  2s  Wait for carousel to load
 
     Click Link  link=View
+    Wait Until Page Contains Element  xpath=${image_title}
     ${description} =  Get Text  xpath=.//div[@class='galleria-info-description']
     Should Be Equal  ${description}  This image was created for testing purposes
 
@@ -166,6 +170,7 @@ Test Carousel Tile
 
     ### Test Custom URL functionality
     Click Link  link=View
+    Wait Until Page Contains Element  xpath=${image_title}
     ${image_url} =  Get Element Attribute  xpath=.//div[@class='galleria-info-title']/a@href
     Should Be Equal  ${image_url}  ${PLONE_URL}/my-image/view
 
@@ -183,6 +188,7 @@ Test Carousel Tile
     Sleep  2s  Wait for carousel to load
 
     Click Link  link=View
+    Wait Until Page Contains Element  xpath=${image_title}
     ${image_url} =  Get Element Attribute  xpath=.//div[@class='galleria-info-title']/a@href
     Should Be Equal  ${image_url}  ${PLONE_URL}/my-image/view
 
