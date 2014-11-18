@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 from collective.cover import _
 from collective.cover.interfaces import ITileEditForm
 from collective.cover.tiles.list import IListTile
@@ -32,8 +31,8 @@ INIT_JS = """$(function() {{
 
 
 class ICarouselTile(IListTile):
-    """A carousel based on the Galleria JavaScript image gallery framework.
-    """
+
+    """A carousel based on the Galleria JS image gallery framework."""
 
     autoplay = schema.Bool(
         title=_(u'Auto play'),
@@ -47,6 +46,8 @@ class ICarouselTile(IListTile):
 
 class CarouselTile(ListTile):
 
+    """A carousel based on the Galleria JS image gallery framework."""
+
     implements(ICarouselTile)
 
     index = ViewPageTemplateFile('templates/carousel.pt')
@@ -55,10 +56,9 @@ class CarouselTile(ListTile):
     short_name = _(u'msg_short_name_carousel', default=u'Carousel')
 
     def populate_with_object(self, obj):
-        """ Add a list of elements to the list of items. This method will
-        append new elements to the already existing list of items.
-        If the object doesn't have an image associated, it will not be
-        included
+        """Add an object to the carousel. This method will append new
+        elements to the already existing list of items. If the object
+        does not have an image associated, it will not be included.
 
         :param uuids: The list of objects' UUIDs to be used
         :type uuids: List of strings
@@ -74,30 +74,77 @@ class CarouselTile(ListTile):
     def autoplay(self):
         if self.data['autoplay'] is None:
             return True  # default value
-
         return self.data['autoplay']
 
-    def get_url(self, item):
-        """ Gets the URL for the item. It will return the "Custom URL", if
-        it was set, if not, the URL for the item will be returned
+    def get_title(self, item):
+        """Get the title of the item, or the custom title if set.
 
-        :param item: [required] The item for which we want the URL to
+        :param item: [required] The item for which we want the title
         :type item: Content object
-        :returns: URL for the item
+        :returns: the item title
+        :rtype: unicode
         """
-        portal_properties = api.portal.get_tool(name='portal_properties')
-        use_view_action = portal_properties.site_properties.getProperty(
+        # First we get the title for the item itself
+        title = item.Title()
+        uuid = self.get_uid(item)
+        data_mgr = ITileDataManager(self)
+        data = data_mgr.get()
+        uuids = data['uuids']
+        if uuid in uuids:
+            if uuids[uuid].get('custom_title', u''):
+                # If we had a custom title set, then get that
+                title = uuids[uuid].get('custom_title')
+        return title
+
+    def get_description(self, item):
+        """Get the description of the item, or the custom description
+        if set.
+
+        :param item: [required] The item for which we want the description
+        :type item: Content object
+        :returns: the item description
+        :rtype: unicode
+        """
+        # First we get the url for the item itself
+        description = item.Description()
+        uuid = self.get_uid(item)
+        data_mgr = ITileDataManager(self)
+        data = data_mgr.get()
+        uuids = data['uuids']
+        if uuid in uuids:
+            if uuids[uuid].get('custom_description', u''):
+                # If we had a custom description set, then get that
+                description = uuids[uuid].get('custom_description')
+        return description
+
+    def _get_types_that_use_view_action(self):
+        """Return a list of types that use the view action in listings.
+
+        :returns: a list of content types
+        :rtype: tuple
+        """
+        portal_properties = api.portal.get_tool('portal_properties')
+        return portal_properties.site_properties.getProperty(
             'typesUseViewActionInListings', ())
+
+    def get_url(self, item):
+        """Get the URL of the item, or the custom URL if set.
+
+        :param item: [required] The item for which we want the URL
+        :type item: Content object
+        :returns: the item URL
+        :rtype: str
+        """
         # First we get the url for the item itself
         url = item.absolute_url()
-        if item.portal_type in use_view_action:
+        if item.portal_type in self._get_types_that_use_view_action():
             url = url + '/view'
         uuid = self.get_uid(item)
         data_mgr = ITileDataManager(self)
         data = data_mgr.get()
         uuids = data['uuids']
         if uuid in uuids:
-            if uuids[uuid].get('custom_url', u""):
+            if uuids[uuid].get('custom_url', u''):
                 # If we had a custom url set, then get that
                 url = uuids[uuid].get('custom_url')
         return url
@@ -113,12 +160,14 @@ class CarouselTile(ListTile):
 
 
 class UUIDSFieldDataConverter(BaseDataConverter):
+
     """A data converter using the field's ``fromUnicode()`` method."""
+
     adapts(IDict, ITextLinesSortableWidget)
 
     def toWidgetValue(self, value):
-        """ Converts the internal stored value into something that a z3c.form
-        widget understands
+        """Convert the internal stored value into something that a
+        z3c.form widget understands.
 
         :param value: [required] The internally stored value
         :type value: Dict
@@ -129,8 +178,8 @@ class UUIDSFieldDataConverter(BaseDataConverter):
         return '\r\n'.join([i[0] for i in ordered_uuids])
 
     def toFieldValue(self, value):
-        """ Passes the value extracted from the widget to the internal
-        structure. In this case, the value expected is already formatted
+        """Pass the value extracted from the widget to the internal
+        structure. In this case, the value expected is already formatted.
 
         :param value: [required] The data extracted from the widget
         :type value: Dict

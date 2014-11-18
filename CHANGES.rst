@@ -6,13 +6,14 @@ There's a frood who really knows where his towel is.
 1.0a11 (unreleased)
 ^^^^^^^^^^^^^^^^^^^
 
-- Nothing changed yet.
+- Allow to choose a custom title and description on items in a carousel tile (closes `#459`_).
+  [rodfersou]
 
 
 1.0a10 (2014-10-31)
 ^^^^^^^^^^^^^^^^^^^
 
-- Allow to set a custom URL on elements for a Carousel (solves `#377`_).
+- Allow to set a custom URL on elements for a Carousel (fixes `#377`_).
   [frapell]
 
 - If an Image content is included, redirect to view and not the image itself
@@ -581,4 +582,5 @@ There's a frood who really knows where his towel is.
 .. _`#426`: https://github.com/collective/collective.cover/issues/426
 .. _`#438`: https://github.com/collective/collective.cover/issues/438
 .. _`#449`: https://github.com/collective/collective.cover/issues/449
+.. _`#459`: https://github.com/collective/collective.cover/issues/459
 .. _`PloneFormGen`: https://pypi.python.org/pypi/Products.PloneFormGen

@@ -14,6 +14,7 @@ ${image_selector}  //div[@id="content-trees"]//li[@class="ui-draggable"]/a[@data
 ${image_title}  //div[@class="galleria-info-title"]/a[text()='Test image']/..
 ${image_selector2}  //div[@id="content-trees"]//li[@class="ui-draggable"]/a[@data-ct-type="Image"]/span[text()='Test image #1']/..
 ${image_title2}  //div[@class="galleria-info-title"]/a[text()='Test image #1']/..
+${image_title_test}  //div[@class="galleria-info-title"]/a[text()='New Title']/..
 ${tile_selector}  div.tile-container div.tile
 ${autoplay_id}  collective-cover-carousel-autoplay-0
 ${edit_link_selector}  a.edit-tile-link
@@ -29,8 +30,6 @@ Get Total Carousel Images
 *** Test cases ***
 
 Test Carousel Tile
-    [Tags]  Expected Failure
-
     Enable Autologin as  Site Administrator
     Go to Homepage
     Create Cover  Title  Description
@@ -109,31 +108,93 @@ Test Carousel Tile
     Compose Cover
     Page Should Contain  options.autoplay = false;
 
-    # Test Custom URL functionality
+    ### Test Custom Title functionality
     Click Link  link=View
-    ${image_url} =  Get Element Attribute  xpath=.//div[@class='galleria-info-title']/a@href
-    Should Be Equal  ${image_url}  ${PLONE_URL}/my-image/view
+    Wait Until Page Contains Element  xpath=${image_title}
+    ${title} =  Get Text  xpath=.//div[@class='galleria-info-title']/a
+    Should Be Equal  ${title}  Test image
 
     # Go to the right
     Click Element  xpath=.//div[@class='galleria-image-nav-right']
     Wait Until Page Contains Element  xpath=${image_title2}
-    ${image_url} =  Get Element Attribute  xpath=.//div[@class='galleria-info-title']/a@href
-    Should Be Equal  ${image_url}  ${PLONE_URL}/my-image1/view
+    ${title} =  Get Text  xpath=.//div[@class='galleria-info-title']/a
+    Should Be Equal  ${title}  Test image #1
 
-
+    # Set custom Title
     Compose Cover
     Click Link  css=${edit_link_selector}
-    Input Text  xpath=.//div[@class='textline-sortable-element'][2]/input  http://www.google.com
+    Input Text  xpath=.//div[@class='textline-sortable-element'][2]//input[@class='custom-title-input']  New Title
     Click Button  Save
     Sleep  2s  Wait for carousel to load
 
     Click Link  link=View
+    Wait Until Page Contains Element  xpath=${image_title}
+    ${title} =  Get Text  xpath=.//div[@class='galleria-info-title']/a
+    Should Be Equal  ${title}  Test image
+
+    # Go to the right
+    Click Element  xpath=.//div[@class='galleria-image-nav-right']
+    Wait Until Page Contains Element  xpath=${image_title_test}
+    ${title} =  Get Text  xpath=.//div[@class='galleria-info-title']/a
+    Should Be Equal  ${title}  New Title
+
+    ### Test Custom Description functionality
+    Click Link  link=View
+    Wait Until Page Contains Element  xpath=${image_title}
+    ${description} =  Get Text  xpath=.//div[@class='galleria-info-description']
+    Should Be Equal  ${description}  This image was created for testing purposes
+
+    # Go to the right
+    Click Element  xpath=.//div[@class='galleria-image-nav-right']
+    Wait Until Page Contains Element  xpath=${image_title_test}
+    ${description} =  Get Text  xpath=.//div[@class='galleria-info-description']
+    Should Be Equal  ${description}  This image #1 was created for testing purposes
+
+    # Set custom Description
+    Compose Cover
+    Click Link  css=${edit_link_selector}
+    Input Text  xpath=.//div[@class='textline-sortable-element'][2]//textarea[@class='custom-description-input']  New Description
+    Click Button  Save
+    Sleep  2s  Wait for carousel to load
+
+    Click Link  link=View
+    Wait Until Page Contains Element  xpath=${image_title}
+    ${description} =  Get Text  xpath=.//div[@class='galleria-info-description']
+    Should Be Equal  ${description}  This image was created for testing purposes
+
+    # Go to the right
+    Click Element  xpath=.//div[@class='galleria-image-nav-right']
+    Wait Until Page Contains Element  xpath=${image_title_test}
+    ${description} =  Get Text  xpath=.//div[@class='galleria-info-description']
+    Should Be Equal  ${description}  New Description
+
+    ### Test Custom URL functionality
+    Click Link  link=View
+    Wait Until Page Contains Element  xpath=${image_title}
     ${image_url} =  Get Element Attribute  xpath=.//div[@class='galleria-info-title']/a@href
     Should Be Equal  ${image_url}  ${PLONE_URL}/my-image/view
 
     # Go to the right
     Click Element  xpath=.//div[@class='galleria-image-nav-right']
-    Wait Until Page Contains Element  xpath=${image_title2}
+    Wait Until Page Contains Element  xpath=${image_title_test}
+    ${image_url} =  Get Element Attribute  xpath=.//div[@class='galleria-info-title']/a@href
+    Should Be Equal  ${image_url}  ${PLONE_URL}/my-image1/view
+
+    # Set custom URL
+    Compose Cover
+    Click Link  css=${edit_link_selector}
+    Input Text  xpath=.//div[@class='textline-sortable-element'][2]//input[@class='custom-url-input']  http://www.google.com
+    Click Button  Save
+    Sleep  2s  Wait for carousel to load
+
+    Click Link  link=View
+    Wait Until Page Contains Element  xpath=${image_title}
+    ${image_url} =  Get Element Attribute  xpath=.//div[@class='galleria-info-title']/a@href
+    Should Be Equal  ${image_url}  ${PLONE_URL}/my-image/view
+
+    # Go to the right
+    Click Element  xpath=.//div[@class='galleria-image-nav-right']
+    Wait Until Page Contains Element  xpath=${image_title_test}
     ${image_url} =  Get Element Attribute  xpath=.//div[@class='galleria-info-title']/a@href
     Should Be Equal  ${image_url}  http://www.google.com/
 

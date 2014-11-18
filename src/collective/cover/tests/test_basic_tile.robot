@@ -62,7 +62,7 @@ Test Basic Tile
     Compose Cover
     Open Content Chooser
     Drag And Drop  css=${image_selector}  css=${tile_selector}
-    Page Should Contain  Test image
+    Wait Until Page Contains Element  css=div.cover-basic-tile a img
 
     # move to the default view and check tile persisted
     Click Link  link=View

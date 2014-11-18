@@ -3,15 +3,32 @@
       tal:omit-tag="">
 <style media="screen" type="text/css">
 .textline-sortable-element {
-    height: 64px;
+    float: left;
     width: 100%;
     display: block;
     position: relative;
+    margin-bottom: 1em;
 }
 
-.tileImage{
+.tileImage {
     float: left;
-    margin: 0 1em 0.5em 0;
+    margin: 1em 1em 0 0;
+}
+.tileProperties {
+    float: left;
+    min-width: 80%;
+}
+.tileProperties span,
+.tileProperties input,
+.tileProperties textarea {
+    float: right;
+}
+div.tileProperties input,
+div.tileProperties textarea {
+    min-width: 65%
+}
+.tileProperties span {
+    margin-right: .5em;
 }
 </style>
 <div data-carousel="carousel-sort">
@@ -53,22 +70,34 @@
                tal:define="obj nocall:item/obj;
                            uuid item/uuid"
                tal:attributes="data-uid uuid">
-                <img class="tileImage"
-                     tal:define="thumbnail python:view.thumbnail(obj)"
-                     tal:condition="thumbnail"
-                     tal:attributes="src thumbnail/url;
-                                     width thumbnail/width;
-                                     height thumbnail/height" />
-            <h3 tal:content="obj/Title" />
-            <p tal:content="obj/Description" />
-
-            <span i18n:translate="">Custom URL</span>
-            <input class="custom-url-input"
-                   tal:attributes="name python:view.name+'.custom_url.%s' % uuid;
-                                   value python:view.get_custom_url(uuid)">
+            <img class="tileImage"
+                 tal:define="thumbnail python:view.thumbnail(obj)"
+                 tal:condition="thumbnail"
+                 tal:attributes="src thumbnail/url;
+                                 width thumbnail/width;
+                                 height thumbnail/height" />
+            <div class="tileProperties">
+              <div class="tileTitle">
+                <input class="custom-title-input"
+                       tal:attributes="name python:'{0}.custom_title.{1}'.format(view.name, uuid);
+                                       value python:view.get_custom_title(uuid)">
+                <span i18n:translate="">Custom Title</span>
+              </div>
+              <div class="tileDescription">
+                <textarea class="custom-description-input"
+                          tal:attributes="name python:'{0}.custom_description.{1}'.format(view.name, uuid)"
+                          tal:content="python:view.get_custom_description(uuid)">
+                </textarea>
+                <span i18n:translate="">Custom Description</span>
+              </div>
+              <div class="tileURL">
+                <input class="custom-url-input"
+                       tal:attributes="name python:'{0}.custom_url.{1}'.format(view.name, uuid);
+                                       value python:view.get_custom_url(uuid)">
+                <span i18n:translate="">Custom URL</span>
+              </div>
+            </div>
           </div>
-
-          <div class="visualClear"><!-- --></div>
         </tal:items>
       </div>
     </div>

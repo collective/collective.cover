@@ -148,7 +148,7 @@ $(document).ready(function() {
                   });
                 };
 
-                var textarea = carousel.find('textarea');
+                var textarea = carousel.find('>textarea');
                 var sortable = carousel.find('.sortable');
                 textarea.hide();
 
@@ -171,4 +171,3 @@ $(document).ready(function() {
         }
     });
 });
-
