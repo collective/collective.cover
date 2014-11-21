@@ -215,13 +215,16 @@ class CollectionTileTestCase(TestTileMixin, unittest.TestCase):
         tile_config = self.tile.get_tile_configuration()
         self.assertEqual(tile_config['date']['visibility'], u'on')
 
+        # Get the first news item from the collection
         content_listing_obj = collection.results()[0]
 
         date = self.tile.Date(content_listing_obj)
-
         self.assertFalse(hasattr(date, '__call__'), 'Date should not be calleable')
 
-        fmt_date = self.portal.toLocalizedTime(content_listing_obj.Date(), True)
+        fmt_date = self.portal.toLocalizedTime(date, True)
 
         rendered = self.tile()
-        self.assertTrue(fmt_date in rendered)
+        self.assertTrue(
+            fmt_date in rendered,
+            'Formatted date should be in rendered tile'
+        )
