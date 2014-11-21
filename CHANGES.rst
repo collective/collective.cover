@@ -8,7 +8,7 @@ There's a frood who really knows where his towel is.
 
 - Allow to choose a custom title and description on items in a carousel tile (closes `#459`_).
   [rodfersou]
-- Fix to show dates for results in collection tile (fixes `#463`_.
+- Fix to show dates for results in collection tile (fixes `#463`_).
   [kcleong]
 
 1.0a10 (2014-10-31)
