@@ -6,10 +6,10 @@ There's a frood who really knows where his towel is.
 1.0a11 (unreleased)
 ^^^^^^^^^^^^^^^^^^^
 
-- Allow to choose a custom title and description on items in a carousel tile (closes `#459`_).
-  [rodfersou]
 - Fix to show dates for results in collection tile (fixes `#463`_).
   [kcleong]
+- Allow to choose a custom title and description on items in a carousel tile (closes `#459`_).
+  [rodfersou]
 
 1.0a10 (2014-10-31)
 ^^^^^^^^^^^^^^^^^^^
