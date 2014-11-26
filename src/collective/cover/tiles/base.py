@@ -5,7 +5,6 @@ from AccessControl import Unauthorized
 from Acquisition import aq_base
 from Acquisition import aq_inner
 from Acquisition import aq_parent
-from plone.app.contentlisting.catalog import CatalogContentListingObject
 from collective.cover import _
 from collective.cover.config import PROJECTNAME
 from collective.cover.controlpanel import ICoverSettings
@@ -352,10 +351,9 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
         calendar = api.portal.get_tool('portal_calendar')
         # calendar_types lists all Event-like content types
         if brain.portal_type not in calendar.calendar_types:
-            if type(brain) == CatalogContentListingObject:
-                return brain.Date()
-            else:
-                return brain.Date
+            # return callable date for content listing objects or date
+            # as string for catalog/brain objects.
+            return brain.Date() if callable(brain.Date) else brain.Date
         else:
             # an Event must have a start date
             assert brain.start is not Missing.Value
