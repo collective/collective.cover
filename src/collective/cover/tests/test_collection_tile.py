@@ -219,7 +219,7 @@ class CollectionTileTestCase(TestTileMixin, unittest.TestCase):
         content_listing_obj = collection.results()[0]
 
         date = self.tile.Date(content_listing_obj)
-        self.assertFalse(hasattr(date, '__call__'), 'Date should not be calleable')
+        self.assertFalse(callable(date), 'Date should not be calleable')
 
         fmt_date = self.portal.toLocalizedTime(date, True)
 
