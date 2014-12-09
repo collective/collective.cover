@@ -6,8 +6,13 @@ There's a frood who really knows where his towel is.
 1.0a11 (unreleased)
 ^^^^^^^^^^^^^^^^^^^
 
+- Extend upgrade step to update the structure of all tiles inheriting from the list tile (fixes `#466`_).
+  Fix upgrade step to use a dict instead of a PersistentMapping.
+  [hvelarde]
+
 - Fix to show dates for results in collection tile (fixes `#463`_).
   [kcleong]
+
 - Allow to choose a custom title and description on items in a carousel tile (closes `#459`_).
   [rodfersou]
 
@@ -585,4 +590,5 @@ There's a frood who really knows where his towel is.
 .. _`#449`: https://github.com/collective/collective.cover/issues/449
 .. _`#459`: https://github.com/collective/collective.cover/issues/459
 .. _`#463`: https://github.com/collective/collective.cover/issues/463
+.. _`#466`: https://github.com/collective/collective.cover/issues/466
 .. _`PloneFormGen`: https://pypi.python.org/pypi/Products.PloneFormGen
