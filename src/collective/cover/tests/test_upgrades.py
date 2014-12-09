@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from collective.cover.config import DEFAULT_GRID_SYSTEM
 from collective.cover.testing import INTEGRATION_TESTING
-from persistent.mapping import PersistentMapping
 from plone import api
 from plone.registry.interfaces import IRegistry
 from plone.tiles.interfaces import ITileDataManager
@@ -259,7 +258,7 @@ class Upgrade9to10TestCase(UpgradeTestCaseBase):
         self._do_upgrade_step(step)
         old_data = ITileDataManager(tile).get()
         self.assertFalse(isinstance(old_data['uuids'], list))
-        self.assertTrue(isinstance(old_data['uuids'], PersistentMapping))
+        self.assertTrue(isinstance(old_data['uuids'], dict))
         self.assertEqual(old_data['uuids']['uuid1']['order'], u'0')
         self.assertEqual(old_data['uuids']['uuid2']['order'], u'2')
         self.assertEqual(old_data['uuids']['uuid3']['order'], u'1')
