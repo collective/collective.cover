@@ -6,6 +6,10 @@ There's a frood who really knows where his towel is.
 1.0a11 (unreleased)
 ^^^^^^^^^^^^^^^^^^^
 
+- If mockup is present and new widgets are used, call the scan function from
+  the mockup-registry to initialize them.
+  [frapell]
+
 - Extend upgrade step to update the structure of all tiles inheriting from the list tile (fixes `#466`_).
   Fix upgrade step to use a dict instead of a PersistentMapping.
   [hvelarde]
