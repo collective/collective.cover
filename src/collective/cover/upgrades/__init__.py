@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
 from collective.cover.config import PROJECTNAME
 from collective.cover.controlpanel import ICoverSettings
+from collective.cover.tiles.list import IListTile
 from plone import api
 from plone.registry.interfaces import IRegistry
 from plone.tiles.interfaces import ITileDataManager
+from plone.tiles.interfaces import ITileType
 from zope.component import getUtility
+from zope.schema.interfaces import IVocabularyFactory
 
 import logging
 
@@ -115,28 +118,25 @@ def change_configlet_permissions(context):
     logger.info('configlet permissions updated')
 
 
+def _get_tiles_inherit_from_list(context):
+    """Return a list of all tiles inheriting from the list tile."""
+    name = 'collective.cover.EnabledTiles'
+    enabled_tiles = getUtility(IVocabularyFactory, name)(context)
+    tiles_to_update = []
+    for i in enabled_tiles:
+        tile = getUtility(ITileType, i.value)
+        if issubclass(tile.schema, IListTile):
+            tiles_to_update.append(i.value)
+    return tiles_to_update
+
+
 def upgrade_carousel_tiles_custom_url(context):
     """Update structure of tiles inheriting from the list tile."""
-
-    def get_tiles_to_update():
-        """Return a list of all tiles inheriting from the list tile."""
-        from collective.cover.tiles.list import IListTile
-        from plone.tiles.interfaces import ITileType
-        from zope.component import getUtility
-        from zope.schema.interfaces import IVocabularyFactory
-        name = 'collective.cover.EnabledTiles'
-        enabled_tiles = getUtility(IVocabularyFactory, name)(context)
-        tiles_to_update = []
-        for i in enabled_tiles:
-            tile = getUtility(ITileType, i.value)
-            if issubclass(tile.schema, IListTile):
-                tiles_to_update.append(i.value)
-        return tiles_to_update
 
     # Get covers
     covers = context.portal_catalog(portal_type='collective.cover.content')
     logger.info('About to update {0} objects'.format(len(covers)))
-    tiles_to_update = get_tiles_to_update()
+    tiles_to_update = _get_tiles_inherit_from_list(context)
     logger.info('{0} tile types will be updated ({1})'.format(
         len(tiles_to_update), ', '.join(tiles_to_update)))
     for cover in covers:
