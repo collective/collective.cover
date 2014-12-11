@@ -6,6 +6,9 @@ There's a frood who really knows where his towel is.
 1.0a11 (unreleased)
 ^^^^^^^^^^^^^^^^^^^
 
+- Add upgrade step for reverting tiles already migrated to PersistentMapping in 1.0a10
+  [frapell]
+
 - Extend upgrade step to update the structure of all tiles inheriting from the list tile (fixes `#466`_).
   Fix upgrade step to use a dict instead of a PersistentMapping.
   [hvelarde]

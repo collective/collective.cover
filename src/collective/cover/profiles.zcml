@@ -124,4 +124,17 @@
 
   </genericsetup:upgradeSteps>
 
+  <genericsetup:upgradeSteps
+      source="10"
+      destination="11"
+      profile="collective.cover:default">
+
+    <genericsetup:upgradeStep
+        title="Revert PersistentMapping back to dict"
+        description="Initial structure should not be a PersistentMapping, but regular dictionaries."
+        handler=".upgrades.fix_persistentmap_to_dict"
+        />
+
+  </genericsetup:upgradeSteps>
+
 </configure>
