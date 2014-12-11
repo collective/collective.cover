@@ -49,6 +49,25 @@ function TitleMarkupSetup(){
     removeObjFromTile();
 }
 
+function initPatterns(selector) {
+    // In case plone.app.widgets is installed, we want to initialize patterns
+    // like for instance, TinyMCE
+    try {
+        require('mockup-registry').scan($(selector));
+        $(selector+ " input#buttons-save").on("click", function (){
+            tinyMCE.triggerSave();
+        });
+        // Apparently JS devs love to z-index always at 9999. This conflicts
+        // with TinyMCE overlays
+        $(".overlay").on("mouseover", function (){
+            $('div.modal-wrapper').css('z-index', "10050");
+        });
+    } catch(error) {
+        // If we are here it most probably means we don't have
+        // plone.app.widgets, so just ignore and continue
+    }
+}
+
 $(document).ready(function() {
     var root = typeof exports !== "undefined" && exports !== null ? exports : this;
     root.reloadTypes = ['collective.cover.carousel'];
