@@ -5,8 +5,8 @@ Documentation  https://github.com/collective/collective.cover/issues/59
 Resource  cover.robot
 Library  Remote  ${PLONE_URL}/RobotRemote
 
-Suite Setup  Open Test Browser
-Suite Teardown  Close all browsers
+Test Setup  Open SauceLabs test browser
+Test Teardown  Run keywords  Report test status  Close all browsers
 
 *** Variables ***
 
