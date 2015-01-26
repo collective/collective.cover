@@ -240,3 +240,15 @@ WARNING: Switching the grid system will apply to all new and existing
 covers.  If you already made layouts for a 16 column grid and switch to
 e.g. a 12 column grid, you will have to manually update all existing
 covers (their layout is not recalculated automatically).
+
+WARNING 2: Cover support saving layout designs by exporting them to a
+json/python dictionairy which is stored in the Plone registry. Cover also
+inserts a few of these saved preset layouts upon installation, check
+registry.xml in collective.cover source.
+
+You always start a new cover by selecting one of these layout designs on the
+Cover add page. If you switch from the default 16 column deco grid to another
+grid with another maximum cover size, these saved layouts however will probably
+still contain a 16 width column and this can mock up your design in small ways.
+If you do swith grid system, make sure you clear the default cover layouts
+and/or insert your own with the correct max column size.

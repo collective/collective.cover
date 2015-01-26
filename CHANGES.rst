@@ -6,6 +6,9 @@ There's a frood who really knows where his towel is.
 1.0a11 (unreleased)
 ^^^^^^^^^^^^^^^^^^^
 
+- Add warning in the developer docs that switching the default grid system also means you should pay extra attention to the preset/saved cover layouts as these can contain invalid grid sizes.
+  [fredvd]
+
 - Add upgrade step for reverting tiles already migrated to PersistentMapping in 1.0a10
   [frapell]
 
