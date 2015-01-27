@@ -6,6 +6,9 @@ There's a frood who really knows where his towel is.
 1.0a11 (unreleased)
 ^^^^^^^^^^^^^^^^^^^
 
+- Allow new empty carousel tiles to be edited in compose mode. (fixes `#472`_).
+  [fredvd]
+
 - Add warning in the developer docs that switching the default grid system also means you should pay extra attention to the preset/saved cover layouts as these can contain invalid grid sizes.
   [fredvd]
 

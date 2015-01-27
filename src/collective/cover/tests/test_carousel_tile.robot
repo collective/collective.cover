@@ -43,6 +43,11 @@ Test Carousel Tile
     Compose Cover
     Page Should Contain  This carousel is empty; open the content chooser and drag-and-drop some items here.
 
+    # Test if we can edit the cover without any content added to it yet
+    Click Link  css=${edit_link_selector}
+    Page Should Contain  Edit Carousel Tile
+    Click Button  Cancel
+
     # drag&drop an Image
     Open Content Chooser
     Click Element  link=Content tree

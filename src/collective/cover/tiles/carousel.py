@@ -173,6 +173,12 @@ class UUIDSFieldDataConverter(BaseDataConverter):
         :type value: Dict
         :returns: A string with UUIDs separated by \r\n
         """
+
+        # A new carousel tile has no items, populate_with_uids has not been
+        # called yet, so incoming uuids is not an empty dict() but None
+        if value is None:
+            return ''
+
         ordered_uuids = [(k, v) for k, v in value.items()]
         ordered_uuids.sort(key=lambda x: x[1]['order'])
         return '\r\n'.join([i[0] for i in ordered_uuids])
