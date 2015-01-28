@@ -6,6 +6,9 @@ There's a frood who really knows where his towel is.
 1.0a11 (unreleased)
 ^^^^^^^^^^^^^^^^^^^
 
+- Don't ignore dropped objects on carousel tiles if the image is added to the object using a Dexterity behavior. (fixes '#473`_`).
+  [fredvd]
+
 - Allow new empty carousel tiles to be edited in compose mode. (fixes `#472`_).
   [fredvd]
 
