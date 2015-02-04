@@ -1,3 +1,4 @@
+(function ($) {
 var ajaxSearchRequest = [];
 function contentSearchFilter(url) {
   var queryVal = $("#contentchooser-content-search-input").val();
@@ -15,16 +16,14 @@ function contentSearchFilter(url) {
   return false;
 }
 
-(function ($) {
-    $.fn.liveDraggable = function (opts) {
-        $(document).on("mouseover", this.selector, function() {
-            if (!$(this).data("init")) {
-                $(this).data("init", true).draggable(opts);
-            }
-        });
-        return $();
-    };
-}(jQuery));
+$.fn.liveDraggable = function (opts) {
+    $(document).on("mouseover", this.selector, function() {
+        if (!$(this).data("init")) {
+            $(this).data("init", true).draggable(opts);
+        }
+    });
+    return $();
+};
 
 
 function contentchooserMaker(options) {
@@ -172,6 +171,7 @@ $(function() {
   });
 
 });
+}(jQuery));
 
 
 var coveractions = {
@@ -380,6 +380,7 @@ var coveractions = {
 coveractions.preInit();
 
 
+(function ($) {
 function filterOnKeyUp() {
     $("#contentchooser-content-search-button").css("display", "none");
     $(".contentchooser-content-trees").keyup(function() {
@@ -395,3 +396,4 @@ function filterOnKeyUp() {
 $(document).ready(function() {
   filterOnKeyUp();
 });
+}(jQuery));
