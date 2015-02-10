@@ -25,6 +25,9 @@ There's a frood who really knows where his towel is.
 - Allow to choose a custom title and description on items in a carousel tile (closes `#459`_).
   [rodfersou]
 
+- Fix to check if custom attributes were changed from default value (closes `#476`_).
+  [rodfersou]
+
 1.0a10 (2014-10-31)
 ^^^^^^^^^^^^^^^^^^^
 
