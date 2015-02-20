@@ -27,6 +27,7 @@ There's a frood who really knows where his towel is.
 
 - Remove hard dependency on plone.app.stagingbehavior as that package is no longer needed in Plone 5.
   Under Plone < 5.0 you should now explicitly add it to the `eggs` part of your buildout configuration to avoid issues while upgrading.
+  Support for checkout and checkin operations will be automatically configured if ``plone.app.stagingbehavior`` is available.
   [hvelarde]
 
 - Implement drag and drop among tiles (closes `#487`_).

@@ -237,12 +237,14 @@ class CarouselTileTestCase(TestTileMixin, unittest.TestCase):
 
     def test_populate_with_collection(self):
         from collective.cover.testing import zptlogo
+        from collective.cover.tests.utils import set_image_field
         with api.env.adopt_roles(['Manager']):
-            api.content.create(
-                self.portal, 'News Item', id='new1', image=zptlogo)
-            api.content.create(
-                self.portal, 'News Item', id='new2', image=zptlogo)
+            api.content.create(self.portal, 'News Item', id='new1')
+            api.content.create(self.portal, 'News Item', id='new2')
             api.content.create(self.portal, 'News Item', id='new3')
+            # handle Archetypes and Dexterity
+            set_image_field(self.portal['new1'], zptlogo)
+            set_image_field(self.portal['new2'], zptlogo)
 
             query = [dict(
                 i='portal_type',

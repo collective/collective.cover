@@ -4,27 +4,40 @@
 We have to set different test fixtures depending on Plone versions and
 features we want to test:
 
+plone.app.contenttypes:
+    installed under Plone 4.3, if requested; installed under Plone 5
+
+plone.app.stagingbehavior
+    installed under Plone 4 only
+
 plone.app.widgets
     installed under Plone 4.3, if requested
 
 Products.PloneFormGen
     installed under Plone 4 only
 """
-from App.Common import package_home
 from collective.cover.config import PLONE_VERSION
-from PIL import Image
-from PIL import ImageChops
+from collective.cover.tests.utils import create_standard_content_for_tests
+from collective.cover.tests.utils import set_file_field
+from collective.cover.tests.utils import set_image_field
 from plone.app.robotframework.testing import AUTOLOGIN_LIBRARY_FIXTURE
 from plone.app.testing import FunctionalTesting
 from plone.app.testing import IntegrationTesting
 from plone.app.testing import PLONE_FIXTURE
 from plone.app.testing import PloneSandboxLayer
 from plone.testing import z2
-from StringIO import StringIO
 
 import os
 import pkg_resources
 import random
+
+try:
+    pkg_resources.get_distribution('plone.app.contenttypes')
+except pkg_resources.DistributionNotFound:
+    DEXTERITY_ONLY = False
+else:
+    # this environment variable is set in .travis.yml test matrix
+    DEXTERITY_ONLY = os.environ.get('DEXTERITY_ONLY') is not None
 
 try:
     pkg_resources.get_distribution('plone.app.widgets')
@@ -50,7 +63,6 @@ ALL_CONTENT_TYPES = [
     'News Item',
 ]
 
-
 zptlogo = (
     'GIF89a\x10\x00\x10\x00\xd5\x00\x00\xff\xff\xff\xff\xff\xfe\xfc\xfd\xfd'
     '\xfa\xfb\xfc\xf7\xf9\xfa\xf5\xf8\xf9\xf3\xf6\xf8\xf2\xf5\xf7\xf0\xf4\xf6'
@@ -72,17 +84,18 @@ zptlogo = (
 )
 
 
-def loadFile(name, size=0):
-    """Load file from testing directory
-    """
-    path = os.path.join(package_home(globals()), 'tests/input', name)
-    fd = open(path, 'rb')
-    data = fd.read()
-    fd.close()
+def load_file(name):
+    """Load file from testing directory."""
+    path = os.path.abspath(os.path.dirname(__file__))
+    filename = os.path.join(path, 'tests/input', name)
+    with open(filename, 'r') as f:
+        data = f.read()
     return data
 
 
 def generate_jpeg(width, height):
+    from PIL import Image
+    from StringIO import StringIO
     # Mandelbrot fractal
     # FB - 201003254
     # drawing area
@@ -114,16 +127,6 @@ def generate_jpeg(width, height):
     return output
 
 
-def images_are_equal(str1, str2):
-    im1 = StringIO()
-    im2 = StringIO()
-    im1.write(str1)
-    im1.seek(0)
-    im2.write(str2)
-    im2.seek(0)
-    return ImageChops.difference(Image.open(im1), Image.open(im2)).getbbox() is None
-
-
 class Fixture(PloneSandboxLayer):
 
     defaultBases = (PLONE_FIXTURE,)
@@ -132,6 +135,11 @@ class Fixture(PloneSandboxLayer):
         if PLONE_VERSION < '5.0':
             import plone.app.stagingbehavior
             self.loadZCML(package=plone.app.stagingbehavior)
+
+            if DEXTERITY_ONLY:
+                import plone.app.contenttypes
+                self.loadZCML(package=plone.app.contenttypes)
+                z2.installProduct(app, 'Products.DateRecurringIndex')
 
             if NEW_WIDGETS:
                 import plone.app.widgets
@@ -154,28 +162,29 @@ class Fixture(PloneSandboxLayer):
 
     def setUpPloneSite(self, portal):
         if PLONE_VERSION < '5.0':
+            if DEXTERITY_ONLY:
+                self.applyProfile(portal, 'plone.app.contenttypes:default')
+
             if NEW_WIDGETS:
                 self.applyProfile(portal, 'plone.app.widgets:default')
 
             if HAS_PFG:
                 self.applyProfile(portal, 'Products.PloneFormGen:default')
 
-        # Install into Plone site using portal_setup
         self.applyProfile(portal, 'collective.cover:default')
         self.applyProfile(portal, 'collective.cover:testfixture')
-        portal['my-image'].setImage(generate_jpeg(50, 50))
-        portal['my-image'].reindexObject()
-        portal['my-image1'].setImage(generate_jpeg(50, 50))
-        portal['my-image1'].reindexObject()
-        portal['my-image2'].setImage(generate_jpeg(50, 50))
-        portal['my-image2'].reindexObject()
-        portal['my-file'].setFile(loadFile('lorem_ipsum.txt'))
-        portal['my-file'].reindexObject()
-        portal['my-news-item'].setImage(generate_jpeg(50, 50))
-        portal['my-news-item'].reindexObject()
+
+        # setup test content
+        create_standard_content_for_tests(portal)
+        set_file_field(portal['my-file'], load_file('lorem_ipsum.txt'))
+        set_image_field(portal['my-image'], generate_jpeg(50, 50))
+        set_image_field(portal['my-image1'], generate_jpeg(50, 50))
+        set_image_field(portal['my-image2'], generate_jpeg(50, 50))
+        set_image_field(portal['my-news-item'], generate_jpeg(50, 50))
+
         portal_workflow = portal.portal_workflow
         portal_workflow.setChainForPortalTypes(
-            ['Collection', 'Event'], ['simple_publication_workflow'])
+            ['Collection'], ['simple_publication_workflow'])
 
         # Prevent kss validation errors in Plone 4.2
         portal_kss = getattr(portal, 'portal_kss', None)

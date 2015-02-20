@@ -58,8 +58,11 @@ class BannerTile(PersistentCoverTile):
 
         super(BannerTile, self).populate_with_object(obj)  # check permissions
 
-        if hasattr(obj, 'getRemoteUrl'):
-            remote_url = obj.getRemoteUrl()
+        if obj.portal_type == 'Link':
+            try:
+                remote_url = obj.getRemoteUrl()  # Archetypes
+            except AttributeError:
+                remote_url = obj.remoteUrl  # Dexterity
         else:
             # Get object URL
             # For Image and File objects (or any other in typesUseViewActionInListings)

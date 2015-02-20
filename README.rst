@@ -114,12 +114,21 @@ To enable this package in a buildout-based installation:
     ...
     eggs =
         collective.cover
+        plone.app.stagingbehavior
 
     [versions]
     ...
     collective.js.bootstrap = 2.3.1.1
     plone.app.blocks = 2.2.0
     plone.app.tiles = 1.0.1
+
+    # if you want to use plone.app.widgets
+    plone.app.widgets = 1.8.0
+
+    # if you want to use plone.app.contenttypes
+    plone.app.contenttypes = 1.1
+    plone.app.event = 1.1.5
+    plone.formwidget.datetime = 1.1
 
 #. If you are using Plone 4.2.x you need to add the following also::
 
@@ -129,15 +138,6 @@ To enable this package in a buildout-based installation:
     plone.app.jquerytools = 1.5.7
     plone.app.z3cform = 0.6.3
     plone.directives.form = 1.1
-
-#. If you are using Plone < 5.0, and you want to use versioning support, you should also add::
-
-    [buildout]
-    ...
-    eggs =
-        plone.app.stagingbehavior
-
-   Support for checkout and checkin operations will be automatically configured if ``plone.app.stagingbehavior`` is available.
 
 #. If you want to use a newer release of ``collective.js.bootstrap``, you will need to update ``plone.app.jquery``::
 

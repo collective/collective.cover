@@ -65,34 +65,27 @@ class BannerTileTestCase(TestTileMixin, unittest.TestCase):
         fields to avoid UnicodeDecodeError.
         """
         title = u'El veloz murciélago hindú comía feliz cardillo y kiwi'
-        remote_url = 'http://plone.org'
         obj = self.portal['my-link']
         obj.setTitle(title)
-        obj.setRemoteUrl('http://plone.org')
         obj.reindexObject()
         self.tile.populate_with_object(obj)
         self.assertEqual(self.tile.data.get('title'), title)
         self.assertIsInstance(self.tile.data.get('title'), unicode)
         self.assertFalse(self.tile.has_image)
-        self.assertEqual(self.tile.getRemoteUrl(), remote_url)
+        self.assertEqual(self.tile.getRemoteUrl(), 'http://plone.org')
 
     def test_populate_tile_with_link_object_string(self):
         """This test complements test_populate_with_link_object_unicode
         using strings instead of unicode objects.
         """
         title = 'The quick brown fox jumps over the lazy dog'
-        remote_url = 'http://plone.org'
         obj = self.portal['my-link']
         obj.setTitle(title)
-        obj.setRemoteUrl('http://plone.org')
         obj.reindexObject()
         self.tile.populate_with_object(obj)
-        self.assertEqual(
-            unicode(title, 'utf-8'),
-            self.tile.data.get('title')
-        )
+        self.assertEqual(unicode(title, 'utf-8'), self.tile.data.get('title'))
         self.assertFalse(self.tile.has_image)
-        self.assertEqual(self.tile.getRemoteUrl(), remote_url)
+        self.assertEqual(self.tile.getRemoteUrl(), 'http://plone.org')
 
     def test_render_empty(self):
         msg = 'Drag&amp;drop an image or link here to populate the tile.'
@@ -116,5 +109,4 @@ class BannerTileTestCase(TestTileMixin, unittest.TestCase):
         self.tile.populate_with_object(obj)
         rendered = self.tile()
         self.assertNotIn('<img ', rendered)
-        # FIXME: set remote_url on the object
-        self.assertIn('<a href="http://">Test link</a>', rendered)
+        self.assertIn('<a href="http://plone.org">Test link</a>', rendered)
