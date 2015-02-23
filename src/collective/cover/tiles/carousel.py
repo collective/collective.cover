@@ -58,8 +58,8 @@ class CarouselTile(ListTile):
     def populate_with_object(self, obj):
         """Add an object to the carousel. This method will append new
         elements to the already existing list of items. If the object
-        does not have an image associated, it will not be included and silently
-        ignored.
+        does not have an image associated, it will not be included and
+        silently ignored.
 
         :param uuids: The list of objects' UUIDs to be used
         :type uuids: List of strings
