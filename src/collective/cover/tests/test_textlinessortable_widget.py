@@ -121,28 +121,37 @@ class TestTextLinesSortableWidget(unittest.TestCase):
         self.assertEqual(widget.get_custom_url(obj3.UID()), u'http://nohost/plone/my-image2/view')
 
     def test_extract(self):
+        obj1 = self.portal['my-image']
+        obj2 = self.portal['my-image1']
+        obj3 = self.portal['my-image2']
+        uuids = [
+            obj1.UID(),
+            obj3.UID(),
+            obj2.UID()
+        ]
+
         name = 'uuid.field'
-        self.request.set(name, u'uuid1\r\nuuid3\r\nuuid2')
-        self.request.set(u'%s.custom_url.uuid1' % name, u'custom_url')
-        self.request.set(u'%s.custom_url.uuid2' % name, u'')
+        self.request.set(name, u'\r\n'.join(uuids))
+        self.request.set(u'{0}.custom_url.{1}'.format(name, obj1.UID()), u'custom_url')
+        self.request.set(u'{0}.custom_url.{1}'.format(name, obj2.UID()), u'')
 
         widget = TextLinesSortableWidget(self.request)
         widget.name = name
 
         expected = {
-            u'uuid1': {
+            obj1.UID(): {
                 u'custom_description': u'',
                 u'custom_title': u'',
                 u'custom_url': u'custom_url',
                 u'order': u'0'
             },
-            u'uuid2': {
+            obj2.UID(): {
                 u'custom_description': u'',
                 u'custom_title': u'',
                 u'custom_url': u'',
                 u'order': u'2'
             },
-            u'uuid3': {
+            obj3.UID(): {
                 u'custom_description': u'',
                 u'custom_title': u'',
                 u'custom_url': u'',
