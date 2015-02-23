@@ -9,6 +9,9 @@ There's a frood who really knows where his towel is.
 - Don't ignore dropped objects on carousel tiles if the image is added to the object using a Dexterity behavior. (fixes '#473`_`).
   [fredvd]
 
+- Fix to check if custom attributes were changed from default value (closes `#476`_).
+  [rodfersou]
+
 - Allow new empty carousel tiles to be edited in compose mode. (fixes `#472`_).
   [fredvd]
 
@@ -603,4 +606,5 @@ There's a frood who really knows where his towel is.
 .. _`#459`: https://github.com/collective/collective.cover/issues/459
 .. _`#463`: https://github.com/collective/collective.cover/issues/463
 .. _`#466`: https://github.com/collective/collective.cover/issues/466
+.. _`#476`: https://github.com/collective/collective.cover/issues/476
 .. _`PloneFormGen`: https://pypi.python.org/pypi/Products.PloneFormGen

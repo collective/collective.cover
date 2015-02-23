@@ -124,25 +124,35 @@ class TextLinesSortableWidget(textlines.TextLinesWidget):
 
         :returns: A dictionary with the information
         """
+        portal_properties = api.portal.get_tool(name='portal_properties')
+        use_view_action = portal_properties.site_properties.getProperty(
+            'typesUseViewActionInListings', ())
         values = self.request.get(self.name).split('\r\n')
         uuids = [i for i in values if i]
         results = dict()
         for index, uuid in enumerate(uuids):
+            obj = uuidToObject(uuid)
+            results[uuid] = {
+                u'order': unicode(index)
+            }
             custom_title = self.request.get(
                 '{0}.custom_title.{1}'.format(self.name, uuid), ''
             )
+            if custom_title != obj.Title():
+                results[uuid][u'custom_title'] = unicode(custom_title)
             custom_description = self.request.get(
                 '{0}.custom_description.{1}'.format(self.name, uuid), ''
             )
+            if custom_description != obj.Description():
+                results[uuid][u'custom_description'] = unicode(custom_description)
             custom_url = self.request.get(
                 '{0}.custom_url.{1}'.format(self.name, uuid), ''
             )
-            results[uuid] = {
-                u'order': unicode(index),
-                u'custom_title': unicode(custom_title),
-                u'custom_description': unicode(custom_description),
-                u'custom_url': unicode(custom_url)
-            }
+            url = obj.absolute_url()
+            if obj.portal_type in use_view_action:
+                url = url + '/view'
+            if custom_url != url:
+                results[uuid][u'custom_url'] = unicode(custom_url)
         return results
 
 
