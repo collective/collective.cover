@@ -19,6 +19,11 @@ class CarouselTileTestCase(TestTileMixin, unittest.TestCase):
         self.tile.__name__ = u'collective.cover.carousel'
         self.tile.id = u'test'
 
+    def _update_tile_data(self):
+        # tile's data attribute is cached; reinstantiate it
+        self.tile = self.cover.restrictedTraverse(
+            '@@{0}/{1}'.format(str(self.tile.__name__), str(self.tile.id)))
+
     @unittest.expectedFailure  # FIXME: raises BrokenImplementation
     def test_interface(self):
         self.interface = ICarouselTile
@@ -36,6 +41,22 @@ class CarouselTileTestCase(TestTileMixin, unittest.TestCase):
     def test_tile_is_empty(self):
         self.assertTrue(self.tile.is_empty())
 
+    def test_autoplay(self):
+        # autoplay is True when tile is empty
+        self.assertTrue(self.tile.autoplay())
+        # but Galleria init code is not rendered
+        self.assertNotIn('options.autoplay = true', self.tile())
+        obj = self.portal['my-image']
+        self.tile.populate_with_object(obj)
+        self.assertIn('options.autoplay = true', self.tile())
+        data_mgr = ITileDataManager(self.tile)
+        data = data_mgr.get()
+        data['autoplay'] = False
+        data_mgr.set(data)
+        self._update_tile_data()
+        self.assertFalse(self.tile.autoplay())
+        self.assertIn('options.autoplay = false', self.tile())
+
     def test_crud(self):
         # we start with an empty tile
         self.assertTrue(self.tile.is_empty())
@@ -47,9 +68,7 @@ class CarouselTileTestCase(TestTileMixin, unittest.TestCase):
         self.tile.populate_with_object(obj1)
         self.tile.populate_with_object(obj2)
 
-        # tile's data attribute is cached; reinstantiate it
-        self.tile = self.cover.restrictedTraverse(
-            '@@{0}/{1}'.format('collective.cover.carousel', 'test'))
+        self._update_tile_data()
 
         # Document should not have been added
         self.assertEqual(len(self.tile.results()), 1)
@@ -59,18 +78,14 @@ class CarouselTileTestCase(TestTileMixin, unittest.TestCase):
         # next, we replace the list of objects with a different one
         obj3 = self.portal['my-image1']
         self.tile.replace_with_objects([IUUID(obj3, None)])
-        # tile's data attribute is cached; reinstantiate it
-        self.tile = self.cover.restrictedTraverse(
-            '@@{0}/{1}'.format('collective.cover.carousel', 'test'))
+        self._update_tile_data()
         self.assertNotIn(obj1, self.tile.results())
         self.assertNotIn(obj2, self.tile.results())
         self.assertIn(obj3, self.tile.results())
 
         # finally, we remove it from the list; the tile must be empty again
         self.tile.remove_item(obj3.UID())
-        # tile's data attribute is cached; reinstantiate it
-        self.tile = self.cover.restrictedTraverse(
-            '@@{0}/{1}'.format('collective.cover.carousel', 'test'))
+        self._update_tile_data()
         self.assertTrue(self.tile.is_empty())
 
     def test_internal_structure(self):
