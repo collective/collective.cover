@@ -6,6 +6,9 @@ There's a frood who really knows where his towel is.
 1.0a11 (unreleased)
 ^^^^^^^^^^^^^^^^^^^
 
+- Don't ignore dropped objects on carousel tiles if the image is added to the object using a Dexterity behavior. (fixes '#473`_`).
+  [fredvd]
+
 - Fix to check if custom attributes were changed from default value (closes `#476`_).
   [rodfersou]
 
