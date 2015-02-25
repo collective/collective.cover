@@ -75,6 +75,10 @@ Mostly Harmless
     :alt: Travis CI badge
     :target: http://travis-ci.org/collective/collective.cover
 
+.. image:: https://badge.waffle.io/collective/collective.cover.png?label=ready&title=Ready
+    :alt: Stories in Ready
+    :target: https://waffle.io/collective/collective.cover
+
 .. image:: https://coveralls.io/repos/collective/collective.cover/badge.png?branch=master
     :alt: Coveralls badge
     :target: https://coveralls.io/r/collective/collective.cover
