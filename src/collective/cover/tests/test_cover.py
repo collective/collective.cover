@@ -98,6 +98,7 @@ class CoverIntegrationTestCase(unittest.TestCase):
         from collective.cover.content import searchableText
         from plone.app.textfield.value import RichTextValue
         from plone.tiles.interfaces import ITileDataManager
+        from plone.app.textfield.interfaces import ITransformer
         self.cover.title = u'Lorem ipsum'
         self.cover.description = u'Neque porro'
         # set up a simple layout with a couple of RichText tiles
@@ -118,11 +119,34 @@ class CoverIntegrationTestCase(unittest.TestCase):
   "type": "row"}]
 """
         tile = self.cover.restrictedTraverse('collective.cover.richtext/test1')
+        value1 = RichTextValue(raw=u'<p>01234</p>',
+                               mimeType='text/x-html-safe',
+                               outputMimeType='text/x-html-safe')
         data_mgr = ITileDataManager(tile)
-        data_mgr.set({'text': RichTextValue(u'<p>01234</p>')})
+        data_mgr.set({'text': value1})
         tile = self.cover.restrictedTraverse('collective.cover.richtext/test2')
         data_mgr = ITileDataManager(tile)
-        data_mgr.set({'text': RichTextValue(u'<p>56789</p>')})
+        value2 = RichTextValue(raw=u'<p>56789</p>',
+                               mimeType='text/x-html-safe',
+                               outputMimeType='text/x-html-safe')
+        data_mgr.set({'text': value2})
+
+        transformer = ITransformer(self.cover)
+        output1 = transformer(value1, 'text/plain')
+        # The following two assertion are NotEqual to show the problem.
+        # Due to the way we construct the RichtTextValue we get this
+        # (swallowed) exception:
+        # No transform path found from 'text/x-html-safe' to 'text/plain'.
+        # Which results in the the outputs being empty
+        # And these assertions being true.
+        self.assertEqual(
+            output1,
+            u'')
+        output2 = transformer(value2, 'text/plain')
+
+        self.assertEqual(
+            output2,
+            u'')
         # indexer should contain id, title, description and text in tiles
         self.assertEqual(
             searchableText(self.cover)(),
