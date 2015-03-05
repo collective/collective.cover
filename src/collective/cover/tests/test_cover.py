@@ -98,7 +98,6 @@ class CoverIntegrationTestCase(unittest.TestCase):
         from collective.cover.content import searchableText
         from plone.app.textfield.value import RichTextValue
         from plone.tiles.interfaces import ITileDataManager
-        from plone.app.textfield.interfaces import ITransformer
         self.cover.title = u'Lorem ipsum'
         self.cover.description = u'Neque porro'
         # set up a simple layout with a couple of RichText tiles
@@ -131,26 +130,10 @@ class CoverIntegrationTestCase(unittest.TestCase):
                                outputMimeType='text/x-html-safe')
         data_mgr.set({'text': value2})
 
-        transformer = ITransformer(self.cover)
-        output1 = transformer(value1, 'text/plain')
-        # The following two assertion are NotEqual to show the problem.
-        # Due to the way we construct the RichtTextValue we get this
-        # (swallowed) exception:
-        # No transform path found from 'text/x-html-safe' to 'text/plain'.
-        # Which results in the the outputs being empty
-        # And these assertions being true.
-        self.assertEqual(
-            output1,
-            u'')
-        output2 = transformer(value2, 'text/plain')
-
-        self.assertEqual(
-            output2,
-            u'')
         # indexer should contain id, title, description and text in tiles
         self.assertEqual(
             searchableText(self.cover)(),
-            u'c1 Lorem ipsum Neque porro 01234 56789'
+            u'c1 Lorem ipsum Neque porro  01234  56789 '
         )
 
     # TODO: add test for plone.app.relationfield.behavior.IRelatedItems
