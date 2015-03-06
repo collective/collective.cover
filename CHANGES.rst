@@ -5,6 +5,8 @@ There's a frood who really knows where his towel is.
 
 1.0a10 (unreleased)
 ^^^^^^^^^^^^^^^^^^^
+- Fix the indexing of richtext tiles by manually transform the text/html to text/plain
+  [puittenbroek]
 
 - Fix modification time disappearing from context data and handling missing value (fixes `#449`_).
   [mhora]
