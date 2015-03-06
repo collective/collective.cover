@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 from collective.cover.config import DEFAULT_GRID_SYSTEM
 from collective.cover.testing import INTEGRATION_TESTING
+from persistent.mapping import PersistentMapping
 from plone import api
 from plone.registry.interfaces import IRegistry
+from plone.tiles.interfaces import ITileDataManager
 from zope.component import getUtility
 
 import unittest
@@ -214,3 +216,101 @@ class Upgrade8to9TestCase(UpgradeTestCaseBase):
         self._do_upgrade_step(step)
         permissions = configlet.permissions
         self.assertEqual(permissions, ('collective.cover: Setup',))
+
+
+class Upgrade9to10TestCase(UpgradeTestCaseBase):
+
+    def setUp(self):
+        UpgradeTestCaseBase.setUp(self, u'9', u'10')
+
+    def test_upgrade_to_10_registrations(self):
+        version = self.setup.getLastVersionForProfile(self.profile_id)[0]
+        self.assertTrue(int(version) >= int(self.to_version))
+        self.assertEqual(self._how_many_upgrades_to_do(), 1)
+
+    def test_new_uuids_structure(self):
+        title = u'Upgrade carousel tiles'
+        step = self._get_upgrade_step(title)
+        self.assertIsNotNone(step)
+
+        # simulate state on previous version
+        with api.env.adopt_roles(['Manager']):
+            api.content.create(
+                self.portal, 'collective.cover.content',
+                'test-cover',
+                template_layout='Empty layout',
+            )
+
+        cover = self.portal['test-cover']
+
+        cover.cover_layout = (
+            '[{"type": "row", "children": [{"data": {"layout-type": "column", '
+            '"column-size": 16}, "type": "group", "children": [{"tile-type": '
+            '"collective.cover.carousel", "type": "tile", "id": '
+            '"ca6ba6675ef145e4a569c5e410af7511"}], "roles": ["Manager"]}]}]'
+        )
+
+        tile = cover.get_tile('ca6ba6675ef145e4a569c5e410af7511')
+        old_data = ITileDataManager(tile).get()
+        old_data['uuids'] = ['uuid1', 'uuid3', 'uuid2']
+        ITileDataManager(tile).set(old_data)
+
+        # run the upgrade step to validate the update
+        self._do_upgrade_step(step)
+        old_data = ITileDataManager(tile).get()
+        self.assertFalse(isinstance(old_data['uuids'], list))
+        self.assertTrue(isinstance(old_data['uuids'], dict))
+        self.assertEqual(old_data['uuids']['uuid1']['order'], u'0')
+        self.assertEqual(old_data['uuids']['uuid2']['order'], u'2')
+        self.assertEqual(old_data['uuids']['uuid3']['order'], u'1')
+
+
+class Upgrade10to11TestCase(UpgradeTestCaseBase):
+
+    def setUp(self):
+        UpgradeTestCaseBase.setUp(self, u'10', u'11')
+
+    def test_upgrade_to_11_registrations(self):
+        version = self.setup.getLastVersionForProfile(self.profile_id)[0]
+        self.assertTrue(int(version) >= int(self.to_version))
+        self.assertEqual(self._how_many_upgrades_to_do(), 1)
+
+    def test_uuids_converted_to_dict(self):
+        title = u'Revert PersistentMapping back to dict'
+        step = self._get_upgrade_step(title)
+        self.assertIsNotNone(step)
+
+        # simulate state on previous version
+        with api.env.adopt_roles(['Manager']):
+            api.content.create(
+                self.portal, 'collective.cover.content',
+                'test-cover',
+                template_layout='Empty layout',
+            )
+
+        cover = self.portal['test-cover']
+
+        cover.cover_layout = (
+            '[{"type": "row", "children": [{"data": {"layout-type": "column", '
+            '"column-size": 16}, "type": "group", "children": [{"tile-type": '
+            '"collective.cover.carousel", "type": "tile", "id": '
+            '"ca6ba6675ef145e4a569c5e410af7511"}], "roles": ["Manager"]}]}]'
+        )
+
+        tile = cover.get_tile('ca6ba6675ef145e4a569c5e410af7511')
+        old_data = ITileDataManager(tile).get()
+        old_dict = PersistentMapping()
+        old_dict['uuid1'] = {'order': u'0'}
+        old_dict['uuid2'] = {'order': u'1'}
+        old_dict['uuid3'] = {'order': u'2'}
+        old_data['uuids'] = old_dict
+        ITileDataManager(tile).set(old_data)
+
+        # run the upgrade step to validate the update
+        self._do_upgrade_step(step)
+        old_data = ITileDataManager(tile).get()
+        self.assertFalse(isinstance(old_data['uuids'], PersistentMapping))
+        self.assertTrue(isinstance(old_data['uuids'], dict))
+        self.assertEqual(old_data['uuids']['uuid1']['order'], u'0')
+        self.assertEqual(old_data['uuids']['uuid2']['order'], u'1')
+        self.assertEqual(old_data['uuids']['uuid3']['order'], u'2')

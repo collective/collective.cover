@@ -56,7 +56,7 @@ Test List Tile
     # drag&drop an Image
     Drag And Drop  css=${image_selector}  css=${tile_selector}
     Wait Until Page Contains  Test image
-    Page Should Contain  This image was created for testing purposes
+    Wait Until Page Contains Element  css=div.cover-list-tile a img
 
     # drag&drop a Link
     Drag And Drop  css=${link_selector}  css=${tile_selector}

@@ -3,10 +3,54 @@ Changelog
 
 There's a frood who really knows where his towel is.
 
-1.0a10 (unreleased)
+1.0a11 (unreleased)
 ^^^^^^^^^^^^^^^^^^^
 - Fix the indexing of richtext tiles by manually transform the text/html to text/plain
   [puittenbroek]
+
+- Don't ignore dropped objects on carousel tiles if the image is added to the object using a Dexterity behavior. (fixes '#473`_`).
+  [fredvd]
+
+- Fix to check if custom attributes were changed from default value (closes `#476`_).
+  [rodfersou]
+
+- Allow new empty carousel tiles to be edited in compose mode. (fixes `#472`_).
+  [fredvd]
+
+- Add warning in the developer docs that switching the default grid system also means you should pay extra attention to the preset/saved cover layouts as these can contain invalid grid sizes.
+  [fredvd]
+
+- Add upgrade step for reverting tiles already migrated to PersistentMapping in 1.0a10
+  [frapell]
+
+- Extend upgrade step to update the structure of all tiles inheriting from the list tile (fixes `#466`_).
+  Fix upgrade step to use a dict instead of a PersistentMapping.
+  [hvelarde]
+
+- Fix to show dates for results in collection tile (fixes `#463`_).
+  [kcleong]
+
+- Allow to choose a custom title and description on items in a carousel tile (closes `#459`_).
+  [rodfersou]
+
+1.0a10 (2014-10-31)
+^^^^^^^^^^^^^^^^^^^
+
+- Allow to set a custom URL on elements for a Carousel (fixes `#377`_).
+  [frapell]
+
+- If an Image content is included, redirect to view and not the image itself
+  [frapell]
+
+- Modifying annotations, while iterating through them, caused their size to be reduced and the loop to end early, leaving annotations in the object.
+  [cguardia]
+
+- Add an option to extend JS configuration to reload tile in custom tiles (outside of collective.cover).
+  [rodfersou]
+
+- Include a behavior to add a couple of fields that enable reloading the current page after a certain amount of time.
+  Typical use case is a news portal that wants to keep the front page updated and increase the number of page views.
+  [hvelarde]
 
 - Fix modification time disappearing from context data and handling missing value (fixes `#449`_).
   [mhora]
@@ -546,6 +590,7 @@ There's a frood who really knows where his towel is.
 .. _`#351`: https://github.com/collective/collective.cover/issues/351
 .. _`#371`: https://github.com/collective/collective.cover/issues/371
 .. _`#374`: https://github.com/collective/collective.cover/issues/374
+.. _`#377`: https://github.com/collective/collective.cover/issues/377
 .. _`#381`: https://github.com/collective/collective.cover/issues/381
 .. _`#383`: https://github.com/collective/collective.cover/issues/383
 .. _`#393`: https://github.com/collective/collective.cover/issues/393
@@ -558,5 +603,10 @@ There's a frood who really knows where his towel is.
 .. _`#421`: https://github.com/collective/collective.cover/issues/421
 .. _`#423`: https://github.com/collective/collective.cover/issues/423
 .. _`#426`: https://github.com/collective/collective.cover/issues/426
+.. _`#438`: https://github.com/collective/collective.cover/issues/438
 .. _`#449`: https://github.com/collective/collective.cover/issues/449
+.. _`#459`: https://github.com/collective/collective.cover/issues/459
+.. _`#463`: https://github.com/collective/collective.cover/issues/463
+.. _`#466`: https://github.com/collective/collective.cover/issues/466
+.. _`#476`: https://github.com/collective/collective.cover/issues/476
 .. _`PloneFormGen`: https://pypi.python.org/pypi/Products.PloneFormGen

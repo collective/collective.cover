@@ -200,3 +200,31 @@ class CollectionTileTestCase(TestTileMixin, unittest.TestCase):
         rendered = self.tile()
         tomorrow = api.portal.get_localized_time(tomorrow, long_format=True)
         self.assertIn(tomorrow, rendered)
+
+    def test_date_on_items(self):
+        collection = self.portal['my-collection']
+        image_query = [{
+            'i': 'Type',
+            'o': 'plone.app.querystring.operation.string.is',
+            'v': 'News Item',
+        }]
+        collection.setQuery(image_query)
+        collection.setSort_on('id')
+        self.tile.populate_with_object(collection)
+
+        tile_config = self.tile.get_tile_configuration()
+        self.assertEqual(tile_config['date']['visibility'], u'on')
+
+        # Get the first news item from the collection
+        content_listing_obj = collection.results()[0]
+
+        date = self.tile.Date(content_listing_obj)
+        self.assertFalse(callable(date), 'Date should not be calleable')
+
+        fmt_date = self.portal.toLocalizedTime(date, True)
+
+        rendered = self.tile()
+        self.assertTrue(
+            fmt_date in rendered,
+            'Formatted date should be in rendered tile'
+        )

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: collective.cover\n"
 "POT-Creation-Date: 2014-08-22 20:31+0000\n"
-"PO-Revision-Date: 2014-06-23 10:50+0800\n"
+"PO-Revision-Date: 2014-11-02 13:10+0800\n"
 "Last-Translator: TsungWei Hu <marr.tw@gmail.com>\n"
 "Language-Team: Plone I18N <plone-i18n@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -72,7 +72,7 @@ msgstr ""
 
 #: collective/cover/controlpanel.py:25
 msgid "Available tiles"
-msgstr ""
+msgstr "圖磚選項"
 
 #: tiles/configure.zcml
 msgid "Banner Tile"
@@ -102,7 +102,7 @@ msgstr "輪播磚"
 
 #: collective/cover/controlpanel.py:57
 msgid "Choose a grid system"
-msgstr ""
+msgstr "網格設計的選項。"
 
 #: collective/cover/models/cover.xml
 msgid "Choose one of the predefined layouts"
@@ -153,7 +153,7 @@ msgstr "日期"
 
 #: collective/cover/layout.py:240
 msgid "Deco (16 columns, default)"
-msgstr ""
+msgstr "Deco (預設 16 欄)"
 
 #: collective/cover/tiles/basic.py:27
 #: collective/cover/tiles/collection.py:39
@@ -192,7 +192,7 @@ msgstr "內嵌程式碼"
 
 #: collective/cover/controlpanel.py:47
 msgid "Enter a list of styles to appear in the style pulldown. Format is title|className, one per line."
-msgstr ""
+msgstr "下拉選單裡的風格樣式，格式是 title|className 逐行輸入。"
 
 #: collective/cover/browser/templates/layoutedit.pt:79
 msgid "Export layout"
@@ -228,7 +228,7 @@ msgstr ""
 
 #: collective/cover/controlpanel.py:56
 msgid "Grid System"
-msgstr ""
+msgstr "網格設計"
 
 #: collective/cover/tiles/configuration_widgets/textline.pt:63
 msgid "HTML tag"
@@ -303,7 +303,7 @@ msgstr ""
 
 #: collective/cover/controlpanel.py:35
 msgid "Only objects of these content types will be searched on the content chooser."
-msgstr ""
+msgstr "搜尋內容時可供選擇的型別。"
 
 #: collective/cover/tiles/configuration_widgets/basewidget.pt:39
 #: collective/cover/tiles/configuration_widgets/list.pt:47
@@ -368,11 +368,11 @@ msgstr ""
 
 #: collective/cover/controlpanel.py:34
 msgid "Searchable Content Types"
-msgstr ""
+msgstr "型別選項"
 
 #: collective/cover/controlpanel.py:67
 msgid "Settings for the collective.cover package"
-msgstr ""
+msgstr "collective.cover 模組設定"
 
 #: collective/cover/tiles/list.py:82
 msgid "Show more... link"
@@ -392,7 +392,7 @@ msgstr ""
 
 #: collective/cover/controlpanel.py:46
 msgid "Styles"
-msgstr ""
+msgstr "風格選項"
 
 #: collective/cover/tiles/configuration_widgets/richtext.pt:50
 msgid "Text length"
@@ -420,7 +420,7 @@ msgstr ""
 
 #: collective/cover/controlpanel.py:26
 msgid "This tiles will be available for layout creation."
-msgstr ""
+msgstr "建置佈局時可供選擇的圖磚類型。"
 
 #: collective/cover/tiles/list.py:78
 msgid "Tile Title"

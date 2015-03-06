@@ -31,9 +31,13 @@ logger = logging.getLogger(PROJECTNAME)
 
 class IListTile(IPersistentCoverTile):
 
-    uuids = schema.List(
+    uuids = schema.Dict(
         title=_(u'Elements'),
-        value_type=schema.TextLine(),
+        key_type=schema.TextLine(),
+        value_type=schema.Dict(
+            key_type=schema.TextLine(),
+            value_type=schema.TextLine(),
+        ),
         required=False,
     )
     form.omitted('uuids')
@@ -112,9 +116,12 @@ class ListTile(PersistentCoverTile):
         # always get the latest data
         uuids = ITileDataManager(self).get().get('uuids', None)
 
-        results, remove = [], []
+        results = list()
         if uuids:
-            for uid in uuids:
+            ordered_uuids = [(k, v) for k, v in uuids.items()]
+            ordered_uuids.sort(key=lambda x: x[1]['order'])
+
+            for uid in [i[0] for i in ordered_uuids]:
                 obj = uuidToObject(uid)
                 if obj:
                     results.append(obj)
@@ -125,14 +132,11 @@ class ListTile(PersistentCoverTile):
                     brain = catalog.unrestrictedSearchResults(UID=uid)
                     if not brain:
                         # the object was deleted; remove it from the tile
-                        # we deal with this below as you can't modify the
-                        # list directly as it's been used on the for loop
-                        remove.append(uid)
-
-            for uid in remove:
-                self.remove_item(uid)
-                logger.debug(
-                    'Nonexistent object {0} removed from tile'.format(uid))
+                        self.remove_item(uid)
+                        logger.debug(
+                            'Nonexistent object {0} removed from '
+                            'tile'.format(uid)
+                        )
 
         return results[:self.limit]
 
@@ -161,12 +165,23 @@ class ListTile(PersistentCoverTile):
                 self.limit = int(field.get('size', self.limit))
 
     def populate_with_object(self, obj):
+        """ Add an object to the list of items
+
+        :param obj: [required] The object to be added
+        :type obj: Content object
+        """
         super(ListTile, self).populate_with_object(obj)  # check permission
         uids = ICoverUIDsProvider(obj).getUIDs()
         if uids:
             self.populate_with_uids(uids)
 
     def populate_with_uids(self, uuids):
+        """ Add a list of elements to the list of items. This method will
+        append new elements to the already existing list of items
+
+        :param uuids: The list of objects' UUIDs to be used
+        :type uuids: List of strings
+        """
         if not self.isAllowedToEdit():
             raise Unauthorized(
                 _('You are not allowed to add content to this tile'))
@@ -174,42 +189,74 @@ class ListTile(PersistentCoverTile):
         data_mgr = ITileDataManager(self)
 
         old_data = data_mgr.get()
-        for uuid in uuids:
-            if old_data['uuids']:
-                if type(old_data['uuids']) != list:
-                    old_data['uuids'] = [uuid]
-                elif uuid not in old_data['uuids']:
-                    old_data['uuids'].append(uuid)
-            else:
-                old_data['uuids'] = [uuid]
-        data_mgr.set(old_data)
-        notify(ObjectModifiedEvent(self))
+        if old_data['uuids'] is None:
+            # If there is no content yet, just assign an empty dict
+            old_data['uuids'] = dict()
 
-    def replace_with_objects(self, uids):
-        if not self.isAllowedToEdit():
-            raise Unauthorized(
-                _('You are not allowed to add content to this tile'))
-        self.set_limit()
-        data_mgr = ITileDataManager(self)
-        old_data = data_mgr.get()
-        if type(uids) == list:
-            old_data['uuids'] = [i for i in uids][:self.limit]
+        uuids_dict = old_data.get('uuids')
+        if not isinstance(uuids_dict, dict):
+            # Make sure this is a dict
+            uuids_dict = old_data['uuids'] = dict()
+
+        if uuids_dict and len(uuids_dict) > self.limit:
+            # Do not allow adding more objects than the defined limit
+            return
+
+        order_list = [int(val.get('order', 0))
+                      for key, val in uuids_dict.items()]
+        if len(order_list) == 0:
+            # First entry
+            order = 0
         else:
-            old_data['uuids'] = [uids]
+            # Get last order position and increment 1
+            order_list.sort()
+            order = order_list.pop() + 1
 
+        for uuid in uuids:
+            if uuid not in uuids_dict.keys():
+                entry = dict()
+                entry[u'order'] = unicode(order)
+                uuids_dict[uuid] = entry
+                order += 1
+
+        old_data['uuids'] = uuids_dict
         data_mgr.set(old_data)
         notify(ObjectModifiedEvent(self))
+
+    # XXX: This should be renamed to replace_with_uuids
+    def replace_with_objects(self, uuids):
+        """ Replaces the whole list of items with a new list of items
+
+        :param uuids: The list of objects' UUIDs to be used
+        :type uuids: List of strings
+        """
+        if not self.isAllowedToEdit():
+            raise Unauthorized(
+                _('You are not allowed to add content to this tile'))
+        data_mgr = ITileDataManager(self)
+        old_data = data_mgr.get()
+        # Clean old data
+        old_data['uuids'] = dict()
+        data_mgr.set(old_data)
+        # Repopulate with clean list
+        self.populate_with_uids(uuids)
 
     def remove_item(self, uid):
+        """ Removes an item from the list
+
+        :param uid: [required] uid for the object that wants to be removed
+        :type uid: string
+        """
         super(ListTile, self).remove_item(uid)  # check permission
         data_mgr = ITileDataManager(self)
         old_data = data_mgr.get()
-        uids = data_mgr.get()['uuids']
-        if uid in uids:
-            del uids[uids.index(uid)]
-        old_data['uuids'] = uids
+        uuids = data_mgr.get()['uuids']
+        if uid in uuids.keys():
+            del uuids[uid]
+        old_data['uuids'] = uuids
         data_mgr.set(old_data)
 
+    @view.memoize
     def get_uid(self, obj):
         """Return the UUID of the object.
 

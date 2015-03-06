@@ -111,4 +111,30 @@
         />
   </genericsetup:upgradeSteps>
 
+  <genericsetup:upgradeSteps
+      source="9"
+      destination="10"
+      profile="collective.cover:default">
+
+    <genericsetup:upgradeStep
+        title="Upgrade carousel tiles"
+        description="Carousel tile now allows to set a custom URL to items. Upgrade existing ones to support this."
+        handler=".upgrades.upgrade_carousel_tiles_custom_url"
+        />
+
+  </genericsetup:upgradeSteps>
+
+  <genericsetup:upgradeSteps
+      source="10"
+      destination="11"
+      profile="collective.cover:default">
+
+    <genericsetup:upgradeStep
+        title="Revert PersistentMapping back to dict"
+        description="Initial structure should not be a PersistentMapping, but regular dictionaries."
+        handler=".upgrades.fix_persistentmap_to_dict"
+        />
+
+  </genericsetup:upgradeSteps>
+
 </configure>

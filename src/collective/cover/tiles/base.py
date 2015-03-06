@@ -351,7 +351,9 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
         calendar = api.portal.get_tool('portal_calendar')
         # calendar_types lists all Event-like content types
         if brain.portal_type not in calendar.calendar_types:
-            return brain.Date
+            # return callable date for content listing objects or date
+            # as string for catalog/brain objects.
+            return brain.Date() if callable(brain.Date) else brain.Date
         else:
             # an Event must have a start date
             assert brain.start is not Missing.Value

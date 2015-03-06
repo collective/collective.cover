@@ -1,5 +1,9 @@
 language: python
 python: 2.7
+sudo: false
+cache:
+  directories:
+    - eggs
 env:
   global:
     - ARTIFACTS_AWS_REGION=sa-east-1
@@ -16,11 +20,11 @@ matrix:
     - env: PLONE_VERSION=5.0
   fast_finish: true
 install:
-  - sed -ie "s#travis-4.x.cfg#travis-$PLONE_VERSION.x.cfg#" travis.cfg
-  - sed -ie "s#versions-4.x.cfg#versions-$PLONE_VERSION.x.cfg#" travis.cfg
+  - sed -ie "s#test-4.3#test-$PLONE_VERSION#" buildout.cfg
+  - sed -ie "s#versions-4.3#versions-$PLONE_VERSION#" buildout.cfg
   - test $JQUERY && sed -ie "s#plone.app.jquery = 1.7.2#plone.app.jquery = $JQUERY#" versions-4.3.x.cfg || true
   - mkdir -p buildout-cache/downloads
-  - python bootstrap.py -c travis.cfg
+  - python bootstrap.py -c travis.cfg -v 2.2.1
   - bin/buildout -c travis.cfg annotate
   - bin/buildout -c travis.cfg -N -q
 before_script:

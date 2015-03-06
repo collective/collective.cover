@@ -76,7 +76,7 @@ def generate_jpeg(width, height):
 
     output = StringIO()
     image.save(output, format='PNG')
-    return output.getvalue()
+    return output
 
 
 def images_are_equal(str1, str2):
@@ -133,11 +133,15 @@ class Fixture(PloneSandboxLayer):
         self.applyProfile(portal, 'collective.cover:default')
         self.applyProfile(portal, 'collective.cover:testfixture')
         portal['my-image'].setImage(generate_jpeg(50, 50))
+        portal['my-image'].reindexObject()
         portal['my-image1'].setImage(generate_jpeg(50, 50))
+        portal['my-image1'].reindexObject()
         portal['my-image2'].setImage(generate_jpeg(50, 50))
+        portal['my-image2'].reindexObject()
         portal['my-file'].setFile(loadFile('lorem_ipsum.txt'))
         portal['my-file'].reindexObject()
         portal['my-news-item'].setImage(generate_jpeg(50, 50))
+        portal['my-news-item'].reindexObject()
         portal_workflow = portal.portal_workflow
         portal_workflow.setChainForPortalTypes(
             ['Collection', 'Event'], ['simple_publication_workflow'])
