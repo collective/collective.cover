@@ -14,6 +14,7 @@ env:
     - PLONE_VERSION=4.2
     - PLONE_VERSION=4.3
     - PLONE_VERSION=4.3 JQUERY=1.8.3
+    - PLONE_VERSION=4.3 BLOCKS=2.0
     - PLONE_VERSION=5.0
 matrix:
   allow_failures:
@@ -23,6 +24,7 @@ install:
 - sed -ie "s#test-4.3#test-$PLONE_VERSION#" buildout.cfg
 - sed -ie "s#versions-4.3#versions-$PLONE_VERSION#" buildout.cfg
 - test $JQUERY && sed -ie "s#plone.app.jquery = 1.7.2#plone.app.jquery = $JQUERY#" versions-4.3.x.cfg || true
+- test $BLOCKS && sed -ie "s#plone.app.blocks = 1.1.1#plone.app.blocks = $BLOCKS#" versions-4.3.x.cfg || true
 - python bootstrap.py
 - bin/buildout annotate
 - bin/buildout -Nq
