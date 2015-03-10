@@ -5,6 +5,8 @@ There's a frood who really knows where his towel is.
 
 1.0a11 (unreleased)
 ^^^^^^^^^^^^^^^^^^^
+- Fix the indexing of richtext tiles by manually transform the text/html to text/plain
+  [puittenbroek]
 
 - Don't ignore dropped objects on carousel tiles if the image is added to the object using a Dexterity behavior. (fixes '#473`_`).
   [fredvd]
