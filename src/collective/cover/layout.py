@@ -14,6 +14,7 @@ from zope.component import getUtility
 from zope.component import queryUtility
 from zope.schema.interfaces import IVocabularyFactory
 
+import urllib
 import json
 
 
@@ -94,6 +95,8 @@ class PageLayout(grok.View):
                 css_class = tile_conf.get('css_class', '')
                 section['class'] = '{0} {1}'.format(section.get('class'), css_class)
 
+                if 'data' in section:
+                    tile_url += '?' + urllib.urlencode(section['data'])
                 return self.tile(section=section, mode=mode, tile_url=tile_url)
         else:
             return self.generalmarkup(section=section, mode=mode)
@@ -243,7 +246,7 @@ class Deco16Grid (grok.GlobalUtility):
     row_class = 'row'
     column_class = 'cell'
 
-    def transform(self, layout):
+    def transform(self, layout, parentData={}):
         for element in layout:
             if 'type' in element:
                 if element['type'] == 'row':
@@ -251,9 +254,12 @@ class Deco16Grid (grok.GlobalUtility):
                     if 'children' in element:
                         self.transform(self.columns_formatter(element['children']))
                 if element['type'] == 'group' and 'children' in element:
-                    self.transform(element['children'])
+                    self.transform(element['children'], parentData=element.get('data', {}))
 
                 if element['type'] == 'tile':
+                    if 'data' not in element:
+                        element['data'] = {}
+                    element['data']['parent-column-size'] = parentData.get('column-size', 1)
                     element['class'] = 'tile'
 
     def columns_formatter(self, columns):
