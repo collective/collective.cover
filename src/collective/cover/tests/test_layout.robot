@@ -97,6 +97,24 @@ Test Basic Layout Operations
     Click Button  id=buttons-cancel
 
 
+Test Setting class in Layouts
+    Enable Autologin as  Site Administrator
+    Go to Homepage
+
+    Create Cover  ClassesTest  Description  Layout A
+    Edit Cover Layout
+    
+    Add Column at First Row
+    
+    # This should NOT destroy the view classes
+    Save Cover Layout
+    
+    # move to the default view and check CSS classes persist
+    Click Link  link=View
+    Element Should Be Visible  css=div.row.carousel
+    Element Should Be Visible  css=div.row.halves
+    Element Should Be Visible  css=div.row.thirds
+
 
 *** Keywords ***
 
