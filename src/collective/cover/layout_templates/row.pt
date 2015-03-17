@@ -9,9 +9,11 @@
 
     <tal:mode define="mode options/mode;">
         <div tal:define="section options/section | nothing;
-                         data python:section.get('data', '') if section else None"
+                         data python:section.get('data', '') if section else None;
+                         viewClasses python: data['view-classes'] if 'view-classes' in data else ''"
             tal:condition="section"
-            tal:attributes="class python:'%s' % section.get('class', '');
+            tal:attributes="class python:'%s %s' % (section.get('class', ''), (viewClasses if mode == 'view' else ''));
+                            data-view-classes python: viewClasses;
                             data-layout-type python: data['layout-type'] if 'layout-type' in data else 'row'">
 
             <tal:children repeat="child python:section.get('children') or []">
