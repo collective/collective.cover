@@ -19,6 +19,8 @@ ${edit_link_selector}  a.edit-tile-link
 *** Test cases ***
 
 Test Collection Tile
+    [Setup]  Set Selenium Speed  .5
+
     Enable Autologin as  Site Administrator
     Go to Homepage
     Create Cover  My Cover  Description
