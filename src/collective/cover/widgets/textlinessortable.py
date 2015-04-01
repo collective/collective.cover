@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from collective.cover.widgets.interfaces import ITextLinesSortableWidget
+from collective.cover.utils import uuidToObject
 from plone import api
-from plone.app.uuid.utils import uuidToObject
 from z3c.form import interfaces
 from z3c.form import widget
 from z3c.form.browser import textlines
@@ -50,6 +50,8 @@ class TextLinesSortableWidget(textlines.TextLinesWidget):
         :type item: Content object
         :returns: The <img> tag for the scale
         """
+        if not item:
+            return None
         scales = item.restrictedTraverse('@@images')
         try:
             return scales.scale('image', 'tile')
