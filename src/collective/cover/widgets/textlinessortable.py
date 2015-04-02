@@ -3,6 +3,8 @@
 from collective.cover.widgets.interfaces import ITextLinesSortableWidget
 from collective.cover.utils import uuidToObject
 from plone import api
+from Products.CMFPlone.utils import base_hasattr
+
 from z3c.form import interfaces
 from z3c.form import widget
 from z3c.form.browser import textlines
@@ -57,6 +59,11 @@ class TextLinesSortableWidget(textlines.TextLinesWidget):
             return scales.scale('image', 'tile')
         except:
             return None
+
+    def isExpired(self, item):
+        if base_hasattr(item, 'expires'):
+            return item.expires().isPast()
+        return False
 
     def get_custom_title(self, uuid):
         """ Returns the custom Title assigned to a specific item
