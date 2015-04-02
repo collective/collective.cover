@@ -1,18 +1,30 @@
 (function ($) {
     var ajaxSearchRequest = [];
+    var timeoutIDs = [];
     function contentSearchFilter(url) {
         var queryVal = $("#contentchooser-content-search-input").val();
-        var page = 0;
-        var data = {'q': queryVal, 'page': page};
-        ajaxSearchRequest.push($.ajax({
-            url: url,
-            data: data,
-            success: function(info) {
-                $("#contentchooser-content-search #recent .item-list").html(info);
-                $("#contentchooser-content-search #recent .item-list li ul").css("display", "none");
-                return false;
-            }
-        }));
+        if (queryVal.length <= 3) {
+            return false;
+        }
+        var i, len, tid;
+        for (i = 0, len = timeoutIDs.length; i < len; i++) {
+            tid = timeoutIDs[i];
+            clearTimeout(tid);
+        }
+        var timeoutID = setTimeout(function() {
+            var page = 0;
+            var data = {'q': queryVal, 'page': page};
+            ajaxSearchRequest.push($.ajax({
+                url: url,
+                data: data,
+                success: function(info) {
+                    $("#contentchooser-content-search #recent .item-list").html(info);
+                    $("#contentchooser-content-search #recent .item-list li ul").css("display", "none");
+                    return false;
+                }
+            }));
+        }, 500);
+        timeoutIDs.push(timeoutID)
         return false;
     }
 
@@ -24,7 +36,6 @@
         });
         return $();
     };
-
 
     function contentchooserMaker(options) {
         var windowId = options.windowId;
@@ -171,216 +182,214 @@
         });
 
     });
-}(jQuery));
 
 
-var coveractions = {
-    /**
-     * Context URL to be used for all AJAX call
-     */
-    /*
-      var call_context = $("head base").attr('href');
-      if (call_context.charAt(call_context.length - 1) !== '/') {
-      call_context = call_context + '/';
-      }
-    */
-    call_context : portal_url + '/',
-    current_path : document.location.href,
+    var coveractions = {
+        /**
+         * Context URL to be used for all AJAX call
+         */
+        /*
+          var call_context = $("head base").attr('href');
+          if (call_context.charAt(call_context.length - 1) !== '/') {
+          call_context = call_context + '/';
+          }
+        */
+        call_context : portal_url + '/',
+        current_path : document.location.href,
 
-    preInit : function() {
-        // If compose exists in url
-        if (this.current_path.indexOf('/compose') > 0){
-            this.getFolderContents(this.call_context,'@@jsonbytype');
+        preInit : function() {
+            // If compose exists in url
+            if (this.current_path.indexOf('/compose') > 0){
+                this.getFolderContents(this.call_context,'@@jsonbytype');
 
-        }
-
-    },
-
-    send: function(o) {
-        var x, t, w = window, c = 0;
-
-        // Default settings
-        o.scope = o.scope || this;
-        o.success_scope = o.success_scope || o.scope;
-        o.error_scope = o.error_scope || o.scope;
-        o.async = o.async === false ? false : true;
-        o.data = o.data || '';
-
-        function get(s) {
-            x = 0;
-
-            try {
-                x = new ActiveXObject(s);
-            } catch (ex) {
             }
 
-            return x;
-        }
+        },
 
-        x = w.XMLHttpRequest ? new XMLHttpRequest() : get('Microsoft.XMLHTTP') || get('Msxml2.XMLHTTP');
+        send: function(o) {
+            var x, t, w = window, c = 0;
 
-        if (x) {
-            if (x.overrideMimeType){
-                x.overrideMimeType(o.content_type);
-            }
+            // Default settings
+            o.scope = o.scope || this;
+            o.success_scope = o.success_scope || o.scope;
+            o.error_scope = o.error_scope || o.scope;
+            o.async = o.async === false ? false : true;
+            o.data = o.data || '';
 
-            x.open(o.type || (o.data ? 'POST' : 'GET'), o.url, o.async);
+            function get(s) {
+                x = 0;
 
-            if (o.content_type){
-                x.setRequestHeader('Content-Type', o.content_type);
-            }
-
-            x.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-
-            x.send(o.data);
-
-            var ready = function() {
-                if (!o.async || x.readyState == 4 || c++ > 10000) {
-                    if (o.success && c < 10000 && x.status == 200){
-                        o.success.call(o.success_scope, '' + x.responseText, x, o);
-                    } else if (o.error){
-                        o.error.call(o.error_scope, c > 10000 ? 'TIMED_OUT' : 'GENERAL', x, o);
-                    }
-                    x = null;
-                } else {
-                    w.setTimeout(ready, 10);
-                }
-            };
-
-            // Syncronous request
-            if (!o.async){
-                return ready();
-            }
-
-            // Wait for response, onReadyStateChange can not be used since it leaks memory in IE
-            t = w.setTimeout(ready, 10);
-        }
-    },
-
-    getAbsolutePath: function() {
-        var loc = window.location;
-        var pathName = loc.pathname.substring(0, loc.pathname.lastIndexOf('/') + 1);
-        return loc.href.substring(0, loc.href.length - ((loc.pathname + loc.search + loc.hash).length - pathName.length));
-    },
-
-
-    getFolderContents : function(path, method) {
-        // Sends a low level Ajax request
-        var t = this, d = document, w = window, na = navigator, ua = na.userAgent;
-        $('#contentchooser-content-trees').val('');
-
-        coveractions.send({
-            url : path + '/' + method,
-            content_type : "application/x-www-form-urlencoded",
-            type : 'POST',
-            data : "searchtext=" +
-                (jQuery('input:text[id=contentchooser-content-trees][name=contentchooser-content-trees]').val() || '') +
-                "&rooted='False'" + "&document_base_url=" +
-                encodeURIComponent(d.baseURI),
-            success : function(text) {
-                var html = "";
-                var data = jQuery.parseJSON(text);
-
-                if (data.items.length > 0) {
-                    for (var i = 0; i < data.items.length; i++) {
-                        //html += '<div class="' + (i % 2 == 0 ? 'even' : 'odd') + '">';
-                        html += '<li uid="'+ data.items[i].uid +'" class="ui-draggable">';
-
-                        if (data.items[i].is_folderish) {
-                            if (data.items[i].icon.length) {
-                                html += '<img src="' + data.items[i].getIcon + '" border="0" style="margin-left: 17px" /> ';
-                            }
-                            html += '<a data-ct-type="' +
-                                data.items[i].portal_type  +'" class="' +
-                                data.items[i].classicon + ' ' + data.items[i].r_state + '" ';
-                            html += 'href="javascript:coveractions.getFolderContents(\'' + data.items[i].url + '\',\'@@jsonbytype' + '\')">';
-                            html += '<span>' + data.items[i].title + '</span>';
-                            html += '</a>';
-                        } else {
-                            if (data.items[i].portal_type == 'Image') {
-                                html += '<img src="' + coveractions.call_context + '/image.png" border="0"/> ';
-                            }
-                            html += '<a data-ct-type="' +
-                                data.items[i].portal_type  +'" class="' +
-                                data.items[i].classicon + ' ' +
-                                data.items[i].r_state + '"> ';
-                            html += '<span>' + data.items[i].title + '</span>';
-                            html += '</a>';
-                        }
-                        html += '</li>';
-                    }
-                } else {
-                    html = '';
+                try {
+                    x = new ActiveXObject(s);
+                } catch (ex) {
                 }
 
-                jQuery(function(){
-                    jQuery("#content-trees > .item-list")[0].innerHTML = html;
+                return x;
+            }
 
-                    html = "";
-                    for (var i = 0; i < data.path.length; i++) {
-                        if (i !== 0) {
-                            html += " &rarr; ";
+            x = w.XMLHttpRequest ? new XMLHttpRequest() : get('Microsoft.XMLHTTP') || get('Msxml2.XMLHTTP');
+
+            if (x) {
+                if (x.overrideMimeType){
+                    x.overrideMimeType(o.content_type);
+                }
+
+                x.open(o.type || (o.data ? 'POST' : 'GET'), o.url, o.async);
+
+                if (o.content_type){
+                    x.setRequestHeader('Content-Type', o.content_type);
+                }
+
+                x.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+                x.send(o.data);
+
+                var ready = function() {
+                    if (!o.async || x.readyState == 4 || c++ > 10000) {
+                        if (o.success && c < 10000 && x.status == 200){
+                            o.success.call(o.success_scope, '' + x.responseText, x, o);
+                        } else if (o.error){
+                            o.error.call(o.error_scope, c > 10000 ? 'TIMED_OUT' : 'GENERAL', x, o);
                         }
-                        if (i == data.path.length - 1) {
-                            html += data.path[i].title;
-                        } else {
-                            html += '<a href="javascript:coveractions.getFolderContents(\'' + data.path[i].url + '\',\'@@jsonbytype' + '\')">';
-                            html += data.path[i].title;
-                            html += '</a>';
+                        x = null;
+                    } else {
+                        w.setTimeout(ready, 10);
+                    }
+                };
+
+                // Syncronous request
+                if (!o.async){
+                    return ready();
+                }
+
+                // Wait for response, onReadyStateChange can not be used since it leaks memory in IE
+                t = w.setTimeout(ready, 10);
+            }
+        },
+
+        getAbsolutePath: function() {
+            var loc = window.location;
+            var pathName = loc.pathname.substring(0, loc.pathname.lastIndexOf('/') + 1);
+            return loc.href.substring(0, loc.href.length - ((loc.pathname + loc.search + loc.hash).length - pathName.length));
+        },
+
+
+        getFolderContents : function(path, method) {
+            // Sends a low level Ajax request
+            var t = this, d = document, w = window, na = navigator, ua = na.userAgent;
+            $('#contentchooser-content-trees').val('');
+
+            coveractions.send({
+                url : path + '/' + method,
+                content_type : "application/x-www-form-urlencoded",
+                type : 'POST',
+                data : "searchtext=" +
+                    ($('input:text[id=contentchooser-content-trees][name=contentchooser-content-trees]').val() || '') +
+                    "&rooted='False'" + "&document_base_url=" +
+                    encodeURIComponent(d.baseURI),
+                success : function(text) {
+                    var html = "";
+                    var data = $.parseJSON(text);
+
+                    if (data.items.length > 0) {
+                        for (var i = 0; i < data.items.length; i++) {
+                            //html += '<div class="' + (i % 2 == 0 ? 'even' : 'odd') + '">';
+                            html += '<li uid="'+ data.items[i].uid +'" class="ui-draggable">';
+
+                            if (data.items[i].is_folderish) {
+                                if (data.items[i].icon.length) {
+                                    html += '<img src="' + data.items[i].getIcon + '" border="0" style="margin-left: 17px" /> ';
+                                }
+                                html += '<a data-ct-type="' +
+                                    data.items[i].portal_type  +'" class="' +
+                                    data.items[i].classicon + ' ' + data.items[i].r_state + '" ';
+                                html += 'href="javascript:coveractions.getFolderContents(\'' + data.items[i].url + '\',\'@@jsonbytype' + '\')">';
+                                html += '<span>' + data.items[i].title + '</span>';
+                                html += '</a>';
+                            } else {
+                                if (data.items[i].portal_type == 'Image') {
+                                    html += '<img src="' + coveractions.call_context + '/image.png" border="0"/> ';
+                                }
+                                html += '<a data-ct-type="' +
+                                    data.items[i].portal_type  +'" class="' +
+                                    data.items[i].classicon + ' ' +
+                                    data.items[i].r_state + '"> ';
+                                html += '<span>' + data.items[i].title + '</span>';
+                                html += '</a>';
+                            }
+                            html += '</li>';
                         }
+                    } else {
+                        html = '';
                     }
 
-                    jQuery('#content-trees #internalpath')[0].innerHTML = html;
-                });
+                    $(function(){
+                        $("#content-trees > .item-list")[0].innerHTML = html;
 
-            }
-        });
+                        html = "";
+                        for (var i = 0; i < data.path.length; i++) {
+                            if (i !== 0) {
+                                html += " &rarr; ";
+                            }
+                            if (i == data.path.length - 1) {
+                                html += data.path[i].title;
+                            } else {
+                                html += '<a href="javascript:coveractions.getFolderContents(\'' + data.path[i].url + '\',\'@@jsonbytype' + '\')">';
+                                html += data.path[i].title;
+                                html += '</a>';
+                            }
+                        }
 
-    },
+                        $('#content-trees #internalpath')[0].innerHTML = html;
+                    });
 
-    getCurrentFolderContents : function() {
-        this.getFolderContents(this.current_path, '@@jsonbytype');
-    },
+                }
+            });
 
-    liveSearch : function(selector,selectorlist,selectoroutput){
-        // selector: Is an input text
-        // selectorlist: Is an selector  type li tag
-        // selectoroutput: Displays number of items that meet the search criteria
-        // Eg. coveractions.liveSearch('#contentchooser-content-trees','.item-list li','#filter-count');
-        jQuery(selector).keyup(function(){
-                // Retrieve the input field text and reset the count to zero
-                var filter = $(this).val(), count = 0;
+        },
 
-                // Loop through the items list
-                jQuery(selectorlist).each(function(){
-                        // If the list item does not contain the text phrase fade it out
-                        if (jQuery(this).text().search(new RegExp(filter, "i")) < 0) {
-                                jQuery(this).fadeOut();
-                            // Show the list item if the phrase matches and increase the count by 1
-                            } else {
-                                    jQuery(this).show();
-                                    count++;
-                                }
+        getCurrentFolderContents : function() {
+            this.getFolderContents(this.current_path, '@@jsonbytype');
+        },
 
-                    });
+        liveSearch : function(selector,selectorlist,selectoroutput){
+            // selector: Is an input text
+            // selectorlist: Is an selector  type li tag
+            // selectoroutput: Displays number of items that meet the search criteria
+            // Eg. coveractions.liveSearch('#contentchooser-content-trees','.item-list li','#filter-count');
+            $(selector).keyup(function(){
+                    // Retrieve the input field text and reset the count to zero
+                    var filter = $(this).val(), count = 0;
 
-                // Update the count
-            if (filter !== ''){
-                    var numberItems = count;
-                    jQuery(selectoroutput).text(" "+ count + " Results");
-            } else {
-                jQuery(selectoroutput).text("");
-            }
-        });
-    },
+                    // Loop through the items list
+                    $(selectorlist).each(function(){
+                            // If the list item does not contain the text phrase fade it out
+                            if ($(this).text().search(new RegExp(filter, "i")) < 0) {
+                                    $(this).fadeOut();
+                                // Show the list item if the phrase matches and increase the count by 1
+                                } else {
+                                        $(this).show();
+                                        count++;
+                                    }
+
+                        });
+
+                    // Update the count
+                if (filter !== ''){
+                        var numberItems = count;
+                        $(selectoroutput).text(" "+ count + " Results");
+                } else {
+                    $(selectoroutput).text("");
+                }
+            });
+        },
 
 
-};
+    };
 
-coveractions.preInit();
+    coveractions.preInit();
 
 
-(function ($) {
     function filterOnKeyUp() {
         $("#contentchooser-content-search-button").css("display", "none");
         $(".contentchooser-content-trees").keyup(function() {
