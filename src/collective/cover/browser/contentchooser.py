@@ -71,7 +71,7 @@ class ContentSearch(grok.View):
     def update(self):
         self.query = self.request.get('q', None)
         self.tab = self.request.get('tab', None)
-        b_size = int(self.request.get('b_size', 10))
+        b_size = int(self.request.get('b_size', 20))
         page = int(self.request.get('page', 0))
         strategy = SitemapNavtreeStrategy(self.context)
 
@@ -99,7 +99,7 @@ class ContentSearch(grok.View):
         catalog_query['portal_type'] = searchable_types
 
         if query:
-            catalog_query = {'SearchableText': u'{0}*'.format(safe_unicode(query))}
+            catalog_query = {'Title': u'{0}*'.format(safe_unicode(query))}
 
         # XXX: not implemented, this is needed?
         # if uids:

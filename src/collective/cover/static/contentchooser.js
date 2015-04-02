@@ -3,7 +3,8 @@
     var timeoutIDs = [];
     function contentSearchFilter(url) {
         var queryVal = $("#contentchooser-content-search-input").val();
-        if (queryVal.length <= 3) {
+        if ((queryVal.length > 0) &&
+            (queryVal.length < 3)) {
             return false;
         }
         var i, len, tid;
