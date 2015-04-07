@@ -10,13 +10,17 @@ var coveractions = {
       call_context = call_context + '/';
       }
     */
-    call_context : portal_url + '/',
     current_path : document.location.href,
 
     preInit : function() {
         // If compose exists in url
-        if (this.current_path.indexOf('/compose') > 0) {
-            this.getFolderContents(this.call_context,'@@jsonbytype');
+        var call_context = (typeof portal_url === 'undefined' ? $('body').data('portalUrl') : portal_url) + '/';
+        if (this.current_path.indexOf('/compose') > 0){
+            this.getFolderContents(call_context, '@@jsonbytype');
+
+        if ((has_next === 'false') ||
+            ($ul.scrollTop() + $ul.innerHeight() < $ul[0].scrollHeight)) {
+            return;
         }
     },
 
@@ -107,6 +111,7 @@ var coveractions = {
         }
         // Sends a low level Ajax request
         var t = this, d = document, w = window, na = navigator, ua = na.userAgent;
+        var call_context = (typeof portal_url === 'undefined' ? $('body').data('portalUrl') : portal_url) + '/';
         var $ul = $('#content-trees .item-list');
         var last_path = $ul.attr('data-last-path');
         $ul.attr('data-last-path', path);
@@ -117,7 +122,7 @@ var coveractions = {
             $('input:text[id=contentchooser-content-trees][name=contentchooser-content-trees]').val('');
         }
         if (path === undefined) {
-            path = coveractions.call_context;
+            path = call_context;
         }
 
         var data = "searchtext=" +
@@ -168,7 +173,7 @@ var coveractions = {
                             html += '</a>';
                         } else {
                             if (data.items[i].portal_type == 'Image') {
-                                html += '<img src="' + coveractions.call_context + '/image.png" border="0"/> ';
+                                html += '<img src="' + call_context + '/image.png" border="0"/> ';
                             }
                             html += '<a data-ct-type="' +
                                 data.items[i].portal_type  +'" class="' +
@@ -325,6 +330,7 @@ var coveractions = {
     }
 
     $(function() {
+        var portal_url = portal_url || $('body').data('portalUrl');
         $("#contentchooser-content-search #recent .item-list").on("scroll", handle_scroll);
 
         $(document).on("click", "#recent .contentchooser-clear", function(e){
@@ -432,9 +438,6 @@ var coveractions = {
 
     });
 
-
-    coveractions.preInit();
-
     function filterOnKeyUp() {
         var timeoutIDs = [];
         $("#contentchooser-content-search-button").css("display", "none");
@@ -469,5 +472,6 @@ var coveractions = {
             "scroll", coveractions.handle_scroll
         );
         filterOnKeyUp();
+        coveractions.preInit();
     });
 }(jQuery));

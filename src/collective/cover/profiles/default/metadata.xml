@@ -9,5 +9,6 @@
     <dependency>profile-plone.app.iterate:plone.app.iterate</dependency>
     <dependency>profile-plone.app.relationfield:default</dependency>
     <dependency>profile-plone.app.tiles:default</dependency>
+    <dependency>profile-Products.ATContentTypes:base</dependency>
   </dependencies>
 </metadata>
