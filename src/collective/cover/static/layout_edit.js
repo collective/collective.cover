@@ -467,6 +467,10 @@
                     var url = $("#configure_tile").attr("action");
                     var data = $("#configure_tile").serialize();
                     data = data + '&buttons.save=Save&ajax_load=true';
+                    var authenticator = jQuery('form#configure_tile input[name="_authenticator"]').val();
+                    if (authenticator) {
+                        data = data + '&_authenticator=' + authenticator;
+                    }
                     $.ajax({
                         type: 'POST',
                         url: url,

@@ -64,9 +64,9 @@
                         </select>
                     </div>
                 </div>
-                <div id="group-select-list" class="modal hide" tal:replace="structure context/@@group_select"></div>
-                <div id="tile-configure" class="modal hide"></div>
-                <div id="export-layout" class="modal hide" tal:condition="can_export_layout">
+                <div id="group-select-list" class="modal" style="display: none;" tal:replace="structure context/@@group_select"></div>
+                <div id="tile-configure" class="modal" style="display: none;"></div>
+                <div id="export-layout" class="modal" style="display: none;" tal:condition="can_export_layout">
                     <h1 class="documentFirstHeading">Export Layout</h1>
                     <p class="discreen">Save a copy of this layout under a new name</p>
                     <form action="." tal:attributes="action request/URL" method="post"
