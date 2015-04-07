@@ -13,6 +13,7 @@ from collective.cover.tiles.configuration_view import IDefaultConfigureForm
 from collective.cover.tiles.permissions import ITilesPermissions
 from persistent.dict import PersistentDict
 from plone import api
+from plone.api.exc import InvalidParameterError
 from plone import tiles
 from plone.app.textfield.interfaces import ITransformer
 from plone.app.textfield.value import RichTextValue
@@ -351,9 +352,14 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
             event's start date in case of an Event-like object
         :rtype: str or DateTime
         """
-        calendar = api.portal.get_tool('portal_calendar')
-        # calendar_types lists all Event-like content types
-        if brain.portal_type not in calendar.calendar_types:
+        try:
+            calendar = api.portal.get_tool('portal_calendar')
+            # calendar_types lists all Event-like content types
+            cal_types = calendar.calendar_types
+        except api.exc.InvalidParameterError:
+            cal_types = ('Event',)
+
+        if brain.portal_type not in cal_types:
             # return callable date for content listing objects or date
             # as string for catalog/brain objects.
             return brain.Date() if callable(brain.Date) else brain.Date
