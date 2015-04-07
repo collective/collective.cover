@@ -12,9 +12,12 @@ $(document).ready(function() {
                 return (css.match (/\bbtn-\S+/g) || []).join(' ');
             });
             $this.find('span').text('Saving...');
+            var authenticator = jQuery('form[action$="layoutedit"] input[name="_authenticator"]').val();
+
             $.ajax({
                 'url':'@@save_layout',
-                'data': {'cover_layout':JSON.stringify(json)},
+                'data': {'cover_layout':JSON.stringify(json),
+                         '_authenticator': authenticator},
                 'type':'POST',
                 success: function(data) {
                     $this.find('span').text('Saved');
