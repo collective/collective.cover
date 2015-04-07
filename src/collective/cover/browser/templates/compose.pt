@@ -34,6 +34,7 @@
         tal:replace="structure layout/render_compose" />
     <div class="content-contentchooser"
         tal:replace="structure context/@@select-content-contentchooser" />
+    <form id="cover-compose-form" method="POST"></form>
 </metal:main>
 
 </body>

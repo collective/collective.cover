@@ -395,9 +395,15 @@ var coveractions = {
                 var tile_id = tile.attr("id");
                 var ct_uid = ui.draggable.attr("uid");
                 tile.find('.loading-mask').addClass('show');
+                var data = {'tile-type': tile_type, 'tile-id': tile_id, 'uid': ct_uid};
+
+                var authenticator = jQuery('form#cover-compose-form input[name="_authenticator"]').val();
+                if (authenticator) {
+                    data['_authenticator'] = authenticator;
+                }
                 $.ajax({
                     url: "@@updatetilecontent",
-                    data: {'tile-type': tile_type, 'tile-id': tile_id, 'uid': ct_uid},
+                    data: data,
                     success: function(info) {
                         tile.html(info);
                         tile.find('.loading-mask').removeClass('show');
