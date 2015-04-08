@@ -150,7 +150,7 @@ table.invisible{visibility:visible;}
     box-shadow: 0 5px 10px #C3C3C3;
 }
 
-.textline-sortable-element.expired { 
+.textline-sortable-element.expired {
     border: 1px solid red;
 }
 .textline-sortable-element .tileProperties .tileExpired {
