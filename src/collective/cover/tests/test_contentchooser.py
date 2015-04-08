@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
-
 from collective.cover.testing import INTEGRATION_TESTING
 from collective.cover.config import PLONE_VERSION
 from plone import api
+from zope.component import queryUtility
+from zope.schema.interfaces import IVocabularyFactory
 
 import json
 import re
@@ -19,13 +20,22 @@ class ContentChooserTestCase(unittest.TestCase):
 
     # XXX: can we get rid of this?
     def test_render(self):
+        self.request.set('b_size', 100)
         rendered = self.portal.restrictedTraverse('@@test-content-contentchooser')()
-        html = """<a data-ct-type="Document" class="contenttype-document state-missing-value" rel="1" title="This document was created for testing purposes">"""
-        self.assertRegexpMatches(rendered, re.compile(html))
+        html = 'title="document:/plone/my-document"'
+        self.assertIn(html, rendered)
 
     def test_jsonbytype(self):
         catalog = self.portal['portal_catalog']
-        results = catalog()
+        types = queryUtility(
+            IVocabularyFactory,
+            name=u'plone.app.vocabularies.ReallyUserFriendlyTypes'
+        )(self.portal)
+        results = catalog(
+            portal_type=[t.value for t in types],
+            path={'query': '/'.join(self.portal.getPhysicalPath()),
+                  'depth': 1}
+        )
         portal_objects_ids = [i.id for i in results]
 
         view = self.portal.restrictedTraverse('@@jsonbytype')
@@ -38,12 +48,14 @@ class ContentChooserTestCase(unittest.TestCase):
         self.assertItemsEqual(json_objects_ids, portal_objects_ids)
 
     def test_searches(self):
+        self.request.set('b_size', 100)
         self.request.set('q', 'Image')
-        view = api.content.get_view(u'content-search', self.portal, self.request)
-        html = """<a data-ct-type="Document" class="contenttype-document state-missing-value" rel="1" title="document:/plone/my-document">"""
-        self.assertFalse(re.compile(html).search(view()))
-        html = """<a data-ct-type="Image" class="contenttype-image state-missing-value" rel="1" title="This image #2 was created for testing purposes">"""
-        self.assertTrue(re.compile(html).search(view()))
+        view = api.content.get_view(u'content-search', self.portal,
+                                    self.request)
+        html = 'title="document:/plone/my-document"'
+        self.assertNotIn(html, view())
+        html = 'title="image:/plone/my-image2"'
+        self.assertIn(html, view())
 
     @unittest.skipIf(
         PLONE_VERSION < '4.3',
