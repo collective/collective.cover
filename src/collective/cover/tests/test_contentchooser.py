@@ -6,7 +6,6 @@ from zope.component import queryUtility
 from zope.schema.interfaces import IVocabularyFactory
 
 import json
-import re
 import unittest
 
 
