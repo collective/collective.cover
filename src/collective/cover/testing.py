@@ -7,7 +7,7 @@ from PIL import ImageChops
 from plone.app.robotframework.testing import AUTOLOGIN_LIBRARY_FIXTURE
 from plone.app.testing import FunctionalTesting
 from plone.app.testing import IntegrationTesting
-from plone.app.testing import PLONE_FIXTURE
+from plone.app.testing.bbb import PTC_FIXTURE
 from plone.app.testing import PloneSandboxLayer
 from plone.testing import z2
 from StringIO import StringIO
@@ -88,7 +88,7 @@ def images_are_equal(str1, str2):
 
 class Fixture(PloneSandboxLayer):
 
-    defaultBases = (PLONE_FIXTURE,)
+    defaultBases = (PTC_FIXTURE,)
 
     def setUpZope(self, app, configurationContext):
         # XXX: do not install (yet) PFG in Plone 5
@@ -96,6 +96,11 @@ class Fixture(PloneSandboxLayer):
             import Products.PloneFormGen
             self.loadZCML(package=Products.PloneFormGen)
             z2.installProduct(app, 'Products.PloneFormGen')
+
+        # Install plone.app.imaging to make image scales work
+        z2.installProduct(app, 'plone.app.imaging')
+        import plone.app.imaging
+        self.loadZCML(package=plone.app.imaging)
 
         # Load ZCML
         import collective.cover
