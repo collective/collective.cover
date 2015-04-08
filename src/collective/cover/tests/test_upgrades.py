@@ -2,6 +2,7 @@
 from collective.cover.config import DEFAULT_GRID_SYSTEM
 from collective.cover.controlpanel import ICoverSettings
 from collective.cover.testing import INTEGRATION_TESTING
+from collective.cover.testing import PLONE_VERSION
 from persistent.mapping import PersistentMapping
 from plone import api
 from plone.registry.interfaces import IRegistry
@@ -69,6 +70,7 @@ class Upgrade5to6TestCase(UpgradeTestCaseBase):
         self.assertGreaterEqual(int(version), int(self.to_version))
         self.assertEqual(self._how_many_upgrades_to_do(), 2)
 
+    @unittest.skipIf(PLONE_VERSION >= '5.0', 'Resource Registries not available')
     def test_issue_201(self):
         # check if the upgrade step is registered
         title = u'issue 201'
@@ -76,6 +78,25 @@ class Upgrade5to6TestCase(UpgradeTestCaseBase):
         step = self._get_upgrade_step(title)
         self.assertIsNotNone(step)
         self.assertEqual(step['description'], description)
+        css_tool = self.portal['portal_css']
+        js_tool = self.portal['portal_javascripts']
+        old_css = '++resource++collective.cover/bootstrap.min.css'
+        old_js = '++resource++collective.cover/bootstrap.min.js'
+        new_js = '++resource++collective.js.bootstrap/js/bootstrap.min.js'
+
+        # simulate state on previous version
+        css_tool.registerResource(old_css)
+        js_tool.renameResource(new_js, old_js)
+        self.assertIn(old_css, css_tool.getResourceIds())
+        self.assertIn(old_js, js_tool.getResourceIds())
+        self.assertNotIn(new_js, js_tool.getResourceIds())
+
+        # run the upgrade step to validate the update
+        self._do_upgrade_step(step)
+
+        self.assertNotIn(old_css, css_tool.getResourceIds())
+        self.assertNotIn(old_js, js_tool.getResourceIds())
+        self.assertIn(new_js, js_tool.getResourceIds())
 
     def test_issue_303(self):
         # check if the upgrade step is registered

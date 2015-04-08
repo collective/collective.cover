@@ -2,6 +2,7 @@
 
 from collective.cover.config import PROJECTNAME
 from collective.cover.testing import INTEGRATION_TESTING
+from collective.cover.testing import PLONE_VERSION
 from plone import api
 from plone.browserlayer.utils import registered_layers
 
@@ -33,6 +34,18 @@ class InstallTestCase(unittest.TestCase):
     def test_addon_layer(self):
         layers = [l.getName() for l in registered_layers()]
         self.assertIn('ICoverLayer', layers)
+
+    @unittest.skipIf(PLONE_VERSION >= '5.0', 'Resource Registries not available')
+    def test_jsregistry(self):
+        resource_ids = self.portal.portal_javascripts.getResourceIds()
+        for id in JS:
+            self.assertIn(id, resource_ids, '{0} not installed'.format(id))
+
+    @unittest.skipIf(PLONE_VERSION >= '5.0', 'Resource Registries not available')
+    def test_cssregistry(self):
+        resource_ids = self.portal.portal_css.getResourceIds()
+        for id in CSS:
+            self.assertIn(id, resource_ids, '{0} not installed'.format(id))
 
     def test_resources_available(self):
         resources = CSS + JS
