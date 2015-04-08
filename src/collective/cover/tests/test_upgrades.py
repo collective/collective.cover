@@ -77,26 +77,6 @@ class Upgrade5to6TestCase(UpgradeTestCaseBase):
         self.assertIsNotNone(step)
         self.assertEqual(step['description'], description)
 
-        css_tool = self.portal['portal_css']
-        js_tool = self.portal['portal_javascripts']
-        old_css = '++resource++collective.cover/bootstrap.min.css'
-        old_js = '++resource++collective.cover/bootstrap.min.js'
-        new_js = '++resource++collective.js.bootstrap/js/bootstrap.min.js'
-
-        # simulate state on previous version
-        css_tool.registerResource(old_css)
-        js_tool.renameResource(new_js, old_js)
-        self.assertIn(old_css, css_tool.getResourceIds())
-        self.assertIn(old_js, js_tool.getResourceIds())
-        self.assertNotIn(new_js, js_tool.getResourceIds())
-
-        # run the upgrade step to validate the update
-        self._do_upgrade_step(step)
-
-        self.assertNotIn(old_css, css_tool.getResourceIds())
-        self.assertNotIn(old_js, js_tool.getResourceIds())
-        self.assertIn(new_js, js_tool.getResourceIds())
-
     def test_issue_303(self):
         # check if the upgrade step is registered
         title = u'issue 303'

@@ -34,16 +34,6 @@ class InstallTestCase(unittest.TestCase):
         layers = [l.getName() for l in registered_layers()]
         self.assertIn('ICoverLayer', layers)
 
-    def test_jsregistry(self):
-        resource_ids = self.portal.portal_javascripts.getResourceIds()
-        for id in JS:
-            self.assertIn(id, resource_ids, '{0} not installed'.format(id))
-
-    def test_cssregistry(self):
-        resource_ids = self.portal.portal_css.getResourceIds()
-        for id in CSS:
-            self.assertIn(id, resource_ids, '{0} not installed'.format(id))
-
     def test_resources_available(self):
         resources = CSS + JS
         for id in resources:
