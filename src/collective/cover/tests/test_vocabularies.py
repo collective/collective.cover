@@ -6,7 +6,6 @@ from plone.registry.interfaces import IRegistry
 from zope.component import getUtility
 from zope.component import queryUtility
 from zope.schema.interfaces import IVocabularyFactory
-from Products.CMFCore.utils import getToolByName
 
 import unittest
 
@@ -17,6 +16,10 @@ class VocabulariesTestCase(unittest.TestCase):
 
     def setUp(self):
         self.portal = self.layer['portal']
+        qi = self.portal['portal_quickinstaller']
+        self.has_pfg = False
+        if qi.isProductInstalled('Products.PloneFormGen'):
+            self.has_pfg = True
 
     def test_layouts_vocabulary(self):
         name = u'collective.cover.AvailableLayouts'
@@ -45,18 +48,21 @@ class VocabulariesTestCase(unittest.TestCase):
         self.assertIn(u'collective.cover.list', tiles)
         self.assertIn(u'collective.cover.richtext', tiles)
 
+    def test_enabled_tiles_count(self):
+        name = u'collective.cover.EnabledTiles'
+        vocabulary = queryUtility(IVocabularyFactory, name)
+        self.assertIsNotNone(vocabulary)
+        tiles = vocabulary(self.portal)
+        tile_count = 10 if self.has_pfg else 9
+
+        self.assertEqual(len(tiles), tile_count)
+
     def test_enabled_tiles_vocabulary(self):
         name = u'collective.cover.EnabledTiles'
         vocabulary = queryUtility(IVocabularyFactory, name)
         self.assertIsNotNone(vocabulary)
         tiles = vocabulary(self.portal)
-        qi = getToolByName(self.portal, 'portal_quickinstaller')
-        has_pfg = False
-        tile_count = 9
-        if qi.isProductInstalled('Products.PloneFormGen'):
-            has_pfg = True
-            tile_count = 10
-        self.assertEqual(len(tiles), tile_count)
+
         self.assertIn(u'collective.cover.banner', tiles)
         self.assertIn(u'collective.cover.basic', tiles)
         self.assertIn(u'collective.cover.carousel', tiles)
@@ -66,13 +72,21 @@ class VocabulariesTestCase(unittest.TestCase):
         self.assertIn(u'collective.cover.file', tiles)
         self.assertIn(u'collective.cover.list', tiles)
         self.assertIn(u'collective.cover.richtext', tiles)
-        # FIXME see: https://github.com/collective/collective.cover/issues/194
-        if has_pfg:
-            self.assertIn(u'collective.cover.pfg', tiles)
         # XXX: https://github.com/collective/collective.cover/issues/81
         # standard tiles are not enabled... yet
         self.assertNotIn(u'plone.app.imagetile', tiles)
         self.assertNotIn(u'plone.app.texttile', tiles)
+
+    def test_pfg_tile_enabled(self):
+        if not self.has_pfg:
+            return
+        name = u'collective.cover.EnabledTiles'
+        vocabulary = queryUtility(IVocabularyFactory, name)
+        self.assertIsNotNone(vocabulary)
+        tiles = vocabulary(self.portal)
+
+        # FIXME see: https://github.com/collective/collective.cover/issues/194
+        self.assertIn(u'collective.cover.pfg', tiles)
 
     def test_available_content_types_vocabulary(self):
         name = u'collective.cover.AvailableContentTypes'

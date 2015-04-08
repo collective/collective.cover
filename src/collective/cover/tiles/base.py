@@ -357,6 +357,8 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
             # calendar_types lists all Event-like content types
             cal_types = calendar.calendar_types
         except api.exc.InvalidParameterError:
+            # portal_calendar no longer exists in Plone 5.0, assume "Event" is
+            # the only event type
             cal_types = ('Event',)
 
         if brain.portal_type not in cal_types:
