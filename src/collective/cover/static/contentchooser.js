@@ -12,13 +12,17 @@
             tid = timeoutIDs[i];
             clearTimeout(tid);
         }
+        timeoutIDs = [];
+        $('#kss-spinner').hide();
         var timeoutID = setTimeout(function() {
             var page = 0;
             var data = {'q': queryVal, 'page': page};
+            $('#kss-spinner').show();
             ajaxSearchRequest.push($.ajax({
                 url: url,
                 data: data,
                 success: function(info) {
+                    $('#kss-spinner').hide();
                     $("#contentchooser-content-search #recent .item-list").html(info);
                     $("#contentchooser-content-search #recent .item-list li ul").css("display", "none");
                     return false;
