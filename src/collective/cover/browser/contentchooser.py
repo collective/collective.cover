@@ -88,7 +88,7 @@ class ContentSearch(grok.View):
     def render(self):
         return self.list_template(children=self.children, level=1)
 
-    def search(self, query=None, page=0, b_size=10, uids=None):
+    def search(self, query=None, page=0, b_size=20, uids=None):
         catalog = api.portal.get_tool('portal_catalog')
         registry = getUtility(IRegistry)
         settings = registry.forInterface(ICoverSettings)
@@ -98,14 +98,16 @@ class ContentSearch(grok.View):
         catalog_query = {'sort_on': 'effective', 'sort_order': 'descending'}
         catalog_query['portal_type'] = searchable_types
 
-        if query:
-            catalog_query = {'Title': u'{0}*'.format(safe_unicode(query))}
-
-        # XXX: not implemented, this is needed?
-        # if uids:
-        #     catalog_query['UID'] = uids
-
+        query = safe_unicode(query)
         results = catalog(**catalog_query)
+
+        # let's filter using python
+        if query:
+            results = [
+                b for b in results
+                if (query.lower() in b['Title'].lower() or
+                    query.lower() in b['id'].lower())
+            ]
         results = Batch(results, size=b_size, start=(page * b_size), orphan=0)
 
         return results
