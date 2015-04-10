@@ -26,7 +26,7 @@
             </li>
         </tal:navitem>
         <li class="nav-bar"
-            tal:content="structure view/paginacao">
+            tal:content="structure view/pagination">
         </li>
     </tal:hasresult>
     <tal:nothasresult condition="python: not children">
