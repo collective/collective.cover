@@ -34,7 +34,7 @@
                 }
             }));
         }, 500);
-        timeoutIDs.push(timeoutID)
+        timeoutIDs.push(timeoutID);
         return false;
     }
 
@@ -73,13 +73,19 @@
 
     var parse_url = function(url) {
         var base, i, key, len, param, param_dict, params, ref, ref1, ref2, ref3, type, value;
-        ref = url.split('?'), base = ref[0], params = ref[1];
+        ref = url.split('?');
+        base = ref[0];
+        params = ref[1];
         param_dict = {};
         ref1 = params.split(',');
         for (i = 0, len = ref1.length; i < len; i++) {
             param = ref1[i];
-            ref2 = param.split('='), key = ref2[0], value = ref2[1];
-            ref3 = key.split(':'), key = ref3[0], type = ref3[1];
+            ref2 = param.split('=');
+            key = ref2[0];
+            value = ref2[1];
+            ref3 = key.split(':');
+            key = ref3[0];
+            type = ref3[1];
             if (type === 'int') {
                 value = parseInt(value, 10);
             }
