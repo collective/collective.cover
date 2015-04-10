@@ -85,7 +85,7 @@ class ContentSearch(grok.View):
         children = [strategy.decoratorFactory({'item': node}) for node in self.batch]
         self.level = 1
         batchview = PloneBatchView(self.context, self.request)
-        self.paginacao = batchview(self.batch)
+        self.pagination = batchview(self.batch)
         self.children = children
 
     def render(self):
