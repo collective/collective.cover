@@ -4,13 +4,16 @@ from Acquisition import aq_inner
 from Acquisition import aq_parent
 from collective.cover.controlpanel import ICoverSettings
 from five import grok
+from plone import api
 from plone.app.layout.navigation.interfaces import INavigationRoot
 from plone.app.layout.navigation.root import getNavigationRoot
+from plone.batching.browser import PloneBatchView
 from plone.i18n.normalizer.interfaces import IIDNormalizer
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.interfaces._content import IFolderish
-from plone import api
 from Products.CMFPlone.browser.navtree import SitemapNavtreeStrategy
+from Products.CMFPlone.PloneBatch import Batch
+from Products.CMFPlone.utils import safe_unicode
 from Products.Five.browser import BrowserView
 from zope.browserpage.viewpagetemplatefile import ViewPageTemplateFile
 from zope.component import getUtility
@@ -18,8 +21,6 @@ from zope.component import queryUtility
 from zope.interface import Interface
 from zope.schema.interfaces import IVocabularyFactory
 from zope.schema.vocabulary import SimpleTerm
-from Products.CMFPlone.PloneBatch import Batch
-from Products.CMFPlone.utils import safe_unicode
 
 import json
 
@@ -72,23 +73,25 @@ class ContentSearch(grok.View):
         self.query = self.request.get('q', None)
         self.tab = self.request.get('tab', None)
         b_size = int(self.request.get('b_size', 20))
-        page = int(self.request.get('page', 0))
+        b_start = int(self.request.get('b_start', 0))
         strategy = SitemapNavtreeStrategy(self.context)
 
         uids = None
-        result = self.search(self.query, uids=uids,
-                             page=page,
-                             b_size=b_size)
-        self.has_next = result.next is not None
-        self.nextpage = result.pagenumber
-        result = [strategy.decoratorFactory({'item': node}) for node in result]
+        self.batch = self.search(
+            self.query, uids=uids,
+            b_size=b_size,
+            b_start=b_start
+        )
+        children = [strategy.decoratorFactory({'item': node}) for node in self.batch]
         self.level = 1
-        self.children = result
+        batchview = PloneBatchView(self.context, self.request)
+        self.paginacao = batchview(self.batch)
+        self.children = children
 
     def render(self):
-        return self.list_template(children=self.children, level=1)
+        return self.list_template()
 
-    def search(self, query=None, page=0, b_size=20, uids=None):
+    def search(self, query=None, b_size=20, b_start=0, uids=None):
         catalog = api.portal.get_tool('portal_catalog')
         registry = getUtility(IRegistry)
         settings = registry.forInterface(ICoverSettings)
@@ -108,8 +111,7 @@ class ContentSearch(grok.View):
                 if (query.lower() in b['Title'].lower() or
                     query.lower() in b['id'].lower())
             ]
-        results = Batch(results, size=b_size, start=(page * b_size), orphan=0)
-
+        results = Batch(results, size=b_size, start=b_start, orphan=0)
         return results
 
     def getTermByBrain(self, brain, real_value=True):

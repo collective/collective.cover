@@ -1,7 +1,11 @@
 (function ($) {
     var ajaxSearchRequest = [];
     var timeoutIDs = [];
-    function contentSearchFilter(url) {
+    function contentSearchFilter(b_start) {
+        if (b_start == null) {
+            b_start = 0;
+        }
+        var url = $("#contentchooser-content-search-button").attr("data-url");
         var queryVal = $("#contentchooser-content-search-input").val();
         if ((queryVal.length > 0) &&
             (queryVal.length < 3)) {
@@ -15,8 +19,7 @@
         timeoutIDs = [];
         $('#kss-spinner').hide();
         var timeoutID = setTimeout(function() {
-            var page = 0;
-            var data = {'q': queryVal, 'page': page};
+            var data = {'q': queryVal, 'b_start': b_start};
             $('#kss-spinner').show();
             ajaxSearchRequest.push($.ajax({
                 url: url,
@@ -24,6 +27,8 @@
                 success: function(info) {
                     $('#kss-spinner').hide();
                     $("#contentchooser-content-search #recent .item-list").html(info);
+                    var count = $('#recent .total-results').text();
+                    $('#recent .filter-count').text(" "+ count + " Results");
                     $("#contentchooser-content-search #recent .item-list li ul").css("display", "none");
                     return false;
                 }
@@ -66,20 +71,32 @@
         $(windowId + " ul.formTabs").tabs("div.panes > div");
     }
 
+    var parse_url = function(url) {
+        var base, i, key, len, param, param_dict, params, ref, ref1, ref2, ref3, type, value;
+        ref = url.split('?'), base = ref[0], params = ref[1];
+        param_dict = {};
+        ref1 = params.split(',');
+        for (i = 0, len = ref1.length; i < len; i++) {
+            param = ref1[i];
+            ref2 = param.split('='), key = ref2[0], value = ref2[1];
+            ref3 = key.split(':'), key = ref3[0], type = ref3[1];
+            if (type === 'int') {
+                value = parseInt(value, 10);
+            }
+            param_dict[key] = value;
+        }
+        return param_dict;
+    };
+
     $(function() {
         // Live search content tree
-        coveractions.liveSearch('#contentchooser-content-trees','.item-list li','#filter-count');
+        coveractions.liveSearch('#contentchooser-content-trees','.item-list li','#content-trees .filter-count');
 
-        $(document).on("click", ".item-list a.next", function(e){
-            $.ajax({
-                url: "@@content-search",
-                data: {'page': $(e.currentTarget).attr('data-page'),
-                       'q': $(e.currentTarget).attr('data-query')},
-                async: false
-            }).done(function(data) {
-                $('.item-list a.next').replaceWith(data);
-            });
-            return false;
+        $(document).on("click", ".item-list .nav-bar a", function(e) {
+            e.preventDefault();
+            var $a = $(this);
+            var params = parse_url($a.attr('href'));
+            contentSearchFilter(params.b_start);
         });
 
         $(document).on("click", "#recent .contentchooser-clear", function(e){
@@ -117,8 +134,7 @@
         $("#contentchooser-content-search-button").click(function(e) {
             e.preventDefault();
             e.stopPropagation();
-            var dataUrl = $(this).attr("data-url");
-            contentSearchFilter(dataUrl);
+            contentSearchFilter();
             return false;
         });
 
@@ -361,28 +377,28 @@
             // selector: Is an input text
             // selectorlist: Is an selector  type li tag
             // selectoroutput: Displays number of items that meet the search criteria
-            // Eg. coveractions.liveSearch('#contentchooser-content-trees','.item-list li','#filter-count');
+            // Eg. coveractions.liveSearch('#contentchooser-content-trees','.item-list li','#content-trees .filter-count');
             $(selector).keyup(function(){
-                    // Retrieve the input field text and reset the count to zero
-                    var filter = $(this).val(), count = 0;
+                // Retrieve the input field text and reset the count to zero
+                var filter = $(this).val(), count = 0;
 
-                    // Loop through the items list
-                    $(selectorlist).each(function(){
-                            // If the list item does not contain the text phrase fade it out
-                            if ($(this).text().search(new RegExp(filter, "i")) < 0) {
-                                    $(this).fadeOut();
-                                // Show the list item if the phrase matches and increase the count by 1
-                                } else {
-                                        $(this).show();
-                                        count++;
-                                    }
+                // Loop through the items list
+                $(selectorlist).each(function(){
+                    // If the list item does not contain the text phrase fade it out
+                    if ($(this).text().search(new RegExp(filter, "i")) < 0) {
+                        $(this).fadeOut();
+                        // Show the list item if the phrase matches and increase the count by 1
+                    } else {
+                        $(this).show();
+                        count++;
+                    }
 
-                        });
+                });
 
-                    // Update the count
+                // Update the count
                 if (filter !== ''){
-                        var numberItems = count;
-                        $(selectoroutput).text(" "+ count + " Results");
+                    var numberItems = count;
+                    $(selectoroutput).text(" "+ count + " Results");
                 } else {
                     $(selectoroutput).text("");
                 }
