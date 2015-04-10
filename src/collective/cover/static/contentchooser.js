@@ -2,7 +2,7 @@
     var ajaxSearchRequest = [];
     var timeoutIDs = [];
     function contentSearchFilter(b_start) {
-        if (b_start == null) {
+        if (b_start === null) {
             b_start = 0;
         }
         var url = $("#contentchooser-content-search-button").attr("data-url");
