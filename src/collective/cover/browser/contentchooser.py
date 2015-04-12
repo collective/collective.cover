@@ -100,17 +100,9 @@ class ContentSearch(grok.View):
         # temporary we'll only list published elements
         catalog_query = {'sort_on': 'effective', 'sort_order': 'descending'}
         catalog_query['portal_type'] = searchable_types
-
-        query = safe_unicode(query)
-        results = catalog(**catalog_query)
-
-        # let's filter using python
         if query:
-            results = [
-                b for b in results
-                if (query.lower() in b['Title'].lower() or
-                    query.lower() in b['id'].lower())
-            ]
+            catalog_query = {'Title': u'{0}*'.format(safe_unicode(query))}
+        results = catalog(**catalog_query)
         results = Batch(results, size=b_size, start=b_start, orphan=0)
         return results
 
