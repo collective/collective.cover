@@ -149,6 +149,7 @@ To enable this package in a buildout-based installation:
 
     [versions]
     ...
+    collective.js.bootstrap = 2.3.1.1
     collective.js.jqueryui = 1.8.16.9
     plone.app.jquery = 1.7.2
     plone.app.jquerytools = 1.5.7
