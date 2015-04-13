@@ -56,9 +56,13 @@
                     $("#contentchooser-content-search #recent .item-list").off("scroll");
                     $("#contentchooser-content-search #recent .item-list").replaceWith(info);
                     $("#contentchooser-content-search #recent .item-list").on("scroll", handle_scroll);
-                    var $ul = $("#contentchooser-content-search #recent .item-list");
-                    var count = $ul.attr('data-total-results');
-                    $('#recent .filter-count').text(" "+ count + " Results");
+                    if (queryVal === '') {
+                        $('#recent .filter-count').text("");
+                    } else {
+                        var $ul = $("#contentchooser-content-search #recent .item-list");
+                        var count = $ul.attr('data-total-results');
+                        $('#recent .filter-count').text(" "+ count + " Results");
+                    }
                     return false;
                 }
             }));
@@ -112,7 +116,7 @@
                 url: portal_url + "/@@content-search",
                 success: function(info) {
                     $("#contentchooser-content-search #recent .item-list").html(info);
-                    $("#contentchooser-content-search #recent .item-list li ul").css("display", "none");
+                    $('#recent .filter-count').text("");
                     return false;
                 }
             }));
