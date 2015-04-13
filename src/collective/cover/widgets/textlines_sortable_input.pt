@@ -23,9 +23,11 @@
 .tileProperties textarea {
     float: right;
 }
-div.tileProperties input,
-div.tileProperties textarea {
+div.tileProperties input {
     min-width: 65%
+}
+div.tileProperties textarea {
+    width: 65%
 }
 .tileProperties span {
     margin-right: .5em;
