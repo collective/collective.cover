@@ -24,11 +24,14 @@
             i18n:attributes="title; placeholder"/>
         </div>
         <a class="ui-icon ui-icon-close contentchooser-clear"></a>
+
+        <span class="filter-count" i18n:translate=""></span>
+
         <input type="button" value="ok" id="contentchooser-content-search-button"
          tal:attributes="data-url view/post_url"
          i18n:attributes="value" />
-        <ul class="item-list">
-            <li tal:replace="structure context/@@content-search" />
+        <ul class="item-list"
+            tal:replace="structure context/@@content-search">
         </ul>
       </div>
 
@@ -40,7 +43,7 @@
           </div>
           <a class="ui-icon ui-icon-close contentchooser-clear"></a>
 
-          <span id="filter-count" i18n:translate=""></span>
+          <span class="filter-count" i18n:translate=""></span>
 
           <fieldset id="general_panel">
             <div id="internalpath" class="formHelp" i18n:translate=""></div>
