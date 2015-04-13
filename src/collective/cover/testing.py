@@ -3,6 +3,7 @@
 from App.Common import package_home
 from collective.cover import _
 from collective.cover.layout import Deco16Grid
+from collective.cover.layout import Bootstrap3
 from PIL import Image
 from PIL import ImageChops
 from plone.app.robotframework.testing import AUTOLOGIN_LIBRARY_FIXTURE
@@ -87,19 +88,6 @@ def images_are_equal(str1, str2):
     im2.write(str2)
     im2.seek(0)
     return ImageChops.difference(Image.open(im1), Image.open(im2)).getbbox() is None
-
-
-class Bootstrap3(Deco16Grid):
-    ncolumns = 12
-    title = _(u'Bootstrap 3')
-
-    def columns_formatter(self, columns):
-        prefix = 'col-md-'
-        for column in columns:
-            width = column['data']['column-size'] if 'data' in column else 1
-            column['class'] = self.column_class + ' ' + (prefix + str(width))
-
-        return columns
 
 
 class Fixture(PloneSandboxLayer):
