@@ -25,7 +25,7 @@ DEFAULT_SEARCHABLE_CONTENT_TYPES = [
     'News Item'
 ]
 
-DEFAULT_GRID_SYSTEM = 'deco16_grid'
+DEFAULT_GRID_SYSTEM = 'bootstrap3'
 
 # z3c.form.widget.SequenceWidget used for css_class field
 # has a default null value of '--NOVALUE--'
