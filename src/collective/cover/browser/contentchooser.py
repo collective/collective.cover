@@ -76,12 +76,14 @@ class ContentSearch(grok.View):
         strategy = SitemapNavtreeStrategy(self.context)
 
         uids = None
-        self.batch = self.search(
+        result = self.search(
             self.query, uids=uids,
             page=page,
             b_size=b_size
         )
-        children = [strategy.decoratorFactory({'item': node}) for node in self.batch]
+        self.has_next = result.next is not None
+        self.nextpage = result.pagenumber + 1
+        children = [strategy.decoratorFactory({'item': node}) for node in result]
         self.level = 1
         self.children = children
 

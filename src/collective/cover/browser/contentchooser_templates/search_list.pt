@@ -2,8 +2,8 @@
             i18n:domain="collective.cover">
     <ul class="item-list"
         tal:attributes="data-total-results view/total_results;
-                        data-has-next view/batch/has_next;
-                        data-nextpage view/batch/nextpage">
+                        data-has-next view/has_next;
+                        data-nextpage view/nextpage">
         <tal:navitem repeat="node children" condition="children">
             <li tal:define="uid node/UID;
                             children python: [];

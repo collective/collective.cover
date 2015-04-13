@@ -91,4 +91,4 @@ class ContentChooserTestCase(unittest.TestCase):
         self.request.set('page', 1)
         self.request.set('b_size', 1)
         view.update()
-        self.assertEqual(view.batch.nextpage, 2)
+        self.assertEqual(view.nextpage, 2)
