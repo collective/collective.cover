@@ -6,7 +6,7 @@
         var $ul = $(this);
         var total_li = parseInt($ul.attr('data-total-results'), 10);
         if (($ul.attr('data-has-next') === 'False') ||
-            ($ul.scrollTop() < $ul.height())        ||
+            ($ul.scrollTop() + $ul.innerHeight() < $ul[0].scrollHeight) ||
             ($('li', $ul).length >= total_li)) {
             return;
         }
