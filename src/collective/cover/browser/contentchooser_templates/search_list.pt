@@ -1,9 +1,9 @@
 <tal:master define="level view/level|python:0; children view/children | nothing;"
             i18n:domain="collective.cover">
-    <tal:hasresult condition="children">
-        <li class="total-results"
-            tal:content="view/batch/length">
-        </li>
+    <ul class="item-list"
+        tal:attributes="data-total-results view/total_results;
+                        data-has-next view/batch/has_next;
+                        data-nextpage view/batch/nextpage">
         <tal:navitem repeat="node children" condition="children">
             <li tal:define="uid node/UID;
                             children python: [];
@@ -25,11 +25,8 @@
                 </tal:level>
             </li>
         </tal:navitem>
-        <li class="nav-bar"
-            tal:content="structure view/pagination">
-        </li>
-    </tal:hasresult>
-    <tal:nothasresult condition="python: not children">
-        <li></li>
-    </tal:nothasresult>
+        <tal:nothasresult condition="python: not children">
+            <li></li>
+        </tal:nothasresult>
+    </ul>
 </tal:master>

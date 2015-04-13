@@ -7,7 +7,6 @@ from five import grok
 from plone import api
 from plone.app.layout.navigation.interfaces import INavigationRoot
 from plone.app.layout.navigation.root import getNavigationRoot
-from plone.batching.browser import PloneBatchView
 from plone.i18n.normalizer.interfaces import IIDNormalizer
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.interfaces._content import IFolderish
@@ -73,25 +72,23 @@ class ContentSearch(grok.View):
         self.query = self.request.get('q', None)
         self.tab = self.request.get('tab', None)
         b_size = int(self.request.get('b_size', 20))
-        b_start = int(self.request.get('b_start', 0))
+        page = int(self.request.get('page', 1))
         strategy = SitemapNavtreeStrategy(self.context)
 
         uids = None
         self.batch = self.search(
             self.query, uids=uids,
-            b_size=b_size,
-            b_start=b_start
+            page=page,
+            b_size=b_size
         )
         children = [strategy.decoratorFactory({'item': node}) for node in self.batch]
         self.level = 1
-        batchview = PloneBatchView(self.context, self.request)
-        self.pagination = batchview(self.batch)
         self.children = children
 
     def render(self):
         return self.list_template()
 
-    def search(self, query=None, b_size=20, b_start=0, uids=None):
+    def search(self, query=None, page=1, b_size=20, uids=None):
         catalog = api.portal.get_tool('portal_catalog')
         registry = getUtility(IRegistry)
         settings = registry.forInterface(ICoverSettings)
@@ -103,7 +100,9 @@ class ContentSearch(grok.View):
         if query:
             catalog_query = {'Title': u'{0}*'.format(safe_unicode(query))}
         results = catalog(**catalog_query)
-        results = Batch(results, size=b_size, start=b_start, orphan=0)
+        self.total_results = len(results)
+        start = (page - 1) * b_size
+        results = Batch(results, size=b_size, start=start, orphan=0)
         return results
 
     def getTermByBrain(self, brain, real_value=True):
