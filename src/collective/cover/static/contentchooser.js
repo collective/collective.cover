@@ -1,9 +1,36 @@
 (function ($) {
     var ajaxSearchRequest = [];
     var timeoutIDs = [];
-    function contentSearchFilter(b_start) {
-        if (b_start === null) {
-            b_start = 0;
+    var TIMEOUT = 500;
+    var handle_scroll = function() {
+        var $ul = $(this);
+        var total_li = parseInt($ul.attr('data-total-results'), 10);
+        if (($ul.attr('data-has-next') === 'False') ||
+            ($ul.scrollTop() < $ul.height())        ||
+            ($('li', $ul).length >= total_li)) {
+            return;
+        }
+        var url = $("#contentchooser-content-search-button").attr("data-url");
+        var queryVal = $("#contentchooser-content-search-input").val();
+        var nextpage = parseInt($ul.attr('data-nextpage'), 10);
+        var data = {'q': queryVal, 'page': nextpage};
+        $('#kss-spinner').show();
+        ajaxSearchRequest.push($.ajax({
+            url: url,
+            data: data,
+            success: function(data) {
+                $('#kss-spinner').hide();
+                var ul = $(data)[1];
+                $ul.attr('data-has-next', $(ul).attr('data-has-next'));
+                $ul.attr('data-nextpage', $(ul).attr('data-nextpage'));
+                $ul.append(ul.children);
+                return false;
+            }
+        }));
+    };
+    function contentSearchFilter(page) {
+        if (page === null) {
+            page = 1;
         }
         var url = $("#contentchooser-content-search-button").attr("data-url");
         var queryVal = $("#contentchooser-content-search-input").val();
@@ -19,21 +46,23 @@
         timeoutIDs = [];
         $('#kss-spinner').hide();
         var timeoutID = setTimeout(function() {
-            var data = {'q': queryVal, 'b_start': b_start};
+            var data = {'q': queryVal, 'page': page};
             $('#kss-spinner').show();
             ajaxSearchRequest.push($.ajax({
                 url: url,
                 data: data,
                 success: function(info) {
                     $('#kss-spinner').hide();
-                    $("#contentchooser-content-search #recent .item-list").html(info);
-                    var count = $('#recent .total-results').text();
+                    $("#contentchooser-content-search #recent .item-list").off("scroll");
+                    $("#contentchooser-content-search #recent .item-list").replaceWith(info);
+                    $("#contentchooser-content-search #recent .item-list").on("scroll", handle_scroll);
+                    var $ul = $("#contentchooser-content-search #recent .item-list");
+                    var count = $ul.attr('data-total-results');
                     $('#recent .filter-count').text(" "+ count + " Results");
-                    $("#contentchooser-content-search #recent .item-list li ul").css("display", "none");
                     return false;
                 }
             }));
-        }, 500);
+        }, TIMEOUT);
         timeoutIDs.push(timeoutID);
         return false;
     }
@@ -71,39 +100,11 @@
         $(windowId + " ul.formTabs").tabs("div.panes > div");
     }
 
-    var parse_url = function(url) {
-        var base, i, key, len, param, param_dict, params, ref, ref1, ref2, ref3, type, value;
-        ref = url.split('?');
-        base = ref[0];
-        params = ref[1];
-        param_dict = {};
-        ref1 = params.split(',');
-        for (i = 0, len = ref1.length; i < len; i++) {
-            param = ref1[i];
-            ref2 = param.split('=');
-            key = ref2[0];
-            value = ref2[1];
-            ref3 = key.split(':');
-            key = ref3[0];
-            type = ref3[1];
-            if (type === 'int') {
-                value = parseInt(value, 10);
-            }
-            param_dict[key] = value;
-        }
-        return param_dict;
-    };
-
     $(function() {
         // Live search content tree
         coveractions.liveSearch('#contentchooser-content-trees','.item-list li','#content-trees .filter-count');
 
-        $(document).on("click", ".item-list .nav-bar a", function(e) {
-            e.preventDefault();
-            var $a = $(this);
-            var params = parse_url($a.attr('href'));
-            contentSearchFilter(params.b_start);
-        });
+        $("#contentchooser-content-search #recent .item-list").on("scroll", handle_scroll);
 
         $(document).on("click", "#recent .contentchooser-clear", function(e){
             $(e.currentTarget).prev().children("input").val("");

@@ -55,15 +55,15 @@
     cursor: grabbing;
 }
 
-#contentchooser-content-search .item-list li.total-results {
+#contentchooser-content-search .item-list li.stats {
     display: none;
 }
 
-#contentchooser-content-search .item-list li:not(.nav-bar):hover {
+#contentchooser-content-search .item-list li:hover {
    background-color: #205C90;
 }
 
-#content #contentchooser-content-search .item-list li:not(.nav-bar) a:link {
+#content #contentchooser-content-search .item-list li a:link {
     border-bottom: 0;
     display: block;
 }

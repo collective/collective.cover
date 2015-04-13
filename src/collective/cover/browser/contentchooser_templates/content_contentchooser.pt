@@ -30,8 +30,8 @@
         <input type="button" value="ok" id="contentchooser-content-search-button"
          tal:attributes="data-url view/post_url"
          i18n:attributes="value" />
-        <ul class="item-list">
-            <li tal:replace="structure context/@@content-search" />
+        <ul class="item-list"
+            tal:replace="structure context/@@content-search">
         </ul>
       </div>
 
