@@ -359,6 +359,37 @@ class Deco16Grid (BaseGrid):
     ncolumns = 16
 
     def columns_formatter(self, columns):
+        for column in columns:
+            width = column['data']['column-size'] if 'data' in column else 1
+            column['class'] = self.column_class + ' ' + (prefix + str(width))
+
+        return columns
+
+
+class Bootstrap2(BaseGrid):
+    grok.name('bootstrap2')
+    grok.implements(IGridSystem)
+
+    ncolumns = 12
+    title = _(u'Bootstrap 2')
+
+    def columns_formatter(self, columns):
+        prefix = 'span'
+        for column in columns:
+            width = column['data']['column-size'] if 'data' in column else 1
+            column['class'] = self.column_class + ' ' + (prefix + str(width))
+
+        return columns
+
+
+class Deco16Grid (BaseGrid):
+    grok.name('deco16_grid')
+    grok.implements(IGridSystem)
+
+    title = _(u'Deco (16 columns)')
+    ncolumns = 16
+
+    def columns_formatter(self, columns):
         w = 'width-'
         p = 'position-'
         offset = 0
@@ -366,20 +397,4 @@ class Deco16Grid (BaseGrid):
             width = column['data']['column-size'] if 'data' in column else 1
             column['class'] = self.column_class + ' ' + (w + str(width)) + ' ' + (p + str(offset))
             offset = offset + width
-        return columns
-
-
-class Bootstrap3(Deco16Grid):
-    grok.name('bootstrap3')
-    grok.implements(IGridSystem)
-
-    ncolumns = 12
-    title = _(u'Bootstrap 3')
-
-    def columns_formatter(self, columns):
-        prefix = 'col-md-'
-        for column in columns:
-            width = column['data']['column-size'] if 'data' in column else 1
-            column['class'] = self.column_class + ' ' + (prefix + str(width))
-
         return columns
