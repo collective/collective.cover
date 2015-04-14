@@ -244,7 +244,6 @@ class BaseGrid(object):
         for element in layout:
             if 'type' in element:
                 if element['type'] == 'row':
-                    element['class'] = self.row_class
                     if 'children' in element:
                         self.transform(self.columns_formatter(element['children']))
                 if element['type'] == 'group' and 'children' in element:
@@ -268,7 +267,7 @@ class Bootstrap3(BaseGrid, grok.GlobalUtility):
         prefix = 'col-md-'
         for column in columns:
             width = column['data']['column-size'] if 'data' in column else 1
-            column['class'] = self.column_class + ' ' + (prefix + str(width))
+            column['class'] = (prefix + str(width))
 
         return columns
 
@@ -284,7 +283,7 @@ class Bootstrap2(BaseGrid, grok.GlobalUtility):
         prefix = 'span'
         for column in columns:
             width = column['data']['column-size'] if 'data' in column else 1
-            column['class'] = self.column_class + ' ' + (prefix + str(width))
+            column['class'] = (prefix + str(width))
 
         return columns
 
@@ -295,6 +294,19 @@ class Deco16Grid (BaseGrid, grok.GlobalUtility):
 
     title = _(u'Deco (16 columns)')
     ncolumns = 16
+
+    def transform(self, layout):
+        for element in layout:
+            if 'type' in element:
+                if element['type'] == 'row':
+                    element['class'] = self.row_class
+                    if 'children' in element:
+                        self.transform(self.columns_formatter(element['children']))
+                if element['type'] == 'group' and 'children' in element:
+                    self.transform(element['children'])
+
+                if element['type'] == 'tile':
+                    element['class'] = 'tile'
 
     def columns_formatter(self, columns):
         w = 'width-'
