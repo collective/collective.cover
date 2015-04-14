@@ -110,6 +110,7 @@ Test Setting class in Layouts
     Click Button  xpath=//input[@id='form-buttons-save']
 
     # move to the default view and check CSS classes persist
+    Sleep  5s  Wait for page to reload after above Save button
     Wait Until Element Is Visible  css=#content-views
     Click Link  link=View
     Element Should Be Visible  css=div.row.new-carousel
