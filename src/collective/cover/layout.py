@@ -233,7 +233,7 @@ class GroupSelect(grok.View):
                 i += 1
 
 
-class BaseGrid(grok.GlobalUtility):
+class BaseGrid(object):
     title = u''
     ncolumns = 0
 
@@ -254,10 +254,10 @@ class BaseGrid(grok.GlobalUtility):
                     element['class'] = 'tile'
 
     def columns_formatter(self, columns):
-        raises Exception('Must be implemented in the child')
+        raise Exception('Must be implemented in the child')
 
 
-class Bootstrap3(BaseGrid):
+class Bootstrap3(BaseGrid, grok.GlobalUtility):
     grok.name('bootstrap3')
     grok.implements(IGridSystem)
 
@@ -273,7 +273,7 @@ class Bootstrap3(BaseGrid):
         return columns
 
 
-class Bootstrap2(BaseGrid):
+class Bootstrap2(BaseGrid, grok.GlobalUtility):
     grok.name('bootstrap2')
     grok.implements(IGridSystem)
 
@@ -289,38 +289,7 @@ class Bootstrap2(BaseGrid):
         return columns
 
 
-class Deco16Grid (BaseGrid):
-    grok.name('deco16_grid')
-    grok.implements(IGridSystem)
-
-    title = _(u'Deco (16 columns)')
-    ncolumns = 16
-
-    def columns_formatter(self, columns):
-        for column in columns:
-            width = column['data']['column-size'] if 'data' in column else 1
-            column['class'] = self.column_class + ' ' + (prefix + str(width))
-
-        return columns
-
-
-class Bootstrap2(BaseGrid):
-    grok.name('bootstrap2')
-    grok.implements(IGridSystem)
-
-    ncolumns = 12
-    title = _(u'Bootstrap 2')
-
-    def columns_formatter(self, columns):
-        prefix = 'span'
-        for column in columns:
-            width = column['data']['column-size'] if 'data' in column else 1
-            column['class'] = self.column_class + ' ' + (prefix + str(width))
-
-        return columns
-
-
-class Deco16Grid (BaseGrid):
+class Deco16Grid (BaseGrid, grok.GlobalUtility):
     grok.name('deco16_grid')
     grok.implements(IGridSystem)
 

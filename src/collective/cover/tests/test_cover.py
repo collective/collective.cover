@@ -3,7 +3,6 @@ from AccessControl import Unauthorized
 from collective.cover.controlpanel import ICoverSettings
 from collective.cover.interfaces import ICover
 from collective.cover.testing import INTEGRATION_TESTING
-from collective.cover.testing import MULTIPLE_GRIDS_INTEGRATION_TESTING
 from plone import api
 from plone.app.dexterity.behaviors.exclfromnav import IExcludeFromNavigation
 from plone.app.lockingbehavior.behaviors import ILocking
@@ -92,7 +91,25 @@ class CoverIntegrationTestCase(unittest.TestCase):
         setRoles(self.portal, TEST_USER_ID, ['Manager'])
         layout_edit = self.cover.restrictedTraverse('layoutedit')
         settings = json.loads(layout_edit.layoutmanager_settings())
+        self.assertEqual(settings, {'ncolumns': 12})
+
+        # Choose different grid.
+        registry = getUtility(IRegistry)
+        cover_settings = registry.forInterface(ICoverSettings)
+        cover_settings.grid_system = 'deco16_grid'
+
+        # The number of columns should be different now.
+        settings = json.loads(layout_edit.layoutmanager_settings())
         self.assertEqual(settings, {'ncolumns': 16})
+
+        # Choose different grid.
+        registry = getUtility(IRegistry)
+        cover_settings = registry.forInterface(ICoverSettings)
+        cover_settings.grid_system = 'bootstrap2'
+
+        # The number of columns should be different now.
+        settings = json.loads(layout_edit.layoutmanager_settings())
+        self.assertEqual(settings, {'ncolumns': 12})
 
     def test_searchabletext_indexer(self):
         from collective.cover.content import searchableText
@@ -141,36 +158,3 @@ class CoverIntegrationTestCase(unittest.TestCase):
         )
 
     # TODO: add test for plone.app.relationfield.behavior.IRelatedItems
-
-
-class CoverMultipleGridsIntegrationTestCase(unittest.TestCase):
-
-    layer = MULTIPLE_GRIDS_INTEGRATION_TESTING
-
-    def setUp(self):
-        self.portal = self.layer['portal']
-
-        with api.env.adopt_roles(['Manager']):
-            self.folder = api.content.create(self.portal, 'Folder', 'folder')
-
-        self.cover = api.content.create(
-            self.folder,
-            'collective.cover.content',
-            'cover',
-            template_layout='Layout A',
-        )
-
-    def test_layoutmanager_settings(self):
-        setRoles(self.portal, TEST_USER_ID, ['Manager'])
-        layout_edit = self.cover.restrictedTraverse('layoutedit')
-        settings = json.loads(layout_edit.layoutmanager_settings())
-        self.assertEqual(settings, {'ncolumns': 16})
-
-        # Choose different grid.
-        registry = getUtility(IRegistry)
-        cover_settings = registry.forInterface(ICoverSettings)
-        cover_settings.grid_system = 'bootstrap3'
-
-        # The number of columns should be different now.
-        settings = json.loads(layout_edit.layoutmanager_settings())
-        self.assertEqual(settings, {'ncolumns': 12})

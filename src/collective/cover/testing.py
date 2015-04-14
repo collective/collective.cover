@@ -1,9 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from App.Common import package_home
-from collective.cover import _
-from collective.cover.layout import Deco16Grid
-from collective.cover.layout import Bootstrap3
 from PIL import Image
 from PIL import ImageChops
 from plone.app.robotframework.testing import AUTOLOGIN_LIBRARY_FIXTURE
@@ -13,7 +10,6 @@ from plone.app.testing import PLONE_FIXTURE
 from plone.app.testing import PloneSandboxLayer
 from plone.testing import z2
 from StringIO import StringIO
-from zope.component import getGlobalSiteManager
 
 import os
 import pkg_resources
@@ -142,25 +138,9 @@ class Fixture(PloneSandboxLayer):
 FIXTURE = Fixture()
 
 
-class MultipleGridsFixture(Fixture):
-
-    defaultBases = (FIXTURE,)
-
-    def setUpZope(self, app, configurationContext):
-        newgrid = Bootstrap3()
-        sm = getGlobalSiteManager()
-        sm.registerUtility(newgrid, name='bootstrap3')
-
-
 INTEGRATION_TESTING = IntegrationTesting(
     bases=(FIXTURE,),
     name='collective.cover:Integration',
-)
-
-MULTIPLE_GRIDS_FIXTURE = MultipleGridsFixture()
-MULTIPLE_GRIDS_INTEGRATION_TESTING = IntegrationTesting(
-    bases=(MULTIPLE_GRIDS_FIXTURE,),
-    name='collective.cover:MultipleGridsIntegration',
 )
 
 FUNCTIONAL_TESTING = FunctionalTesting(

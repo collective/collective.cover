@@ -5,6 +5,9 @@ There's a frood who really knows where his towel is.
 
 1.0a11 (unreleased)
 ^^^^^^^^^^^^^^^^^^^
+- Make a 12 columns grid the default one (closes `#504`_).
+  [rodfersou]
+
 - Fix the indexing of richtext tiles by manually transform the text/html to text/plain
   [puittenbroek]
 
@@ -609,4 +612,5 @@ There's a frood who really knows where his towel is.
 .. _`#463`: https://github.com/collective/collective.cover/issues/463
 .. _`#466`: https://github.com/collective/collective.cover/issues/466
 .. _`#476`: https://github.com/collective/collective.cover/issues/476
+.. _`#504`: https://github.com/collective/collective.cover/issues/504
 .. _`PloneFormGen`: https://pypi.python.org/pypi/Products.PloneFormGen
