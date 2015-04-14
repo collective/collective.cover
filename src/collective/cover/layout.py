@@ -241,18 +241,19 @@ class GroupSelect(grok.View):
                 tile.setAllowedGroupsForEdit(groups)
                 i += 1
 
+## Validator for multiple CSS class names
 
 # Ok we exclude a little too much here. We exclude "-89", which is invalid, but
 # we also exclude "-abc" which IS a valid class, but it's also a silly CSS
 # class, so why bother to support it!?
-VALID_CSS_RE = re.compile('[a-zA-Z_][0-9a-zA-Z_-]*')
+VALID_CSS_CLASS_RE = re.compile('[a-zA-Z_][0-9a-zA-Z_-]*')
 
-def cssConstraint(value):
+def css_constraint(value):
     """Check for valid CSS names in a space separated string
     """
     invalidTokens = []
     for token in value.split():
-        if not VALID_CSS_RE.match(token):
+        if not VALID_CSS_CLASS_RE.match(token):
             invalidTokens.append(token)
 
     if invalidTokens:
@@ -272,7 +273,7 @@ class IRowConfigureForm(form.Schema):
     row_classes = schema.TextLine(
             title=_(u"Row Classes"),
             description=_(u"CSS class(es) for Cover row - space separated"),
-            constraint=cssConstraint,
+            constraint=css_constraint,
         )
 
 
@@ -317,7 +318,7 @@ class RowConfigureForm(form.SchemaForm):
 
 
     @button.buttonAndHandler(u"Cancel")
-    def handleCancel(self, action):
+    def handle_cancel(self, action):
         """User cancelled. Redirect back to the layout view.
         """
         layoutView = self.context.absolute_url() + "/@@layoutedit"
@@ -325,7 +326,7 @@ class RowConfigureForm(form.SchemaForm):
 
 
     @button.buttonAndHandler(u'Save')
-    def handleApply(self, action):
+    def handle_apply(self, action):
         data, errors = self.extractData()
         if errors:
             self.status = self.formErrorsMessage
