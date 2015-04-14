@@ -18,7 +18,8 @@
                             data-layout-type python: data['layout-type'] if 'layout-type' in data else 'row'">
                     <a href="#" class="config-row-link"
                         tal:condition="python:mode == 'layout_edit'"
-                        tal:attributes="href string:${context/absolute_url}/@@configure-row?rownum=${rownum}"
+                        tal:attributes="href string:${context/absolute_url}/@@configure-row?rownum=${rownum};
+                                        title string:Configure classes for row ${rownum}"
                         ><i class="config-icon"></i></a>
 
             <tal:children repeat="child python:section.get('children') or []">
