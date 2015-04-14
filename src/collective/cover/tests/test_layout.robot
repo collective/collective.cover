@@ -103,17 +103,35 @@ Test Setting class in Layouts
 
     Create Cover  ClassesTest  Description  Layout A
     Edit Cover Layout
-    
+    Click Link  css=div.layout div.cover-row:nth-child(1) a.config-row-link
+
+    Wait Until Element Is Visible  xpath=//input[@id='form-widgets-row_classes']
+    Input Text  xpath=//input[@id='form-widgets-row_classes']  new-carousel
+    Click Button  xpath=//input[@id='form-buttons-save']
+
+    # move to the default view and check CSS classes persist
+    Wait Until Element Is Visible  css=#content-views
+    Click Link  link=View
+    Element Should Be Visible  css=div.row.new-carousel
+
+    # Check that other layout mods do not destroy the view-classes
+    Edit Cover Layout
     Add Column at First Row
-    
-    # This should NOT destroy the view classes
+
     Save Cover Layout
-    
+
     # move to the default view and check CSS classes persist
     Click Link  link=View
-    Element Should Be Visible  css=div.row.carousel
-    Element Should Be Visible  css=div.row.halves
-    Element Should Be Visible  css=div.row.thirds
+    Element Should Be Visible  css=div.row.new-carousel
+
+    Edit Cover Layout
+    Click Link  css=div.layout div.cover-row:nth-child(2) a.config-row-link
+
+    Wait Until Element Is Visible  xpath=//input[@id='form-widgets-row_classes']
+    Input Text  xpath=//input[@id='form-widgets-row_classes']  123 -456 secondrow
+    Click Button  xpath=//input[@id='form-buttons-save']
+
+    Page Should Contain  The following strings are not valid css identifiers: 123 -456
 
 
 *** Keywords ***

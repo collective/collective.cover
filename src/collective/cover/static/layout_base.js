@@ -29,4 +29,14 @@ $(document).ready(function() {
             });
         });
     }
+
+    $('a.config-row-link').prepOverlay({
+        subtype: 'ajax',
+        filter: '#content > *',
+        width: '330px',
+        formselector: 'form#configure_row',
+        noform: 'reload',
+        closeselector: '#configure_row input#form-buttons-cancel'
+    });
+
 });

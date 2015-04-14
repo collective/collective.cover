@@ -6,15 +6,21 @@ from collective.cover.interfaces import ICover
 from collective.cover.interfaces import IGridSystem
 from collective.cover.utils import assign_tile_ids
 from five import grok
+from plone.directives import form
 from plone.registry.interfaces import IRegistry
 from plone.tiles.interfaces import ITileType
 from plone.uuid.interfaces import IUUIDGenerator
+from Products.statusmessages.interfaces import IStatusMessage
+from zope import schema
 from zope.browserpage.viewpagetemplatefile import ViewPageTemplateFile
 from zope.component import getUtility
 from zope.component import queryUtility
+from zope.interface import Invalid
 from zope.schema.interfaces import IVocabularyFactory
+from z3c.form import button
 
 import json
+import re
 
 
 class PageLayout(grok.View):
@@ -64,10 +70,13 @@ class PageLayout(grok.View):
                     self.grid_layout_common(element['children'])
 
     def grid_layout_edit(self, layout):
+        rowcount = 1
         for element in layout:
             if 'type' in element:
                 if element['type'] == 'row':
                     element['class'] = 'cover-row'
+                    element['rownum'] = rowcount
+                    rowcount += 1
 
                 if element['type'] == 'group':
                     element['class'] = 'cover-column'
@@ -231,6 +240,112 @@ class GroupSelect(grok.View):
                 tile = self.context.restrictedTraverse('{0}/{1}'.format(tile_type, tile_id))
                 tile.setAllowedGroupsForEdit(groups)
                 i += 1
+
+
+# Ok we exclude a little too much here. We exclude "-89", which is invalid, but
+# we also exclude "-abc" which IS a valid class, but it's also a silly CSS
+# class, so why bother to support it!?
+VALID_CSS_RE = re.compile('[a-zA-Z_][0-9a-zA-Z_-]*')
+
+def cssConstraint(value):
+    """Check for valid CSS names in a space separated string
+    """
+    invalidTokens = []
+    for token in value.split():
+        if not VALID_CSS_RE.match(token):
+            invalidTokens.append(token)
+
+    if invalidTokens:
+        raise Invalid(_(u"The following strings are not valid css identifiers: %s" %
+                        ' '.join(invalidTokens)))
+    return True
+
+
+class IRowConfigureForm(form.Schema):
+    """ Popout form to update row configuration (currently just classes)"""
+
+    form.mode(rownum='hidden')
+    rownum = schema.Int(
+            default=-1,
+        )
+
+    row_classes = schema.TextLine(
+            title=_(u"Row Classes"),
+            description=_(u"CSS class(es) for Cover row - space separated"),
+            constraint=cssConstraint,
+        )
+
+
+class RowConfigureForm(form.SchemaForm):
+    """ Configure settings for Cover Row
+
+    """
+    grok.context(ICover)
+    grok.name('configure-row')
+    grok.require('cmf.ModifyPortalContent')
+
+    schema = IRowConfigureForm
+    ignoreContext = True
+    name = 'configure_row'
+
+
+    def updateWidgets(self):
+        super(RowConfigureForm, self).updateWidgets()
+        # rownum should be passed in in query str...
+        rowid = self.request.form.get('rownum')
+        if rowid is None:
+            # ... Or by form submission (if an error occurred)
+            rowid = int(self.widgets["rownum"].value)
+
+        if rowid is None:
+            # redirect to View view if no rownum parameter
+            self.request.response.redirect(self.context.absolute_url())
+        else:
+            try:
+                rownum = int(rowid)
+                self.label = u"Row Settings for row %s" % rownum
+                self.widgets["rownum"].value = rownum
+
+                layout = json.loads(self.context.cover_layout)
+                # throws IndexError if bad rownum
+                existing_row_data = layout[rownum-1].get('data')
+                if existing_row_data:
+                    self.widgets["row_classes"].value = existing_row_data['view-classes']
+            except IndexError, ie:
+                # Bad rownum parameter, so redirect
+                self.request.response.redirect(self.context.absolute_url())
+
+
+    @button.buttonAndHandler(u"Cancel")
+    def handleCancel(self, action):
+        """User cancelled. Redirect back to the layout view.
+        """
+        layoutView = self.context.absolute_url() + "/@@layoutedit"
+        self.request.response.redirect(layoutView)
+
+
+    @button.buttonAndHandler(u'Save')
+    def handleApply(self, action):
+        data, errors = self.extractData()
+        if errors:
+            self.status = self.formErrorsMessage
+            return
+
+        # Save the new classes into the row
+        layout = json.loads(self.context.cover_layout)
+        rowindex = data['rownum'] - 1
+        new_row_data = layout[rowindex].get('data', dict())
+        new_row_data['view-classes'] = data['row_classes']
+        layout[rowindex]['data'] = new_row_data
+
+        layout_str = json.dumps(layout)
+
+        self.context.cover_layout = layout_str
+
+        # Set status on this form page
+        self.status = "Classes set on row %s" % data['rownum']
+        layoutView = self.context.absolute_url() + "/@@layoutedit"
+        self.request.response.redirect(layoutView)
 
 
 class Deco16Grid (grok.GlobalUtility):

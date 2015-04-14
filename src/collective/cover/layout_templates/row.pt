@@ -9,12 +9,17 @@
 
     <tal:mode define="mode options/mode;">
         <div tal:define="section options/section | nothing;
-                         data python:section.get('data', '') if section else None;
-                         viewClasses python: data['view-classes'] if 'view-classes' in data else ''"
+                         data python:section.get('data', {}) if section else {};
+                         viewClasses python: data.get('view-classes', '');
+                         rownum python:section.get('rownum', '');"
             tal:condition="section"
             tal:attributes="class python:'%s %s' % (section.get('class', ''), (viewClasses if mode == 'view' else ''));
                             data-view-classes python: viewClasses;
                             data-layout-type python: data['layout-type'] if 'layout-type' in data else 'row'">
+                    <a href="#" class="config-row-link"
+                        tal:condition="python:mode == 'layout_edit'"
+                        tal:attributes="href string:${context/absolute_url}/@@configure-row?rownum=${rownum}"
+                        ><i class="config-icon"></i></a>
 
             <tal:children repeat="child python:section.get('children') or []">
                 <div tal:replace="structure python:view.render_section(child, mode)" />

@@ -602,6 +602,6 @@
                 $('#sidebar').removeClass("fixed");
             }
         }
-});
+    });
 
 })(jQuery);
