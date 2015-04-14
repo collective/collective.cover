@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from App.Common import package_home
+from collective.cover.config import PLONE_VERSION
 from PIL import Image
 from PIL import ImageChops
 from plone.app.robotframework.testing import AUTOLOGIN_LIBRARY_FIXTURE
@@ -15,7 +16,6 @@ import os
 import pkg_resources
 import random
 
-PLONE_VERSION = pkg_resources.require('Plone')[0].version
 
 try:
     pkg_resources.get_distribution('Products.PloneFormGen')

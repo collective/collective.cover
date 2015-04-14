@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import pkg_resources
+
 
 PROJECTNAME = 'collective.cover'
 
@@ -25,7 +27,9 @@ DEFAULT_SEARCHABLE_CONTENT_TYPES = [
     'News Item'
 ]
 
-DEFAULT_GRID_SYSTEM = 'bootstrap3'
+PLONE_VERSION = pkg_resources.require('Plone')[0].version
+
+DEFAULT_GRID_SYSTEM = 'bootstrap3' if PLONE_VERSION >= 4.3 else 'bootstrap2'
 
 # z3c.form.widget.SequenceWidget used for css_class field
 # has a default null value of '--NOVALUE--'

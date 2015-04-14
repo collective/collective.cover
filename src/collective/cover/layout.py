@@ -238,7 +238,7 @@ class BaseGrid(object):
     ncolumns = 0
 
     row_class = 'row'
-    column_class = 'cell'
+    column_class = 'column'
 
     def transform(self, layout):
         for element in layout:
@@ -262,13 +262,13 @@ class Bootstrap3(BaseGrid, grok.GlobalUtility):
     grok.implements(IGridSystem)
 
     ncolumns = 12
-    title = _(u'Bootstrap 3, default')
+    title = _(u'Bootstrap 3')
 
     def columns_formatter(self, columns):
         prefix = 'col-md-'
         for column in columns:
             width = column['data']['column-size'] if 'data' in column else 1
-            column['class'] = (prefix + str(width))
+            column['class'] = self.column_class + ' ' + (prefix + str(width))
 
         return columns
 
@@ -284,7 +284,7 @@ class Bootstrap2(BaseGrid, grok.GlobalUtility):
         prefix = 'span'
         for column in columns:
             width = column['data']['column-size'] if 'data' in column else 1
-            column['class'] = (prefix + str(width))
+            column['class'] = self.column_class + ' ' + (prefix + str(width))
 
         return columns
 
@@ -295,6 +295,7 @@ class Deco16Grid (BaseGrid, grok.GlobalUtility):
 
     title = _(u'Deco (16 columns)')
     ncolumns = 16
+    column_class = 'cell'
 
     def columns_formatter(self, columns):
         w = 'width-'

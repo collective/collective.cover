@@ -115,6 +115,6 @@ class VocabulariesTestCase(unittest.TestCase):
         self.assertIn(u'bootstrap3', grids)
         self.assertIn(u'bootstrap2', grids)
         self.assertIn(u'deco16_grid', grids)
-        self.assertEqual(grids.getTerm('bootstrap3').title, u'Bootstrap 3, default')
+        self.assertEqual(grids.getTerm('bootstrap3').title, u'Bootstrap 3')
         self.assertEqual(grids.getTerm('bootstrap2').title, u'Bootstrap 2')
         self.assertEqual(grids.getTerm('deco16_grid').title, u'Deco (16 columns)')
