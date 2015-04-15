@@ -227,6 +227,8 @@ def fix_persistentmap_to_dict(context):
 
 
 def _remove_css_class_layout(layout, is_child=False):
+    """Recursivelly remove class attribute from layout
+    """
     if not is_child:
         layout = json.loads(layout)
     fixed_layout = []
@@ -247,7 +249,8 @@ def _remove_css_class_layout(layout, is_child=False):
 
 
 def remove_css_class_layout(context):
-    '''Remove css class from registry and cover layouts.'''
+    '''Remove css class from registry and cover layouts.
+    '''
     # Fix registry layouts
     logger.info('Remove css class from registry layout')
     registry = getUtility(IRegistry)
