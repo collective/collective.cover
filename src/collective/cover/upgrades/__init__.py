@@ -267,7 +267,6 @@ def remove_css_class_layout(context):
         obj = cover.getObject()
         logger.info('Remove css class from "{0}" cover layout'.format(obj.Title()))
         obj.cover_layout = _remove_css_class_layout(obj.cover_layout)
-        obj.reindexObject()
     # Fix cover layouts
 
     logger.info('Done')
