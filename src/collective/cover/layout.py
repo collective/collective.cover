@@ -18,9 +18,9 @@ import json
 
 
 class PageLayout(grok.View):
-    """
-    Renders a layout for the cover object.
-    """
+
+    """Renders a layout for the cover object."""
+
     grok.context(ICover)
     grok.name('layout')
     grok.require('zope2.View')
@@ -49,9 +49,8 @@ class PageLayout(grok.View):
         return layout
 
     def grid_layout_common(self, layout):
-        """Add things to the grid/layout structure which should be available
-        on both compose and layout tabs.
-
+        """Add things to the grid/layout structure which should be
+        available on both compose and layout tabs.
         """
 
         for element in layout:
@@ -234,8 +233,9 @@ class GroupSelect(grok.View):
 
 
 class BaseGrid(object):
-    """Base class for grid systems
-    """
+
+    """Base class for grid systems."""
+
     title = u''
     ncolumns = 0
 
@@ -260,8 +260,9 @@ class BaseGrid(object):
 
 
 class Bootstrap3(BaseGrid, grok.GlobalUtility):
-    """Bootstrap 3 grid system (12 columns)
-    """
+
+    """Bootstrap 3 grid system (12 columns)."""
+
     grok.name('bootstrap3')
     grok.implements(IGridSystem)
 
@@ -278,8 +279,9 @@ class Bootstrap3(BaseGrid, grok.GlobalUtility):
 
 
 class Bootstrap2(BaseGrid, grok.GlobalUtility):
-    """Bootstrap 2 grid system (12 columns)
-    """
+
+    """Bootstrap 2 grid system (12 columns)."""
+
     grok.name('bootstrap2')
     grok.implements(IGridSystem)
 
@@ -296,8 +298,9 @@ class Bootstrap2(BaseGrid, grok.GlobalUtility):
 
 
 class Deco16Grid (BaseGrid, grok.GlobalUtility):
-    """Deco grid system (16 columns)
-    """
+
+    """Deco grid system (16 columns)."""
+
     grok.name('deco16_grid')
     grok.implements(IGridSystem)
 
