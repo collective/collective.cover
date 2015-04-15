@@ -59,16 +59,15 @@ Test Content Chooser
     Wait Until Page Contains  1 Results
     Page Should Contain Element  css=${folder_selector}
     Click Element  css=${folder_selector}
-    Wait Until Page Contains  Plone site → my-folder
+    Wait Until Page Contains  my-folder
 
     # go back to tree root
     Click Element  link=Plone site
     ${TIMEOUT} =  Get Selenium timeout
     ${IMPLICIT_WAIT} =  Get Selenium implicit wait
     Wait Until Keyword Succeeds  ${TIMEOUT}  ${IMPLICIT_WAIT}
-    ...                          Page Should Not Contain  Plone site → my-folder
+    ...                          Page Should Not Contain  my-folder
 
     Click Element  css=${contentchooser_close}
     Wait Until Keyword Succeeds  ${TIMEOUT}  ${IMPLICIT_WAIT}
     ...                          Element Should Not Be Visible  css=${CONTENT_CHOOSER_SELECTOR}
-
