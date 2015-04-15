@@ -273,7 +273,7 @@ class Upgrade10to11TestCase(UpgradeTestCaseBase):
     def test_upgrade_to_11_registrations(self):
         version = self.setup.getLastVersionForProfile(self.profile_id)[0]
         self.assertTrue(int(version) >= int(self.to_version))
-        self.assertEqual(self._how_many_upgrades_to_do(), 1)
+        self.assertEqual(self._how_many_upgrades_to_do(), 2)
 
     def test_uuids_converted_to_dict(self):
         title = u'Revert PersistentMapping back to dict'
