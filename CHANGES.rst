@@ -5,7 +5,7 @@ There's a frood who really knows where his towel is.
 
 1.0a11 (unreleased)
 ^^^^^^^^^^^^^^^^^^^
-- Make a 12 columns grid the default one (closes `#504`_).
+- Ship with more than one grid system (closes `#504`_).
   [rodfersou]
 
 - Performance issue when searching for recent items at content chooser (compose tab). (fixes '#493`_`).
