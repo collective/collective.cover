@@ -9,7 +9,9 @@ from plone.tiles.interfaces import ITileType
 from zope.component import getUtility
 from zope.schema.interfaces import IVocabularyFactory
 
+import json
 import logging
+
 
 logger = logging.getLogger(PROJECTNAME)
 PROFILE_ID = 'profile-collective.cover:default'
@@ -221,4 +223,48 @@ def fix_persistentmap_to_dict(context):
             logger.info(
                 'Tile %s at %s updated' % (tile_id, cover.getPath())
             )
+    logger.info('Done')
+
+
+def _remove_css_class_layout(layout, is_child=False):
+    if not is_child:
+        layout = json.loads(layout)
+    fixed_layout = []
+    for row in layout:
+        fixed_row = {
+            k: v
+            for k, v in row.iteritems()
+            if k != u'class'
+        }
+        if u'children' in fixed_row:
+            fixed_row[u'children'] = _remove_css_class_layout(fixed_row[u'children'], True)
+        fixed_layout.append(fixed_row)
+    if is_child:
+        return fixed_layout
+    else:
+        fixed_layout = json.dumps(fixed_layout)
+        return fixed_layout.decode('utf-8')
+
+
+def remove_css_class_layout(context):
+    '''Remove css class from registry and cover layouts.'''
+    # Fix registry layouts
+    logger.info('Remove css class from registry layout')
+    registry = getUtility(IRegistry)
+    settings = registry.forInterface(ICoverSettings)
+    fixed_layouts = {}
+    for name, layout in settings.layouts.iteritems():
+        fixed_layouts[name] = _remove_css_class_layout(layout)
+    settings.layouts = fixed_layouts
+    # Fix registry layouts
+
+    # Fix cover layouts
+    covers = context.portal_catalog(portal_type='collective.cover.content')
+    for cover in covers:
+        obj = cover.getObject()
+        logger.info('Remove css class from "{0}" cover layout'.format(obj.Title()))
+        obj.cover_layout = _remove_css_class_layout(obj.cover_layout)
+        obj.reindexObject()
+    # Fix cover layouts
+
     logger.info('Done')
