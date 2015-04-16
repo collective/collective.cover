@@ -25,7 +25,7 @@ def uuidToObject(uuid):
 
     :param uuid: UUID of the object
     :type uuid: str
-    :returns: the content object or None, if the uuid can't be found.
+    :returns: the content object or None, if the UUID can't be found.
     """
     # Use local uuidToCatalogBrain without the inactive content filter
     brain = uuidToCatalogBrain(uuid)
@@ -39,7 +39,7 @@ def uuidToCatalogBrain(uuid):
     :param uuid: UUID of the object
     :type uuid: str
     :returns: the catalog brain associated with the object or None,
-        if the uuid can't be found.
+        if the UUID can't be found.
     """
     catalog = api.portal.get_tool('portal_catalog')
     results = catalog(UID=uuid, show_all=1, show_inactive=1)
