@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-
 from collective.cover.config import DEFAULT_GRID_SYSTEM
+from collective.cover.config import PLONE_VERSION
 from collective.cover.controlpanel import ICoverSettings
 from collective.cover.testing import INTEGRATION_TESTING
 from plone import api
@@ -40,77 +40,52 @@ class GridTestCase(unittest.TestCase):
         self.view = folder.cover.restrictedTraverse('view')
 
     def test_default_grid(self):
-        document = lxml.html.fromstring(self.view())
+        if PLONE_VERSION < '5.0':
+            self.assertEqual(DEFAULT_GRID_SYSTEM, 'deco16_grid')
+        else:
+            self.assertEqual(DEFAULT_GRID_SYSTEM, 'bootstrap3')
 
-        rows = document.cssselect('#content div.row')
-
-        if DEFAULT_GRID_SYSTEM == 'deco16_grid':
-            cells0 = rows[0].cssselect('div.cell')
-            cells1 = rows[1].cssselect('div.cell')
-            cells2 = rows[2].cssselect('div.cell')
-
-            self.assertTrue(_has_classes(cells0[0], ('width-16', 'position-0')))
-            self.assertTrue(_has_classes(cells1[0], ('width-8', 'position-0')))
-            self.assertTrue(_has_classes(cells1[1], ('width-8', 'position-8')))
-            self.assertTrue(_has_classes(cells2[0], ('width-5', 'position-0')))
-            self.assertTrue(_has_classes(cells2[1], ('width-5', 'position-5')))
-            self.assertTrue(_has_classes(cells2[2], ('width-5', 'position-10')))
-        elif DEFAULT_GRID_SYSTEM == 'bootstrap3':
-            cells0 = rows[0].cssselect('div.column')
-            cells1 = rows[1].cssselect('div.column')
-            cells2 = rows[2].cssselect('div.column')
-
-            self.assertTrue(_has_classes(cells0[0], ('col-md-16',)))
-            self.assertTrue(_has_classes(cells1[0], ('col-md-8',)))
-            self.assertTrue(_has_classes(cells1[1], ('col-md-8',)))
-            self.assertTrue(_has_classes(cells2[0], ('col-md-5',)))
-            self.assertTrue(_has_classes(cells2[1], ('col-md-5',)))
-            self.assertTrue(_has_classes(cells2[2], ('col-md-5',)))
-
-    def test_other_default_grid(self):
+    def _switch_grid_system(self, grid):
         registry = getUtility(IRegistry)
         settings = registry.forInterface(ICoverSettings)
+        settings.grid_system = grid
 
-        if DEFAULT_GRID_SYSTEM == 'deco16_grid':
-            settings.grid_system = 'bootstrap3'
+    def test_deco16_grid(self):
+        self._switch_grid_system('deco16_grid')
 
-            document = lxml.html.fromstring(self.view())
+        document = lxml.html.fromstring(self.view())
+        rows = document.cssselect('#content div.row')
+        cells0 = rows[0].cssselect('div.cell')
+        cells1 = rows[1].cssselect('div.cell')
+        cells2 = rows[2].cssselect('div.cell')
 
-            rows = document.cssselect('#content div.row')
-            cells0 = rows[0].cssselect('div.column')
-            cells1 = rows[1].cssselect('div.column')
-            cells2 = rows[2].cssselect('div.column')
+        self.assertTrue(_has_classes(cells0[0], ('width-16', 'position-0')))
+        self.assertTrue(_has_classes(cells1[0], ('width-8', 'position-0')))
+        self.assertTrue(_has_classes(cells1[1], ('width-8', 'position-8')))
+        self.assertTrue(_has_classes(cells2[0], ('width-5', 'position-0')))
+        self.assertTrue(_has_classes(cells2[1], ('width-5', 'position-5')))
+        self.assertTrue(_has_classes(cells2[2], ('width-5', 'position-10')))
 
-            self.assertTrue(_has_classes(cells0[0], ('col-md-16',)))
-            self.assertTrue(_has_classes(cells1[0], ('col-md-8',)))
-            self.assertTrue(_has_classes(cells1[1], ('col-md-8',)))
-            self.assertTrue(_has_classes(cells2[0], ('col-md-5',)))
-            self.assertTrue(_has_classes(cells2[1], ('col-md-5',)))
-            self.assertTrue(_has_classes(cells2[2], ('col-md-5',)))
-        elif DEFAULT_GRID_SYSTEM == 'bootstrap3':
-            settings.grid_system = 'deco16_grid'
+    def test_bootstrap3_grid(self):
+        self._switch_grid_system('bootstrap3')
 
-            document = lxml.html.fromstring(self.view())
+        document = lxml.html.fromstring(self.view())
+        rows = document.cssselect('#content div.row')
+        cells0 = rows[0].cssselect('div.column')
+        cells1 = rows[1].cssselect('div.column')
+        cells2 = rows[2].cssselect('div.column')
 
-            rows = document.cssselect('#content div.row')
-            cells0 = rows[0].cssselect('div.cell')
-            cells1 = rows[1].cssselect('div.cell')
-            cells2 = rows[2].cssselect('div.cell')
-
-            self.assertTrue(_has_classes(cells0[0], ('width-16', 'position-0')))
-            self.assertTrue(_has_classes(cells1[0], ('width-8', 'position-0')))
-            self.assertTrue(_has_classes(cells1[1], ('width-8', 'position-8')))
-            self.assertTrue(_has_classes(cells2[0], ('width-5', 'position-0')))
-            self.assertTrue(_has_classes(cells2[1], ('width-5', 'position-5')))
-            self.assertTrue(_has_classes(cells2[2], ('width-5', 'position-10')))
+        self.assertTrue(_has_classes(cells0[0], ('col-md-16',)))
+        self.assertTrue(_has_classes(cells1[0], ('col-md-8',)))
+        self.assertTrue(_has_classes(cells1[1], ('col-md-8',)))
+        self.assertTrue(_has_classes(cells2[0], ('col-md-5',)))
+        self.assertTrue(_has_classes(cells2[1], ('col-md-5',)))
+        self.assertTrue(_has_classes(cells2[2], ('col-md-5',)))
 
     def test_bootstrap2_grid(self):
-        registry = getUtility(IRegistry)
-        settings = registry.forInterface(ICoverSettings)
-        settings.grid_system = 'bootstrap2'
+        self._switch_grid_system('bootstrap2')
 
         document = lxml.html.fromstring(self.view())
-
         rows = document.cssselect('#content div.row')
         cells0 = rows[0].cssselect('div.column')
         cells1 = rows[1].cssselect('div.column')
