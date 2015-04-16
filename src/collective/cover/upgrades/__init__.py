@@ -2,6 +2,7 @@
 from collective.cover.config import PROJECTNAME
 from collective.cover.controlpanel import ICoverSettings
 from collective.cover.tiles.list import IListTile
+from collective.cover.interfaces import ICover
 from plone import api
 from plone.registry.interfaces import IRegistry
 from plone.tiles.interfaces import ITileDataManager
@@ -248,23 +249,22 @@ def _remove_css_class_layout(layout, is_child=False):
 
 
 def remove_css_class_layout(context):
-    """Remove css class from registry and cover layouts."""
+    """Remove CSS class from registry and cover layouts."""
+    logger.info('CSS classes will be removed from Cover layouts.')
     # Fix registry layouts
-    logger.info('Remove css class from registry layout')
     registry = getUtility(IRegistry)
     settings = registry.forInterface(ICoverSettings)
     fixed_layouts = {}
     for name, layout in settings.layouts.iteritems():
         fixed_layouts[name] = _remove_css_class_layout(layout)
     settings.layouts = fixed_layouts
-    # Fix registry layouts
+    logger.info('Registry layouts were updated.')
 
     # Fix cover layouts
-    covers = context.portal_catalog(portal_type='collective.cover.content')
+    covers = context.portal_catalog(object_provides=ICover.__identifier__)
+    logger.info('Layout of {0} objects will be updated'.format(len(covers)))
+
     for cover in covers:
         obj = cover.getObject()
-        logger.info('Remove css class from "{0}" cover layout'.format(obj.Title()))
         obj.cover_layout = _remove_css_class_layout(obj.cover_layout)
-    # Fix cover layouts
-
-    logger.info('Done')
+        logger.info('"{0}" was updated'.format(obj.absolute_url_path()))
