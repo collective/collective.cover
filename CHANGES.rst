@@ -6,22 +6,26 @@ There's a frood who really knows where his towel is.
 1.0a11 (unreleased)
 ^^^^^^^^^^^^^^^^^^^
 
-- Ship with more than one grid system (closes `#504`_).
+- Ship with support for more than one grid system.
+  Besides 16-column Deco grid, we now include support for 12-column Bootstrap 2 and Bootstrap 3 grids.
+  Check developers documentation for more information on how to use them (closes `#504`_).
   [rodfersou]
 
-- Performance issue when searching for recent items at content chooser (compose tab). (fixes `#493`_).
+- Fix performance issues when searching for recent items in the content chooser.
+  Searches only start after the third character and will be delayed by 500ms to wait for the user to stop typing.
+  The scope of the search was also changed: instead of searching on SearchableText index (full text), we search on Title index only (fixes `#493`_).
   [rodfersou]
 
 - Fix the indexing of RichText tiles by manually transform the text/html to text/plain.
   [puittenbroek]
 
-- Don't ignore dropped objects on carousel tiles if the image is added to the object using a Dexterity behavior. (fixes `#473`_).
+- Don't ignore dropped objects on carousel tiles if the image is added to the object using a Dexterity behavior (fixes `#473`_).
   [fredvd]
 
 - Fix to check if custom attributes were changed from default value (closes `#476`_).
   [rodfersou]
 
-- Allow new empty carousel tiles to be edited in compose mode. (fixes `#472`_).
+- Allow new empty carousel tiles to be edited in compose mode (fixes `#472`_).
   [fredvd]
 
 - Add warning in the developer docs that switching the default grid system also means you should pay extra attention to the preset/saved cover layouts as these can contain invalid grid sizes.
