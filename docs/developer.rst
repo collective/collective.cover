@@ -235,6 +235,8 @@ Once registered you can select your grid system on the Cover Settings control pa
 .. WARNING::
     Switching the grid system will apply to all new and existing covers.
     If you already made layouts for a 16-column grid and switch to e.g. a 12-column grid, you will have to manually update all existing covers (their layout is not recalculated automatically).
+    
+    Collective.cover does not provide any grid system styles, only changes the HTML output. Be sure your theme have all necessary styles for the grid system you choose.
 
 Layouts
 ^^^^^^^
