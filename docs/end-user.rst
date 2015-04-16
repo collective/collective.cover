@@ -192,18 +192,12 @@ steps:
 
 There are also two other navigation options to find content.
 
-Searching for content
-+++++++++++++++++++++
+Filtering recent items
+++++++++++++++++++++++
 
-You can use the search field in the content selection window to locate the
-content you want:
-
-#. Type the term you want to find.
-
-#. Push the "Search" button.
-
-The items related to the term you search will be displayed and can be used
-according to the steps above.
+You can use the search box in the recent items tab to filter content.
+Just type the term you want to find and the items containing it on their title field will be displayed.
+The items will be shown sorted by publication date with the more recent appearing first.
 
 Content tree
 ++++++++++++
