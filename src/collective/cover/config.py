@@ -27,7 +27,7 @@ DEFAULT_SEARCHABLE_CONTENT_TYPES = [
     'News Item'
 ]
 
-PLONE_VERSION = pkg_resources.require('Plone')[0].version
+PLONE_VERSION = pkg_resources.get_distribution('Plone').version
 
 DEFAULT_GRID_SYSTEM = 'bootstrap3' if PLONE_VERSION >= 5.0 else 'deco16_grid'
 
