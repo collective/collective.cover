@@ -65,6 +65,9 @@ button.close {
     text-shadow: 0px 1px 0px rgb(255, 255, 255);
     opacity: 0.2;
 }
+.overlay-ajax .close {
+    opacity: 1;
+}
 .modal{
     position:fixed;
     top:10%;
@@ -258,7 +261,8 @@ input[type="submit"].btn::-moz-focus-inner {
     margin-left: 0 !important;
 }
 
-#content .layout .config-tile-link:link {
+#content .layout .config-tile-link:link,
+#content .layout .config-row-link:link {
     position: absolute;
     color: #FFFFFF;
     cursor: pointer;
@@ -273,7 +277,8 @@ input[type="submit"].btn::-moz-focus-inner {
     border: medium none;
 }
 
-#content .layout .config-tile-link .config-icon {
+#content .layout .config-tile-link .config-icon,
+#content .layout .config-row-link .config-icon {
     background: transparent url(/++resource++collective.cover/conf.png) no-repeat center center;
     height: 16px;
     width: 16px;
@@ -522,9 +527,9 @@ input[type="submit"].btn::-moz-focus-inner {
 .visibility-yes {background: url('visibility.png') no-repeat -22px 4px;}
 
 #tile-configure .order-box {
-	display: none;
+    display: none;
 }
 
 #tile-configure .config-sortable {
-	cursor: move;
+    cursor: move;
 }

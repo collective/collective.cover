@@ -97,6 +97,43 @@ Test Basic Layout Operations
     Click Button  id=buttons-cancel
 
 
+Test Setting class in Layouts
+    Enable Autologin as  Site Administrator
+    Go to Homepage
+
+    Create Cover  ClassesTest  Description  Layout A
+    Edit Cover Layout
+    Click Link  css=div.layout div.cover-row:nth-child(1) a.config-row-link
+
+    Wait Until Element Is Visible  xpath=//input[@id='form-widgets-row_classes']
+    Input Text  xpath=//input[@id='form-widgets-row_classes']  new-carousel
+    Click Button  xpath=//input[@id='form-buttons-save']
+
+    # move to the default view and check CSS classes persist
+    Sleep  5s  Wait for page to reload after above Save button
+    Wait Until Element Is Visible  css=#content-views
+    Click Link  link=View
+    Element Should Be Visible  css=div.row.new-carousel
+
+    # Check that other layout mods do not destroy the view-classes
+    Edit Cover Layout
+    Add Column at First Row
+
+    Save Cover Layout
+
+    # move to the default view and check CSS classes persist
+    Click Link  link=View
+    Element Should Be Visible  css=div.row.new-carousel
+
+    Edit Cover Layout
+    Click Link  css=div.layout div.cover-row:nth-child(2) a.config-row-link
+
+    Wait Until Element Is Visible  xpath=//input[@id='form-widgets-row_classes']
+    Input Text  xpath=//input[@id='form-widgets-row_classes']  123 -456 secondrow
+    Click Button  xpath=//input[@id='form-buttons-save']
+
+    Page Should Contain  The following strings are not valid css identifiers: 123 -456
+
 
 *** Keywords ***
 

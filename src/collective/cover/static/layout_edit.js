@@ -512,6 +512,11 @@
                         if (node_type) {
                             entry.type = node_type[0];
                         }
+                        if (node_type == 'row') {
+                            entry.data = {
+                                'view-classes': $(this).data('view-classes')
+                            };
+                        }
                         if (node_type == 'column') {
                             entry.roles = ['Manager'];
                             entry.type = 'group';
@@ -597,6 +602,6 @@
                 $('#sidebar').removeClass("fixed");
             }
         }
-});
+    });
 
 })(jQuery);
