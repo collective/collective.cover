@@ -317,7 +317,7 @@ class Upgrade10to11TestCase(UpgradeTestCaseBase):
         self.assertEqual(old_data['uuids']['uuid3']['order'], u'2')
 
     def test_remove_css_class_layout(self):
-        title = u'Remove css class information for registry and cover layout information'
+        title = u'Remove css class information for registry and cover layouts'
         step = self._get_upgrade_step(title)
         self.assertIsNotNone(step)
 
