@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
-
-import uuid
 from plone import api
 
+import uuid
+
+
 def assign_tile_ids(layout, override=True):
-    """
-    This function takes a dict, and it will recursively traverse it and assign
-    sha-hashed ids so we are pretty sure they are unique among them
+    """Recursively traverse a dict describing a layout and assign
+    sha-hashed ids to the tiles so we are pretty sure they are unique
+    among them.
     """
 
     for elem in layout:
@@ -20,28 +21,26 @@ def assign_tile_ids(layout, override=True):
 
 
 def uuidToObject(uuid):
-    """Given a UUID, attempt to return a content object. Will return
-    None if the UUID can't be found. 
+    """Return a content object given an UUID.
+
+    :param uuid: UUID of the object
+    :type uuid: str
+    :returns: the content object or None, if the uuid can't be found.
     """
-    
-    # Use local uuidToCatalogBrain without the inactive content filter 
+    # Use local uuidToCatalogBrain without the inactive content filter
     brain = uuidToCatalogBrain(uuid)
-    if brain is None:
-        return None
-    
-    return brain.getObject()
+    return brain.getObject() if brain else None
+
 
 def uuidToCatalogBrain(uuid):
-    """Given a UUID, attempt to return a catalog brain.
-       Copied from plone.app.uuid:utils but doesn't filter on expired items
+    """Return a catalog brain given an UUID.
+    Copied from plone.app.uuid:utils but doesn't filter on expired items.
+
+    :param uuid: UUID of the object
+    :type uuid: str
+    :returns: the catalog brain associated with the object or None,
+        if the uuid can't be found.
     """
-    
-    catalog = api.portal.get_tool(name='portal_catalog')
-    if catalog is None:
-        return None
-    
-    result = catalog(UID=uuid, show_all=1, show_inactive=1)
-    if len(result) != 1:
-        return None
-    
-    return result[0]
+    catalog = api.portal.get_tool('portal_catalog')
+    results = catalog(UID=uuid, show_all=1, show_inactive=1)
+    return results[0] if results else None
