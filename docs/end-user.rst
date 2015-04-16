@@ -316,7 +316,7 @@ You can control the width of each column individually:
 
 .. TIP::
     By default, ``collective.cover`` uses a 16-column grid system.
-    Therefore, the sum of the all widths in a column must not exceed 16.
+    Therefore, the sum of the width of all columns in a row must not exceed 16.
     To make it easier to edit the width of all columns, first adjust the width of the smallest column.
 
 Adding new tiles
