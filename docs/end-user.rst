@@ -314,9 +314,10 @@ You can control the width of each column individually:
     :height: 450px
     :width: 670px
 
-By default, ``collective.cover`` uses a grid of 16 units. Therefore, the sum
-of the all widths in a column must not exceed 16. To make it easier to edit
-the width of all columns, first adjust the width of the smallest column.
+.. TIP::
+    By default, ``collective.cover`` uses a 16-column grid system.
+    Therefore, the sum of the all widths in a column must not exceed 16.
+    To make it easier to edit the width of all columns, first adjust the width of the smallest column.
 
 Adding new tiles
 ^^^^^^^^^^^^^^^^
@@ -373,5 +374,4 @@ your website:
 
 #. Click "Export layout"".
 
-Now this layout can be used as a model to create new covers, as explained in
-the section "Adding a cover".
+Now this layout can be used as a model to create new covers, as explained in the section "Adding a cover".
