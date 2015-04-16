@@ -3,3 +3,6 @@
 
     <span tal:replace="structure view/contents" />
 </div>
+<script>
+    initPatterns('div.tile-content');
+</script>

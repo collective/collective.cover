@@ -26,6 +26,10 @@ There's a frood who really knows where his towel is.
 - Add upgrade step for reverting tiles already migrated to PersistentMapping in 1.0a10
   [frapell]
 
+- If mockup is present and new widgets are used, call the scan function from
+  the mockup-registry to initialize them.
+  [frapell]
+
 - Extend upgrade step to update the structure of all tiles inheriting from the list tile (fixes `#466`_).
   Fix upgrade step to use a dict instead of a PersistentMapping.
   [hvelarde]
