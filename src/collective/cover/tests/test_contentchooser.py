@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from collective.cover.testing import INTEGRATION_TESTING
-from collective.cover.testing import PLONE_VERSION
+from collective.cover.config import PLONE_VERSION
 from plone import api
 
 import json

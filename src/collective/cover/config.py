@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
-import pkg_resources
-
+from plone import api
 
 PROJECTNAME = 'collective.cover'
 
@@ -27,9 +26,9 @@ DEFAULT_SEARCHABLE_CONTENT_TYPES = [
     'News Item'
 ]
 
-PLONE_VERSION = pkg_resources.get_distribution('Plone').version
+PLONE_VERSION = api.env.plone_version()
 
-DEFAULT_GRID_SYSTEM = 'bootstrap3' if PLONE_VERSION >= 5.0 else 'deco16_grid'
+DEFAULT_GRID_SYSTEM = 'deco16_grid' if PLONE_VERSION < '5.0' else 'bootstrap3'
 
 # z3c.form.widget.SequenceWidget used for css_class field
 # has a default null value of '--NOVALUE--'
