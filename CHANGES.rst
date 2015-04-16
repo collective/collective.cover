@@ -55,6 +55,9 @@ There's a frood who really knows where his towel is.
   Typical use case is a news portal that wants to keep the front page updated and increase the number of page views.
   [hvelarde]
 
+- A new behavior was included to add the possibility of having a background image on the default view of the item.
+  [hvelarde]
+
 - Fix modification time disappearing from context data and handling missing value (fixes `#449`_).
   [mhora]
 

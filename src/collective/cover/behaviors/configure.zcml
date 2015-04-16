@@ -14,4 +14,11 @@
       i18n:attributes="title; description"
       />
 
+  <plone:behavior
+      title="Background image"
+      description="Adds the possibility of having a background image on the default view of the item."
+      provides="collective.cover.behaviors.interfaces.IBackgroundImage"
+      for="collective.cover.interfaces.ICover"
+      />
+
 </configure>
