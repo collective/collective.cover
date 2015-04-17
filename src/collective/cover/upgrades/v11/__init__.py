@@ -1,0 +1,98 @@
+# -*- coding: utf-8 -*-
+from collective.cover.logger import logger
+from collective.cover.controlpanel import ICoverSettings
+from collective.cover.interfaces import ICover
+from collective.cover.upgrades import _get_tiles_inherit_from_list
+from plone.registry.interfaces import IRegistry
+from plone.tiles.interfaces import ITileDataManager
+from zope.component import getUtility
+
+import json
+
+
+def fix_persistentmap_to_dict(context):
+    """Internal structure was reverted from using PersistentMapping.
+    Fix tiles here"""
+
+    # Get covers
+    covers = context.portal_catalog(portal_type='collective.cover.content')
+    logger.info('About to update {0} objects'.format(len(covers)))
+    tiles_to_update = _get_tiles_inherit_from_list(context)
+    logger.info('{0} tile types will be updated ({1})'.format(
+        len(tiles_to_update), ', '.join(tiles_to_update)))
+    for cover in covers:
+        obj = cover.getObject()
+        tile_ids = obj.list_tiles(types=tiles_to_update)
+        for tile_id in tile_ids:
+            tile = obj.get_tile(tile_id)
+            old_data = ITileDataManager(tile).get()
+            uuids = old_data['uuids']
+            if isinstance(uuids, dict):
+                # This tile is fixed, carry on
+                logger.info(
+                    'Tile %s at %s was already updated' %
+                    (tile_id, cover.getPath())
+                )
+                continue
+            if not uuids:
+                # This tile did not have data, so ignore
+                logger.info(
+                    'Tile %s at %s did not have any data' %
+                    (tile_id, cover.getPath())
+                )
+                continue
+
+            new_data = dict()
+            for k, v in uuids.items():
+                new_data[k] = v
+
+            old_data['uuids'] = new_data
+            ITileDataManager(tile).set(old_data)
+
+            logger.info(
+                'Tile %s at %s updated' % (tile_id, cover.getPath())
+            )
+    logger.info('Done')
+
+
+def _remove_css_class_layout(layout, is_child=False):
+    """Recursivelly remove class attribute from layout."""
+    if not is_child:
+        layout = json.loads(layout)
+    fixed_layout = []
+    for row in layout:
+        fixed_row = {
+            k: v
+            for k, v in row.iteritems()
+            if k != u'class'
+        }
+        if u'children' in fixed_row:
+            fixed_row[u'children'] = _remove_css_class_layout(fixed_row[u'children'], True)
+        fixed_layout.append(fixed_row)
+    if is_child:
+        return fixed_layout
+    else:
+        fixed_layout = json.dumps(fixed_layout)
+        return fixed_layout.decode('utf-8')
+
+
+def remove_css_class_layout(context):
+    """Remove CSS class from registry and cover layouts."""
+    logger.info('CSS classes will be removed from Cover layouts.')
+    # Fix registry layouts
+    registry = getUtility(IRegistry)
+    settings = registry.forInterface(ICoverSettings)
+    fixed_layouts = {}
+    for name, layout in settings.layouts.iteritems():
+        fixed_layouts[name] = _remove_css_class_layout(layout)
+    settings.layouts = fixed_layouts
+    logger.info('Registry layouts were updated.')
+
+    # Fix cover layouts
+    covers = context.portal_catalog(object_provides=ICover.__identifier__)
+    logger.info('Layout of {0} objects will be updated'.format(len(covers)))
+
+    for cover in covers:
+        obj = cover.getObject()
+        obj.cover_layout = _remove_css_class_layout(obj.cover_layout)
+        logger.info('"{0}" was updated'.format(obj.absolute_url_path()))
