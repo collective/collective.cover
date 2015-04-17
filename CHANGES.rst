@@ -6,6 +6,10 @@ There's a frood who really knows where his towel is.
 1.0a11 (unreleased)
 ^^^^^^^^^^^^^^^^^^^
 
+- Add upgrade step to remove orphan annotations left behind.
+  The bug was fixed in release 1.0a10 but no upgrade step was provided to clean up the objects.
+  [ericof, hvelarde]
+
 - Ship with support for more than one grid system.
   Besides 16-column Deco grid, we now include support for 12-column Bootstrap 2 and Bootstrap 3 grids.
   Check developers documentation for more information on how to use them (closes `#504`_).

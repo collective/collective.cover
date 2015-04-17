@@ -21,6 +21,12 @@
         handler=".remove_css_class_layout"
         />
 
+    <genericsetup:upgradeStep
+        title="Remove orphan annotations"
+        description="This upgrade step was pending from v10."
+        handler=".remove_orphan_annotations"
+        />
+
   </genericsetup:upgradeSteps>
 
 </configure>

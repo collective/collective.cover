@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
-from collective.cover.logger import logger
 from collective.cover.controlpanel import ICoverSettings
 from collective.cover.interfaces import ICover
+from collective.cover.logger import logger
+from collective.cover.tiles.configuration import ANNOTATIONS_KEY_PREFIX as PREFIX
 from collective.cover.upgrades import _get_tiles_inherit_from_list
+from plone import api
 from plone.registry.interfaces import IRegistry
 from plone.tiles.interfaces import ITileDataManager
 from zope.component import getUtility
@@ -96,3 +98,32 @@ def remove_css_class_layout(context):
         obj = cover.getObject()
         obj.cover_layout = _remove_css_class_layout(obj.cover_layout)
         logger.info('"{0}" was updated'.format(obj.absolute_url_path()))
+
+
+def remove_orphan_annotations(context):
+    """Remove annotations left behind after tile removal.
+
+    The bug was fixed in bf386fee but no upgrade step was provided to
+    clean up the objects.
+    """
+    catalog = api.portal.get_tool('portal_catalog')
+    results = catalog(object_provides=ICover.__identifier__)
+    logger.info(
+        'Checking {0} objects for orphan annotations'.format(len(results)))
+
+    for brain in results:
+        cover = brain.getObject()
+        tiles = cover.list_tiles()
+
+        try:
+            orphan_annotations = [
+                k for k in cover.__annotations__.keys()
+                if k.startswith(PREFIX) and k.split('.')[3] not in tiles
+            ]
+            for k in orphan_annotations:
+                del(cover.__annotations__[k])
+            logger.info('Removed {0} annotations from "{1}"'.format(
+                len(orphan_annotations), cover.absolute_url_path()))
+
+        except AttributeError:
+            pass  # cover with no annotations
