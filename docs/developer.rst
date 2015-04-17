@@ -203,8 +203,7 @@ By default ``collective.cover`` uses 16-column Deco grid,
 and ships with support for 12-column Bootstrap 2 and Bootstrap 3 grids.
 
 If your theme provides a CSS framework with a different grid system (such as Zurb Foundation) you can use that instead of the default one.
-To do so,
-your theme package should provide a new grid system class which implements the ``collective.cover.interfaces.IGridSystem`` interface:
+To do so, your theme package should provide a new grid system class which implements the ``collective.cover.interfaces.IGridSystem`` interface:
 
 .. code-block:: python
 
@@ -237,7 +236,9 @@ Once registered you can select your grid system on the Cover Settings control pa
     If you already made layouts for a 16-column grid and switch to e.g. a 12-column grid, you will have to manually update all existing covers (their layout is not recalculated automatically).
     
 .. NOTE::
-    ``collective.cover`` does not provide any grid system styles, only changes the HTML output. Be sure your theme have all necessary styles for the grid system you choose.
+    ``collective.cover`` does not provide any grid system styles,
+    only changes the HTML output.
+    Be sure your theme have all necessary styles for the grid system you choose.
 
 Layouts
 ^^^^^^^

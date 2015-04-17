@@ -88,6 +88,7 @@ class CoverIntegrationTestCase(unittest.TestCase):
         self.assertFalse(layout_edit.can_export_layout())
         self.assertNotIn('<span>Export layout</span>', layout_edit())
 
+    # TODO: move this to a browser view test
     def test_layoutmanager_settings(self):
         setRoles(self.portal, TEST_USER_ID, ['Manager'])
         layout_edit = self.cover.restrictedTraverse('layoutedit')
