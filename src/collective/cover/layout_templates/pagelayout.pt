@@ -5,14 +5,11 @@
       lang="en"
       i18n:domain="collective.cover"
       tal:omit-tag="">
-<body tal:omit-tag="">
-
-    <tal:mode define="mode python:options.get('mode', 'view');">
-        <tal:section repeat="section python:view.get_layout(mode)">
-            <div tal:replace="structure python:view.render_section(section, mode)" />
-        </tal:section>
-    </tal:mode>
-
-</body>
+    <body tal:omit-tag="">
+        <tal:mode define="mode python:options.get('mode', 'view');">
+            <tal:section repeat="section python:view.get_layout(mode)">
+                <div tal:replace="structure python:view.render_section(section, mode)" />
+            </tal:section>
+        </tal:mode>
+    </body>
 </html>
-

@@ -1,27 +1,27 @@
 (function($) {
-   /**
-    * @constructor
-    * @param jqDomObj layout, the layout container
-    * @param {Object} conf, the conf dictionary
-    */
+    /**
+     * @constructor
+     * @param jqDomObj layout, the layout container
+     * @param {Object} conf, the conf dictionary
+     */
     function LayoutManager(layout, conf) {
         var self = this,
-            n_columns = conf.ncolumns,
-            row_class = 'cover-row',
-            row_dom = $('<div/>').addClass(row_class)
-                                 .attr('data-layout-type', 'row'),
-            column_class = 'cover-column',
-            column_dom = $('<div/>').addClass(column_class)
-                                    .attr('data-layout-type', 'column'),
-            tile_class = 'cover-tile',
-            tile_dom = $('<div/>').addClass(tile_class)
-                                  .attr('data-layout-type', 'tile'),
-            le = $('.layout'),
-            BeforeUnloadHandler;
+        n_columns = conf.ncolumns,
+        row_class = 'cover-row',
+        row_dom = $('<div/>').addClass(row_class)
+            .attr('data-layout-type', 'row'),
+        column_class = 'cover-column',
+        column_dom = $('<div/>').addClass(column_class)
+            .attr('data-layout-type', 'column'),
+        tile_class = 'cover-tile',
+        tile_dom = $('<div/>').addClass(tile_class)
+            .attr('data-layout-type', 'tile'),
+        le = $('.layout'),
+        BeforeUnloadHandler;
 
         BeforeUnloadHandler = function() {
             var self = this,
-                message;
+            message;
             this.message = window.form_modified_message ||
                 "Discard changes? If you click OK, any changes you have made will be lost.";
 
@@ -130,7 +130,7 @@
                     hoverClass: 'ui-state-hover',
                     accept: '#btn-column',
                     drop: function(event, ui) {
-                            self.row_drop($(this));
+                        self.row_drop($(this));
                     }
                 });
 
@@ -185,10 +185,10 @@
 
                                 var config_icon = $("<i/>").addClass("config-icon");
                                 var config_link = $("<a />").addClass("config-tile-link")
-                                                            .attr('href',url_config)
-                                                            .append(config_icon);
+                                    .attr('href',url_config)
+                                    .append(config_icon);
                                 var name_tag = $("<span />").addClass("tile-name")
-                                                            .text(ui.draggable.data('tile-name'));
+                                    .text(ui.draggable.data('tile-name'));
                                 if(is_configurable) {
                                     new_tile.append(config_link);
                                 }
@@ -432,13 +432,13 @@
                     var data = $("#configure_tile").serialize();
                     data = data + '&buttons.save=Save&ajax_load=true';
                     $.ajax({
-                      type: 'POST',
-                      url: url,
-                      data: data,
-                      success: function(e,v) {
-                          $('#tile-configure').html('');
-                          $('#tile-configure').modal('hide');
-                      }
+                        type: 'POST',
+                        url: url,
+                        data: data,
+                        success: function(e,v) {
+                            $('#tile-configure').html('');
+                            $('#tile-configure').modal('hide');
+                        }
                     });
                     return false;
                 });
@@ -451,10 +451,10 @@
                 });
                 //config the tile
                 $(document).on("click", ".config-tile-link", function(e) {
-                      e.preventDefault();
-                      var url = $(this).attr("href");
-                      $('#tile-configure').modal();
-                      $.ajax({
+                    e.preventDefault();
+                    var url = $(this).attr("href");
+                    $('#tile-configure').modal();
+                    $.ajax({
                         type:'GET',
                         url: url,
                         data: {'ajax_load':true},
@@ -468,29 +468,30 @@
                             }
                             $('#configure_tile div.field').not('#'+css_id).addClass('config-sortable');
                             // Fields in tile config sortable
-                            $('#configure_tile').sortable({opacity: 0.6,
-                                                                cursor: 'move',
-                                                                placeholder: "ui-state-highlight",
-                                                                zIndex: 9999,
-                                                                refreshPositions: true,
-                                                                axis: 'y',
-                                                                tolerance: 'pointer',
-                                                                forcePlaceholderSize: true,
-                                                                items: 'div.config-sortable',
-                                                                update: function(e, ui){
-                                                                    var $divs = $(this).children('div.field');
-                                                                    $divs.each(function() {
-                                                                        var $div = $(this);
-                                                                        var newVal = $(this).index() + 1;
-                                                                        // TODO: Is used newVal -1 to prevent the field **Clase CSS** be counted as sortable item
-                                                                        $(this).children('div.order-box').children('input').val(newVal-1);
-                                                                    });
-                                                                }
+                            $('#configure_tile').sortable({
+                                opacity: 0.6,
+                                cursor: 'move',
+                                placeholder: "ui-state-highlight",
+                                zIndex: 9999,
+                                refreshPositions: true,
+                                axis: 'y',
+                                tolerance: 'pointer',
+                                forcePlaceholderSize: true,
+                                items: 'div.config-sortable',
+                                update: function(e, ui){
+                                    var $divs = $(this).children('div.field');
+                                    $divs.each(function() {
+                                        var $div = $(this);
+                                        var newVal = $(this).index() + 1;
+                                        // TODO: Is used newVal -1 to prevent the field **Clase CSS** be counted as sortable item
+                                        $(this).children('div.order-box').children('input').val(newVal-1);
+                                    });
+                                }
                             });
                         }
-                      });
-                      return false;
-                  });
+                    });
+                    return false;
+                });
             },
 
             /**
@@ -597,6 +598,6 @@
                 $('#sidebar').removeClass("fixed");
             }
         }
-});
+    });
 
 })(jQuery);

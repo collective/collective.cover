@@ -258,6 +258,8 @@ input[type="submit"].btn::-moz-focus-inner {
     margin-left: 0 !important;
 }
 
+#content .layout .config-row-link:link,
+#content .layout .config-column-link:link,
 #content .layout .config-tile-link:link {
     position: absolute;
     color: #FFFFFF;
@@ -273,6 +275,8 @@ input[type="submit"].btn::-moz-focus-inner {
     border: medium none;
 }
 
+#content .layout .config-row-link .config-icon,
+#content .layout .config-column-link .config-icon,
 #content .layout .config-tile-link .config-icon {
     background: transparent url(/++resource++collective.cover/conf.png) no-repeat center center;
     height: 16px;
@@ -522,9 +526,9 @@ input[type="submit"].btn::-moz-focus-inner {
 .visibility-yes {background: url('visibility.png') no-repeat -22px 4px;}
 
 #tile-configure .order-box {
-	display: none;
+    display: none;
 }
 
 #tile-configure .config-sortable {
-	cursor: move;
+    cursor: move;
 }
