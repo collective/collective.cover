@@ -202,7 +202,7 @@ class SearchItemsBrowserView(BrowserView):
         catalog_query['portal_type'] = self.filter_portal_types
         catalog_query['path'] = {'query': path, 'depth': 1}
         if searchtext:
-            catalog_query = {'SearchableText': '{0}*'.format(searchtext)}
+            catalog_query = {'Title': '{0}*'.format(searchtext)}
 
         for brain in catalog(**catalog_query):
             catalog_results.append({
