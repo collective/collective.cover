@@ -79,24 +79,27 @@ class PageLayout(grok.View):
                     self.grid_layout_edit(element['children'])
 
     def render_section(self, section, mode):
-        if 'type' in section:
-            if section['type'] == u'row':
-                return self.row(section=section, mode=mode)
-            if section['type'] == u'group':
-                return self.group(section=section, mode=mode)
-            if section['type'] == u'tile':
-                tile_url = '@@{0}/{1}'.format(section.get('tile-type'),
-                                              section.get('id'))
-                tile = self.context.restrictedTraverse(tile_url.encode(), None)
-                if tile is None:
-                    return '<div class="tileNotFound">Could not find tile</div>'
-                tile_conf = tile.get_tile_configuration()
-                css_class = tile_conf.get('css_class', '')
-                section['class'] = '{0} {1}'.format(section.get('class'), css_class)
-
-                return self.tile(section=section, mode=mode, tile_url=tile_url)
-        else:
+        if 'type' not in section:
             return self.generalmarkup(section=section, mode=mode)
+
+        if section['type'] == u'row':
+            return self.row(section=section, mode=mode)
+        elif section['type'] == u'group':
+            return self.group(section=section, mode=mode)
+        elif section['type'] == u'tile':
+            tile_url = '@@{0}/{1}'.format(section.get('tile-type'),
+                                          section.get('id'))
+            tile = self.context.restrictedTraverse(tile_url.encode(), None)
+            if tile is None:
+                return '<div class="tileNotFound">Could not find tile</div>'
+            if mode == 'layout_edit':
+                css_class = 'cover-tile '
+            else:
+                css_class = 'tile '
+            tile_conf = tile.get_tile_configuration()
+            css_class += tile_conf.get('css_class', '')
+            section['css_class'] = css_class.strip()
+            return self.tile(section=section, mode=mode, tile_url=tile_url)
 
     def is_user_allowed_in_group(self):
         return True

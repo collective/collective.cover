@@ -5,22 +5,27 @@
       lang="en"
       i18n:domain="collective.cover"
       tal:omit-tag="">
-<body tal:omit-tag="">
+    <body tal:omit-tag="">
 
-    <tal:mode define="mode options/mode;">
-        <div tal:define="section options/section | nothing;
-                         data python:section.get('data', '') if section else None"
-            tal:condition="section"
-            tal:attributes="class python:'%s' % section.get('class', '');
-                            data-layout-type python: data['layout-type'] if 'layout-type' in data else 'row'">
+        <tal:mode define="mode options/mode;">
+            <div tal:define="section options/section | nothing;
+                             data python:section.get('data', '') if section else None"
+                 tal:condition="section"
+                 tal:attributes="class python:'%s' % section.get('class', '');
+                                 data-layout-type python: data['layout-type'] if 'layout-type' in data else 'row'">
 
-            <tal:children repeat="child python:section.get('children') or []">
-                <div tal:replace="structure python:view.render_section(child, mode)" />
-            </tal:children>
+                <tal:layoutedit tal:condition="python:mode == 'layout_edit'">
+                    <a href="#" class="config-row-link">
+                        <i class="config-icon"></i>
+                    </a>
+                </tal:layoutedit>
 
-        </div>
-    </tal:mode>
+                <tal:children repeat="child python:section.get('children') or []">
+                    <div tal:replace="structure python:view.render_section(child, mode)" />
+                </tal:children>
 
-</body>
+            </div>
+        </tal:mode>
+
+    </body>
 </html>
-
