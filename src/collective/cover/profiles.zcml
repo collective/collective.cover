@@ -135,6 +135,12 @@
         handler=".upgrades.fix_persistentmap_to_dict"
         />
 
+    <genericsetup:upgradeStep
+        title="Update layouts"
+        description="Remove CSS class from registry and cover layouts."
+        handler=".upgrades.remove_css_class_layout"
+        />
+
   </genericsetup:upgradeSteps>
 
 </configure>

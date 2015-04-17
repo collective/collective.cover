@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from collective.cover.config import DEFAULT_GRID_SYSTEM
+from collective.cover.controlpanel import ICoverSettings
 from collective.cover.testing import INTEGRATION_TESTING
 from persistent.mapping import PersistentMapping
 from plone import api
@@ -273,7 +274,7 @@ class Upgrade10to11TestCase(UpgradeTestCaseBase):
     def test_upgrade_to_11_registrations(self):
         version = self.setup.getLastVersionForProfile(self.profile_id)[0]
         self.assertTrue(int(version) >= int(self.to_version))
-        self.assertEqual(self._how_many_upgrades_to_do(), 1)
+        self.assertEqual(self._how_many_upgrades_to_do(), 2)
 
     def test_uuids_converted_to_dict(self):
         title = u'Revert PersistentMapping back to dict'
@@ -314,3 +315,46 @@ class Upgrade10to11TestCase(UpgradeTestCaseBase):
         self.assertEqual(old_data['uuids']['uuid1']['order'], u'0')
         self.assertEqual(old_data['uuids']['uuid2']['order'], u'1')
         self.assertEqual(old_data['uuids']['uuid3']['order'], u'2')
+
+    def test_remove_css_class_layout(self):
+        title = u'Update layouts'
+        step = self._get_upgrade_step(title)
+        self.assertIsNotNone(step)
+
+        old_data = (
+            u'[{"type": "row", "class": "row", "children": [{"data": '
+            u'{"layout-type": "column", "column-size": 16}, "type": "group", '
+            u'"children": [{"class": "tile", "tile-type": "collective.cover.carousel", '
+            u'"type": "tile", "id": "ca6ba6675ef145e4a569c5e410af7511"}], '
+            u'"roles": ["Manager"]}]}]'
+        )
+
+        expected = (
+            u'[{"type": "row", "children": [{"data": {"layout-type": "column", '
+            u'"column-size": 16}, "type": "group", "children": [{"tile-type": '
+            u'"collective.cover.carousel", "type": "tile", "id": '
+            u'"ca6ba6675ef145e4a569c5e410af7511"}], "roles": ["Manager"]}]}]'
+        )
+
+        # simulate state on pravious version of registry layouts
+        registry = getUtility(IRegistry)
+        settings = registry.forInterface(ICoverSettings)
+        settings.layouts = {
+            u'test_layout': old_data
+        }
+
+        # simulate state on previous version of cover layout
+        with api.env.adopt_roles(['Manager']):
+            api.content.create(
+                self.portal, 'collective.cover.content',
+                'test-cover',
+                template_layout='Empty layout',
+            )
+        cover = self.portal['test-cover']
+        cover.cover_layout = old_data
+
+        # run the upgrade step to validate the update
+        self._do_upgrade_step(step)
+
+        self.assertEqual(settings.layouts, {'test_layout': expected})
+        self.assertEqual(cover.cover_layout, expected)

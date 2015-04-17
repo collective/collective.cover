@@ -150,7 +150,9 @@ work, check all tiles provided by this package, under the tiles directory.
 Image field and scales
 ++++++++++++++++++++++
 
-To add an image field to your tile::
+To add an image field to your tile:
+
+.. code-block:: python
 
     image = NamedImage(
         title=_(u'Image'),
@@ -191,64 +193,64 @@ will honor the image and scales in the original object. This way the image
 data isn't duplicated and products than allow scales modifications are
 supported.
 
-
 .. _`Using tiles to provide more flexible Plone layouts`: http://glicksoftware.com/blog/using-tiles-to-provide-more-flexible-plone-layouts
 
 
-Grid systems
-++++++++++++
+Grid Systems
+^^^^^^^^^^^^
 
-By default collective.cover uses a deco 16 column grid.
+By default ``collective.cover`` uses 16-column Deco grid,
+and ships with support for 12-column Bootstrap 2 and Bootstrap 3 grids.
 
-If your theme provides a css framework with a different grid system
-(such as Twitter Bootstrap or Zurb Foundation) you can use that
-instead of the default deco grid.  To do so, your theme package should
-provide a new grid system class which implements the
-collective.cover.interfaces.IGridSystem interface.
+If your theme provides a CSS framework with a different grid system (such as Zurb Foundation) you can use that instead of the default one.
+To do so, your theme package should provide a new grid system class which implements the ``collective.cover.interfaces.IGridSystem`` interface:
 
-#. Implement a grid system::
+.. code-block:: python
 
+    from collective.cover.interfaces import IGridSystem
+    from collective.cover.layout import BaseGrid
     from five import grok
-    from collective.cover.layout import Deco16Grid
 
-    class Bootstrap3(Deco16Grid):
-        grok.name('bootstrap3')
+    class MyGrid(BaseGrid, grok.GlobalUtility):
+
+        """Bootstrap 3 grid system for small devices (12 columns)."""
+
+        grok.name('mygrid')
+        grok.implements(IGridSystem)
+
         ncolumns = 12
-        title = _(u'Bootstrap 3')
+        title = _(u'MyGrid')
 
         def columns_formatter(self, columns):
-            prefix = 'col-md-'
+            prefix = 'col-sm-'
             for column in columns:
                 width = column['data']['column-size'] if 'data' in column else 1
                 column['class'] = self.column_class + ' ' + (prefix + str(width))
 
             return columns
 
-#. Register your new grid system (in configure.zcml) ::
+Once registered you can select your grid system on the Cover Settings control panel configlet.
 
-    <utility factory="my.theme.module.Bootstrap3" name="bootstrap3" />
+.. WARNING::
+    Switching the grid system will apply to all new and existing covers.
+    If you already made layouts for a 16-column grid and switch to e.g. a 12-column grid, you will have to manually update all existing covers (their layout is not recalculated automatically).
+    
+.. NOTE::
+    ``collective.cover`` does not provide any grid system styles,
+    only changes the HTML output.
+    Be sure your theme have all necessary styles for the grid system you choose.
 
-#. Or using grok::
+Layouts
+^^^^^^^
 
-    <grok:grok package="." />
+``collective.cover`` supports saving layout designs by exporting them to a JSON/Python dictionary which are stored in the Plone registry.
+You always start a new cover by selecting one of these layout designs on the Add Cover page.
 
+.. NOTE::
+    ``collective.cover`` inserts a few of these saved preset layouts upon installation.
+    Check ``registry.xml`` in the source of the package.
 
-Once registered you can select your grid system on the Cover Settings
-panel.
-
-WARNING: Switching the grid system will apply to all new and existing
-covers.  If you already made layouts for a 16 column grid and switch to
-e.g. a 12 column grid, you will have to manually update all existing
-covers (their layout is not recalculated automatically).
-
-WARNING 2: Cover support saving layout designs by exporting them to a
-json/python dictionairy which is stored in the Plone registry. Cover also
-inserts a few of these saved preset layouts upon installation, check
-registry.xml in collective.cover source.
-
-You always start a new cover by selecting one of these layout designs on the
-Cover add page. If you switch from the default 16 column deco grid to another
-grid with another maximum cover size, these saved layouts however will probably
-still contain a 16 width column and this can mock up your design in small ways.
-If you do swith grid system, make sure you clear the default cover layouts
-and/or insert your own with the correct max column size.
+If you switch from the default 16-column Deco grid to another grid with a different number of columns,
+these saved layouts will still contain a 16-column width and this can mock up your design in small ways.
+In that case,
+make sure you clear the default cover layouts and/or save your own layout with the correct number of columns.

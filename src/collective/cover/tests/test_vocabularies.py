@@ -2,7 +2,6 @@
 
 from collective.cover.controlpanel import ICoverSettings
 from collective.cover.testing import INTEGRATION_TESTING
-from collective.cover.testing import MULTIPLE_GRIDS_INTEGRATION_TESTING
 from plone.registry.interfaces import IRegistry
 from zope.component import getUtility
 from zope.component import queryUtility
@@ -112,27 +111,10 @@ class VocabulariesTestCase(unittest.TestCase):
 
         # Our default grid system must be in the vocabulary.
         grids = vocabulary(self.portal)
-        self.assertEqual(len(grids), 1)
-        self.assertIn(u'deco16_grid', grids)
-
-
-class VocabulariesMultipleGridsTestCase(unittest.TestCase):
-
-    layer = MULTIPLE_GRIDS_INTEGRATION_TESTING
-
-    def setUp(self):
-        self.portal = self.layer['portal']
-
-    def test_grid_systems(self):
-        name = u'collective.cover.GridSystems'
-        vocabulary = queryUtility(IVocabularyFactory, name)
-        self.assertIsNotNone(vocabulary)
-        grids = vocabulary(self.portal)
-        self.assertEqual(len(grids), 2)
-
-        # Our default grid system must be in the vocabulary.
-        self.assertIn(u'deco16_grid', grids)
-
-        # The layer has setup a second grid.
+        self.assertEqual(len(grids), 3)
         self.assertIn(u'bootstrap3', grids)
+        self.assertIn(u'bootstrap2', grids)
+        self.assertIn(u'deco16_grid', grids)
         self.assertEqual(grids.getTerm('bootstrap3').title, u'Bootstrap 3')
+        self.assertEqual(grids.getTerm('bootstrap2').title, u'Bootstrap 2')
+        self.assertEqual(grids.getTerm('deco16_grid').title, u'Deco (16 columns)')
