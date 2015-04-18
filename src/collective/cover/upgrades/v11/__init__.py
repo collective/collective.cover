@@ -120,10 +120,13 @@ def remove_orphan_annotations(context):
                 k for k in cover.__annotations__.keys()
                 if k.startswith(PREFIX) and k.split('.')[3] not in tiles
             ]
+
             for k in orphan_annotations:
                 del(cover.__annotations__[k])
-            logger.info('Removed {0} annotations from "{1}"'.format(
-                len(orphan_annotations), cover.absolute_url_path()))
+
+            if orphan_annotations:
+                logger.info('Removed {0} annotations from "{1}"'.format(
+                    len(orphan_annotations), cover.absolute_url_path()))
 
         except AttributeError:
             pass  # cover with no annotations
