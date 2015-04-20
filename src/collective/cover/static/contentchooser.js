@@ -86,7 +86,10 @@ var coveractions = {
     },
 
 
-    getFolderContents : function(path, method) {
+    getFolderContents : function(path, method, scroll) {
+        if (scroll === null) {
+            scroll = false;
+        }
         // Sends a low level Ajax request
         var t = this, d = document, w = window, na = navigator, ua = na.userAgent;
         $('#contentchooser-content-trees').val('');
@@ -98,7 +101,7 @@ var coveractions = {
                 ($('input:text[id=contentchooser-content-trees][name=contentchooser-content-trees]').val() || '') +
                 "&rooted='False'" + "&document_base_url=" + encodeURIComponent(d.baseURI);
 
-        if ((has_next !== null) && has_next === 'true') {
+        if ((has_next !== null) && has_next === true && scroll === true) {
             data += "&page='"+ nextpage +"'";
         }
 
@@ -147,7 +150,7 @@ var coveractions = {
                 }
 
                 $(function(){
-                    if (data.nextpage === '2') {
+                    if (data.nextpage === 2) {
                         $("#content-trees > .item-list")[0].innerHTML = html;
                     } else {
                         $("#content-trees > .item-list")[0].innerHTML += html;
