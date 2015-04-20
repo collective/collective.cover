@@ -23,7 +23,6 @@ var coveractions = {
     handle_scroll: function() {
         var $ul = $(this);
         var last_path = $ul.attr('data-last-path');
-        var last_method = $ul.attr('data-last-method');
         var has_next = $ul.attr('data-has-next');
         var nextpage = $ul.attr('data-nextpage');
 
@@ -32,7 +31,7 @@ var coveractions = {
             return;
         }
 
-        coveractions.getFolderContents(last_path, last_method, true);
+        coveractions.getFolderContents(last_path, '@@jsonbytype', true);
     },
 
     send: function(o) {
@@ -110,10 +109,14 @@ var coveractions = {
         // Sends a low level Ajax request
         var t = this, d = document, w = window, na = navigator, ua = na.userAgent;
         var $ul = $('#content-trees .item-list');
+        var last_path = $ul.attr('data-last-path');
         $ul.attr('data-last-path', path);
-        $ul.attr('data-last-method', method);
         var has_next = $ul.attr('data-has-next');
         var nextpage = $ul.attr('data-nextpage');
+
+        if (path !== last_path) {
+            $('input:text[id=contentchooser-content-trees][name=contentchooser-content-trees]').val('');
+        }
 
         var data = "searchtext=" +
                 ($('input:text[id=contentchooser-content-trees][name=contentchooser-content-trees]').val() || '') +
@@ -441,8 +444,7 @@ var coveractions = {
             var timeoutID = setTimeout(function() {
                 var $ul = $('#content-trees .item-list');
                 var last_path = $ul.attr('data-last-path');
-                var last_method = $ul.attr('data-last-method');
-                coveractions.getFolderContents(coveractions.current_path, '@@jsonbytype');
+                coveractions.getFolderContents(last_path, '@@jsonbytype');
             }, TIMEOUT);
             timeoutIDs.push(timeoutID)
         });
