@@ -6,11 +6,6 @@ There's a frood who really knows where his towel is.
 1.0a11 (unreleased)
 ^^^^^^^^^^^^^^^^^^^
 
-- Fix performance issues when searching for content tree items in the content chooser.
-  Searches only start after the third character and will be delayed by 500ms to wait for the user to stop typing.
-  The scope of the search was also changed: instead of searching on SearchableText index (full text), we search on Title index only (fixes `#494`_).
-  [rodfersou]
-
 - Add upgrade step to remove orphan annotations left behind.
   The bug was fixed in release 1.0a10 but no upgrade step was provided to clean up the objects.
   [ericof, hvelarde]
@@ -20,9 +15,9 @@ There's a frood who really knows where his towel is.
   Check developers documentation for more information on how to use them (closes `#504`_).
   [rodfersou]
 
-- Fix performance issues when searching for recent items in the content chooser.
+- Fix performance issues in the content chooser.
   Searches only start after the third character and will be delayed by 500ms to wait for the user to stop typing.
-  The scope of the search was also changed: instead of searching on SearchableText index (full text), we search on Title index only (fixes `#493`_).
+  The scope of the search was also changed: instead of searching on SearchableText index (full text), we search on Title index only (fixes `#493`_ and `#494`_).
   [rodfersou]
 
 - Fix the indexing of RichText tiles by manually transform the text/html to text/plain.
