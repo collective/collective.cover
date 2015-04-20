@@ -173,7 +173,7 @@ class SearchItemsBrowserView(BrowserView):
                                    'url': root_url + '/' + '/'.join(now)})
         return result
 
-    def jsonByType(self, rooted, document_base_url, searchtext, page=1):
+    def jsonByType(self, rooted, document_base_url, searchtext, page='1'):
         """ Returns the actual listing """
         catalog_results = []
         results = {}
@@ -206,6 +206,7 @@ class SearchItemsBrowserView(BrowserView):
             catalog_query = {'Title': '{0}*'.format(searchtext)}
 
         brains = catalog(**catalog_query)
+        page = int(page, 10)
         start = (page - 1) * self.items_by_request
         brains = Batch(brains, size=self.items_by_request, start=start, orphan=0)
 
@@ -223,7 +224,8 @@ class SearchItemsBrowserView(BrowserView):
                 'r_state': 'state-{0}'.format(normalizer.normalize(brain.review_state or '')),
                 'title': brain.Title == "" and brain.id or brain.Title,
                 'icon': self.getIcon(brain).url or '',
-                'is_folderish': brain.is_folderish
+                'is_folderish': brain.is_folderish,
+                'description': brain.Description or ''
             })
         # add catalog_ressults
         results['items'] = catalog_results

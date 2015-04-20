@@ -24,7 +24,6 @@ var coveractions = {
         var $ul = $(this);
         var last_path = $ul.attr('data-last-path');
         var has_next = $ul.attr('data-has-next');
-        var nextpage = $ul.attr('data-nextpage');
 
         if ((has_next === 'false') ||
             ($ul.scrollTop() + $ul.innerHeight() < $ul[0].scrollHeight)) {
@@ -112,7 +111,7 @@ var coveractions = {
         var last_path = $ul.attr('data-last-path');
         $ul.attr('data-last-path', path);
         var has_next = $ul.attr('data-has-next');
-        var nextpage = $ul.attr('data-nextpage');
+        var nextpage = parseInt($ul.attr('data-nextpage'), 10);
 
         if (path !== last_path) {
             $('input:text[id=contentchooser-content-trees][name=contentchooser-content-trees]').val('');
@@ -153,6 +152,7 @@ var coveractions = {
                             html += '<a data-ct-type="' +
                                 data.items[i].portal_type  +'" class="' +
                                 data.items[i].classicon + ' ' + data.items[i].r_state + '" ';
+                            html += 'title="' + data.items[i].description + '" ';
                             html += 'href="javascript:coveractions.getFolderContents(\'' + data.items[i].url + '\',\'@@jsonbytype' + '\')">';
                             html += '<span>' + data.items[i].title + '</span>';
                             html += '</a>';
@@ -163,7 +163,8 @@ var coveractions = {
                             html += '<a data-ct-type="' +
                                 data.items[i].portal_type  +'" class="' +
                                 data.items[i].classicon + ' ' +
-                                data.items[i].r_state + '"> ';
+                                data.items[i].r_state + '" ' +
+                                'title="' + data.items[i].description + '"> ';
                             html += '<span>' + data.items[i].title + '</span>';
                             html += '</a>';
                         }
