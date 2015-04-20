@@ -13,11 +13,9 @@ var coveractions = {
 
     preInit : function() {
         // If compose exists in url
-        if (this.current_path.indexOf('/compose') > 0){
+        if (this.current_path.indexOf('/compose') > 0) {
             this.getFolderContents(this.call_context,'@@jsonbytype');
-
         }
-
     },
 
     send: function(o) {
@@ -112,7 +110,7 @@ var coveractions = {
 
                         if (data.items[i].is_folderish) {
                             if (data.items[i].icon.length) {
-                                html += '<img src="' + data.items[i].getIcon + '" border="0" style="margin-left: 17px" /> ';
+                                html += '<img src="' + data.items[i].icon + '" border="0" style="margin-left: 17px" /> ';
                             }
                             html += '<a data-ct-type="' +
                                 data.items[i].portal_type  +'" class="' +
@@ -197,8 +195,6 @@ var coveractions = {
             }
         });
     },
-
-
 };
 
 
