@@ -67,19 +67,18 @@ class ContentSearch(grok.View):
 
     list_template = ViewPageTemplateFile('contentchooser_templates/search_list.pt')
     tree_template = ViewPageTemplateFile('contentchooser_templates/tree_template.pt')
+    items_by_request = 20
 
     def update(self):
         self.query = self.request.get('q', None)
         self.tab = self.request.get('tab', None)
-        b_size = int(self.request.get('b_size', 20))
         page = int(self.request.get('page', 1))
         strategy = SitemapNavtreeStrategy(self.context)
 
         uids = None
         result = self.search(
             self.query, uids=uids,
-            page=page,
-            b_size=b_size
+            page=page
         )
         self.has_next = result.next is not None
         self.nextpage = result.pagenumber + 1
@@ -90,7 +89,7 @@ class ContentSearch(grok.View):
     def render(self):
         return self.list_template()
 
-    def search(self, query=None, page=1, b_size=20, uids=None):
+    def search(self, query=None, page=1, uids=None):
         catalog = api.portal.get_tool('portal_catalog')
         registry = getUtility(IRegistry)
         settings = registry.forInterface(ICoverSettings)
@@ -103,8 +102,8 @@ class ContentSearch(grok.View):
             catalog_query = {'Title': u'{0}*'.format(safe_unicode(query))}
         results = catalog(**catalog_query)
         self.total_results = len(results)
-        start = (page - 1) * b_size
-        results = Batch(results, size=b_size, start=start, orphan=0)
+        start = (page - 1) * self.items_by_request
+        results = Batch(results, size=self.items_by_request, start=start, orphan=0)
         return results
 
     def getTermByBrain(self, brain, real_value=True):
@@ -116,6 +115,8 @@ class ContentSearch(grok.View):
 
 class SearchItemsBrowserView(BrowserView):
     """ Returns a folderish like listing in JSON """
+
+    items_by_request = 20
 
     def __init__(self, context, request, **kwargs):
         """ Contructor """
@@ -172,7 +173,7 @@ class SearchItemsBrowserView(BrowserView):
                                    'url': root_url + '/' + '/'.join(now)})
         return result
 
-    def jsonByType(self, rooted, document_base_url, searchtext):
+    def jsonByType(self, rooted, document_base_url, searchtext, page=1):
         """ Returns the actual listing """
         catalog_results = []
         results = {}
@@ -204,7 +205,14 @@ class SearchItemsBrowserView(BrowserView):
         if searchtext:
             catalog_query = {'Title': '{0}*'.format(searchtext)}
 
-        for brain in catalog(**catalog_query):
+        brains = catalog(**catalog_query)
+        start = (page - 1) * self.items_by_request
+        brains = Batch(brains, size=self.items_by_request, start=start, orphan=0)
+
+        results['has_next'] = brains.next is not None
+        results['nextpage'] = brains.pagenumber + 1
+
+        for brain in brains:
             catalog_results.append({
                 'id': brain.getId,
                 'uid': brain.UID or None,  # Maybe Missing.Value

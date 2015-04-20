@@ -90,18 +90,29 @@ var coveractions = {
         // Sends a low level Ajax request
         var t = this, d = document, w = window, na = navigator, ua = na.userAgent;
         $('#contentchooser-content-trees').val('');
+        var $ul = $('#content-trees .item-list');
+        var has_next = $ul.attr('data-has-next');
+        var nextpage = $ul.attr('data-nextpage');
+
+        var data = "searchtext=" +
+                ($('input:text[id=contentchooser-content-trees][name=contentchooser-content-trees]').val() || '') +
+                "&rooted='False'" + "&document_base_url=" + encodeURIComponent(d.baseURI);
+
+        if ((has_next !== null) && has_next === 'true') {
+            data += "&page='"+ nextpage +"'";
+        }
 
         coveractions.send({
             url : path + '/' + method,
             content_type : "application/x-www-form-urlencoded",
             type : 'POST',
-            data : "searchtext=" +
-                ($('input:text[id=contentchooser-content-trees][name=contentchooser-content-trees]').val() || '') +
-                "&rooted='False'" + "&document_base_url=" +
-                encodeURIComponent(d.baseURI),
+            data : data,
             success : function(text) {
                 var html = "";
                 var data = $.parseJSON(text);
+
+                $ul.attr('data-has-next', data.has_next);
+                $ul.attr('data-nextpage', data.nextpage);
 
                 if (data.items.length > 0) {
                     for (var i = 0; i < data.items.length; i++) {
@@ -136,7 +147,11 @@ var coveractions = {
                 }
 
                 $(function(){
-                    $("#content-trees > .item-list")[0].innerHTML = html;
+                    if (data.nextpage === '2') {
+                        $("#content-trees > .item-list")[0].innerHTML = html;
+                    } else {
+                        $("#content-trees > .item-list")[0].innerHTML += html;
+                    }
 
                     html = "";
                     for (var i = 0; i < data.path.length; i++) {
