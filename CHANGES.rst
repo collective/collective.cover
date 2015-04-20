@@ -6,6 +6,11 @@ There's a frood who really knows where his towel is.
 1.0a11 (unreleased)
 ^^^^^^^^^^^^^^^^^^^
 
+- Fix performance issues when searching for content tree items in the content chooser.
+  Searches only start after the third character and will be delayed by 500ms to wait for the user to stop typing.
+  The scope of the search was also changed: instead of searching on SearchableText index (full text), we search on Title index only (fixes `#494`_).
+  [rodfersou]
+
 - Add upgrade step to remove orphan annotations left behind.
   The bug was fixed in release 1.0a10 but no upgrade step was provided to clean up the objects.
   [ericof, hvelarde]
@@ -627,5 +632,6 @@ There's a frood who really knows where his towel is.
 .. _`#473`: https://github.com/collective/collective.cover/issues/473
 .. _`#476`: https://github.com/collective/collective.cover/issues/476
 .. _`#493`: https://github.com/collective/collective.cover/issues/493
+.. _`#494`: https://github.com/collective/collective.cover/issues/494
 .. _`#504`: https://github.com/collective/collective.cover/issues/504
 .. _`PloneFormGen`: https://pypi.python.org/pypi/Products.PloneFormGen

@@ -28,6 +28,9 @@ VOCAB_ID = u'plone.app.vocabularies.ReallyUserFriendlyTypes'
 grok.templatedir('contentchooser_templates')
 
 
+ITEMS_BY_REQUEST = 20
+
+
 # XXX: what's the purpose of this view?
 #      why is here if it's intendes for tests?
 #      can we get rid of it?
@@ -67,7 +70,6 @@ class ContentSearch(grok.View):
 
     list_template = ViewPageTemplateFile('contentchooser_templates/search_list.pt')
     tree_template = ViewPageTemplateFile('contentchooser_templates/tree_template.pt')
-    items_by_request = 20
 
     def update(self):
         self.query = self.request.get('q', None)
@@ -89,7 +91,7 @@ class ContentSearch(grok.View):
     def render(self):
         return self.list_template()
 
-    def search(self, query=None, page=1, uids=None):
+    def search(self, query=None, page=1, b_size=ITEMS_BY_REQUEST, uids=None):
         catalog = api.portal.get_tool('portal_catalog')
         registry = getUtility(IRegistry)
         settings = registry.forInterface(ICoverSettings)
@@ -102,8 +104,8 @@ class ContentSearch(grok.View):
             catalog_query = {'Title': u'{0}*'.format(safe_unicode(query))}
         results = catalog(**catalog_query)
         self.total_results = len(results)
-        start = (page - 1) * self.items_by_request
-        results = Batch(results, size=self.items_by_request, start=start, orphan=0)
+        start = (page - 1) * b_size
+        results = Batch(results, size=b_size, start=start, orphan=0)
         return results
 
     def getTermByBrain(self, brain, real_value=True):
@@ -115,8 +117,6 @@ class ContentSearch(grok.View):
 
 class SearchItemsBrowserView(BrowserView):
     """ Returns a folderish like listing in JSON """
-
-    items_by_request = 20
 
     def __init__(self, context, request, **kwargs):
         """ Contructor """
@@ -207,11 +207,12 @@ class SearchItemsBrowserView(BrowserView):
 
         brains = catalog(**catalog_query)
         page = int(page, 10)
-        start = (page - 1) * self.items_by_request
-        brains = Batch(brains, size=self.items_by_request, start=start, orphan=0)
+        start = (page - 1) * ITEMS_BY_REQUEST
+        brains = Batch(brains, size=ITEMS_BY_REQUEST, start=start, orphan=0)
 
         results['has_next'] = brains.next is not None
         results['nextpage'] = brains.pagenumber + 1
+        results['total_results'] = len(brains)
 
         for brain in brains:
             catalog_results.append({

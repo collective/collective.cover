@@ -116,6 +116,9 @@ var coveractions = {
         if (path !== last_path) {
             $('input:text[id=contentchooser-content-trees][name=contentchooser-content-trees]').val('');
         }
+        if (path === undefined) {
+            path = coveractions.call_context;
+        }
 
         var data = "searchtext=" +
                 ($('input:text[id=contentchooser-content-trees][name=contentchooser-content-trees]').val() || '') +
@@ -136,6 +139,13 @@ var coveractions = {
                 $('#kss-spinner').hide();
                 var html = "";
                 var data = $.parseJSON(text);
+
+                var filter = $('input:text[id=contentchooser-content-trees][name=contentchooser-content-trees]').val();
+                if (filter !== '') {
+                    $('#content-trees .filter-count').text(" "+ data.total_results + " Results");
+                } else {
+                    $('#content-trees .filter-count').text("");
+                }
 
                 $ul.attr('data-has-next', data.has_next);
                 $ul.attr('data-nextpage', data.nextpage);

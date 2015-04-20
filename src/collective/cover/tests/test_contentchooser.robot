@@ -9,7 +9,7 @@ Suite Teardown  Close all browsers
 *** Variables ***
 
 ${basic_tile_location}  'collective.cover.basic'
-${folder_selector}  .ui-draggable .contenttype-folder
+${file_selector}  .ui-draggable .contenttype-file
 ${contentchooser_search_selector}  FIXME
 ${contentchooser_search_clear}  a.contentchooser-clear
 ${contentchooser_close}  div.close
@@ -50,25 +50,24 @@ Test Content Chooser
     Wait Until Page Contains  Plone site
 
     # make a search on Content tree
-    Input Text  css=#content-trees input  folder
+    Input Text  css=#content-trees input  file
     Wait Until Page Contains  1 Results
     Click Element  css=#content-trees ${contentchooser_search_clear}
 
     # navigate the tree
-    Input Text  css=#content-trees input  folder
+    Input Text  css=#content-trees input  file
     Wait Until Page Contains  1 Results
-    Page Should Contain Element  css=${folder_selector}
-    Click Element  css=${folder_selector}
-    Wait Until Page Contains  Plone site → my-folder
+    Page Should Contain Element  css=${file_selector}
+    Click Element  css=${file_selector}
+    Wait Until Page Contains  My file
 
     # go back to tree root
     Click Element  link=Plone site
     ${TIMEOUT} =  Get Selenium timeout
     ${IMPLICIT_WAIT} =  Get Selenium implicit wait
     Wait Until Keyword Succeeds  ${TIMEOUT}  ${IMPLICIT_WAIT}
-    ...                          Page Should Not Contain  Plone site → my-folder
+    ...                          Page Should Not Contain  My file
 
     Click Element  css=${contentchooser_close}
     Wait Until Keyword Succeeds  ${TIMEOUT}  ${IMPLICIT_WAIT}
     ...                          Element Should Not Be Visible  css=${CONTENT_CHOOSER_SELECTOR}
-
