@@ -215,7 +215,8 @@ class SearchItemsBrowserView(BrowserView):
                 'r_state': 'state-{0}'.format(normalizer.normalize(brain.review_state or '')),
                 'title': brain.Title == "" and brain.id or brain.Title,
                 'icon': self.getIcon(brain).html_tag() or '',
-                'is_folderish': brain.is_folderish})
+                'is_folderish': brain.is_folderish
+            })
         # add catalog_ressults
         results['items'] = catalog_results
         # return results in JSON format
