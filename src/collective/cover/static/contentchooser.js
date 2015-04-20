@@ -122,12 +122,15 @@ var coveractions = {
             data = "page="+ nextpage +"&" + data;
         }
 
+        $('#kss-spinner').show();
+
         coveractions.send({
             url : path + '/' + method,
             content_type : "application/x-www-form-urlencoded",
             type : 'POST',
             data : data,
             success : function(text) {
+                $('#kss-spinner').hide();
                 var html = "";
                 var data = $.parseJSON(text);
 
