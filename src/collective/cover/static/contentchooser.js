@@ -447,7 +447,7 @@ var coveractions = {
                 var last_path = $ul.attr('data-last-path');
                 coveractions.getFolderContents(last_path, '@@jsonbytype');
             }, TIMEOUT);
-            timeoutIDs.push(timeoutID)
+            timeoutIDs.push(timeoutID);
         });
     }
 
