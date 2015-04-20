@@ -11,17 +11,20 @@
 
   <i18n:registerTranslations directory="locales" />
   <five:registerPackage package="." />
+
   <includeDependencies package="." />
   <include package="five.grok" />
   <include package="plone.app.relationfield" />
 
   <include file="permissions.zcml" />
-  <grok:grok package="." />
+  <include file="profiles.zcml" />
+  <include file="subscribers.zcml" />
 
   <include package=".behaviors" />
   <include package=".tiles" />
-  <include file="profiles.zcml" />
-  <include file="subscribers.zcml" />
+  <include package=".upgrades" />
+
+  <grok:grok package="." />
 
   <!-- five.grok 1.3.2 will not register this by itself -->
   <browser:resourceDirectory

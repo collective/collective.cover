@@ -18,9 +18,9 @@ import json
 
 
 class PageLayout(grok.View):
-    """
-    Renders a layout for the cover object.
-    """
+
+    """Renders a layout for the cover object."""
+
     grok.context(ICover)
     grok.name('layout')
     grok.require('zope2.View')
@@ -49,9 +49,8 @@ class PageLayout(grok.View):
         return layout
 
     def grid_layout_common(self, layout):
-        """Add things to the grid/layout structure which should be available
-        on both compose and layout tabs.
-
+        """Add things to the grid/layout structure which should be
+        available on both compose and layout tabs.
         """
 
         for element in layout:
@@ -236,15 +235,15 @@ class GroupSelect(grok.View):
                 i += 1
 
 
-class Deco16Grid (grok.GlobalUtility):
-    grok.name('deco16_grid')
-    grok.implements(IGridSystem)
+class BaseGrid(object):
 
-    title = _(u'Deco (16 columns, default)')
-    ncolumns = 16
+    """Base class for grid systems."""
+
+    title = u''
+    ncolumns = 0
 
     row_class = 'row'
-    column_class = 'cell'
+    column_class = 'column'
 
     def transform(self, layout):
         for element in layout:
@@ -260,8 +259,59 @@ class Deco16Grid (grok.GlobalUtility):
                     element['class'] = 'tile'
 
     def columns_formatter(self, columns):
-        # This formatter works for Deco; you can implement a custom one
-        # for you grid system
+        raise Exception('Must be implemented in the child')
+
+
+class Bootstrap3(BaseGrid, grok.GlobalUtility):
+
+    """Bootstrap 3 grid system (12 columns)."""
+
+    grok.name('bootstrap3')
+    grok.implements(IGridSystem)
+
+    ncolumns = 12
+    title = _(u'Bootstrap 3')
+
+    def columns_formatter(self, columns):
+        prefix = 'col-md-'
+        for column in columns:
+            width = column['data']['column-size'] if 'data' in column else 1
+            column['class'] = self.column_class + ' ' + (prefix + str(width))
+
+        return columns
+
+
+class Bootstrap2(BaseGrid, grok.GlobalUtility):
+
+    """Bootstrap 2 grid system (12 columns)."""
+
+    grok.name('bootstrap2')
+    grok.implements(IGridSystem)
+
+    ncolumns = 12
+    title = _(u'Bootstrap 2')
+
+    def columns_formatter(self, columns):
+        prefix = 'span'
+        for column in columns:
+            width = column['data']['column-size'] if 'data' in column else 1
+            column['class'] = self.column_class + ' ' + (prefix + str(width))
+
+        return columns
+
+
+class Deco16Grid (BaseGrid, grok.GlobalUtility):
+
+    """Deco grid system (16 columns)."""
+
+    grok.name('deco16_grid')
+    grok.implements(IGridSystem)
+
+    title = _(u'Deco (16 columns)')
+    ncolumns = 16
+    column_class = 'cell'
+
+    def columns_formatter(self, columns):
         w = 'width-'
         p = 'position-'
         offset = 0

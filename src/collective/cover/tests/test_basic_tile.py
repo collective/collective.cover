@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from collective.cover.testing import ALL_CONTENT_TYPES
-from collective.cover.testing import PLONE_VERSION
+from collective.cover.config import PLONE_VERSION
 from collective.cover.testing import generate_jpeg
 from collective.cover.testing import images_are_equal
 from collective.cover.tests.base import TestTileMixin

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from collective.cover.config import PROJECTNAME
+from collective.cover.logger import logger
 from collective.cover.controlpanel import ICoverSettings
 from collective.cover.tiles.list import IListTile
 from plone import api
@@ -9,9 +9,6 @@ from plone.tiles.interfaces import ITileType
 from zope.component import getUtility
 from zope.schema.interfaces import IVocabularyFactory
 
-import logging
-
-logger = logging.getLogger(PROJECTNAME)
 PROFILE_ID = 'profile-collective.cover:default'
 
 
@@ -169,51 +166,6 @@ def upgrade_carousel_tiles_custom_url(context):
                     entry[u'order'] = unicode(order)
                     new_data[uuid] = entry
                     order += 1
-
-            old_data['uuids'] = new_data
-            ITileDataManager(tile).set(old_data)
-
-            logger.info(
-                'Tile %s at %s updated' % (tile_id, cover.getPath())
-            )
-    logger.info('Done')
-
-
-def fix_persistentmap_to_dict(context):
-    """Internal structure was reverted from using PersistentMapping.
-    Fix tiles here"""
-
-    # Get covers
-    covers = context.portal_catalog(portal_type='collective.cover.content')
-    logger.info('About to update {0} objects'.format(len(covers)))
-    tiles_to_update = _get_tiles_inherit_from_list(context)
-    logger.info('{0} tile types will be updated ({1})'.format(
-        len(tiles_to_update), ', '.join(tiles_to_update)))
-    for cover in covers:
-        obj = cover.getObject()
-        tile_ids = obj.list_tiles(types=tiles_to_update)
-        for tile_id in tile_ids:
-            tile = obj.get_tile(tile_id)
-            old_data = ITileDataManager(tile).get()
-            uuids = old_data['uuids']
-            if isinstance(uuids, dict):
-                # This tile is fixed, carry on
-                logger.info(
-                    'Tile %s at %s was already updated' %
-                    (tile_id, cover.getPath())
-                )
-                continue
-            if not uuids:
-                # This tile did not have data, so ignore
-                logger.info(
-                    'Tile %s at %s did not have any data' %
-                    (tile_id, cover.getPath())
-                )
-                continue
-
-            new_data = dict()
-            for k, v in uuids.items():
-                new_data[k] = v
 
             old_data['uuids'] = new_data
             ITileDataManager(tile).set(old_data)
