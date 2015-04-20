@@ -459,6 +459,9 @@ var coveractions = {
             }, TIMEOUT);
             timeoutIDs.push(timeoutID);
         });
+        $("#contentchooser-content-search-input").keyup(function() {
+            $("#contentchooser-content-search-button").trigger("click");
+        });
     }
 
     $(document).ready(function() {
