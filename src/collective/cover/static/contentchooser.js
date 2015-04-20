@@ -1,3 +1,5 @@
+var TIMEOUT = 500;
+
 var coveractions = {
     /**
      * Context URL to be used for all AJAX call
@@ -107,7 +109,6 @@ var coveractions = {
         }
         // Sends a low level Ajax request
         var t = this, d = document, w = window, na = navigator, ua = na.userAgent;
-        $('#contentchooser-content-trees').val('');
         var $ul = $('#content-trees .item-list');
         $ul.attr('data-last-path', path);
         $ul.attr('data-last-method', method);
@@ -200,46 +201,13 @@ var coveractions = {
 
     getCurrentFolderContents : function() {
         this.getFolderContents(this.current_path, '@@jsonbytype');
-    },
-
-    liveSearch : function(selector,selectorlist,selectoroutput){
-        // selector: Is an input text
-        // selectorlist: Is an selector  type li tag
-        // selectoroutput: Displays number of items that meet the search criteria
-        // Eg. coveractions.liveSearch('#contentchooser-content-trees','.item-list li','#content-trees .filter-count');
-        $(selector).keyup(function(){
-            // Retrieve the input field text and reset the count to zero
-            var filter = $(this).val(), count = 0;
-
-            // Loop through the items list
-            $(selectorlist).each(function(){
-                // If the list item does not contain the text phrase fade it out
-                if ($(this).text().search(new RegExp(filter, "i")) < 0) {
-                    $(this).fadeOut();
-                    // Show the list item if the phrase matches and increase the count by 1
-                } else {
-                    $(this).show();
-                    count++;
-                }
-
-            });
-
-            // Update the count
-            if (filter !== ''){
-                var numberItems = count;
-                $(selectoroutput).text(" "+ count + " Results");
-            } else {
-                $(selectoroutput).text("");
-            }
-        });
-    },
+    }
 };
 
 
 (function ($) {
     var ajaxSearchRequest = [];
     var timeoutIDs = [];
-    var TIMEOUT = 500;
     var handle_scroll = function() {
         var $ul = $(this);
         var total_li = parseInt($ul.attr('data-total-results'), 10);
@@ -343,9 +311,6 @@ var coveractions = {
     }
 
     $(function() {
-        // Live search content tree
-        coveractions.liveSearch('#contentchooser-content-trees','.item-list li','#content-trees .filter-count');
-
         $("#contentchooser-content-search #recent .item-list").on("scroll", handle_scroll);
 
         $(document).on("click", "#recent .contentchooser-clear", function(e){
@@ -456,16 +421,30 @@ var coveractions = {
 
     coveractions.preInit();
 
-
     function filterOnKeyUp() {
+        var timeoutIDs = [];
         $("#contentchooser-content-search-button").css("display", "none");
-        $(".contentchooser-content-trees").keyup(function() {
-            var i = 0;
-            for(i=0; i<ajaxSearchRequest.length; i++) {
-                ajaxSearchRequest[i].abort();
+        $("#contentchooser-content-trees").keyup(function() {
+            var queryVal = $(this).val();
+            if ((queryVal.length > 0) &&
+                (queryVal.length < 3)) {
+                return false;
             }
-            ajaxSearchRequest = [];
-            $("#contentchooser-content-search-button").trigger("click");
+
+            var i, len, tid;
+            for (i = 0, len = timeoutIDs.length; i < len; i++) {
+                tid = timeoutIDs[i];
+                clearTimeout(tid);
+            }
+            timeoutIDs = [];
+            $('#kss-spinner').hide();
+            var timeoutID = setTimeout(function() {
+                var $ul = $('#content-trees .item-list');
+                var last_path = $ul.attr('data-last-path');
+                var last_method = $ul.attr('data-last-method');
+                coveractions.getFolderContents(last_path, last_method);
+            }, TIMEOUT);
+            timeoutIDs.push(timeoutID)
         });
     }
 
