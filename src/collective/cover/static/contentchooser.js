@@ -110,7 +110,7 @@ var coveractions = {
 
                         if (data.items[i].is_folderish) {
                             if (data.items[i].icon.length) {
-                                html += '<img src="' + data.items[i].icon + '" border="0" style="margin-left: 17px" /> ';
+                                html += '<img src="' + data.items[i].icon + ' /> ';
                             }
                             html += '<a data-ct-type="' +
                                 data.items[i].portal_type  +'" class="' +
