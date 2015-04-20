@@ -18,6 +18,21 @@ var coveractions = {
         }
     },
 
+    handle_scroll: function() {
+        var $ul = $(this);
+        var last_path = $ul.attr('data-last-path');
+        var last_method = $ul.attr('data-last-method');
+        var has_next = $ul.attr('data-has-next');
+        var nextpage = $ul.attr('data-nextpage');
+
+        if ((has_next === 'false') ||
+            ($ul.scrollTop() + $ul.innerHeight() < $ul[0].scrollHeight)) {
+            return;
+        }
+
+        coveractions.getFolderContents(last_path, last_method, true);
+    },
+
     send: function(o) {
         var x, t, w = window, c = 0;
 
@@ -94,6 +109,8 @@ var coveractions = {
         var t = this, d = document, w = window, na = navigator, ua = na.userAgent;
         $('#contentchooser-content-trees').val('');
         var $ul = $('#content-trees .item-list');
+        $ul.attr('data-last-path', path);
+        $ul.attr('data-last-method', method);
         var has_next = $ul.attr('data-has-next');
         var nextpage = $ul.attr('data-nextpage');
 
@@ -101,8 +118,8 @@ var coveractions = {
                 ($('input:text[id=contentchooser-content-trees][name=contentchooser-content-trees]').val() || '') +
                 "&rooted='False'" + "&document_base_url=" + encodeURIComponent(d.baseURI);
 
-        if ((has_next !== null) && has_next === true && scroll === true) {
-            data += "&page='"+ nextpage +"'";
+        if ((has_next !== null) && has_next === 'true' && scroll === true) {
+            data = "page="+ nextpage +"&" + data;
         }
 
         coveractions.send({
@@ -450,6 +467,9 @@ var coveractions = {
     }
 
     $(document).ready(function() {
+        $("#contentchooser-content-search #content-trees .item-list").on(
+            "scroll", coveractions.handle_scroll
+        );
         filterOnKeyUp();
     });
 }(jQuery));
