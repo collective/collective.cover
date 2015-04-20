@@ -101,7 +101,7 @@ class ContentSearch(grok.View):
         catalog_query = {'sort_on': 'effective', 'sort_order': 'descending'}
         catalog_query['portal_type'] = searchable_types
         if query:
-            catalog_query = {'Title': u'{0}*'.format(safe_unicode(query))}
+            catalog_query['Title'] = u'{0}*'.format(safe_unicode(query))
         results = catalog(**catalog_query)
         self.total_results = len(results)
         start = (page - 1) * b_size
@@ -203,7 +203,7 @@ class SearchItemsBrowserView(BrowserView):
         catalog_query['portal_type'] = self.filter_portal_types
         catalog_query['path'] = {'query': path, 'depth': 1}
         if searchtext:
-            catalog_query = {'Title': '{0}*'.format(searchtext)}
+            catalog_query['Title'] = '{0}*'.format(searchtext)
 
         brains = catalog(**catalog_query)
         page = int(page, 10)
