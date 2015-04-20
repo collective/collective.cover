@@ -442,7 +442,7 @@ var coveractions = {
                 var $ul = $('#content-trees .item-list');
                 var last_path = $ul.attr('data-last-path');
                 var last_method = $ul.attr('data-last-method');
-                coveractions.getFolderContents(last_path, last_method);
+                coveractions.getFolderContents(coveractions.current_path, '@@jsonbytype');
             }, TIMEOUT);
             timeoutIDs.push(timeoutID)
         });
