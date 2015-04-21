@@ -139,13 +139,13 @@ class TextLinesSortableWidget(textlines.TextLinesWidget):
                 '{0}.custom_title.{1}'.format(self.name, uuid), ''
             )
             if (custom_title != u'' and
-                custom_title != obj.Title().decode('utf-8')):
+               custom_title != obj.Title().decode('utf-8')):
                 results[uuid][u'custom_title'] = unicode(custom_title)
             custom_description = self.request.get(
                 '{0}.custom_description.{1}'.format(self.name, uuid), ''
             )
             if (custom_description != u'' and
-                custom_description != obj.Description().decode('utf-8')):
+               custom_description != obj.Description().decode('utf-8')):
                 results[uuid][u'custom_description'] = unicode(custom_description)
             custom_url = self.request.get(
                 '{0}.custom_url.{1}'.format(self.name, uuid), ''
@@ -154,7 +154,7 @@ class TextLinesSortableWidget(textlines.TextLinesWidget):
             if obj.portal_type in use_view_action:
                 url = url + '/view'
             if (custom_url != u'' and
-                custom_url != url):
+               custom_url != url):
                 results[uuid][u'custom_url'] = unicode(custom_url)
         return results
 
