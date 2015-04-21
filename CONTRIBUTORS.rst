@@ -8,6 +8,7 @@ the following people:
 - Asko Soukka
 - Carlos de la Guardia
 - Cleber J. Santos
+- Daniel Jowett
 - Davi Lima
 - Denis Krienbühl
 - Érico Andrei

@@ -27,6 +27,18 @@
         handler=".remove_orphan_annotations"
         />
 
+    <genericsetup:upgradeStep
+        title="Cook CSS resources"
+        description="There were changes in the CSS files, so we need to cook the resources."
+        handler="..cook_css_resources"
+        />
+
+    <genericsetup:upgradeStep
+        title="Cook JS resources"
+        description="There were changes in the JS files, so we need to cook the resources."
+        handler="..cook_javascript_resources"
+        />
+
   </genericsetup:upgradeSteps>
 
 </configure>

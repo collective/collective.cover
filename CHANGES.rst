@@ -6,6 +6,9 @@ There's a frood who really knows where his towel is.
 1.0a11 (unreleased)
 ^^^^^^^^^^^^^^^^^^^
 
+- Do not purge fields in registry.xml to avoid overwriting information at reinstall time (fixes `#465`_).
+  [hvelarde]
+
 - Add upgrade step to remove orphan annotations left behind.
   The bug was fixed in release 1.0a10 but no upgrade step was provided to clean up the objects.
   [ericof, hvelarde]
@@ -15,9 +18,10 @@ There's a frood who really knows where his towel is.
   Check developers documentation for more information on how to use them (closes `#504`_).
   [rodfersou]
 
-- Fix performance issues when searching for recent items in the content chooser.
+- Fix performance issues in the content chooser.
   Searches only start after the third character and will be delayed by 500ms to wait for the user to stop typing.
-  The scope of the search was also changed: instead of searching on SearchableText index (full text), we search on Title index only (fixes `#493`_).
+  Avoid including types not defined as "searchable" in the configlet.
+  The scope of the search was also changed: instead of searching on SearchableText index (full text), we search on Title index only (fixes `#493`_ and `#494`_).
   [rodfersou]
 
 - Fix the indexing of RichText tiles by manually transform the text/html to text/plain.
@@ -622,10 +626,12 @@ There's a frood who really knows where his towel is.
 .. _`#449`: https://github.com/collective/collective.cover/issues/449
 .. _`#459`: https://github.com/collective/collective.cover/issues/459
 .. _`#463`: https://github.com/collective/collective.cover/issues/463
+.. _`#465`: https://github.com/collective/collective.cover/issues/465
 .. _`#466`: https://github.com/collective/collective.cover/issues/466
 .. _`#472`: https://github.com/collective/collective.cover/issues/472
 .. _`#473`: https://github.com/collective/collective.cover/issues/473
 .. _`#476`: https://github.com/collective/collective.cover/issues/476
 .. _`#493`: https://github.com/collective/collective.cover/issues/493
+.. _`#494`: https://github.com/collective/collective.cover/issues/494
 .. _`#504`: https://github.com/collective/collective.cover/issues/504
 .. _`PloneFormGen`: https://pypi.python.org/pypi/Products.PloneFormGen
