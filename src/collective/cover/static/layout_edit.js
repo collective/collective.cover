@@ -8,14 +8,20 @@
         var self = this,
         n_columns = conf.ncolumns,
         row_class = 'cover-row',
-        row_dom = $('<div/>').addClass(row_class)
-            .attr('data-layout-type', 'row'),
+        row_dom = $('<div data-layout-type="row" class="'+ row_class +'">' +
+                    '    <a href="#" class="config-row-link">' +
+                    '        <i class="config-icon"></i>' +
+                    '    </a>' +
+                    '</div>'),
         column_class = 'cover-column',
-        column_dom = $('<div/>').addClass(column_class)
-            .attr('data-layout-type', 'column'),
+        column_dom = $('<div data-layout-type="column" class="'+ column_class +'">' +
+                       '    <a href="#" class="config-column-link">' +
+                       '        <i class="config-icon"></i>' +
+                       '    </a>' +
+                       '</div>'),
         tile_class = 'cover-tile',
-        tile_dom = $('<div/>').addClass(tile_class)
-            .attr('data-layout-type', 'tile'),
+        tile_dom = $('<div data-layout-type="tile" class="'+ tile_class +'">' +
+                     '</div>'),
         le = $('.layout'),
         BeforeUnloadHandler;
 
@@ -44,8 +50,6 @@
             },
 
             setup: function() {
-
-                le.append('<div id="dialog" title="Resize Column"><p id="column-size-resize">Actual column size: <span></span></p><div id="slider"></div></div>');
 
                 //buttons draggable binding
                 $( "#btn-row" ).draggable({
@@ -84,6 +88,7 @@
                 self.generate_grid_css();
                 self.delete_manager();
                 self.resize_columns_manager();
+                self.class_chooser_manager();
 
                 self.tile_config_manager();
 
@@ -387,12 +392,12 @@
                 var resizer = $('<i/>').addClass('resizer');
                 $(columns).append(resizer);
 
-                $( "#dialog" ).dialog({
+                $( "#resizer" ).dialog({
                     autoOpen: false
                 });
 
                 $( ".resizer" ).click(function() {
-                    $( "#dialog" ).dialog( "open" );
+                    $( "#resizer" ).dialog( "open" );
 
                     var column = $(this).parents('.cover-column');
                     var size = column.attr('data-column-size');
@@ -417,6 +422,43 @@
                     }
                 });
                 $( "#amount" ).val( $( "#slider-range-max" ).slider( "value" ) );
+            },
+
+            /**
+             *  Class chooser
+             *
+             **/
+            class_chooser_manager: function(){
+                $("#class-chooser" ).dialog({
+                    autoOpen: false
+                });
+
+                $(document).on('click', '.config-row-link, .config-column-link', function() {
+                    $( "#class-chooser" ).dialog( "open" );
+
+                    //var column = $(this).parents('.cover-column');
+                    //var size = column.attr('data-column-size');
+                    //
+                    //$( "#column-size-resize span" ).html( size );
+                    //$('#slider').slider("option", "value", size);
+                    //$('#slider').off("slide");
+                    //$('#slider').on( "slide", function( event, ui ) {
+                    //    column.attr('data-column-size', ui.value);
+                    //    le.trigger('modified.layout');
+                    //});
+                    return false;
+                });
+
+                //$( "#slider" ).slider({
+                //    range: "max",
+                //    min: 1,
+                //    max: n_columns,
+                //    value: 1,
+                //    slide: function( event, ui ) {
+                //        $( "#column-size-resize span" ).html( ui.value );
+                //    }
+                //});
+                //$( "#amount" ).val( $( "#slider-range-max" ).slider( "value" ) );
             },
 
             /**
