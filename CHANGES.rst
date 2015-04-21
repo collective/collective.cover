@@ -17,6 +17,7 @@ There's a frood who really knows where his towel is.
 
 - Fix performance issues in the content chooser.
   Searches only start after the third character and will be delayed by 500ms to wait for the user to stop typing.
+  Avoid including types not defined as "searchable" in the configlet.
   The scope of the search was also changed: instead of searching on SearchableText index (full text), we search on Title index only (fixes `#493`_ and `#494`_).
   [rodfersou]
 
