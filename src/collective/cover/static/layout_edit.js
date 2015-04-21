@@ -8,19 +8,19 @@
         var self = this,
         n_columns = conf.ncolumns,
         row_class = 'cover-row',
-        row_dom = $('<div data-layout-type="row" class="'+ row_class +'">' +
+        row_dom = $('<div class="'+ row_class +'">' +
                     '    <a href="#" class="config-row-link">' +
                     '        <i class="config-icon"></i>' +
                     '    </a>' +
                     '</div>'),
         column_class = 'cover-column',
-        column_dom = $('<div data-layout-type="column" class="'+ column_class +'">' +
+        column_dom = $('<div class="'+ column_class +'">' +
                        '    <a href="#" class="config-column-link">' +
                        '        <i class="config-icon"></i>' +
                        '    </a>' +
                        '</div>'),
         tile_class = 'cover-tile',
-        tile_dom = $('<div data-layout-type="tile" class="'+ tile_class +'">' +
+        tile_dom = $('<div class="'+ tile_class +'">' +
                      '</div>'),
         le = $('.layout'),
         BeforeUnloadHandler;
@@ -559,9 +559,7 @@
                             entry.roles = ['Manager'];
                             entry.type = 'group';
                             entry.data = {
-                                'column-size': $(this).data('columnSize'),
-                                'layout-type': $(this).data('layout-type')
-
+                                'column-size': $(this).data('columnSize')
                             };
                         }
                         //entry.class = $(this).attr('class');
