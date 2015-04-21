@@ -6,6 +6,9 @@ There's a frood who really knows where his towel is.
 1.0a11 (unreleased)
 ^^^^^^^^^^^^^^^^^^^
 
+- Do not purge fields in registry.xml to avoid overwriting information at reinstall time (fixes `#465`_).
+  [hvelarde]
+
 - Add upgrade step to remove orphan annotations left behind.
   The bug was fixed in release 1.0a10 but no upgrade step was provided to clean up the objects.
   [ericof, hvelarde]
@@ -623,6 +626,7 @@ There's a frood who really knows where his towel is.
 .. _`#449`: https://github.com/collective/collective.cover/issues/449
 .. _`#459`: https://github.com/collective/collective.cover/issues/459
 .. _`#463`: https://github.com/collective/collective.cover/issues/463
+.. _`#465`: https://github.com/collective/collective.cover/issues/465
 .. _`#466`: https://github.com/collective/collective.cover/issues/466
 .. _`#472`: https://github.com/collective/collective.cover/issues/472
 .. _`#473`: https://github.com/collective/collective.cover/issues/473
