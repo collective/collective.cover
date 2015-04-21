@@ -128,7 +128,7 @@ var coveractions = {
             data = "page="+ nextpage +"&" + data;
         }
 
-        $('#kss-spinner').show();
+        $('#ajax-spinner').show();
 
         coveractions.send({
             url : path + '/' + method,
@@ -136,7 +136,7 @@ var coveractions = {
             type : 'POST',
             data : data,
             success : function(text) {
-                $('#kss-spinner').hide();
+                $('#ajax-spinner').hide();
                 var html = "";
                 var data = $.parseJSON(text);
 
@@ -234,12 +234,12 @@ var coveractions = {
         var queryVal = $("#contentchooser-content-search-input").val();
         var nextpage = parseInt($ul.attr('data-nextpage'), 10);
         var data = {'q': queryVal, 'page': nextpage};
-        $('#kss-spinner').show();
+        $('#ajax-spinner').show();
         ajaxSearchRequest.push($.ajax({
             url: url,
             data: data,
             success: function(data) {
-                $('#kss-spinner').hide();
+                $('#ajax-spinner').hide();
                 var ul = $(data)[1];
                 $ul.attr('data-has-next', $(ul).attr('data-has-next'));
                 $ul.attr('data-nextpage', $(ul).attr('data-nextpage'));
@@ -264,15 +264,15 @@ var coveractions = {
             clearTimeout(tid);
         }
         timeoutIDs = [];
-        $('#kss-spinner').hide();
+        $('#ajax-spinner').hide();
         var timeoutID = setTimeout(function() {
             var data = {'q': queryVal, 'page': page};
-            $('#kss-spinner').show();
+            $('#ajax-spinner').show();
             ajaxSearchRequest.push($.ajax({
                 url: url,
                 data: data,
                 success: function(info) {
-                    $('#kss-spinner').hide();
+                    $('#ajax-spinner').hide();
                     $("#contentchooser-content-search #recent .item-list").off("scroll");
                     $("#contentchooser-content-search #recent .item-list").replaceWith(info);
                     $("#contentchooser-content-search #recent .item-list").on("scroll", handle_scroll);
@@ -451,7 +451,7 @@ var coveractions = {
                 clearTimeout(tid);
             }
             timeoutIDs = [];
-            $('#kss-spinner').hide();
+            $('#ajax-spinner').hide();
             var timeoutID = setTimeout(function() {
                 var $ul = $('#content-trees .item-list');
                 var last_path = $ul.attr('data-last-path');
