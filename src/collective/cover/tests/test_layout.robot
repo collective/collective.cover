@@ -125,6 +125,7 @@ Test Setting class in Layouts
     Click Link  link=View
     Element Should Be Visible  css=div.row.new-carousel
 
+    # Test CSS class validation
     Edit Cover Layout
     Click Link  css=div.layout div.cover-row:nth-child(2) a.config-row-link
 
@@ -133,6 +134,20 @@ Test Setting class in Layouts
     Click Button  xpath=//input[@id='form-buttons-save']
 
     Page Should Contain  The following strings are not valid css identifiers: 123 -456
+
+    # Test exported layout includes the view-classes
+    Input Text  xpath=//input[@id='form-widgets-row_classes']  secondrow
+    Click Button  xpath=//input[@id='form-buttons-save']
+
+    Save Cover Layout
+    Click Element  css=a#btn-export.btn
+    Wait Until Element Is Visible  xpath=//div[@id='export-layout']
+    Input Text  xpath=//input[@name='layout-name']  my-test-layout
+    Click Button  xpath=//input[@name='export-layout']
+    Go to Homepage
+
+    Create Cover  ClassExportTest  new description  my-test-layout
+    Element Should Be Visible  css=div.row.secondrow
 
 
 *** Keywords ***
