@@ -140,23 +140,30 @@ class TestTextLinesSortableWidget(unittest.TestCase):
 
         expected = {
             obj1.UID(): {
-                u'custom_description': u'',
-                u'custom_title': u'',
                 u'custom_url': u'custom_url',
                 u'order': u'0'
             },
-            obj2.UID(): {
-                u'custom_description': u'',
-                u'custom_title': u'',
-                u'custom_url': u'',
-                u'order': u'2'
-            },
-            obj3.UID(): {
-                u'custom_description': u'',
-                u'custom_title': u'',
-                u'custom_url': u'',
-                u'order': u'1'
-            }
+            obj2.UID(): {u'order': u'2'},
+            obj3.UID(): {u'order': u'1'}
+        }
+
+        extracted_value = widget.extract()
+
+        self.assertDictEqual(extracted_value, expected)
+
+    def test_utf8_custom_data(self):
+        obj = self.portal['my-image']
+        obj.setDescription('áéíóú')
+
+        name = 'uuid.field'
+        self.request.set(name, u'{0}'.format(obj.UID()))
+        self.request.set(u'{0}.custom_description.{1}'.format(name, obj.UID()), u'áéíóú')
+
+        widget = TextLinesSortableWidget(self.request)
+        widget.name = name
+
+        expected = {
+            obj.UID(): {u'order': u'0'},
         }
 
         extracted_value = widget.extract()
