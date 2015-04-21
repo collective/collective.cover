@@ -48,7 +48,21 @@
                 <div class="layout" tal:attributes="data-layoutmanager-settings view/layoutmanager_settings">
                     <div tal:define="layout nocall:context/@@layout"
                          tal:replace="structure layout/render_layout_edit" />
-                    <!--div class="content-contentchooser" tal:replace="structure context/@@select-content-contentchooser"></div-->
+                    <div id="resizer" title="Resize Column">
+                        <p id="column-size-resize">
+                            Actual column size: <span></span>
+                        </p>
+                        <div id="slider"></div>
+                    </div>
+                    <div id="class-chooser" title="Choose Class">
+                        <select>
+                            <tal:classes repeat="item view/css_classes">
+                                <option tal:attributes="value item/value"
+                                        tal:content="item/title">
+                                </option>
+                            </tal:classes>
+                        </select>
+                    </div>
                 </div>
                 <div id="group-select-list" class="modal hide" tal:replace="structure context/@@group_select"></div>
                 <div id="tile-configure" class="modal hide"></div>
