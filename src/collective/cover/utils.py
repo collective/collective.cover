@@ -32,6 +32,7 @@ def uuidToObject(uuid):
     return brain.getObject() if brain else None
 
 
+# TODO: implement this directly in plone.app.uuid
 def uuidToCatalogBrain(uuid):
     """Return a catalog brain given an UUID.
     Copied from plone.app.uuid:utils but doesn't filter on expired items.
@@ -42,5 +43,7 @@ def uuidToCatalogBrain(uuid):
         if the UUID can't be found.
     """
     catalog = api.portal.get_tool('portal_catalog')
+    # XXX: should we add a check on 'Access inactive portal content'
+    #      permission before setting show_inactive?
     results = catalog(UID=uuid, show_all=1, show_inactive=1)
     return results[0] if results else None
