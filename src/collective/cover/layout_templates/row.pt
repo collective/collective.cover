@@ -11,8 +11,7 @@
             <div tal:define="section options/section | nothing;
                              data python:section.get('data', '') if section else None"
                  tal:condition="section"
-                 tal:attributes="class python:'%s' % section.get('class', '');
-                                 data-layout-type python: data['layout-type'] if 'layout-type' in data else 'row'">
+                 tal:attributes="class python:'%s' % section.get('class', '')">
 
                 <tal:layoutedit tal:condition="python:mode == 'layout_edit'">
                     <a href="#" class="config-row-link">

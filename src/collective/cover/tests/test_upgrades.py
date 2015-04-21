@@ -245,7 +245,7 @@ class Upgrade9to10TestCase(UpgradeTestCaseBase):
         # simulate state on previous version
         cover = self._create_cover('test-cover', 'Empty layout')
         cover.cover_layout = (
-            '[{"type": "row", "children": [{"data": {"layout-type": "column", '
+            '[{"type": "row", "children": [{"data": {'
             '"column-size": 16}, "type": "group", "children": [{"tile-type": '
             '"collective.cover.carousel", "type": "tile", "id": '
             '"ca6ba6675ef145e4a569c5e410af7511"}], "roles": ["Manager"]}]}]'
@@ -284,7 +284,7 @@ class Upgrade10to11TestCase(UpgradeTestCaseBase):
         # simulate state on previous version
         cover = self._create_cover('test-cover', 'Empty layout')
         cover.cover_layout = (
-            '[{"type": "row", "children": [{"data": {"layout-type": "column", '
+            '[{"type": "row", "children": [{"data": {'
             '"column-size": 16}, "type": "group", "children": [{"tile-type": '
             '"collective.cover.carousel", "type": "tile", "id": '
             '"ca6ba6675ef145e4a569c5e410af7511"}], "roles": ["Manager"]}]}]'
@@ -315,14 +315,14 @@ class Upgrade10to11TestCase(UpgradeTestCaseBase):
 
         old_data = (
             u'[{"type": "row", "class": "row", "children": [{"data": '
-            u'{"layout-type": "column", "column-size": 16}, "type": "group", '
+            u'{"column-size": 16}, "type": "group", '
             u'"children": [{"class": "tile", "tile-type": "collective.cover.carousel", '
             u'"type": "tile", "id": "ca6ba6675ef145e4a569c5e410af7511"}], '
             u'"roles": ["Manager"]}]}]'
         )
 
         expected = (
-            u'[{"type": "row", "children": [{"data": {"layout-type": "column", '
+            u'[{"type": "row", "children": [{"data": {'
             u'"column-size": 16}, "type": "group", "children": [{"tile-type": '
             u'"collective.cover.carousel", "type": "tile", "id": '
             u'"ca6ba6675ef145e4a569c5e410af7511"}], "roles": ["Manager"]}]}]'
