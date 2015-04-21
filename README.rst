@@ -154,7 +154,6 @@ To enable this package in a buildout-based installation:
     plone.app.jquerytools = 1.5.7
     plone.app.z3cform = 0.6.3
     plone.directives.form = 1.1
-    plone.formwidget.namedfile = 1.0.10
 
 #. If you want to use a newer release of ``collective.js.bootstrap``, you will need to update ``plone.app.jquery``::
 
