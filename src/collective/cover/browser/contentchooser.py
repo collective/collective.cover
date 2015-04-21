@@ -28,6 +28,9 @@ VOCAB_ID = u'plone.app.vocabularies.ReallyUserFriendlyTypes'
 grok.templatedir('contentchooser_templates')
 
 
+ITEMS_BY_REQUEST = 20
+
+
 # XXX: what's the purpose of this view?
 #      why is here if it's intendes for tests?
 #      can we get rid of it?
@@ -71,15 +74,13 @@ class ContentSearch(grok.View):
     def update(self):
         self.query = self.request.get('q', None)
         self.tab = self.request.get('tab', None)
-        b_size = int(self.request.get('b_size', 20))
         page = int(self.request.get('page', 1))
         strategy = SitemapNavtreeStrategy(self.context)
 
         uids = None
         result = self.search(
             self.query, uids=uids,
-            page=page,
-            b_size=b_size
+            page=page
         )
         self.has_next = result.next is not None
         self.nextpage = result.pagenumber + 1
@@ -90,7 +91,7 @@ class ContentSearch(grok.View):
     def render(self):
         return self.list_template()
 
-    def search(self, query=None, page=1, b_size=20, uids=None):
+    def search(self, query=None, page=1, b_size=ITEMS_BY_REQUEST, uids=None):
         catalog = api.portal.get_tool('portal_catalog')
         registry = getUtility(IRegistry)
         settings = registry.forInterface(ICoverSettings)
@@ -100,7 +101,7 @@ class ContentSearch(grok.View):
         catalog_query = {'sort_on': 'effective', 'sort_order': 'descending'}
         catalog_query['portal_type'] = searchable_types
         if query:
-            catalog_query = {'Title': u'{0}*'.format(safe_unicode(query))}
+            catalog_query['Title'] = u'{0}*'.format(safe_unicode(query))
         results = catalog(**catalog_query)
         self.total_results = len(results)
         start = (page - 1) * b_size
@@ -172,7 +173,7 @@ class SearchItemsBrowserView(BrowserView):
                                    'url': root_url + '/' + '/'.join(now)})
         return result
 
-    def jsonByType(self, rooted, document_base_url, searchtext):
+    def jsonByType(self, rooted, document_base_url, searchtext, page='1'):
         """ Returns the actual listing """
         catalog_results = []
         results = {}
@@ -202,9 +203,18 @@ class SearchItemsBrowserView(BrowserView):
         catalog_query['portal_type'] = self.filter_portal_types
         catalog_query['path'] = {'query': path, 'depth': 1}
         if searchtext:
-            catalog_query = {'SearchableText': '{0}*'.format(searchtext)}
+            catalog_query['Title'] = '{0}*'.format(searchtext)
 
-        for brain in catalog(**catalog_query):
+        brains = catalog(**catalog_query)
+        page = int(page, 10)
+        start = (page - 1) * ITEMS_BY_REQUEST
+        brains = Batch(brains, size=ITEMS_BY_REQUEST, start=start, orphan=0)
+
+        results['has_next'] = brains.next is not None
+        results['nextpage'] = brains.pagenumber + 1
+        results['total_results'] = len(brains)
+
+        for brain in brains:
             catalog_results.append({
                 'id': brain.getId,
                 'uid': brain.UID or None,  # Maybe Missing.Value
@@ -214,8 +224,10 @@ class SearchItemsBrowserView(BrowserView):
                 'classicon': 'contenttype-{0}'.format(normalizer.normalize(brain.portal_type)),
                 'r_state': 'state-{0}'.format(normalizer.normalize(brain.review_state or '')),
                 'title': brain.Title == "" and brain.id or brain.Title,
-                'icon': self.getIcon(brain).html_tag() or '',
-                'is_folderish': brain.is_folderish})
+                'icon': self.getIcon(brain).url or '',
+                'is_folderish': brain.is_folderish,
+                'description': brain.Description or ''
+            })
         # add catalog_ressults
         results['items'] = catalog_results
         # return results in JSON format
