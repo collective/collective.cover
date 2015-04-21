@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
+from plone import api
 
 import uuid
 
 
 def assign_tile_ids(layout, override=True):
-    """
-    This function takes a dict, and it will recursively traverse it and assign
-    sha-hashed ids so we are pretty sure they are unique among them
+    """Recursively traverse a dict describing a layout and assign
+    sha-hashed ids to the tiles so we are pretty sure they are unique
+    among them.
     """
 
     for elem in layout:
@@ -17,3 +18,32 @@ def assign_tile_ids(layout, override=True):
             children = elem.get('children')
             if children:
                 assign_tile_ids(children, override)
+
+
+def uuidToObject(uuid):
+    """Return a content object given an UUID.
+
+    :param uuid: UUID of the object
+    :type uuid: str
+    :returns: the content object or None, if the UUID can't be found.
+    """
+    # Use local uuidToCatalogBrain without the inactive content filter
+    brain = uuidToCatalogBrain(uuid)
+    return brain.getObject() if brain else None
+
+
+# TODO: implement this directly in plone.app.uuid
+def uuidToCatalogBrain(uuid):
+    """Return a catalog brain given an UUID.
+    Copied from plone.app.uuid:utils but doesn't filter on expired items.
+
+    :param uuid: UUID of the object
+    :type uuid: str
+    :returns: the catalog brain associated with the object or None,
+        if the UUID can't be found.
+    """
+    catalog = api.portal.get_tool('portal_catalog')
+    # XXX: should we add a check on 'Access inactive portal content'
+    #      permission before setting show_inactive?
+    results = catalog(UID=uuid, show_all=1, show_inactive=1)
+    return results[0] if results else None

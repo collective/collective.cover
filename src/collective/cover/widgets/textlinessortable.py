@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 
 from collective.cover.widgets.interfaces import ITextLinesSortableWidget
+from collective.cover.utils import uuidToObject
 from plone import api
-from plone.app.uuid.utils import uuidToObject
+from Products.CMFPlone.utils import base_hasattr
+
 from z3c.form import interfaces
 from z3c.form import widget
 from z3c.form.browser import textlines
@@ -50,11 +52,18 @@ class TextLinesSortableWidget(textlines.TextLinesWidget):
         :type item: Content object
         :returns: The <img> tag for the scale
         """
+        if not item:
+            return None
         scales = item.restrictedTraverse('@@images')
         try:
             return scales.scale('image', 'tile')
         except:
             return None
+
+    def isExpired(self, item):
+        if base_hasattr(item, 'expires'):
+            return item.expires().isPast()
+        return False
 
     def get_custom_title(self, uuid):
         """ Returns the custom Title assigned to a specific item
@@ -138,12 +147,14 @@ class TextLinesSortableWidget(textlines.TextLinesWidget):
             custom_title = self.request.get(
                 '{0}.custom_title.{1}'.format(self.name, uuid), ''
             )
-            if custom_title != obj.Title():
+            if (custom_title != u'' and
+               custom_title != obj.Title().decode('utf-8')):
                 results[uuid][u'custom_title'] = unicode(custom_title)
             custom_description = self.request.get(
                 '{0}.custom_description.{1}'.format(self.name, uuid), ''
             )
-            if custom_description != obj.Description():
+            if (custom_description != u'' and
+               custom_description != obj.Description().decode('utf-8')):
                 results[uuid][u'custom_description'] = unicode(custom_description)
             custom_url = self.request.get(
                 '{0}.custom_url.{1}'.format(self.name, uuid), ''
@@ -151,7 +162,8 @@ class TextLinesSortableWidget(textlines.TextLinesWidget):
             url = obj.absolute_url()
             if obj.portal_type in use_view_action:
                 url = url + '/view'
-            if custom_url != url:
+            if (custom_url != u'' and
+               custom_url != url):
                 results[uuid][u'custom_url'] = unicode(custom_url)
         return results
 
