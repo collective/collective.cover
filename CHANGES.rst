@@ -6,6 +6,11 @@ There's a frood who really knows where his towel is.
 1.0a11 (unreleased)
 ^^^^^^^^^^^^^^^^^^^
 
+- Fix the carousel compose edit widget when items have been added that are now expired.
+  List the items with a red border and a warning text.
+  This only fixes listing expired content for non-managers (like using having the Editor rol) in compose mode, it doesn't change visibility of items when viewing.
+  [fredvd]
+
 - Do not purge fields in registry.xml to avoid overwriting information at reinstall time (fixes `#465`_).
   [hvelarde]
 
@@ -633,5 +638,6 @@ There's a frood who really knows where his towel is.
 .. _`#476`: https://github.com/collective/collective.cover/issues/476
 .. _`#493`: https://github.com/collective/collective.cover/issues/493
 .. _`#494`: https://github.com/collective/collective.cover/issues/494
+.. _`#495`: https://github.com/collective/collective.cover/issues/495
 .. _`#504`: https://github.com/collective/collective.cover/issues/504
 .. _`PloneFormGen`: https://pypi.python.org/pypi/Products.PloneFormGen

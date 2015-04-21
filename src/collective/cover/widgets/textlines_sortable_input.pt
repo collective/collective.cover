@@ -70,8 +70,9 @@ div.tileProperties textarea {
         <tal:items repeat="item view/sort_results">
           <div class="textline-sortable-element"
                tal:define="obj nocall:item/obj;
-                           uuid item/uuid"
-               tal:attributes="data-uid uuid">
+                           uuid item/uuid;
+                           isExpired python:view.isExpired(obj) and 'expired' or '';"
+               tal:attributes="data-uid uuid; class string:textline-sortable-element ${isExpired};">
             <img class="tileImage"
                  tal:define="thumbnail python:view.thumbnail(obj)"
                  tal:condition="thumbnail"
@@ -79,6 +80,9 @@ div.tileProperties textarea {
                                  width thumbnail/width;
                                  height thumbnail/height" />
             <div class="tileProperties">
+              <div class="tileExpired" tal:condition="python:isExpired == 'expired'">
+                <span i18n:translate="">This item has expired</span>
+              </div>
               <div class="tileTitle">
                 <input class="custom-title-input"
                        tal:attributes="name python:'{0}.custom_title.{1}'.format(view.name, uuid);

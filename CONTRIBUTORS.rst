@@ -13,6 +13,7 @@ the following people:
 - Denis Krienbühl
 - Érico Andrei
 - Franco Pellegrini
+- Fred van Dijk
 - Fulvio Casali
 - Giorgio Borelli
 - Gonzalo Almeida
