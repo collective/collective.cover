@@ -433,32 +433,26 @@
                     autoOpen: false
                 });
 
-                $(document).on('click', '.config-row-link, .config-column-link', function() {
-                    $( "#class-chooser" ).dialog( "open" );
-
-                    //var column = $(this).parents('.cover-column');
-                    //var size = column.attr('data-column-size');
-                    //
-                    //$( "#column-size-resize span" ).html( size );
-                    //$('#slider').slider("option", "value", size);
-                    //$('#slider').off("slide");
-                    //$('#slider').on( "slide", function( event, ui ) {
-                    //    column.attr('data-column-size', ui.value);
-                    //    le.trigger('modified.layout');
-                    //});
-                    return false;
+                $(document).on('click', '.config-row-link, .config-column-link', function(e) {
+                    e.preventDefault();
+                    $target = $(this).parent();
+                    $('#class-chooser').data('target', $target);
+                    if ($target.attr('data-css-class')) {
+                        $('#class-chooser select').val(
+                            $target.attr('data-css-class')
+                        );
+                    } else {
+                        $('#class-chooser select').val('');
+                    }
+                    $('#class-chooser').dialog( "open" );
                 });
 
-                //$( "#slider" ).slider({
-                //    range: "max",
-                //    min: 1,
-                //    max: n_columns,
-                //    value: 1,
-                //    slide: function( event, ui ) {
-                //        $( "#column-size-resize span" ).html( ui.value );
-                //    }
-                //});
-                //$( "#amount" ).val( $( "#slider-range-max" ).slider( "value" ) );
+                $(document).on('change', '#class-chooser select', function(e) {
+                    e.preventDefault();
+                    $select = $(this);
+                    $target = $('#class-chooser').data('target');
+                    $target.attr('data-css-class', $select.val());
+                });
             },
 
             /**
@@ -555,12 +549,16 @@
                         if (node_type) {
                             entry.type = node_type[0];
                         }
+
                         if (node_type == 'column') {
                             entry.roles = ['Manager'];
                             entry.type = 'group';
                             entry['column-size'] = $(this).data('columnSize');
                         }
-                        //entry.class = $(this).attr('class');
+
+                        if ($(this).attr('data-css-class')) {
+                            entry['css-class'] = $(this).attr('data-css-class');
+                        }
 
                         var iterator = self.html2json($(this));
                         if (iterator[0] !== undefined) {

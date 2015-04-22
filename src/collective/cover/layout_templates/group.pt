@@ -13,7 +13,8 @@
                     <div tal:define="klass python:section.get('class', '')"
                          tal:attributes="class python:'%s %s' % (klass, '' if view.is_user_allowed_in_group() else 'disabled');
                                          data-panel python: section.get('id', '');
-                                         data-column-size python: section.get('column-size', 1)">
+                                         data-column-size python: section.get('column-size', 1);
+                                         data-css-class python: section.get('css-class', None)">
 
                         <a href="#" class="config-column-link">
                             <i class="config-icon"></i>

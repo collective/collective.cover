@@ -250,6 +250,10 @@ class BaseGrid(object):
             if 'type' in element:
                 if element['type'] == 'row':
                     element['class'] = self.row_class
+                    if 'css-class' in element:
+                        element['class'] += ' {0}'.format(
+                            element['css-class']
+                        )
                     if 'children' in element:
                         self.transform(self.columns_formatter(element['children']))
                 if element['type'] == 'group' and 'children' in element:
@@ -277,6 +281,10 @@ class Bootstrap3(BaseGrid, grok.GlobalUtility):
         for column in columns:
             width = column.get('column-size', 1)
             column['class'] = self.column_class + ' ' + (prefix + str(width))
+            if 'css-class' in column:
+                column['class'] += ' {0}'.format(
+                    column['css-class']
+                )
 
         return columns
 
@@ -296,6 +304,10 @@ class Bootstrap2(BaseGrid, grok.GlobalUtility):
         for column in columns:
             width = column.get('column-size', 1)
             column['class'] = self.column_class + ' ' + (prefix + str(width))
+            if 'css-class' in column:
+                column['class'] += ' {0}'.format(
+                    column['css-class']
+                )
 
         return columns
 
@@ -318,5 +330,9 @@ class Deco16Grid (BaseGrid, grok.GlobalUtility):
         for column in columns:
             width = column.get('column-size', 1)
             column['class'] = self.column_class + ' ' + (w + str(width)) + ' ' + (p + str(offset))
+            if 'css-class' in column:
+                column['class'] += ' {0}'.format(
+                    column['css-class']
+                )
             offset = offset + width
         return columns
