@@ -69,12 +69,12 @@
     cursor: pointer;
     height: 14px;
     width: 14px;
-    background:transparent url('remove.png') scroll no-repeat top center;
+    background:transparent url(++resource++collective.cover/remove.png) scroll no-repeat top center;
     background-size: 100%;
 }
 
 .tile-remove-item:hover {
-    background:transparent url("remove.png") no-repeat scroll center -14px;
+    background:transparent url(++resource++collective.cover/remove.png) no-repeat scroll center -14px;
     background-size: 100%;
 }
 .tile-remove-item .text{
