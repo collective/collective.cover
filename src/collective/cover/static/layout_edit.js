@@ -558,9 +558,7 @@
                         if (node_type == 'column') {
                             entry.roles = ['Manager'];
                             entry.type = 'group';
-                            entry.data = {
-                                'column-size': $(this).data('columnSize')
-                            };
+                            entry['column-size'] = $(this).data('columnSize');
                         }
                         //entry.class = $(this).attr('class');
 

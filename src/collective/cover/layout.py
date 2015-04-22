@@ -275,7 +275,7 @@ class Bootstrap3(BaseGrid, grok.GlobalUtility):
     def columns_formatter(self, columns):
         prefix = 'col-md-'
         for column in columns:
-            width = column['data']['column-size'] if 'data' in column else 1
+            width = column.get('column-size', 1)
             column['class'] = self.column_class + ' ' + (prefix + str(width))
 
         return columns
@@ -294,7 +294,7 @@ class Bootstrap2(BaseGrid, grok.GlobalUtility):
     def columns_formatter(self, columns):
         prefix = 'span'
         for column in columns:
-            width = column['data']['column-size'] if 'data' in column else 1
+            width = column.get('column-size', 1)
             column['class'] = self.column_class + ' ' + (prefix + str(width))
 
         return columns
@@ -316,7 +316,7 @@ class Deco16Grid (BaseGrid, grok.GlobalUtility):
         p = 'position-'
         offset = 0
         for column in columns:
-            width = column['data']['column-size'] if 'data' in column else 1
+            width = column.get('column-size', 1)
             column['class'] = self.column_class + ' ' + (w + str(width)) + ' ' + (p + str(offset))
             offset = offset + width
         return columns

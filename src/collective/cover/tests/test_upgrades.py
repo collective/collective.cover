@@ -245,8 +245,8 @@ class Upgrade9to10TestCase(UpgradeTestCaseBase):
         # simulate state on previous version
         cover = self._create_cover('test-cover', 'Empty layout')
         cover.cover_layout = (
-            '[{"type": "row", "children": [{"data": {'
-            '"column-size": 16}, "type": "group", "children": [{"tile-type": '
+            '[{"type": "row", "children": [{"column-size": 16, "type": '
+            '"group", "children": [{"tile-type": '
             '"collective.cover.carousel", "type": "tile", "id": '
             '"ca6ba6675ef145e4a569c5e410af7511"}], "roles": ["Manager"]}]}]'
         )
@@ -274,7 +274,7 @@ class Upgrade10to11TestCase(UpgradeTestCaseBase):
     def test_upgrade_to_11_registrations(self):
         version = self.setup.getLastVersionForProfile(self.profile_id)[0]
         self.assertTrue(int(version) >= int(self.to_version))
-        self.assertEqual(self._how_many_upgrades_to_do(), 5)
+        self.assertEqual(self._how_many_upgrades_to_do(), 6)
 
     def test_uuids_converted_to_dict(self):
         title = u'Revert PersistentMapping back to dict'
@@ -284,8 +284,8 @@ class Upgrade10to11TestCase(UpgradeTestCaseBase):
         # simulate state on previous version
         cover = self._create_cover('test-cover', 'Empty layout')
         cover.cover_layout = (
-            '[{"type": "row", "children": [{"data": {'
-            '"column-size": 16}, "type": "group", "children": [{"tile-type": '
+            '[{"type": "row", "children": [{"column-size": 16, "type": '
+            '"group", "children": [{"tile-type": '
             '"collective.cover.carousel", "type": "tile", "id": '
             '"ca6ba6675ef145e4a569c5e410af7511"}], "roles": ["Manager"]}]}]'
         )
@@ -314,18 +314,18 @@ class Upgrade10to11TestCase(UpgradeTestCaseBase):
         self.assertIsNotNone(step)
 
         old_data = (
-            u'[{"type": "row", "class": "row", "children": [{"data": '
-            u'{"column-size": 16}, "type": "group", '
-            u'"children": [{"class": "tile", "tile-type": "collective.cover.carousel", '
+            u'[{"type": "row", "class": "row", "children": [{"column-size": 16, '
+            u'"type": "group", "children": [{"class": "tile", "tile-type": '
+            u'"collective.cover.carousel", '
             u'"type": "tile", "id": "ca6ba6675ef145e4a569c5e410af7511"}], '
             u'"roles": ["Manager"]}]}]'
         )
 
         expected = (
-            u'[{"type": "row", "children": [{"data": {'
-            u'"column-size": 16}, "type": "group", "children": [{"tile-type": '
-            u'"collective.cover.carousel", "type": "tile", "id": '
-            u'"ca6ba6675ef145e4a569c5e410af7511"}], "roles": ["Manager"]}]}]'
+            u'[{"type": "row", "children": [{"type": "group", "children": '
+            u'[{"tile-type": "collective.cover.carousel", "type": "tile", '
+            u'"id": "ca6ba6675ef145e4a569c5e410af7511"}], "roles": '
+            u'["Manager"], "column-size": 16}]}]'
         )
 
         # simulate state on previous version of registry layouts
@@ -364,3 +364,39 @@ class Upgrade10to11TestCase(UpgradeTestCaseBase):
         # simulate state on previous version
         self._do_upgrade_step(step)
         self.assertNotIn(foo, annotations)
+
+    def test_simplify_layout(self):
+        title = u'Simplify layouts'
+        step = self._get_upgrade_step(title)
+        self.assertIsNotNone(step)
+
+        old_data = (
+            u'[{"type": "row", "children": [{"data": {"layout-type": "column", '
+            u'"column-size": 16}, "type": "group", "children": [{"tile-type": '
+            u'"collective.cover.carousel", "type": "tile", "id": '
+            u'"ca6ba6675ef145e4a569c5e410af7511"}], "roles": ["Manager"]}]}]'
+        )
+
+        expected = (
+            u'[{"type": "row", "children": [{"type": "group", "children": '
+            u'[{"tile-type": "collective.cover.carousel", "type": "tile", '
+            u'"id": "ca6ba6675ef145e4a569c5e410af7511"}], "roles": '
+            u'["Manager"], "column-size": 16}]}]'
+        )
+
+        # simulate state on previous version of registry layouts
+        registry = getUtility(IRegistry)
+        settings = registry.forInterface(ICoverSettings)
+        settings.layouts = {
+            u'test_layout': old_data
+        }
+
+        # simulate state on previous version of cover layout
+        cover = self._create_cover('test-cover', 'Empty layout')
+        cover.cover_layout = old_data
+
+        # run the upgrade step to validate the update
+        self._do_upgrade_step(step)
+
+        self.assertEqual(settings.layouts, {'test_layout': expected})
+        self.assertEqual(cover.cover_layout, expected)

@@ -39,6 +39,12 @@
         handler="..cook_javascript_resources"
         />
 
+    <genericsetup:upgradeStep
+        title="Simplify layouts"
+        description="Remove data and layout-type items, and move column-size to the parent."
+        handler=".simplify_layout"
+        />
+
   </genericsetup:upgradeSteps>
 
 </configure>

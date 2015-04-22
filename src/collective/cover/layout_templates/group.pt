@@ -10,11 +10,10 @@
             <tal:block tal:define="section options/section | nothing"
                        tal:condition="section">
                 <tal:layoutedit tal:condition="python:mode == 'layout_edit'">
-                    <div tal:define="klass python:section.get('class', '');
-                                     data python:section.get('data', '')"
+                    <div tal:define="klass python:section.get('class', '')"
                          tal:attributes="class python:'%s %s' % (klass, '' if view.is_user_allowed_in_group() else 'disabled');
                                          data-panel python: section.get('id', '');
-                                         data-column-size python: data['column-size'] if 'column-size' in data else 1">
+                                         data-column-size python: section.get('column-size', 1)">
 
                         <a href="#" class="config-column-link">
                             <i class="config-icon"></i>
