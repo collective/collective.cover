@@ -156,7 +156,7 @@ def _simplify_layout(layout, is_child=False):
 
 def simplify_layout(context):
     """Move column-size to parent and remove data attribute from layout."""
-    logger.info('CSS classes will be removed from Cover layouts.')
+    logger.info('Cover layouts will be simplified.')
     # Fix registry layouts
     registry = getUtility(IRegistry)
     settings = registry.forInterface(ICoverSettings)
