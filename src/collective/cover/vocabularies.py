@@ -132,4 +132,7 @@ class TileStylesVocabulary(object):
 
         return SimpleVocabulary(items)
 
+# CSS classes for tiles and for "rows & columns". Separate declarations even
+# though they are the same means they can be overridden separately
 grok.global_utility(TileStylesVocabulary, name=u'collective.cover.TileStyles')
+grok.global_utility(TileStylesVocabulary, name=u'collective.cover.RowColumnStyles')

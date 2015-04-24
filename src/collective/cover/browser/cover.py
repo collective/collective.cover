@@ -17,6 +17,7 @@ from Products.CMFCore.exceptions import BadRequest
 from zope.annotation.interfaces import IAnnotations
 from zope.component import getUtility
 from zope.event import notify
+from zope.schema.interfaces import IVocabularyFactory
 
 import json
 
@@ -152,7 +153,7 @@ class LayoutEdit(grok.View):
 
     def update(self):
         self.context = aq_inner(self.context)
-        vocab = TileStylesVocabulary()
+        vocab = getUtility(IVocabularyFactory, name="collective.cover.RowColumnStyles")
         self.css_classes = vocab(self.context)
         # XXX: used to lock the object when someone is editing it
         notify(EditBegunEvent(self.context))
