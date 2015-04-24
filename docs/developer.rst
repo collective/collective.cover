@@ -39,7 +39,7 @@ different aspects of the tile. From here you can specify which fields get
 rendered when viewing the tile, or the order in which they show up.
 
 In addition, each field widget can provide specific configuration options.
-For instance, an ITextLinesWidget will provide an extra configuration 
+For instance, an ITextLinesWidget will provide an extra configuration
 option, "HTML tag", which allows to specify the HTML tag to be used when
 rendering data saved in this field.
 
@@ -53,7 +53,7 @@ Writing a custom widget in "configure" mode for a field
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The configuration view uses z3c.form to automatically render a form based on
-the tile's schema definition. For that, it renders widgets in a "configure" 
+the tile's schema definition. For that, it renders widgets in a "configure"
 mode. You can see how existing ones are defined, checking the configure.zcml
 file under tiles/configuration_widgets
 
@@ -107,7 +107,7 @@ Storage
 Data and configuration for tiles are stored in an annotation of the context
 where the tile is being shown.
 
-You can see how this works by looking into data.py and configuration.py under 
+You can see how this works by looking into data.py and configuration.py under
 the tiles directory.
 
 Render view
@@ -224,9 +224,12 @@ To do so, your theme package should provide a new grid system class which implem
         def columns_formatter(self, columns):
             prefix = 'col-sm-'
             for column in columns:
-                width = column['data']['column-size'] if 'data' in column else 1
+                width = column.get('column-size', 1)
                 column['class'] = self.column_class + ' ' + (prefix + str(width))
-
+                if 'css-class' in column:
+                    column['class'] += ' {0}'.format(
+                        column['css-class']
+                    )
             return columns
 
 Once registered you can select your grid system on the Cover Settings control panel configlet.
@@ -234,7 +237,7 @@ Once registered you can select your grid system on the Cover Settings control pa
 .. WARNING::
     Switching the grid system will apply to all new and existing covers.
     If you already made layouts for a 16-column grid and switch to e.g. a 12-column grid, you will have to manually update all existing covers (their layout is not recalculated automatically).
-    
+
 .. NOTE::
     ``collective.cover`` does not provide any grid system styles,
     only changes the HTML output.
