@@ -78,24 +78,27 @@ class PageLayout(grok.View):
                     self.grid_layout_edit(element['children'])
 
     def render_section(self, section, mode):
-        if 'type' in section:
-            if section['type'] == u'row':
-                return self.row(section=section, mode=mode)
-            if section['type'] == u'group':
-                return self.group(section=section, mode=mode)
-            if section['type'] == u'tile':
-                tile_url = '@@{0}/{1}'.format(section.get('tile-type'),
-                                              section.get('id'))
-                tile = self.context.restrictedTraverse(tile_url.encode(), None)
-                if tile is None:
-                    return '<div class="tileNotFound">Could not find tile</div>'
-                tile_conf = tile.get_tile_configuration()
-                css_class = tile_conf.get('css_class', '')
-                section['class'] = '{0} {1}'.format(section.get('class'), css_class)
-
-                return self.tile(section=section, mode=mode, tile_url=tile_url)
-        else:
+        if 'type' not in section:
             return self.generalmarkup(section=section, mode=mode)
+
+        if section['type'] == u'row':
+            return self.row(section=section, mode=mode)
+        elif section['type'] == u'group':
+            return self.group(section=section, mode=mode)
+        elif section['type'] == u'tile':
+            tile_url = '@@{0}/{1}'.format(section.get('tile-type'),
+                                          section.get('id'))
+            tile = self.context.restrictedTraverse(tile_url.encode(), None)
+            if tile is None:
+                return '<div class="tileNotFound">Could not find tile</div>'
+            if mode == 'layout_edit':
+                css_class = 'cover-tile '
+            else:
+                css_class = 'tile '
+            tile_conf = tile.get_tile_configuration()
+            css_class += tile_conf.get('css_class', '')
+            section['css_class'] = css_class.strip()
+            return self.tile(section=section, mode=mode, tile_url=tile_url)
 
     def is_user_allowed_in_group(self):
         return True
@@ -247,6 +250,10 @@ class BaseGrid(object):
             if 'type' in element:
                 if element['type'] == 'row':
                     element['class'] = self.row_class
+                    if 'css-class' in element:
+                        element['class'] += ' {0}'.format(
+                            element['css-class']
+                        )
                     if 'children' in element:
                         self.transform(self.columns_formatter(element['children']))
                 if element['type'] == 'group' and 'children' in element:
@@ -272,8 +279,12 @@ class Bootstrap3(BaseGrid, grok.GlobalUtility):
     def columns_formatter(self, columns):
         prefix = 'col-md-'
         for column in columns:
-            width = column['data']['column-size'] if 'data' in column else 1
+            width = column.get('column-size', 1)
             column['class'] = self.column_class + ' ' + (prefix + str(width))
+            if 'css-class' in column:
+                column['class'] += ' {0}'.format(
+                    column['css-class']
+                )
 
         return columns
 
@@ -291,8 +302,12 @@ class Bootstrap2(BaseGrid, grok.GlobalUtility):
     def columns_formatter(self, columns):
         prefix = 'span'
         for column in columns:
-            width = column['data']['column-size'] if 'data' in column else 1
+            width = column.get('column-size', 1)
             column['class'] = self.column_class + ' ' + (prefix + str(width))
+            if 'css-class' in column:
+                column['class'] += ' {0}'.format(
+                    column['css-class']
+                )
 
         return columns
 
@@ -313,7 +328,11 @@ class Deco16Grid (BaseGrid, grok.GlobalUtility):
         p = 'position-'
         offset = 0
         for column in columns:
-            width = column['data']['column-size'] if 'data' in column else 1
+            width = column.get('column-size', 1)
             column['class'] = self.column_class + ' ' + (w + str(width)) + ' ' + (p + str(offset))
+            if 'css-class' in column:
+                column['class'] += ' {0}'.format(
+                    column['css-class']
+                )
             offset = offset + width
         return columns

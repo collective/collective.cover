@@ -1,27 +1,33 @@
 (function($) {
-   /**
-    * @constructor
-    * @param jqDomObj layout, the layout container
-    * @param {Object} conf, the conf dictionary
-    */
+    /**
+     * @constructor
+     * @param jqDomObj layout, the layout container
+     * @param {Object} conf, the conf dictionary
+     */
     function LayoutManager(layout, conf) {
         var self = this,
-            n_columns = conf.ncolumns,
-            row_class = 'cover-row',
-            row_dom = $('<div/>').addClass(row_class)
-                                 .attr('data-layout-type', 'row'),
-            column_class = 'cover-column',
-            column_dom = $('<div/>').addClass(column_class)
-                                    .attr('data-layout-type', 'column'),
-            tile_class = 'cover-tile',
-            tile_dom = $('<div/>').addClass(tile_class)
-                                  .attr('data-layout-type', 'tile'),
-            le = $('.layout'),
-            BeforeUnloadHandler;
+        n_columns = conf.ncolumns,
+        row_class = 'cover-row',
+        row_dom = $('<div class="'+ row_class +'">' +
+                    '    <a href="#" class="config-row-link">' +
+                    '        <i class="config-icon"></i>' +
+                    '    </a>' +
+                    '</div>'),
+        column_class = 'cover-column',
+        column_dom = $('<div class="'+ column_class +'">' +
+                       '    <a href="#" class="config-column-link">' +
+                       '        <i class="config-icon"></i>' +
+                       '    </a>' +
+                       '</div>'),
+        tile_class = 'cover-tile',
+        tile_dom = $('<div class="'+ tile_class +'">' +
+                     '</div>'),
+        le = $('.layout'),
+        BeforeUnloadHandler;
 
         BeforeUnloadHandler = function() {
             var self = this,
-                message;
+            message;
             this.message = window.form_modified_message ||
                 "Discard changes? If you click OK, any changes you have made will be lost.";
 
@@ -44,8 +50,6 @@
             },
 
             setup: function() {
-
-                le.append('<div id="dialog" title="Resize Column"><p id="column-size-resize">Actual column size: <span></span></p><div id="slider"></div></div>');
 
                 //buttons draggable binding
                 $( "#btn-row" ).draggable({
@@ -84,6 +88,7 @@
                 self.generate_grid_css();
                 self.delete_manager();
                 self.resize_columns_manager();
+                self.class_chooser_manager();
 
                 self.tile_config_manager();
 
@@ -130,7 +135,7 @@
                     hoverClass: 'ui-state-hover',
                     accept: '#btn-column',
                     drop: function(event, ui) {
-                            self.row_drop($(this));
+                        self.row_drop($(this));
                     }
                 });
 
@@ -185,10 +190,10 @@
 
                                 var config_icon = $("<i/>").addClass("config-icon");
                                 var config_link = $("<a />").addClass("config-tile-link")
-                                                            .attr('href',url_config)
-                                                            .append(config_icon);
+                                    .attr('href',url_config)
+                                    .append(config_icon);
                                 var name_tag = $("<span />").addClass("tile-name")
-                                                            .text(ui.draggable.data('tile-name'));
+                                    .text(ui.draggable.data('tile-name'));
                                 if(is_configurable) {
                                     new_tile.append(config_link);
                                 }
@@ -387,12 +392,12 @@
                 var resizer = $('<i/>').addClass('resizer');
                 $(columns).append(resizer);
 
-                $( "#dialog" ).dialog({
+                $( "#resizer" ).dialog({
                     autoOpen: false
                 });
 
                 $( ".resizer" ).click(function() {
-                    $( "#dialog" ).dialog( "open" );
+                    $( "#resizer" ).dialog( "open" );
 
                     var column = $(this).parents('.cover-column');
                     var size = column.attr('data-column-size');
@@ -420,6 +425,37 @@
             },
 
             /**
+             *  Class chooser
+             *
+             **/
+            class_chooser_manager: function(){
+                $("#class-chooser" ).dialog({
+                    autoOpen: false
+                });
+
+                $(document).on('click', '.config-row-link, .config-column-link', function(e) {
+                    e.preventDefault();
+                    $target = $(this).parent();
+                    $('#class-chooser').data('target', $target);
+                    if ($target.attr('data-css-class')) {
+                        $('#class-chooser select').val(
+                            $target.attr('data-css-class')
+                        );
+                    } else {
+                        $('#class-chooser select').val('');
+                    }
+                    $('#class-chooser').dialog( "open" );
+                });
+
+                $(document).on('change', '#class-chooser select', function(e) {
+                    e.preventDefault();
+                    $select = $(this);
+                    $target = $('#class-chooser').data('target');
+                    $target.attr('data-css-class', $select.val());
+                });
+            },
+
+            /**
              *  Tile Config
              *  Configuration for tiles, manage the save, open and cancel operations
              **/
@@ -432,13 +468,13 @@
                     var data = $("#configure_tile").serialize();
                     data = data + '&buttons.save=Save&ajax_load=true';
                     $.ajax({
-                      type: 'POST',
-                      url: url,
-                      data: data,
-                      success: function(e,v) {
-                          $('#tile-configure').html('');
-                          $('#tile-configure').modal('hide');
-                      }
+                        type: 'POST',
+                        url: url,
+                        data: data,
+                        success: function(e,v) {
+                            $('#tile-configure').html('');
+                            $('#tile-configure').modal('hide');
+                        }
                     });
                     return false;
                 });
@@ -451,10 +487,10 @@
                 });
                 //config the tile
                 $(document).on("click", ".config-tile-link", function(e) {
-                      e.preventDefault();
-                      var url = $(this).attr("href");
-                      $('#tile-configure').modal();
-                      $.ajax({
+                    e.preventDefault();
+                    var url = $(this).attr("href");
+                    $('#tile-configure').modal();
+                    $.ajax({
                         type:'GET',
                         url: url,
                         data: {'ajax_load':true},
@@ -468,29 +504,30 @@
                             }
                             $('#configure_tile div.field').not('#'+css_id).addClass('config-sortable');
                             // Fields in tile config sortable
-                            $('#configure_tile').sortable({opacity: 0.6,
-                                                                cursor: 'move',
-                                                                placeholder: "ui-state-highlight",
-                                                                zIndex: 9999,
-                                                                refreshPositions: true,
-                                                                axis: 'y',
-                                                                tolerance: 'pointer',
-                                                                forcePlaceholderSize: true,
-                                                                items: 'div.config-sortable',
-                                                                update: function(e, ui){
-                                                                    var $divs = $(this).children('div.field');
-                                                                    $divs.each(function() {
-                                                                        var $div = $(this);
-                                                                        var newVal = $(this).index() + 1;
-                                                                        // TODO: Is used newVal -1 to prevent the field **Clase CSS** be counted as sortable item
-                                                                        $(this).children('div.order-box').children('input').val(newVal-1);
-                                                                    });
-                                                                }
+                            $('#configure_tile').sortable({
+                                opacity: 0.6,
+                                cursor: 'move',
+                                placeholder: "ui-state-highlight",
+                                zIndex: 9999,
+                                refreshPositions: true,
+                                axis: 'y',
+                                tolerance: 'pointer',
+                                forcePlaceholderSize: true,
+                                items: 'div.config-sortable',
+                                update: function(e, ui){
+                                    var $divs = $(this).children('div.field');
+                                    $divs.each(function() {
+                                        var $div = $(this);
+                                        var newVal = $(this).index() + 1;
+                                        // TODO: Is used newVal -1 to prevent the field **Clase CSS** be counted as sortable item
+                                        $(this).children('div.order-box').children('input').val(newVal-1);
+                                    });
+                                }
                             });
                         }
-                      });
-                      return false;
-                  });
+                    });
+                    return false;
+                });
             },
 
             /**
@@ -512,16 +549,16 @@
                         if (node_type) {
                             entry.type = node_type[0];
                         }
+
                         if (node_type == 'column') {
                             entry.roles = ['Manager'];
                             entry.type = 'group';
-                            entry.data = {
-                                'column-size': $(this).data('columnSize'),
-                                'layout-type': $(this).data('layout-type')
-
-                            };
+                            entry['column-size'] = $(this).data('columnSize');
                         }
-                        //entry.class = $(this).attr('class');
+
+                        if ($(this).attr('data-css-class')) {
+                            entry['css-class'] = $(this).attr('data-css-class');
+                        }
 
                         var iterator = self.html2json($(this));
                         if (iterator[0] !== undefined) {
@@ -597,6 +634,6 @@
                 $('#sidebar').removeClass("fixed");
             }
         }
-});
+    });
 
 })(jQuery);

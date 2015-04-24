@@ -6,6 +6,9 @@ There's a frood who really knows where his towel is.
 1.0a11 (unreleased)
 ^^^^^^^^^^^^^^^^^^^
 
+- Add custom classes for row and columns (closes `#504`_).
+  [rodfersou]
+
 - Fix the carousel compose edit widget when items have been added that are now expired.
   List the items with a red border and a warning text.
   This only fixes listing expired content for non-managers (like using having the Editor rol) in compose mode, it doesn't change visibility of items when viewing.

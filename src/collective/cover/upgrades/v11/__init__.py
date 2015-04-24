@@ -4,6 +4,7 @@ from collective.cover.interfaces import ICover
 from collective.cover.logger import logger
 from collective.cover.tiles.configuration import ANNOTATIONS_KEY_PREFIX as PREFIX
 from collective.cover.upgrades import _get_tiles_inherit_from_list
+from copy import deepcopy
 from plone import api
 from plone.registry.interfaces import IRegistry
 from plone.tiles.interfaces import ITileDataManager
@@ -130,3 +131,46 @@ def remove_orphan_annotations(context):
 
         except AttributeError:
             pass  # cover with no annotations
+
+
+def _simplify_layout(layout, is_child=False):
+    """Recursivelly move column-size to parent and remove data attribute from layout."""
+    if not is_child:
+        layout = json.loads(layout)
+    fixed_layout = []
+    for row in layout:
+        fixed_row = deepcopy(row)
+        if u'data' in row:
+            if u'column-size' in row[u'data']:
+                fixed_row[u'column-size'] = fixed_row[u'data'][u'column-size']
+            del(fixed_row[u'data'])
+        if u'children' in fixed_row:
+            fixed_row[u'children'] = _simplify_layout(fixed_row[u'children'], True)
+        fixed_layout.append(fixed_row)
+    if is_child:
+        return fixed_layout
+    else:
+        fixed_layout = json.dumps(fixed_layout)
+        return fixed_layout.decode('utf-8')
+
+
+def simplify_layout(context):
+    """Move column-size to parent and remove data attribute from layout."""
+    logger.info('Cover layouts will be simplified.')
+    # Fix registry layouts
+    registry = getUtility(IRegistry)
+    settings = registry.forInterface(ICoverSettings)
+    fixed_layouts = {}
+    for name, layout in settings.layouts.iteritems():
+        fixed_layouts[name] = _simplify_layout(layout)
+    settings.layouts = fixed_layouts
+    logger.info('Registry layouts were updated.')
+
+    # Fix cover layouts
+    covers = context.portal_catalog(object_provides=ICover.__identifier__)
+    logger.info('Layout of {0} objects will be updated'.format(len(covers)))
+
+    for cover in covers:
+        obj = cover.getObject()
+        obj.cover_layout = _simplify_layout(obj.cover_layout)
+        logger.info('"{0}" was updated'.format(obj.absolute_url_path()))

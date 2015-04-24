@@ -141,7 +141,7 @@ class CoverIntegrationTestCase(unittest.TestCase):
                      "id": "test2",
                      "tile-type": "collective.cover.richtext",
                      "type": "tile"}],
-                "data": {"column-size": 8, "layout-type": "column"},
+                "column-size": 8,
                 "id": "group1",
                 "roles": ["Manager"],
                 "type": "group"}],

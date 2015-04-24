@@ -81,7 +81,26 @@ Test Basic Layout Operations
     # Hide Description
     Click Element  css=#formfield-collective-cover-basic-description .visibility-no
     Click Button  id=buttons-save
+    # Change row class
+    Click Element  css=.config-row-link:nth-child(1)
+    Wait until element is visible  id=class-chooser
+    Select From List  css=#class-chooser select  Shadow
+    Click Element  css=.ui-dialog:last-child .ui-dialog-titlebar-close
+    # Change column class
+    Click Element  css=.config-column-link:nth-child(1)
+    Wait until element is visible  id=class-chooser
+    Select From List  css=#class-chooser select  Border
+    Click Element  css=.ui-dialog:last-child .ui-dialog-titlebar-close
     Save Cover Layout
+
+    # Test row and column classes
+    Compose Cover
+    Page Should Contain Element  css=.row.tile-shadow
+    Page Should Contain Element  css=.cell.tile-edge
+    Click Link  link=View
+    Page Should Contain Element  css=.row.tile-shadow
+    Page Should Contain Element  css=.cell.tile-edge
+
 
     # Reopen Layout and check configuration
     Edit Cover Layout
@@ -144,4 +163,3 @@ Click Config from Tile
     [arguments]  ${tile}
 
     Click Element  css=${tile} .config-tile-link
-
