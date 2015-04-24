@@ -6,11 +6,15 @@ There's a frood who really knows where his towel is.
 1.0a12 (unreleased)
 ^^^^^^^^^^^^^^^^^^^
 
+- Fix issue where page composition layer had side-effects outside cover pages by upgrading plone.app.blocks to 2.0 (fixes `#331`_);
+  drop support for Plone 4.2.
+  [datakurre]
+
 - When fetching image from content object, fetch the tile scale to ensure we get a correct crop from plone.app.imagecropping and don't waste space storing a full sized image.
   [alecm]
 
 - Add Cache-Control headers to the @@configure-tile and @@edit-tile views to prevent Internet Explorer from caching the XHR GET requests for these views. What would happen is that you would see the previious (old) field info if you configured or edited a tile, saved and re-opened the same dialog in IE.
-    
+
 - Fix textlinessortable widget for IE11 where IE11 mangles multiform POST data. This fixes removing items from the Caroussel compose widget in IE11.
   [fredvd]
 
@@ -642,6 +646,7 @@ There's a frood who really knows where his towel is.
 .. _`#317`: https://github.com/collective/collective.cover/issues/317
 .. _`#318`: https://github.com/collective/collective.cover/issues/318
 .. _`#323`: https://github.com/collective/collective.cover/issues/323
+.. _`#331`: https://github.com/collective/collective.cover/issues/331
 .. _`#333`: https://github.com/collective/collective.cover/issues/333
 .. _`#339`: https://github.com/collective/collective.cover/issues/339
 .. _`#342`: https://github.com/collective/collective.cover/issues/342

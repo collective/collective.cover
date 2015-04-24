@@ -33,8 +33,11 @@
                     </div>
 
                     <div tal:attributes="class python:'%s' % section.get('css_class', '');
-                                         data-tile python:'%s' %(tile_url);
-                                         id tile_id" />
+                                         id tile_id">
+                        <div tal:attributes="data-tile python:'%s' %(tile_url);">
+                            Tile content replaced during the blocks transform.
+                        </div>
+                    </div>
                 </tal:co>
             </tal:view>
 
@@ -42,11 +45,14 @@
                 <div tal:condition="section" class="tile-container">
                     <span class="tile-type-name" tal:content="tile_title" />
                     <div tal:attributes="class python:'%s %s' % (section.get('css_class', ''), view.can_compose_tile_class(tile_type, tile_id));
-                                         data-tile python:'%s' %(tile_url);
                                          data-tile-type tile_type;
                                          data-tile-valid-ct python:view.accepted_ct_for_tile(tile_type);
                                          data-is-droppable python:view.tile_is_droppable(tile_type);
-                                         id tile_id" />
+                                         id tile_id">
+                        <div tal:attributes="data-tile python:'%s' %(tile_url);">
+                            Tile content replaced during the blocks transform.
+                        </div>
+                    </div>
                     <a href="#" class="edit-tile-link"
                        tal:condition="python:view.tile_is_editable(tile_type)"
                        tal:attributes="href string:${context/absolute_url}/@@edit-tile/${tile_type}/${tile_id}"
