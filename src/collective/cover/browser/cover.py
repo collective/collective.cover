@@ -5,7 +5,6 @@ from collective.cover.controlpanel import ICoverSettings
 from collective.cover.interfaces import ICover
 from collective.cover.interfaces import IGridSystem
 from collective.cover.tiles.list import ListTile
-from collective.cover.vocabularies import TileStylesVocabulary
 from five import grok
 from plone import api
 from plone.dexterity.events import EditBegunEvent
@@ -153,7 +152,8 @@ class LayoutEdit(grok.View):
 
     def update(self):
         self.context = aq_inner(self.context)
-        vocab = getUtility(IVocabularyFactory, name="collective.cover.RowColumnStyles")
+        vocab = getUtility(IVocabularyFactory,
+                           'collective.cover.RowColumnStyles')
         self.css_classes = vocab(self.context)
         # XXX: used to lock the object when someone is editing it
         notify(EditBegunEvent(self.context))
