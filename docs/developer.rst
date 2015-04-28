@@ -257,3 +257,38 @@ If you switch from the default 16-column Deco grid to another grid with a differ
 these saved layouts will still contain a 16-column width and this can mock up your design in small ways.
 In that case,
 make sure you clear the default cover layouts and/or save your own layout with the correct number of columns.
+
+Row and Column Classes
+++++++++++++++++++++++
+
+``collective.cover`` enables you to set CSS classes on rows and columns in its layouts.
+These classes are those listed in the Styles field of the @@cover-settings view, which is
+also used for Tile styles.
+This does mean that rows, columns and tiles will have the same list of classes available for styling.
+If this is not satisfactory then the vocabularies ``collective.cover.RowColumnStyles`` and/or
+``collective.cover.TileStyles`` can be overridden in your own product as shown below:
+
+In **overrides.zcml**:
+
+    <utility
+        factory=".vocabularies.RowColumnStylesVocabulary"
+        provides="zope.schema.interfaces.IVocabularyFactory"
+        name="collective.cover.RowColumnStyles"
+        />
+
+**vocabularies.py**
+
+    from zope.schema.vocabulary import SimpleTerm
+    from zope.schema.vocabulary import SimpleVocabulary
+
+    class RowColumnStylesVocabulary(object):
+
+        def __call__(self, context):
+            items = []
+            items.append(SimpleTerm(value=u'row-default', title='Row Default'))
+            items.append(SimpleTerm(value=u'row-alternative', title='Row Alternative'))
+            items.append(SimpleTerm(value=u'column-default', title='Column Default'))
+            items.append(SimpleTerm(value=u'column-alternative', title='Column Alternative'))
+
+            return SimpleVocabulary(items)
+
