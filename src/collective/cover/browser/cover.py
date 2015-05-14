@@ -152,9 +152,12 @@ class LayoutEdit(grok.View):
 
     def update(self):
         self.context = aq_inner(self.context)
-        vocab = getUtility(IVocabularyFactory,
-                           'collective.cover.RowColumnStyles')
-        self.css_classes = vocab(self.context)
+        row_vocab = getUtility(IVocabularyFactory,
+                               'collective.cover.RowStyles')
+        self.row_css_classes = row_vocab(self.context)
+        column_vocab = getUtility(IVocabularyFactory,
+                                  'collective.cover.ColumnStyles')
+        self.column_css_classes = column_vocab(self.context)
         # XXX: used to lock the object when someone is editing it
         notify(EditBegunEvent(self.context))
 

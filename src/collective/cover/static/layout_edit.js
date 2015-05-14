@@ -88,7 +88,8 @@
                 self.generate_grid_css();
                 self.delete_manager();
                 self.resize_columns_manager();
-                self.class_chooser_manager();
+                self.row_class_chooser_manager();
+                self.column_class_chooser_manager();
 
                 self.tile_config_manager();
 
@@ -425,32 +426,63 @@
             },
 
             /**
-             *  Class chooser
+             *  Row Class chooser
              *
              **/
-            class_chooser_manager: function(){
-                $("#class-chooser" ).dialog({
+            row_class_chooser_manager: function(){
+                $("#row-class-chooser" ).dialog({
                     autoOpen: false
                 });
 
-                $(document).on('click', '.config-row-link, .config-column-link', function(e) {
+                $(document).on('click', '.config-row-link', function(e) {
                     e.preventDefault();
                     $target = $(this).parent();
-                    $('#class-chooser').data('target', $target);
+                    $('#row-class-chooser').data('target', $target);
                     if ($target.attr('data-css-class')) {
-                        $('#class-chooser select').val(
+                        $('#row-class-chooser select').val(
                             $target.attr('data-css-class')
                         );
                     } else {
-                        $('#class-chooser select').val('');
+                        $('#row-class-chooser select').val('');
                     }
-                    $('#class-chooser').dialog( "open" );
+                    $('#row-class-chooser').dialog( "open" );
                 });
 
-                $(document).on('change', '#class-chooser select', function(e) {
+                $(document).on('change', '#row-class-chooser select', function(e) {
                     e.preventDefault();
                     $select = $(this);
-                    $target = $('#class-chooser').data('target');
+                    $target = $('#row-class-chooser').data('target');
+                    $target.attr('data-css-class', $select.val());
+                });
+            },
+
+            /**
+             *  Column Class chooser
+             *
+             **/
+            column_class_chooser_manager: function(){
+                $("#column-class-chooser" ).dialog({
+                    autoOpen: false
+                });
+
+                $(document).on('click', '.config-column-link', function(e) {
+                    e.preventDefault();
+                    $target = $(this).parent();
+                    $('#column-class-chooser').data('target', $target);
+                    if ($target.attr('data-css-class')) {
+                        $('#column-class-chooser select').val(
+                            $target.attr('data-css-class')
+                        );
+                    } else {
+                        $('#column-class-chooser select').val('');
+                    }
+                    $('#column-class-chooser').dialog( "open" );
+                });
+
+                $(document).on('change', '#column-class-chooser select', function(e) {
+                    e.preventDefault();
+                    $select = $(this);
+                    $target = $('#column-class-chooser').data('target');
                     $target.attr('data-css-class', $select.val());
                 });
             },

@@ -83,13 +83,13 @@ Test Basic Layout Operations
     Click Button  id=buttons-save
     # Change row class
     Click Element  css=.config-row-link:nth-child(1)
-    Wait until element is visible  id=class-chooser
-    Select From List  css=#class-chooser select  Shadow
+    Wait until element is visible  id=row-class-chooser
+    Select From List  css=#row-class-chooser select  -Column Default-
     Click Element  css=.ui-dialog:last-child .ui-dialog-titlebar-close
     # Change column class
     Click Element  css=.config-column-link:nth-child(1)
-    Wait until element is visible  id=class-chooser
-    Select From List  css=#class-chooser select  Border
+    Wait until element is visible  id=column-class-chooser
+    Select From List  css=#column-class-chooser select  -Row Default-
     Click Element  css=.ui-dialog:last-child .ui-dialog-titlebar-close
     Save Cover Layout
 

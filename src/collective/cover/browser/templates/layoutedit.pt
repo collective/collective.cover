@@ -54,9 +54,18 @@
                         </p>
                         <div id="slider"></div>
                     </div>
-                    <div id="class-chooser" title="Choose Class">
+                    <div id="row-class-chooser" title="Choose Row Class">
                         <select>
-                            <tal:classes repeat="item view/css_classes">
+                            <tal:classes repeat="item view/row_css_classes">
+                                <option tal:attributes="value item/value"
+                                        tal:content="item/title">
+                                </option>
+                            </tal:classes>
+                        </select>
+                    </div>
+                    <div id="column-class-chooser" title="Choose Column Class">
+                        <select>
+                            <tal:classes repeat="item view/column_css_classes">
                                 <option tal:attributes="value item/value"
                                         tal:content="item/title">
                                 </option>

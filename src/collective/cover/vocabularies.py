@@ -101,7 +101,7 @@ grok.global_utility(AvailableContentTypesVocabulary,
                     name=u'collective.cover.AvailableContentTypes')
 
 
-class TileStylesVocabulary(object):
+class StylesVocabulary(object):
     """Creates a vocabulary with the available styles stored in the registry.
     """
     grok.implements(IVocabularyFactory)
@@ -122,17 +122,68 @@ class TileStylesVocabulary(object):
                     # make sure that default style is always first
                     if css_class == u'tile-default':
                         items.insert(0, SimpleTerm(value=css_class, title=title))
-                        with_default = True
                     else:
                         items.append(SimpleTerm(value=css_class, title=title))
 
-        # force default style if it was removed from configuration
-        if not with_default:
+        return SimpleVocabulary(items)
+
+
+class TileStylesVocabulary(object):
+    """ A vocabulary from  available styles stored in the registry,
+        with Column & Row styles filtered out.
+    """
+    grok.implements(IVocabularyFactory)
+
+    def __call__(self, context):
+        base_vocab = StylesVocabulary()
+        items = [sTerm for sTerm in base_vocab(context)
+                       if not (sTerm.value.startswith('column-') or
+                               sTerm.value.startswith('row-')) ]
+        default_item = [sTerm for sTerm in items if sTerm.value == u'tile-default']
+        if not default_item:
             items.insert(0, SimpleTerm(value=u'tile-default', title='-Default-'))
 
         return SimpleVocabulary(items)
 
+
+class RowStylesVocabulary(object):
+    """ A vocabulary from  available styles stored in the registry,
+        with Column & Tile styles filtered out.
+    """
+    grok.implements(IVocabularyFactory)
+
+    def __call__(self, context):
+        base_vocab = StylesVocabulary()
+        items = [sTerm for sTerm in base_vocab(context)
+                       if not (sTerm.value.startswith('column-') or
+                               sTerm.value.startswith('tile-')) ]
+        default_item = [sTerm for sTerm in items if sTerm.value == u'row-default']
+        if not default_item:
+            items.insert(0, SimpleTerm(value=u'row-default', title='-Row Default-'))
+
+        return SimpleVocabulary(items)
+
+
+class ColumnStylesVocabulary(object):
+    """ A vocabulary from  available styles stored in the registry,
+        with Row & Tile styles filtered out.
+    """
+    grok.implements(IVocabularyFactory)
+
+    def __call__(self, context):
+        base_vocab = StylesVocabulary()
+        items = [sTerm for sTerm in base_vocab(context)
+                       if not (sTerm.value.startswith('row-') or
+                               sTerm.value.startswith('tile-')) ]
+        default_item = [sTerm for sTerm in items if sTerm.value == u'column-default']
+        if not default_item:
+            items.insert(0, SimpleTerm(value=u'column-default', title='-Column Default-'))
+
+        return SimpleVocabulary(items)
+
+
 # CSS classes for tiles and for "rows & columns". Separate declarations even
 # though they are the same means they can be overridden separately
 grok.global_utility(TileStylesVocabulary, name=u'collective.cover.TileStyles')
-grok.global_utility(TileStylesVocabulary, name=u'collective.cover.RowColumnStyles')
+grok.global_utility(RowStylesVocabulary, name=u'collective.cover.RowStyles')
+grok.global_utility(ColumnStylesVocabulary, name=u'collective.cover.ColumnStyles')
