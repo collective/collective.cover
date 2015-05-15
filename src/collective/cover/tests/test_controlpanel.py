@@ -86,7 +86,9 @@ class RegistryTestCase(unittest.TestCase):
             set(['-Default-|tile-default',
                  'Border|tile-edge',
                  'Dark Background|tile-dark',
-                 'Shadow|tile-shadow'])
+                 'Shadow|tile-shadow',
+                 '-Column Default-|column-default',
+                 '-Row Default-|row-default'])
         )
 
     def test_grid_system_record_in_registry(self):
