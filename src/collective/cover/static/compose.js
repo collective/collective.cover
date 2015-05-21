@@ -78,7 +78,7 @@ $(document).ready(function() {
 
     TitleMarkupSetup();
 
-    $('a.edit-tile-link, a.config-tile-link').prepOverlay({
+    $('a.edit-tile-link').prepOverlay({
         subtype: 'ajax',
         filter: '.tile-content',
         formselector: '#edit_tile',
