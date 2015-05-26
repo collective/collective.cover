@@ -7,7 +7,7 @@ There's a frood who really knows where his towel is.
 ^^^^^^^^^^^^^^^^^^^
 
 - Add custom classes for row and columns (closes `#504`_).
-  [rodfersou]
+  [rodfersou, djowett]
 
 - Fix the carousel compose edit widget when items have been added that are now expired.
   List the items with a red border and a warning text.
@@ -59,6 +59,9 @@ There's a frood who really knows where his towel is.
 
 - Allow to choose a custom title and description on items in a carousel tile (closes `#459`_).
   [rodfersou]
+
+- Stop collective.cover breaking Products.TinyMCE's hyperlink upload button (closes `#450`_).
+  [djowett]
 
 1.0a10 (2014-10-31)
 ^^^^^^^^^^^^^^^^^^^
