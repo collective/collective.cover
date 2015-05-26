@@ -635,6 +635,7 @@ There's a frood who really knows where his towel is.
 .. _`#426`: https://github.com/collective/collective.cover/issues/426
 .. _`#438`: https://github.com/collective/collective.cover/issues/438
 .. _`#449`: https://github.com/collective/collective.cover/issues/449
+.. _`#450`: https://github.com/collective/collective.cover/issues/450
 .. _`#459`: https://github.com/collective/collective.cover/issues/459
 .. _`#463`: https://github.com/collective/collective.cover/issues/463
 .. _`#465`: https://github.com/collective/collective.cover/issues/465
