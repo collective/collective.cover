@@ -35,22 +35,6 @@ date and tags) and you can even upload a different image into the tile if you
 want. The title and image fields will include a link to the original object
 location.
 
-Carousel
-++++++++
-
-A Carousel tile shows a slideshow made with a list of individual items; every
-item will show an image, title and description. Carousel tiles are 100%
-responsive, support native-like swipe movements and use hardware optimized
-animations.
-
-You can drop any object in a Carousel tile. Right now, you can not edit
-individual items metadata in the carousel, but you can remove or reorder them.
-You can also specify if the carousel will start playing the slideshow
-automatically or not. Every item in the slideshow will have a link pointing
-back to the original object.
-
-Carousel tile is fully responsive, so be sure to configure it to use the image size that fits better the maximum desired size.
-
 Collection
 ++++++++++
 
@@ -118,6 +102,15 @@ will be populated with the object text. You can easily edit the text and you
 can add images and links to it. Rich Text tiles support link-integrity: a
 message will be shown if somebody tries to delete the object you are
 referencing on the tile, warning her there is a link pointing to that object.
+
+Other packages providing compatible tiles
++++++++++++++++++++++++++++++++++++++++++
+
+`covertile.galleria`_
+    A carousel tile based on the `Galleria`_ JavaScript image gallery framework.
+
+.. _`covertile.galleria`: https://github.com/collective/covertile.galleria
+.. _`Galleria`: http://galleria.io/
 
 Using collective.cover
 ----------------------
@@ -325,7 +318,7 @@ Adding new tiles
 
 Now that you have created columns, you can add tiles to it:
 
-#. In the Layout tab, select one of the available Tile icons and drag it 
+#. In the Layout tab, select one of the available Tile icons and drag it
    to the column where you want to place it.
 
 #. Change the configuration as desired.
@@ -369,7 +362,7 @@ your website:
 
 #. Select the Layout tab.
 
-#. Click the "Export layout" button. 
+#. Click the "Export layout" button.
 
 #. Enter a name for your model.
 

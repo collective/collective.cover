@@ -1,10 +1,7 @@
 # -*- coding: utf-8 -*-
-
 from collective.cover.config import PROJECTNAME
 from collective.cover.testing import INTEGRATION_TESTING
 from plone import api
-from plone.app.testing import setRoles
-from plone.app.testing import TEST_USER_ID
 from plone.registry.interfaces import IRegistry
 from zope.component import getUtility
 
@@ -18,7 +15,6 @@ class TilesTestCase(unittest.TestCase):
     def setUp(self):
         self.portal = self.layer['portal']
         self.registry = getUtility(IRegistry)
-        setRoles(self.portal, TEST_USER_ID, ['Manager'])
 
     @unittest.expectedFailure  # FIXME: remove tiles on uninstall
     def test_tiles_removed_on_uninstall(self):
@@ -26,7 +22,6 @@ class TilesTestCase(unittest.TestCase):
         qi.uninstallProducts(products=[PROJECTNAME])
         tiles = self.registry['plone.app.tiles']
         self.assertNotIn(u'collective.cover.basic', tiles)
-        self.assertNotIn(u'collective.cover.carousel', tiles)
         self.assertNotIn(u'collective.cover.collection', tiles)
         self.assertNotIn(u'collective.cover.embed', tiles)
         self.assertNotIn(u'collective.cover.file', tiles)
