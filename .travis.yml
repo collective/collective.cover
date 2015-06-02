@@ -28,6 +28,7 @@ install:
 - bin/buildout -Nq
 before_script:
   - export DISPLAY=:99.0
+  - export GROK_DISABLE_TEMPLATE_WARNING=on
   - sh -e /etc/init.d/xvfb start
   - firefox -v
 script:
