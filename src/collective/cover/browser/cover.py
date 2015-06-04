@@ -13,7 +13,7 @@ from plone.dexterity.utils import createContentInContainer
 from plone.registry.interfaces import IRegistry
 from plone.tiles.interfaces import ITileDataManager
 from plone.uuid.interfaces import IUUIDGenerator
-from Products.CMFCore.exceptions import BadRequest
+from zExceptions import BadRequest
 from zope.annotation.interfaces import IAnnotations
 from zope.component import getUtility
 from zope.event import notify

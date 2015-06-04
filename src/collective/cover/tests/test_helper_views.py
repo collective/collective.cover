@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from collective.cover.testing import INTEGRATION_TESTING
 from plone import api
-from Products.CMFCore.exceptions import BadRequest
+from zExceptions import BadRequest
 
 import unittest
 

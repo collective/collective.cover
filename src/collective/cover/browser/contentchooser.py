@@ -9,7 +9,7 @@ from plone.app.layout.navigation.interfaces import INavigationRoot
 from plone.app.layout.navigation.root import getNavigationRoot
 from plone.i18n.normalizer.interfaces import IIDNormalizer
 from plone.registry.interfaces import IRegistry
-from Products.CMFCore.interfaces._content import IFolderish
+from Products.CMFCore.interfaces import IFolderish
 from Products.CMFPlone.browser.navtree import SitemapNavtreeStrategy
 from Products.CMFPlone.PloneBatch import Batch
 from Products.CMFPlone.utils import safe_unicode
