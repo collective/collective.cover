@@ -15,7 +15,6 @@ from plone.namedfile.field import NamedBlobImage
 from plone.tiles.interfaces import ITileDataManager
 from plone.tiles.interfaces import ITileType
 from plone.uuid.interfaces import IUUID
-from Products.CMFCore.utils import getToolByName
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zope import schema
 from zope.component import queryUtility
@@ -341,7 +340,7 @@ class ListTile(PersistentCoverTile):
         if not (self.data['more_link'] and self.data['more_link_text']):
             return None
 
-        pc = getToolByName(self.context, 'portal_catalog')
+        pc = api.portal.get_tool('portal_catalog')
         brainz = pc(UID=self.data['more_link'])
         if not len(brainz):
             return None
