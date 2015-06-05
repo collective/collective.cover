@@ -6,6 +6,9 @@ There's a frood who really knows where his towel is.
 1.0a11 (unreleased)
 ^^^^^^^^^^^^^^^^^^^
 
+- Emit the layout identifier in the body class (closes `#216`_).
+  [hvelarde]
+
 - Add custom classes for row and columns (closes `#504`_).
   [rodfersou, djowett]
 
@@ -591,6 +594,7 @@ There's a frood who really knows where his towel is.
 .. _`#204`: https://github.com/collective/collective.cover/issues/204
 .. _`#206`: https://github.com/collective/collective.cover/issues/206
 .. _`#212`: https://github.com/collective/collective.cover/issues/212
+.. _`#216`: https://github.com/collective/collective.cover/issues/216
 .. _`#218`: https://github.com/collective/collective.cover/issues/218
 .. _`#239`: https://github.com/collective/collective.cover/issues/239
 .. _`#241`: https://github.com/collective/collective.cover/issues/241
