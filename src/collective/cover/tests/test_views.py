@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
-
 from collective.cover.interfaces import ICoverLayer
-from collective.cover.tiles.list import ListTile
 from collective.cover.testing import INTEGRATION_TESTING
+from collective.cover.tiles.list import ListTile
+from lxml import etree
 from plone import api
-from zope.interface import directlyProvides
+from zope.interface import alsoProvides
 
 import unittest
 
@@ -16,7 +16,7 @@ class BrowserViewsTestCase(unittest.TestCase):
     def setUp(self):
         self.portal = self.layer['portal']
         self.request = self.layer['request']
-        directlyProvides(self.request, ICoverLayer)
+        alsoProvides(self.request, ICoverLayer)
 
         with api.env.adopt_roles(['Manager']):
             self.folder = api.content.create(
@@ -26,8 +26,8 @@ class BrowserViewsTestCase(unittest.TestCase):
             self.folder,
             'collective.cover.content',
             'c1',
-            title='Front page',
-            description='Should I see this?',
+            title='My Title',
+            description='My Description',
         )
 
     def test_default_view_registration(self):
@@ -37,26 +37,28 @@ class BrowserViewsTestCase(unittest.TestCase):
         self.assertEqual(default_view, u'view')
         self.assertIn(u'view', view_methods)
 
-    @unittest.expectedFailure  # FIXME: why is this failing?
     def test_default_view_render(self):
         view = api.content.get_view(u'view', self.c1, self.request)
-        rendered_html = view.render()
+        html = etree.HTML(view())
         # default view should not show title, description or viewlets
-        self.assertNotIn('Front page', rendered_html)
-        self.assertNotIn('Should I see this?', rendered_html)
+        self.assertEqual(
+            len(html.xpath('.//h1[contains(text(),"My Title")]')), 0)
+        self.assertEqual(
+            len(html.xpath('.//div[contains(text(),"My Description")]')), 0)
 
     def test_alternate_view_registration(self):
         portal_types = self.portal['portal_types']
         view_methods = portal_types['collective.cover.content'].view_methods
         self.assertIn(u'standard', view_methods)
 
-    @unittest.expectedFailure  # FIXME: why is this failing?
     def test_alternate_view_render(self):
         view = api.content.get_view(u'standard', self.c1, self.request)
-        rendered_html = view.render()
-        # default view should show title, description and viewlets
-        self.assertIn('Front page', rendered_html)
-        self.assertIn('Should I see this?', rendered_html)
+        html = etree.HTML(view())
+        # alternate view should show title, description and viewlets
+        self.assertEqual(
+            len(html.xpath('.//h1[contains(text(),"My Title")]')), 1)
+        self.assertEqual(
+            len(html.xpath('.//div[contains(text(),"My Description")]')), 1)
 
 
 class RemoveItemFromListTileTestCase(unittest.TestCase):
