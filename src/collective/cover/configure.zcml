@@ -16,6 +16,7 @@
   <include package="five.grok" />
   <include package="plone.app.relationfield" />
 
+  <include file="overrides.zcml" />
   <include file="permissions.zcml" />
   <include file="profiles.zcml" />
   <include file="subscribers.zcml" />

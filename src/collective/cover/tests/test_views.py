@@ -28,6 +28,7 @@ class BrowserViewsTestCase(unittest.TestCase):
             'c1',
             title='My Title',
             description='My Description',
+            template_layout='Layout A',
         )
 
     def test_default_view_registration(self):
@@ -59,6 +60,17 @@ class BrowserViewsTestCase(unittest.TestCase):
             len(html.xpath('.//h1[contains(text(),"My Title")]')), 1)
         self.assertEqual(
             len(html.xpath('.//div[contains(text(),"My Description")]')), 1)
+
+    def test_body_class(self):
+        view = api.content.get_view(u'view', self.c1, self.request)
+        html = etree.HTML(view())
+        self.assertEqual(
+            len(html.xpath('.//body[contains(@class, "cover-layout-layout-a")]')), 1)
+
+        view = api.content.get_view(u'standard', self.c1, self.request)
+        html = etree.HTML(view())
+        self.assertEqual(
+            len(html.xpath('.//body[contains(@class, "cover-layout-layout-a")]')), 1)
 
 
 class RemoveItemFromListTileTestCase(unittest.TestCase):
