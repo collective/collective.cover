@@ -7,7 +7,7 @@ There's a frood who really knows where his towel is.
 ^^^^^^^^^^^^^^^^^^^
 
 - Emit the layout identifier in the body class (closes `#216`_).
-  [hvelarde]
+  [hvelarde, djowett]
 
 - Add custom classes for row and columns (closes `#504`_).
   [rodfersou, djowett]
