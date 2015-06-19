@@ -94,6 +94,11 @@ Got an idea? Found a bug? Let us know by `opening a support ticket`_.
 Known issues
 ^^^^^^^^^^^^
 
+* `Versioning creates zillions of empty blob files`_.
+  If you're using this feature in your site you have to take special attention to the number of free inodes in your file system,
+  as you can run out of them;
+  use the ``df -i`` command to check it.
+
 * `Package is not compatible with standard Plone tiles`_.
   This will be addressed in a future release, if we get an sponsor.
 
@@ -106,6 +111,7 @@ Known issues
 
 See the `complete list of bugs on GitHub`_.
 
+.. _`Versioning creates zillions of empty blob files`: https://github.com/collective/collective.cover/issues/532
 .. _`Package is not compatible with standard Plone tiles`: https://github.com/collective/collective.cover/issues/81
 .. _`AJAX responses are wrapped after installing the package`: https://github.com/collective/collective.cover/issues/331
 .. _`complete list of bugs on GitHub`: https://github.com/collective/collective.cover/issues?labels=bug&milestone=&page=1&state=open
