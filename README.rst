@@ -83,10 +83,6 @@ Mostly Harmless
     :alt: Coveralls badge
     :target: https://coveralls.io/r/collective/collective.cover
 
-.. image:: https://pypip.in/d/collective.cover/badge.png
-    :alt: Downloads
-    :target: https://pypi.python.org/pypi/collective.cover/
-
 Got an idea? Found a bug? Let us know by `opening a support ticket`_.
 
 .. _`opening a support ticket`: https://github.com/collective/collective.cover/issues
@@ -103,7 +99,8 @@ Known issues
   This will be addressed in a future release, if we get an sponsor.
 
 * `AJAX responses are wrapped after installing the package`_.
-  This is `an issue in plone.app.blocks`_.
+  This was an issue in `Blocks`_ that is already fixed;
+  we haven't merge it yet because it will break compatibility with Plone 4.2.
 
 * `Not compatible with jQuery 1.9`_.
   There is work being done to solve this and to fix `plone.app.jquerytools` also.
@@ -114,9 +111,8 @@ See the `complete list of bugs on GitHub`_.
 .. _`Versioning creates zillions of empty blob files`: https://github.com/collective/collective.cover/issues/532
 .. _`Package is not compatible with standard Plone tiles`: https://github.com/collective/collective.cover/issues/81
 .. _`AJAX responses are wrapped after installing the package`: https://github.com/collective/collective.cover/issues/331
-.. _`complete list of bugs on GitHub`: https://github.com/collective/collective.cover/issues?labels=bug&milestone=&page=1&state=open
-.. _`an issue in plone.app.blocks`: https://github.com/plone/plone.app.blocks/issues/5
 .. _`Not compatible with jQuery 1.9`: https://github.com/collective/collective.cover/issues/413
+.. _`complete list of bugs on GitHub`: https://github.com/collective/collective.cover/issues?labels=bug&milestone=&page=1&state=open
 
 Don't Panic
 -----------
