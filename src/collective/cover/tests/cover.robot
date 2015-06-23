@@ -105,7 +105,7 @@ Delete Tile
 Compose Cover
     [Documentation]  Click on Compose tab and wait until the layout has been
     ...              loaded.
-    Click Link  link=Compose
+    Wait Until Keyword Succeeds  5 sec  1 sec  Click Link  link=Compose
     Sleep  1s  Wait for cover compose to load
     Wait Until Page Contains Element  css=div#contentchooser-content-show-button
     Page Should Contain  Add Content
