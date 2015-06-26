@@ -71,16 +71,16 @@ These are some of the sites using ``collective.cover``:
 Mostly Harmless
 ---------------
 
-.. image:: https://secure.travis-ci.org/collective/collective.cover.png?branch=master
-    :alt: Travis CI badge
+.. image:: http://img.shields.io/pypi/v/collective.cover.svg
+   :target: https://pypi.python.org/pypi/collective.cover
+
+.. image:: https://img.shields.io/travis/collective/collective.cover/master.svg
     :target: http://travis-ci.org/collective/collective.cover
 
 .. image:: https://badge.waffle.io/collective/collective.cover.png?label=ready&title=Ready
-    :alt: Stories in Ready
     :target: https://waffle.io/collective/collective.cover
 
-.. image:: https://coveralls.io/repos/collective/collective.cover/badge.png?branch=master
-    :alt: Coveralls badge
+.. image:: https://img.shields.io/coveralls/collective/collective.cover/master.svg
     :target: https://coveralls.io/r/collective/collective.cover
 
 Got an idea? Found a bug? Let us know by `opening a support ticket`_.
