@@ -103,7 +103,7 @@ setup(name='collective.cover',
               'plone.browserlayer',
               'plone.cachepurging',
               'plone.testing',
-              'Products.PloneFormGen',
+              'Products.PloneFormGen <1.8.0.alpha1',
           ],
       },
       entry_points="""
