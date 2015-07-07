@@ -197,11 +197,10 @@ following:
     interface of all. It is easily extended and there are several add-ons
     available that provide new functionality for it.
 
-Home Page Editor of the Brazilian Chamber of Deputies Site
-    Strongly based on `Collage`_, this package was presented at the `World
-    Plone Day 2012 Brasilia`_. It allows editing of home pages and the
-    definition of permissions on blocks of content. Available only for Plone 3
-    and not openly published… yet.
+`Home Page Editor of the Brazilian Chamber of Deputies Site`_
+    Strongly based on `Collage`_, this package was presented at the `World Plone Day 2012 Brasilia`_.
+    It allows editing of home pages and the definition of permissions on blocks of content.
+    Works under Plone 3 only.
 
 `collective.panels`_
     A new package that lets site editors add portlets to a set of new
@@ -215,5 +214,6 @@ Home Page Editor of the Brazilian Chamber of Deputies Site
 .. _`Collage`: http://plone.org/products/collage
 .. _`collective.panels`: https://github.com/collective/collective.panels
 .. _`CompositePack`: http://plone.org/products/compositepack
+.. _`Home Page Editor of the Brazilian Chamber of Deputies Site`: https://colab.interlegis.leg.br/browser/publico/camara.home
 .. _`Using tiles to provide more flexible Plone layouts`: http://davisagli.com/blog/using-tiles-to-provide-more-flexible-plone-layouts
 .. _`World Plone Day 2012 Brasilia`: http://colab.interlegis.leg.br/wiki/WorldPloneDay
