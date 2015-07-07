@@ -3,7 +3,7 @@ Changelog
 
 There's a frood who really knows where his towel is.
 
-1.0a11 (unreleased)
+1.0a11 (2015-07-07)
 ^^^^^^^^^^^^^^^^^^^
 
 - Emit the layout identifier in the body class (closes `#216`_).
