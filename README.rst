@@ -14,11 +14,11 @@ offer. However, despite offering rich resources to build a cover,
 ``collective.cover`` also provides a very easy mechanism for managing its
 contents, built around a drag-and-drop interface.
 
-``collective.cover`` is based on `Blocks`_ and `Tiles`_, like `Deco`_, the layout composition system proposed for Plone.
+``collective.cover`` is based on `Blocks`_ and `Tiles`_, like `Mosaic`_, the new layout solution for Plone.
 
-.. _`Blocks`: https://github.com/plone/plone.app.blocks
-.. _`Deco`: https://github.com/plone/plone.app.deco
-.. _`Tiles`: https://github.com/plone/plone.app.tiles
+.. _`Blocks`: https://pypi.python.org/pypi/plone.app.blocks
+.. _`Mosaic`: https://pypi.python.org/pypi/plone.app.mosaic
+.. _`Tiles`: https://pypi.python.org/pypi/plone.app.tiles
 
 Demo
 ^^^^
