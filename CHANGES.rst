@@ -6,7 +6,8 @@ There's a frood who really knows where his towel is.
 1.0a12 (unreleased)
 ^^^^^^^^^^^^^^^^^^^
 
-- Nothing changed yet.
+- Add warning to the developer docs that existing custom grid systems have to be upgraded after release 1.0a11 because of internal data structure changes, otherwise your cover columns will be seem to reset to  width "1". (closes `#530`_).
+  [fredvd]
 
 
 1.0a11 (2015-07-07)
@@ -32,7 +33,7 @@ There's a frood who really knows where his towel is.
 
 - Ship with support for more than one grid system.
   Besides 16-column Deco grid, we now include support for 12-column Bootstrap 2 and Bootstrap 3 grids.
-  Check developers documentation for more information on how to use them (closes `#504`_).
+  Check developers documentation for more information on how to use them.
   [rodfersou]
 
 - Fix performance issues in the content chooser.
