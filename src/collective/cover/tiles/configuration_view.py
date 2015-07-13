@@ -2,6 +2,7 @@
 
 from collective.cover import _
 from collective.cover.tiles.configuration import ITilesConfigurationScreen
+from datetime import datetime
 from plone import api
 from plone.app.tiles.browser.base import TileForm
 from plone.app.tiles.browser.traversal import TileTraverser
@@ -198,6 +199,14 @@ class DefaultConfigureForm(TileForm, form.Form):
         super(DefaultConfigureForm, self).updateActions()
         self.actions['save'].addClass('context')
         self.actions['cancel'].addClass('standalone')
+
+    def datetime_widget_options(self):
+        now = datetime.now()
+        return (
+            (api.portal.get_localized_time(now, long_format=True, time_only=False), 'datetime'),
+            (api.portal.get_localized_time(now, long_format=False, time_only=False), 'dateonly'),
+            (api.portal.get_localized_time(now, long_format=False, time_only=True), 'timeonly')
+        )
 
 
 class DefaultConfigureView(layout.FormWrapper):

@@ -9,8 +9,9 @@ from zope.interface import implements
 from zope.interface import Interface
 from zope.schema import getFieldNamesInOrder
 from zope.schema import getFieldsInOrder
-from zope.schema.interfaces import ITextLine
+from zope.schema.interfaces import IDatetime
 from zope.schema.interfaces import IInt
+from zope.schema.interfaces import ITextLine
 
 
 ANNOTATIONS_KEY_PREFIX = u'plone.tiles.configuration'
@@ -55,7 +56,7 @@ class ITilesConfigurationScreen(Interface):
         final result will be something like this:
 
         {'css_class': u'tile_default',
-         'date': {'order': u'3', 'visibility': u'on'},
+         'date': {'order': u'3', 'visibility': u'on', 'format': 'datetime'},
          'description': {'order': u'1', 'visibility': u'on'},
          'image': {'imgsize': u'mini 200:200',
                    'order': u'2',
@@ -120,6 +121,9 @@ class TilesConfigurationScreen(object):
                 defaults[name]['imgsize'] = u'mini 200:200'
             elif IInt.providedBy(field):
                 defaults[name][name] = field.default
+            elif IDatetime.providedBy(field):
+                # field is Datetime, we should add 'format'
+                defaults[name]['format'] = 'datetime'
 
         return defaults
 

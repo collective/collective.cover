@@ -13,6 +13,9 @@ There's a frood who really knows where his towel is.
 1.0a11 (2015-07-07)
 ^^^^^^^^^^^^^^^^^^^
 
+- Create format options for datetime widget (closes `#534`_).
+  [rodfersou]
+
 - Emit the layout identifier in the body class (closes `#216`_).
   [hvelarde, djowett]
 
@@ -658,4 +661,5 @@ There's a frood who really knows where his towel is.
 .. _`#494`: https://github.com/collective/collective.cover/issues/494
 .. _`#495`: https://github.com/collective/collective.cover/issues/495
 .. _`#504`: https://github.com/collective/collective.cover/issues/504
+.. _`#534`: https://github.com/collective/collective.cover/issues/534
 .. _`PloneFormGen`: https://pypi.python.org/pypi/Products.PloneFormGen

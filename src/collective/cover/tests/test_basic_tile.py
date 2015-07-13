@@ -308,3 +308,33 @@ class BasicTileTestCase(TestTileMixin, unittest.TestCase):
         rendered = self.tile()
         tomorrow = api.portal.get_localized_time(tomorrow, long_format=True)
         self.assertIn(tomorrow, rendered)
+
+    def test_get_formatted_date(self):
+        tomorrow = DateTime() + 1
+        # create an Event starting tomorrow
+        with api.env.adopt_roles(['Manager']):
+            event = api.content.create(
+                self.portal, 'Event', 'event', startDate=tomorrow)
+            api.content.transition(event, 'publish')
+
+        self.tile.populate_with_object(event)
+        rendered = self.tile()
+        expected = api.portal.get_localized_time(tomorrow, long_format=True,
+                                                 time_only=False)
+        self.assertIn(expected, rendered)
+
+        tile_conf = self.tile.get_tile_configuration()
+        tile_conf['title']['datetimetag'] = '1'
+        self.tile.set_tile_configuration(tile_conf)
+        rendered = self.tile()
+        expected = api.portal.get_localized_time(tomorrow, long_format=False,
+                                                 time_only=False)
+        self.assertIn(expected, rendered)
+
+        tile_conf = self.tile.get_tile_configuration()
+        tile_conf['title']['datetimetag'] = '2'
+        self.tile.set_tile_configuration(tile_conf)
+        rendered = self.tile()
+        expected = api.portal.get_localized_time(tomorrow, long_format=False,
+                                                 time_only=True)
+        self.assertIn(expected, rendered)

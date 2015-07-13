@@ -73,11 +73,11 @@ Test Basic Layout Operations
     Click Config from Tile  ${tile_class}
     Wait until element is visible  id=buttons-cancel
     # Move Categories to second place
-    Drag And Drop  css=#formfield-collective-cover-basic-subjects  css=#configure_tile div.field:nth-child(2)
+    Drag And Drop  css=#formfield-collective-cover-basic-subjects label  css=#configure_tile div.field:nth-child(2) label
     # Move Date over Categories
-    Drag And Drop  css=#formfield-collective-cover-basic-date  css=#formfield-collective-cover-basic-subjects
+    Drag And Drop  css=#formfield-collective-cover-basic-date label  css=#formfield-collective-cover-basic-subjects label
     # Try to move Date over CSS
-    Drag And Drop  css=#formfield-collective-cover-basic-date  css=#formfield-collective-cover-basic-css_class
+    Drag And Drop  css=#formfield-collective-cover-basic-date label  css=#formfield-collective-cover-basic-css_class label
     # Hide Description
     Click Element  css=#formfield-collective-cover-basic-description .visibility-no
     Click Button  id=buttons-save

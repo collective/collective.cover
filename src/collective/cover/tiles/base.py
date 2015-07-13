@@ -295,6 +295,9 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
             # render, save it here
             field['htmltag'] = field_conf['htmltag']
 
+        if 'format' in field_conf:
+            field['format'] = field_conf['format']
+
         if 'imgsize' in field_conf:
             field['scale'] = field_conf['imgsize'].split()[0]
 
@@ -358,6 +361,20 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
             # an Event must have a start date
             assert brain.start is not Missing.Value
             return brain.start
+
+    def get_formatted_date(self, date, format):
+        """Return datetime formatted as selected in layout configurations
+
+        :param date: [required] datetime to be formatted
+        :param format: [required] selected type of formatting of
+            datetime
+        """
+        options = {
+            'datetime': {'datetime': date, 'long_format': True, 'time_only': False},
+            'dateonly': {'datetime': date, 'long_format': False, 'time_only': False},
+            'timeonly': {'datetime': date, 'long_format': False, 'time_only': True}
+        }
+        return api.portal.get_localized_time(**options[format])
 
     @property
     def has_image(self):
