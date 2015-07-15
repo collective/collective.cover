@@ -201,11 +201,12 @@ class DefaultConfigureForm(TileForm, form.Form):
         self.actions['cancel'].addClass('standalone')
 
     def datetime_widget_options(self):
+        """Return the options that can be used on a datetime widget."""
         now = datetime.now()
         return (
-            (api.portal.get_localized_time(now, long_format=True, time_only=False), 'datetime'),
-            (api.portal.get_localized_time(now, long_format=False, time_only=False), 'dateonly'),
-            (api.portal.get_localized_time(now, long_format=False, time_only=True), 'timeonly')
+            ('datetime', api.portal.get_localized_time(now, long_format=True, time_only=False)),
+            ('dateonly', api.portal.get_localized_time(now, long_format=False, time_only=False)),
+            ('timeonly', api.portal.get_localized_time(now, long_format=False, time_only=True)),
         )
 
 

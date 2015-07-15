@@ -47,7 +47,7 @@
                              accesskey view/accesskey|nothing;"/>
     </div>
 
-    <span i18n:translate="">Datetime Format</span>
+    <span i18n:translate="">Format</span>
     <select id="" name="" class=""
             tabindex="" accesskey=""
             tal:attributes="id string:${view/id}-format;
@@ -57,10 +57,10 @@
                             accesskey view/accesskey|nothing;">
 
       <tal:options repeat="option view/form/datetime_widget_options">
-        <option tal:define="value repeat/option/index;"
+        <option tal:define="value python:option[0]"
                 tal:attributes="value value;
-                                selected python:stored_data.get('format', None) == str(value) and 'selected' or None"
-                tal:content="option">DATETIME TAG</option>
+                                selected python:'selected' if stored_data.get('format', None) == str(value) else None"
+                tal:content="python:option[1]">Jul 15, 2015 01:23 PM</option>
       </tal:options>
     </select>
 
