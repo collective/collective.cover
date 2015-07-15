@@ -362,17 +362,23 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
             assert brain.start is not Missing.Value
             return brain.start
 
-    def get_formatted_date(self, date, format):
-        """Return datetime formatted as selected in layout configurations
+    def get_localized_time(self, datetime, format):
+        """Return datetime localized as selected in layout configurations.
 
-        :param date: [required] datetime to be formatted
-        :param format: [required] selected type of formatting of
-            datetime
+        :param datetime: [required] datetime to be formatted
+        :type datetime: DateTime, datetime or date
+        :param format: [required] format to be used
+        :type format: string
+        :returns: localized time
+        :rtype: unicode
         """
         options = {
-            'datetime': {'datetime': date, 'long_format': True, 'time_only': False},
-            'dateonly': {'datetime': date, 'long_format': False, 'time_only': False},
-            'timeonly': {'datetime': date, 'long_format': False, 'time_only': True}
+            'datetime': dict(  # u'Jul 15, 2015 01:23 PM'
+                datetime=datetime, long_format=True, time_only=False),
+            'dateonly': dict(  # u'Jul 15, 2015
+                datetime=datetime, long_format=False, time_only=False),
+            'timeonly': dict(  # u'01:23 PM'
+                datetime=datetime, long_format=False, time_only=True),
         }
         return api.portal.get_localized_time(**options[format])
 
