@@ -87,11 +87,13 @@
                tal:condition="python:field['id'] == 'description'"
                tal:content="obj/Description" />
 
-            <tal:datetime define="format python:field.get('format', 'datetime');
-                                  datetime python:view.Date(item)"
-                          condition="python:field['id'] == 'date'">
-              <time tal:attributes="datetime datetime"
-                    tal:content="python:view.get_formatted_date(datetime, format)">
+            <tal:datetime condition="python:field['id'] == 'date'">
+              <time
+                  tal:define="datetime python:view.Date(item);
+                              format python:field.get('format', 'datetime')"
+                  tal:attributes="datetime datetime"
+                  tal:content="python:view.get_localized_time(datetime, format)">
+                Jul 15, 2015 01:23 PM
               </time>
             </tal:datetime>
           </tal:fields>
