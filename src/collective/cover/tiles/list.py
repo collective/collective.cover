@@ -290,6 +290,9 @@ class ListTile(PersistentCoverTile):
                     # render, save it here
                     field['htmltag'] = field_conf['htmltag']
 
+                if 'format' in field_conf:
+                    field['format'] = field_conf['format']
+
                 if 'imgsize' in field_conf:
                     field['scale'] = field_conf['imgsize']
 

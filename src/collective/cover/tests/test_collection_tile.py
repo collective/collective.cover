@@ -2,7 +2,9 @@
 from collective.cover.tests.base import TestTileMixin
 from collective.cover.tiles.collection import CollectionTile
 from collective.cover.tiles.collection import ICollectionTile
+from DateTime import DateTime
 from mock import Mock
+from plone import api
 from plone.app.imaging.interfaces import IImageScale
 from plone.app.testing import login
 from plone.app.testing import setRoles
@@ -228,3 +230,42 @@ class CollectionTileTestCase(TestTileMixin, unittest.TestCase):
             fmt_date in rendered,
             'Formatted date should be in rendered tile'
         )
+
+    def test_localized_time_is_rendered(self):
+        tomorrow = DateTime() + 1
+        # create an Event starting tomorrow and a Collection listing it
+        with api.env.adopt_roles(['Manager']):
+            event = api.content.create(
+                self.portal, 'Event', 'event', startDate=tomorrow)
+            api.content.transition(event, 'publish')
+            query = [dict(
+                i='portal_type',
+                o='plone.app.querystring.operation.selection.is',
+                v='Event',
+            )]
+            collection = api.content.create(
+                self.portal, 'Collection', 'collection', query=query)
+            api.content.transition(collection, 'publish')
+            self.assertEqual(len(collection.results()), 1)
+
+        self.tile.populate_with_object(collection)
+        rendered = self.tile()
+        expected = api.portal.get_localized_time(
+            tomorrow, long_format=True, time_only=False)
+        self.assertIn(expected, rendered)  # u'Jul 15, 2015 01:23 PM'
+
+        tile_conf = self.tile.get_tile_configuration()
+        tile_conf['title']['format'] = 'dateonly'
+        self.tile.set_tile_configuration(tile_conf)
+        rendered = self.tile()
+        expected = api.portal.get_localized_time(
+            tomorrow, long_format=False, time_only=False)
+        self.assertIn(expected, rendered)  # u'Jul 15, 2015
+
+        tile_conf = self.tile.get_tile_configuration()
+        tile_conf['title']['format'] = 'timeonly'
+        self.tile.set_tile_configuration(tile_conf)
+        rendered = self.tile()
+        expected = api.portal.get_localized_time(
+            tomorrow, long_format=False, time_only=True)
+        self.assertIn(expected, rendered)  # u'01:23 PM'

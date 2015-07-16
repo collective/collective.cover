@@ -4,8 +4,7 @@
       xmlns:i18n="http://xml.zope.org/namespaces/i18n"
       i18n:domain="collective.cover">
 
-<body tal:define="is_empty nocall:view/is_empty;
-                  toLocalizedTime nocall:context/@@plone/toLocalizedTime">
+<body tal:define="is_empty nocall:view/is_empty">
   <p tal:condition="python: is_empty and view.is_compose_mode()" i18n:translate="">
     Please drag&amp;drop some content here to populate the tile.
   </p>
@@ -56,9 +55,16 @@
         <p tal:content="python:field['content']">Description</p>
       </tal:description>
 
-      <tal:date condition="python:field['id'] == 'date'">
-        <p tal:content="python:toLocalizedTime(view.Date(), True)">Date</p>
-      </tal:date>
+      <tal:datetime condition="python:field['id'] == 'date'">
+        <time
+            tal:define="datetime python:view.Date();
+                        format python:field.get('format', 'datetime')"
+            tal:condition="datetime"
+            tal:attributes="datetime datetime"
+            tal:content="python:view.get_localized_time(datetime, format)">
+          Jul 15, 2015 01:23 PM
+        </time>
+      </tal:datetime>
 
       <tal:subjects condition="python:field['id'] == 'subjects'">
             <span metal:use-macro="context/@@tile_macros/subjects" />

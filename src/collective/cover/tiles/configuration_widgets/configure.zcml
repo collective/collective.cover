@@ -37,6 +37,13 @@
         template="namedimage.pt"
         />
 
+    <z3c:widgetTemplate
+        mode="configure"
+        widget="collective.z3cform.datetimewidget.interfaces.IDatetimeWidget"
+        layer="z3c.form.interfaces.IFormLayer"
+        template="datetime.pt"
+        />
+
     <class class=".cssclasswidget.CSSClassWidget">
         <require permission="zope.Public"
                  interface=".interfaces.ICSSClassWidget" />

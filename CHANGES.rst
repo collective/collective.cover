@@ -6,7 +6,10 @@ There's a frood who really knows where his towel is.
 1.0a12 (unreleased)
 ^^^^^^^^^^^^^^^^^^^
 
-- Add warning to the developer docs that existing custom grid systems have to be upgraded after release 1.0a11 because of internal data structure changes, otherwise your cover columns will be seem to reset to  width "1". (closes `#530`_).
+- Create format options for datetime widget (closes `#534`_).
+  [rodfersou]
+
+- Add warning to the developer docs that existing custom grid systems have to be upgraded after release 1.0a11 because of internal data structure changes, otherwise your cover columns will be seem to reset to width "1" (closes `#530`_).
   [fredvd]
 
 
@@ -658,4 +661,5 @@ There's a frood who really knows where his towel is.
 .. _`#494`: https://github.com/collective/collective.cover/issues/494
 .. _`#495`: https://github.com/collective/collective.cover/issues/495
 .. _`#504`: https://github.com/collective/collective.cover/issues/504
+.. _`#534`: https://github.com/collective/collective.cover/issues/534
 .. _`PloneFormGen`: https://pypi.python.org/pypi/Products.PloneFormGen

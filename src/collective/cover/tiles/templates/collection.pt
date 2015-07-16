@@ -10,8 +10,7 @@
   </p>
 
   <div class="cover-collection-tile tile-content" tal:condition="not:is_empty">
-    <tal:results define="results view/results|nothing;
-                         toLocalizedTime nocall:context/@@plone/toLocalizedTime">
+    <tal:results define="results view/results|nothing">
 
       <div class="collection-link" tal:condition="view/is_compose_mode">
         <a tal:attributes="href view/collection_url" i18n:translate="">
@@ -88,8 +87,15 @@
                tal:condition="python:field['id'] == 'description'"
                tal:content="obj/Description" />
 
-            <p tal:condition="python:field['id'] == 'date'"
-               tal:content="python:toLocalizedTime(view.Date(item), True)" />
+            <tal:datetime condition="python:field['id'] == 'date'">
+              <time
+                  tal:define="datetime python:view.Date(item);
+                              format python:field.get('format', 'datetime')"
+                  tal:attributes="datetime datetime"
+                  tal:content="python:view.get_localized_time(datetime, format)">
+                Jul 15, 2015 01:23 PM
+              </time>
+            </tal:datetime>
           </tal:fields>
         </tal:items>
         <div class="visualClear"><!-- --></div>
