@@ -400,3 +400,33 @@ class Upgrade10to11TestCase(UpgradeTestCaseBase):
 
         self.assertEqual(settings.layouts, {'test_layout': expected})
         self.assertEqual(cover.cover_layout, expected)
+
+
+class Upgrade11to12TestCase(UpgradeTestCaseBase):
+
+    def setUp(self):
+        UpgradeTestCaseBase.setUp(self, u'11', u'12')
+
+    def test_registrations(self):
+        version = self.setup.getLastVersionForProfile(self.profile_id)[0]
+        self.assertTrue(int(version) >= int(self.to_version))
+        self.assertEqual(self._how_many_upgrades_to_do(), 1)
+
+    def test_update_role_map(self):
+        # address also an issue with Setup permission
+        title = u'Add Embed Code permission'
+        step = self._get_upgrade_step(title)
+        self.assertIsNotNone(step)
+
+        # simulate state on previous version
+        self.portal._collective_cover__Embed_Code_Permission = ()
+        self.portal._collective_cover__Setup_Permission = ()
+
+        # run the upgrade step to validate the update
+        self._do_upgrade_step(step)
+        permissions = ['collective.cover: Setup', 'collective.cover: Embed Code']
+        expected = ['Manager', 'Site Administrator']
+        for p in permissions:
+            roles = self.portal.rolesOfPermission(p)
+            roles = [r['name'] for r in roles if r['selected']]
+            self.assertListEqual(roles, expected)

@@ -9,6 +9,12 @@ There's a frood who really knows where his towel is.
 - Create format options for datetime widget (closes `#534`_).
   [rodfersou]
 
+- Add new permission to restrict code inclussion on the Embed tile;
+  now, by default, only Managers and Site Administrators are able to insert code in the tile.
+  The provided upgrade step also fixes the roles assigned to the collective.cover.Setup permission that was broken on the previous release.
+  (closes `#297`_).
+  [hvelarde]
+
 - Add warning to the developer docs that existing custom grid systems have to be upgraded after release 1.0a11 because of internal data structure changes, otherwise your cover columns will be seem to reset to width "1" (closes `#530`_).
   [fredvd]
 
@@ -620,6 +626,7 @@ There's a frood who really knows where his towel is.
 .. _`#281`: https://github.com/collective/collective.cover/issues/281
 .. _`#294`: https://github.com/collective/collective.cover/issues/294
 .. _`#295`: https://github.com/collective/collective.cover/issues/295
+.. _`#297`: https://github.com/collective/collective.cover/issues/297
 .. _`#298`: https://github.com/collective/collective.cover/issues/298
 .. _`#301`: https://github.com/collective/collective.cover/issues/301
 .. _`#303`: https://github.com/collective/collective.cover/issues/303
