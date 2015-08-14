@@ -6,6 +6,9 @@ There's a frood who really knows where his towel is.
 1.0a12 (unreleased)
 ^^^^^^^^^^^^^^^^^^^
 
+- Fix textlinessortable widget for IE11 where IE11 mangles multiform POST data. This fixes removing items from the Caroussel compose widget in IE11.
+  [fredvd]
+
 - Create format options for datetime widget (closes `#534`_).
   [rodfersou]
 
