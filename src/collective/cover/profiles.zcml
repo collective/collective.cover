@@ -29,6 +29,9 @@
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
 
+  <utility factory=".setuphandlers.HiddenProfiles" name="collective.cover" />
+  <utility factory=".setuphandlers.HiddenProducts" name="collective.cover" />
+
   <genericsetup:upgradeSteps
       source="5"
       destination="6"
