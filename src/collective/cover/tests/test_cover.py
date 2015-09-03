@@ -8,7 +8,6 @@ from plone import api
 from plone.app.dexterity.behaviors.exclfromnav import IExcludeFromNavigation
 from plone.app.lockingbehavior.behaviors import ILocking
 from plone.app.referenceablebehavior.referenceable import IReferenceable
-from plone.app.stagingbehavior.interfaces import IStagingSupport
 from plone.app.testing import setRoles
 from plone.app.testing import TEST_USER_ID
 from plone.dexterity.interfaces import IDexterityFTI
@@ -62,9 +61,6 @@ class CoverIntegrationTestCase(unittest.TestCase):
     def test_is_referenceable(self):
         self.assertTrue(IReferenceable.providedBy(self.cover))
         self.assertTrue(IAttributeUUID.providedBy(self.cover))
-
-    def test_staging_behavior(self):
-        self.assertTrue(IStagingSupport.providedBy(self.cover))
 
     def test_cover_selectable_as_folder_default_view(self):
         self.folder.setDefaultPage('c1')
