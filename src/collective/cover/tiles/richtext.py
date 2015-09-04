@@ -78,10 +78,8 @@ class SearchableRichTextTile(object):
         value = context.data['text']
         data = transforms.convertTo(
             'text/plain',
-            value.raw_encoded,
+            value.encode('utf-8 ') if isinstance(value, unicode) else value.raw_encoded,
             mimetype='text/html',
             context=context,
-            # portal_transforms caches on this
-            object=value._raw_holder,
-            encoding=value.encoding)
+            encoding='utf-8' if isinstance(value, unicode) else value.encoding) if value else ''
         return u'{0}'.format(unicode(data.getData(), 'utf-8')) if data else ''
