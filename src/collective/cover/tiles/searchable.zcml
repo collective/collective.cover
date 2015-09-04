@@ -1,0 +1,49 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:i18n="http://namespaces.zope.org/i18n"
+    xmlns:zcml="http://namespaces.zope.org/zcml"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    i18n_domain="collective.cover">
+
+  <adapter
+      factory=".banner.SearchableBannerTile"
+      provides="collective.cover.interfaces.ISearchableText"
+      for=".banner.IBannerTile"
+      />
+  <adapter
+      factory=".basic.SearchableBasicTile"
+      provides="collective.cover.interfaces.ISearchableText"
+      for=".basic.IBasicTile"
+      />
+  <adapter
+      factory=".collection.SearchableCollectionTile"
+      provides="collective.cover.interfaces.ISearchableText"
+      for=".collection.ICollectionTile"
+      />
+  <adapter
+      factory=".embed.SearchableEmbedTile"
+      provides="collective.cover.interfaces.ISearchableText"
+      for=".embed.IEmbedTile"
+      />
+  <adapter
+      factory=".file.SearchableFileTile"
+      provides="collective.cover.interfaces.ISearchableText"
+      for=".file.IFileTile"
+      />
+  <adapter
+      factory=".list.SearchableListTile"
+      provides="collective.cover.interfaces.ISearchableText"
+      for=".list.ListTile"
+      />
+  <adapter
+      factory=".pfg.SearchablePFGTile"
+      provides="collective.cover.interfaces.ISearchableText"
+      for=".pfg.PFGTile"
+      />
+  <adapter
+      factory=".richtext.SearchableRichTextTile"
+      provides="collective.cover.interfaces.ISearchableText"
+      for=".richtext.RichTextTile"
+      />
+
+</configure>

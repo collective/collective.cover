@@ -13,6 +13,7 @@ from Products.CMFPlone.utils import safe_unicode
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zope import schema
 from zope.interface import implements
+from collective.cover.interfaces import ISearchableText
 
 
 class IBasicTile(IPersistentCoverTile):
@@ -118,3 +119,14 @@ class BasicTile(PersistentCoverTile):
 
         data_mgr = ITileDataManager(self)
         data_mgr.set(data)
+
+
+class SearchableBasicTile(object):
+    implements(ISearchableText)
+
+    def __init__(self, context):
+        self.context = context
+
+    def SearchableText(self):
+        context = self.context
+        return u'{0} {1}'.format(context.data['title'] or '', context.data['description'] or '')

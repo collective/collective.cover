@@ -11,6 +11,7 @@ from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.CMFPlone.utils import safe_unicode
 from zope import schema
 from zope.interface import implements
+from collective.cover.interfaces import ISearchableText
 
 
 class IPFGTile(IPersistentCoverTile):
@@ -66,3 +67,14 @@ class PFGTile(PersistentCoverTile):
         """Return 'FormFolder' as the only content type accepted in the tile.
         """
         return ['FormFolder']
+
+
+class SearchablePFGTile(object):
+    implements(ISearchableText)
+
+    def __init__(self, context):
+        self.context = context
+
+    def SearchableText(self):
+        context = self.context
+        return u'{0} {1}'.format(context.data['title'] or '', context.data['description'] or '')
