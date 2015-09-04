@@ -3,11 +3,27 @@ Changelog
 
 There's a frood who really knows where his towel is.
 
-1.0a11 (unreleased)
+1.0a12 (unreleased)
+^^^^^^^^^^^^^^^^^^^
+
+- Create format options for datetime widget (closes `#534`_).
+  [rodfersou]
+
+- Add new permission to restrict code inclussion on the Embed tile;
+  now, by default, only Managers and Site Administrators are able to insert code in the tile.
+  The provided upgrade step also fixes the roles assigned to the collective.cover.Setup permission that was broken on the previous release.
+  (closes `#297`_).
+  [hvelarde]
+
+- Add warning to the developer docs that existing custom grid systems have to be upgraded after release 1.0a11 because of internal data structure changes, otherwise your cover columns will be seem to reset to width "1" (closes `#530`_).
+  [fredvd]
+
+
+1.0a11 (2015-07-07)
 ^^^^^^^^^^^^^^^^^^^
 
 - Emit the layout identifier in the body class (closes `#216`_).
-  [hvelarde]
+  [hvelarde, djowett]
 
 - Add custom classes for row and columns (closes `#504`_).
   [rodfersou, djowett]
@@ -26,7 +42,7 @@ There's a frood who really knows where his towel is.
 
 - Ship with support for more than one grid system.
   Besides 16-column Deco grid, we now include support for 12-column Bootstrap 2 and Bootstrap 3 grids.
-  Check developers documentation for more information on how to use them (closes `#504`_).
+  Check developers documentation for more information on how to use them.
   [rodfersou]
 
 - Fix performance issues in the content chooser.
@@ -610,6 +626,7 @@ There's a frood who really knows where his towel is.
 .. _`#281`: https://github.com/collective/collective.cover/issues/281
 .. _`#294`: https://github.com/collective/collective.cover/issues/294
 .. _`#295`: https://github.com/collective/collective.cover/issues/295
+.. _`#297`: https://github.com/collective/collective.cover/issues/297
 .. _`#298`: https://github.com/collective/collective.cover/issues/298
 .. _`#301`: https://github.com/collective/collective.cover/issues/301
 .. _`#303`: https://github.com/collective/collective.cover/issues/303
@@ -651,4 +668,6 @@ There's a frood who really knows where his towel is.
 .. _`#494`: https://github.com/collective/collective.cover/issues/494
 .. _`#495`: https://github.com/collective/collective.cover/issues/495
 .. _`#504`: https://github.com/collective/collective.cover/issues/504
+.. _`#530`: https://github.com/collective/collective.cover/issues/530
+.. _`#534`: https://github.com/collective/collective.cover/issues/534
 .. _`PloneFormGen`: https://pypi.python.org/pypi/Products.PloneFormGen

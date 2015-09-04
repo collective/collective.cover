@@ -3,7 +3,7 @@
 from setuptools import find_packages
 from setuptools import setup
 
-version = '1.0a11.dev0'
+version = '1.0a12.dev0'
 description = 'A sane, working, editor-friendly way of creating front pages and other composite pages. Working now, for mere mortals.'
 long_description = (
     open('README.rst').read() + '\n' +
@@ -78,7 +78,7 @@ setup(name='collective.cover',
           'plone.registry',
           'plone.scale',
           'plone.supermodel',
-          'plone.tiles >=1.2',
+          'plone.tiles',
           'plone.uuid',
           'plone.z3cform',
           'Products.Archetypes',
@@ -103,7 +103,7 @@ setup(name='collective.cover',
               'plone.browserlayer',
               'plone.cachepurging',
               'plone.testing',
-              'Products.PloneFormGen',
+              'Products.PloneFormGen <1.8.0.alpha1',
           ],
       },
       entry_points="""

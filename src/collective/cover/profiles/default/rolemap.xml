@@ -1,13 +1,21 @@
 <?xml version="1.0"?>
- <rolemap>
-   <permissions>
-     <permission name="collective.cover: Can Export Layout" acquire="False">
-       <role name="Manager"/>
-       <role name="Site Administrator"/>
-     </permission>
-     <permission name="collective.cover: Can Edit Layout" acquire="False">
-       <role name="Manager"/>
-       <role name="Site Administrator"/>
-     </permission>
-   </permissions>
- </rolemap>
+<rolemap>
+  <permissions>
+    <permission name="collective.cover: Setup" acquire="False">
+      <role name="Manager"/>
+      <role name="Site Administrator"/>
+    </permission>
+    <permission name="collective.cover: Can Export Layout" acquire="False">
+      <role name="Manager"/>
+      <role name="Site Administrator"/>
+    </permission>
+    <permission name="collective.cover: Can Edit Layout" acquire="False">
+      <role name="Manager"/>
+      <role name="Site Administrator"/>
+    </permission>
+    <permission name="collective.cover: Embed Code" acquire="False">
+      <role name="Manager"/>
+      <role name="Site Administrator"/>
+    </permission>
+  </permissions>
+</rolemap>

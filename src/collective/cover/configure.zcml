@@ -16,7 +16,6 @@
   <include package="five.grok" />
   <include package="plone.app.relationfield" />
 
-  <include file="overrides.zcml" />
   <include file="permissions.zcml" />
   <include file="profiles.zcml" />
   <include file="subscribers.zcml" />
@@ -38,6 +37,15 @@
       for="Products.CMFPlone.interfaces.IPloneSiteRoot"
       class=".controlpanel.CoverSettingsControlPanel"
       permission="collective.cover.Setup"
+      />
+
+  <browser:page
+      name="plone_layout"
+      for="collective.cover.interfaces.ICover"
+      permission="zope.Public"
+      class=".layoutpolicy.LayoutPolicy"
+      allowed_interface="plone.app.layout.globals.interfaces.ILayoutPolicy"
+      layer="collective.cover.interfaces.ICoverLayer"
       />
 
   <browser:pages

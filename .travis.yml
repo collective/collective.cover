@@ -3,7 +3,8 @@ python: 2.7
 sudo: false
 cache:
   directories:
-    - eggs
+  - eggs
+  - parts/node
 env:
   global:
     - ARTIFACTS_AWS_REGION=sa-east-1

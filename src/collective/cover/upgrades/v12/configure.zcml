@@ -1,0 +1,20 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+    xmlns:i18n="http://namespaces.zope.org/i18n"
+    i18n_domain="collective.cover">
+
+  <genericsetup:upgradeSteps
+      source="11"
+      destination="12"
+      profile="collective.cover:default">
+
+    <genericsetup:upgradeStep
+        title="Add Embed Code permission"
+        description="Adds new permission to embed code in the Embed tile."
+        handler=".update_role_map"
+        />
+
+  </genericsetup:upgradeSteps>
+
+</configure>

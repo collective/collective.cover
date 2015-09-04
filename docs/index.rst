@@ -1,10 +1,3 @@
-.. line-block::
-
-    WARNING: If you are reading this on GitHub, DON'T! Read it on ReadTheDocs:
-    http://ploneapi.readthedocs.org/en/latest/index.html so you have working
-    references and proper formatting.
-
-
 ****************
 collective.cover
 ****************

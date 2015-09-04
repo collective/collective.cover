@@ -36,10 +36,15 @@
              tal:content="obj/Description"
              />
 
-          <p tal:define="toLocalizedTime nocall:context/@@plone/toLocalizedTime"
-             tal:condition="python:field['id'] == 'date'"
-             tal:content="python:toLocalizedTime(view.Date(obj), True)"
-             />
+          <tal:datetime condition="python:field['id'] == 'date'">
+            <time
+                tal:define="datetime python:view.Date(obj);
+                            format python:field.get('format', 'datetime')"
+                tal:attributes="datetime datetime"
+                tal:content="python:view.get_localized_time(datetime, format)">
+              Jul 15, 2015 01:23 PM
+            </time>
+          </tal:datetime>
         </tal:fields>
         <div class="visualClear"><!-- --></div>
       </div>

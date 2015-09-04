@@ -1,0 +1,68 @@
+<html lang="en"
+      xml:lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      i18n:domain="collective.cover"
+      tal:omit-tag="">
+
+  <tal:stored_data define="stored_data python:view.form.getFieldConfiguration(view)">
+
+    <div class="visibility-box">
+      <span i18n:translate="">Visible</span>
+      <input type="radio" id="" name="" class=""
+             tabindex="" accesskey="" value="on"
+             tal:attributes="id string:${view/id}-visibility-yes;
+                             name string:${view/name}.visibility;
+                             class view/klass;
+                             tabindex view/tabindex;
+                             checked python:not stored_data.get('visibility', None) and 'checked' or stored_data.get('visibility', None) == 'on' and 'checked';
+                             accesskey view/accesskey|nothing;"/>
+      <label i18n:translate=""
+             tal:attributes="for string:${view/id}-visibility-yes;"
+             class="visibility-yes">Yes</label>
+      <input type="radio" id="" name="" class=""
+             tabindex="" accesskey="" value="off"
+             tal:attributes="id string:${view/id}-visibility-no;
+                             name string:${view/name}.visibility;
+                             class view/klass;
+                             tabindex view/tabindex;
+                             checked python:stored_data.get('visibility', None) == 'off' and 'checked';
+                             accesskey view/accesskey|nothing;"/>
+      <label i18n:translate=""
+             tal:attributes="for string:${view/id}-visibility-no;"
+             class="visibility-no">No</label>
+    </div>
+
+    <div class="order-box">
+      <span i18n:translate="">Order</span>
+      <input type="text" id="" name="" class="" size="2"
+             tabindex="" accesskey=""
+             tal:attributes="id string:${view/id}-order;
+                             name string:${view/name}.order;
+                             class view/klass;
+                             tabindex view/tabindex;
+                             value python:stored_data.get('order', None);
+                             accesskey view/accesskey|nothing;"/>
+    </div>
+
+    <span i18n:translate="">Format</span>
+    <select id="" name="" class=""
+            tabindex="" accesskey=""
+            tal:attributes="id string:${view/id}-format;
+                            name string:${view/name}.format;
+                            class view/klass;
+                            tabindex view/tabindex;
+                            accesskey view/accesskey|nothing;">
+
+      <tal:options repeat="option view/form/datetime_widget_options">
+        <option tal:define="value python:option[0]"
+                tal:attributes="value value;
+                                selected python:'selected' if stored_data.get('format', None) == str(value) else None"
+                tal:content="python:option[1]">Jul 15, 2015 01:23 PM</option>
+      </tal:options>
+    </select>
+
+  </tal:stored_data>
+</html>

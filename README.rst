@@ -14,11 +14,11 @@ offer. However, despite offering rich resources to build a cover,
 ``collective.cover`` also provides a very easy mechanism for managing its
 contents, built around a drag-and-drop interface.
 
-``collective.cover`` is based on `Blocks`_ and `Tiles`_, like `Deco`_, the layout composition system proposed for Plone.
+``collective.cover`` is based on `Blocks`_ and `Tiles`_, like `Mosaic`_, the new layout solution for Plone.
 
-.. _`Blocks`: https://github.com/plone/plone.app.blocks
-.. _`Deco`: https://github.com/plone/plone.app.deco
-.. _`Tiles`: https://github.com/plone/plone.app.tiles
+.. _`Blocks`: https://pypi.python.org/pypi/plone.app.blocks
+.. _`Mosaic`: https://pypi.python.org/pypi/plone.app.mosaic
+.. _`Tiles`: https://pypi.python.org/pypi/plone.app.tiles
 
 Demo
 ^^^^
@@ -71,21 +71,17 @@ These are some of the sites using ``collective.cover``:
 Mostly Harmless
 ---------------
 
-.. image:: https://secure.travis-ci.org/collective/collective.cover.png?branch=master
-    :alt: Travis CI badge
+.. image:: http://img.shields.io/pypi/v/collective.cover.svg
+   :target: https://pypi.python.org/pypi/collective.cover
+
+.. image:: https://img.shields.io/travis/collective/collective.cover/master.svg
     :target: http://travis-ci.org/collective/collective.cover
 
 .. image:: https://badge.waffle.io/collective/collective.cover.png?label=ready&title=Ready
-    :alt: Stories in Ready
     :target: https://waffle.io/collective/collective.cover
 
-.. image:: https://coveralls.io/repos/collective/collective.cover/badge.png?branch=master
-    :alt: Coveralls badge
+.. image:: https://img.shields.io/coveralls/collective/collective.cover/master.svg
     :target: https://coveralls.io/r/collective/collective.cover
-
-.. image:: https://pypip.in/d/collective.cover/badge.png
-    :alt: Downloads
-    :target: https://pypi.python.org/pypi/collective.cover/
 
 Got an idea? Found a bug? Let us know by `opening a support ticket`_.
 
@@ -94,11 +90,17 @@ Got an idea? Found a bug? Let us know by `opening a support ticket`_.
 Known issues
 ^^^^^^^^^^^^
 
+* `Versioning creates zillions of empty blob files`_.
+  If you're using this feature in your site you have to take special attention to the number of free inodes in your file system,
+  as you can run out of them;
+  use the ``df -i`` command to check it.
+
 * `Package is not compatible with standard Plone tiles`_.
   This will be addressed in a future release, if we get an sponsor.
 
 * `AJAX responses are wrapped after installing the package`_.
-  This is `an issue in plone.app.blocks`_.
+  This was an issue in `Blocks`_ that is already fixed;
+  we haven't merge it yet because it will break compatibility with Plone 4.2.
 
 * `Not compatible with jQuery 1.9`_.
   There is work being done to solve this and to fix `plone.app.jquerytools` also.
@@ -106,11 +108,11 @@ Known issues
 
 See the `complete list of bugs on GitHub`_.
 
+.. _`Versioning creates zillions of empty blob files`: https://github.com/collective/collective.cover/issues/532
 .. _`Package is not compatible with standard Plone tiles`: https://github.com/collective/collective.cover/issues/81
 .. _`AJAX responses are wrapped after installing the package`: https://github.com/collective/collective.cover/issues/331
-.. _`complete list of bugs on GitHub`: https://github.com/collective/collective.cover/issues?labels=bug&milestone=&page=1&state=open
-.. _`an issue in plone.app.blocks`: https://github.com/plone/plone.app.blocks/issues/5
 .. _`Not compatible with jQuery 1.9`: https://github.com/collective/collective.cover/issues/413
+.. _`complete list of bugs on GitHub`: https://github.com/collective/collective.cover/issues?labels=bug&milestone=&page=1&state=open
 
 Don't Panic
 -----------
@@ -141,9 +143,7 @@ To enable this package in a buildout-based installation:
     ...
     collective.js.bootstrap = 2.3.1.1
     plone.app.blocks = 1.1.1
-    plone.app.drafts = 1.0a2
     plone.app.tiles = 1.0.1
-    plone.tiles = 1.2
 
 #. If you are using Plone 4.2.x you need to add the following also::
 
@@ -195,11 +195,10 @@ following:
     interface of all. It is easily extended and there are several add-ons
     available that provide new functionality for it.
 
-Home Page Editor of the Brazilian Chamber of Deputies Site
-    Strongly based on `Collage`_, this package was presented at the `World
-    Plone Day 2012 Brasilia`_. It allows editing of home pages and the
-    definition of permissions on blocks of content. Available only for Plone 3
-    and not openly published… yet.
+`Home Page Editor of the Brazilian Chamber of Deputies Site`_
+    Strongly based on `Collage`_, this package was presented at the `World Plone Day 2012 Brasilia`_.
+    It allows editing of home pages and the definition of permissions on blocks of content.
+    Works under Plone 3 only.
 
 `collective.panels`_
     A new package that lets site editors add portlets to a set of new
@@ -213,5 +212,6 @@ Home Page Editor of the Brazilian Chamber of Deputies Site
 .. _`Collage`: http://plone.org/products/collage
 .. _`collective.panels`: https://github.com/collective/collective.panels
 .. _`CompositePack`: http://plone.org/products/compositepack
+.. _`Home Page Editor of the Brazilian Chamber of Deputies Site`: https://colab.interlegis.leg.br/browser/publico/camara.home
 .. _`Using tiles to provide more flexible Plone layouts`: http://davisagli.com/blog/using-tiles-to-provide-more-flexible-plone-layouts
 .. _`World Plone Day 2012 Brasilia`: http://colab.interlegis.leg.br/wiki/WorldPloneDay
