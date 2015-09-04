@@ -56,5 +56,5 @@ class SearchableEmbedTile(object):
 
     def SearchableText(self):
         context = self.context
-        return u'{0} {1} {2}'.format(context.data['title'] or '', context.data['description'] or '',
-                                     context.data['embed'] or '')
+        import ipdb;ipdb.set_trace()
+        return u'{0} {1}'.format(context.data['title'] or '', context.data['description'] or '')
