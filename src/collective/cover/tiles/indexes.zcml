@@ -8,27 +8,27 @@
   <adapter
       factory=".banner.SearchableBannerTile"
       provides="collective.cover.interfaces.ISearchableText"
-      for=".banner.IBannerTile"
+      for=".banner.BannerTile"
       />
   <adapter
       factory=".basic.SearchableBasicTile"
       provides="collective.cover.interfaces.ISearchableText"
-      for=".basic.IBasicTile"
+      for=".basic.BasicTile"
       />
   <adapter
       factory=".collection.SearchableCollectionTile"
       provides="collective.cover.interfaces.ISearchableText"
-      for=".collection.ICollectionTile"
+      for=".collection.CollectionTile"
       />
   <adapter
       factory=".embed.SearchableEmbedTile"
       provides="collective.cover.interfaces.ISearchableText"
-      for=".embed.IEmbedTile"
+      for=".embed.EmbedTile"
       />
   <adapter
       factory=".file.SearchableFileTile"
       provides="collective.cover.interfaces.ISearchableText"
-      for=".file.IFileTile"
+      for=".file.FileTile"
       />
   <adapter
       factory=".list.SearchableListTile"
