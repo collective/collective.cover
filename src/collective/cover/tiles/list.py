@@ -423,4 +423,4 @@ class SearchableListTile(object):
 
     def SearchableText(self):
         context = self.context
-        return u'{0} {1}'.format(context.data['title'] or '', context.data['description'] or '')
+        return u'{0} {1}'.format(context.data['tile_title'] or '', context.data['more_link_text'] or '')
