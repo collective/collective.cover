@@ -151,26 +151,21 @@ def assign_id_for_tiles(cover, event):
 def searchableText(obj):
     """Return searchable text to be used as indexer. Includes id, title,
     description and text from Rich Text tiles."""
-    try:
-        text_list = []
-        tiles = obj.get_tiles()
-        for tile in tiles:
-            tile_obj = obj.restrictedTraverse('@@{0}/{1}'.format(tile['type'], tile['id']))
-            searchable = queryAdapter(tile_obj, ISearchableText)
-            if searchable:
-                text_list.append(searchable.SearchableText())
-        tiles_text = u' '.join(text_list)
-        searchable_text = [safe_unicode(entry) for entry in (
-            obj.id,
-            obj.Title(),
-            obj.Description(),
-            tiles_text,
-        ) if entry]
-        searchable_text = u' '.join(searchable_text)
-        print 'OK'
-    except Exception as error:
-        print 'NOTOK:', obj.absolute_url(), error 
-        raise    
+    text_list = []
+    tiles = obj.get_tiles()
+    for tile in tiles:
+        tile_obj = obj.restrictedTraverse('@@{0}/{1}'.format(tile['type'], tile['id']))
+        searchable = queryAdapter(tile_obj, ISearchableText)
+        if searchable:
+            text_list.append(searchable.SearchableText())
+    tiles_text = u' '.join(text_list)
+    searchable_text = [safe_unicode(entry) for entry in (
+        obj.id,
+        obj.Title(),
+        obj.Description(),
+        tiles_text,
+    ) if entry]
+    searchable_text = u' '.join(searchable_text)
     return searchable_text
 
 grok.global_adapter(searchableText, name='SearchableText')
