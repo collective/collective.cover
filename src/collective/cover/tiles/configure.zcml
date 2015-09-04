@@ -116,6 +116,6 @@
       />
 
   <include file="tiles.zcml" />
-  <include file="searchable.zcml" />
+  <include file="indexes.zcml" />
 
 </configure>
