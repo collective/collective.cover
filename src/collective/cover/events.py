@@ -4,9 +4,8 @@ from five import grok
 from plone import api
 from plone.app.iterate.interfaces import ICheckinEvent
 from plone.app.linkintegrity.handlers import getObjectsFromLinks
-from plone.app.linkintegrity.handlers import referencedRelationship
+from plone.app.linkintegrity.handlers import updateReferences
 from plone.app.linkintegrity.parser import extractLinks
-from plone.app.linkintegrity.references import updateReferences
 from plone.app.textfield.value import RichTextValue
 from Products.Archetypes.interfaces import IReferenceable
 from zope.annotation.interfaces import IAnnotations
@@ -68,4 +67,4 @@ def modifiedCoverTile(obj, event):
             links = extractLinks(value)
             refs |= getObjectsFromLinks(obj.context, links)
 
-    updateReferences(IReferenceable(obj.context), referencedRelationship, refs)
+    updateReferences(obj.context, refs)
