@@ -25,10 +25,11 @@
       handler=".events.modifiedCoverTile"
       />
 
+<!--
   <subscriber
       for="collective.cover.tiles.base.IPersistentCoverTile
            zope.lifecycleevent.interfaces.IObjectRemovedEvent"
       handler="plone.app.linkintegrity.handlers.referencedObjectRemoved"
       />
-
+-->
 </configure>
