@@ -6,6 +6,7 @@ from zope.component import queryUtility
 from zope.schema.interfaces import IVocabularyFactory
 
 import json
+import lxml
 import unittest
 
 
@@ -21,8 +22,9 @@ class ContentChooserTestCase(unittest.TestCase):
     def test_render(self):
         self.request.set('b_size', 100)
         rendered = self.portal.restrictedTraverse('@@test-content-contentchooser')()
-        html = 'title="document:/plone/my-document"'
-        self.assertIn(html, rendered)
+        document = lxml.html.fromstring(rendered)
+        # there should be a link to a document in here
+        self.assertTrue(document.cssselect('a.contenttype-document'))
 
     def test_jsonbytype(self):
         catalog = self.portal['portal_catalog']
@@ -51,10 +53,10 @@ class ContentChooserTestCase(unittest.TestCase):
         self.request.set('q', 'Image')
         view = api.content.get_view(u'content-search', self.portal,
                                     self.request)
-        html = 'title="document:/plone/my-document"'
-        self.assertNotIn(html, view())
-        html = 'title="image:/plone/my-image2"'
-        self.assertIn(html, view())
+        document = lxml.html.fromstring(view())
+        # we should have links to images, but none to documents
+        self.assertEqual(len(document.cssselect('a.contenttype-document')), 0)
+        self.assertEqual(len(document.cssselect('a.contenttype-image')), 3)
 
     @unittest.skipIf(
         PLONE_VERSION < '4.3',
