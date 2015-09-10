@@ -8,9 +8,8 @@
      tal:omit-tag="">
 
     <tal:stored_data define="stored_data python:view.form.getFieldConfiguration(view);
-                             properties view/form/context/@@plone_tools/properties;
-                             imaging_properties properties/imaging_properties;
-                             allowed_sizes python:imaging_properties.getProperty('allowed_sizes')">
+                             registry python:view.form.context.portal_registry;
+                             allowed_sizes python:registry['plone.allowed_sizes'];">
 
         <div class="visibility-box">
         <span i18n:translate="">Visible</span>
