@@ -17,10 +17,6 @@ var coveractions = {
         var call_context = (typeof portal_url === 'undefined' ? $('body').data('portalUrl') : portal_url) + '/';
         if (this.current_path.indexOf('/compose') > 0){
             this.getFolderContents(call_context, '@@jsonbytype');
-
-        if ((has_next === 'false') ||
-            ($ul.scrollTop() + $ul.innerHeight() < $ul[0].scrollHeight)) {
-            return;
         }
     },
 
