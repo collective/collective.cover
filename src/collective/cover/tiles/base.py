@@ -13,7 +13,6 @@ from collective.cover.tiles.configuration_view import IDefaultConfigureForm
 from collective.cover.tiles.permissions import ITilesPermissions
 from persistent.dict import PersistentDict
 from plone import api
-from plone.api.exc import InvalidParameterError
 from plone import tiles
 from plone.app.textfield.interfaces import ITransformer
 from plone.app.textfield.value import RichTextValue
