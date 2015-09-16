@@ -239,3 +239,11 @@ class DefaultConfigureView(layout.FormWrapper):
         if self.form_instance is not None:
             if getattr(self.form_instance, 'tileType', None) is None:
                 self.form_instance.tileType = tileType
+
+    def __call__(self):
+        # We add Cache-Control here because IE9-11 cache XHR GET requests. If
+        # you configure a tile, save and reconfigure you get the previouw
+        # request. IE will list the request as 304 not modified, in its F12
+        # tools, but it is never even requested from the server.
+        self.request.response.setHeader('Cache-Control', 'no-cache, must-revalidate')
+        return super(DefaultConfigureView, self).__call__()

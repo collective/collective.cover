@@ -136,7 +136,7 @@ class TextLinesSortableWidget(textlines.TextLinesWidget):
         portal_properties = api.portal.get_tool(name='portal_properties')
         use_view_action = portal_properties.site_properties.getProperty(
             'typesUseViewActionInListings', ())
-        values = self.request.get(self.name).split('\r\n')
+        values = self.request.get(self.name).splitlines()
         uuids = [i for i in values if i]
         results = dict()
         for index, uuid in enumerate(uuids):
