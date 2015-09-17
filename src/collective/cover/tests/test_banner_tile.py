@@ -3,6 +3,8 @@ from collective.cover.testing import ALL_CONTENT_TYPES
 from collective.cover.tests.base import TestTileMixin
 from collective.cover.tiles.banner import BannerTile
 from collective.cover.tiles.banner import IBannerTile
+from collective.cover.interfaces import ISearchableText
+from zope.component import queryAdapter
 from mock import Mock
 
 import unittest
@@ -118,3 +120,8 @@ class BannerTileTestCase(TestTileMixin, unittest.TestCase):
         self.assertNotIn('<img ', rendered)
         # FIXME: set remote_url on the object
         self.assertIn('<a href="http://">Test link</a>', rendered)
+
+    def test_seachable_text(self):
+        searchable = queryAdapter(self.tile, ISearchableText)
+        self.tile.data['title'] = 'custom title'
+        self.assertEqual(searchable.SearchableText(), 'custom title')

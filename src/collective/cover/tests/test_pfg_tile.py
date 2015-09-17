@@ -4,11 +4,13 @@ from collective.cover.tiles.configuration import ITilesConfigurationScreen
 from collective.cover.tiles.permissions import ITilesPermissions
 from collective.cover.tiles.pfg import IPFGTile
 from collective.cover.tiles.pfg import PFGTile
+from collective.cover.interfaces import ISearchableText
 from mock import Mock
 from plone import api
 from plone.uuid.interfaces import IUUID
 from zope.annotation.interfaces import IAnnotations
 from zope.component import getMultiAdapter
+from zope.component import queryAdapter
 
 import unittest
 
@@ -113,6 +115,12 @@ class PFGTileTestCase(TestTileMixin, unittest.TestCase):
         # Now we should not see the stored data anymore
         self.assertNotIn('plone.tiles.permission.test', annotations)
         self.assertNotIn('plone.tiles.configuration.test', annotations)
+
+    def test_seachable_text(self):
+        searchable = queryAdapter(self.tile, ISearchableText)
+        self.tile.data['title'] = 'custom title'
+        self.tile.data['description'] = 'custom description'
+        self.assertEqual(searchable.SearchableText(), 'custom title custom description')
 
 
 def test_suite():
