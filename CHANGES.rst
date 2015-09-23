@@ -6,6 +6,11 @@ There's a frood who really knows where his towel is.
 1.0a12 (unreleased)
 ^^^^^^^^^^^^^^^^^^^
 
+- When fetching image from content object, fetch the tile scale to ensure we get a correct crop from plone.app.imagecropping and don't waste space storing a full sized image.
+  [alecm]
+
+- Add Cache-Control headers to the @@configure-tile and @@edit-tile views to prevent Internet Explorer from caching the XHR GET requests for these views. What would happen is that you would see the previious (old) field info if you configured or edited a tile, saved and re-opened the same dialog in IE.
+    
 - Fix textlinessortable widget for IE11 where IE11 mangles multiform POST data. This fixes removing items from the Caroussel compose widget in IE11.
   [fredvd]
 

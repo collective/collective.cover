@@ -107,6 +107,14 @@ class CustomTileEdit(DefaultEditView):
     form = CustomEditForm
     index = ViewPageTemplateFile('templates/tileformlayout.pt')
 
+    def __call__(self):
+        # We add Cache-Control here because IE9-11 cache XHR GET requests. If
+        # you edit a tile, save and re-edit you get the previouw request. IE
+        # will list the request as 304 not modified, in its F12 tools, but it
+        # is never even requested from the server.
+        self.request.response.setHeader('Cache-Control', 'no-cache, must-revalidate')
+        return super(CustomTileEdit, self).__call__()
+
 
 class CoverTileEditView(EditTile):
     """

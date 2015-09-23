@@ -419,10 +419,11 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
         :rtype: NamedBlobImage instance or None
         """
         image = None
+        scale = self.scale
         # if has image, store a copy of its data
         if self._has_image_field(obj) and self._field_is_visible('image'):
             scales = obj.restrictedTraverse('@@images')
-            image = scales.scale('image', None)
+            image = scales.scale('image', scale)
 
         if image is not None and image != '':
             if isinstance(image.data, NamedBlobImage):
