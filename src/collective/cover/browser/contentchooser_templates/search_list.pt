@@ -1,4 +1,4 @@
-<tal:master define="level view/level|python:0; children view/children | nothing;"
+<tal:master define="level view/level|python:0; children view/children | nothing; portal_path context/portal_url/getPortalPath"
             i18n:domain="collective.cover">
     <ul class="item-list"
         tal:attributes="data-total-results view/total_results;
@@ -10,13 +10,14 @@
                             item_url node/getURL;
                             item_token  python:view.getTermByBrain(node['item']).token;
                             item_icon node/item_icon;
-                            content_type node/portal_type;"
+                            content_type node/portal_type;
+                            content_path python:node['path'][len(portal_path):]"
                 tal:attributes="uid uid">
                 <tal:level define="item_class string:contenttype-${node/normalized_portal_type} state-${node/normalized_review_state}">
                     <tal:block>
                         <a tal:attributes="rel level;
                                            class string:$item_class;
-                                           title string:${node/Description};
+                                           title string:${node/Description} : ${content_path};
                                            data-ct-type content_type">
                             <img tal:replace="structure item_icon/html_tag|item_icon" />
                             <span tal:content="node/Title">Selected Item Title</span>
