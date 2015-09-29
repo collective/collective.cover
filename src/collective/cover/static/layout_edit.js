@@ -106,6 +106,49 @@
             },
 
             /**
+             * Generate a random value to form a UUID; we use a
+             * fallback for browsers without crypto module mainly to
+             * deal with older versions of IE.
+             * See: http://caniuse.com/#search=crypto
+             **/
+            get_random_value: function(c) {
+              var r;
+              if (typeof crypto !== "undefined" && crypto !== null) {
+                r = crypto.getRandomValues(new Uint8Array(1))[0] % 16 | 0;
+              } else { // Fallback for older browsers
+                r = Math.random() * 16 | 0;
+              }
+              if (c !== 'x') {
+                r = r & 0x3 | 0x8;
+              }
+              return r.toString(16);
+            },
+
+            /**
+             * Generate an RFC 4122 version 4 compliant UUID.
+             * See: http://stackoverflow.com/a/2117523/2116850
+             **/
+            generate_uuid: function () {
+              return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(
+                /[xy]/g,
+                self.get_random_value
+              );
+            },
+
+            /**
+             * Generate tile id. As we're using the generated UUID as
+             * class id, we need the first char not to be a number.
+             * See: http://css-tricks.com/ids-cannot-start-with-a-number/
+             **/
+            generate_tile_id: function () {
+                var tile_id = self.generate_uuid();
+                while ($.isNumeric(tile_id[0])) {
+                  tile_id = self.generate_uuid();
+                }
+                return tile_id;
+            },
+
+            /**
              * Row drop handler
              * available from outside the droppable definition
              **/
@@ -182,30 +225,25 @@
                         var is_configurable = ui.draggable.data('tile-configurable');
                         new_tile.attr("data-tile-type", tile_type);
 
-                        $.ajax({
-                            url: "@@uid_getter",
-                            success: function(info, la) {
-                                new_tile.attr("id", info);
-                                var url_config = "@@configure-tile/" + tile_type + "/" + info;
+                        var tile_id = self.generate_tile_id();
+                        new_tile.attr("id", tile_id);
+                        var url_config = "@@configure-tile/" + tile_type + "/" + tile_id;
 
-                                var config_icon = $("<i/>").addClass("config-icon");
-                                var config_link = $("<a />").addClass("config-tile-link")
-                                    .attr('href',url_config)
-                                    .append(config_icon);
-                                var name_tag = $("<span />").addClass("tile-name")
-                                    .text(ui.draggable.data('tile-name'));
-                                if(is_configurable) {
-                                    new_tile.append(config_link);
-                                }
-                                new_tile.append(name_tag);
+                        var config_icon = $("<i/>").addClass("config-icon");
+                        var config_link = $("<a />").addClass("config-tile-link")
+                            .attr('href',url_config)
+                            .append(config_icon);
+                        var name_tag = $("<span />").addClass("tile-name")
+                            .text(ui.draggable.data('tile-name'));
+                        if(is_configurable) {
+                            new_tile.append(config_link);
+                        }
+                        new_tile.append(name_tag);
 
-                                $(column_elem).append(new_tile);
-                                self.delete_manager(new_tile);
+                        $(column_elem).append(new_tile);
+                        self.delete_manager(new_tile);
 
-                                le.trigger('modified.layout');
-                                return false;
-                            }
-                        });
+                        le.trigger('modified.layout');
                     }
                 });
 

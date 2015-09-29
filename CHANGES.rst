@@ -6,6 +6,9 @@ There's a frood who really knows where his towel is.
 1.0a12 (unreleased)
 ^^^^^^^^^^^^^^^^^^^
 
+- Generate tile ids client-side to fix an issue causing duplicated ids on tiles when using IE browsers or proxy caches (fixes `#526`_).
+  [frapell, rodfersou]
+
 - Add new feature to make content of new tiles searchable;
   now, besides the RichText tile, Basic and Embed tiles are searchable by default.
   Developer documentation was also updated with a new section explaining how to accomplish this.
@@ -694,6 +697,7 @@ There's a frood who really knows where his towel is.
 .. _`#494`: https://github.com/collective/collective.cover/issues/494
 .. _`#495`: https://github.com/collective/collective.cover/issues/495
 .. _`#504`: https://github.com/collective/collective.cover/issues/504
+.. _`#526`: https://github.com/collective/collective.cover/issues/526
 .. _`#530`: https://github.com/collective/collective.cover/issues/530
 .. _`#534`: https://github.com/collective/collective.cover/issues/534
 .. _`PloneFormGen`: https://pypi.python.org/pypi/Products.PloneFormGen
