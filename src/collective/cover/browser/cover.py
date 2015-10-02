@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from AccessControl import getSecurityManager
 from Acquisition import aq_inner
+from plone.app.blocks.interfaces import IBlocksTransformEnabled
 from collective.cover.controlpanel import ICoverSettings
 from collective.cover.interfaces import ICover
 from collective.cover.interfaces import IGridSystem
@@ -25,12 +26,14 @@ grok.templatedir('templates')
 
 class View(grok.View):
     grok.context(ICover)
+    grok.implements(IBlocksTransformEnabled)
     grok.require('zope2.View')
     grok.name('view')
 
 
 class Standard(grok.View):
     grok.context(ICover)
+    grok.implements(IBlocksTransformEnabled)
     grok.require('zope2.View')
     grok.name('standard')
 
@@ -136,6 +139,7 @@ class RemoveTileWidget(grok.View):
 # XXX: we need to leave the view after saving or cancelling editing
 class Compose(grok.View):
     grok.context(ICover)
+    grok.implements(IBlocksTransformEnabled)
     grok.require('cmf.ModifyPortalContent')
 
     def update(self):
