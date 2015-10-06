@@ -66,18 +66,6 @@
       />
 
   <plone:tile
-      name="collective.cover.carousel"
-      title="Carousel Tile"
-      description="A tile that shows a carousel of images."
-      icon="++resource++collective.cover/tile-carousel.png"
-      add_permission="cmf.ModifyPortalContent"
-      schema=".carousel.ICarouselTile"
-      class=".carousel.CarouselTile"
-      permission="zope2.View"
-      for="*"
-      />
-
-  <plone:tile
       name="collective.cover.embed"
       title="Embedding Tile"
       description="A tile to embed content from a remote source."
