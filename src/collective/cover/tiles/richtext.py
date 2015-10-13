@@ -12,6 +12,8 @@ from plone.app.textfield.value import RichTextValue
 from plone.tiles.interfaces import ITileDataManager
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zope.interface import implements
+from collective.cover.interfaces import ISearchableText
+from plone import api
 
 
 class IRichTextTile(IPersistentCoverTile):
@@ -62,3 +64,22 @@ class RichTextTile(PersistentCoverTile):
     def accepted_ct(self):
         """Return 'Document' as the only content type accepted in the tile."""
         return ['Document']
+
+
+class SearchableRichTextTile(object):
+    implements(ISearchableText)
+
+    def __init__(self, context):
+        self.context = context
+
+    def SearchableText(self):
+        context = self.context
+        transforms = api.portal.get_tool('portal_transforms')
+        value = context.data['text']
+        data = transforms.convertTo(
+            'text/plain',
+            value.encode('utf-8 ') if isinstance(value, unicode) else value.raw_encoded,
+            mimetype='text/html',
+            context=context,
+            encoding='utf-8' if isinstance(value, unicode) else value.encoding) if value else ''
+        return u'{0}'.format(unicode(data.getData(), 'utf-8')) if data else ''

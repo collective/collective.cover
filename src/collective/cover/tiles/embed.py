@@ -6,6 +6,7 @@ from plone.autoform.directives import write_permission
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zope import schema
 from zope.interface import implements
+from collective.cover.interfaces import ISearchableText
 
 
 class IEmbedTile(IPersistentCoverTile):
@@ -46,3 +47,14 @@ class EmbedTile(PersistentCoverTile):
     def accepted_ct(self):
         """Return an empty list as no content types are accepted."""
         return []
+
+
+class SearchableEmbedTile(object):
+    implements(ISearchableText)
+
+    def __init__(self, context):
+        self.context = context
+
+    def SearchableText(self):
+        context = self.context
+        return u'{0} {1}'.format(context.data['title'] or '', context.data['description'] or '')
