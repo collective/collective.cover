@@ -6,6 +6,9 @@ There's a frood who really knows where his towel is.
 1.0a12 (unreleased)
 ^^^^^^^^^^^^^^^^^^^
 
+- Use "application/javascript" media type instead of the obsolete "text/javascript".
+  [hvelarde]
+
 - Make package compatible with jQuery 1.9.
   [naro]
 
