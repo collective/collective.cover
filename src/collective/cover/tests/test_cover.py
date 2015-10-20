@@ -166,7 +166,7 @@ class CoverIntegrationTestCase(unittest.TestCase):
         # indexer should contain id, title, description and text in tiles
         self.assertEqual(
             searchableText(self.cover)(),
-            u'c1 Lorem ipsum Neque porro  01234  56789 '
+            u'c1 Lorem ipsum Neque porro  01234   56789 '
         )
 
     # TODO: add test for plone.app.relationfield.behavior.IRelatedItems

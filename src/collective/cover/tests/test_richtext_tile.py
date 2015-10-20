@@ -2,6 +2,9 @@
 from collective.cover.tests.base import TestTileMixin
 from collective.cover.tiles.richtext import IRichTextTile
 from collective.cover.tiles.richtext import RichTextTile
+from collective.cover.interfaces import ISearchableText
+from plone.app.textfield.value import RichTextValue
+from zope.component import queryAdapter
 from mock import Mock
 
 import unittest
@@ -48,3 +51,12 @@ class RichTextTileTestCase(TestTileMixin, unittest.TestCase):
         self.tile.populate_with_object(obj)
         rendered = self.tile()
         self.assertIn('<p>My document text...</p>', rendered)
+
+    def test_seachable_text(self):
+        searchable = queryAdapter(self.tile, ISearchableText)
+        text = '<p>My document text...</p>'
+        value = RichTextValue(raw=text,
+                              mimeType='text/x-html-safe',
+                              outputMimeType='text/x-html-safe')
+        self.tile.data['text'] = value
+        self.assertEqual(searchable.SearchableText(), ' My document text... ')
