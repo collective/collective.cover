@@ -10,7 +10,6 @@ from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.CMFPlone.utils import safe_unicode
 from zope import schema
 from zope.interface import implements
-from collective.cover.interfaces import ISearchableText
 
 HTML = """
     <a href="{0}/at_download/file">
@@ -109,14 +108,3 @@ class FileTile(PersistentCoverTile):
     def accepted_ct(self):
         """Return 'File' as the only content type accepted in the tile."""
         return ['File']
-
-
-class SearchableFileTile(object):
-    implements(ISearchableText)
-
-    def __init__(self, context):
-        self.context = context
-
-    def SearchableText(self):
-        context = self.context
-        return u'{0} {1}'.format(context.data['title'] or '', context.data['description'] or '')

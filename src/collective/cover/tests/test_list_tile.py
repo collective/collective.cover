@@ -3,8 +3,6 @@ from collective.cover.testing import ALL_CONTENT_TYPES
 from collective.cover.tests.base import TestTileMixin
 from collective.cover.tiles.list import IListTile
 from collective.cover.tiles.list import ListTile
-from collective.cover.interfaces import ISearchableText
-from zope.component import queryAdapter
 from DateTime import DateTime
 from mock import Mock
 from plone import api
@@ -216,9 +214,3 @@ class ListTileTestCase(TestTileMixin, unittest.TestCase):
         expected = api.portal.get_localized_time(
             tomorrow, long_format=False, time_only=True)
         self.assertIn(expected, rendered)  # u'01:23 PM'
-
-    def test_seachable_text(self):
-        searchable = queryAdapter(self.tile, ISearchableText)
-        self.tile.data['tile_title'] = 'custom title'
-        self.tile.data['more_link_text'] = 'custom more link text'
-        self.assertEqual(searchable.SearchableText(), 'custom title custom more link text')

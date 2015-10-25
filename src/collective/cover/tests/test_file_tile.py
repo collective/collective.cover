@@ -2,8 +2,6 @@
 from collective.cover.tests.base import TestTileMixin
 from collective.cover.tiles.file import FileTile
 from collective.cover.tiles.file import IFileTile
-from collective.cover.interfaces import ISearchableText
-from zope.component import queryAdapter
 from plone.uuid.interfaces import IUUID
 
 import unittest
@@ -102,9 +100,3 @@ class FileTileTestCase(TestTileMixin, unittest.TestCase):
         self.assertIn('1 MB (1048576 bytes)', rendered)
         self.assertIn('My file', rendered)
         self.assertIn('This file was created for testing purposes', rendered)
-
-    def test_seachable_text(self):
-        searchable = queryAdapter(self.tile, ISearchableText)
-        self.tile.data['title'] = 'custom title'
-        self.tile.data['description'] = 'custom description'
-        self.assertEqual(searchable.SearchableText(), 'custom title custom description')

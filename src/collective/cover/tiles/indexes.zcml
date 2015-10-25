@@ -6,39 +6,14 @@
     i18n_domain="collective.cover">
 
   <adapter
-      factory=".banner.SearchableBannerTile"
-      provides="collective.cover.interfaces.ISearchableText"
-      for=".banner.BannerTile"
-      />
-  <adapter
       factory=".basic.SearchableBasicTile"
       provides="collective.cover.interfaces.ISearchableText"
       for=".basic.BasicTile"
       />
   <adapter
-      factory=".collection.SearchableCollectionTile"
-      provides="collective.cover.interfaces.ISearchableText"
-      for=".collection.CollectionTile"
-      />
-  <adapter
       factory=".embed.SearchableEmbedTile"
       provides="collective.cover.interfaces.ISearchableText"
       for=".embed.EmbedTile"
-      />
-  <adapter
-      factory=".file.SearchableFileTile"
-      provides="collective.cover.interfaces.ISearchableText"
-      for=".file.FileTile"
-      />
-  <adapter
-      factory=".list.SearchableListTile"
-      provides="collective.cover.interfaces.ISearchableText"
-      for=".list.ListTile"
-      />
-  <adapter
-      factory=".pfg.SearchablePFGTile"
-      provides="collective.cover.interfaces.ISearchableText"
-      for=".pfg.PFGTile"
       />
   <adapter
       factory=".richtext.SearchableRichTextTile"

@@ -22,7 +22,6 @@ from zope.event import notify
 from zope.interface import implements
 from zope.lifecycleevent import ObjectModifiedEvent
 from zope.schema import getFieldsInOrder
-from collective.cover.interfaces import ISearchableText
 
 import logging
 
@@ -416,14 +415,3 @@ class GenericUIDsProvider(object):
         """ Return a list of UIDs of collection objects.
         """
         return [IUUID(self.context)]
-
-
-class SearchableListTile(object):
-    implements(ISearchableText)
-
-    def __init__(self, context):
-        self.context = context
-
-    def SearchableText(self):
-        context = self.context
-        return u'{0} {1}'.format(context.data['tile_title'] or '', context.data['more_link_text'] or '')

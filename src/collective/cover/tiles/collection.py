@@ -16,7 +16,6 @@ from zope import schema
 from zope.component import queryUtility
 from zope.interface import implements
 from zope.schema import getFieldsInOrder
-from collective.cover.interfaces import ISearchableText
 
 
 class ICollectionTile(IPersistentCoverTile):
@@ -227,15 +226,3 @@ class CollectionTile(PersistentCoverTile):
 
     def show_footer(self):
         return self._field_is_visible('footer')
-
-
-class SearchableCollectionTile(object):
-    implements(ISearchableText)
-
-    def __init__(self, context):
-        self.context = context
-
-    def SearchableText(self):
-        context = self.context
-        return u'{0} {1} {2} {3}'.format(context.data['title'] or '', context.data['description'] or '',
-                                         context.data['header'] or '', context.data['footer'] or '')

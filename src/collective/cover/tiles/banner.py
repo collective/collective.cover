@@ -11,7 +11,6 @@ from Products.CMFPlone.utils import safe_unicode
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zope import schema
 from zope.interface import implements
-from collective.cover.interfaces import ISearchableText
 
 
 class IBannerTile(IPersistentCoverTile):
@@ -109,14 +108,3 @@ class BannerTile(PersistentCoverTile):
         if title_conf:
             htmltag = title_conf['htmltag']
             return htmltag
-
-
-class SearchableBannerTile(object):
-    implements(ISearchableText)
-
-    def __init__(self, context):
-        self.context = context
-
-    def SearchableText(self):
-        context = self.context
-        return u'{0}'.format(context.data['title'] or '')
