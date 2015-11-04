@@ -120,6 +120,11 @@ class BasicTile(PersistentCoverTile):
         data_mgr = ITileDataManager(self)
         data_mgr.set(data)
 
+    @property
+    def alt(self):
+        """Return the alt attribute for the image."""
+        return self.data.get('description') or self.data.get('title')
+
 
 class SearchableBasicTile(object):
 

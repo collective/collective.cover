@@ -265,6 +265,10 @@ class ListTile(PersistentCoverTile):
         """
         return IUUID(obj, None)
 
+    def get_alt(self, obj):
+        """Return the alt attribute for the image in the obj."""
+        return obj.Description() or obj.Title()
+
     # XXX: refactoring the tile's schema should be a way to avoid this
     def get_configured_fields(self):
         # Override this method, since we are not storing anything

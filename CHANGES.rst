@@ -6,6 +6,12 @@ There's a frood who really knows where his towel is.
 1.0a12 (unreleased)
 ^^^^^^^^^^^^^^^^^^^
 
+- Tiles that display an image now show their description (or title) in the ``alt`` attribute (closes `#559`_).
+  [rodfersou, hvelarde]
+
+- The ``image`` macro previously included on ``tile_macros.pt`` was removed as it is not used anywhere.
+  [rodfersou]
+
 - Show more information using title tooltip in content search, to ensure listed content is unambiguous.
   [cguardia, alecm]
 
@@ -703,4 +709,5 @@ There's a frood who really knows where his towel is.
 .. _`#526`: https://github.com/collective/collective.cover/issues/526
 .. _`#530`: https://github.com/collective/collective.cover/issues/530
 .. _`#534`: https://github.com/collective/collective.cover/issues/534
+.. _`#559`: https://github.com/collective/collective.cover/issues/559
 .. _`PloneFormGen`: https://pypi.python.org/pypi/Products.PloneFormGen

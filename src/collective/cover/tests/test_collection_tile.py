@@ -14,6 +14,12 @@ from plone.uuid.interfaces import IUUID
 
 import unittest
 
+IMAGE_QUERY = [{
+    'i': 'Type',
+    'o': 'plone.app.querystring.operation.string.is',
+    'v': 'Image',
+}]
+
 
 class CollectionTileTestCase(TestTileMixin, unittest.TestCase):
 
@@ -128,12 +134,7 @@ class CollectionTileTestCase(TestTileMixin, unittest.TestCase):
 
     def test_number_of_items(self):
         collection = self.portal['my-collection']
-        image_query = [{
-            'i': 'Type',
-            'o': 'plone.app.querystring.operation.string.is',
-            'v': 'Image',
-        }]
-        collection.setQuery(image_query)
+        collection.setQuery(IMAGE_QUERY)
         collection.setSort_on('id')
         self.tile.populate_with_object(collection)
 
@@ -152,12 +153,7 @@ class CollectionTileTestCase(TestTileMixin, unittest.TestCase):
 
     def test_offset(self):
         collection = self.portal['my-collection']
-        image_query = [{
-            'i': 'Type',
-            'o': 'plone.app.querystring.operation.string.is',
-            'v': 'Image',
-        }]
-        collection.setQuery(image_query)
+        collection.setQuery(IMAGE_QUERY)
         collection.setSort_on('id')
         self.tile.populate_with_object(collection)
 
@@ -205,12 +201,7 @@ class CollectionTileTestCase(TestTileMixin, unittest.TestCase):
 
     def test_date_on_items(self):
         collection = self.portal['my-collection']
-        image_query = [{
-            'i': 'Type',
-            'o': 'plone.app.querystring.operation.string.is',
-            'v': 'News Item',
-        }]
-        collection.setQuery(image_query)
+        collection.setQuery(IMAGE_QUERY)
         collection.setSort_on('id')
         self.tile.populate_with_object(collection)
 
@@ -269,3 +260,14 @@ class CollectionTileTestCase(TestTileMixin, unittest.TestCase):
         expected = api.portal.get_localized_time(
             tomorrow, long_format=False, time_only=True)
         self.assertIn(expected, rendered)  # u'01:23 PM'
+
+    def test_get_alt(self):
+        collection = self.portal['my-collection']
+        collection.setQuery(IMAGE_QUERY)
+        collection.setSort_on('id')
+        self.tile.populate_with_object(collection)
+        rendered = self.tile()
+        # the image is there and the alt attribute is set
+        self.assertIn('<img ', rendered)
+        self.assertIn(
+            'alt="This image was created for testing purposes"', rendered)

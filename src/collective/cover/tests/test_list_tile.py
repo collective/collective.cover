@@ -214,3 +214,12 @@ class ListTileTestCase(TestTileMixin, unittest.TestCase):
         expected = api.portal.get_localized_time(
             tomorrow, long_format=False, time_only=True)
         self.assertIn(expected, rendered)  # u'01:23 PM'
+
+    def test_get_alt(self):
+        obj1 = self.portal['my-image']
+        self.tile.populate_with_object(obj1)
+        rendered = self.tile()
+        # the image is there and the alt attribute is set
+        self.assertIn('<img ', rendered)
+        self.assertIn(
+            'alt="This image was created for testing purposes"', rendered)

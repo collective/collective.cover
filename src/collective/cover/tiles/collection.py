@@ -202,6 +202,10 @@ class CollectionTile(PersistentCoverTile):
                 scales = item.restrictedTraverse('@@images')
                 return scales.scale('image', scale)
 
+    def get_alt(self, obj):
+        """Return the alt attribute for the image in the obj."""
+        return obj.Description() or obj.Title()
+
     @view.memoize
     def get_image_position(self):
         tile_conf = self.get_tile_configuration()

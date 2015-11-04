@@ -46,7 +46,7 @@
                                width thumbnail/width;
                                height thumbnail/height;
                                class python:field.get('position', '');
-                               alt view/data/title" />
+                               alt view/alt" />
         </a>
       </tal:scales>
       </tal:image>

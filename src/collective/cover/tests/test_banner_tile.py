@@ -107,9 +107,9 @@ class BannerTileTestCase(TestTileMixin, unittest.TestCase):
         obj = self.portal['my-image']
         self.tile.populate_with_object(obj)
         rendered = self.tile()
+        # the image is there and the alt attribute is set
         self.assertIn('<img ', rendered)
-        # https://github.com/collective/collective.cover/issues/182
-        self.assertIn('alt="Test image"', rendered)
+        self.assertIn('alt="This image was created for testing purposes"', rendered)
 
     def test_render_with_link(self):
         obj = self.portal['my-link']
