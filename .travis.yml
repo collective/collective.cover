@@ -5,12 +5,14 @@ cache:
   directories:
   - eggs
   - parts/node
+addons:
+  artifacts:
+    s3_region: sa-east-1
+    bucket: collective-cover
+    permissions: public-read
+    paths:
+    - $(find parts/test -type f | tr "\n" ":")
 env:
-  global:
-    - ARTIFACTS_AWS_REGION=sa-east-1
-    - ARTIFACTS_S3_BUCKET=collective-cover
-    - secure: "Ll2tTrfw0vpGlk+tfdcOD8HOylIWlyFDtNL+ShfQtAZ9wHZEOFJJyVsaSpDbdgWD1Y+muSz8I9xcvNY7ag17jm8udSEWecGaMIodeHB5hIklEi/OovKoAUgPqaVtbNE/FtyURZf7KE+Nb7zCege6XjCD635U4W2P1/072aEY3CU="
-    - secure: "bPiRnG3qFbWjD1zgVcTJAcOy8uuUwLKDIaVe15L6M5xLz49SfHFe6Zwc8jQ0g4J9xIDRqX4gcLnJffr0xJmBytXZGohFCjQRPUFruoy/stWWOrdgYT+9Jm9/TbVwoh+Cudo5iTNdIsaVnzcA6IyuTae/i9CJ9QQ7MBKyrjRV+T4="
   matrix:
     - PLONE_VERSION=4.2
     - PLONE_VERSION=4.3
@@ -40,9 +42,6 @@ after_success:
 - bin/createcoverage -t "--layer=!Robot"
 - pip install -q coveralls
 - coveralls
-after_failure:
-  - gem install travis-artifacts -q
-  - travis-artifacts upload --path parts/test
 notifications:
   irc:
     channels: irc.freenode.org#simplesconsultoria
@@ -50,8 +49,8 @@ notifications:
       - "%{repository}#%{build_number} (%{branch} - %{commit} : %{author}): %{message}"
       - "Change view : %{compare_url}"
       - "Build details : %{build_url}"
-      - "Robot Test Report for Plone 4.2: http://collective-cover.s3-website-sa-east-1.amazonaws.com/artifacts/%{build_number}/%{build_number}.1/robot_report.html"
-      - "Robot Test Report for Plone 4.3: http://collective-cover.s3-website-sa-east-1.amazonaws.com/artifacts/%{build_number}/%{build_number}.2/robot_report.html"
-      - "Robot Test Report for Plone 4.3 (jQuery 1.8.x): http://collective-cover.s3-website-sa-east-1.amazonaws.com/artifacts/%{build_number}/%{build_number}.3/robot_report.html"
-      - "Robot Test Report for Plone 4.3 (jQuery 1.9.x): http://collective-cover.s3-website-sa-east-1.amazonaws.com/artifacts/%{build_number}/%{build_number}.4/robot_report.html"
-      - "Robot Test Report for Plone 5.0: http://collective-cover.s3-website-sa-east-1.amazonaws.com/artifacts/%{build_number}/%{build_number}.5/robot_report.html"
+      - "Robot Test Report for Plone 4.2: http://s3-sa-east-1.amazonaws.com/collective-cover/collective/collective.cover/%{build_number}/%{build_number}.1/parts/test/robot_log.html"
+      - "Robot Test Report for Plone 4.3: http://s3-sa-east-1.amazonaws.com/collective-cover/collective/collective.cover/%{build_number}/%{build_number}.2/parts/test/robot_log.html"
+      - "Robot Test Report for jQuery 1.8: http://s3-sa-east-1.amazonaws.com/collective-cover/collective/collective.cover/%{build_number}/%{build_number}.3/parts/test/robot_log.html"
+      - "Robot Test Report for jQuery 1.9: http://s3-sa-east-1.amazonaws.com/collective-cover/collective/collective.cover/%{build_number}/%{build_number}.4/parts/test/robot_log.html"
+      - "Robot Test Report for Plone 5.0: http://s3-sa-east-1.amazonaws.com/collective-cover/collective/collective.cover/%{build_number}/%{build_number}.5/parts/test/robot_log.html"
