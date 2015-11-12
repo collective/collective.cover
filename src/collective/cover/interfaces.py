@@ -51,3 +51,10 @@ class IGridSystem(Interface):
 
     title = Attribute('The user-visible title for this grid.')
     ncolums = Attribute('Number of colums in a grid.')
+
+
+class ISearchableText(Interface):
+    """Interface to adapt tile to provide indexable content"""
+
+    def SearchableText(self):
+        """Content of the tile provided as plain text"""

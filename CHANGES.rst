@@ -6,6 +6,9 @@ There's a frood who really knows where his towel is.
 1.0a12 (unreleased)
 ^^^^^^^^^^^^^^^^^^^
 
+- All tiles made searchable.
+  [lewicki]
+
 - Use "application/javascript" media type instead of the obsolete "text/javascript".
   [hvelarde]
 

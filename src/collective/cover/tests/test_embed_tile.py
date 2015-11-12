@@ -2,6 +2,8 @@
 from collective.cover.tests.base import TestTileMixin
 from collective.cover.tiles.embed import EmbedTile
 from collective.cover.tiles.embed import IEmbedTile
+from collective.cover.interfaces import ISearchableText
+from zope.component import queryAdapter
 from mock import Mock
 
 import unittest
@@ -40,3 +42,9 @@ class EmbedTileTestCase(TestTileMixin, unittest.TestCase):
 
         self.tile.is_compose_mode = Mock(return_value=False)
         self.assertNotIn(msg, self.tile())
+
+    def test_seachable_text(self):
+        searchable = queryAdapter(self.tile, ISearchableText)
+        self.tile.data['title'] = 'custom title'
+        self.tile.data['description'] = 'custom description'
+        self.assertEqual(searchable.SearchableText(), 'custom title custom description')

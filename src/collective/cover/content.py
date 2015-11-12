@@ -5,7 +5,6 @@ from collective.cover.controlpanel import ICoverSettings
 from collective.cover.interfaces import ICover
 from collective.cover.utils import assign_tile_ids
 from five import grok
-from plone import api
 from plone.dexterity.content import Item
 from plone.indexer import indexer
 from plone.registry.interfaces import IRegistry
@@ -13,9 +12,10 @@ from plone.tiles.interfaces import ITileDataManager
 from Products.CMFPlone.utils import safe_unicode
 from Products.GenericSetup.interfaces import IDAVAware
 from zope.component import getUtility
+from zope.component import queryAdapter
 from zope.container.interfaces import IObjectAddedEvent
 from zope.interface import implements
-
+from collective.cover.interfaces import ISearchableText
 import json
 import logging
 
@@ -149,30 +149,21 @@ def assign_id_for_tiles(cover, event):
 def searchableText(obj):
     """Return searchable text to be used as indexer. Includes id, title,
     description and text from Rich Text tiles."""
-    tiles_text = ''
-    transforms = api.portal.get_tool('portal_transforms')
-    for t in obj.list_tiles('collective.cover.richtext'):
-        tile = obj.restrictedTraverse(
-            '@@collective.cover.richtext/{0}'.format(str(t)))
-        value = tile.data['text']
-        data = transforms.convertTo(
-            'text/plain',
-            value.raw_encoded,
-            mimetype='text/html',
-            context=obj,
-            # portal_transforms caches on this
-            object=value._raw_holder,
-            encoding=value.encoding)
-        if data:
-            tiles_text += data.getData()
-
+    text_list = []
+    tiles = obj.get_tiles()
+    for tile in tiles:
+        tile_obj = obj.restrictedTraverse('@@{0}/{1}'.format(tile['type'], tile['id']))
+        searchable = queryAdapter(tile_obj, ISearchableText)
+        if searchable:
+            text_list.append(searchable.SearchableText())
+    tiles_text = u' '.join(text_list)
     searchable_text = [safe_unicode(entry) for entry in (
         obj.id,
         obj.Title(),
         obj.Description(),
         tiles_text,
     ) if entry]
-
-    return u' '.join(searchable_text)
+    searchable_text = u' '.join(searchable_text)
+    return searchable_text
 
 grok.global_adapter(searchableText, name='SearchableText')

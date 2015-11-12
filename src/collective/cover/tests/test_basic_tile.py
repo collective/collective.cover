@@ -8,6 +8,7 @@ from collective.cover.tiles.basic import BasicTile
 from collective.cover.tiles.basic import IBasicTile
 from collective.cover.tiles.configuration import ITilesConfigurationScreen
 from collective.cover.tiles.permissions import ITilesPermissions
+from collective.cover.interfaces import ISearchableText
 from DateTime import DateTime
 from mock import Mock
 from plone import api
@@ -23,6 +24,7 @@ from zope.annotation.interfaces import IAttributeAnnotatable
 from zope.component import getMultiAdapter
 from zope.component import provideUtility
 from zope.component import queryUtility
+from zope.component import queryAdapter
 from zope.component.globalregistry import provideHandler
 from zope.globalrequest import setRequest
 from zope.interface import alsoProvides
@@ -338,3 +340,9 @@ class BasicTileTestCase(TestTileMixin, unittest.TestCase):
         expected = api.portal.get_localized_time(
             tomorrow, long_format=False, time_only=True)
         self.assertIn(expected, rendered)  # u'01:23 PM'
+
+    def test_seachable_text(self):
+        searchable = queryAdapter(self.tile, ISearchableText)
+        self.tile.data['title'] = 'custom title'
+        self.tile.data['description'] = 'custom description'
+        self.assertEqual(searchable.SearchableText(), 'custom title custom description')
