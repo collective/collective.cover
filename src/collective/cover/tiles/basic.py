@@ -122,6 +122,7 @@ class BasicTile(PersistentCoverTile):
 
 
 class SearchableBasicTile(object):
+
     implements(ISearchableText)
 
     def __init__(self, context):
@@ -129,4 +130,5 @@ class SearchableBasicTile(object):
 
     def SearchableText(self):
         context = self.context
-        return u'{0} {1}'.format(context.data['title'] or '', context.data['description'] or '')
+        return u'{0} {1}'.format(
+            context.data['title'] or '', context.data['description'] or '')

@@ -6,7 +6,9 @@ There's a frood who really knows where his towel is.
 1.0a12 (unreleased)
 ^^^^^^^^^^^^^^^^^^^
 
-- All tiles made searchable.
+- Add new feature to make content of new tiles searchable;
+  now, besides the RichText tile, Basic and Embed tiles are searchable by default.
+  Developer documentation was also updated with a new section explaining how to accomplish this.
   [lewicki]
 
 - Use "application/javascript" media type instead of the obsolete "text/javascript".

@@ -201,22 +201,22 @@ Searchable text in new tiles
 
 The content of new tiles is not searchable by default. To enable that functionality
 you need to register a new adapter for the ISearchableText interface. It is as simple
-as copying the code provided for ``plone.tiles.BasicTile`` and adding a new ZCML 
+as copying the code provided for ``plone.tiles.BasicTile`` and adding a new ZCML
 registration.
 
 .. code-block:: python
 
-  class SearchableBasicTile(object):
-      implements(ISearchableText)
+    class SearchableBasicTile(object):
 
-      def __init__(self, context):
-          self.context = context
+        implements(ISearchableText)
 
-      def SearchableText(self):
-          context = self.context
-          return u'{0} {1}'.format(context.data['title'] or '', 
-                                   context.data['description'] or '')
+        def __init__(self, context):
+            self.context = context
 
+        def SearchableText(self):
+            context = self.context
+            return u'{0} {1}'.format(
+                context.data['title'] or '', context.data['description'] or '')
 
 
 Grid Systems

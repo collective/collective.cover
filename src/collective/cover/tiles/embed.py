@@ -50,6 +50,7 @@ class EmbedTile(PersistentCoverTile):
 
 
 class SearchableEmbedTile(object):
+
     implements(ISearchableText)
 
     def __init__(self, context):
@@ -57,4 +58,5 @@ class SearchableEmbedTile(object):
 
     def SearchableText(self):
         context = self.context
-        return u'{0} {1}'.format(context.data['title'] or '', context.data['description'] or '')
+        return u'{0} {1}'.format(
+            context.data['title'] or '', context.data['description'] or '')

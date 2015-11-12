@@ -54,7 +54,8 @@ class IGridSystem(Interface):
 
 
 class ISearchableText(Interface):
-    """Interface to adapt tile to provide indexable content"""
+
+    """Interface to adapt tile to provide indexable content."""
 
     def SearchableText(self):
-        """Content of the tile provided as plain text"""
+        """Content of the tile provided as plain text."""

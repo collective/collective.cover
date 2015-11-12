@@ -67,6 +67,7 @@ class RichTextTile(PersistentCoverTile):
 
 
 class SearchableRichTextTile(object):
+
     implements(ISearchableText)
 
     def __init__(self, context):
@@ -74,12 +75,17 @@ class SearchableRichTextTile(object):
 
     def SearchableText(self):
         context = self.context
-        transforms = api.portal.get_tool('portal_transforms')
         value = context.data['text']
+        if not value:
+            return ''
+
+        transforms = api.portal.get_tool('portal_transforms')
         data = transforms.convertTo(
             'text/plain',
             value.encode('utf-8 ') if isinstance(value, unicode) else value.raw_encoded,
             mimetype='text/html',
             context=context,
-            encoding='utf-8' if isinstance(value, unicode) else value.encoding) if value else ''
-        return u'{0}'.format(unicode(data.getData(), 'utf-8')) if data else ''
+            encoding='utf-8' if isinstance(value, unicode) else value.encoding)
+
+        searchable_text = unicode(data.getData(), 'utf-8')
+        return searchable_text.strip()  # remove leading and trailing spaces

@@ -55,8 +55,10 @@ class RichTextTileTestCase(TestTileMixin, unittest.TestCase):
     def test_seachable_text(self):
         searchable = queryAdapter(self.tile, ISearchableText)
         text = '<p>My document text...</p>'
-        value = RichTextValue(raw=text,
-                              mimeType='text/x-html-safe',
-                              outputMimeType='text/x-html-safe')
+        value = RichTextValue(
+            raw=text,
+            mimeType='text/x-html-safe',
+            outputMimeType='text/x-html-safe'
+        )
         self.tile.data['text'] = value
-        self.assertEqual(searchable.SearchableText(), ' My document text... ')
+        self.assertEqual(searchable.SearchableText(), 'My document text...')
