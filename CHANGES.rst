@@ -29,8 +29,7 @@ There's a frood who really knows where his towel is.
 - Make package compatible with jQuery 1.9.
   [naro]
 
-- Fix issue where page composition layer had side-effects outside cover pages by upgrading plone.app.blocks to 2.0 (fixes `#331`_);
-  drop support for Plone 4.2.
+- Fix issue where page composition layer had side-effects outside cover pages by upgrading plone.app.blocks to 2.2 (fixes `#331`_).
   [datakurre]
 
 - When fetching image from content object, fetch the tile scale to ensure we get a correct crop from plone.app.imagecropping and don't waste space storing a full sized image.
