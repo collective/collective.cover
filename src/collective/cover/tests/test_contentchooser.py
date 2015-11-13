@@ -5,8 +5,11 @@ from collective.cover.config import PLONE_VERSION
 from plone import api
 
 import json
-import re
+from lxml import etree
+from StringIO import StringIO
 import unittest
+
+parser = etree.HTMLParser()
 
 
 class ContentChooserTestCase(unittest.TestCase):
@@ -20,8 +23,9 @@ class ContentChooserTestCase(unittest.TestCase):
     # XXX: can we get rid of this?
     def test_render(self):
         rendered = self.portal.restrictedTraverse('@@test-content-contentchooser')()
-        html = """<a data-ct-type="Document" class="contenttype-document state-missing-value" rel="1" title="This document was created for testing purposes">"""
-        self.assertRegexpMatches(rendered, re.compile(html))
+        tree = etree.parse(StringIO(rendered), parser)
+        document_match = tree.xpath("//a[@data-ct-type='Document'][@class='contenttype-document state-missing-value'][contains(@title, 'This document was created for testing purposes')][contains(@title, '/my-document')][@rel='1']")
+        self.assertTrue(document_match)
 
     def test_jsonbytype(self):
         catalog = self.portal['portal_catalog']
@@ -40,10 +44,11 @@ class ContentChooserTestCase(unittest.TestCase):
     def test_searches(self):
         self.request.set('q', 'Image')
         view = api.content.get_view(u'content-search', self.portal, self.request)
-        html = """<a data-ct-type="Document" class="contenttype-document state-missing-value" rel="1" title="document:/plone/my-document">"""
-        self.assertFalse(re.compile(html).search(view()))
-        html = """<a data-ct-type="Image" class="contenttype-image state-missing-value" rel="1" title="This image #2 was created for testing purposes">"""
-        self.assertTrue(re.compile(html).search(view()))
+        tree = etree.parse(StringIO(view()), parser)
+        document_match = tree.xpath("//a[@data-ct-type='Document'][@class='contenttype-document state-missing-value'][contains(@title, 'This document was created for testing purposes')][contains(@title, '/my-document')][@rel='1']")
+        self.assertFalse(document_match)
+        image_match = tree.xpath("//a[@data-ct-type='Image'][@class='contenttype-image state-missing-value'][contains(@title, 'This image #2 was created for testing purposes')][contains(@title, '/my-image')][@rel='1']")
+        self.assertTrue(image_match)
 
     @unittest.skipIf(
         PLONE_VERSION < '4.3',

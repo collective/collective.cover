@@ -6,6 +6,9 @@ There's a frood who really knows where his towel is.
 1.0a12 (unreleased)
 ^^^^^^^^^^^^^^^^^^^
 
+- Show more information using title tooltip in content search, to ensure listed content is unambiguous.
+  [cguardia, alecm]
+
 - Generate tile ids client-side to fix an issue causing duplicated ids on tiles when using IE browsers or proxy caches (fixes `#526`_).
   [frapell, rodfersou]
 
