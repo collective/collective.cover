@@ -113,11 +113,14 @@
              **/
             get_random_value: function(c) {
               var r;
-              if (typeof crypto !== "undefined" && crypto !== null) {
+              if (window.crypto && typeof window.crypto.getRandomValues === 'function') {
                 r = crypto.getRandomValues(new Uint8Array(1))[0] % 16 | 0;
               } else { // Fallback for older browsers
                 r = Math.random() * 16 | 0;
               }
+              // Improve randomness. See: http://stackoverflow.com/a/8809472/2116850
+              r = (self.timestamp + r) % 16 | 0;
+              self.timestamp = Math.floor(self.timestamp / 16);
               if (c !== 'x') {
                 r = r & 0x3 | 0x8;
               }
@@ -129,6 +132,11 @@
              * See: http://stackoverflow.com/a/2117523/2116850
              **/
             generate_uuid: function () {
+              // Improve randomness. See: http://stackoverflow.com/a/8809472/2116850
+              self.timestamp = new Date().getTime();
+              if (window.performance && typeof window.performance.now === 'function') {
+                self.timestamp += performance.now(); // use high-precision timer if available
+              }
               return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(
                 /[xy]/g,
                 self.get_random_value
@@ -141,11 +149,11 @@
              * See: http://css-tricks.com/ids-cannot-start-with-a-number/
              **/
             generate_tile_id: function () {
-                var tile_id = self.generate_uuid();
-                while ($.isNumeric(tile_id[0])) {
-                  tile_id = self.generate_uuid();
-                }
-                return tile_id;
+              var tile_id = self.generate_uuid();
+              while ($.isNumeric(tile_id[0])) {
+                tile_id = self.generate_uuid();
+              }
+              return tile_id;
             },
 
             /**
