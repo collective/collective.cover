@@ -29,6 +29,7 @@
            tal:attributes="src thumbnail/url|string:${item/absolute_url}/download;
                            width thumbnail/width;
                            height thumbnail/height;
+                           alt python:view.get_alt(item);
                            data-title string:<a href='${url}'>${title}</a>;
                            data-description description;
                            data-link url;

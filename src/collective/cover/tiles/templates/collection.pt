@@ -54,7 +54,7 @@
                                      width thumbnail/width;
                                      height thumbnail/height;
                                      class view/get_image_position;
-                                     alt obj/Title;" />
+                                     alt python:view.get_alt(obj);" />
               </a>
             </tal:image>
 

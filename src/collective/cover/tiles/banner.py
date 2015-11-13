@@ -75,23 +75,22 @@ class BannerTile(PersistentCoverTile):
 
         obj = aq_base(obj)  # avoid acquisition
         title = safe_unicode(obj.Title())
+        description = safe_unicode(obj.Description())
 
         data_mgr = ITileDataManager(self)
         data_mgr.set({
             'title': title,
+            'description': description,
             'image': image,
             'remote_url': remote_url,
         })
-
-    def Title(self):
-        return self.data.get('title', None)
 
     def getRemoteUrl(self):
         return self.data.get('remote_url', None)
 
     @property
     def is_empty(self):
-        return not (self.Title() or self.has_image or self.getRemoteUrl())
+        return not(self.data.get('title') or self.has_image or self.getRemoteUrl())
 
     @property
     def css_class(self):
@@ -108,3 +107,8 @@ class BannerTile(PersistentCoverTile):
         if title_conf:
             htmltag = title_conf['htmltag']
             return htmltag
+
+    @property
+    def alt(self):
+        """Return the alt attribute for the image."""
+        return self.data.get('description') or self.data.get('title')

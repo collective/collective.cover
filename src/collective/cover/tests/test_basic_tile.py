@@ -121,12 +121,6 @@ class BasicTileTestCase(TestTileMixin, unittest.TestCase):
         self.tile.is_compose_mode = Mock(return_value=False)
         self.assertNotIn(msg, self.tile())
 
-    def test_render_title(self):
-        obj = self.portal['my-news-item']
-        self.tile.populate_with_object(obj)
-        rendered = self.tile()
-        self.assertIn('Test news item', rendered)
-
     def test_render_deleted_object(self):
         # We will use an image to test it
         obj = self.portal['my-image']
@@ -148,7 +142,7 @@ class BasicTileTestCase(TestTileMixin, unittest.TestCase):
         # copied over
         self.assertIn('@@images', rendered)
 
-    def test_basic_tile_render(self):
+    def test_render(self):
         obj = self.portal['my-news-item']
         obj.setSubject(['subject1', 'subject2'])
         obj.effective_date = DateTime()
@@ -164,7 +158,7 @@ class BasicTileTestCase(TestTileMixin, unittest.TestCase):
 
         # the description must be there
         self.assertIn(
-            'This news item was created for testing purposes', rendered)
+            '<p>This news item was created for testing purposes</p>', rendered)
 
         # the localized time must be there
         date = api.portal.get_localized_time(obj.Date(), long_format=True)
@@ -174,19 +168,9 @@ class BasicTileTestCase(TestTileMixin, unittest.TestCase):
         self.assertIn('subject1', rendered)
         self.assertIn('subject2', rendered)
 
-    def test_alt_atribute_present_in_image(self):
-        """Object's title must be displayed in image alt attribute.
-        See: https://github.com/collective/collective.cover/issues/182
-        """
-        obj = self.portal['my-news-item']
-        obj.setImage(generate_jpeg(128, 128))
-        obj.reindexObject()
-        self.tile.populate_with_object(obj)
-        tile_conf_adapter = getMultiAdapter((self.tile.context, self.request, self.tile),
-                                            ITilesConfigurationScreen)
-        tile_conf_adapter.set_configuration({'image': {'visibility': 'on', 'imgsize': 'large'}})
-        rendered = self.tile()
-        self.assertIn('alt="Test news item"', rendered)
+        # the image is there and the alt attribute is set
+        self.assertIn('<img ', rendered)
+        self.assertIn('alt="This news item was created for testing purposes"', rendered)
 
     def test_delete_tile_persistent_data(self):
         permissions = getMultiAdapter(
