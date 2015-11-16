@@ -3,7 +3,7 @@ Changelog
 
 There's a frood who really knows where his towel is.
 
-1.0a12 (unreleased)
+1.0a12 (2015-11-16)
 ^^^^^^^^^^^^^^^^^^^
 
 - Tiles that display an image now show their description (or title) in the ``alt`` attribute (closes `#559`_).
