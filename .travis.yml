@@ -44,6 +44,7 @@ after_success:
 - coveralls
 notifications:
   irc:
+    on_success: change
     channels: irc.freenode.org#simplesconsultoria
     template:
       - "%{repository}#%{build_number} (%{branch} - %{commit} : %{author}): %{message}"
