@@ -76,7 +76,6 @@ Edit Cover Layout
     ...              loaded. Buttons related with layout operations must be
     ...              also visible.
     Click Link  link=Layout
-    Sleep  1s  Wait for cover layout to load
     Page Should Contain  Export layout
     Page Should Contain  Saved
 
