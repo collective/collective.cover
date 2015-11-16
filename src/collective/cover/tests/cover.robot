@@ -76,9 +76,7 @@ Edit Cover Layout
     ...              loaded. Buttons related with layout operations must be
     ...              also visible.
     Click Link  link=Layout
-    # XXX: the following does not makes sense but tests are randomly failing
-    Wait Until Page Contains  Export layout
-    # Page Should Contain  Export layout
+    Page Should Contain  Export layout
     Page Should Contain  Saved
 
 Save Cover Layout

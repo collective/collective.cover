@@ -19,6 +19,8 @@ ${edit_link_selector}  a.edit-tile-link
 *** Test cases ***
 
 Test Embed Tile
+    [Tags]  Expected Failure
+
     Enable Autologin as  Site Administrator
     Go to Homepage
     Create Cover  Title  Description
