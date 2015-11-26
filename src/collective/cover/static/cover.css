@@ -157,3 +157,6 @@ table.invisible{visibility:visible;}
   font-weight: bold;
   color: red;
 }
+.template-cover-settings .formHelp {
+  white-space: pre;
+}

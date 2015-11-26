@@ -34,6 +34,8 @@
       <element>Border|tile-edge</element>
       <element>Dark Background|tile-dark</element>
       <element>Shadow|tile-shadow</element>
+      <element>-Column Default-|column-default</element>
+      <element>-Row Default-|row-default</element>
     </value>
   </record>
 

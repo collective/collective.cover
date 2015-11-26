@@ -45,8 +45,12 @@ class ICoverSettings(form.Schema):
     styles = schema.Set(
         title=_(u'Styles'),
         description=_(
-            u'Enter a list of styles to appear in the style pulldown. '
-            u'Format is title|className, one per line.'),
+            u'Enter a list of styles to appear in the style pulldowns for '
+            u'Tiles, Columns or Rows. '
+            u'Format is title|className, one per line.\n'
+            u'classNames starting with "tile-" will only be available as Tile '
+            u'classes, similarly for classNames starting "row-" and "column-".'
+        ),
         required=False,
         default=set(),
         value_type=schema.ASCIILine(title=_(u'CSS Class')),
