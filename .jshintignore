@@ -1,4 +1,1 @@
-src/collective/cover/static/bootstrap.min.js
-src/collective/cover/static/jquery.*
-src/collective/cover/static/jss.js
-src/collective/cover/static/jss.min.js
+src/collective/cover/static/js/vendor/*

@@ -430,3 +430,82 @@ class Upgrade11to12TestCase(UpgradeTestCaseBase):
             roles = self.portal.rolesOfPermission(p)
             roles = [r['name'] for r in roles if r['selected']]
             self.assertListEqual(roles, expected)
+
+
+class Upgrade12to13TestCase(UpgradeTestCaseBase):
+
+    def setUp(self):
+        UpgradeTestCaseBase.setUp(self, u'12', u'13')
+
+    def test_registrations(self):
+        version = self.setup.getLastVersionForProfile(self.profile_id)[0]
+        self.assertTrue(int(version) >= int(self.to_version))
+        self.assertEqual(self._how_many_upgrades_to_do(), 3)
+
+    def test_fix_resources_references(self):
+        # address also an issue with Setup permission
+        title = u'Fix resource references'
+        step = self._get_upgrade_step(title)
+        self.assertIsNotNone(step)
+
+        # simulate state on previous version
+        from collective.cover.upgrades.v13 import _rename_resources
+        from collective.cover.upgrades.v13 import RESOURCES_TO_FIX
+        RESOURCES_TO_FIX_INVERSE = {v: k for k, v in RESOURCES_TO_FIX.items()}
+
+        css_tool = api.portal.get_tool('portal_css')
+        _rename_resources(css_tool, RESOURCES_TO_FIX_INVERSE)
+
+        js_tool = api.portal.get_tool('portal_javascripts')
+        _rename_resources(js_tool, RESOURCES_TO_FIX_INVERSE)
+
+        css_ids = css_tool.getResourceIds()
+        self.assertIn('++resource++collective.cover/contentchooser.css', css_ids)
+        self.assertIn('++resource++collective.cover/cover.css', css_ids)
+        self.assertNotIn('++resource++collective.cover/css/contentchooser.css', css_ids)
+        self.assertNotIn('++resource++collective.cover/css/cover.css', css_ids)
+
+        js_ids = js_tool.getResourceIds()
+        self.assertIn('++resource++collective.cover/contentchooser.js', js_ids)
+        self.assertIn('++resource++collective.cover/jquery.endless-scroll.js', js_ids)
+        self.assertNotIn('++resource++collective.cover/js/contentchooser.js', js_ids)
+        self.assertNotIn('++resource++collective.cover/js/vendor/jquery.endless-scroll.js', js_ids)
+
+        for res in RESOURCES_TO_FIX:
+            ids = css_ids
+            if res.endswith('js'):
+                ids = js_ids
+            self.assertIn(res, ids)
+            self.assertNotIn(RESOURCES_TO_FIX[res], ids)
+
+        cptool = api.portal.get_tool('portal_controlpanel')
+        configlet = cptool.getActionObject('Products/cover')
+        configlet.setIconExpression('string:${portal_url}/++resource++collective.cover/frontpage_icon.png')
+
+        types = api.portal.get_tool('portal_types')
+        cover_type = types['collective.cover.content']
+        cover_type.icon_expr = 'string:${portal_url}/++resource++collective.cover/frontpage_icon.png'
+
+        # run the upgrade step to validate the update
+        self._do_upgrade_step(step)
+
+        css_ids = css_tool.getResourceIds()
+        self.assertIn('++resource++collective.cover/css/contentchooser.css', css_ids)
+        self.assertIn('++resource++collective.cover/css/cover.css', css_ids)
+        self.assertNotIn('++resource++collective.cover/contentchooser.css', css_ids)
+        self.assertNotIn('++resource++collective.cover/cover.css', css_ids)
+
+        js_ids = js_tool.getResourceIds()
+        self.assertIn('++resource++collective.cover/js/contentchooser.js', js_ids)
+        self.assertIn('++resource++collective.cover/js/vendor/jquery.endless-scroll.js', js_ids)
+        self.assertNotIn('++resource++collective.cover/contentchooser.js', js_ids)
+        self.assertNotIn('++resource++collective.cover/jquery.endless-scroll.js', js_ids)
+
+        configlet = cptool.getActionObject('Products/cover')
+        self.assertEqual(
+            configlet.getIconExpression(),
+            'string:${portal_url}/++resource++collective.cover/img/frontpage_icon.png')
+
+        self.assertEqual(
+            cover_type.icon_expr,
+            'string:${portal_url}/++resource++collective.cover/img/frontpage_icon.png')

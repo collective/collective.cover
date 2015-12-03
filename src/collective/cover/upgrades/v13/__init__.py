@@ -1,0 +1,37 @@
+# -*- coding: utf-8 -*-
+from collective.cover.config import PROJECTNAME
+from collective.cover.logger import logger
+from plone import api
+
+
+RESOURCES_TO_FIX = {
+    '++resource++collective.cover/contentchooser.css': '++resource++collective.cover/css/contentchooser.css',
+    '++resource++collective.cover/cover.css': '++resource++collective.cover/css/cover.css',
+    '++resource++collective.cover/contentchooser.js': '++resource++collective.cover/js/contentchooser.js',
+    '++resource++collective.cover/jquery.endless-scroll.js': '++resource++collective.cover/js/vendor/jquery.endless-scroll.js'
+}
+
+
+def _rename_resources(tool, from_to):
+    for id in tool.getResourceIds():
+        if id in from_to:
+            tool.renameResource(id, from_to[id])
+
+
+def fix_resources_references(setup_tool):
+    """Fix resource references after static files reorganization."""
+    profile = 'profile-{0}:default'.format(PROJECTNAME)
+
+    css_tool = api.portal.get_tool('portal_css')
+    _rename_resources(css_tool, RESOURCES_TO_FIX)
+    logger.info('Updated css references.')
+
+    js_tool = api.portal.get_tool('portal_javascripts')
+    _rename_resources(js_tool, RESOURCES_TO_FIX)
+    logger.info('Updated javascript references.')
+
+    setup_tool.runImportStepFromProfile(profile, 'controlpanel')
+    logger.info('Updated controlpanel icon reference.')
+
+    setup_tool.runImportStepFromProfile(profile, 'typeinfo')
+    logger.info('Updated content type icon reference.')

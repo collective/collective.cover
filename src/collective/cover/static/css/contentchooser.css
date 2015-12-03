@@ -1,0 +1,197 @@
+#contentchooser-content-show-button
+{
+    padding: .5em 1em;
+
+    cursor: pointer;
+
+    border: 1px solid #ccc;
+    -webkit-border-radius: 4px;
+       -moz-border-radius: 4px;
+            border-radius: 4px;
+}
+
+#contentchooser-content-search
+{
+    position: fixed;
+    z-index: 9999;
+
+    display: none;
+
+    padding: 20px;
+
+    cursor: pointer;
+
+    border: 1px solid #ccc;
+    background-color: #fff;
+}
+
+#contentchooser-content-search.right
+{
+    right: 0;
+}
+
+#contentchooser-content-search .item-list
+{
+    overflow: auto;
+
+    width: 500px;
+    max-width: 100%;
+    height: 250px;
+    margin: 10px 0 0;
+    padding: 5px;
+
+    border: 1px solid #ccc;
+}
+
+#contentchooser-content-search .item-list li
+{
+    list-style-type: none;
+    list-style-image: none;
+
+    cursor: url('data:image/vnd.microsoft.icon;base64,AAACAAEAICACAAcABQAwAQAAFgAAACgAAAAgAAAAQAAAAAEAAQAAAAAAAAEAAAAAAAAAAAAAAgAAAAAAAAAAAAAA////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD8AAAA/AAAAfwAAAP+AAAH/gAAB/8AAA//AAAd/wAAGf+AAAH9gAADbYAAA2yAAAZsAAAGbAAAAGAAAAAAAAA//////////////////////////////////////////////////////////////////////////////////////gH///4B///8Af//+AD///AA///wAH//4AB//8AAf//AAD//5AA///gAP//4AD//8AF///AB///5A////5///8='), all-scroll;
+    cursor: -webkit-grab;
+    cursor:    -moz-grab;
+    cursor:      -o-grab;
+    cursor:     -ms-grab;
+    cursor:         grab;
+}
+
+#contentchooser-content-search .item-list li.ui-draggable-dragging
+{
+    cursor: url('data:image/vnd.microsoft.icon;base64,AAACAAEAICACAAcABQAwAQAAFgAAACgAAAAgAAAAQAAAAAEAAQAAAAAAAAEAAAAAAAAAAAAAAgAAAAAAAAAAAAAA////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD8AAAA/AAAAfwAAAP+AAAH/gAAB/8AAAH/AAAB/wAAA/0AAANsAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//////////////////////////////////////////////////////////////////////////////////////gH///4B///8Af//+AD///AA///wAH//+AB///wAf//4AH//+AD///yT/////////////////////////////8='), all-scroll;
+    cursor: -webkit-grabbing;
+    cursor:    -moz-grabbing;
+    cursor:      -o-grabbing;
+    cursor:     -ms-grabbing;
+    cursor:         grabbing;
+}
+
+#contentchooser-content-search .item-list li.stats
+{
+    display: none;
+}
+
+#contentchooser-content-search .item-list li:hover
+{
+    background-color: #205c90;
+}
+
+#content #contentchooser-content-search .item-list li img
+{
+    display: inline-block;
+
+    border: 0;
+}
+
+#content #contentchooser-content-search .item-list li a:link
+{
+    display: inline-block;
+
+    border-bottom: 0;
+}
+
+#contentchooser-content-show-button
+{
+    font-weight: bold;
+
+    position: relative;
+    z-index: 999;
+    top: 0;
+    right: 0;
+
+    float: right;
+
+    margin-bottom: 10px;
+
+    background: #fff;
+}
+
+#contentchooser-content-search .close
+{
+    position: absolute;
+    top: -14px;
+    left: -14px;
+
+    width: 30px;
+    height: 30px;
+
+    cursor: pointer;
+
+    background-image: url('++resource++plone.app.jquerytools.pb_close.png');
+}
+
+.current
+{
+    -webkit-border-top-left-radius: .5em;
+    -moz-border-radius-topleft: .5em;
+            border-top-left-radius: .5em;
+    -webkit-border-top-right-radius: .5em;
+    -moz-border-radius-topright: .5em;
+            border-top-right-radius: .5em;
+    background: #fff;
+}
+
+div.input
+{
+    width: 200px;
+    margin: 10px 0;
+    padding: 3px 15px;
+
+    border: 1px solid #507aaa;
+    border-radius: 10px;
+    background: white;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, .08);
+}
+
+input[type='text'].contentchooser-content-trees,
+input[type='text']#contentchooser-content-trees
+{
+    width: 100%;
+    min-width: 12em;
+    height: 16px;
+    padding-top: 1px;
+
+    color: #888;
+    border: 0 solid;
+    background: transparent;
+    text-shadow: 0 1px 1px white;
+}
+
+#content-trees #general_panel
+{
+    padding: 0;
+}
+
+#contentchooser-content-search-input-container,
+#contentchooser-content-trees-container,
+.contentchooser-clear
+{
+    display: inline-block;
+}
+#contentchooser-content-search-input-container,
+#contentchooser-content-trees-container
+{
+    width: 80%;
+}
+.contentchooser-clear
+{
+    height: 13px;
+    margin-left: -25px;
+}
+
+#more-link-field > .results > li
+{
+    display: block; margin-bottom: .25em; cursor: pointer;
+}
+#more-link-field > .results > li:hover
+{
+    background-color: #205c90;
+}
+#more-link-field > div
+{
+    margin-bottom: .5em;
+}
+#more-link-field button
+{
+    padding: 0 .5em;
+}

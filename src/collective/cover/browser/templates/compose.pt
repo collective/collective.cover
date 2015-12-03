@@ -10,7 +10,7 @@
 <metal:js fill-slot="javascript_head_slot">
     <script type="application/javascript"
         tal:define="navroot context/@@plone_portal_state/navigation_root_url"
-        tal:attributes="src string:${navroot}/++resource++collective.cover/compose.js">
+        tal:attributes="src string:${navroot}/++resource++collective.cover/js/compose.js">
     </script>
 
     <script type="application/javascript">

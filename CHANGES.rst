@@ -6,7 +6,8 @@ There's a frood who really knows where his towel is.
 1.0a13 (unreleased)
 ^^^^^^^^^^^^^^^^^^^
 
-- Nothing changed yet.
+- Clean up static files.
+  [rodfersou]
 
 
 1.0a12 (2015-11-16)
