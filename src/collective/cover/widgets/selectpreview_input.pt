@@ -3,7 +3,7 @@
      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
      i18n:domain="collective.cover"
      tal:omit-tag="">
-<script type="application/javascript" src="++resource++collective.cover/selectlayoutpreview.js"></script>
+<script type="application/javascript" src="++resource++collective.cover/js/selectlayoutpreview.js"></script>
 <script type="application/javascript" tal:content="structure view/js"></script>
 <style media="screen" type="text/css">
 #preview-select-container {

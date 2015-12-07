@@ -18,7 +18,7 @@ from zope.schema.interfaces import IDict
 
 # autoplay feature is enabled in view mode only
 INIT_JS = """$(function() {{
-    Galleria.loadTheme('++resource++collective.cover/galleria-theme/galleria.cover_theme.js');
+    Galleria.loadTheme('++resource++collective.cover/js/galleria.cover_theme.js');
     Galleria.run('#galleria-{0}');
 
     var options = {{ height: 1 }};

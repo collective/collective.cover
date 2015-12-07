@@ -6,7 +6,7 @@
 
 <head>
   <link rel="stylesheet" type="text/css"
-      tal:attributes="href string:${context/@@plone_portal_state/portal_url}/++resource++collective.cover/galleria-theme/galleria.cover_theme.css" />
+      tal:attributes="href string:${context/@@plone_portal_state/portal_url}/++resource++collective.cover/css/galleria.cover_theme.css" />
   <script type="application/javascript" tal:content="structure view/init_js">
   </script>
 </head>

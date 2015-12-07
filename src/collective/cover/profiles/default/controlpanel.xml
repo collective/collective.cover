@@ -9,7 +9,7 @@
         category="Products"
         condition_expr=""
         url_expr="string:${portal_url}/@@cover-settings"
-        icon_expr="string:${portal_url}/++resource++collective.cover/frontpage_icon.png"
+        icon_expr="string:${portal_url}/++resource++collective.cover/img/frontpage_icon.png"
         visible="True"
         i18n:attributes="title">
       <permission>collective.cover: Setup</permission>

@@ -17,7 +17,7 @@
                              data-tile-configurable metadata/is_configurable;
                              title metadata/description;
                              id tile/tile_type">
-            <img src="" tal:attributes="src python:metadata['icon'] if metadata['icon'] else '++resource++collective.cover/tile-generic.png';
+            <img src="" tal:attributes="src python:metadata['icon'] if metadata['icon'] else '++resource++collective.cover/img/tile-generic.png';
                                        alt metadata/description"/>
             <span i18n:translate="" tal:content="metadata/title"></span>
           </a>

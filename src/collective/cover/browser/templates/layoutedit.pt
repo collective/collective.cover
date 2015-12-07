@@ -9,15 +9,15 @@
         <metal:js fill-slot="javascript_head_slot">
             <script type="application/javascript"
                     tal:define="navroot context/@@plone_portal_state/navigation_root_url"
-                    tal:attributes="src string:${navroot}/++resource++collective.cover/jss.min.js">
+                    tal:attributes="src string:${navroot}/++resource++collective.cover/js/vendor/jss.min.js">
             </script>
             <script type="application/javascript"
                     tal:define="navroot context/@@plone_portal_state/navigation_root_url"
-                    tal:attributes="src string:${navroot}/++resource++collective.cover/layout_base.js">
+                    tal:attributes="src string:${navroot}/++resource++collective.cover/js/layout_base.js">
             </script>
             <script type="application/javascript"
                     tal:define="navroot context/@@plone_portal_state/navigation_root_url"
-                    tal:attributes="src string:${navroot}/++resource++collective.cover/layout_edit.js">
+                    tal:attributes="src string:${navroot}/++resource++collective.cover/js/layout_edit.js">
             </script>
             <script type="application/javascript">
             jQuery(document).ready(function() {
@@ -30,7 +30,7 @@
         <metal:styles fill-slot="style_slot">
             <link rel="stylesheet" type="text/css" media="screen" href=""
                   tal:define="navroot context/@@plone_portal_state/navigation_root_url"
-                  tal:attributes="href string:${navroot}/++resource++collective.cover/layout_edit.css" />
+                  tal:attributes="href string:${navroot}/++resource++collective.cover/css/layout_edit.css" />
         </metal:styles>
         <metal:main fill-slot="main">
             <tal:block tal:define="can_export_layout view/can_export_layout">
