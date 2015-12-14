@@ -20,8 +20,7 @@
         '    </a>' +
         '</div>'),
       tile_class = 'cover-tile',
-      tile_dom = $('<div class="' + tile_class + '">' +
-        '</div>'),
+      tile_dom = $('<div class="' + tile_class + '">' + '</div>'),
       le = $('.layout'),
       BeforeUnloadHandler;
 
@@ -50,7 +49,6 @@
       },
 
       setup: function() {
-
         //buttons draggable binding
         $("#btn-row").draggable({
           connectToSortable: ".layout",
@@ -393,14 +391,6 @@
             'width': column_width + margin_width + '%',
             'margin-left': gutter + '%'
           });
-          // var columns = Math.floor(n_columns / i); //amount of fiting columns
-          // var margin = (columns - 1 ) * gutter; //margin of the columns
-          // var total_space = 100 - margin; //total space to divide in columns
-
-          // jss.set('[data-column-size="' + i + '"]', {
-          //     'width':  total_space / columns + '%',
-          //     'margin-left': gutter + '%'
-          // });
         }
 
         jss.set('.' + column_class + ':nth-of-type(1)', {
@@ -632,15 +622,12 @@
     self.init();
   }
 
-
   $.fn.layoutmanager = function(options) {
-
     // already instanced, return the data object
     var el = this.data("layoutmanager");
     if (el) {
       return el;
     }
-
 
     var default_settings = this.data('layoutmanager-settings');
     var settings = '';
@@ -661,16 +648,13 @@
       el = new LayoutManager($(this), settings);
       $(this).data("layoutmanager", el);
     });
-
   };
-
 
   /**
    * Stick sidebar
    * stick sidebar on top when scrolling
    **/
   var fixed = false;
-
   $(document).scroll(function() {
     if ($(this).scrollTop() > 200) {
       if (!fixed) {
@@ -685,5 +669,4 @@
       }
     }
   });
-
 })(jQuery);

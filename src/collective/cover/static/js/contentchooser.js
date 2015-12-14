@@ -4,12 +4,6 @@ var coveractions = {
   /**
    * Context URL to be used for all AJAX call
    */
-  /*
-    var call_context = $("head base").attr('href');
-    if (call_context.charAt(call_context.length - 1) !== '/') {
-    call_context = call_context + '/';
-    }
-  */
   call_context: portal_url + '/',
   current_path: document.location.href,
 
@@ -99,7 +93,6 @@ var coveractions = {
     var pathName = loc.pathname.substring(0, loc.pathname.lastIndexOf('/') + 1);
     return loc.href.substring(0, loc.href.length - ((loc.pathname + loc.search + loc.hash).length - pathName.length));
   },
-
 
   getFolderContents: function(path, method, scroll) {
     if (scroll === null) {
@@ -211,17 +204,14 @@ var coveractions = {
 
           $('#content-trees #internalpath')[0].innerHTML = html;
         });
-
       }
     });
-
   },
 
   getCurrentFolderContents: function() {
     this.getFolderContents(this.current_path, '@@jsonbytype');
   }
 };
-
 
 (function($) {
   var ajaxSearchRequest = [];
@@ -367,7 +357,6 @@ var coveractions = {
         minWidth: 350,
         maxWidth: 540
       });
-
     }
 
     $("#contentchooser-content-search-button").click(function(e) {
@@ -417,8 +406,6 @@ var coveractions = {
       }
     });
 
-
-
     $("#contentchooser-content-search").draggable({
       start: function(event, ui) {
         $(this).removeClass("right");
@@ -446,9 +433,7 @@ var coveractions = {
         child.css("display", "block");
       }
     });
-
   });
-
 
   coveractions.preInit();
 
