@@ -1,5 +1,4 @@
 $(document).ready(function() {
-
   function draw_preview(layout, ctx) {
     //row position, depends of the number of the content that the row has
     var row_offset = 10;
@@ -18,11 +17,9 @@ $(document).ready(function() {
         ctx.fillRect(column_h_offset, row_offset + 10, column_width, 50);
 
         column_h_offset = column_h_offset + column_width + 10;
-
       });
 
       row_offset = row_offset + 80;
-
     });
   }
 

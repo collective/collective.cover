@@ -12,7 +12,6 @@ var rm_button = function(data) {
   return "<i class='tile-remove-item' data-uid='" + uid + "'><span class='text'>remove</span></i>";
 };
 
-
 (function($) {
 
   /*global jQuery, Galleria */
