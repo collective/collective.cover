@@ -9,7 +9,7 @@
 
     <div id="more-link-field">
         <div class="selection">
-            <input class="uid" type="hidden" tal:attributes="name view/name; value view/value" />
+            <input class="uuid" type="hidden" tal:attributes="name view/name; value view/value" />
             <span class="title" tal:content="view/link_title"> </span>
             <button type="button" class="unlink">Unlink</button>
         </div>
@@ -23,7 +23,7 @@
          var $field = $('#more-link-field');
 
          var toggle_unlink = function() {
-             $field.find('.unlink').toggle( $field.find('.uid').val() !== '' );
+             $field.find('.unlink').toggle( $field.find('.uuid').val() !== '' );
          }
 
          $field.find('button.search').on('click', function() {
@@ -47,13 +47,13 @@
          });
 
          $field.find('.results').on('click', 'li', function() {
-             $field.find('.uid').val( $(this).attr ('uid') );
+             $field.find('.uuid').val( $(this).attr ('uuid') );
              $field.find('.title').text( $(this).find ('a').text () );
              toggle_unlink();
          });
 
          $field.find('.unlink').on('click', function() {
-             $field.find('.uid').val('');
+             $field.find('.uuid').val('');
              $field.find('.title').text('');
              toggle_unlink();
          });

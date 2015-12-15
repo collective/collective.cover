@@ -15,7 +15,9 @@
     </div>
     <tal:items repeat="obj view/results">
       <div class="list-item" style="position:relative"
-           tal:attributes="data-uid python:view.get_uid(obj)">
+           tal:attributes="data-tile-id view/id;
+                           data-content-type obj/portal_type;
+                           data-content-uuid python:view.get_uuid(obj)">
         <tal:fields repeat="field view/get_configured_fields">
           <tal:image define="thumbnail python:view.thumbnail(obj);"
                      condition="python:field['id'] == 'image' and thumbnail">

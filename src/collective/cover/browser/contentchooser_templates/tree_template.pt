@@ -1,18 +1,18 @@
 <tal:master define="level options/level|python:0; children options/children | nothing;">
     <tal:navitem repeat="node children">
-        <li tal:define="show_children       node/show_children;
-                        uid                 node/UID;
-                        children            node/children;
-                        item_url            node/getURL;
-                        item_token          python:view.getTermByBrain(node['item']).token;
-                        item_icon           node/item_icon;
-                        selectable          python:True;
-                        li_folder_class     python:show_children and ' navTreeFolderish' or '';
+        <li tal:define="show_children node/show_children;
+                        uuid node/UID;
+                        children node/children;
+                        item_url node/getURL;
+                        item_token python:view.getTermByBrain(node['item']).token;
+                        item_icon node/item_icon;
+                        selectable python:True;
+                        li_folder_class python:show_children and ' navTreeFolderish' or '';
                         li_selectable_class python:selectable and ' selectable' or '';
-                        li_collapsed_class  python:(len(children) > 0 and show_children) and '  expanded' or ' collapsed';
-                        li_class            string:${li_folder_class}${li_selectable_class}${li_collapsed_class}"
+                        li_collapsed_class python:(len(children) > 0 and show_children) and '  expanded' or ' collapsed';
+                        li_class string:${li_folder_class}${li_selectable_class}${li_collapsed_class}"
             tal:attributes="class string:navTreeItem visualNoMarker${li_class};
-            uid uid">
+            uuid uuid">
             <tal:level define="item_class string:contenttype-${node/normalized_portal_type} state-${node/normalized_review_state}">
               <tal:block define="item_class item_class">
                 <a tal:attributes="rel level;

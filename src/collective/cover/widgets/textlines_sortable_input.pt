@@ -72,7 +72,7 @@ div.tileProperties textarea {
                tal:define="obj nocall:item/obj;
                            uuid item/uuid;
                            isExpired python:view.isExpired(obj) and 'expired' or '';"
-               tal:attributes="data-uid uuid; class string:textline-sortable-element ${isExpired};">
+               tal:attributes="data-content-uuid uuid; class string:textline-sortable-element ${isExpired};">
             <img class="tileImage"
                  tal:define="thumbnail python:view.thumbnail(obj)"
                  tal:condition="thumbnail"

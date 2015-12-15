@@ -77,7 +77,7 @@ class CarouselTileTestCase(TestTileMixin, unittest.TestCase):
 
         # next, we replace the list of objects with a different one
         obj3 = self.portal['my-image1']
-        self.tile.replace_with_objects([IUUID(obj3, None)])
+        self.tile.replace_with_uuids([IUUID(obj3, None)])
         self._update_tile_data()
         self.assertNotIn(obj1, self.tile.results())
         self.assertNotIn(obj2, self.tile.results())
@@ -129,7 +129,7 @@ class CarouselTileTestCase(TestTileMixin, unittest.TestCase):
         obj1 = self.portal['my-document']
         obj2 = self.portal['my-image']
 
-        self.tile.populate_with_uids([
+        self.tile.populate_with_uuids([
             obj1.UID(), obj2.UID()
         ])
 
@@ -157,7 +157,7 @@ class CarouselTileTestCase(TestTileMixin, unittest.TestCase):
         obj1 = self.portal['my-document']
         obj2 = self.portal['my-image']
 
-        self.tile.populate_with_uids([
+        self.tile.populate_with_uuids([
             obj1.UID(), obj2.UID()
         ])
 
@@ -186,7 +186,7 @@ class CarouselTileTestCase(TestTileMixin, unittest.TestCase):
         obj2 = self.portal['my-image']
         obj3 = self.portal['my-image1']
 
-        self.tile.populate_with_uids([
+        self.tile.populate_with_uuids([
             obj1.UID(), obj2.UID(), obj3.UID()
         ])
 

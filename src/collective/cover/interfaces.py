@@ -32,11 +32,11 @@ class IJSONSearch(Interface):
 class ICoverUIDsProvider(Interface):
 
     def getUIDs(self):
-        """ Get UIDs associated with the object.
-            could be the UID of the object or a
-            list of related UIDs.
+        """Get UUIDs associated with the object.
+            could be the UUID of the object or a
+            list of related UUIDs.
 
-        @return: iterable of UIDs
+        @return: iterable of UUIDs
         """
 
 

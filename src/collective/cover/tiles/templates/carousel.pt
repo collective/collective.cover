@@ -21,11 +21,12 @@
       tal:attributes="id string:galleria-${view/id}">
     <tal:items repeat="item view/results">
       <img tal:define="thumbnail python:view.thumbnail(item);
-                       uid python:view.get_uid(item);
+                       uuid python:view.get_uuid(item);
+                       type item/portal_type;
                        title python:view.get_title(item);
                        description python:view.get_description(item);
                        url python:view.get_url(item)"
-           tal:condition="python:thumbnail and uid"
+           tal:condition="python:thumbnail and uuid"
            tal:attributes="src thumbnail/url|string:${item/absolute_url}/download;
                            width thumbnail/width;
                            height thumbnail/height;
@@ -33,7 +34,9 @@
                            data-title string:<a href='${url}'>${title}</a>;
                            data-description description;
                            data-link url;
-                           data-uid uid;" />
+                           data-content-uuid uuid;
+                           data-content-type type;
+                           data-has-subitem string:True" />
     </tal:items>
   </div>
 </body>

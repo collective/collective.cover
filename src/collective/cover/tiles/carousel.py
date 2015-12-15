@@ -83,7 +83,7 @@ class CarouselTile(ListTile):
         """
         # First we get the title for the item itself
         title = item.Title()
-        uuid = self.get_uid(item)
+        uuid = self.get_uuid(item)
         data_mgr = ITileDataManager(self)
         data = data_mgr.get()
         uuids = data['uuids']
@@ -104,7 +104,7 @@ class CarouselTile(ListTile):
         """
         # First we get the url for the item itself
         description = item.Description()
-        uuid = self.get_uid(item)
+        uuid = self.get_uuid(item)
         data_mgr = ITileDataManager(self)
         data = data_mgr.get()
         uuids = data['uuids']
@@ -136,7 +136,7 @@ class CarouselTile(ListTile):
         url = item.absolute_url()
         if item.portal_type in self._get_types_that_use_view_action():
             url = url + '/view'
-        uuid = self.get_uid(item)
+        uuid = self.get_uuid(item)
         data_mgr = ITileDataManager(self)
         data = data_mgr.get()
         uuids = data['uuids']
@@ -171,7 +171,7 @@ class UUIDSFieldDataConverter(BaseDataConverter):
         :returns: A string with UUIDs separated by \r\n
         """
 
-        # A new carousel tile has no items, populate_with_uids has not been
+        # A new carousel tile has no items, populate_with_uuids has not been
         # called yet, so incoming uuids is not an empty dict() but None
         if value is None:
             return ''

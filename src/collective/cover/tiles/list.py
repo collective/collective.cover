@@ -18,6 +18,7 @@ from plone.uuid.interfaces import IUUID
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zope import schema
 from zope.component import queryUtility
+from zope.deprecation.deprecation import deprecate
 from zope.event import notify
 from zope.interface import implements
 from zope.lifecycleevent import ObjectModifiedEvent
@@ -120,21 +121,21 @@ class ListTile(PersistentCoverTile):
             ordered_uuids = [(k, v) for k, v in uuids.items()]
             ordered_uuids.sort(key=lambda x: x[1]['order'])
 
-            for uid in [i[0] for i in ordered_uuids]:
-                obj = uuidToObject(uid)
+            for uuid in [i[0] for i in ordered_uuids]:
+                obj = uuidToObject(uuid)
                 if obj:
                     results.append(obj)
                 else:
                     # maybe the user has no permission to access the object
                     # so we try to get it bypassing the restrictions
                     catalog = api.portal.get_tool('portal_catalog')
-                    brain = catalog.unrestrictedSearchResults(UID=uid)
+                    brain = catalog.unrestrictedSearchResults(UID=uuid)
                     if not brain:
                         # the object was deleted; remove it from the tile
-                        self.remove_item(uid)
+                        self.remove_item(uuid)
                         logger.debug(
                             'Nonexistent object {0} removed from '
-                            'tile'.format(uid)
+                            'tile'.format(uuid)
                         )
 
         return results[:self.limit]
@@ -153,7 +154,7 @@ class ListTile(PersistentCoverTile):
         #      to be careful because there must be tiles derived from it,
         #      like the Carousel tile
         catalog = api.portal.get_tool('portal_catalog')
-        brain = catalog(UID=self.get_uid(obj))
+        brain = catalog(UID=self.get_uuid(obj))
         assert len(brain) == 1
         return super(ListTile, self).Date(brain[0])
 
@@ -170,11 +171,11 @@ class ListTile(PersistentCoverTile):
         :type obj: Content object
         """
         super(ListTile, self).populate_with_object(obj)  # check permission
-        uids = ICoverUIDsProvider(obj).getUIDs()
-        if uids:
-            self.populate_with_uids(uids)
+        uuids = ICoverUIDsProvider(obj).getUIDs()
+        if uuids:
+            self.populate_with_uuids(uuids)
 
-    def populate_with_uids(self, uuids):
+    def populate_with_uuids(self, uuids):
         """ Add a list of elements to the list of items. This method will
         append new elements to the already existing list of items
 
@@ -222,8 +223,11 @@ class ListTile(PersistentCoverTile):
         data_mgr.set(old_data)
         notify(ObjectModifiedEvent(self))
 
-    # XXX: This should be renamed to replace_with_uuids
+    @deprecate('Use replace_with_uuids method instead.')
     def replace_with_objects(self, uuids):
+        self.replace_with_uuids(uuids)
+
+    def replace_with_uuids(self, uuids):
         """ Replaces the whole list of items with a new list of items
 
         :param uuids: The list of objects' UUIDs to be used
@@ -238,25 +242,25 @@ class ListTile(PersistentCoverTile):
         old_data['uuids'] = dict()
         data_mgr.set(old_data)
         # Repopulate with clean list
-        self.populate_with_uids(uuids)
+        self.populate_with_uuids(uuids)
 
-    def remove_item(self, uid):
+    def remove_item(self, uuid):
         """ Removes an item from the list
 
-        :param uid: [required] uid for the object that wants to be removed
-        :type uid: string
+        :param uuid: [required] uuid for the object that wants to be removed
+        :type uuid: string
         """
-        super(ListTile, self).remove_item(uid)  # check permission
+        super(ListTile, self).remove_item(uuid)  # check permission
         data_mgr = ITileDataManager(self)
         old_data = data_mgr.get()
         uuids = data_mgr.get()['uuids']
-        if uid in uuids.keys():
-            del uuids[uid]
+        if uuid in uuids.keys():
+            del uuids[uuid]
         old_data['uuids'] = uuids
         data_mgr.set(old_data)
 
     @view.memoize
-    def get_uid(self, obj):
+    def get_uuid(self, obj):
         """Return the UUID of the object.
 
         :param obj: [required]
@@ -390,8 +394,7 @@ class CollectionUIDsProvider(object):
         self.context = context
 
     def getUIDs(self):
-        """ Return a list of UIDs of collection objects.
-        """
+        """Return a list of UUIDs of collection objects."""
         return [i.UID for i in self.context.queryCatalog()]
 
 
@@ -403,8 +406,7 @@ class FolderUIDsProvider(object):
         self.context = context
 
     def getUIDs(self):
-        """ Return a list of UIDs of collection objects.
-        """
+        """Return a list of UUIDs of collection objects."""
         return [i.UID for i in self.context.getFolderContents()]
 
 
@@ -416,6 +418,5 @@ class GenericUIDsProvider(object):
         self.context = context
 
     def getUIDs(self):
-        """ Return a list of UIDs of collection objects.
-        """
+        """Return a list of UUIDs of collection objects."""
         return [IUUID(self.context)]

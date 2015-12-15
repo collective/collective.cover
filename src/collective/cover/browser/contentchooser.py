@@ -77,9 +77,9 @@ class ContentSearch(grok.View):
         page = int(self.request.get('page', 1))
         strategy = SitemapNavtreeStrategy(self.context)
 
-        uids = None
+        uuids = None
         result = self.search(
-            self.query, uids=uids,
+            self.query, uuids=uuids,
             page=page
         )
         self.has_next = result.next is not None
@@ -91,7 +91,8 @@ class ContentSearch(grok.View):
     def render(self):
         return self.list_template()
 
-    def search(self, query=None, page=1, b_size=ITEMS_BY_REQUEST, uids=None):
+    def search(self, query=None, page=1, b_size=ITEMS_BY_REQUEST, uuids=None):
+        # XXX uuids parameter not used anywhere
         catalog = api.portal.get_tool('portal_catalog')
         registry = getUtility(IRegistry)
         settings = registry.forInterface(ICoverSettings)
@@ -217,7 +218,7 @@ class SearchItemsBrowserView(BrowserView):
         for brain in brains:
             catalog_results.append({
                 'id': brain.getId,
-                'uid': brain.UID or None,  # Maybe Missing.Value
+                'uuid': brain.UID or None,  # Maybe Missing.Value
                 'url': brain.getURL(),
                 'portal_type': brain.portal_type,
                 'normalized_type': normalizer.normalize(brain.portal_type),

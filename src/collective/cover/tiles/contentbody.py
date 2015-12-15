@@ -13,7 +13,11 @@ from zope.interface import implements
 
 class IContentBodyTile(IPersistentCoverTile):
 
-    uuid = schema.TextLine(title=u'Collection uuid', readonly=True)
+    uuid = schema.TextLine(
+        title=_(u'UUID'),
+        required=False,
+        readonly=True,
+    )
 
 
 class ContentBodyTile(PersistentCoverTile):
@@ -49,7 +53,7 @@ class ContentBodyTile(PersistentCoverTile):
         super(ContentBodyTile, self).populate_with_object(obj)
 
         data = {
-            'uuid': IUUID(obj, None),  # XXX: can we get None here? see below
+            'uuid': IUUID(obj),
         }
 
         data_mgr = ITileDataManager(self)

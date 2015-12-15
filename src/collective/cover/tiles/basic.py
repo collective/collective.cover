@@ -107,7 +107,7 @@ class BasicTile(PersistentCoverTile):
         data = {
             'title': safe_unicode(obj.Title()),
             'description': safe_unicode(obj.Description()),
-            'uuid': IUUID(obj, None),  # XXX: can we get None here? see below
+            'uuid': IUUID(obj),
             'date': True,
             'subjects': True,
             'image': self.get_image_data(obj)

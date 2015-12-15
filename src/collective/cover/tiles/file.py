@@ -93,17 +93,16 @@ class FileTile(PersistentCoverTile):
     def populate_with_object(self, obj):
         super(FileTile, self).populate_with_object(obj)  # check permissions
 
-        if obj.portal_type in self.accepted_ct():
-            title = safe_unicode(obj.Title())
-            description = safe_unicode(obj.Description())
-            uuid = IUUID(obj)
-
-            data_mgr = ITileDataManager(self)
-            data_mgr.set({'title': title,
-                          'description': description,
-                          'download': True,
-                          'uuid': uuid,
-                          })
+        if obj.portal_type not in self.accepted_ct():
+            return
+        data = {
+            'title': safe_unicode(obj.Title()),
+            'description': safe_unicode(obj.Description()),
+            'download': True,
+            'uuid': IUUID(obj),
+        }
+        data_mgr = ITileDataManager(self)
+        data_mgr.set(data)
 
     def accepted_ct(self):
         """Return 'File' as the only content type accepted in the tile."""

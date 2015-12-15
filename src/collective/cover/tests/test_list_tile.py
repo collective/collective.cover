@@ -58,7 +58,7 @@ class ListTileTestCase(TestTileMixin, unittest.TestCase):
 
         # next, we replace the list of objects with a different one
         obj3 = self.portal['my-news-item']
-        self.tile.replace_with_objects([IUUID(obj3, None)])
+        self.tile.replace_with_uuids([IUUID(obj3, None)])
         # tile's data attribute is cached; reinstantiate it
         self.tile = self.cover.restrictedTraverse(
             '@@{0}/{1}'.format('collective.cover.list', 'test'))
@@ -91,14 +91,14 @@ class ListTileTestCase(TestTileMixin, unittest.TestCase):
             '@@{0}/{1}'.format('collective.cover.list', 'test'))
         self.assertTrue(self.tile.is_empty())
 
-    def test_populate_with_uids(self):
+    def test_populate_with_uuids(self):
         # we start with an empty tile
         self.assertTrue(self.tile.is_empty())
 
         # now we add a couple of objects to the list
         obj1 = self.portal['my-document']
         obj2 = self.portal['my-image']
-        self.tile.populate_with_uids([IUUID(obj1, None), IUUID(obj2, None)])
+        self.tile.populate_with_uuids([IUUID(obj1, None), IUUID(obj2, None)])
 
         # tile's data attribute is cached; reinstantiate it
         self.tile = self.cover.restrictedTraverse(

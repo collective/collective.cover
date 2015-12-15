@@ -4,21 +4,29 @@
 # http://davisagli.com/blog/using-tiles-to-provide-more-flexible-plone-layouts
 
 from collective.cover import _
+from collective.cover.interfaces import ISearchableText
 from collective.cover.tiles.base import IPersistentCoverTile
 from collective.cover.tiles.base import PersistentCoverTile
+from plone import api
 from plone.app.textfield import RichText
 from plone.app.textfield.interfaces import ITransformer
 from plone.app.textfield.value import RichTextValue
 from plone.tiles.interfaces import ITileDataManager
+from plone.uuid.interfaces import IUUID
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
+from zope import schema
 from zope.interface import implements
-from collective.cover.interfaces import ISearchableText
-from plone import api
 
 
 class IRichTextTile(IPersistentCoverTile):
 
     text = RichText(title=u'Text')
+
+    uuid = schema.TextLine(
+        title=_(u'UUID'),
+        required=False,
+        readonly=True,
+    )
 
 
 class RichTextTile(PersistentCoverTile):
@@ -57,9 +65,13 @@ class RichTextTile(PersistentCoverTile):
         value = RichTextValue(raw=text,
                               mimeType='text/x-html-safe',
                               outputMimeType='text/x-html-safe')
-        data_mgr = ITileDataManager(self)
 
-        data_mgr.set({'text': value})
+        data = {
+            'text': value,
+            'uuid': IUUID(obj),
+        }
+        data_mgr = ITileDataManager(self)
+        data_mgr.set(data)
 
     def accepted_ct(self):
         """Return 'Document' as the only content type accepted in the tile."""

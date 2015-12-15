@@ -39,9 +39,21 @@
 
 .template-compose #content .tile
 {
-    padding-top: 1em;
+    padding-top: 1.2em;
 
     outline: 1px dotted #999;
+}
+.template-compose #content .tile.ui-draggable:hover
+{
+    cursor: move;
+}
+.template-compose #content .tile.ui-draggable-dragging
+{
+    overflow: hidden;
+
+    height: 114px;
+
+    cursor: move;
 }
 .template-compose .tile-container
 {
@@ -83,6 +95,25 @@
     cursor: pointer;
 }
 
+.tile-move
+{
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    overflow: hidden;
+
+    width: 16px;
+    height: 16px;
+
+    cursor: pointer;
+    white-space: nowrap;
+    text-indent: 101%;
+
+    background: transparent url('++resource++collective.cover/img/move.png') scroll no-repeat top center;
+    background-size: 100%;
+}
+
 .tile-remove-item
 {
     font-size: 1px;
@@ -119,7 +150,11 @@
     outline: 1px dashed green;
     background-color: #9ad39d !important;
 }
-.ui-sortable-helper
+.ui-sortable > div:hover
+{
+    cursor: move;
+}
+.tile > .ui-sortable > .ui-sortable-helper
 {
     cursor: move;
 
@@ -147,10 +182,6 @@
 .template-compose #content .sortable-tile .list-item:hover
 {
     outline: 1px dotted #999;
-}
-.ui-sortable > div:hover
-{
-    cursor: move;
 }
 
 

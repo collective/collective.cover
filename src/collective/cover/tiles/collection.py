@@ -77,6 +77,7 @@ class ICollectionTile(IPersistentCoverTile):
 
     uuid = schema.TextLine(
         title=_(u'UUID'),
+        required=False,
         readonly=True,
     )
 
@@ -130,13 +131,12 @@ class CollectionTile(PersistentCoverTile):
         if obj.portal_type in self.accepted_ct():
             header = safe_unicode(obj.Title())  # use collection's title as header
             footer = _(u'More…')  # XXX: can we use field's default?
-            uuid = IUUID(obj)
 
             data_mgr = ITileDataManager(self)
             data_mgr.set({
                 'header': header,
                 'footer': footer,
-                'uuid': uuid,
+                'uuid': IUUID(obj),
             })
 
     def accepted_ct(self):
