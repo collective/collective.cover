@@ -45,7 +45,7 @@
     height: 20px;
 
     background: #000;
-    background: url('++resource++collective.galleria/img/classic-loader.gif') no-repeat 2px 2px;
+    background: url('++resource++collective.galleria/classic-loader.gif') no-repeat 2px 2px;
 }
 
 .galleria-info
@@ -277,7 +277,7 @@
 .galleria-image-nav-left,
 .galleria-image-nav-right
 {
-    background-image: url('++resource++collective.galleria/img/classic-map.png');
+    background-image: url('++resource++collective.galleria/classic-map.png');
     background-repeat: no-repeat;
 }
 
