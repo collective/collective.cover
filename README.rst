@@ -98,20 +98,10 @@ Known issues
 * `Package is not compatible with standard Plone tiles`_.
   This will be addressed in a future release, if we get an sponsor.
 
-* `AJAX responses are wrapped after installing the package`_.
-  This was an issue in `Blocks`_ that is already fixed;
-  we haven't merge it yet because it will break compatibility with Plone 4.2.
-
-* `Not compatible with jQuery 1.9`_.
-  There is work being done to solve this and to fix `plone.app.jquerytools` also.
-  We only support jQuery 1.7 and jQuery 1.8 at this time.
-
 See the `complete list of bugs on GitHub`_.
 
 .. _`Versioning creates zillions of empty blob files`: https://github.com/collective/collective.cover/issues/532
 .. _`Package is not compatible with standard Plone tiles`: https://github.com/collective/collective.cover/issues/81
-.. _`AJAX responses are wrapped after installing the package`: https://github.com/collective/collective.cover/issues/331
-.. _`Not compatible with jQuery 1.9`: https://github.com/collective/collective.cover/issues/413
 .. _`complete list of bugs on GitHub`: https://github.com/collective/collective.cover/issues?labels=bug&milestone=&page=1&state=open
 
 Don't Panic
