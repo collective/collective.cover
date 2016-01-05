@@ -12,7 +12,7 @@ class PermissionsTestCase(unittest.TestCase):
         self.portal = self.layer['portal']
 
     def test_setup_permission(self):
-        permission = 'collective.cover: Can Export Layout'
+        permission = 'collective.cover: Setup'
         roles = self.portal.rolesOfPermission(permission)
         roles = [r['name'] for r in roles if r['selected']]
         expected = ['Manager', 'Site Administrator']
