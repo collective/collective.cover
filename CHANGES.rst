@@ -6,6 +6,9 @@ There's a frood who really knows where his towel is.
 1.0a13 (unreleased)
 ^^^^^^^^^^^^^^^^^^^
 
+- Implement drag and drop among tiles (closes `#487`_).
+  [rodfersou]
+
 - Clean up static files.
   [rodfersou]
 
@@ -708,6 +711,7 @@ There's a frood who really knows where his towel is.
 .. _`#472`: https://github.com/collective/collective.cover/issues/472
 .. _`#473`: https://github.com/collective/collective.cover/issues/473
 .. _`#476`: https://github.com/collective/collective.cover/issues/476
+.. _`#487`: https://github.com/collective/collective.cover/issues/487
 .. _`#493`: https://github.com/collective/collective.cover/issues/493
 .. _`#494`: https://github.com/collective/collective.cover/issues/494
 .. _`#495`: https://github.com/collective/collective.cover/issues/495

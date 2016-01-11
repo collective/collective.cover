@@ -100,7 +100,7 @@ class RemoveItemFromListTileTestCase(unittest.TestCase):
 
         self.request.form['tile-type'] = u'collective.cover.list'
         self.request.form['tile-id'] = u'test'
-        self.request.form['uid'] = obj1.UID()
+        self.request.form['uuid'] = obj1.UID()
         view = api.content.get_view(
             u'removeitemfromlisttile', self.cover, self.request)
 

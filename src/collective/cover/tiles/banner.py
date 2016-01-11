@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 from Acquisition import aq_base
 from collective.cover import _
 from collective.cover.tiles.base import IPersistentCoverTile
@@ -7,6 +6,7 @@ from collective.cover.tiles.base import PersistentCoverTile
 from plone import api
 from plone.namedfile import field
 from plone.tiles.interfaces import ITileDataManager
+from plone.uuid.interfaces import IUUID
 from Products.CMFPlone.utils import safe_unicode
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zope import schema
@@ -28,6 +28,12 @@ class IBannerTile(IPersistentCoverTile):
     remote_url = schema.TextLine(
         title=_(u'URL'),
         required=False,
+    )
+
+    uuid = schema.TextLine(
+        title=_(u'UUID'),
+        required=False,
+        readonly=True,
     )
 
 
@@ -81,6 +87,7 @@ class BannerTile(PersistentCoverTile):
         data_mgr.set({
             'title': title,
             'description': description,
+            'uuid': IUUID(obj),
             'image': image,
             'remote_url': remote_url,
         })

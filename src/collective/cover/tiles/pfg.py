@@ -4,7 +4,6 @@ from collective.cover import _
 from collective.cover.tiles.base import IPersistentCoverTile
 from collective.cover.tiles.base import PersistentCoverTile
 from plone.app.uuid.utils import uuidToObject
-from plone.autoform import directives as form
 from plone.tiles.interfaces import ITileDataManager
 from plone.uuid.interfaces import IUUID
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
@@ -25,8 +24,11 @@ class IPFGTile(IPersistentCoverTile):
         required=False,
     )
 
-    form.omitted('uuid')
-    uuid = schema.TextLine(title=u'Collection uuid', readonly=True)
+    uuid = schema.TextLine(
+        title=_(u'UUID'),
+        required=False,
+        readonly=True,
+    )
 
 
 class PFGTile(PersistentCoverTile):
@@ -56,7 +58,7 @@ class PFGTile(PersistentCoverTile):
         data = {
             'title': safe_unicode(obj.Title()),
             'description': safe_unicode(obj.Description()),
-            'uuid': IUUID(obj, None),  # XXX: can we get None here? see below
+            'uuid': IUUID(obj),
         }
 
         data_mgr = ITileDataManager(self)

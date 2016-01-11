@@ -8,8 +8,8 @@
  */
 
 var rm_button = function(data) {
-  var uid = data.original.attributes['data-uid'].value;
-  return "<i class='tile-remove-item' data-uid='" + uid + "'><span class='text'>remove</span></i>";
+  var uuid = data.original.attributes['data-content-uuid'].value;
+  return "<i class='tile-remove-item' data-uuid='" + uuid + "'><span class='text'>remove</span></i>";
 };
 
 (function($) {
@@ -65,6 +65,13 @@ var rm_button = function(data) {
       this.bind('loadfinish', function(e) {
         this.$('loader').fadeOut(200);
         e.galleriaData.layer = rm_button(e.galleriaData);
+        var $original = $(e.galleriaData.original);
+        var $target = $(this._target);
+        $target.attr('data-tile-id', $target.parents('.tile').attr('id')); 
+        $target.attr('data-tile-type', $target.parents('.tile').attr('data-tile-type')); 
+        $target.attr('data-content-type', $original.attr('data-content-type')); 
+        $target.attr('data-content-uuid', $original.attr('data-content-uuid')); 
+        $target.attr('data-has-subitem', $original.attr('data-has-subitem')); 
       });
       if ($('body').hasClass('template-compose')) {
         this.bind('data', function(e) {
@@ -80,7 +87,7 @@ var rm_button = function(data) {
           $(e.imageTarget).prev().show();
           $(".tile-remove-item").click(function(e) {
             e.preventDefault();
-            var uid = $(this).attr("data-uid");
+            var uuid = $(this).attr("data-uuid");
             var tile = $(this).parents('.tile');
 
             tile.find('.loading-mask').addClass('show remove-tile');
@@ -91,7 +98,7 @@ var rm_button = function(data) {
               data: {
                 'tile-type': tile_type,
                 'tile-id': tile_id,
-                'uid': uid
+                'uuid': uuid
               },
               success: function(info) {
                 $(tile).find('.galleria-inner').remove();

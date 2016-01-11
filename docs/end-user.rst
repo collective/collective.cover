@@ -43,11 +43,14 @@ item will show an image, title and description. Carousel tiles are 100%
 responsive, support native-like swipe movements and use hardware optimized
 animations.
 
-You can drop any object in a Carousel tile. Right now, you can not edit
-individual items metadata in the carousel, but you can remove or reorder them.
-You can also specify if the carousel will start playing the slideshow
-automatically or not. Every item in the slideshow will have a link pointing
-back to the original object.
+You can drop any object into a Carousel tile.
+You can edit the metadata (title, description and URL) of items in the carousel,
+and you can reorder or remove them from the tile.
+You can also specify if the carousel will start playing the slideshow automatically or not.
+Every item in the slideshow will have a link pointing back to the original object.
+
+If you drop a folder or a collection into this tile,
+it will take every item into the folder or into the collection and insert it until it reaches the max items specified into configuration.
 
 Carousel tile is fully responsive, so be sure to configure it to use the image size that fits better the maximum desired size.
 
@@ -105,6 +108,9 @@ with the objects metadata; if an object has an image, it will be shown also.
 Right now, you can not edit individual items metadata in the list, but you can
 remove or reorder them. The title and image fields will include a link to the
 original object location.
+
+If you drop a folder or a collection into this tile,
+it will take every item into the folder or into the collection and insert it until it reaches the max items specified into configuration.
 
 Rich Text
 +++++++++
@@ -191,6 +197,40 @@ steps:
     :width: 670px
 
 There are also two other navigation options to find content.
+
+Moving content among tiles
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+While managing a cover on your site you will eventually need to move items among tiles.
+
+Moving content among tiles is easy:
+
+#. Select the "Compose" tab.
+
+#. Drag the content you want to move and drop it into the destination tile.
+
+.. figure:: https://raw.github.com/collective/collective.cover/master/docs/move-content1.gif
+    :align: center
+    :height: 529px
+    :width: 856px
+
+You can move any piece of content among any kind of tiles,
+but there are some considerations to take into account:
+If you move content among tiles of the same type,
+all customizations will be maintained except for the tile configuration.
+If you move content to a list or carousel tiles,
+all customizations will be lost.
+
+For list and carousel tiles there is an advanced feature that lets you move all the content in one simple step:
+
+#. Select the "Compose" tab.
+
+#. Drag the tile from the "move" icon and drop it into a tile of the same type.
+
+.. figure:: https://raw.github.com/collective/collective.cover/master/docs/move-content2.gif
+    :align: center
+    :height: 531px
+    :width: 803px
 
 Filtering recent items
 ++++++++++++++++++++++
@@ -325,7 +365,7 @@ Adding new tiles
 
 Now that you have created columns, you can add tiles to it:
 
-#. In the Layout tab, select one of the available Tile icons and drag it 
+#. In the Layout tab, select one of the available Tile icons and drag it
    to the column where you want to place it.
 
 #. Change the configuration as desired.
@@ -369,7 +409,7 @@ your website:
 
 #. Select the Layout tab.
 
-#. Click the "Export layout" button. 
+#. Click the "Export layout" button.
 
 #. Enter a name for your model.
 

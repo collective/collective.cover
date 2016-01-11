@@ -142,7 +142,7 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
             raise Unauthorized(
                 _('You are not allowed to add content to this tile'))
 
-    def remove_item(self, uid):
+    def remove_item(self, uuid):
         if not self.isAllowedToEdit():
             raise Unauthorized(
                 _('You are not allowed to remove content of this tile'))
@@ -508,7 +508,7 @@ class ImageScaling(BaseImageScaling):
             scale = stack.pop()
             image = self.scale(name, scale)             # this is aq-wrapped
         elif '-' in name:
-            # we got a uid...
+            # we got a uuid...
             if '.' in name:
                 name, ext = name.rsplit('.', 1)
             storage = AnnotationStorage(self.context)

@@ -24,7 +24,7 @@ class ContentChooserTestCase(unittest.TestCase):
     def test_render(self):
         rendered = self.portal.restrictedTraverse('@@test-content-contentchooser')()
         tree = etree.parse(StringIO(rendered), parser)
-        document_match = tree.xpath("//a[@data-ct-type='Document'][@class='contenttype-document state-missing-value'][contains(@title, 'This document was created for testing purposes')][contains(@title, '/my-document')][@rel='1']")
+        document_match = tree.xpath("//li[@data-content-type='Document']/a[@class='contenttype-document state-missing-value'][contains(@title, 'This document was created for testing purposes')][contains(@title, '/my-document')][@rel='1']")
         self.assertTrue(document_match)
 
     def test_jsonbytype(self):
@@ -45,9 +45,9 @@ class ContentChooserTestCase(unittest.TestCase):
         self.request.set('q', 'Image')
         view = api.content.get_view(u'content-search', self.portal, self.request)
         tree = etree.parse(StringIO(view()), parser)
-        document_match = tree.xpath("//a[@data-ct-type='Document'][@class='contenttype-document state-missing-value'][contains(@title, 'This document was created for testing purposes')][contains(@title, '/my-document')][@rel='1']")
+        document_match = tree.xpath("//li[@data-content-type='Document']/a[@class='contenttype-document state-missing-value'][contains(@title, 'This document was created for testing purposes')][contains(@title, '/my-document')][@rel='1']")
         self.assertFalse(document_match)
-        image_match = tree.xpath("//a[@data-ct-type='Image'][@class='contenttype-image state-missing-value'][contains(@title, 'This image #2 was created for testing purposes')][contains(@title, '/my-image')][@rel='1']")
+        image_match = tree.xpath("//li[@data-content-type='Image']/a[@class='contenttype-image state-missing-value'][contains(@title, 'This image #2 was created for testing purposes')][contains(@title, '/my-image')][@rel='1']")
         self.assertTrue(image_match)
 
     @unittest.skipIf(

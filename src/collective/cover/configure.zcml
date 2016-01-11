@@ -21,6 +21,7 @@
   <include file="subscribers.zcml" />
 
   <include package=".behaviors" />
+  <include package=".browser" />
   <include package=".tiles" />
   <include package=".upgrades" />
 

@@ -4,9 +4,12 @@ from collective.cover import _
 from collective.cover.controlpanel import ICoverSettings
 from collective.cover.interfaces import ICover
 from collective.cover.interfaces import IGridSystem
+from collective.cover.tiles.list import IListTile
 from collective.cover.utils import assign_tile_ids
 from five import grok
+from plone.app.uuid.utils import uuidToObject
 from plone.registry.interfaces import IRegistry
+from plone.tiles.interfaces import ITileDataManager
 from plone.tiles.interfaces import ITileType
 from zope.browserpage.viewpagetemplatefile import ViewPageTemplateFile
 from zope.component import getUtility
@@ -141,6 +144,29 @@ class PageLayout(grok.View):
         accepted_ct = tile.accepted_ct()
 
         return json.dumps(accepted_ct)
+
+    def get_content_portal_type(self, tile_type, tile_id):
+        """Return content type of data inside the tile."""
+        tile = self.context.restrictedTraverse('{0}/{1}'.format(str(tile_type), str(tile_id)))
+        data_mgr = ITileDataManager(tile)
+        data = data_mgr.get()
+        uuid = data.get('uuid', None)
+        if uuid is None:
+            return
+        obj = uuidToObject(uuid)
+        return obj.portal_type
+
+    def get_content_uuid(self, tile_type, tile_id):
+        """Return UUID of data inside the tile."""
+        tile = self.context.restrictedTraverse('{0}/{1}'.format(str(tile_type), str(tile_id)))
+        data_mgr = ITileDataManager(tile)
+        data = data_mgr.get()
+        return data.get('uuid', None)
+
+    def get_has_subitem(self, tile_type, tile_id):
+        """Return if tile has subitems (inherited from IListTile)."""
+        tile = self.context.restrictedTraverse('{0}/{1}'.format(str(tile_type), str(tile_id)))
+        return IListTile.providedBy(tile)
 
 
 class LayoutSave(grok.View):

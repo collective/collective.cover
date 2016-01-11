@@ -150,14 +150,13 @@ var coveractions = {
         if (data.items.length > 0) {
           for (var i = 0; i < data.items.length; i++) {
             //html += '<div class="' + (i % 2 == 0 ? 'even' : 'odd') + '">';
-            html += '<li uid="' + data.items[i].uid + '" class="ui-draggable">';
+            html += '<li data-content-type="' + data.items[i].portal_type + '" data-content-uuid="' + data.items[i].uuid + '" class="ui-draggable">';
 
             if (data.items[i].is_folderish) {
               if (data.items[i].icon.length) {
                 html += '<img src="' + data.items[i].icon + '" /> ';
               }
-              html += '<a data-ct-type="' +
-                data.items[i].portal_type + '" class="' +
+              html += '<a class="' +
                 data.items[i].classicon + ' ' + data.items[i].r_state + '" ';
               html += 'title="' + data.items[i].description + '" ';
               html += 'href="javascript:coveractions.getFolderContents(\'' + data.items[i].url + '\',\'@@jsonbytype' + '\')">';
@@ -367,42 +366,145 @@ var coveractions = {
     });
 
     contentchooserMaker({
-      draggable: '#contentchooser-content-search .item-list li',
-      draggable_acepted: function(e) {
-        var ct = $(this).data('tileValidCt');
-        var valid = $.inArray($(e).find('a').data('ctType'), ct);
-        var isDroppable = $(this).attr("data-is-droppable");
-
-        if (isDroppable === "False" || $(e).attr('id') === 'contentchooser-content-search') {
-          return false;
+      draggable: '#contentchooser-content-search .item-list li, ' +
+                 '#content .tile, ' +
+                 '#content .tile-move, ' +
+                 '[data-tile-type=collective\\.cover\\.carousel] [data-content-uuid]',
+      draggable_acepted: function($origin) {
+        var $target = $(this);
+        var ct = $target.data('tileValidCt');
+        var valid = $.inArray($origin.attr('data-content-type'), ct) >= 0;
+        var isDroppable = $target.attr("data-is-droppable") === "True";
+        var origin_id = $origin.attr('id');
+        if ($origin.is('[data-tile-id]')) {
+          origin_id = $origin.attr('data-tile-id');
         }
-        if (!ct && $($(e).context).parent().attr("class") === "item-list") {
+        var origin_has_subitem = $origin.attr('data-has-subitem') === 'True';
+        var origin_uuid = $origin.attr('data-content-uuid');
+
+        if (!ct &&
+            origin_has_subitem ||
+            $origin.attr('data-tile-type') === $target.attr('data-tile-type') &&
+            (typeof origin_uuid !== 'undefined' ||
+             $origin.hasClass('tile-move')) &&
+            origin_id !== $target.attr('id')) {
           return true;
         }
-        return valid !== -1 ? true : false;
+        if (!isDroppable ||
+            origin_id === $target.attr('id') ||
+            typeof origin_uuid === 'undefined') {
+          return false;
+        }
+        return valid;
       },
       windowId: '#contentchooser-content-search',
       droppable: '#content .tile',
       dropped: function(event, ui) {
-        var tile = $(this);
-        var tile_type = tile.attr("data-tile-type");
-        var tile_id = tile.attr("id");
-        var ct_uid = ui.draggable.attr("uid");
-        tile.find('.loading-mask').addClass('show');
-        $.ajax({
-          url: "@@updatetilecontent",
-          data: {
-            'tile-type': tile_type,
-            'tile-id': tile_id,
-            'uid': ct_uid
-          },
-          success: function(info) {
-            tile.html(info);
-            tile.find('.loading-mask').removeClass('show');
-            TitleMarkupSetup();
+        var $draggable = ui.draggable;  // JQuery UI copy of $origin
+        var $target = $(this);
+        var target_type = $target.attr('data-tile-type');
+        var target_id = $target.attr('id');
+        var target_has_subitem = $target.attr('data-has_subitem') === 'True';
+        var draggable_id = $draggable.attr('id');
+        if ($draggable.is('[data-tile-id]')) {
+          draggable_id = $draggable.attr('data-tile-id');
+        }
+        var $origin = $('#' + draggable_id);
+        var origin_type = $origin.attr('data-tile-type');
+        var origin_has_subitem = $origin.attr('data-has-subitem') === 'True';
+        var draggable_uuid = $draggable.attr('data-content-uuid');
+        var draggable_type = $draggable.attr('data-content-type');
+        if (target_id === draggable_id) {
+          return false;
+        }
+        $target.find('.loading-mask').addClass('show');
+        if ($draggable.hasClass('tile') || origin_has_subitem) {
+          var move_callback = function() {
+            // TODO: there are a conflict beetween sort list tile and drag and drop content that makes data keep in origin tile
+            //       we should take out the sort functionality of list tile and put it into edit overlay (like carousel tile)
+            if ($('#' + draggable_id + ' [data-content-uuid=' + draggable_uuid + ']').length > 0) {
+              $.ajax({
+                url: "@@removeitemfromlisttile",
+                data: {
+                  'tile-type': origin_type,
+                  'tile-id': draggable_id,
+                  'uuid': draggable_uuid
+                },
+                success: function(info) {
+                  $origin.html(info);
+                  $origin.find('.loading-mask').addClass('show');
+                  if (!origin_has_subitem) {
+                    $origin.removeAttr('data-content-uuid');
+                    $origin.removeAttr('data-content-type');
+                  }
+                  move_callback();
+                  return false;
+                }
+              });
+            } else {
+              $origin.find('.loading-mask').removeClass('show');
+              $target.find('.loading-mask').removeClass('show');
+              TitleMarkupSetup();
+            }
             return false;
-          }
-        });
+          };
+          $origin.find('.loading-mask').addClass('show');
+          $.ajax({
+            url: '@@movetilecontent',
+            data: {
+              'origin-type': origin_type,
+              'origin-id': draggable_id,
+              'target-type': target_type,
+              'target-id': target_id,
+              'uuid': draggable_uuid
+            },
+            success: function(info) {
+              $target.html(info);
+              $target.find('.loading-mask').addClass('show');
+              if (!target_has_subitem) {
+                $target.attr('data-content-uuid', draggable_uuid);
+                $target.attr('data-content-type', draggable_type);
+              }
+              $.ajax({
+                url: '@@updatetile',
+                data: {
+                  'tile-type': origin_type,
+                  'tile-id': draggable_id,
+                },
+                success: function(info) {
+                  $origin.html(info);
+                  $origin.find('.loading-mask').addClass('show');
+                  if (!origin_has_subitem) {
+                    $origin.removeAttr('data-content-uuid');
+                    $origin.removeAttr('data-content-type');
+                  }
+                  move_callback();
+                  return false;
+                }
+              });
+              return false;
+            }
+          });
+        } else {
+          $.ajax({
+            url: '@@updatetilecontent',
+            data: {
+              'tile-type': target_type,
+              'tile-id': target_id,
+              'uuid': draggable_uuid
+            },
+            success: function(info) {
+              $target.html(info);
+              if (!target_has_subitem) {
+                $target.attr('data-content-uuid', draggable_uuid);
+                $target.attr('data-content-type', draggable_type);
+              }
+              $target.find('.loading-mask').removeClass('show');
+              TitleMarkupSetup();
+              return false;
+            }
+          });
+        }
       }
     });
 

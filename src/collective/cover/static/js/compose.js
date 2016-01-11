@@ -13,14 +13,14 @@
 function removeObjFromTile() {
   $(".tile-remove-item").remove();
   $(".sortable-tile").each(function() {
-    var child = $(this).children('*[data-uid]');
+    var child = $(this).children('*[data-content-uuid]');
     child.append("<i class='tile-remove-item'><span class='text'>remove</span></i>");
   });
   $(".tile-remove-item").unbind("click");
   $(".tile-remove-item").click(function(e) {
     e.preventDefault();
     var obj = $(this).parent();
-    uid = obj.attr("data-uid");
+    uuid = obj.attr("data-content-uuid");
     var tile = obj.parents('.tile');
 
     tile.find('.loading-mask').addClass('show remove-tile');
@@ -31,7 +31,7 @@ function removeObjFromTile() {
       data: {
         'tile-type': tile_type,
         'tile-id': tile_id,
-        'uid': uid
+        'uuid': uuid
       },
       success: function(info) {
         tile.html(info);
@@ -58,10 +58,10 @@ $(document).ready(function() {
 
   $(".sortable-tile").liveSortable({
     stop: function(event, ui) {
-      var uids = [];
+      var uuids = [];
       $(this).children().each(function(index) {
-        if ($(this).attr("data-uid") !== undefined) {
-          uids.push($(this).attr("data-uid"));
+        if ($(this).attr("data-content-uuid") !== undefined) {
+          uuids.push($(this).attr("data-content-uuid"));
         }
       });
       var tile = $(this).closest('.tile');
@@ -72,7 +72,7 @@ $(document).ready(function() {
         data: {
           'tile-type': tile_type,
           'tile-id': tile_id,
-          'uids': uids
+          'uuids': uuids
         },
         success: function(info) {
           tile.html(info);
@@ -149,8 +149,8 @@ $(document).ready(function() {
 
           var serial_sort = function(textarea, sortable) {
             textarea.empty();
-            sortable.find('[data-uid]').each(function(e) {
-              textarea.append($(this).data('uid') + "\n");
+            sortable.find('[data-content-uuid]').each(function(e) {
+              textarea.append($(this).attr('data-content-uuid') + "\n");
             });
           };
 
@@ -165,8 +165,8 @@ $(document).ready(function() {
           });
 
           //create delete buttons
-          sortable.find('[data-uid]').append("<i class='tile-remove-item' data-uid=''><span class='text'>remove</span></i>");
-          sortable.find('[data-uid]').find('.tile-remove-item').click(function(e) {
+          sortable.find('[data-content-uuid]').append("<i class='tile-remove-item' data-content-uuid=''><span class='text'>remove</span></i>");
+          sortable.find('[data-content-uuid]').find('.tile-remove-item').click(function(e) {
             $(this).parent('.textline-sortable-element').remove();
             serial_sort(textarea, sortable);
           });
