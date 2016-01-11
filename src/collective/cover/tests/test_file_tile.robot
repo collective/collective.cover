@@ -19,6 +19,8 @@ ${edit_link_selector}  a.edit-tile-link
 *** Test cases ***
 
 Test File Tile
+    [Tags]  Mandelbug
+
     Enable Autologin as  Site Administrator
     Go to Homepage
 

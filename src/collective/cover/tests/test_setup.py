@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 from collective.cover.config import PROJECTNAME
 from collective.cover.testing import INTEGRATION_TESTING
 from plone import api
@@ -25,10 +24,10 @@ class InstallTestCase(unittest.TestCase):
 
     def setUp(self):
         self.portal = self.layer['portal']
+        self.qi = self.portal['portal_quickinstaller']
 
     def test_installed(self):
-        qi = self.portal['portal_quickinstaller']
-        self.assertTrue(qi.isProductInstalled(PROJECTNAME))
+        self.assertTrue(self.qi.isProductInstalled(PROJECTNAME))
 
     def test_addon_layer(self):
         layers = [l.getName() for l in registered_layers()]
@@ -56,6 +55,14 @@ class InstallTestCase(unittest.TestCase):
             ps.runAllImportStepsFromProfile('profile-collective.cover:default')
         except AttributeError:
             self.fail('Reinstall fails when the record was changed')
+
+    def test_new_widgets_installed(self):
+        from collective.cover.testing import NEW_WIDGETS
+        name = 'plone.app.widgets'
+        if NEW_WIDGETS:
+            self.assertTrue(self.qi.isProductInstalled(name))
+        else:
+            self.assertFalse(self.qi.isProductInstalled(name))
 
 
 class UninstallTestCase(unittest.TestCase):

@@ -16,6 +16,9 @@ ${edit_link_selector}  a.edit-tile-link
 *** Test cases ***
 
 Test RichText Tile
+    ${TIMEOUT} =  Get Selenium timeout
+    ${IMPLICIT_WAIT} =  Get Selenium implicit wait
+
     Enable Autologin as  Site Administrator
     Go to Homepage
 
@@ -30,7 +33,16 @@ Test RichText Tile
 
     # edit tile but don't save it
     Click Link  css=${edit_link_selector}
-    Wait For Condition  return typeof tinyMCE != "undefined" && tinyMCE.activeEditor != null
+    Wait For Condition  return typeof tinyMCE !== "undefined" && tinyMCE.activeEditor !== null && document.getElementById(tinyMCE.activeEditor.id) !== null
+    Click Button  Cancel
+    Wait Until Keyword Succeeds  ${TIMEOUT}  ${IMPLICIT_WAIT}  Page Should Not Contain  Edit Rich Text Tile
+
+    # check if TinyMCE loads a second time
+    # see: https://github.com/collective/collective.cover/issues/543
+    Click Link  css=${edit_link_selector}
+    Sleep  1s  Wait for tinymce to load
+    Wait For Condition  return typeof tinyMCE !== "undefined" && tinyMCE.activeEditor !== null && document.getElementById(tinyMCE.activeEditor.id) !== null
+
     Execute Javascript  tinyMCE.activeEditor.setContent("${text_sample}");
     Click Button  Save
     # save via ajax => wait until the tile has been reloaded
@@ -45,10 +57,11 @@ Test RichText Tile
     # Compose and don't save some other text
     Compose Cover
     Click Link  css=${edit_link_selector}
-    Wait For Condition  return typeof tinyMCE != "undefined" && tinyMCE.activeEditor != null
+    Sleep  1s  Wait for tinymce to load
+    Wait For Condition  return typeof tinyMCE !== "undefined" && tinyMCE.activeEditor !== null && document.getElementById(tinyMCE.activeEditor.id) !== null
     Execute Javascript  tinyMCE.activeEditor.setContent("${text_other_sample}");
     Click Button  Cancel
-    Page Should Not Contain  ${text_other_sample}
+    Wait Until Keyword Succeeds  ${TIMEOUT}  ${IMPLICIT_WAIT}  Page Should Not Contain  ${text_other_sample}
     Page Should Contain  ${text_sample}
 
     Edit Cover Layout

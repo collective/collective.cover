@@ -25,6 +25,8 @@ ${edit_link_selector}  a.edit-tile-link
 *** Test cases ***
 
 Test Basic Tile
+    [Tags]  Mandelbug
+
     Enable Autologin as  Site Administrator
     Go to Homepage
     Create Cover  Title  Description

@@ -20,6 +20,7 @@ ${edit_link_selector}  a.edit-tile-link
 
 Test Collection Tile
     [Setup]  Set Selenium Speed  .5
+    [Tags]  issue_580
 
     Enable Autologin as  Site Administrator
     Go to Homepage
