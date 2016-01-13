@@ -92,10 +92,13 @@ class Fixture(PloneSandboxLayer):
 
     def setUpZope(self, app, configurationContext):
         # XXX: do not install (yet) PFG in Plone 5
-        if HAS_PFG and PLONE_VERSION < '5.0':
-            import Products.PloneFormGen
-            self.loadZCML(package=Products.PloneFormGen)
-            z2.installProduct(app, 'Products.PloneFormGen')
+        if PLONE_VERSION < '5.0':
+            import plone.app.stagingbehavior
+            self.loadZCML(package=plone.app.stagingbehavior)
+            if HAS_PFG:
+                import Products.PloneFormGen
+                self.loadZCML(package=Products.PloneFormGen)
+                z2.installProduct(app, 'Products.PloneFormGen')
 
         # Load ZCML
         import collective.cover

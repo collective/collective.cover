@@ -144,6 +144,15 @@ To enable this package in a buildout-based installation:
     plone.app.z3cform = 0.6.3
     plone.directives.form = 1.1
 
+#. If you are using Plone < 5.0, and you want to use versioning support, you should also add::
+
+    [buildout]
+    ...
+    eggs =
+        plone.app.stagingbehavior
+
+   Support for checkout and checkin operations will be automatically configured if ``plone.app.stagingbehavior`` is available.
+
 #. If you want to use a newer release of ``collective.js.bootstrap``, you will need to update ``plone.app.jquery``::
 
     [versions]

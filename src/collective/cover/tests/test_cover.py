@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from AccessControl import Unauthorized
 from collective.cover.config import DEFAULT_GRID_SYSTEM
+from collective.cover.config import PLONE_VERSION
 from collective.cover.controlpanel import ICoverSettings
 from collective.cover.interfaces import ICover
 from collective.cover.testing import INTEGRATION_TESTING
@@ -8,7 +9,6 @@ from plone import api
 from plone.app.dexterity.behaviors.exclfromnav import IExcludeFromNavigation
 from plone.app.lockingbehavior.behaviors import ILocking
 from plone.app.referenceablebehavior.referenceable import IReferenceable
-from plone.app.stagingbehavior.interfaces import IStagingSupport
 from plone.app.testing import setRoles
 from plone.app.testing import TEST_USER_ID
 from plone.dexterity.interfaces import IDexterityFTI
@@ -63,7 +63,10 @@ class CoverIntegrationTestCase(unittest.TestCase):
         self.assertTrue(IReferenceable.providedBy(self.cover))
         self.assertTrue(IAttributeUUID.providedBy(self.cover))
 
+    @unittest.skipIf(
+        PLONE_VERSION < '5.0', 'plone.app.stagingbehavior not needed')
     def test_staging_behavior(self):
+        from plone.app.stagingbehavior.interfaces import IStagingSupport
         self.assertTrue(IStagingSupport.providedBy(self.cover))
 
     def test_cover_selectable_as_folder_default_view(self):
