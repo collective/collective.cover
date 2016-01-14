@@ -27,12 +27,4 @@ output.xml
 parts/
 report.html
 selenium*
-src/plone.app.blocks/
-src/plone.app.deco/
-src/plone.app.imaging/
-src/plone.app.intid/
-src/plone.app.stagingbehavior/
-src/plone.app.tiles/
-src/plone.scale/
-src/plone.tiles/
 var/
