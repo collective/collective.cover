@@ -129,7 +129,10 @@ class Fixture(PloneSandboxLayer):
     defaultBases = (PLONE_FIXTURE,)
 
     def setUpZope(self, app, configurationContext):
-        if PLONE_VERSION < '5.0':
+        if PLONE_VERSION.startswith('5'):
+            import plone.app.contenttypes
+            self.loadZCML(package=plone.app.contenttypes)
+        else:
             if DEXTERITY_ONLY:
                 import plone.app.contenttypes
                 self.loadZCML(package=plone.app.contenttypes)
@@ -155,7 +158,9 @@ class Fixture(PloneSandboxLayer):
             manage_addVirtualHostMonster(app, 'virtual_hosting')
 
     def setUpPloneSite(self, portal):
-        if PLONE_VERSION < '5.0':
+        if PLONE_VERSION.startswith('5'):
+            self.applyProfile(portal, 'plone.app.contenttypes:default')
+        else:
             if DEXTERITY_ONLY:
                 self.applyProfile(portal, 'plone.app.contenttypes:default')
 
