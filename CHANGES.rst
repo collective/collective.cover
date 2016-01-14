@@ -6,6 +6,9 @@ There's a frood who really knows where his towel is.
 1.0a13 (unreleased)
 ^^^^^^^^^^^^^^^^^^^
 
+- Add missing dependency on collective.z3cform.datetimewidget.
+  [hvelarde]
+
 - Remove hard dependency on plone.app.stagingbehavior as that package is no longer needed in Plone 5.
   Under Plone < 5.0 you should now explicitly add it to the `eggs` part of your buildout configuration to avoid issues while upgrading.
   [hvelarde]
