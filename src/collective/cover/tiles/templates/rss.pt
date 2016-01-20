@@ -7,7 +7,7 @@
       i18n:domain="plone">
   <body>
     <dl tal:condition="view/enabled"
-        class="rsstile">
+        class="cover-rsstile tile-content">
       <dt class="header rss-title">
         <a href=""
            tal:attributes="href view/siteurl"
