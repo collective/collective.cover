@@ -30,7 +30,6 @@ Get Total Carousel Images
 *** Test cases ***
 
 Test Carousel Tile
-
     Enable Autologin as  Site Administrator
     Go to Homepage
     Create Cover  Title  Description

@@ -1,5 +1,15 @@
 # -*- coding: utf-8 -*-
+"""Setup test fixtures.
 
+We have to set different test fixtures depending on Plone versions and
+features we want to test:
+
+plone.app.widgets
+    installed under Plone 4.3, if requested
+
+Products.PloneFormGen
+    installed under Plone 4 only
+"""
 from App.Common import package_home
 from collective.cover.config import PLONE_VERSION
 from PIL import Image
@@ -16,6 +26,13 @@ import os
 import pkg_resources
 import random
 
+try:
+    pkg_resources.get_distribution('plone.app.widgets')
+except pkg_resources.DistributionNotFound:
+    NEW_WIDGETS = False
+else:
+    # this environment variable is set in .travis.yml test matrix
+    NEW_WIDGETS = os.environ.get('NEW_WIDGETS') is not None
 
 try:
     pkg_resources.get_distribution('Products.PloneFormGen')
@@ -91,16 +108,19 @@ class Fixture(PloneSandboxLayer):
     defaultBases = (PLONE_FIXTURE,)
 
     def setUpZope(self, app, configurationContext):
-        # XXX: do not install (yet) PFG in Plone 5
         if PLONE_VERSION < '5.0':
             import plone.app.stagingbehavior
             self.loadZCML(package=plone.app.stagingbehavior)
+
+            if NEW_WIDGETS:
+                import plone.app.widgets
+                self.loadZCML(package=plone.app.widgets)
+
             if HAS_PFG:
                 import Products.PloneFormGen
                 self.loadZCML(package=Products.PloneFormGen)
                 z2.installProduct(app, 'Products.PloneFormGen')
 
-        # Load ZCML
         import collective.cover
         self.loadZCML(package=collective.cover)
 
@@ -112,9 +132,12 @@ class Fixture(PloneSandboxLayer):
             manage_addVirtualHostMonster(app, 'virtual_hosting')
 
     def setUpPloneSite(self, portal):
-        # XXX: do not install (yet) PFG in Plone 5
-        if HAS_PFG and PLONE_VERSION < '5.0':
-            self.applyProfile(portal, 'Products.PloneFormGen:default')
+        if PLONE_VERSION < '5.0':
+            if NEW_WIDGETS:
+                self.applyProfile(portal, 'plone.app.widgets:default')
+
+            if HAS_PFG:
+                self.applyProfile(portal, 'Products.PloneFormGen:default')
 
         # Install into Plone site using portal_setup
         self.applyProfile(portal, 'collective.cover:default')

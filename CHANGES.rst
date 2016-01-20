@@ -6,6 +6,9 @@ There's a frood who really knows where his towel is.
 1.0a13 (unreleased)
 ^^^^^^^^^^^^^^^^^^^
 
+- Package is now compatible with plone.app.widgets as RichText tile no longer breaks with it (closes `#543`_).
+  [frapell, rodfersou]
+
 - Add missing dependency on collective.z3cform.datetimewidget.
   [hvelarde]
 
@@ -726,5 +729,6 @@ There's a frood who really knows where his towel is.
 .. _`#526`: https://github.com/collective/collective.cover/issues/526
 .. _`#530`: https://github.com/collective/collective.cover/issues/530
 .. _`#534`: https://github.com/collective/collective.cover/issues/534
+.. _`#543`: https://github.com/collective/collective.cover/issues/543
 .. _`#559`: https://github.com/collective/collective.cover/issues/559
 .. _`PloneFormGen`: https://pypi.python.org/pypi/Products.PloneFormGen

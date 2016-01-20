@@ -19,6 +19,8 @@ ${document_body}  body.portaltype-document
 *** Test cases ***
 
 Test Content Body Tile
+    [Tags]  issue_580
+
     Enable Autologin as  Site Administrator
 
     # edit document so it contains text

@@ -22,7 +22,7 @@ ${edit_link_selector}  a.edit-tile-link
 *** Test cases ***
 
 Test Banner Tile
-    [Tags]  Expected Failure
+    [Tags]  Mandelbug
 
     Enable Autologin as  Site Administrator
     Go to Homepage

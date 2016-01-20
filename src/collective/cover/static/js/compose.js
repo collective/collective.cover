@@ -128,20 +128,42 @@ $(document).ready(function() {
     },
     config: {
       onLoad: function() {
-        if (typeof initTinyMCE != 'undefined') {
-          initTinyMCE(this.getOverlay());
-        }
-        $('textarea.mce_editable').each(function() {
-          if (typeof TinyMCEConfig != 'undefined') {
-            textarea_id = $(this).attr('id');
-            var config = new TinyMCEConfig(textarea_id);
-            delete InitializedTinyMCEInstances[textarea_id];
-            config.init();
-
-            // Remove unecessary link, use HTML button of editor
-            $('div.suppressVisualEditor').remove();
+        // With plone.app.widgets and Plone 4.3
+        if (typeof require !== 'undefined' && require.defined('pat-registry')) {
+          // Remove old editors references to work with ajax
+          if (typeof tinyMCE !== 'undefined' && tinyMCE !== null) {
+            if (tinyMCE.EditorManager != null) {
+              tinyMCE.EditorManager.editors = [];
+            }
           }
-        });
+          // Add tinymce
+          $('.overlay textarea.mce_editable').addClass('pat-tinymce');
+          require('pat-registry').scan($('.overlay'), ['tinymce']);
+          // Wire save buttom to save tinymce
+          $( '.overlay input#buttons-save').on('click', function() {
+            tinyMCE.triggerSave();
+          });
+          // Hack to make overlay work over overlay
+          $('.overlay').on('mouseover', function() {
+            $('div.plone-modal-wrapper').css('z-index', '10050');
+          });
+        } else if (typeof initTinyMCE !== 'undefined') { // Plone 4.3
+          // Remove old editors references to work with ajax
+          if (typeof tinyMCE !== 'undefined' && tinyMCE !== null) {
+            if (tinyMCE.EditorManager != null) {
+              tinyMCE.EditorManager.editors = [];
+            }
+          }
+          // Add tinymce
+          initTinyMCE(this.getOverlay());
+        } else if (typeof TinyMCEConfig != 'undefined') { // Plone 4.2
+          var textarea_id = $('.overlay textarea.mce_editable').attr('id');
+          var config = new TinyMCEConfig(textarea_id);
+          delete InitializedTinyMCEInstances[textarea_id];
+          config.init();
+        }
+        // Remove unecessary link, use HTML button of EditorManager
+        $('div.suppressVisualEditor').remove();
 
         //carousel
         var carousel = $('div[data-carousel="carousel-sort"]');
