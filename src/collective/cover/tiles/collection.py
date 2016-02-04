@@ -171,6 +171,9 @@ class CollectionTile(PersistentCoverTile):
                 if 'imgsize' in field_conf:
                     field['scale'] = field_conf['imgsize']
 
+                if 'format' in field_conf:
+                    field['format'] = field_conf['format']
+
                 if 'size' in field_conf:
                     field['size'] = field_conf['size']
 
