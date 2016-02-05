@@ -241,25 +241,31 @@ class CollectionTileTestCase(TestTileMixin, unittest.TestCase):
 
         self.tile.populate_with_object(collection)
         rendered = self.tile()
-        expected = api.portal.get_localized_time(
+        tomorrow_in_datetime = api.portal.get_localized_time(
             tomorrow, long_format=True, time_only=False)
-        self.assertIn(expected, rendered)  # u'Jul 15, 2015 01:23 PM'
+
+        self.assertIn(tomorrow_in_datetime, rendered)  # u'Jul 15, 2015 01:23 PM'
 
         tile_conf = self.tile.get_tile_configuration()
-        tile_conf['title']['format'] = 'dateonly'
+        tile_conf['date']['format'] = 'dateonly'
         self.tile.set_tile_configuration(tile_conf)
         rendered = self.tile()
-        expected = api.portal.get_localized_time(
+        tomorrow_in_date = api.portal.get_localized_time(
             tomorrow, long_format=False, time_only=False)
-        self.assertIn(expected, rendered)  # u'Jul 15, 2015
+
+        self.assertNotIn(tomorrow_in_datetime, rendered)
+        self.assertIn(tomorrow_in_date, rendered)  # u'Jul 15, 2015
 
         tile_conf = self.tile.get_tile_configuration()
-        tile_conf['title']['format'] = 'timeonly'
+        tile_conf['date']['format'] = 'timeonly'
         self.tile.set_tile_configuration(tile_conf)
         rendered = self.tile()
-        expected = api.portal.get_localized_time(
+        tomorrow_timeonly = api.portal.get_localized_time(
             tomorrow, long_format=False, time_only=True)
-        self.assertIn(expected, rendered)  # u'01:23 PM'
+
+        self.assertNotIn(tomorrow_in_datetime, rendered)
+        self.assertNotIn(tomorrow_in_date, rendered)
+        self.assertIn(tomorrow_timeonly, rendered)  # u'01:23 PM'
 
     def test_get_alt(self):
         collection = self.portal['my-collection']
