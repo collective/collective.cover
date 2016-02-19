@@ -480,8 +480,18 @@ var coveractions = {
                   }
                   move_callback();
                   return false;
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                  $origin.html(textStatus + ': ' + errorThrown);
+                  $origin.find('.loading-mask').removeClass('show');
+                  return false;
                 }
               });
+              return false;
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+              $target.html(textStatus + ': ' + errorThrown);
+              $target.find('.loading-mask').removeClass('show');
               return false;
             }
           });
@@ -499,6 +509,12 @@ var coveractions = {
                 $target.attr('data-content-uuid', draggable_uuid);
                 $target.attr('data-content-type', draggable_type);
               }
+              $target.find('.loading-mask').removeClass('show');
+              TitleMarkupSetup();
+              return false;
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+              $target.html(textStatus + ': ' + errorThrown);
               $target.find('.loading-mask').removeClass('show');
               TitleMarkupSetup();
               return false;

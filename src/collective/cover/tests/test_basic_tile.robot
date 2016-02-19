@@ -2,7 +2,7 @@
 
 Resource  cover.robot
 Library  Remote  ${PLONE_URL}/RobotRemote
-
+Library  ${CURDIR}/TestInternalServerError.py
 Suite Setup  Open Test Browser
 Suite Teardown  Close all browsers
 
@@ -69,6 +69,16 @@ Test Basic Tile
     # move to the default view and check tile persisted
     Click Link  link=View
     Page Should Contain  Test image
+
+    # drag&drop an Image, forcing an error in the server. This error is made
+    # possible using the keyword below from TestInternalServerError.py Library.
+    Apply Patch Populate With Object
+    Compose Cover
+    Open Content Chooser
+    Drag And Drop  css=${image_selector}  css=${tile_selector}
+    Wait Until Page Contains Element  css=div.cover-basic-tile a img
+    Page Should Contain  Internal Server Error
+    Remove Patch Populate With Object
 
     # drag&drop a Link
     Compose Cover

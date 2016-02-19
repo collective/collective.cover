@@ -38,6 +38,12 @@ function removeObjFromTile() {
         TitleMarkupSetup();
         tile.find('.loading-mask').removeClass('show remove-tile');
         return false;
+      },
+      error: function(XMLHttpRequest, textStatus, errorThrown) {
+        tile.html(textStatus + ': ' + errorThrown);
+        TitleMarkupSetup();
+        tile.find('.loading-mask').removeClass('show remove-tile');
+        return false;
       }
     });
   });
@@ -76,6 +82,11 @@ $(document).ready(function() {
         },
         success: function(info) {
           tile.html(info);
+          TitleMarkupSetup();
+          return false;
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+          tile.html(textStatus + ': ' + errorThrown);
           TitleMarkupSetup();
           return false;
         }
