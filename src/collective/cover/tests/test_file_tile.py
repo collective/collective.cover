@@ -2,6 +2,7 @@
 from collective.cover.tests.base import TestTileMixin
 from collective.cover.tiles.file import FileTile
 from collective.cover.tiles.file import IFileTile
+from plone import api
 from plone.uuid.interfaces import IUUID
 
 import unittest
@@ -82,6 +83,21 @@ class FileTileTestCase(TestTileMixin, unittest.TestCase):
         self.assertIn('Download file', rendered)
         self.assertIn('My file', rendered)
         self.assertIn('This file was created for testing purposes', rendered)
+
+    def test_remove_file(self):
+        # https://github.com/collective/collective.cover/issues/588
+        with api.env.adopt_roles(['Manager']):
+            obj = api.content.create(self.portal, 'File', 'My test')
+        self.tile.populate_with_object(obj)
+        rendered = self.tile()
+        self.assertIn(
+            '<a href="http://nohost/plone/My%20test/at_download/file">', rendered)
+        self.assertIn('Download file', rendered)
+        api.content.delete(obj)
+        rendered = self.tile()
+        self.assertNotIn(
+            '<a href="http://nohost/plone/My%20test/at_download/file">', rendered)
+        self.assertNotIn('Download file', rendered)
 
     def test_render_kB_file(self):
         obj = self.portal['my-file']
