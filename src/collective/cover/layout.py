@@ -154,6 +154,8 @@ class PageLayout(grok.View):
         if uuid is None:
             return
         obj = uuidToObject(uuid)
+        if obj is None:
+            return
         return obj.portal_type
 
     def get_content_uuid(self, tile_type, tile_id):
