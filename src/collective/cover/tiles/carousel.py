@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 from collective.cover import _
+from collective.cover.interfaces import ICoverUIDsProvider
 from collective.cover.interfaces import ITileEditForm
 from collective.cover.tiles.list import IListTile
 from collective.cover.tiles.list import ListTile
 from collective.cover.widgets.interfaces import ITextLinesSortableWidget
 from collective.cover.widgets.textlinessortable import TextLinesSortableFieldWidget
 from plone import api
+from plone.app.uuid.utils import uuidToObject
 from plone.autoform import directives as form
 from plone.tiles.interfaces import ITileDataManager
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
@@ -64,9 +66,14 @@ class CarouselTile(ListTile):
         :param uuids: The list of objects' UUIDs to be used
         :type uuids: List of strings
         """
-        if not self._has_image_field(obj):
-            return
-        super(CarouselTile, self).populate_with_object(obj)
+        super(ListTile, self).populate_with_object(obj)  # check permission
+        uuids = ICoverUIDsProvider(obj).getUIDs()
+        # Accept just elements with image
+        uuids = [
+            uuid for uuid in uuids
+            if self._has_image_field(uuidToObject(uuid))]
+        if uuids:
+            self.populate_with_uuids(uuids)
 
     def autoplay(self):
         if self.data['autoplay'] is None:
