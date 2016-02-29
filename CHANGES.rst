@@ -6,6 +6,9 @@ There's a frood who really knows where his towel is.
 1.0a13 (unreleased)
 ^^^^^^^^^^^^^^^^^^^
 
+- Accept collection and folder objects into carousel tile (closes `574`_).
+  [rodfersou]
+
 - Shows message to user if an exception is thrown in a tile (closes `#581`_).
   [idgserpro]
 
@@ -737,6 +740,7 @@ There's a frood who really knows where his towel is.
 .. _`#534`: https://github.com/collective/collective.cover/issues/534
 .. _`#543`: https://github.com/collective/collective.cover/issues/543
 .. _`#559`: https://github.com/collective/collective.cover/issues/559
+.. _`#574`: https://github.com/collective/collective.cover/issues/574
 .. _`#581`: https://github.com/collective/collective.cover/issues/581
 .. _`#584`: https://github.com/collective/collective.cover/issues/584
 .. _`PloneFormGen`: https://pypi.python.org/pypi/Products.PloneFormGen
