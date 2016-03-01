@@ -68,10 +68,8 @@ class CarouselTile(ListTile):
         """
         super(ListTile, self).populate_with_object(obj)  # check permission
         uuids = ICoverUIDsProvider(obj).getUIDs()
-        # Accept just elements with image
-        uuids = [
-            uuid for uuid in uuids
-            if self._has_image_field(uuidToObject(uuid))]
+        # accept just elements with a lead image
+        uuids = [i for i in uuids if self._has_image_field(uuidToObject(i))]
         if uuids:
             self.populate_with_uuids(uuids)
 

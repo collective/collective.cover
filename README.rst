@@ -14,19 +14,15 @@ offer. However, despite offering rich resources to build a cover,
 ``collective.cover`` also provides a very easy mechanism for managing its
 contents, built around a drag-and-drop interface.
 
-``collective.cover`` is based on `Blocks`_ and `Tiles`_, like `Mosaic`_, the new layout solution for Plone.
-
-.. _`Blocks`: https://pypi.python.org/pypi/plone.app.blocks
-.. _`Mosaic`: https://pypi.python.org/pypi/plone.app.mosaic
-.. _`Tiles`: https://pypi.python.org/pypi/plone.app.tiles
+``collective.cover`` is based on `Blocks <https://pypi.python.org/pypi/plone.app.blocks>`_ and `Tiles <https://pypi.python.org/pypi/plone.app.tiles>`_,
+like `Mosaic <https://pypi.python.org/pypi/plone.app.mosaic>`_,
+the new layout solution for Plone.
 
 Demo
 ^^^^
 
-For impatient types, there is a demo installation of collective.cover on `Heroku`_.
+For impatient types, there is a demo installation of collective.cover on `Heroku <http://collective-cover.herokuapp.com>`_.
 It needs about 60 seconds to spin up and it will purge all changes after about an hour of non-usage.
-
-.. _`Heroku`: http://collective-cover.herokuapp.com
 
 Use cases
 ^^^^^^^^^
@@ -83,39 +79,29 @@ Mostly Harmless
 .. image:: https://img.shields.io/coveralls/collective/collective.cover/master.svg
     :target: https://coveralls.io/r/collective/collective.cover
 
-Got an idea? Found a bug? Let us know by `opening a support ticket`_.
-
-.. _`opening a support ticket`: https://github.com/collective/collective.cover/issues
+Got an idea? Found a bug? Let us know by `opening a support ticket <https://github.com/collective/collective.cover/issues>`_.
 
 Known issues
 ^^^^^^^^^^^^
 
-* `Versioning creates zillions of empty blob files`_.
+* `Versioning creates zillions of empty blob files <https://github.com/collective/collective.cover/issues/532>`_.
   If you're using this feature in your site you have to take special attention to the number of free inodes in your file system,
   as you can run out of them;
   use the ``df -i`` command to check it.
 
-* `Package is not compatible with standard Plone tiles`_.
+* `Package is not compatible with standard Plone tiles <https://github.com/collective/collective.cover/issues/81>`_.
   This will be addressed in a future release, if we get an sponsor.
 
-See the `complete list of bugs on GitHub`_.
-
-.. _`Versioning creates zillions of empty blob files`: https://github.com/collective/collective.cover/issues/532
-.. _`Package is not compatible with standard Plone tiles`: https://github.com/collective/collective.cover/issues/81
-.. _`complete list of bugs on GitHub`: https://github.com/collective/collective.cover/issues?labels=bug&milestone=&page=1&state=open
+See the `complete list of bugs on GitHub <https://github.com/collective/collective.cover/issues?labels=bug&milestone=&page=1&state=open>`_.
 
 Don't Panic
 -----------
 
 We are currently working on the documentation of the package; this is what we have right now (contributions are always welcomed):
 
-* `Quick Tour video on YouTube`_.
-* `End user documentation`_
-* `Developer documentation`_
-
-.. _`Developer documentation`: https://github.com/collective/collective.cover/blob/master/docs/developer.rst
-.. _`End user documentation`: https://github.com/collective/collective.cover/blob/master/docs/end-user.rst
-.. _`Quick Tour video on YouTube`: https://www.youtube.com/watch?v=h_rsSL1e4i4
+* `Quick Tour video on YouTube <https://www.youtube.com/watch?v=h_rsSL1e4i4>`_.
+* `End user documentation <https://github.com/collective/collective.cover/blob/master/docs/end-user.rst>`_
+* `Developer documentation <https://github.com/collective/collective.cover/blob/master/docs/developer.rst>`_
 
 Installation
 ^^^^^^^^^^^^
@@ -176,40 +162,32 @@ Over the years there have been some packages designed to solve the problem of
 creating section covers in Plone. We have used and have taken ideas from the
 following:
 
-`CompositePack`_
+`CompositePack <https://pypi.python.org/pypi/Products.CompositePack>`_
     Very old; the legacy code is so complex that is not maintainable anymore.
     It has (arguably) the best user interface of all. Layouts can not be
     created TTW. Viewlets are just page templates associated with content
     types; you can drag&drop viewlets around the layout. Publishers love it.
 
-`CMFContentPanels`_
+`CMFContentPanels <https://pypi.python.org/pypi/Products.CMFContentPanels>`_
     Code is very old, but still maintained (at least works in Plone 4). Allows
     to create complex layouts TTW and use any layout as a template. Easy to
     extend and edit (but is terrible to find a content to use). Needs a lot of
     memory to work and aggressive cache settings.
 
-`Collage`_
+`Collage <https://pypi.python.org/pypi/Products.Collage>`_
     Allows the creation of layouts TTW but it has (arguably) the worst user
     interface of all. It is easily extended and there are several add-ons
     available that provide new functionality for it.
 
-`Home Page Editor of the Brazilian Chamber of Deputies Site`_
-    Strongly based on `Collage`_, this package was presented at the `World Plone Day 2012 Brasilia`_.
+`Home Page Editor of the Brazilian Chamber of Deputies Site <https://colab.interlegis.leg.br/browser/publico/camara.home>`_
+    Strongly based on `Collage`_, this package was presented at the `World Plone Day 2012 Brasilia <http://colab.interlegis.leg.br/wiki/WorldPloneDay>`_.
     It allows editing of home pages and the definition of permissions on blocks of content.
     Works under Plone 3 only.
 
-`collective.panels`_
+`collective.panels <https://pypi.python.org/pypi/collective.panels>`_
     A new package that lets site editors add portlets to a set of new
     locations: above and below page contents, portal top and footer. The
     package comes with a number of flexible layouts that are used to position
     the portlets, and locations can be fixed to the nearest site object, to
     facilitate inheritance. In ``collective.cover`` (this package), we don't
     want to use portlets at all.
-
-.. _`CMFContentPanels`: http://plone.org/products/cmfcontentpanels
-.. _`Collage`: http://plone.org/products/collage
-.. _`collective.panels`: https://github.com/collective/collective.panels
-.. _`CompositePack`: http://plone.org/products/compositepack
-.. _`Home Page Editor of the Brazilian Chamber of Deputies Site`: https://colab.interlegis.leg.br/browser/publico/camara.home
-.. _`Using tiles to provide more flexible Plone layouts`: http://davisagli.com/blog/using-tiles-to-provide-more-flexible-plone-layouts
-.. _`World Plone Day 2012 Brasilia`: http://colab.interlegis.leg.br/wiki/WorldPloneDay
