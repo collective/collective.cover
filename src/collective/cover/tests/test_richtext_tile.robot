@@ -16,6 +16,7 @@ ${edit_link_selector}  a.edit-tile-link
 *** Test cases ***
 
 Test RichText Tile
+    Set Library Search Order  cover
     Enable Autologin as  Site Administrator
     Go to Homepage
 

@@ -9,6 +9,7 @@ Test Teardown  Close all browsers
 *** Test cases ***
 
 Test CRUD
+    Set Library Search Order  cover
     Enable Autologin as  Site Administrator
     Go to Homepage
 
@@ -17,6 +18,7 @@ Test CRUD
     Delete
 
 Test renderBase
+    Set Library Search Order  cover
     Enable Autologin as  Site Administrator
     Goto Homepage
 

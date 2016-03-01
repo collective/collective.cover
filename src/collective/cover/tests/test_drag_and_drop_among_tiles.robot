@@ -22,6 +22,7 @@ ${list_tile_selector}  [data-tile-type=collective\\.cover\\.list]
 Test Drag And Drop Among Tiles
     [Tags]  Expected Failure
 
+    Set Library Search Order  cover
     Enable Autologin as  Site Administrator
     Go to Homepage
     Create Cover  Title  Description

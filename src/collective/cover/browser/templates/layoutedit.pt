@@ -69,7 +69,7 @@
                 <div id="export-layout" class="modal hide" tal:condition="can_export_layout">
                     <h1 class="documentFirstHeading">Export Layout</h1>
                     <p class="discreen">Save a copy of this layout under a new name</p>
-                    <form action="." tal:attributes="action request/URL" method="post"
+                    <form id="cover-layout-form" tal:attributes="action request/URL" method="post"
                           enctype="multipart/form-data">
                         <div class="modal-fields">
                             <label for="layout-name" i18n:translate="">Layout name</label>

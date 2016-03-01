@@ -306,10 +306,12 @@
           //XXX are you sure
           tiles_to_delete.each(function() {
             var $this = $(this);
+            var authenticator = $('#cover-compose-form input[name="_authenticator"]').val();
 
             $.ajax({
               url: 'deletetile',
               data: {
+                '_authenticator': authenticator,
                 'tile-type': $this.data('tileType'),
                 'tile-id': $(this).attr('id')
               },
@@ -502,7 +504,9 @@
           e.preventDefault();
           var url = $("#configure_tile").attr("action");
           var data = $("#configure_tile").serialize();
-          data = data + '&buttons.save=Save&ajax_load=true';
+          var authenticator = $('#cover-compose-form input[name="_authenticator"]').val();
+          data += '&buttons.save=Save&ajax_load=true';
+          data += '&_authenticator=' + authenticator;
           $.ajax({
             type: 'POST',
             url: url,
@@ -525,11 +529,13 @@
         $(document).on("click", ".config-tile-link", function(e) {
           e.preventDefault();
           var url = $(this).attr("href");
+          var authenticator = $('#cover-compose-form input[name="_authenticator"]').val();
           $('#tile-configure').modal();
           $.ajax({
             type: 'GET',
             url: url,
             data: {
+              '_authenticator': authenticator,
               'ajax_load': true
             },
             success: function(data) {

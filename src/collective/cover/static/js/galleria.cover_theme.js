@@ -93,9 +93,11 @@ var rm_button = function(data) {
             tile.find('.loading-mask').addClass('show remove-tile');
             var tile_type = "collective.cover.carousel";
             var tile_id = tile.attr("id");
+            var authenticator = $('#cover-compose-form input[name="_authenticator"]').val();
             $.ajax({
               url: "@@removeitemfromlisttile",
               data: {
+                '_authenticator': authenticator,
                 'tile-type': tile_type,
                 'tile-id': tile_id,
                 'uuid': uuid

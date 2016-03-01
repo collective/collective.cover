@@ -24,6 +24,7 @@ Test File Tile
     # XXX: test is randomly failing under Plone 4.2 only
     Run keyword if  '${CMFPLONE_VERSION}' >= '4.3'  Remove Tags  Mandelbug
 
+    Set Library Search Order  cover
     Enable Autologin as  Site Administrator
     Go to Homepage
     Create Cover  Title  Description

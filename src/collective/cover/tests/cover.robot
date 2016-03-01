@@ -22,6 +22,7 @@ ${column_drop_area_selector} =  div.cover-row
 ${tile_drop_area_selector} =  div.cover-column
 ${tile_cancel_area_selector} =  div.modal-backdrop
 ${delete_tile_selector} =  button.close
+${confirm_action_selector} =  input.standalone
 ${CONTENT_CHOOSER_SELECTOR} =  div#contentchooser-content-search
 
 *** Keywords ***
@@ -37,9 +38,14 @@ Start Browser and Log In as Site Owner
     Log In As Site Owner
     Click Link  link=Home
 
+Go to homepage
+    Go to  ${PLONE_URL}
+    Wait Until Page Contains Element  css=${confirm_action_selector}
+    Click Element  css=${confirm_action_selector}
+    Page Should Contain  Plone site
+
 Setup Cover Test Case
     Start Browser and Log In as Site Owner
-    Go to Homepage
 
 Click Add Cover
     Open Add New Menu

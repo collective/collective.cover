@@ -22,6 +22,7 @@ ${last_item}   .list-item:last-child
 *** Test cases ***
 
 Test List Tile
+    Set Library Search Order  cover
     Enable Autologin as  Site Administrator
     Go to Homepage
 
