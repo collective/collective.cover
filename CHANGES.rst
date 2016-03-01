@@ -6,7 +6,8 @@ There's a frood who really knows where his towel is.
 1.0a13 (unreleased)
 ^^^^^^^^^^^^^^^^^^^
 
-- Accept collection and folder objects into carousel tile (closes `574`_).
+- You can now use a collection to populate a carousel tile;
+  search results without a lead image will be bypassed (fixes `#574`_).
   [rodfersou]
 
 - Shows message to user if an exception is thrown in a tile (closes `#581`_).

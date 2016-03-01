@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from collective.cover.testing import ALL_CONTENT_TYPES
-from collective.cover.config import PLONE_VERSION
 from collective.cover.testing import generate_jpeg
 from collective.cover.testing import images_are_equal
 from collective.cover.tests.base import TestTileMixin
@@ -230,11 +229,10 @@ class BasicTileTestCase(TestTileMixin, unittest.TestCase):
 
         self.assertIn('test/@@images', rendered)
 
-    @unittest.skipIf(PLONE_VERSION < '4.3', 'zptlogo not available')
     def test_double_assign_tile_dexterity_image(self):
         # https://github.com/collective/collective.cover/issues/449
+        from collective.cover.testing import zptlogo
         from plone.namedfile.file import NamedBlobImage
-        from plone.namedfile.tests.test_image import zptlogo
         with api.env.adopt_roles(['Manager']):
             obj = api.content.create(self.portal, 'Dexterity Image', 'foo')
             obj.image = NamedBlobImage(zptlogo)
