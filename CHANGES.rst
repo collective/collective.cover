@@ -6,6 +6,9 @@ There's a frood who really knows where his towel is.
 1.0a13 (unreleased)
 ^^^^^^^^^^^^^^^^^^^
 
+- Remove Grok dependency for vocabularies.
+  [l34marr]
+
 - You can now use a collection to populate a carousel tile;
   search results without a lead image will be bypassed (fixes `#574`_).
   [rodfersou]

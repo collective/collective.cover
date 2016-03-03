@@ -3,20 +3,20 @@
 from collective.cover.controlpanel import ICoverSettings
 from collective.cover.interfaces import IGridSystem
 from collective.cover.tiles.base import IPersistentCoverTile
-from five import grok
 from plone.app.vocabularies.types import ReallyUserFriendlyTypesVocabulary
 from plone.registry.interfaces import IRegistry
 from plone.tiles.interfaces import ITileType
 from zope.component import getUtilitiesFor
 from zope.component import getUtility
 from zope.component import queryUtility
+from zope.interface import implementer
 from zope.schema.interfaces import IVocabularyFactory
 from zope.schema.vocabulary import SimpleTerm
 from zope.schema.vocabulary import SimpleVocabulary
 
 
+@implementer(IVocabularyFactory)
 class AvailableLayoutsVocabulary(object):
-    grok.implements(IVocabularyFactory)
 
     def __call__(self, context):
 
@@ -26,12 +26,9 @@ class AvailableLayoutsVocabulary(object):
         items = [SimpleTerm(value=i, title=i) for i in sorted(settings.layouts)]
         return SimpleVocabulary(items)
 
-grok.global_utility(AvailableLayoutsVocabulary,
-                    name=u'collective.cover.AvailableLayouts')
 
-
+@implementer(IVocabularyFactory)
 class AvailableTilesVocabulary(object):
-    grok.implements(IVocabularyFactory)
 
     def __call__(self, context):
 
@@ -43,26 +40,20 @@ class AvailableTilesVocabulary(object):
         items = [SimpleTerm(value=i, title=i) for i in tiles]
         return SimpleVocabulary(items)
 
-grok.global_utility(AvailableTilesVocabulary,
-                    name=u'collective.cover.AvailableTiles')
 
-
+@implementer(IVocabularyFactory)
 class GridSystemsVocabulary(object):
-    grok.implements(IVocabularyFactory)
 
     def __call__(self, context):
         items = [SimpleTerm(value=name, title=grid.title)
                  for (name, grid) in getUtilitiesFor(IGridSystem)]
         return SimpleVocabulary(items)
 
-grok.global_utility(GridSystemsVocabulary,
-                    name=u'collective.cover.GridSystems')
 
-
+@implementer(IVocabularyFactory)
 class EnabledTilesVocabulary(object):
     """Return a list of tiles ready to work with collective.cover.
     """
-    grok.implements(IVocabularyFactory)
 
     def _enabled(self, name):
         tile_type = queryUtility(ITileType, name)
@@ -80,16 +71,13 @@ class EnabledTilesVocabulary(object):
             items.append(SimpleTerm(value=tile, title=tile_type.title))
         return SimpleVocabulary(items)
 
-grok.global_utility(EnabledTilesVocabulary,
-                    name=u'collective.cover.EnabledTiles')
 
-
+@implementer(IVocabularyFactory)
 class AvailableContentTypesVocabulary(ReallyUserFriendlyTypesVocabulary):
     """
     Inherit from plone.app.vocabularies.ReallyUserFriendlyTypes; and filter
     the results. We don't want covers to be listed.
     """
-    grok.implements(IVocabularyFactory)
 
     def __call__(self, context):
         items = super(AvailableContentTypesVocabulary, self).__call__(context)
@@ -97,14 +85,10 @@ class AvailableContentTypesVocabulary(ReallyUserFriendlyTypesVocabulary):
         return SimpleVocabulary(items)
 
 
-grok.global_utility(AvailableContentTypesVocabulary,
-                    name=u'collective.cover.AvailableContentTypes')
-
-
+@implementer(IVocabularyFactory)
 class TileStylesVocabulary(object):
     """Creates a vocabulary with the available styles stored in the registry.
     """
-    grok.implements(IVocabularyFactory)
 
     def __call__(self, context):
         registry = getUtility(IRegistry)
@@ -131,5 +115,3 @@ class TileStylesVocabulary(object):
             items.insert(0, SimpleTerm(value=u'tile-default', title='-Default-'))
 
         return SimpleVocabulary(items)
-
-grok.global_utility(TileStylesVocabulary, name=u'collective.cover.TileStyles')

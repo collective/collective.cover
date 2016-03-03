@@ -1,0 +1,36 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    i18n_domain="collective.cover"
+    >
+
+  <utility
+      name="collective.cover.AvailableLayouts"
+      factory=".vocabularies.AvailableLayoutsVocabulary"
+      />
+
+  <utility
+      name="collective.cover.AvailableTiles"
+      factory=".vocabularies.AvailableTilesVocabulary"
+      />
+
+  <utility
+      name="collective.cover.GridSystems"
+      factory=".vocabularies.GridSystemsVocabulary"
+      />
+
+  <utility
+      name="collective.cover.EnabledTiles"
+      factory=".vocabularies.EnabledTilesVocabulary"
+      />
+
+  <utility
+      name="collective.cover.AvailableContentTypes"
+      factory=".vocabularies.AvailableContentTypesVocabulary"
+      />
+
+  <utility
+      name="collective.cover.TileStyles"
+      factory=".vocabularies.TileStylesVocabulary"
+      />
+
+</configure>
