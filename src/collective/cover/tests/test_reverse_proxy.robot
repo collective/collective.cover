@@ -19,7 +19,7 @@ Test Reverse Proxy
     Go to Homepage
 
     Create Cover  Title  Description
-    Edit Cover Layout
+    Open Layout Tab
 
     Add Tile  ${basic_tile_location}
     Save Cover Layout
@@ -34,7 +34,7 @@ Test Reverse Proxy
     Page Should Not Contain   Please drag&drop some content here to populate the tile.
 
     Switch Browser  1
-    Edit Cover Layout
+    Open Layout Tab
     Delete Tile
     Save Cover Layout
 

@@ -27,8 +27,7 @@ Test Collection Tile
     Create Cover  My Cover  Description
 
     # add a collection tile to the layout
-    Edit Cover Layout
-    Page Should Contain  Export layout
+    Open Layout Tab
     Add Tile  ${collection_tile_location}
     Save Cover Layout
 
@@ -81,7 +80,7 @@ Test Collection Tile
     Page Should Contain  Test image
 
     # change header and title HTML tag
-    Edit Cover Layout
+    Open Layout Tab
     Click Element  css=a.config-tile-link
     Select From List  xpath=//select[@name="collective.cover.collection.header.htmltag"]  h3
     Select From List  xpath=//select[@name="collective.cover.collection.title.htmltag"]  h4
@@ -93,6 +92,6 @@ Test Collection Tile
     Element Text Should Be  css=.collection-item h4:first-child  Test image
 
     # delete the tile
-    Edit Cover Layout
+    Open Layout Tab
     Delete Tile
     Save Cover Layout

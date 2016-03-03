@@ -35,7 +35,7 @@ Test Carousel Tile
     Create Cover  Title  Description
 
     # add a carousel tile to the layout
-    Edit Cover Layout
+    Open Layout Tab
     Add Tile  ${carousel_tile_location}
     Save Cover Layout
 
@@ -189,6 +189,6 @@ Test Carousel Tile
     Should Be Equal  ${image_url}  http://www.google.com/
 
     # delete the tile
-    Edit Cover Layout
+    Open Layout Tab
     Delete Tile
     Save Cover Layout

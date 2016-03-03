@@ -25,7 +25,7 @@ Test File Tile
     Go to Homepage
 
     Create Cover  Title  Description
-    Edit Cover Layout
+    Open Layout Tab
 
     Add Tile  ${file_tile_location}
     Save Cover Layout
@@ -58,6 +58,6 @@ Test File Tile
     Page Should Not Contain  ${title_other_sample}
     Page Should Contain  ${title_sample}
 
-    Edit Cover Layout
+    Open Layout Tab
     Delete Tile
     Save Cover Layout
