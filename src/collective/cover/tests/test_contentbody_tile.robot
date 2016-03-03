@@ -35,8 +35,7 @@ Test Content Body Tile
     Create Cover  My Cover  Description
 
     # add a content body tile to the layout
-    Edit Cover Layout
-    Page Should Contain  Export layout
+    Open Layout Tab
     Add Tile  ${contentbody_tile_location}
     Save Cover Layout
 
@@ -68,6 +67,6 @@ Test Content Body Tile
     Page Should Not Contain  css=${edit_link_selector}
 
     # delete the tile
-    Edit Cover Layout
+    Open Layout Tab
     Delete Tile
     Save Cover Layout

@@ -26,8 +26,7 @@ Test Embed Tile
     Create Cover  Title  Description
 
     # add a banner tile to the layout
-    Edit Cover Layout
-    Page Should Contain  Export layout
+    Open Layout Tab
     Add Tile  ${embed_tile_location}
     Save Cover Layout
 
@@ -52,6 +51,6 @@ Test Embed Tile
     Wait Until Page Contains  ${title_sample}
 
     # delete the tile
-    Edit Cover Layout
+    Open Layout Tab
     Delete Tile
     Save Cover Layout

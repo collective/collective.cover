@@ -26,7 +26,7 @@ Test renderBase
     Compose Cover
     ${BASE}  Get Element Attribute  tag=base@href
     Should Be Equal  ${BASE}  ${PLONE_URL}/title-1/
-    Edit Cover Layout
+    Open Layout Tab
     ${BASE}  Get Element Attribute  tag=base@href
     Should Be Equal  ${BASE}  ${PLONE_URL}/title-1/
 
