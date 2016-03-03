@@ -28,7 +28,7 @@ Test List Tile
     Create Cover  Title  Description
 
     # add a list tile to the layout
-    Edit Cover Layout
+    Open Layout Tab
     Add Tile  ${list_tile_location}
     Save Cover Layout
 
@@ -110,6 +110,6 @@ Test List Tile
     Should Be Equal  ${first_item_title}  My document
 
     # delete the tile
-    Edit Cover Layout
+    Open Layout Tab
     Delete Tile
     Save Cover Layout

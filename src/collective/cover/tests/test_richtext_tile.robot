@@ -23,7 +23,7 @@ Test RichText Tile
     Go to Homepage
 
     Create Cover  Title  Description
-    Edit Cover Layout
+    Open Layout Tab
 
     Add Tile  ${tile_location}
     Save Cover Layout
@@ -64,6 +64,6 @@ Test RichText Tile
     Wait Until Keyword Succeeds  ${TIMEOUT}  ${IMPLICIT_WAIT}  Page Should Not Contain  ${text_other_sample}
     Page Should Contain  ${text_sample}
 
-    Edit Cover Layout
+    Open Layout Tab
     Delete Tile
     Save Cover Layout
