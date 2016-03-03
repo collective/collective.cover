@@ -29,7 +29,8 @@ Test Banner Tile
     Create Cover  Title  Description
 
     # add a banner tile to the layout
-    Open Layout Tab
+    Edit Cover Layout
+    Page Should Contain  Export layout
     Add Tile  ${banner_tile_location}
     Save Cover Layout
 
@@ -89,6 +90,6 @@ Test Banner Tile
     Wait Until Page Contains  ${title_sample}
 
     # delete the tile
-    Open Layout Tab
+    Edit Cover Layout
     Delete Tile
     Save Cover Layout

@@ -71,10 +71,12 @@ Delete
     Click Button  Delete
     Page Should Contain  Plone site
 
-Open Layout Tab
-    [Documentation]  Click on Layout tab and wait until it loads.
+Edit Cover Layout
+    [Documentation]  Click on Layout tab and wait until the layout has been
+    ...              loaded. Buttons related with layout operations must be
+    ...              also visible.
     Click Link  link=Layout
-    Wait Until Page Contains  Export layout
+    Page Should Contain  Export layout
     Page Should Contain  Saved
 
 Save Cover Layout

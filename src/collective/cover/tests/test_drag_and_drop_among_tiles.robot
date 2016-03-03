@@ -27,7 +27,8 @@ Test Drag And Drop Among Tiles
     Create Cover  Title  Description
 
     # add a Basic tile to the layout
-    Open Layout Tab
+    Edit Cover Layout
+    Page Should Contain  Export layout
     Add Tile  ${basic_tile_location}
     Add Tile  ${banner_tile_location}
     Add Tile  ${list_tile_location}
@@ -47,7 +48,7 @@ Test Drag And Drop Among Tiles
     Drag And Drop  css=${banner_tile_selector}  css=${basic_tile_selector}
     Wait Until Page Contains Element  css=div.cover-basic-tile a img
 
-    Open Layout Tab
+    Edit Cover Layout
     Delete Tile
     Delete Tile
     Delete Tile

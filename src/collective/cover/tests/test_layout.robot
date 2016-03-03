@@ -18,7 +18,7 @@ Test Basic Layout Operations
     Go to Homepage
 
     Create Cover  Title  Description
-    Open Layout Tab
+    Edit Cover Layout
     # empty layout has one column and one row by default
     # TODO: test if there is 1 row and 1 column
     #       this can be done using Xpath Should Match X Times
@@ -51,7 +51,7 @@ Test Basic Layout Operations
     Save Cover Layout
 
     # load layout again, it has to be the new one
-    Open Layout Tab
+    Edit Cover Layout
 
     #3 columns and 2 rows
     Count Number of Columns  5
@@ -103,7 +103,7 @@ Test Basic Layout Operations
 
 
     # Reopen Layout and check configuration
-    Open Layout Tab
+    Edit Cover Layout
     Click Config from Tile  ${tile_class}
     Wait until element is visible  id=buttons-cancel
     # Date should be first in order (order is 1-indexed)

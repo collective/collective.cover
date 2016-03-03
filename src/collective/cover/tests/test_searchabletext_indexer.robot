@@ -31,7 +31,7 @@ Test RichTextTile is Searchable
     Go to Homepage
 
     Create Cover  ${title}  ${description}
-    Open Layout Tab
+    Edit Cover Layout
     Add Tile  ${richtext_tile_location}
     Add Tile  ${basic_tile_location}
     Save Cover Layout

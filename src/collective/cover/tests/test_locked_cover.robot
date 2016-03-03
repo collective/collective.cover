@@ -22,7 +22,7 @@ Test Locked Cover
     Log in as site owner
     Goto Homepage
     Create Cover  My Cover  Description
-    Open Layout Tab
+    Edit Cover Layout
 
     Add Tile  ${basic_tile_location}
     Save Cover Layout
@@ -65,7 +65,7 @@ Test Locked Cover
     Switch Browser  1
     Click Link  link=My Cover
     Page Should Not Contain  Locked  ${LOCKED_MESSAGE}
-    Open Layout Tab
+    Edit Cover Layout
 
     Switch Browser  2
     Click Link  link=My Cover
@@ -78,7 +78,7 @@ Test Locked Cover
     Switch Browser  2
     Click Link  link=My Cover
     Page Should Not Contain  Locked  ${LOCKED_MESSAGE}
-    Open Layout Tab
+    Edit Cover Layout
 
     Switch Browser  1
     Click Link  link=My Cover

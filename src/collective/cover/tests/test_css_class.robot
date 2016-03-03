@@ -22,7 +22,7 @@ Test CSS Class
     Go to Homepage
 
     Create Cover  Title  Description
-    Open Layout Tab
+    Edit Cover Layout
 
     Add Tile  ${basic_tile_location}
     Save Cover Layout
@@ -34,7 +34,7 @@ Test CSS Class
 
     # and now change style configuration
     # start with default style
-    Open Layout Tab
+    Edit Cover Layout
     Click Config from Tile  ${tile_class}
     Wait until element is visible  id=buttons-save
     Click Button  id=buttons-save
@@ -45,7 +45,7 @@ Test CSS Class
     Page Should Contain Element  css=${default_tile}
 
     # change style
-    Open Layout Tab
+    Edit Cover Layout
     Click Config from Tile  ${tile_class}
     Select From List  css=select#collective-cover-basic-css_class  ${border_class}
     Wait until element is visible  id=buttons-save
