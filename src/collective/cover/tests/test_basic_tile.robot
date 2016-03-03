@@ -19,19 +19,16 @@ ${news_item_title}  Test news item
 ${news_item_description}  This news item was created for testing purposes
 ${title_field_id}  collective-cover-basic-title
 ${title_sample}  Some text for title
-${title_other_sample}  This text should never be saved
 ${edit_link_selector}  a.edit-tile-link
 
 *** Test cases ***
 
 Test Basic Tile
-    [Tags]  Mandelbug
-
     Enable Autologin as  Site Administrator
     Go to Homepage
     Create Cover  Title  Description
 
-    # add a Basic tile to the layout
+    # add tile to the layout
     Open Layout Tab
     Add Tile  ${basic_tile_location}
     Save Cover Layout
@@ -109,15 +106,6 @@ Test Basic Tile
     Click Button  Save
     # save via ajax => wait until the tile has been reloaded
     Wait Until Page Contains  ${title_sample}
-
-    # edit tile but don't save it
-    Compose Cover
-    Click Link  css=${edit_link_selector}
-    Wait until page contains element  id=${title_field_id}
-    Input Text  id=${title_field_id}  ${title_other_sample}
-    Click Button  Cancel
-    Page Should Not Contain Link  ${title_other_sample}
-    Page Should Contain Link  ${title_sample}
 
     Open Layout Tab
     Delete Tile

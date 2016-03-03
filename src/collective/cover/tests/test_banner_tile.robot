@@ -16,19 +16,16 @@ ${file_selector}  .ui-draggable .contenttype-file
 ${tile_selector}  div.tile-container div.tile
 ${title_field_id}  collective-cover-banner-title
 ${title_sample}  Some text for title
-${title_other_sample}  This text should never be saved
 ${edit_link_selector}  a.edit-tile-link
 
 *** Test cases ***
 
 Test Banner Tile
-    [Tags]  Mandelbug
-
     Enable Autologin as  Site Administrator
     Go to Homepage
     Create Cover  Title  Description
 
-    # add a banner tile to the layout
+    # add tile to the layout
     Open Layout Tab
     Add Tile  ${banner_tile_location}
     Save Cover Layout
@@ -78,14 +75,6 @@ Test Banner Tile
     Wait until page contains element  id=${title_field_id}
     Input Text  id=${title_field_id}  ${title_sample}
     Click Button  Save
-    Wait Until Page Contains  ${title_sample}
-
-    # edit the tile but cancel operation
-    Compose Cover
-    Click Link  css=${edit_link_selector}
-    Wait until page contains element  id=${title_field_id}
-    Input Text  id=${title_field_id}  ${title_other_sample}
-    Click Button  Cancel
     Wait Until Page Contains  ${title_sample}
 
     # delete the tile
