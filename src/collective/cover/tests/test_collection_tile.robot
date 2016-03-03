@@ -23,7 +23,10 @@ ${more_msg}  More?
 *** Test cases ***
 
 Test Collection Tile
-    Enable Autologin as  Manager
+    # XXX: test is randomly failing under Plone 4.2
+    [Tags]  Mandelbug
+
+    Enable Autologin as  Site Administrator
     Go to Homepage
     Create Cover  My Cover  Description
 
@@ -57,14 +60,16 @@ Test Collection Tile
     Page Should Not Contain Link  ${related_msg}
     Page Should Not Contain  ${no_results_msg}
 
-    # edit tile title
+    # go back to compose view and edit the tile
     Compose Cover
     Wait Until Element Contains  css=${tile_header_selector}  ${title}
     Click Link  css=${edit_link_selector}
-    Wait Until Page Contains Element  id=${title_field_id}
+    Wait Until Page Contains  Edit Collection Tile
     Input Text  id=${title_field_id}  ${title_alternate}
     Click Button  Save
-    # check AJAX refresh
+    Wait Until Page Does Not Contain  Edit Collection Tile
+
+    # check for successful AJAX refresh
     Wait Until Page Contains  ${title_alternate}
 
     # change header and title HTML tag

@@ -18,6 +18,9 @@ ${edit_link_selector}  a.edit-tile-link
 *** Test cases ***
 
 Test File Tile
+    # XXX: test is randomly failing under Plone 4.2
+    [Tags]  Mandelbug
+
     Enable Autologin as  Site Administrator
     Go to Homepage
     Create Cover  Title  Description
@@ -37,13 +40,15 @@ Test File Tile
     Page Should Contain  This file was created for testing purposes
     Page Should Contain Link  link=Download file
 
-    # edit header
+    # go back to compose view and edit the tile
     Compose Cover
     Click Link  css=${edit_link_selector}
-    Wait until page contains element  id=${title_field_id}
+    Wait Until Page Contains  Edit File Tile
     Input Text  id=${title_field_id}  ${title_sample}
     Click Button  Save
-    # save via ajax => wait until the tile has been reloaded
+    Wait Until Page Does Not Contain  Edit File Tile
+
+    # check for successful AJAX refresh
     Wait Until Page Contains  ${title_sample}
 
     Open Layout Tab

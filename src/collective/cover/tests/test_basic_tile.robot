@@ -3,6 +3,7 @@
 Resource  cover.robot
 Library  Remote  ${PLONE_URL}/RobotRemote
 Library  ${CURDIR}/TestInternalServerError.py
+
 Suite Setup  Open Test Browser
 Suite Teardown  Close all browsers
 
@@ -24,6 +25,9 @@ ${edit_link_selector}  a.edit-tile-link
 *** Test cases ***
 
 Test Basic Tile
+    # XXX: test is randomly failing under Plone 4.2
+    [Tags]  Mandelbug
+
     Enable Autologin as  Site Administrator
     Go to Homepage
     Create Cover  Title  Description
@@ -98,13 +102,15 @@ Test Basic Tile
     Page Should Contain  ${news_item_title}
     Page Should Contain  ${news_item_description}
 
-    # go back to compose view to edit title
+    # go back to compose view and edit the tile
     Compose Cover
     Click Link  css=${edit_link_selector}
-    Wait until page contains element  id=${title_field_id}
+    Wait Until Page Contains  Edit Basic Tile
     Input Text  id=${title_field_id}  ${title_sample}
     Click Button  Save
-    # save via ajax => wait until the tile has been reloaded
+    Wait Until Page Does Not Contain  Edit Basic Tile
+
+    # check for successful AJAX refresh
     Wait Until Page Contains  ${title_sample}
 
     Open Layout Tab
