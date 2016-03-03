@@ -18,7 +18,7 @@ class VocabulariesTestCase(unittest.TestCase):
         self.portal = self.layer['portal']
 
     def test_layouts_vocabulary(self):
-        name = u'collective.cover.AvailableLayouts'
+        name = 'collective.cover.AvailableLayouts'
         vocabulary = queryUtility(IVocabularyFactory, name)
         self.assertIsNotNone(vocabulary)
         layouts = vocabulary(self.portal)
@@ -29,7 +29,7 @@ class VocabulariesTestCase(unittest.TestCase):
         self.assertIn(u'Empty layout', layouts)
 
     def test_available_tiles_vocabulary(self):
-        name = u'collective.cover.AvailableTiles'
+        name = 'collective.cover.AvailableTiles'
         vocabulary = queryUtility(IVocabularyFactory, name)
         self.assertIsNotNone(vocabulary)
         tiles = vocabulary(self.portal)
@@ -45,7 +45,7 @@ class VocabulariesTestCase(unittest.TestCase):
         self.assertIn(u'collective.cover.richtext', tiles)
 
     def test_enabled_tiles_vocabulary(self):
-        name = u'collective.cover.EnabledTiles'
+        name = 'collective.cover.EnabledTiles'
         vocabulary = queryUtility(IVocabularyFactory, name)
         self.assertIsNotNone(vocabulary)
         tiles = vocabulary(self.portal)
@@ -67,7 +67,7 @@ class VocabulariesTestCase(unittest.TestCase):
         self.assertNotIn(u'plone.app.texttile', tiles)
 
     def test_available_content_types_vocabulary(self):
-        name = u'collective.cover.AvailableContentTypes'
+        name = 'collective.cover.AvailableContentTypes'
         vocabulary = queryUtility(IVocabularyFactory, name)
         self.assertIsNotNone(vocabulary)
         available_content_types = vocabulary(self.portal)
@@ -75,7 +75,7 @@ class VocabulariesTestCase(unittest.TestCase):
         self.assertNotIn(u'collective.cover.content', available_content_types)
 
     def test_tile_styles_vocabulary(self):
-        name = u'collective.cover.TileStyles'
+        name = 'collective.cover.TileStyles'
         vocabulary = queryUtility(IVocabularyFactory, name)
         self.assertIsNotNone(vocabulary)
         # in the beginning the vocabulary should contain the default styles
@@ -105,7 +105,7 @@ class VocabulariesTestCase(unittest.TestCase):
         self.assertEqual(styles.by_value.keys()[0], u'tile-default')
 
     def test_grid_systems(self):
-        name = u'collective.cover.GridSystems'
+        name = 'collective.cover.GridSystems'
         vocabulary = queryUtility(IVocabularyFactory, name)
         self.assertIsNotNone(vocabulary)
 
