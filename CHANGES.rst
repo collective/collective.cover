@@ -6,6 +6,9 @@ There's a frood who really knows where his towel is.
 1.0a13 (unreleased)
 ^^^^^^^^^^^^^^^^^^^
 
+- Add RSS tile (closes `#347`_).
+  [rodfersou]
+
 - Remove Grok dependency for vocabularies.
   [l34marr]
 
@@ -708,6 +711,7 @@ There's a frood who really knows where his towel is.
 .. _`#333`: https://github.com/collective/collective.cover/issues/333
 .. _`#339`: https://github.com/collective/collective.cover/issues/339
 .. _`#342`: https://github.com/collective/collective.cover/issues/342
+.. _`#347`: https://github.com/collective/collective.cover/issues/347
 .. _`#348`: https://github.com/collective/collective.cover/issues/348
 .. _`#351`: https://github.com/collective/collective.cover/issues/351
 .. _`#371`: https://github.com/collective/collective.cover/issues/371

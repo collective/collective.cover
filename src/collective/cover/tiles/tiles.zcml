@@ -126,4 +126,17 @@
       for="*"
       />
 
+  <plone:tile
+      zcml:condition="installed plone.app.standardtiles"
+      name="collective.cover.rss"
+      title="RSS Tile"
+      description="A tile that shows a RSS feed."
+      icon="++resource++collective.cover/img/tile-generic.png"
+      add_permission="cmf.ModifyPortalContent"
+      schema=".rss.IRSSTile"
+      class=".rss.RSSTile"
+      permission="zope2.View"
+      for="*"
+      />
+
 </configure>

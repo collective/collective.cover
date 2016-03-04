@@ -49,6 +49,7 @@
       <element>collective.cover.list</element>
       <element>collective.cover.pfg</element>
       <element>collective.cover.richtext</element>
+      <element>collective.cover.rss</element>
     </value>
   </record>
 
