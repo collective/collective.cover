@@ -6,6 +6,9 @@ Library  Remote  ${PLONE_URL}/RobotRemote
 Suite Setup  Open Test Browser
 Suite Teardown  Close all browsers
 
+# XXX: test is randomly failing under Plone 4.2 only
+Default Tags  Mandelbug
+
 *** Variables ***
 
 ${collection_tile_location}  'collective.cover.collection'
@@ -23,8 +26,8 @@ ${more_msg}  More?
 *** Test cases ***
 
 Test Collection Tile
-    # XXX: test is randomly failing under Plone 4.2
-    [Tags]  Mandelbug
+    # XXX: test is randomly failing under Plone 4.2 only
+    Run keyword if  '${CMFPLONE_VERSION}' >= '4.3'  Remove Tags  Mandelbug
 
     Enable Autologin as  Site Administrator
     Go to Homepage
