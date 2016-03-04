@@ -6,6 +6,10 @@ There's a frood who really knows where his towel is.
 1.0a13 (unreleased)
 ^^^^^^^^^^^^^^^^^^^
 
+- Package is now also tested with plone.app.contenttypes installed;
+  a few bugs related with API incompatibilities among Archetypes and Dexterity were fixed.
+  [hvelarde]
+
 - Remove Grok dependency for vocabularies.
   [l34marr]
 
