@@ -21,6 +21,9 @@ ${edit_link_selector}  a.edit-tile-link
 *** Test cases ***
 
 Test Banner Tile
+    # XXX: test is randomly failing under Plone 4.2
+    [Tags]  Mandelbug
+
     Enable Autologin as  Site Administrator
     Go to Homepage
     Create Cover  Title  Description
@@ -69,12 +72,15 @@ Test Banner Tile
     Drag And Drop  css=${file_selector}  css=${tile_selector}
     Wait Until Page Contains Element  css=div.cover-banner-tile h2 a
 
-    # edit the tile and check AJAX refresh
+    # go back to compose view and edit the tile
     Compose Cover
     Click Link  css=${edit_link_selector}
-    Wait until page contains element  id=${title_field_id}
+    Wait Until Page Contains  Edit Banner Tile
     Input Text  id=${title_field_id}  ${title_sample}
     Click Button  Save
+    Wait Until Page Does Not Contain  Edit Banner Tile
+
+    # check for successful AJAX refresh
     Wait Until Page Contains  ${title_sample}
 
     # delete the tile

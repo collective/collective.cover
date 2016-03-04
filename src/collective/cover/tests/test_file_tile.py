@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from collective.cover.tests.base import TestTileMixin
+from collective.cover.tests.utils import set_file_field
 from collective.cover.tiles.file import FileTile
 from collective.cover.tiles.file import IFileTile
 from plone import api
@@ -86,22 +87,21 @@ class FileTileTestCase(TestTileMixin, unittest.TestCase):
 
     def test_remove_file(self):
         # https://github.com/collective/collective.cover/issues/588
-        with api.env.adopt_roles(['Manager']):
-            obj = api.content.create(self.portal, 'File', 'My test')
+        obj = self.portal['my-file']
         self.tile.populate_with_object(obj)
         rendered = self.tile()
         self.assertIn(
-            '<a href="http://nohost/plone/My%20test/at_download/file">', rendered)
+            '<a href="http://nohost/plone/my-file/at_download/file">', rendered)
         self.assertIn('Download file', rendered)
         api.content.delete(obj)
         rendered = self.tile()
         self.assertNotIn(
-            '<a href="http://nohost/plone/My%20test/at_download/file">', rendered)
+            '<a href="http://nohost/plone/my-file/at_download/file">', rendered)
         self.assertNotIn('Download file', rendered)
 
     def test_render_kB_file(self):
         obj = self.portal['my-file']
-        obj.setFile('0' * 1024)
+        set_file_field(obj, '0' * 1024)  # handle Archetypes and Dexterity
         self.tile.populate_with_object(obj)
         rendered = self.tile()
         self.assertIn('1 kB (1024 bytes)', rendered)
@@ -110,7 +110,7 @@ class FileTileTestCase(TestTileMixin, unittest.TestCase):
 
     def test_render_MB_file(self):
         obj = self.portal['my-file']
-        obj.setFile('0' * 1048576)
+        set_file_field(obj, '0' * 1048576)  # handle Archetypes and Dexterity
         self.tile.populate_with_object(obj)
         rendered = self.tile()
         self.assertIn('1 MB (1048576 bytes)', rendered)

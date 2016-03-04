@@ -35,19 +35,20 @@ class ContentBodyTile(PersistentCoverTile):
         return not self.data.get('uuid', False)
 
     def body(self):
-        body = ''
+        """Return the body text of the related object."""
         uuid = self.data.get('uuid', None)
         try:
             obj = uuid and uuidToObject(uuid)
         except Unauthorized:
-            obj = None
-        if obj is not None:
-            if hasattr(obj, 'getText'):
-                body = obj.getText()
-            else:
-                # Probably Dexterity.
-                body = obj.text.output
-        return body
+            return  # TODO: handle exception and show message on template
+
+        if obj is None:
+            return ''  # obj was deleted
+
+        try:
+            return obj.getText()  # Archetypes
+        except AttributeError:
+            return obj.text.output if obj.text is not None else ''  # Dexterity
 
     def populate_with_object(self, obj):
         super(ContentBodyTile, self).populate_with_object(obj)

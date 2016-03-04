@@ -16,9 +16,8 @@
       </a>
     </div>
 
-    <tal:text define="text view/body;
-                      len_text python:len(text.strip())">
-      <div class="discreet" tal:condition="python:not len_text and view.is_compose_mode()"
+    <tal:text define="text view/body">
+      <div class="discreet" tal:condition="python:not text and view.is_compose_mode()"
           i18n:translate="">This item does not have any body text.</div>
       <div class="content" tal:condition="text"
           tal:content="structure text">Body</div>

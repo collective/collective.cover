@@ -1,13 +1,11 @@
 # -*- coding: utf-8 -*-
 from collective.cover.testing import ALL_CONTENT_TYPES
-from collective.cover.testing import generate_jpeg
-from collective.cover.testing import images_are_equal
 from collective.cover.tests.base import TestTileMixin
+from collective.cover.tests.utils import today
 from collective.cover.tiles.basic import BasicTile
 from collective.cover.tiles.basic import IBasicTile
 from collective.cover.tiles.configuration import ITilesConfigurationScreen
 from collective.cover.tiles.permissions import ITilesPermissions
-from collective.cover.interfaces import ISearchableText
 from DateTime import DateTime
 from mock import Mock
 from plone import api
@@ -15,7 +13,7 @@ from plone.app.testing import setRoles
 from plone.app.testing import TEST_USER_ID
 from plone.cachepurging.hooks import queuePurge
 from plone.cachepurging.interfaces import ICachePurgingSettings
-from plone.namedfile.file import NamedBlobImage as NamedImageFile
+from plone.namedfile.file import NamedBlobImage
 from plone.registry.interfaces import IRegistry
 from plone.tiles.interfaces import ITileDataManager
 from zope.annotation.interfaces import IAnnotations
@@ -23,7 +21,6 @@ from zope.annotation.interfaces import IAttributeAnnotatable
 from zope.component import getMultiAdapter
 from zope.component import provideUtility
 from zope.component import queryUtility
-from zope.component import queryAdapter
 from zope.component.globalregistry import provideHandler
 from zope.globalrequest import setRequest
 from zope.interface import alsoProvides
@@ -145,7 +142,6 @@ class BasicTileTestCase(TestTileMixin, unittest.TestCase):
         obj = self.portal['my-news-item']
         obj.setSubject(['subject1', 'subject2'])
         obj.effective_date = DateTime()
-        obj.setImage(generate_jpeg(128, 128))
         obj.reindexObject()
 
         self.tile.populate_with_object(obj)
@@ -207,43 +203,55 @@ class BasicTileTestCase(TestTileMixin, unittest.TestCase):
         self.assertNotIn('test/@@images', rendered)
 
     def test_image_traverser(self):
+        # XXX: probably this should be moved to a new test views module
+
+        def images_are_equal(str1, str2):
+            # XXX: refactor
+            from PIL import Image
+            from PIL import ImageChops
+            from StringIO import StringIO
+            im1 = StringIO()
+            im2 = StringIO()
+            im1.write(str1)
+            im1.seek(0)
+            im2.write(str2)
+            im2.seek(0)
+            return ImageChops.difference(Image.open(im1), Image.open(im2)).getbbox() is None
+
         obj = self.portal['my-image']
-        data = self.tile.data
-        scales = api.content.get_view(u'images', obj, self.request)
-        self.tile.data['image'] = NamedImageFile(str(scales.scale('image').data))
-        data_mgr = ITileDataManager(self.tile)
-        data_mgr.set(data)
+        self.tile.populate_with_object(obj)
+
         scales = self.cover.restrictedTraverse(
             '@@{0}/{1}/@@images'.format('collective.cover.basic', 'test'))
-        img = scales.scale('image')
-        self.assertTrue(images_are_equal(str(self.tile.data['image'].data),
-                                         str(img.index_html().read())))
+        scale = scales.scale('image')
+
+        try:
+            image = obj.getImage()  # Archetypes
+        except AttributeError:
+            image = obj.image.data  # Dexterity
+
+        self.assertTrue(images_are_equal(image, scale.data.data))
 
     def test_basic_tile_image(self):
         obj = self.portal['my-news-item']
-        obj.setImage(generate_jpeg(128, 128))
-        obj.reindexObject()
-
         self.tile.populate_with_object(obj)
         rendered = self.tile()
-
         self.assertIn('test/@@images', rendered)
 
-    def test_double_assign_tile_dexterity_image(self):
+    def test_double_dragging_content_with_image(self):
         # https://github.com/collective/collective.cover/issues/449
-        from collective.cover.testing import zptlogo
-        from plone.namedfile.file import NamedBlobImage
-        with api.env.adopt_roles(['Manager']):
-            obj = api.content.create(self.portal, 'Dexterity Image', 'foo')
-            obj.image = NamedBlobImage(zptlogo)
-
+        obj = self.portal['my-image']
         data_mgr = ITileDataManager(self.tile)
         self.tile.populate_with_object(obj)
         self.assertIn('image_mtime', data_mgr.get())
-        mtime = data_mgr.get()['image_mtime']
+        self.assertTrue(float(data_mgr.get()['image_mtime']))
+        # populate tile for second time with same object
         self.tile.populate_with_object(obj)
         self.assertIn('image_mtime', data_mgr.get())
-        self.assertEqual(mtime, data_mgr.get()['image_mtime'])
+        self.assertTrue(float(data_mgr.get()['image_mtime']))
+        # tile is rendered with no issues
+        rendered = self.tile()
+        self.assertIn('<html xmlns="http://www.w3.org/1999/xhtml">', rendered)
 
     def test_basic_tile_purge_cache(self):
         provideHandler(queuePurge)
@@ -263,7 +271,7 @@ class BasicTileTestCase(TestTileMixin, unittest.TestCase):
         obj = self.portal['my-image']
         data = self.tile.data
         scales = api.content.get_view(u'images', obj, self.request)
-        self.tile.data['image'] = NamedImageFile(str(scales.scale('image').data))
+        self.tile.data['image'] = NamedBlobImage(str(scales.scale('image').data))
         data_mgr = ITileDataManager(self.tile)
         data_mgr.set(data)
 
@@ -281,30 +289,18 @@ class BasicTileTestCase(TestTileMixin, unittest.TestCase):
             IAnnotations(request)['plone.cachepurging.urls'])
 
     def test_show_start_date_on_events(self):
-        tomorrow = DateTime() + 1
-        # create an Event starting tomorrow
-        with api.env.adopt_roles(['Manager']):
-            event = api.content.create(
-                self.portal, 'Event', 'event', startDate=tomorrow)
-            api.content.transition(event, 'publish')
-
+        event = self.portal['my-event']
         self.tile.populate_with_object(event)
         rendered = self.tile()
-        tomorrow = api.portal.get_localized_time(tomorrow, long_format=True)
-        self.assertIn(tomorrow, rendered)
+        start_date = api.portal.get_localized_time(today, long_format=True)
+        self.assertIn(start_date, rendered)
 
     def test_localized_time_is_rendered(self):
-        tomorrow = DateTime() + 1
-        # create an Event starting tomorrow
-        with api.env.adopt_roles(['Manager']):
-            event = api.content.create(
-                self.portal, 'Event', 'event', startDate=tomorrow)
-            api.content.transition(event, 'publish')
-
+        event = self.portal['my-event']
         self.tile.populate_with_object(event)
         rendered = self.tile()
         expected = api.portal.get_localized_time(
-            tomorrow, long_format=True, time_only=False)
+            today, long_format=True, time_only=False)
         self.assertIn(expected, rendered)  # u'Jul 15, 2015 01:23 PM'
 
         tile_conf = self.tile.get_tile_configuration()
@@ -312,7 +308,7 @@ class BasicTileTestCase(TestTileMixin, unittest.TestCase):
         self.tile.set_tile_configuration(tile_conf)
         rendered = self.tile()
         expected = api.portal.get_localized_time(
-            tomorrow, long_format=False, time_only=False)
+            today, long_format=False, time_only=False)
         self.assertIn(expected, rendered)  # u'Jul 15, 2015
 
         tile_conf = self.tile.get_tile_configuration()
@@ -320,10 +316,12 @@ class BasicTileTestCase(TestTileMixin, unittest.TestCase):
         self.tile.set_tile_configuration(tile_conf)
         rendered = self.tile()
         expected = api.portal.get_localized_time(
-            tomorrow, long_format=False, time_only=True)
+            today, long_format=False, time_only=True)
         self.assertIn(expected, rendered)  # u'01:23 PM'
 
     def test_seachable_text(self):
+        from collective.cover.interfaces import ISearchableText
+        from zope.component import queryAdapter
         searchable = queryAdapter(self.tile, ISearchableText)
         self.tile.data['title'] = 'custom title'
         self.tile.data['description'] = 'custom description'

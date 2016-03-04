@@ -16,9 +16,6 @@ ${edit_link_selector}  a.edit-tile-link
 *** Test cases ***
 
 Test RichText Tile
-    ${TIMEOUT} =  Get Selenium timeout
-    ${IMPLICIT_WAIT} =  Get Selenium implicit wait
-
     Enable Autologin as  Site Administrator
     Go to Homepage
 
@@ -33,35 +30,27 @@ Test RichText Tile
 
     # edit tile but don't save it
     Click Link  css=${edit_link_selector}
+    Wait Until Page Contains  Edit Rich Text Tile
+    Sleep  1s  Wait for TinyMCE to load
     Wait For Condition  return typeof tinyMCE !== "undefined" && tinyMCE.activeEditor !== null && document.getElementById(tinyMCE.activeEditor.id) !== null
     Click Button  Cancel
-    Wait Until Keyword Succeeds  ${TIMEOUT}  ${IMPLICIT_WAIT}  Page Should Not Contain  Edit Rich Text Tile
+    Wait Until Page Does Not Contain  Edit Rich Text Tile
 
-    # check if TinyMCE loads a second time
+    # check if TinyMCE loads a second time and edit the tile
     # see: https://github.com/collective/collective.cover/issues/543
     Click Link  css=${edit_link_selector}
-    Sleep  1s  Wait for tinymce to load
+    Wait Until Page Contains  Edit Rich Text Tile
+    Sleep  1s  Wait for TinyMCE to load
     Wait For Condition  return typeof tinyMCE !== "undefined" && tinyMCE.activeEditor !== null && document.getElementById(tinyMCE.activeEditor.id) !== null
-
     Execute Javascript  tinyMCE.activeEditor.setContent("${text_sample}");
     Click Button  Save
     # save via ajax => wait until the tile has been reloaded
+    Wait Until Page Does Not Contain  Edit Rich Text Tile
+    # check for successful AJAX refresh
     Wait Until Page Contains  ${text_sample}
-    Page Should Contain  ${text_sample}
 
     # Go to view and check it's there
     Click Link  link=View
-    Page Should Contain  ${text_sample}
-
-
-    # Compose and don't save some other text
-    Compose Cover
-    Click Link  css=${edit_link_selector}
-    Sleep  1s  Wait for tinymce to load
-    Wait For Condition  return typeof tinyMCE !== "undefined" && tinyMCE.activeEditor !== null && document.getElementById(tinyMCE.activeEditor.id) !== null
-    Execute Javascript  tinyMCE.activeEditor.setContent("${text_other_sample}");
-    Click Button  Cancel
-    Wait Until Keyword Succeeds  ${TIMEOUT}  ${IMPLICIT_WAIT}  Page Should Not Contain  ${text_other_sample}
     Page Should Contain  ${text_sample}
 
     Open Layout Tab
