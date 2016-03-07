@@ -17,7 +17,7 @@ There's a frood who really knows where his towel is.
   search results without a lead image will be bypassed (fixes `#574`_).
   [rodfersou]
 
-- Shows message to user if an exception is thrown in a tile (closes `#581`_).
+- Shows message to user if an exception is thrown in a tile in AJAX calls. (closes `#581`_).
   [idgserpro]
 
 - Fix date format in collection tiles (closes `#584`_).
