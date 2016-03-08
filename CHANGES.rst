@@ -6,6 +6,14 @@ There's a frood who really knows where his towel is.
 1.0a13 (unreleased)
 ^^^^^^^^^^^^^^^^^^^
 
+- Remove hard dependency on plone.app.referenceablebehavior as Archetypes is no longer the default framework in Plone 5.
+  Under Plone < 5.0 you should now explicitly add it to the `eggs` part of your buildout configuration to avoid issues while upgrading.
+  [hvelarde]
+
+- Link integrity was refactored to work on all tiles and under Plone 5;
+  a hard dependency on Products.Archetypes was removed (fixes `#578`_).
+  [hvelarde]
+
 - Do not use the calendar tool to discover Event-like objects as it was removed on Plone 5.
   Instead, try to guess if an object is an Event by using its catalog metadata.
   [hvelarde]
@@ -753,6 +761,7 @@ There's a frood who really knows where his towel is.
 .. _`#543`: https://github.com/collective/collective.cover/issues/543
 .. _`#559`: https://github.com/collective/collective.cover/issues/559
 .. _`#574`: https://github.com/collective/collective.cover/issues/574
+.. _`#578`: https://github.com/collective/collective.cover/issues/578
 .. _`#581`: https://github.com/collective/collective.cover/issues/581
 .. _`#584`: https://github.com/collective/collective.cover/issues/584
 .. _`PloneFormGen`: https://pypi.python.org/pypi/Products.PloneFormGen

@@ -1,15 +1,19 @@
 # -*- coding: utf-8 -*-
+from collective.cover.config import PLONE_VERSION
 from collective.cover.interfaces import ICover
 from five import grok
-from plone import api
 from plone.app.iterate.interfaces import ICheckinEvent
 from plone.app.linkintegrity.handlers import getObjectsFromLinks
-from plone.app.linkintegrity.handlers import referencedRelationship
 from plone.app.linkintegrity.parser import extractLinks
-from plone.app.linkintegrity.references import updateReferences
 from plone.app.textfield.value import RichTextValue
-from Products.Archetypes.interfaces import IReferenceable
 from zope.annotation.interfaces import IAnnotations
+
+if PLONE_VERSION.startswith('5'):
+    from plone.app.linkintegrity.handlers import updateReferences
+else:
+    from plone.app.linkintegrity.handlers import referencedRelationship
+    from plone.app.linkintegrity.references import updateReferences
+    from Products.Archetypes.interfaces import IReferenceable
 
 
 @grok.subscribe(ICover, ICheckinEvent)
@@ -35,31 +39,16 @@ def override_object_annotations(cover, event):
             old_annotations[key] = new_annotations[key]
 
 
-def modifiedCoverTile(obj, event):
-    """Ensure link integrity on Rich Text tiles.
+def update_link_integrity(obj, event):
+    """Update link integrity information on modification/removal of
+    tiles.
 
-    Keyword arguments:
-    obj -- Dexterity-based object that was modified
-    event -- event fired
+    :param obj: cover object that was modified
+    :type obj: Dexterity-based content type
+    :param event: event fired
+    :type event:
     """
-    pu = api.portal.get_tool('portal_url')
-    if pu is None:
-        # `getObjectFromLinks` is not possible without access
-        # to `portal_url`
-        return
-    rc = api.portal.get_tool('reference_catalog')
-    if rc is None:
-        # `updateReferences` is not possible without access
-        # to `reference_catalog`
-        return
-    referenceable_parent = IReferenceable(obj.context, None)
-    if referenceable_parent is None:
-        # `updateReferences` is not possible
-        # if parent object isn't referenceable
-        return
-
     refs = set()
-
     for name, value in obj.data.items():
         if isinstance(value, RichTextValue):
             value = value.raw
@@ -68,4 +57,7 @@ def modifiedCoverTile(obj, event):
             links = extractLinks(value)
             refs |= getObjectsFromLinks(obj.context, links)
 
-    updateReferences(IReferenceable(obj.context), referencedRelationship, refs)
+    if PLONE_VERSION.startswith('5'):
+        updateReferences(obj.context, refs)
+    elif IReferenceable.providedBy(obj.context):
+        updateReferences(IReferenceable(obj.context), referencedRelationship, refs)

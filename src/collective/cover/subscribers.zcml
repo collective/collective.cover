@@ -1,31 +1,24 @@
 <configure
     xmlns="http://namespaces.zope.org/zope"
     xmlns:browser="http://namespaces.zope.org/browser"
-    xmlns:zcml="http://namespaces.zope.org/zcml"
     xmlns:five="http://namespaces.zope.org/five"
-    >
+    xmlns:zcml="http://namespaces.zope.org/zcml">
 
   <!-- event handlers for updating link integrity references -->
 
   <subscriber
       for="collective.cover.tiles.base.IPersistentCoverTile
            OFS.interfaces.IObjectClonedEvent"
-      handler=".events.modifiedCoverTile"
-      />
-
-  <subscriber
-      for="collective.cover.tiles.base.IPersistentCoverTile
-           zope.lifecycleevent.interfaces.IObjectAddedEvent"
-      handler=".events.modifiedCoverTile"
+      handler=".events.update_link_integrity"
       />
 
   <subscriber
       for="collective.cover.tiles.base.IPersistentCoverTile
            zope.lifecycleevent.interfaces.IObjectModifiedEvent"
-      handler=".events.modifiedCoverTile"
+      handler=".events.update_link_integrity"
       />
 
-  <subscriber
+  <subscriber zcml:condition="not-have plone-5"
       for="collective.cover.tiles.base.IPersistentCoverTile
            zope.lifecycleevent.interfaces.IObjectRemovedEvent"
       handler="plone.app.linkintegrity.handlers.referencedObjectRemoved"
