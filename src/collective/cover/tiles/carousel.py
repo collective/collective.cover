@@ -23,9 +23,9 @@ INIT_JS = """$(function() {{
     Galleria.loadTheme('++resource++collective.cover/js/galleria.cover_theme.js');
     Galleria.run('#galleria-{0}');
 
-    var options = {{ height: 1 }};
+    var options = {{ height: {1} }};
     if ($('body').hasClass('template-view')) {{
-        options.autoplay = {1};
+        options.autoplay = {2};
     }}
     Galleria.configure(options);
 }});
@@ -151,6 +151,19 @@ class CarouselTile(ListTile):
                 url = uuids[uuid].get('custom_url')
         return url
 
+    @property
+    def get_image_ratio(self):
+        """Return image ratio to be used in the carousel.
+        See: http://galleria.io/docs/options/height/
+        """
+        thumbs = [self.thumbnail(i) for i in self.results()]
+        # exclude from calculation any item with no image
+        ratios = [
+            float(t.height) / float(t.width) for t in thumbs if t is not None]
+        if not ratios:
+            return '1'
+        return str(max(ratios))
+
     def init_js(self):
         if self.is_empty():
             # Galleria will display scary error messages when it
@@ -158,7 +171,8 @@ class CarouselTile(ListTile):
             # the <div> is there and has some items in it.
             return ''
 
-        return INIT_JS.format(self.id, str(self.autoplay()).lower())
+        return INIT_JS.format(
+            self.id, self.get_image_ratio, str(self.autoplay()).lower())
 
 
 class UUIDSFieldDataConverter(BaseDataConverter):
