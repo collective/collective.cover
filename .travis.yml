@@ -32,7 +32,7 @@ install:
 - test $JQUERY && sed -ie "s#plone.app.jquery = 1.7.2#plone.app.jquery = $JQUERY#" versions-4.3.x.cfg || true
 - python bootstrap.py
 - bin/buildout annotate
-- bin/buildout -Nq
+- bin/buildout
 before_script:
   - export DISPLAY=:99.0
   - export GROK_DISABLE_TEMPLATE_WARNING=on
@@ -43,7 +43,7 @@ script:
 - bin/test
 after_success:
 - bin/createcoverage -t "--layer=!Robot"
-- pip install -q coveralls
+- pip install coveralls
 - coveralls
 notifications:
   irc:
