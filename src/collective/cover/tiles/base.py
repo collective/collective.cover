@@ -351,15 +351,9 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
             event's start date in case of an Event-like object
         :rtype: str or DateTime
         """
-        calendar = api.portal.get_tool('portal_calendar')
-        # calendar_types lists all Event-like content types
-        if brain.portal_type not in calendar.calendar_types:
-            # return callable date for content listing objects or date
-            # as string for catalog/brain objects.
+        if brain.start == Missing.Value:
             return brain.Date() if callable(brain.Date) else brain.Date
         else:
-            # an Event must have a start date
-            assert brain.start is not Missing.Value
             return brain.start
 
     def get_localized_time(self, datetime, format):

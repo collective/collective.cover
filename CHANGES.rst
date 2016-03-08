@@ -6,6 +6,10 @@ There's a frood who really knows where his towel is.
 1.0a13 (unreleased)
 ^^^^^^^^^^^^^^^^^^^
 
+- Do not use the calendar tool to discover Event-like objects as it was removed on Plone 5.
+  Instead, try to guess if an object is an Event by using its catalog metadata.
+  [hvelarde]
+
 - Package is now also tested with plone.app.contenttypes installed;
   a few bugs related with API incompatibilities among Archetypes and Dexterity were fixed.
   [hvelarde]
