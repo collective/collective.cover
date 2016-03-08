@@ -49,7 +49,6 @@ def update_link_integrity(obj, event):
     :type event:
     """
     refs = set()
-
     for name, value in obj.data.items():
         if isinstance(value, RichTextValue):
             value = value.raw
@@ -60,5 +59,5 @@ def update_link_integrity(obj, event):
 
     if PLONE_VERSION.startswith('5'):
         updateReferences(obj.context, refs)
-    else:
+    elif IReferenceable.providedBy(obj.context):
         updateReferences(IReferenceable(obj.context), referencedRelationship, refs)
