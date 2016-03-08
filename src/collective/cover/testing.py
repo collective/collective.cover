@@ -7,9 +7,6 @@ features we want to test:
 plone.app.contenttypes:
     installed under Plone 4.3, if requested; installed under Plone 5
 
-plone.app.stagingbehavior
-    installed under Plone 4 only
-
 plone.app.widgets
     installed under Plone 4.3, if requested
 
@@ -133,9 +130,6 @@ class Fixture(PloneSandboxLayer):
 
     def setUpZope(self, app, configurationContext):
         if PLONE_VERSION < '5.0':
-            import plone.app.stagingbehavior
-            self.loadZCML(package=plone.app.stagingbehavior)
-
             if DEXTERITY_ONLY:
                 import plone.app.contenttypes
                 self.loadZCML(package=plone.app.contenttypes)
