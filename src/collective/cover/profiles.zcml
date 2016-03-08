@@ -32,14 +32,6 @@
   <utility factory=".setuphandlers.HiddenProfiles" name="collective.cover" />
   <utility factory=".setuphandlers.HiddenProducts" name="collective.cover" />
 
-  <genericsetup:importStep
-      name="collective.cover"
-      title="collective.cover: setup"
-      description="Import step for configuration that is not handled in XML files."
-      handler="collective.cover.setuphandlers.import_various">
-    <depends name="content" />
-  </genericsetup:importStep>
-
   <genericsetup:upgradeSteps
       source="5"
       destination="6"

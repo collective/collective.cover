@@ -114,7 +114,6 @@ To enable this package in a buildout-based installation:
     ...
     eggs =
         collective.cover
-        plone.app.stagingbehavior
 
     [versions]
     ...
