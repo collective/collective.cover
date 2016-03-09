@@ -7,10 +7,113 @@
     >
 
   <browser:page
+      name="view"
+      for="..interfaces.ICover"
+      permission="zope2.View"
+      class=".cover.View"
+      template="templates/view.pt"
+      />
+
+  <browser:page
+      name="standard"
+      for="..interfaces.ICover"
+      permission="zope2.View"
+      class=".cover.Standard"
+      template="templates/standard.pt"
+      />
+
+  <browser:page
+      name="addctwidget"
+      for="..interfaces.ICover"
+      permission="cmf.ModifyPortalContent"
+      class=".cover.AddCTWidget"
+      />
+
+  <browser:page
+      name="addtilewidget"
+      for="..interfaces.ICover"
+      permission="cmf.ModifyPortalContent"
+      class=".cover.AddTileWidget"
+      />
+
+  <browser:page
+      name="setwidgetmap"
+      for="..interfaces.ICover"
+      permission="cmf.ModifyPortalContent"
+      class=".cover.SetWidgetMap"
+      />
+
+  <browser:page
+      name="updatewidget"
+      for="..interfaces.ICover"
+      permission="cmf.ModifyPortalContent"
+      class=".cover.UpdateWidget"
+      />
+
+  <browser:page
+      name="removetilewidget"
+      for="..interfaces.ICover"
+      permission="cmf.ModifyPortalContent"
+      class=".cover.RemoveTileWidget"
+      template="templates/removetilewidget.pt"
+      />
+
+  <browser:page
+      name="compose"
+      for="..interfaces.ICover"
+      permission="cmf.ModifyPortalContent"
+      class=".cover.Compose"
+      template="templates/compose.pt"
+      />
+
+  <browser:page
+      name="layoutedit"
+      for="..interfaces.ICover"
+      permission="collective.cover.CanEditLayout"
+      class=".cover.LayoutEdit"
+      template="templates/layoutedit.pt"
+      />
+
+  <browser:page
+      name="updatetilecontent"
+      for="..interfaces.ICover"
+      permission="cmf.ModifyPortalContent"
+      class=".cover.UpdateTileContent"
+      />
+
+  <browser:page
       name="movetilecontent"
       for="..interfaces.ICover"
       permission="cmf.ModifyPortalContent"
       class=".cover.MoveTileContent"
+      />
+
+  <browser:page
+      name="updatetile"
+      for="..interfaces.ICover"
+      permission="cmf.ModifyPortalContent"
+      class=".cover.UpdateTile"
+      />
+
+  <browser:page
+      name="updatelisttilecontent"
+      for="..interfaces.ICover"
+      permission="cmf.ModifyPortalContent"
+      class=".cover.UpdateListTileContent"
+      />
+
+  <browser:page
+      name="removeitemfromlisttile"
+      for="..interfaces.ICover"
+      permission="cmf.ModifyPortalContent"
+      class=".cover.RemoveItemFromListTile"
+      />
+
+  <browser:page
+      name="deletetile"
+      for="..interfaces.ICover"
+      permission="cmf.ModifyPortalContent"
+      class=".cover.DeleteTile"
       />
 
 </configure>

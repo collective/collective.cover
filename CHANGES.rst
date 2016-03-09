@@ -25,7 +25,7 @@ There's a frood who really knows where his towel is.
   a few bugs related with API incompatibilities among Archetypes and Dexterity were fixed.
   [hvelarde]
 
-- Remove Grok dependency for vocabularies.
+- Remove Grok dependency from views and vocabularies.
   [l34marr]
 
 - You can now use a collection to populate a carousel tile;
