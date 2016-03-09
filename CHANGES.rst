@@ -6,6 +6,9 @@ There's a frood who really knows where his towel is.
 1.0a13 (unreleased)
 ^^^^^^^^^^^^^^^^^^^
 
+- Carousel tile now uses a relative ratio to set its height (fixes `#414`_).
+  [terapyon, hvelarde]
+
 - Remove hard dependency on plone.app.referenceablebehavior as Archetypes is no longer the default framework in Plone 5.
   Under Plone < 5.0 you should now explicitly add it to the `eggs` part of your buildout configuration to avoid issues while upgrading.
   [hvelarde]
@@ -736,6 +739,7 @@ There's a frood who really knows where his towel is.
 .. _`#411`: https://github.com/collective/collective.cover/issues/411
 .. _`#412`: https://github.com/collective/collective.cover/issues/412
 .. _`#413`: https://github.com/collective/collective.cover/issues/413
+.. _`#414`: https://github.com/collective/collective.cover/issues/414
 .. _`#415`: https://github.com/collective/collective.cover/issues/415
 .. _`#421`: https://github.com/collective/collective.cover/issues/421
 .. _`#423`: https://github.com/collective/collective.cover/issues/423
