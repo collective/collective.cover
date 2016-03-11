@@ -440,7 +440,7 @@ class Upgrade12to13TestCase(UpgradeTestCaseBase):
     def test_registrations(self):
         version = self.setup.getLastVersionForProfile(self.profile_id)[0]
         self.assertTrue(int(version) >= int(self.to_version))
-        self.assertEqual(self._how_many_upgrades_to_do(), 3)
+        self.assertEqual(self._how_many_upgrades_to_do(), 4)
 
     def test_fix_resources_references(self):
         # address also an issue with Setup permission

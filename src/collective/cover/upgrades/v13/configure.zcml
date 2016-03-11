@@ -14,6 +14,7 @@
         description="Fix resource references after static files reorganization."
         handler=".fix_resources_references"
         />
+
     <genericsetup:upgradeStep
         title="Cook CSS resources"
         description="There were changes in the CSS files, so we need to cook the resources."
@@ -24,6 +25,12 @@
         title="Cook JS resources"
         description="There were changes in the JS files, so we need to cook the resources."
         handler="..cook_javascript_resources"
+        />
+
+    <genericsetup:upgradeStep
+        title="Update references"
+        description="Update references used for link integrity checking."
+        handler=".update_references"
         />
 
   </genericsetup:upgradeSteps>

@@ -6,6 +6,9 @@ There's a frood who really knows where his towel is.
 1.0a13 (unreleased)
 ^^^^^^^^^^^^^^^^^^^
 
+- Fix support for link integrity checking (fixes `#604`_).
+  [rodfersou]
+
 - Enforce usage of plone.app.blocks 2.2.1 to avoid issues with tiles breaking the whole cover page.
   [hvelarde]
 
@@ -774,5 +777,6 @@ There's a frood who really knows where his towel is.
 .. _`#578`: https://github.com/collective/collective.cover/issues/578
 .. _`#581`: https://github.com/collective/collective.cover/issues/581
 .. _`#584`: https://github.com/collective/collective.cover/issues/584
+.. _`#604`: https://github.com/collective/collective.cover/issues/604
 .. _`#608`: https://github.com/collective/collective.cover/issues/608
 .. _`PloneFormGen`: https://pypi.python.org/pypi/Products.PloneFormGen

@@ -21,7 +21,6 @@ from zExceptions import BadRequest
 from zope.annotation.interfaces import IAnnotations
 from zope.component import getUtility
 from zope.event import notify
-from zope.lifecycleevent import ObjectModifiedEvent
 
 import json
 
@@ -273,7 +272,6 @@ class MoveTileContent(BrowserView):
             self._move_all_content(origin_tile, target_tile)
         else:
             self._move_selected_content(origin_tile, target_tile, obj)
-        notify(ObjectModifiedEvent(self.context))
         # reinstantiate the tile to update its content on AJAX calls
         target_tile = self.context.restrictedTraverse('{0}/{1}'.format(target_type, target_id))
         return target_tile()
@@ -335,6 +333,8 @@ class RemoveItemFromListTile(grok.View):
             tile = self.context.restrictedTraverse('{0}/{1}'.format(tile_type, tile_id))
             if IListTile.providedBy(tile):
                 tile.remove_item(uuid)
+                # reinstantiate the tile to update its content on AJAX calls
+                tile = self.context.restrictedTraverse('{0}/{1}'.format(tile_type, tile_id))
                 return tile()
         else:
             raise BadRequest('Invalid parameters')
@@ -349,6 +349,5 @@ class DeleteTile(grok.View):
         tile_id = self.request.form.get('tile-id')
 
         if tile_type and tile_id:
-            tile = self.context.restrictedTraverse(tile_type)
-            tile_instance = tile[tile_id]
-            tile_instance.delete()
+            tile = self.context.restrictedTraverse('{0}/{1}'.format(tile_type, tile_id))
+            tile.delete()

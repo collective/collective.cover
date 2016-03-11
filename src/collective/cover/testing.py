@@ -122,6 +122,10 @@ class Fixture(PloneSandboxLayer):
             import plone.app.contenttypes
             self.loadZCML(package=plone.app.contenttypes)
         else:
+            # needed by plone.app.linkintegrity under Plone 4.x
+            import plone.app.referenceablebehavior
+            self.loadZCML(package=plone.app.referenceablebehavior)
+
             if DEXTERITY_ONLY:
                 import plone.app.contenttypes
                 self.loadZCML(package=plone.app.contenttypes)
