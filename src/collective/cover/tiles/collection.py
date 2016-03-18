@@ -17,6 +17,8 @@ from zope.component import queryUtility
 from zope.interface import implements
 from zope.schema import getFieldsInOrder
 
+import random
+
 
 class ICollectionTile(IPersistentCoverTile):
 
@@ -70,6 +72,13 @@ class ICollectionTile(IPersistentCoverTile):
         default=0,
     )
 
+    form.omitted(IDefaultConfigureForm, 'random')
+    random = schema.Bool(
+        title=_(u"Select random items"),
+        required=False,
+        default=False
+    )
+
     footer = schema.TextLine(
         title=_(u'Footer'),
         required=False,
@@ -116,7 +125,13 @@ class CollectionTile(PersistentCoverTile):
         uuid = self.data.get('uuid', None)
         obj = uuidToObject(uuid)
         if uuid and obj:
-            return obj.results(batch=False)[offset:offset + size]
+            results = obj.results(batch=False)
+            if self.data.get('random', False):
+                if size > len(results):
+                    size = len(results)
+                return random.sample(results, size)
+
+            return results[offset:offset + size]
         else:
             self.remove_relation()
             return []
