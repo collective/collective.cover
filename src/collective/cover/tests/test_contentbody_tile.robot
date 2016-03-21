@@ -19,8 +19,6 @@ ${document_body}  body.portaltype-document
 *** Test cases ***
 
 Test Content Body Tile
-    [Tags]  issue_580
-
     Enable Autologin as  Site Administrator
     Go to Homepage
     Create Cover  My Cover  Description

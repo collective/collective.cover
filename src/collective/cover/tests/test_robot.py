@@ -10,7 +10,6 @@ Mandelbug
 Issue related
     They are failing under certain reproducible circunstances.
 """
-from collective.cover.testing import NEW_WIDGETS
 from collective.cover.testing import ROBOT_TESTING
 from plone.testing import layered
 
@@ -23,9 +22,6 @@ files = os.listdir(dirname)
 tests = [f for f in files if f.startswith('test_') and f.endswith('.robot')]
 
 noncritical = ['Expected Failure', 'Mandelbug']
-
-if NEW_WIDGETS:
-    noncritical.append('issue_580')
 
 
 def test_suite():

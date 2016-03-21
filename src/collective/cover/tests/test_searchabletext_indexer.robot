@@ -25,8 +25,6 @@ ${search_results_number_selector}  xpath=//strong[@id='search-results-number']
 *** Test cases ***
 
 Test RichTextTile is Searchable
-    [Tags]  issue_580
-
     Enable Autologin as  Site Administrator
     Go to Homepage
 

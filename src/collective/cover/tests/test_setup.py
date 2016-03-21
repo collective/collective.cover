@@ -56,14 +56,6 @@ class InstallTestCase(unittest.TestCase):
         except AttributeError:
             self.fail('Reinstall fails when the record was changed')
 
-    def test_new_widgets_installed(self):
-        from collective.cover.testing import NEW_WIDGETS
-        name = 'plone.app.widgets'
-        if NEW_WIDGETS:
-            self.assertTrue(self.qi.isProductInstalled(name))
-        else:
-            self.assertFalse(self.qi.isProductInstalled(name))
-
 
 class UninstallTestCase(unittest.TestCase):
 
