@@ -38,7 +38,7 @@ There's a frood who really knows where his towel is.
 - Fix date format in collection tiles (closes `#584`_).
   [tcurvelo]
 
-- Package is now compatible with plone.app.widgets as RichText tile no longer breaks with it (closes `#543`_).
+- RichText tile no longer breaks with plone.app.widgets installed (closes `#543`_).
   [frapell, rodfersou]
 
 - Add missing dependency on collective.z3cform.datetimewidget.

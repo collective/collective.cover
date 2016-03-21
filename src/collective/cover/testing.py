@@ -7,9 +7,6 @@ features we want to test:
 plone.app.contenttypes:
     installed under Plone 4.3, if requested; installed under Plone 5
 
-plone.app.widgets
-    installed under Plone 4.3, if requested
-
 Products.PloneFormGen
     installed under Plone 4 only
 """
@@ -35,14 +32,6 @@ except pkg_resources.DistributionNotFound:
 else:
     # this environment variable is set in .travis.yml test matrix
     DEXTERITY_ONLY = os.environ.get('DEXTERITY_ONLY') is not None
-
-try:
-    pkg_resources.get_distribution('plone.app.widgets')
-except pkg_resources.DistributionNotFound:
-    NEW_WIDGETS = False
-else:
-    # this environment variable is set in .travis.yml test matrix
-    NEW_WIDGETS = os.environ.get('NEW_WIDGETS') is not None
 
 try:
     pkg_resources.get_distribution('Products.PloneFormGen')
@@ -138,10 +127,6 @@ class Fixture(PloneSandboxLayer):
                 self.loadZCML(package=plone.app.contenttypes)
                 z2.installProduct(app, 'Products.DateRecurringIndex')
 
-            if NEW_WIDGETS:
-                import plone.app.widgets
-                self.loadZCML(package=plone.app.widgets)
-
             if HAS_PFG:
                 import Products.PloneFormGen
                 self.loadZCML(package=Products.PloneFormGen)
@@ -163,9 +148,6 @@ class Fixture(PloneSandboxLayer):
         else:
             if DEXTERITY_ONLY:
                 self.applyProfile(portal, 'plone.app.contenttypes:default')
-
-            if NEW_WIDGETS:
-                self.applyProfile(portal, 'plone.app.widgets:default')
 
             if HAS_PFG:
                 self.applyProfile(portal, 'Products.PloneFormGen:default')
