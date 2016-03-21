@@ -70,7 +70,9 @@ interface class should inherit from
 Instead of inheriting from ``plone.tiles.PersistentTile``, the tile
 must inherit from ``collective.cover.tile.base.PersistentCoverTile``.
 
-Register your tile on the registry using the "plone.app.tiles" record::
+Register your tile on the registry using the "plone.app.tiles" record:
+
+.. code-block:: xml
 
   <?xml version="1.0"?>
   <registry>
@@ -134,10 +136,12 @@ render it. For that, you need to take a few things into consideration.
    CSS class name. This way, after configuration or edition, the tile will
    be automatically reloaded via AJAX. If you don't include this, edition
    and configuration will missbehave.
-   Here's and example::
+   Here's and example:
+
+.. code-block:: html
 
     <div class="my-custom-tile tile-content">
-         Some really cool stuff just your tile is able to do
+        Some really cool stuff just your tile is able to do
     </div>
 
    Check `this package tile templates to see more examples.`_
@@ -161,18 +165,23 @@ To add an image field to your tile:
 
 Then, you have several ways of using image scales in your tile templates.
 
-#. You can pass width and height to the ``scale`` method explicitly::
+#. You can pass width and height to the ``scale`` method explicitly:
+
+.. code-block:: html
 
     <img tal:define="scales view/@@images;
                      thumbnail python: scales.scale('image', width=64, height=64);"
-       tal:condition="thumbnail"
-       tal:attributes="src thumbnail/url;
-                       width thumbnail/width;
-                       height thumbnail/height;
-                       class position;
-                       alt view/data/title" />
+        tal:condition="thumbnail"
+        tal:attributes="src thumbnail/url;
+                        width thumbnail/width;
+                        height thumbnail/height;
+                        class position;
+                        alt view/data/title"
+        />
 
-#. Or you can use Plone predefined scales::
+#. Or you can use Plone predefined scales:
+
+.. code-block:: html
 
     <img tal:define="scales view/@@images;
                      thumbnail python: scales.scale('image', scale=scale);"
