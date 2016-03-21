@@ -121,11 +121,6 @@ To enable this package in a buildout-based installation:
     plone.app.blocks = 2.2.0
     plone.app.tiles = 1.0.1
 
-    # if you want to use plone.app.contenttypes
-    plone.app.contenttypes = 1.1
-    plone.app.event = 1.1.5
-    plone.formwidget.datetime = 1.1
-
 #. If you are using Plone 4.2.x you need to add the following also::
 
     [versions]
