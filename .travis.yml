@@ -21,7 +21,6 @@ env:
     - PLONE_VERSION=5.0
 matrix:
   allow_failures:
-    - env: PLONE_VERSION=4.2
     - env: PLONE_VERSION=5.0
   fast_finish: true
 install:

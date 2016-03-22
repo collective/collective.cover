@@ -167,11 +167,13 @@ $(document).ready(function() {
           }
           // Add tinymce
           initTinyMCE(this.getOverlay());
-        } else if (typeof TinyMCEConfig != 'undefined') { // Plone 4.2
+        } else if (typeof TinyMCEConfig !== 'undefined') { // Plone 4.2
           var textarea_id = $('.overlay textarea.mce_editable').attr('id');
-          var config = new TinyMCEConfig(textarea_id);
-          delete InitializedTinyMCEInstances[textarea_id];
-          config.init();
+          if (typeof textarea_id !== 'undefined') {
+            var config = new TinyMCEConfig(textarea_id);
+            delete InitializedTinyMCEInstances[textarea_id];
+            config.init();
+          }
         }
         // Remove unecessary link, use HTML button of EditorManager
         $('div.suppressVisualEditor').remove();
