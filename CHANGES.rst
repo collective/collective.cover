@@ -6,6 +6,9 @@ There's a frood who really knows where his towel is.
 1.0a13 (unreleased)
 ^^^^^^^^^^^^^^^^^^^
 
+- Add option to select random items in collection tile (closes `#608`_).
+  [rodfersou]
+
 - Carousel tile now uses a relative ratio to set its height (fixes `#414`_).
   [terapyon, hvelarde]
 
@@ -768,4 +771,5 @@ There's a frood who really knows where his towel is.
 .. _`#578`: https://github.com/collective/collective.cover/issues/578
 .. _`#581`: https://github.com/collective/collective.cover/issues/581
 .. _`#584`: https://github.com/collective/collective.cover/issues/584
+.. _`#608`: https://github.com/collective/collective.cover/issues/608
 .. _`PloneFormGen`: https://pypi.python.org/pypi/Products.PloneFormGen

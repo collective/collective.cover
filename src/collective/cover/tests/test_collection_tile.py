@@ -164,6 +164,27 @@ class CollectionTileTestCase(TestTileMixin, unittest.TestCase):
         self.assertEqual(len(items), 1)
         self.assertEqual(items[0].getId(), 'my-image1')
 
+    def test_random_items(self):
+        obj = self.portal['mandelbrot-set']
+        self.tile.populate_with_object(obj)
+
+        # we need to compare lists of objects
+        ordered = [o for o in obj.results()]
+        results = [o for o in self.tile.results()]
+        # default behavior return results in order
+        self.assertEqual(results, ordered)
+
+        # now, return results in random order
+        self.tile.data['random'] = True
+        i = 0
+        while i < 3:
+            results = [o for o in self.tile.results()]
+            if results != ordered:
+                return
+            i += 1
+
+        self.fail('No random order after 3 attemps')
+
     def _create_events_collection(self):
         with api.env.adopt_roles(['Manager']):
             obj = api.content.create(
