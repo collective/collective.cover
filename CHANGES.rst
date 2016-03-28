@@ -6,6 +6,9 @@ There's a frood who really knows where his towel is.
 1.0a13 (unreleased)
 ^^^^^^^^^^^^^^^^^^^
 
+- Enforce usage of plone.app.blocks 2.2.1 to avoid issues with tiles breaking the whole cover page.
+  [hvelarde]
+
 - Add option to select random items in collection tile (closes `#608`_).
   [rodfersou]
 

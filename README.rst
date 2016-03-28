@@ -120,7 +120,7 @@ To enable this package in a buildout-based installation:
     [versions]
     ...
     collective.js.bootstrap = 2.3.1.1
-    plone.app.blocks = 2.2.0
+    plone.app.blocks = 2.2.1
     plone.app.tiles = 1.0.1
 
 #. If you are using Plone 4.2.x you need to add the following also:
