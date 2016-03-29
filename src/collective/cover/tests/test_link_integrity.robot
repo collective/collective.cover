@@ -20,6 +20,7 @@ ${edit_link_selector}  a.edit-tile-link
 *** Test cases ***
 
 Test Link Integrity on Basic Tile
+    [Tags]  issue_615
     Enable Autologin as  Manager
     Go to Homepage
     Create Cover  Title  Description
@@ -43,6 +44,7 @@ Test Link Integrity on Basic Tile
     Click Button  Cancel
 
 Test Link Integrity on RichText Tile
+    [Tags]  issue_615
     Enable Autologin as  Manager
     Go to Homepage
     Create Cover  Title  Description
