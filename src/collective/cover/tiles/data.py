@@ -5,7 +5,7 @@ from persistent.dict import PersistentDict
 from plone.namedfile.interfaces import INamedImage
 from plone.tiles.data import PersistentTileDataManager
 from z3c.caching.purge import Purge
-from zope.component import adapts
+from zope.component import adapter
 from zope.event import notify
 from zope.lifecycleevent import ObjectModifiedEvent
 from zope.schema import getFields
@@ -13,14 +13,13 @@ from zope.schema import getFields
 import time
 
 
+@adapter(IPersistentCoverTile)
 class PersistentCoverTileDataManager(PersistentTileDataManager):
     """
     A data reader for persistent tiles operating on annotatable contexts.
     The data is retrieved from an annotation.
     Specific configuration is applied
     """
-
-    adapts(IPersistentCoverTile)
 
     def __init__(self, tile):
         super(PersistentCoverTileDataManager, self).__init__(tile)

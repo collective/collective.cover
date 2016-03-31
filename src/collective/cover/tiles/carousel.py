@@ -13,8 +13,8 @@ from plone.tiles.interfaces import ITileDataManager
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from z3c.form.converter import BaseDataConverter
 from zope import schema
-from zope.component import adapts
-from zope.interface import implements
+from zope.component import adapter
+from zope.interface import implementer
 from zope.schema.interfaces import IDict
 
 
@@ -46,11 +46,10 @@ class ICarouselTile(IListTile):
     form.widget(uuids=TextLinesSortableFieldWidget)
 
 
+@implementer(ICarouselTile)
 class CarouselTile(ListTile):
 
     """A carousel based on the Galleria JS image gallery framework."""
-
-    implements(ICarouselTile)
 
     index = ViewPageTemplateFile('templates/carousel.pt')
     is_configurable = True
@@ -175,11 +174,10 @@ class CarouselTile(ListTile):
             self.id, self.get_image_ratio, str(self.autoplay()).lower())
 
 
+@adapter(IDict, ITextLinesSortableWidget)
 class UUIDSFieldDataConverter(BaseDataConverter):
 
     """A data converter using the field's ``fromUnicode()`` method."""
-
-    adapts(IDict, ITextLinesSortableWidget)
 
     def toWidgetValue(self, value):
         """Convert the internal stored value into something that a

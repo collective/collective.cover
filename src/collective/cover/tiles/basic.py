@@ -13,7 +13,7 @@ from plone.uuid.interfaces import IUUID
 from Products.CMFPlone.utils import safe_unicode
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zope import schema
-from zope.interface import implements
+from zope.interface import implementer
 
 
 class IBasicTile(IPersistentCoverTile):
@@ -58,9 +58,8 @@ class IBasicTile(IPersistentCoverTile):
     )
 
 
+@implementer(IBasicTile)
 class BasicTile(PersistentCoverTile):
-
-    implements(IBasicTile)
 
     index = ViewPageTemplateFile('templates/basic.pt')
 
@@ -126,9 +125,8 @@ class BasicTile(PersistentCoverTile):
         return self.data.get('description') or self.data.get('title')
 
 
+@implementer(ISearchableText)
 class SearchableBasicTile(object):
-
-    implements(ISearchableText)
 
     def __init__(self, context):
         self.context = context

@@ -14,7 +14,7 @@ from z3c.form.interfaces import IDataManager
 from z3c.form.interfaces import NO_VALUE
 from zope.component import getMultiAdapter
 from zope.event import notify
-from zope.interface import implements
+from zope.interface import implementer
 from zope.interface import Interface
 from zope.lifecycleevent import ObjectModifiedEvent
 from zope.publisher.interfaces.browser import IBrowserView
@@ -68,6 +68,7 @@ class ConfigureTile(TileTraverser):
         raise KeyError(name)
 
 
+@implementer(IDefaultConfigureForm)
 class DefaultConfigureForm(TileForm, form.Form):
     """
     Standard tile configure form, which is wrapped by DefaultConfigureView (see
@@ -76,8 +77,6 @@ class DefaultConfigureForm(TileForm, form.Form):
     This form is capable of rendering the fields of any tile schema as defined
     by an ITileType utility.
     """
-    implements(IDefaultConfigureForm)
-
     mode = 'configure'
     name = 'configure_tile'
 

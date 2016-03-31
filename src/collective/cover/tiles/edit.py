@@ -13,7 +13,7 @@ from plone.z3cform.interfaces import IDeferSecurityCheck
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from z3c.form import button
 from zope.component import getMultiAdapter
-from zope.interface import implements
+from zope.interface import implementer
 from zope.publisher.interfaces.browser import IBrowserView
 from zope.traversing.browser.absoluteurl import absoluteURL
 
@@ -23,6 +23,7 @@ class ICoverTileEditView(IBrowserView):
     """
 
 
+@implementer(ITileEditForm)
 class CustomEditForm(DefaultEditForm):
     """Standard tile edit form, which is wrapped by DefaultEditView (see
     below).
@@ -30,8 +31,6 @@ class CustomEditForm(DefaultEditForm):
     This form is capable of rendering the fields of any tile schema as defined
     by an ITileType utility.
     """
-
-    implements(ITileEditForm)
 
     def update(self):
         super(CustomEditForm, self).update()

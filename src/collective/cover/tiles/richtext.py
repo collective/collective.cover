@@ -15,7 +15,7 @@ from plone.tiles.interfaces import ITileDataManager
 from plone.uuid.interfaces import IUUID
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zope import schema
-from zope.interface import implements
+from zope.interface import implementer
 
 
 class IRichTextTile(IPersistentCoverTile):
@@ -29,9 +29,8 @@ class IRichTextTile(IPersistentCoverTile):
     )
 
 
+@implementer(IRichTextTile)
 class RichTextTile(PersistentCoverTile):
-
-    implements(IRichTextTile)
 
     index = ViewPageTemplateFile('templates/richtext.pt')
 
@@ -78,9 +77,8 @@ class RichTextTile(PersistentCoverTile):
         return ['Document']
 
 
+@implementer(ISearchableText)
 class SearchableRichTextTile(object):
-
-    implements(ISearchableText)
 
     def __init__(self, context):
         self.context = context

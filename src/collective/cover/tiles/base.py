@@ -37,13 +37,13 @@ from plone.tiles.interfaces import ITileType
 from z3c.caching.interfaces import IPurgePaths
 from ZODB.POSException import ConflictError
 from zope.annotation import IAnnotations
-from zope.component import adapts
+from zope.component import adapter
 from zope.component import getMultiAdapter
 from zope.component import getUtility
 from zope.component import queryMultiAdapter
 from zope.component import queryUtility
 from zope.event import notify
-from zope.interface import implements
+from zope.interface import implementer
 from zope.lifecycleevent import ObjectModifiedEvent
 from zope.publisher.interfaces import NotFound
 from zope.schema import Choice
@@ -126,9 +126,8 @@ class IPersistentCoverTile(model.Schema):
         """
 
 
+@implementer(IPersistentCoverTile)
 class PersistentCoverTile(tiles.PersistentTile, ESITile):
-
-    implements(IPersistentCoverTile)
 
     is_configurable = False
     is_editable = True
@@ -617,12 +616,11 @@ class ImageScaling(BaseImageScaling):
             return scale_view.__of__(self.context)
 
 
+@adapter(IPersistentCoverTile)
+@implementer(IPurgePaths)
 class PersistentCoverTilePurgePaths(object):
     """Paths to purge for cover tiles
     """
-
-    implements(IPurgePaths)
-    adapts(IPersistentCoverTile)
 
     def __init__(self, context):
         self.context = context
