@@ -7,8 +7,8 @@ from plone.tiles.data import PersistentTileDataManager
 from z3c.caching.purge import Purge
 from zope.component import adapts
 from zope.event import notify
-from zope.schema import getFields
 from zope.lifecycleevent import ObjectModifiedEvent
+from zope.schema import getFields
 
 import time
 

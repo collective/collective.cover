@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 
-import zope.interface
-import zope.schema
-from z3c.form.widget import FieldWidget
-from z3c.form.browser.select import SelectWidget
+from interfaces import ICSSClassWidget
 from z3c.form import interfaces
 from z3c.form.browser import widget
-from interfaces import ICSSClassWidget
+from z3c.form.browser.select import SelectWidget
+from z3c.form.widget import FieldWidget
+
+import zope.interface
+import zope.schema
 
 
 @zope.interface.implementer_only(ICSSClassWidget)

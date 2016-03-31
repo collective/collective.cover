@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from collective.cover import _
+from collective.cover.interfaces import ISearchableText
 from collective.cover.tiles.base import IPersistentCoverTile
 from collective.cover.tiles.base import PersistentCoverTile
 from collective.cover.tiles.configuration_view import IDefaultConfigureForm
@@ -13,7 +14,6 @@ from Products.CMFPlone.utils import safe_unicode
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zope import schema
 from zope.interface import implements
-from collective.cover.interfaces import ISearchableText
 
 
 class IBasicTile(IPersistentCoverTile):

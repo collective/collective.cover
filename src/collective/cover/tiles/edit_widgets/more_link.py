@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 
+from interfaces import IMoreLinkWidget
+from Products.CMFCore.utils import getToolByName
+from z3c.form import interfaces
+from z3c.form.browser.text import TextWidget
+from z3c.form.widget import FieldWidget
+
 import zope.interface
 import zope.schema
-from Products.CMFCore.utils import getToolByName
-from z3c.form.widget import FieldWidget
-from z3c.form.browser.text import TextWidget
-from z3c.form import interfaces
-from interfaces import IMoreLinkWidget
 
 
 @zope.interface.implementer_only(IMoreLinkWidget)

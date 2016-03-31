@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
+from collective.cover.interfaces import ISearchableText
 from collective.cover.tests.base import TestTileMixin
 from collective.cover.tiles.richtext import IRichTextTile
 from collective.cover.tiles.richtext import RichTextTile
-from collective.cover.interfaces import ISearchableText
+from mock import Mock
 from plone.app.textfield.value import RichTextValue
 from zope.component import queryAdapter
-from mock import Mock
 
 import unittest
 

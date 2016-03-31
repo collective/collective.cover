@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
 
-from collective.cover.testing import INTEGRATION_TESTING
 from collective.cover.config import PLONE_VERSION
+from collective.cover.testing import INTEGRATION_TESTING
+from lxml import etree
 from plone import api
+from StringIO import StringIO
 
 import json
-from lxml import etree
-from StringIO import StringIO
 import unittest
+
 
 parser = etree.HTMLParser()
 

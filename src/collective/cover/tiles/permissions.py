@@ -5,6 +5,7 @@ from zope.annotation.interfaces import IAnnotations
 from zope.interface import implements
 from zope.interface import Interface
 
+
 ANNOTATIONS_KEY_PREFIX = u'plone.tiles.permission'
 
 

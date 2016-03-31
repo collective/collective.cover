@@ -19,9 +19,9 @@ from plone.app.textfield.value import RichTextValue
 from plone.app.uuid.utils import uuidToObject
 from plone.autoform import directives as form
 from plone.memoize import view
+from plone.namedfile import NamedBlobImage
 from plone.namedfile.interfaces import INamedImage
 from plone.namedfile.interfaces import INamedImageField
-from plone.namedfile import NamedBlobImage
 from plone.namedfile.scaling import ImageScale as BaseImageScale
 from plone.namedfile.scaling import ImageScaling as BaseImageScaling
 from plone.namedfile.utils import set_headers
@@ -52,6 +52,7 @@ from zope.schema import getFieldsInOrder
 
 import logging
 import Missing
+
 
 logger = logging.getLogger(PROJECTNAME)
 

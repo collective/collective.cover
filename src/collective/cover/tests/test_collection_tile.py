@@ -9,6 +9,7 @@ from plone.uuid.interfaces import IUUID
 
 import unittest
 
+
 EMPTY = [dict(
     i='portal_type',
     o='plone.app.querystring.operation.selection.is',

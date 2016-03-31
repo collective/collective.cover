@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-from collective.cover.logger import logger
 from collective.cover.controlpanel import ICoverSettings
+from collective.cover.logger import logger
 from collective.cover.tiles.list import IListTile
 from plone import api
 from plone.registry.interfaces import IRegistry
@@ -8,6 +8,7 @@ from plone.tiles.interfaces import ITileDataManager
 from plone.tiles.interfaces import ITileType
 from zope.component import getUtility
 from zope.schema.interfaces import IVocabularyFactory
+
 
 PROFILE_ID = 'profile-collective.cover:default'
 

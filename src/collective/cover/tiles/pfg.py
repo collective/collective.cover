@@ -6,8 +6,8 @@ from collective.cover.tiles.base import PersistentCoverTile
 from plone.app.uuid.utils import uuidToObject
 from plone.tiles.interfaces import ITileDataManager
 from plone.uuid.interfaces import IUUID
-from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.CMFPlone.utils import safe_unicode
+from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zope import schema
 from zope.interface import implements
 

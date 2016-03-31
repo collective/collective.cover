@@ -35,6 +35,7 @@ invalid image can be created to test the "Internal Server Error" string.
 
 from collective.cover.tiles.basic import BasicTile
 
+
 ORIGINAL_POPULATE_WITH_OBJECT = BasicTile.populate_with_object
 
 

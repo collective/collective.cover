@@ -1,22 +1,21 @@
 # -*- coding: utf-8 -*-
 
 from AccessControl import Unauthorized
+from collective.cover import _
+from collective.cover.interfaces import ITileEditForm
 from plone import api
 from plone.app.tiles.browser.edit import DefaultEditForm
 from plone.app.tiles.browser.edit import DefaultEditView
 from plone.app.tiles.browser.traversal import EditTile
 from plone.app.tiles.utils import appendJSONData
 from plone.tiles.interfaces import ITileDataManager
+from plone.z3cform.interfaces import IDeferSecurityCheck
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from z3c.form import button
+from zope.component import getMultiAdapter
 from zope.interface import implements
 from zope.publisher.interfaces.browser import IBrowserView
 from zope.traversing.browser.absoluteurl import absoluteURL
-from zope.component import getMultiAdapter
-from plone.z3cform.interfaces import IDeferSecurityCheck
-
-from collective.cover import _
-from collective.cover.interfaces import ITileEditForm
 
 
 class ICoverTileEditView(IBrowserView):

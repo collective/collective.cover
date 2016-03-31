@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
+from collective.cover.interfaces import ISearchableText
 from collective.cover.tests.base import TestTileMixin
 from collective.cover.tiles.embed import EmbedTile
 from collective.cover.tiles.embed import IEmbedTile
-from collective.cover.interfaces import ISearchableText
-from zope.component import queryAdapter
 from mock import Mock
+from zope.component import queryAdapter
 
 import unittest
 
