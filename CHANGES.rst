@@ -3,7 +3,7 @@ Changelog
 
 There's a frood who really knows where his towel is.
 
-1.0a13 (unreleased)
+1.1b1 (2016-03-31)
 ^^^^^^^^^^^^^^^^^^^
 
 - Enforce usage of plone.app.blocks 2.2.1 to avoid issues with tiles breaking the whole cover page.
