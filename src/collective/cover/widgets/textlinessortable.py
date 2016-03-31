@@ -56,7 +56,7 @@ class TextLinesSortableWidget(textlines.TextLinesWidget):
         scales = item.restrictedTraverse('@@images')
         try:
             return scales.scale('image', 'tile')
-        except:
+        except:  # FIXME: B901 blind except: statement
             return None
 
     def isExpired(self, item):
