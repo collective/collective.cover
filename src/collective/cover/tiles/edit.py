@@ -84,7 +84,7 @@ class CustomEditForm(DefaultEditForm):
                                    name=self.tileType.__name__)
             return view[self.tileId]
         else:
-            return self.context.restrictedTraverse('@@%s/%s' % (
+            return self.context.restrictedTraverse('@@{0}/{1}'.format(
                 self.tileType.__name__, self.tileId,))
 
     def getContent(self):

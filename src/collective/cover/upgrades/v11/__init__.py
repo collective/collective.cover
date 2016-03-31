@@ -32,17 +32,13 @@ def fix_persistentmap_to_dict(context):
             uuids = old_data['uuids']
             if isinstance(uuids, dict):
                 # This tile is fixed, carry on
-                logger.info(
-                    'Tile %s at %s was already updated' %
-                    (tile_id, cover.getPath())
-                )
+                msg = 'Tile {0} at {1} was already updated'
+                logger.info(msg.format(tile_id, cover.getPath()))
                 continue
             if not uuids:
                 # This tile did not have data, so ignore
-                logger.info(
-                    'Tile %s at %s did not have any data' %
-                    (tile_id, cover.getPath())
-                )
+                msg = 'Tile {0} at {1} did not have any data'
+                logger.info(msg.format(tile_id, cover.getPath()))
                 continue
 
             new_data = dict()
@@ -52,9 +48,9 @@ def fix_persistentmap_to_dict(context):
             old_data['uuids'] = new_data
             ITileDataManager(tile).set(old_data)
 
-            logger.info(
-                'Tile %s at %s updated' % (tile_id, cover.getPath())
-            )
+            msg = 'Tile {0} at {1} updated'
+            logger.info(msg.format(tile_id, cover.getPath()))
+
     logger.info('Done')
 
 
@@ -109,8 +105,7 @@ def remove_orphan_annotations(context):
     """
     catalog = api.portal.get_tool('portal_catalog')
     results = catalog(object_provides=ICover.__identifier__)
-    logger.info(
-        'Checking {0} objects for orphan annotations'.format(len(results)))
+    logger.info('Checking {0} objects for orphan annotations'.format(len(results)))
 
     for brain in results:
         cover = brain.getObject()
@@ -126,8 +121,9 @@ def remove_orphan_annotations(context):
                 del(cover.__annotations__[k])
 
             if orphan_annotations:
-                logger.info('Removed {0} annotations from "{1}"'.format(
-                    len(orphan_annotations), cover.absolute_url_path()))
+                msg = 'Removed {0} annotations from "{1}"'
+                logger.info(
+                    msg.format(len(orphan_annotations), cover.absolute_url_path()))
 
         except AttributeError:
             pass  # cover with no annotations

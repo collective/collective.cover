@@ -52,7 +52,7 @@ class PersistentCoverTileDataManager(PersistentTileDataManager):
                      data[k] != self.annotations[self.key][k])):
                     # set modification time of the image
                     notify(Purge(self.tile))
-                    data[mtime_key] = '%f' % time.time()
+                    data[mtime_key] = repr(time.time())
                 else:
                     data[mtime_key] = self.annotations[self.key].get(mtime_key, '')
 

@@ -552,17 +552,17 @@ class ImageScaling(BaseImageScaling):
             raise
         except Exception:
             logging.exception(
-                'could not scale "%r" of %r',
-                orig_value, self.context.context.absolute_url())  # FIXME: PEP 3101
+                'could not scale "{0}" of {1}'.format(
+                    repr(orig_value),
+                    repr(self.context.context.absolute_url())))
             return
         if result is not None:
-            data, format, dimensions = result
-            # FIXME: PEP 3101; how to avoid confusion among method and variable name?
-            mimetype = 'image/%s' % format.lower()
+            data, format_, dimensions = result
+            mimetype = 'image/' + format_.lower()
             value = orig_value.__class__(data, contentType=mimetype,
                                          filename=orig_value.filename)
             value.fieldname = fieldname
-            return value, format, dimensions
+            return value, format_, dimensions
 
     def modified(self):
         """ provide a callable to return the modification time of content

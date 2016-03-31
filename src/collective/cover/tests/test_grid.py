@@ -15,7 +15,7 @@ def _has_classes(element, classes):
     element_classes = [c.strip() for c in element.attrib['class'].split(' ')]
     for expected in classes:
         if expected not in element_classes:
-            raise Exception('expected (%s) in element classes (%s)' % (
+            raise Exception('expected ({0}) in element classes ({1})'.format(
                 ' '.join(classes), ' '.join(element_classes)))
     return True
 

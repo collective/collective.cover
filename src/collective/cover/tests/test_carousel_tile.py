@@ -205,7 +205,7 @@ class CarouselTileTestCase(TestTileMixin, unittest.TestCase):
         # First image should return the custom URL
         self.assertEqual(url2, u'http://www.custom_url.com')
         # And second image should have the absolute_url and /view
-        self.assertEqual(url3, u'%s/view' % obj3.absolute_url())
+        self.assertEqual(url3, obj3.absolute_url() + '/view')
 
     def test_data_converter(self):
         field = ICarouselTile['uuids']
