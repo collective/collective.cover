@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 from collective.cover.config import PROJECTNAME
+from collective.cover.events import update_link_integrity
+from collective.cover.interfaces import ICover
 from collective.cover.logger import logger
 from plone import api
 
@@ -35,3 +37,15 @@ def fix_resources_references(setup_tool):
 
     setup_tool.runImportStepFromProfile(profile, 'typeinfo')
     logger.info('Updated content type icon reference.')
+
+
+def update_references(setup_tool):
+    """Update references used for link integrity checking."""
+    catalog = api.portal.get_tool('portal_catalog')
+    query = dict(object_provides=ICover.__identifier__)
+    results = catalog.unrestrictedSearchResults(**query)
+    for brain in results:
+        obj = brain.getObject()
+        update_link_integrity(obj, None)
+
+    logger.info('References updated on {0} objects.'.format(len(results)))

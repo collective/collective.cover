@@ -19,9 +19,7 @@ from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zope import schema
 from zope.component import queryUtility
 from zope.deprecation.deprecation import deprecate
-from zope.event import notify
 from zope.interface import implements
-from zope.lifecycleevent import ObjectModifiedEvent
 from zope.schema import getFieldsInOrder
 
 import logging
@@ -221,7 +219,6 @@ class ListTile(PersistentCoverTile):
 
         old_data['uuids'] = uuids_dict
         data_mgr.set(old_data)
-        notify(ObjectModifiedEvent(self))
 
     @deprecate('Use replace_with_uuids method instead.')
     def replace_with_objects(self, uuids):

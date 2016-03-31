@@ -67,3 +67,18 @@ class CoverAPITestCase(unittest.TestCase):
         tile = cover.get_tile(tiles[3])
         self.assertEqual(tile.data['title'], title)
         self.assertEqual(tile.data['description'], description)
+
+    def test_get_referenced_objects(self):
+        cover = self._create_cover('c2', 'Layout A')
+        self.assertEqual(cover.get_referenced_objects(), set([]))
+        image = self.portal['my-image']
+        tiles = cover.list_tiles()
+        for tile_uuid in tiles:
+            tile = cover.get_tile(tile_uuid)
+            tile.populate_with_object(image)
+        self.assertEqual(cover.get_referenced_objects(), set([image]))
+        link = self.portal['my-link']
+        for tile_uuid in tiles:
+            tile = cover.get_tile(tile_uuid)
+            tile.populate_with_object(link)
+        self.assertEqual(cover.get_referenced_objects(), set([image, link]))

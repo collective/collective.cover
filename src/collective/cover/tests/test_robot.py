@@ -10,6 +10,8 @@ Mandelbug
 Issue related
     They are failing under certain reproducible circunstances.
 """
+from collective.cover.config import PLONE_VERSION
+from collective.cover.testing import DEXTERITY_ONLY
 from collective.cover.testing import ROBOT_TESTING
 from plone.testing import layered
 
@@ -22,6 +24,13 @@ files = os.listdir(dirname)
 tests = [f for f in files if f.startswith('test_') and f.endswith('.robot')]
 
 noncritical = ['Expected Failure', 'Mandelbug']
+
+# XXX: Link integrity tests fail under Plone 4.2 and under
+#      Plone 4.3 with plone.app.contenttypes installed
+#      https://github.com/collective/collective.cover/issues/615
+if PLONE_VERSION.startswith('4.2') or \
+        (PLONE_VERSION.startswith('4.3') and DEXTERITY_ONLY):
+    noncritical.append('issue_615')
 
 
 def test_suite():

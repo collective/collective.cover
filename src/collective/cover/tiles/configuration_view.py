@@ -176,7 +176,7 @@ class DefaultConfigureForm(TileForm, form.Form):
         tile_conf_adapter.set_configuration(data)
 
         # notify about modification
-        notify(ObjectModifiedEvent(tile))
+        notify(ObjectModifiedEvent(self.context))
         api.portal.show_message(
             _(u'Tile configuration saved.'), self.request, type='info')
 

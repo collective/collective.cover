@@ -7,13 +7,13 @@
   <!-- event handlers for updating link integrity references -->
 
   <subscriber
-      for="collective.cover.tiles.base.IPersistentCoverTile
+      for="collective.cover.interfaces.ICover
            OFS.interfaces.IObjectClonedEvent"
       handler=".events.update_link_integrity"
       />
 
   <subscriber
-      for="collective.cover.tiles.base.IPersistentCoverTile
+      for="collective.cover.interfaces.ICover
            zope.lifecycleevent.interfaces.IObjectModifiedEvent"
       handler=".events.update_link_integrity"
       />

@@ -9,9 +9,7 @@ from plone.app.tiles.utils import appendJSONData
 from plone.tiles.interfaces import ITileDataManager
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from z3c.form import button
-from zope.event import notify
 from zope.interface import implements
-from zope.lifecycleevent import ObjectModifiedEvent
 from zope.publisher.interfaces.browser import IBrowserView
 from zope.traversing.browser.absoluteurl import absoluteURL
 from zope.component import getMultiAdapter
@@ -65,8 +63,6 @@ class CustomEditForm(DefaultEditForm):
             old_data[item] = data[item]
         dataManager.set(old_data)
 
-        # notify about modification
-        notify(ObjectModifiedEvent(tile))
         api.portal.show_message(_(u'Tile saved'), self.request, type='info')
 
         # Look up the URL - we need to do this after we've set the data to

@@ -3,9 +3,6 @@ from collective.cover.config import PLONE_VERSION
 from collective.cover.interfaces import ICover
 from five import grok
 from plone.app.iterate.interfaces import ICheckinEvent
-from plone.app.linkintegrity.handlers import getObjectsFromLinks
-from plone.app.linkintegrity.parser import extractLinks
-from plone.app.textfield.value import RichTextValue
 from zope.annotation.interfaces import IAnnotations
 
 if PLONE_VERSION.startswith('5'):
@@ -48,16 +45,13 @@ def update_link_integrity(obj, event):
     :param event: event fired
     :type event:
     """
-    refs = set()
-    for name, value in obj.data.items():
-        if isinstance(value, RichTextValue):
-            value = value.raw
-            if not value:
-                continue
-            links = extractLinks(value)
-            refs |= getObjectsFromLinks(obj.context, links)
+    refs = obj.get_referenced_objects()
 
     if PLONE_VERSION.startswith('5'):
-        updateReferences(obj.context, refs)
-    elif IReferenceable.providedBy(obj.context):
-        updateReferences(IReferenceable(obj.context), referencedRelationship, refs)
+        updateReferences(obj, refs)
+    else:
+        # needed by plone.app.linkintegrity under Plone 4.x
+        adapted = IReferenceable(obj, None)
+        if adapted is None:
+            return
+        updateReferences(adapted, referencedRelationship, refs)
