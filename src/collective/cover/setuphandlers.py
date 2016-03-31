@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
-from Products.CMFPlone import interfaces as Plone
-from Products.CMFQuickInstallerTool import interfaces as QuickInstaller
+from Products.CMFPlone.interfaces import INonInstallable
 from zope.interface import implements
 
 
@@ -13,14 +12,4 @@ class HiddenProfiles(object):
         return [
             u'collective.cover:testfixture',
             u'collective.cover:uninstall',
-        ]
-
-
-class HiddenProducts(object):
-
-    implements(QuickInstaller.INonInstallable)
-
-    def getNonInstallableProducts(self):
-        """Do not show on QuickInstaller's list of installable products."""
-        return [
         ]
