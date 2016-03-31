@@ -34,6 +34,7 @@ from plone.supermodel import model
 from plone.tiles.esi import ESITile
 from plone.tiles.interfaces import ITileDataManager
 from plone.tiles.interfaces import ITileType
+from Products.CMFPlone.utils import safe_hasattr
 from z3c.caching.interfaces import IPurgePaths
 from ZODB.POSException import ConflictError
 from zope.annotation import IAnnotations
@@ -232,9 +233,9 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
         :param obj: [required]
         :type obj: content object
         """
-        if hasattr(obj, 'image'):  # Dexterity
+        if safe_hasattr(obj, 'image'):  # Dexterity
             return True
-        elif hasattr(obj, 'Schema'):  # Archetypes
+        elif safe_hasattr(obj, 'Schema'):  # Archetypes
             return 'image' in obj.Schema().keys()
         else:
             return False
@@ -419,7 +420,7 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
             else:
                 # Archetypes
                 data = image.data
-                if hasattr(data, 'data'):  # image data weirdness...
+                if safe_hasattr(data, 'data'):  # image data weirdness...
                     data = data.data
                 image = NamedBlobImage(data)
         return image
@@ -462,7 +463,7 @@ class ImageScale(BaseImageScale):
         if self.data is None:
             self.data = self.context.data.get(self.fieldname)
         url = self.context.url
-        if hasattr(self.data, 'contentType'):
+        if safe_hasattr(self.data, 'contentType'):
             extension = self.data.contentType.split('/')[-1].lower()
         elif 'mimetype' in info:
             extension = info['mimetype'].split('/')[-1]
@@ -539,7 +540,7 @@ class ImageScaling(BaseImageScaling):
         if height is None and width is None:
             _, format = orig_value.contentType.split('/', 1)
             return None, format, (orig_value._width, orig_value._height)
-        if hasattr(aq_base(orig_value), 'open'):
+        if safe_hasattr(aq_base(orig_value), 'open'):
             orig_data = orig_value.open()
         else:
             orig_data = getattr(aq_base(orig_value), 'data', orig_value)
