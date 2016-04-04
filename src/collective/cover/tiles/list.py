@@ -19,10 +19,11 @@ from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zope import schema
 from zope.component import queryUtility
 from zope.deprecation.deprecation import deprecate
-from zope.interface import implements
+from zope.interface import implementer
 from zope.schema import getFieldsInOrder
 
 import logging
+
 
 logger = logging.getLogger(PROJECTNAME)
 
@@ -91,9 +92,8 @@ class IListTile(IPersistentCoverTile):
     form.no_omit(ITileEditForm, 'more_link_text')
 
 
+@implementer(IListTile)
 class ListTile(PersistentCoverTile):
-
-    implements(IListTile)
 
     index = ViewPageTemplateFile('templates/list.pt')
 
@@ -383,9 +383,8 @@ class ListTile(PersistentCoverTile):
         return self._get_title_tag(item)
 
 
+@implementer(ICoverUIDsProvider)
 class CollectionUIDsProvider(object):
-
-    implements(ICoverUIDsProvider)
 
     def __init__(self, context):
         self.context = context
@@ -395,9 +394,8 @@ class CollectionUIDsProvider(object):
         return [i.UID for i in self.context.queryCatalog()]
 
 
+@implementer(ICoverUIDsProvider)
 class FolderUIDsProvider(object):
-
-    implements(ICoverUIDsProvider)
 
     def __init__(self, context):
         self.context = context
@@ -407,9 +405,8 @@ class FolderUIDsProvider(object):
         return [i.UID for i in self.context.getFolderContents()]
 
 
+@implementer(ICoverUIDsProvider)
 class GenericUIDsProvider(object):
-
-    implements(ICoverUIDsProvider)
 
     def __init__(self, context):
         self.context = context

@@ -10,7 +10,8 @@ from Products.CMFPlone.utils import safe_unicode
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.MimetypesRegistry.common import MimeTypeException
 from zope import schema
-from zope.interface import implements
+from zope.interface import implementer
+
 
 HTML = """
     <a href="{0}/at_download/file">
@@ -61,9 +62,8 @@ class IFileTile(IPersistentCoverTile):
     )
 
 
+@implementer(IFileTile)
 class FileTile(PersistentCoverTile):
-
-    implements(IFileTile)
 
     index = ViewPageTemplateFile('templates/file.pt')
 

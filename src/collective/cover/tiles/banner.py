@@ -7,10 +7,11 @@ from plone import api
 from plone.namedfile import field
 from plone.tiles.interfaces import ITileDataManager
 from plone.uuid.interfaces import IUUID
+from Products.CMFPlone.utils import safe_hasattr
 from Products.CMFPlone.utils import safe_unicode
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zope import schema
-from zope.interface import implements
+from zope.interface import implementer
 
 
 class IBannerTile(IPersistentCoverTile):
@@ -37,9 +38,8 @@ class IBannerTile(IPersistentCoverTile):
     )
 
 
+@implementer(IBannerTile)
 class BannerTile(PersistentCoverTile):
-
-    implements(IBannerTile)
 
     index = ViewPageTemplateFile('templates/banner.pt')
     is_configurable = True
@@ -72,7 +72,7 @@ class BannerTile(PersistentCoverTile):
             stp = props.site_properties
             view_action_types = stp.getProperty('typesUseViewActionInListings', ())
 
-            if hasattr(obj, 'portal_type') and obj.portal_type in view_action_types:
+            if safe_hasattr(obj, 'portal_type') and obj.portal_type in view_action_types:
                 obj_url += '/view'
 
             remote_url = obj_url

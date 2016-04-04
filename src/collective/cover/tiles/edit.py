@@ -1,22 +1,21 @@
 # -*- coding: utf-8 -*-
 
 from AccessControl import Unauthorized
+from collective.cover import _
+from collective.cover.interfaces import ITileEditForm
 from plone import api
 from plone.app.tiles.browser.edit import DefaultEditForm
 from plone.app.tiles.browser.edit import DefaultEditView
 from plone.app.tiles.browser.traversal import EditTile
 from plone.app.tiles.utils import appendJSONData
 from plone.tiles.interfaces import ITileDataManager
+from plone.z3cform.interfaces import IDeferSecurityCheck
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from z3c.form import button
-from zope.interface import implements
+from zope.component import getMultiAdapter
+from zope.interface import implementer
 from zope.publisher.interfaces.browser import IBrowserView
 from zope.traversing.browser.absoluteurl import absoluteURL
-from zope.component import getMultiAdapter
-from plone.z3cform.interfaces import IDeferSecurityCheck
-
-from collective.cover import _
-from collective.cover.interfaces import ITileEditForm
 
 
 class ICoverTileEditView(IBrowserView):
@@ -24,6 +23,7 @@ class ICoverTileEditView(IBrowserView):
     """
 
 
+@implementer(ITileEditForm)
 class CustomEditForm(DefaultEditForm):
     """Standard tile edit form, which is wrapped by DefaultEditView (see
     below).
@@ -31,8 +31,6 @@ class CustomEditForm(DefaultEditForm):
     This form is capable of rendering the fields of any tile schema as defined
     by an ITileType utility.
     """
-
-    implements(ITileEditForm)
 
     def update(self):
         super(CustomEditForm, self).update()
@@ -86,7 +84,7 @@ class CustomEditForm(DefaultEditForm):
                                    name=self.tileType.__name__)
             return view[self.tileId]
         else:
-            return self.context.restrictedTraverse('@@%s/%s' % (
+            return self.context.restrictedTraverse('@@{0}/{1}'.format(
                 self.tileType.__name__, self.tileId,))
 
     def getContent(self):

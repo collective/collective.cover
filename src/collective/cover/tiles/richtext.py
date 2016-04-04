@@ -13,9 +13,10 @@ from plone.app.textfield.interfaces import ITransformer
 from plone.app.textfield.value import RichTextValue
 from plone.tiles.interfaces import ITileDataManager
 from plone.uuid.interfaces import IUUID
+from Products.CMFPlone.utils import safe_hasattr
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zope import schema
-from zope.interface import implements
+from zope.interface import implementer
 
 
 class IRichTextTile(IPersistentCoverTile):
@@ -29,9 +30,8 @@ class IRichTextTile(IPersistentCoverTile):
     )
 
 
+@implementer(IRichTextTile)
 class RichTextTile(PersistentCoverTile):
-
-    implements(IRichTextTile)
 
     index = ViewPageTemplateFile('templates/richtext.pt')
 
@@ -56,7 +56,7 @@ class RichTextTile(PersistentCoverTile):
     def populate_with_object(self, obj):
         super(RichTextTile, self).populate_with_object(obj)
 
-        if hasattr(obj, 'getRawText'):
+        if safe_hasattr(obj, 'getRawText'):
             text = obj.getRawText().decode('utf-8')
         else:
             # Probably a dexterity item.  This is already unicode.
@@ -78,9 +78,8 @@ class RichTextTile(PersistentCoverTile):
         return ['Document']
 
 
+@implementer(ISearchableText)
 class SearchableRichTextTile(object):
-
-    implements(ISearchableText)
 
     def __init__(self, context):
         self.context = context

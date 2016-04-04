@@ -30,7 +30,6 @@
       />
 
   <utility factory=".setuphandlers.HiddenProfiles" name="collective.cover" />
-  <utility factory=".setuphandlers.HiddenProducts" name="collective.cover" />
 
   <genericsetup:upgradeSteps
       source="5"

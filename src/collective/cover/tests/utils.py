@@ -6,6 +6,7 @@ from datetime import datetime
 from datetime import timedelta
 from tzlocal import get_localzone
 
+
 today = datetime.today()
 tomorrow = today + timedelta(days=1)
 

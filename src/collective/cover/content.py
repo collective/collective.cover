@@ -20,7 +20,7 @@ from Products.GenericSetup.interfaces import IDAVAware
 from zope.component import getUtility
 from zope.component import queryAdapter
 from zope.container.interfaces import IObjectAddedEvent
-from zope.interface import implements
+from zope.interface import implementer
 
 import json
 import logging
@@ -29,14 +29,13 @@ import logging
 logger = logging.getLogger(PROJECTNAME)
 
 
+# XXX: Provide this so Cover items can be imported using the import
+#      content from GS, until a proper solution is found.
+#      ref: http://thread.gmane.org/gmane.comp.web.zope.plone.devel/31799
+@implementer(IDAVAware)
 class Cover(Item):
 
     """A composable page."""
-
-    # XXX: Provide this so Cover items can be imported using the import
-    #      content from GS, until a proper solution is found.
-    #      ref: http://thread.gmane.org/gmane.comp.web.zope.plone.devel/31799
-    implements(IDAVAware)
 
     @property
     def refresh(self):

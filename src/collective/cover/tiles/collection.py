@@ -14,7 +14,7 @@ from Products.CMFPlone.utils import safe_unicode
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zope import schema
 from zope.component import queryUtility
-from zope.interface import implements
+from zope.interface import implementer
 from zope.schema import getFieldsInOrder
 
 import random
@@ -91,9 +91,8 @@ class ICollectionTile(IPersistentCoverTile):
     )
 
 
+@implementer(ICollectionTile)
 class CollectionTile(PersistentCoverTile):
-
-    implements(ICollectionTile)
 
     index = ViewPageTemplateFile('templates/collection.pt')
 

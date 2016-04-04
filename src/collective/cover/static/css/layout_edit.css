@@ -677,12 +677,12 @@ input[type='submit'].btn::-moz-focus-inner
 /* tiles config */
 .modal-fields,
 #configure_tile > div
-{position: relative;min-height: 2em;padding-bottom: 8px; 
+{position: relative;min-height: 2em;padding-bottom: 8px;
 
     border-bottom: 1px solid #d1d1d1;
 }
 #configure_tile > div > label
-{float: left;margin-right: 8px; 
+{float: left;margin-right: 8px;
     margin-left: 20px;
 }
 #tile-configure .formControls

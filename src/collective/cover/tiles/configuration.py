@@ -5,7 +5,7 @@ from plone.namedfile.interfaces import INamedBlobImageField
 from plone.tiles.interfaces import ITileType
 from zope.annotation.interfaces import IAnnotations
 from zope.component import getUtility
-from zope.interface import implements
+from zope.interface import implementer
 from zope.interface import Interface
 from zope.schema import getFieldNamesInOrder
 from zope.schema import getFieldsInOrder
@@ -86,12 +86,11 @@ class ITilesConfigurationScreen(Interface):
         """
 
 
+@implementer(ITilesConfigurationScreen)
 class TilesConfigurationScreen(object):
     """
     An adapter that will provide the configuration screens functionality
     """
-
-    implements(ITilesConfigurationScreen)
 
     def __init__(self, context, request, tile):
         self.context = context

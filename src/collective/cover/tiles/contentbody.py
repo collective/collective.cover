@@ -8,7 +8,7 @@ from plone.tiles.interfaces import ITileDataManager
 from plone.uuid.interfaces import IUUID
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zope import schema
-from zope.interface import implements
+from zope.interface import implementer
 
 
 class IContentBodyTile(IPersistentCoverTile):
@@ -20,9 +20,8 @@ class IContentBodyTile(IPersistentCoverTile):
     )
 
 
+@implementer(IContentBodyTile)
 class ContentBodyTile(PersistentCoverTile):
-
-    implements(IContentBodyTile)
 
     index = ViewPageTemplateFile('templates/contentbody.pt')
 

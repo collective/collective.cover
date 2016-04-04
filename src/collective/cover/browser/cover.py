@@ -308,7 +308,7 @@ class UpdateListTileContent(grok.View):
             try:
                 tile_instance.replace_with_uuids(uuids)
                 html = tile_instance()
-            except:
+            except:  # FIXME: B901 blind except: statement
                 # XXX: Pass silently ?
                 pass
 

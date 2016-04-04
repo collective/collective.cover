@@ -67,11 +67,11 @@ var rm_button = function(data) {
         e.galleriaData.layer = rm_button(e.galleriaData);
         var $original = $(e.galleriaData.original);
         var $target = $(this._target);
-        $target.attr('data-tile-id', $target.parents('.tile').attr('id')); 
-        $target.attr('data-tile-type', $target.parents('.tile').attr('data-tile-type')); 
-        $target.attr('data-content-type', $original.attr('data-content-type')); 
-        $target.attr('data-content-uuid', $original.attr('data-content-uuid')); 
-        $target.attr('data-has-subitem', $original.attr('data-has-subitem')); 
+        $target.attr('data-tile-id', $target.parents('.tile').attr('id'));
+        $target.attr('data-tile-type', $target.parents('.tile').attr('data-tile-type'));
+        $target.attr('data-content-type', $original.attr('data-content-type'));
+        $target.attr('data-content-uuid', $original.attr('data-content-uuid'));
+        $target.attr('data-has-subitem', $original.attr('data-has-subitem'));
       });
       if ($('body').hasClass('template-compose')) {
         this.bind('data', function(e) {

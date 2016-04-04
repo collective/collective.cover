@@ -19,9 +19,9 @@ from plone.app.textfield.value import RichTextValue
 from plone.app.uuid.utils import uuidToObject
 from plone.autoform import directives as form
 from plone.memoize import view
+from plone.namedfile import NamedBlobImage
 from plone.namedfile.interfaces import INamedImage
 from plone.namedfile.interfaces import INamedImageField
-from plone.namedfile import NamedBlobImage
 from plone.namedfile.scaling import ImageScale as BaseImageScale
 from plone.namedfile.scaling import ImageScaling as BaseImageScaling
 from plone.namedfile.utils import set_headers
@@ -34,16 +34,17 @@ from plone.supermodel import model
 from plone.tiles.esi import ESITile
 from plone.tiles.interfaces import ITileDataManager
 from plone.tiles.interfaces import ITileType
+from Products.CMFPlone.utils import safe_hasattr
 from z3c.caching.interfaces import IPurgePaths
 from ZODB.POSException import ConflictError
 from zope.annotation import IAnnotations
-from zope.component import adapts
+from zope.component import adapter
 from zope.component import getMultiAdapter
 from zope.component import getUtility
 from zope.component import queryMultiAdapter
 from zope.component import queryUtility
 from zope.event import notify
-from zope.interface import implements
+from zope.interface import implementer
 from zope.lifecycleevent import ObjectModifiedEvent
 from zope.publisher.interfaces import NotFound
 from zope.schema import Choice
@@ -52,6 +53,7 @@ from zope.schema import getFieldsInOrder
 
 import logging
 import Missing
+
 
 logger = logging.getLogger(PROJECTNAME)
 
@@ -125,9 +127,8 @@ class IPersistentCoverTile(model.Schema):
         """
 
 
+@implementer(IPersistentCoverTile)
 class PersistentCoverTile(tiles.PersistentTile, ESITile):
-
-    implements(IPersistentCoverTile)
 
     is_configurable = False
     is_editable = True
@@ -232,9 +233,9 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
         :param obj: [required]
         :type obj: content object
         """
-        if hasattr(obj, 'image'):  # Dexterity
+        if safe_hasattr(obj, 'image'):  # Dexterity
             return True
-        elif hasattr(obj, 'Schema'):  # Archetypes
+        elif safe_hasattr(obj, 'Schema'):  # Archetypes
             return 'image' in obj.Schema().keys()
         else:
             return False
@@ -419,7 +420,7 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
             else:
                 # Archetypes
                 data = image.data
-                if hasattr(data, 'data'):  # image data weirdness...
+                if safe_hasattr(data, 'data'):  # image data weirdness...
                     data = data.data
                 image = NamedBlobImage(data)
         return image
@@ -462,7 +463,7 @@ class ImageScale(BaseImageScale):
         if self.data is None:
             self.data = self.context.data.get(self.fieldname)
         url = self.context.url
-        if hasattr(self.data, 'contentType'):
+        if safe_hasattr(self.data, 'contentType'):
             extension = self.data.contentType.split('/')[-1].lower()
         elif 'mimetype' in info:
             extension = info['mimetype'].split('/')[-1]
@@ -539,7 +540,7 @@ class ImageScaling(BaseImageScaling):
         if height is None and width is None:
             _, format = orig_value.contentType.split('/', 1)
             return None, format, (orig_value._width, orig_value._height)
-        if hasattr(aq_base(orig_value), 'open'):
+        if safe_hasattr(aq_base(orig_value), 'open'):
             orig_data = orig_value.open()
         else:
             orig_data = getattr(aq_base(orig_value), 'data', orig_value)
@@ -550,19 +551,19 @@ class ImageScaling(BaseImageScaling):
                                 height=height, width=width, **parameters)
         except (ConflictError, KeyboardInterrupt):
             raise
-        except Exception:
+        except Exception:  # FIXME: B901 blind except: statement
             logging.exception(
-                'could not scale "%r" of %r',
-                orig_value, self.context.context.absolute_url())  # FIXME: PEP 3101
+                'could not scale "{0}" of {1}'.format(
+                    repr(orig_value),
+                    repr(self.context.context.absolute_url())))
             return
         if result is not None:
-            data, format, dimensions = result
-            # FIXME: PEP 3101; how to avoid confusion among method and variable name?
-            mimetype = 'image/%s' % format.lower()
+            data, format_, dimensions = result
+            mimetype = 'image/' + format_.lower()
             value = orig_value.__class__(data, contentType=mimetype,
                                          filename=orig_value.filename)
             value.fieldname = fieldname
-            return value, format, dimensions
+            return value, format_, dimensions
 
     def modified(self):
         """ provide a callable to return the modification time of content
@@ -616,12 +617,11 @@ class ImageScaling(BaseImageScaling):
             return scale_view.__of__(self.context)
 
 
+@adapter(IPersistentCoverTile)
+@implementer(IPurgePaths)
 class PersistentCoverTilePurgePaths(object):
     """Paths to purge for cover tiles
     """
-
-    implements(IPurgePaths)
-    adapts(IPersistentCoverTile)
 
     def __init__(self, context):
         self.context = context

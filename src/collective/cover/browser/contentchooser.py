@@ -224,7 +224,7 @@ class SearchItemsBrowserView(BrowserView):
                 'normalized_type': normalizer.normalize(brain.portal_type),
                 'classicon': 'contenttype-{0}'.format(normalizer.normalize(brain.portal_type)),
                 'r_state': 'state-{0}'.format(normalizer.normalize(brain.review_state or '')),
-                'title': brain.Title == "" and brain.id or brain.Title,
+                'title': brain.Title == '' and brain.id or brain.Title,
                 'icon': self.getIcon(brain).url or '',
                 'is_folderish': brain.is_folderish,
                 'description': brain.Description or ''

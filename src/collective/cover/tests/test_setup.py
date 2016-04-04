@@ -6,6 +6,7 @@ from plone.browserlayer.utils import registered_layers
 
 import unittest
 
+
 JS = [
     '++resource++collective.cover/js/contentchooser.js',
     '++resource++collective.js.bootstrap/js/bootstrap.min.js',

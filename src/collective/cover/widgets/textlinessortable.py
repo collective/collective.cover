@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 
-from collective.cover.widgets.interfaces import ITextLinesSortableWidget
 from collective.cover.utils import uuidToObject
+from collective.cover.widgets.interfaces import ITextLinesSortableWidget
 from plone import api
 from Products.CMFPlone.utils import base_hasattr
-
 from z3c.form import interfaces
 from z3c.form import widget
 from z3c.form.browser import textlines
@@ -57,7 +56,7 @@ class TextLinesSortableWidget(textlines.TextLinesWidget):
         scales = item.restrictedTraverse('@@images')
         try:
             return scales.scale('image', 'tile')
-        except:
+        except:  # FIXME: B901 blind except: statement
             return None
 
     def isExpired(self, item):
