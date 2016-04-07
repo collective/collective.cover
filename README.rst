@@ -108,7 +108,7 @@ Installation
 
 To enable this package in a buildout-based installation:
 
-#. Edit your buildout.cfg and add add the following to it:
+Edit your buildout.cfg and add add the following to it:
 
 .. code-block:: ini
 
@@ -123,7 +123,7 @@ To enable this package in a buildout-based installation:
     plone.app.blocks = 2.2.1
     plone.app.tiles = 1.0.1
 
-#. If you are using Plone 4.2.x you need to add the following also:
+If you are using Plone 4.2.x you need to add the following also:
 
 .. code-block:: ini
 
@@ -134,7 +134,7 @@ To enable this package in a buildout-based installation:
     plone.app.z3cform = 0.6.3
     plone.directives.form = 1.1
 
-#. If you want to use a newer release of ``collective.js.bootstrap``, you will need to update ``plone.app.jquery``:
+If you want to use a newer release of ``collective.js.bootstrap``, you will need to update ``plone.app.jquery``:
 
 .. code-block:: ini
 

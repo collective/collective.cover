@@ -73,7 +73,7 @@ There's a frood who really knows where his towel is.
   [rodfersou]
 
 
-Previous entries can be found in HISTORY.rst.
+Previous entries can be found in the HISTORY.rst file.
 
 
 .. _`#414`: https://github.com/collective/collective.cover/issues/414
