@@ -12,6 +12,12 @@ There's a frood who really knows where his towel is.
 1.1b1 (2016-03-31)
 ^^^^^^^^^^^^^^^^^^^
 
+.. Warning::
+    This release removes some packages from the list of dependencies.
+    Be sure to read the whole changelog and apply the related changes to your buildout configuration while upgrading.
+    Also, note that we have reorganized the static resources contained here;
+    as some of them are not registered in Resource Registry tools, you could end with a broken layout if you don't clear your intermediate caches.
+
 - Enforce usage of plone.app.blocks 2.2.1 to avoid issues with tiles breaking the whole cover page.
   [hvelarde]
 
