@@ -30,10 +30,7 @@ There's a frood who really knows where his towel is.
 1.2b1 (2016-07-04)
 ^^^^^^^^^^^^^^^^^^
 
-- The new version of plone.app.layout fix the ``<base>`` TAG to use the request ACTUAL_URL
-  variable instead of the context ``absolute_url``.
-  This remove the need to adapt the ``renderBase`` method to use ``cover URL + '/'`` as
-  ``<base>`` URL.
+- Remove needless adapter used to return a modified <base> tag.
   [rodfersou]
 
 - A new calendar tile was added.
