@@ -139,13 +139,6 @@
       allowed_interface="plone.app.layout.globals.interfaces.ILayoutPolicy"
       layer="collective.cover.interfaces.ICoverLayer"
       />
-  <browser:page
-      for="collective.cover.content.ICover"
-      name="plone"
-      class=".adapters.PloneView"
-      permission="zope.Public"
-      allowed_interface="Products.CMFPlone.browser.interfaces.IPlone"
-      />
   <!-- Image scale support for tile images -->
   <browser:page
       name="images"

@@ -13,7 +13,7 @@ $(document).ready(function() {
       });
       $this.find('span').text('Saving...');
       $.ajax({
-        'url': '@@save_layout',
+        'url': $('#cover-root').text() + '@@save_layout',
         'data': {
           'cover_layout': JSON.stringify(json)
         },

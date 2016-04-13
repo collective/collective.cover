@@ -308,7 +308,7 @@
             var $this = $(this);
 
             $.ajax({
-              url: 'deletetile',
+              url: $('#cover-root').text() + 'deletetile',
               data: {
                 'tile-type': $this.data('tileType'),
                 'tile-id': $(this).attr('id')
@@ -505,7 +505,7 @@
           data = data + '&buttons.save=Save&ajax_load=true';
           $.ajax({
             type: 'POST',
-            url: url,
+            url: $('#cover-root').text() + url,
             data: data,
             success: function(e, v) {
               $('#tile-configure').html('');
@@ -528,7 +528,7 @@
           $('#tile-configure').modal();
           $.ajax({
             type: 'GET',
-            url: url,
+            url: $('#cover-root').text() + url,
             data: {
               'ajax_load': true
             },
