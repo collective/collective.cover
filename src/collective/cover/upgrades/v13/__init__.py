@@ -46,6 +46,10 @@ def update_references(setup_tool):
     results = catalog.unrestrictedSearchResults(**query)
     for brain in results:
         obj = brain.getObject()
-        update_link_integrity(obj, None)
+        try:
+            update_link_integrity(obj, None)
+        except AssertionError:
+            msg = 'Duplicated tiles in {0} ({1}); skipping'
+            logger.error(msg.format(obj.absolute_url(), obj.list_tiles()))
 
     logger.info('References updated on {0} objects.'.format(len(results)))
