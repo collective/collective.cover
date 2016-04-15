@@ -22,7 +22,14 @@ ${edit_link_selector}  a.edit-tile-link
 Test Link Integrity on Basic Tile
     [Tags]  issue_615
     Enable Autologin as  Manager
-    Go to Homepage
+    # BBB: "Go to Homepage" keyword is customized to give support to Plone 4.2.
+    # In other tests, to say that customized keywords in collective.cover have
+    # precedence instead of plone.app.robotframework (like in test_banner_tile)
+    # "Set Library Search Order  cover" is used instead of using 'cover.'
+    # prefix below. Here we use the prefix because the second "Go to Homepage"
+    # call, indeed, is to use the one from plone.app.robotframework since we
+    # don't have the "Confirm" action button for CSRF.
+    cover.Go to Homepage
     Create Cover  Title  Description
 
     # add tile to the layout
@@ -37,7 +44,9 @@ Test Link Integrity on Basic Tile
     Page Should Contain  My document
 
     # a warning is shown when trying to delete the document
-    Go to Homepage
+    # BBB: Check "cover.Go to Homepage" explanation above to understand the
+    # prefix usage.
+    keywords.Go to Homepage
     Click Link  link=My document
     Click Delete Action
     Page Should Contain  Potential link breakage
@@ -46,7 +55,14 @@ Test Link Integrity on Basic Tile
 Test Link Integrity on RichText Tile
     [Tags]  issue_615
     Enable Autologin as  Manager
-    Go to Homepage
+    # BBB: "Go to Homepage" keyword is customized to give support to Plone 4.2.
+    # In other tests, to say that customized keywords in collective.cover have
+    # precedence instead of plone.app.robotframework (like in test_banner_tile)
+    # "Set Library Search Order  cover" is used instead of using 'cover.'
+    # prefix below. Here we use the prefix because the second "Go to Homepage"
+    # call, indeed, is to use the one from plone.app.robotframework since we
+    # don't have the "Confirm" action button for CSRF.
+    cover.Go to Homepage
     Create Cover  Title  Description
 
     # add tile to the layout
@@ -61,7 +77,9 @@ Test Link Integrity on RichText Tile
     Edit RichText Tile  ${html}
 
     # a warning is shown when trying to delete the document
-    Go to Homepage
+    # BBB: Check "cover.Go to Homepage" explanation above to understand the
+    # prefix usage.
+    keywords.Go to Homepage
     Click Link  link=My document
     Click Delete Action
     Page Should Contain  Potential link breakage

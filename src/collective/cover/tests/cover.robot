@@ -38,11 +38,22 @@ Start Browser and Log In as Site Owner
     Log In As Site Owner
     Click Link  link=Home
 
+# BBB: This needs to be customized to handle both Plone 4.2 and 4.3.
+# In Plone 4.2, we still have the confirm action button that it's gone in 4.3.
+# Customized from
+# https://github.com/plone/plone.app.robotframework/blob/9ab289c5b93c2aa1acb6078b955694ad458d9c3b/src/plone/app/robotframework/keywords.robot#L53
 Go to homepage
+
+    # Both.
     Go to  ${PLONE_URL}
-    Wait Until Page Contains Element  css=${confirm_action_selector}
-    Click Element  css=${confirm_action_selector}
-    Page Should Contain  Plone site
+
+    # Plone 4.2.
+    Run keyword if  '${CMFPLONE_VERSION}' < '4.3'  Wait Until Page Contains Element  css=${confirm_action_selector}
+    Run keyword if  '${CMFPLONE_VERSION}' < '4.3'  Click Element  css=${confirm_action_selector}
+    Run keyword if  '${CMFPLONE_VERSION}' < '4.3'  Page Should Contain  Plone site
+
+    # Plone >= 4.3.
+    Run keyword if  '${CMFPLONE_VERSION}' >= '4.3'  Wait until location is  ${PLONE_URL}
 
 Setup Cover Test Case
     Start Browser and Log In as Site Owner

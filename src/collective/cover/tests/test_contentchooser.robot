@@ -39,13 +39,16 @@ Test Content Chooser
 
     # make a search on Recent items
     Click Element  link=Recent items
+    Wait Until Element Is Visible  css=#contentchooser-content-search-input
     Input Text  css=#recent input  folder
     # FIXME: we have no result counter in here
     #Wait Until Page Contains  1 Results
     Click Element  css=#recent ${contentchooser_search_clear}
+    Sleep  4s  Wait for complete ajax call @@content-search for cleaning
 
     Click Element  link=Content tree
     Sleep  2s  Wait for content tree to load
+    Wait Until Element Is Visible  css=#contentchooser-content-trees
 
     # make a search on Content tree
     Input Text  css=#content-trees input  file
