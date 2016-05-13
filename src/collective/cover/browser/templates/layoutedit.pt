@@ -69,6 +69,30 @@
                 <div id="export-layout" class="modal hide" tal:condition="can_export_layout">
                     <h1 class="documentFirstHeading">Export Layout</h1>
                     <p class="discreen">Save a copy of this layout under a new name</p>
+                    <tal:comment tal:replace="nothing">
+
+                        FIXME
+                        BBB
+                        plone4.csrffixes automatically adds, to all AJAX calls,
+                        a X-CSRF-TOKEN so plone.protect will automatically add
+                        CSRF protection without configuration, because from
+                        plone.protect 3.0.x onwards it checks for this token.
+
+                        But for Plone 5 (that doesn't use
+                        plone4.csrffixes for obvious reasons) this token isn't
+                        set, so you need to add a form to all your templates
+                        and an _authenticator variable to all your requests in
+                        your javascripts.
+
+                        If this issue of adding this behavior of setting the
+                        token in
+
+                        https://github.com/plone/plone.protect/issues/42
+
+                        is solved, these forms and all _authenticator variables
+                        can be removed from code.
+
+                    </tal:comment>
                     <form id="cover-layout-form" tal:attributes="action request/URL" method="post"
                           enctype="multipart/form-data">
                         <div class="modal-fields">
