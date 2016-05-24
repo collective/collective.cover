@@ -19,6 +19,7 @@ ${tile_selector}  div.tile-container div.tile
 *** Test Cases ***
 
 Test Locked Cover
+    Set Library Search Order  keywords
     Log in as site owner
     Goto Homepage
     Create Cover  My Cover  Description
@@ -38,6 +39,7 @@ Test Locked Cover
     Click Link  link=My Cover
     Compose Cover
 
+    Set Library Search Order  cover
     # open a new browser to simulate a 2-user interaction
     Open Browser  ${ALT_PLONE_URL}
     Enable Autologin as  Site Administrator

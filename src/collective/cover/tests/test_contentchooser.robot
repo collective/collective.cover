@@ -18,6 +18,7 @@ ${tile_selector}  div.tile-container div.tile
 *** Test cases ***
 
 Test Content Chooser
+    Set Library Search Order  cover
     Enable Autologin as  Site Administrator
     Go to Homepage
     Create Cover  Title  Description
@@ -38,13 +39,16 @@ Test Content Chooser
 
     # make a search on Recent items
     Click Element  link=Recent items
+    Wait Until Element Is Visible  css=#contentchooser-content-search-input
     Input Text  css=#recent input  folder
     # FIXME: we have no result counter in here
     #Wait Until Page Contains  1 Results
     Click Element  css=#recent ${contentchooser_search_clear}
+    Sleep  4s  Wait for complete ajax call @@content-search for cleaning
 
     Click Element  link=Content tree
-    Wait Until Page Contains  Plone site
+    Sleep  2s  Wait for content tree to load
+    Wait Until Element Is Visible  css=#contentchooser-content-trees
 
     # make a search on Content tree
     Input Text  css=#content-trees input  file
@@ -53,6 +57,7 @@ Test Content Chooser
     # navigate the tree
     Click Element  css=#content-trees ${contentchooser_search_clear}
     Input Text  css=#content-trees input  file
+    Sleep  2s  Wait for content tree to load
     Wait Until Page Contains  1 Results
     Page Should Contain Element  css=${file_selector}
     # TODO: Refactor this test before https://github.com/collective/collective.cover/issues/508

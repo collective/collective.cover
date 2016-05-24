@@ -15,6 +15,7 @@ ${basic_tile_location}  'collective.cover.basic'
 *** Test cases ***
 
 Test Reverse Proxy
+    Set Library Search Order  cover
     Enable Autologin as  Site Administrator
     Go to Homepage
 

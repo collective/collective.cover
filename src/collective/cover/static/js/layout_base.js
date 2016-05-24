@@ -8,6 +8,7 @@ $(document).ready(function() {
       event.preventDefault();
       json = layout.layoutmanager().html2json(layout);
       var $this = $(this);
+      var authenticator = $('#cover-layout-form input[name="_authenticator"]').val();
       $this.removeClass(function(index, css) {
         return (css.match(/\bbtn-\S+/g) || []).join(' ');
       });
@@ -15,6 +16,7 @@ $(document).ready(function() {
       $.ajax({
         'url': '@@save_layout',
         'data': {
+          '_authenticator': authenticator,
           'cover_layout': JSON.stringify(json)
         },
         'type': 'POST',

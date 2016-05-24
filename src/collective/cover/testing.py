@@ -136,6 +136,9 @@ class Fixture(PloneSandboxLayer):
                 self.loadZCML(package=Products.PloneFormGen)
                 z2.installProduct(app, 'Products.PloneFormGen')
 
+            import plone4.csrffixes
+            self.loadZCML(package=plone4.csrffixes)
+
         import collective.cover
         self.loadZCML(package=collective.cover)
 

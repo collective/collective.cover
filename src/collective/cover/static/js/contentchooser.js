@@ -226,7 +226,9 @@ var coveractions = {
     var url = $("#contentchooser-content-search-button").attr("data-url");
     var queryVal = $("#contentchooser-content-search-input").val();
     var nextpage = parseInt($ul.attr('data-nextpage'), 10);
+    var authenticator = $('#cover-compose-form input[name="_authenticator"]').val();
     var data = {
+      '_authenticator': authenticator,
       'q': queryVal,
       'page': nextpage
     };
@@ -263,7 +265,9 @@ var coveractions = {
     timeoutIDs = [];
     $('#ajax-spinner').hide();
     var timeoutID = setTimeout(function() {
+      var authenticator = $('#cover-compose-form input[name="_authenticator"]').val();
       var data = {
+        '_authenticator': authenticator,
         'q': queryVal,
         'page': page
       };
@@ -329,8 +333,12 @@ var coveractions = {
 
     $(document).on("click", "#recent .contentchooser-clear", function(e) {
       $(e.currentTarget).prev().children("input").val("");
+      var authenticator = $('#cover-compose-form input[name="_authenticator"]').val();
       ajaxSearchRequest.push($.ajax({
         url: portal_url + "/@@content-search",
+        data: {
+          '_authenticator': authenticator
+        },
         success: function(info) {
           $("#contentchooser-content-search #recent .item-list").html(info);
           $('#recent .filter-count').text("");
@@ -414,6 +422,7 @@ var coveractions = {
         var origin_has_subitem = $origin.attr('data-has-subitem') === 'True';
         var draggable_uuid = $draggable.attr('data-content-uuid');
         var draggable_type = $draggable.attr('data-content-type');
+        var authenticator = $('#cover-compose-form input[name="_authenticator"]').val();
         if (target_id === draggable_id) {
           return false;
         }
@@ -426,6 +435,7 @@ var coveractions = {
               $.ajax({
                 url: "@@removeitemfromlisttile",
                 data: {
+                  '_authenticator': authenticator,
                   'tile-type': origin_type,
                   'tile-id': draggable_id,
                   'uuid': draggable_uuid
@@ -452,6 +462,7 @@ var coveractions = {
           $.ajax({
             url: '@@movetilecontent',
             data: {
+              '_authenticator': authenticator,
               'origin-type': origin_type,
               'origin-id': draggable_id,
               'target-type': target_type,
@@ -468,6 +479,7 @@ var coveractions = {
               $.ajax({
                 url: '@@updatetile',
                 data: {
+                  '_authenticator': authenticator,
                   'tile-type': origin_type,
                   'tile-id': draggable_id,
                 },
@@ -499,6 +511,7 @@ var coveractions = {
           $.ajax({
             url: '@@updatetilecontent',
             data: {
+              '_authenticator': authenticator,
               'tile-type': target_type,
               'tile-id': target_id,
               'uuid': draggable_uuid

@@ -6,6 +6,9 @@ There's a frood who really knows where his towel is.
 1.1b2 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Implement CSRF protection (closes `#590`_).
+  [rodfersou]
+
 - Handle `AssertionError` on upgrade step to profile 13 to avoid failures when a cover object has duplicated tiles on it.
   Now, an error message will be logged and the object will be skipped;
   you must manually remove the duplicated tiles (closes #619).
@@ -86,4 +89,5 @@ Previous entries can be found in the HISTORY.rst file.
 .. _`#578`: https://github.com/collective/collective.cover/issues/578
 .. _`#581`: https://github.com/collective/collective.cover/issues/581
 .. _`#584`: https://github.com/collective/collective.cover/issues/584
+.. _`#590`: https://github.com/collective/collective.cover/issues/590
 .. _`#608`: https://github.com/collective/collective.cover/issues/608

@@ -26,9 +26,11 @@ function removeObjFromTile() {
     tile.find('.loading-mask').addClass('show remove-tile');
     var tile_type = tile.attr("data-tile-type");
     var tile_id = tile.attr("id");
+    var authenticator = $('#cover-compose-form input[name="_authenticator"]').val();
     $.ajax({
       url: "@@removeitemfromlisttile",
       data: {
+        '_authenticator': authenticator,
         'tile-type': tile_type,
         'tile-id': tile_id,
         'uuid': uuid
@@ -73,9 +75,11 @@ $(document).ready(function() {
       var tile = $(this).closest('.tile');
       var tile_type = tile.attr("data-tile-type");
       var tile_id = tile.attr("id");
+      var authenticator = $('#cover-compose-form input[name="_authenticator"]').val();
       $.ajax({
         url: "@@updatelisttilecontent",
         data: {
+          '_authenticator': authenticator,
           'tile-type': tile_type,
           'tile-id': tile_id,
           'uuids': uuids

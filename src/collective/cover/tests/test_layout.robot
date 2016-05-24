@@ -14,6 +14,7 @@ ${tile_class} =  div.cover-tile
 *** Test cases ***
 
 Test Basic Layout Operations
+    Set Library Search Order  cover
     Enable Autologin as  Site Administrator
     Go to Homepage
 
