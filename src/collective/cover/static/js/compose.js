@@ -143,17 +143,19 @@ $(document).ready(function() {
         if (typeof require !== 'undefined' && require.defined('pat-registry')) {
           // Remove old editors references to work with ajax
           if (typeof tinyMCE !== 'undefined' && tinyMCE !== null) {
-            if (tinyMCE.EditorManager != null) {
+            if (tinyMCE.EditorManager !== null) {
               tinyMCE.EditorManager.editors = [];
             }
           }
-          // Add tinymce
-          $('.overlay textarea.mce_editable').addClass('pat-tinymce');
-          require('pat-registry').scan($('.overlay'), ['tinymce']);
-          // Wire save buttom to save tinymce
-          $( '.overlay input#buttons-save').on('click', function() {
+
+        // plone.app.widget 1.8.0 compatiblity
+          require('pat-registry').scan($('.overlay'), ['textareamimetypeselector']);
+        
+        // Wire save buttom to save tinymce
+        $( '.overlay input#buttons-save').on('click', function() {
             tinyMCE.triggerSave();
-          });
+        });
+  
           // Hack to make overlay work over overlay
           $('.overlay').on('mouseover', function() {
             $('div.plone-modal-wrapper').css('z-index', '10050');
