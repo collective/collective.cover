@@ -3,8 +3,8 @@ Developer documentation
 
 .. contents:: Table of Contents
 
-Views
-^^^^^
+Tile Views
+^^^^^^^^^^
 
 Tiles for the collective.cover package provide 3 different views:
 
@@ -292,3 +292,8 @@ If you switch from the default 16-column Deco grid to another grid with a differ
 these saved layouts will still contain a 16-column width and this can mock up your design in small ways.
 In that case,
 make sure you clear the default cover layouts and/or save your own layout with the correct number of columns.
+
+Custom Cover Views
+^^^^^^^^^^^^^^^^^^
+
+In case you want to create custom cover views, you can find the existing ones under browser/cover.py. Note that from version 1.0a12 collective.cover uses plone.app.blocks 2.0.0, which means that a cover view (or any view that includes tiles), must implement plone.app.blocks.interfaces.IBlocksTransformEnabled (using five.grok.implements(), zope.interface.implements() or @zope.interface.implementer()) within it's view class. Without this the resulting HTML would only contain tile placeholders, not the tiles themselves.
