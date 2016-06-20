@@ -2,22 +2,22 @@
 from AccessControl import getSecurityManager
 from Acquisition import aq_inner
 from collective.cover.controlpanel import ICoverSettings
-from collective.cover.interfaces import ICover
 from collective.cover.interfaces import IGridSystem
 from collective.cover.tiles.list import IListTile
 from collective.cover.vocabularies import TileStylesVocabulary
-from five import grok
 from plone import api
 from plone.app.blocks.interfaces import IBlocksTransformEnabled
 from plone.app.uuid.utils import uuidToObject
 from plone.dexterity.events import EditBegunEvent
 from plone.dexterity.utils import createContentInContainer
+from plone.dexterity.browser.view import DefaultView
 from plone.registry.interfaces import IRegistry
 from plone.tiles.interfaces import ITileDataManager
 from plone.uuid.interfaces import IUUID
 from plone.uuid.interfaces import IUUIDGenerator
 from Products.Five.browser import BrowserView
 from zExceptions import BadRequest
+from zope.interface import implements
 from zope.annotation.interfaces import IAnnotations
 from zope.component import getUtility
 from zope.event import notify
@@ -25,26 +25,15 @@ from zope.event import notify
 import json
 
 
-grok.templatedir('templates')
+class View(BrowserView):
+    implements(IBlocksTransformEnabled)
 
 
-class View(grok.View):
-    grok.context(ICover)
-    grok.implements(IBlocksTransformEnabled)
-    grok.require('zope2.View')
-    grok.name('view')
+class Standard(BrowserView):
+    implements(IBlocksTransformEnabled)
 
 
-class Standard(grok.View):
-    grok.context(ICover)
-    grok.implements(IBlocksTransformEnabled)
-    grok.require('zope2.View')
-    grok.name('standard')
-
-
-class AddCTWidget(grok.View):
-    grok.context(ICover)
-    grok.require('cmf.ModifyPortalContent')
+class AddCTWidget(DefaultView):
 
     def render(self):
         widget_type = self.request.get('widget_type')
@@ -62,9 +51,7 @@ class AddCTWidget(grok.View):
                            'widget_url': widget_url})
 
 
-class AddTileWidget(grok.View):
-    grok.context(ICover)
-    grok.require('cmf.ModifyPortalContent')
+class AddTileWidget(DefaultView):
 
     def render(self):
         uuid = getUtility(IUUIDGenerator)
@@ -91,9 +78,7 @@ class AddTileWidget(grok.View):
                            'widget_url': widget_url})
 
 
-class SetWidgetMap(grok.View):
-    grok.context(ICover)
-    grok.require('cmf.ModifyPortalContent')
+class SetWidgetMap(DefaultView):
 
     def render(self):
         widget_map = self.request.get('widget_map')
@@ -102,9 +87,7 @@ class SetWidgetMap(grok.View):
         return json.dumps('success')
 
 
-class UpdateWidget(grok.View):
-    grok.context(ICover)
-    grok.require('cmf.ModifyPortalContent')
+class UpdateWidget(DefaultView):
 
     def render(self):
         widget_id = self.request.get('wid')
@@ -114,11 +97,8 @@ class UpdateWidget(grok.View):
             return 'Widget does not exist'
 
 
-class RemoveTileWidget(grok.View):
+class RemoveTileWidget(DefaultView):
     # XXX: This should be part of the plone.app.tiles package or similar
-    grok.context(ICover)
-    grok.require('cmf.ModifyPortalContent')
-    grok.name('removetilewidget')
 
     def __call__(self):
         template = self.template
@@ -141,10 +121,8 @@ class RemoveTileWidget(grok.View):
 
 # TODO: implement EditCancelledEvent and EditFinishedEvent
 # XXX: we need to leave the view after saving or cancelling editing
-class Compose(grok.View):
-    grok.context(ICover)
-    grok.implements(IBlocksTransformEnabled)
-    grok.require('cmf.ModifyPortalContent')
+class Compose(BrowserView):
+    implements(IBlocksTransformEnabled)
 
     def update(self):
         self.context = aq_inner(self.context)
@@ -154,9 +132,7 @@ class Compose(grok.View):
 
 # TODO: implement EditCancelledEvent and EditFinishedEvent
 # XXX: we need to leave the view after saving or cancelling editing
-class LayoutEdit(grok.View):
-    grok.context(ICover)
-    grok.require('collective.cover.CanEditLayout')
+class LayoutEdit(DefaultView):
 
     def update(self):
         self.context = aq_inner(self.context)
@@ -197,12 +173,9 @@ class LayoutEdit(grok.View):
         return json.dumps({'ncolumns': grid.ncolumns})
 
 
-class UpdateTileContent(grok.View):
+class UpdateTileContent(DefaultView):
 
     """Helper browser view to update the content of a tile."""
-
-    grok.context(ICover)
-    grok.require('cmf.ModifyPortalContent')
 
     def render(self):
         """Render a tile after populating it with an object."""
@@ -277,9 +250,7 @@ class MoveTileContent(BrowserView):
         return target_tile()
 
 
-class UpdateTile(grok.View):
-    grok.context(ICover)
-    grok.require('cmf.ModifyPortalContent')
+class UpdateTile(DefaultView):
 
     def render(self):
         tile_type = self.request.form.get('tile-type')
@@ -291,9 +262,7 @@ class UpdateTile(grok.View):
         return tile_instance()
 
 
-class UpdateListTileContent(grok.View):
-    grok.context(ICover)
-    grok.require('cmf.ModifyPortalContent')
+class UpdateListTileContent(DefaultView):
 
     def render(self):
         tile_type = self.request.form.get('tile-type')
@@ -317,12 +286,9 @@ class UpdateListTileContent(grok.View):
         return html
 
 
-class RemoveItemFromListTile(grok.View):
+class RemoveItemFromListTile(DefaultView):
 
     """Helper browser view to remove an object from a list tile."""
-
-    grok.context(ICover)
-    grok.require('cmf.ModifyPortalContent')
 
     def render(self):
         """Render a tile after removing an object from it."""
@@ -340,9 +306,7 @@ class RemoveItemFromListTile(grok.View):
             raise BadRequest('Invalid parameters')
 
 
-class DeleteTile(grok.View):
-    grok.context(ICover)
-    grok.require('cmf.ModifyPortalContent')
+class DeleteTile(DefaultView):
 
     def render(self):
         tile_type = self.request.form.get('tile-type')
