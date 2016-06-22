@@ -1,9 +1,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:tal="http://xml.zope.org/namespaces/tal"
       xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-      tal:omit-tag="">
+      i18n:domain="plone">
+<body>
+<div class="cover-calendar-tile tile-content">
 <dl class="portlet portletCalendar"
-    i18n:domain="plone"
     tal:define="navigation_root_url context/@@plone_portal_state/navigation_root_url;
                 query_string view/getQueryString;
                 url_quote_plus nocall:view/url_quote_plus;
@@ -18,8 +19,7 @@
            class="calendarPrev"
            tal:define="prevMonthMonth view/prevMonthMonth;
                        prevMonthYear view/prevMonthYear"
-           tal:attributes="id python:showPrevMonth and 'calendar-previous' or '';
-                           href python:'?%smonth:int=%d&amp;year:int=%d&amp;orig_query=%s' % (query_string, prevMonthMonth, prevMonthYear, url_quote_plus(query_string));
+           tal:attributes="href python:'?%smonth:int=%d&amp;year:int=%d&amp;orig_query=%s' % (query_string, prevMonthMonth, prevMonthYear, url_quote_plus(query_string));
                            data-year prevMonthYear;
                            data-month prevMonthMonth;"
            tal:condition="showPrevMonth"
@@ -39,8 +39,7 @@
            class="calendarNext"
            tal:define="nextMonthMonth view/nextMonthMonth;
                        nextMonthYear view/nextMonthYear"
-           tal:attributes="id python:showNextMonth and 'calendar-next' or '';
-                           href python:'?%smonth:int=%d&amp;year:int=%d&amp;orig_query=%s' % (query_string, nextMonthMonth, nextMonthYear, url_quote_plus(query_string));
+           tal:attributes="href python:'?%smonth:int=%d&amp;year:int=%d&amp;orig_query=%s' % (query_string, nextMonthMonth, nextMonthYear, url_quote_plus(query_string));
                            data-year nextMonthYear;
                            data-month nextMonthMonth;"
            tal:condition="showNextMonth"
@@ -49,10 +48,7 @@
     </dt>
 
     <dd class="portletItem">
-        <table class="ploneCalendar"
-               summary="Calendar"
-               i18n:domain="plone"
-               i18n:attributes="summary summary_calendar;">
+        <table class="ploneCalendar">
             <caption class="hiddenStructure"
                      tal:content="view/monthName">Month name</caption>
             <thead>
@@ -103,4 +99,6 @@
         <span class="portletBottomRight"></span>
     </dd>
 </dl>
+</div>
+</body>
 </html>

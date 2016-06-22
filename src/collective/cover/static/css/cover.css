@@ -247,3 +247,15 @@ table.invisible
 
     color: red;
 }
+
+/* Tile Calendar */
+.cover-calendar-tile dt a.calendarPrev {
+    float: left;
+    padding: 0 1em;
+    margin: 0 -.5em;
+}
+.cover-calendar-tile dt a.calendarNext {
+    float: right;
+    padding: 0 1em;
+    margin: 0 -.5em;
+}
