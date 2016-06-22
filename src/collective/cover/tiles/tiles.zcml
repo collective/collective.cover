@@ -126,4 +126,16 @@
       for="*"
       />
 
+  <plone:tile
+      name="collective.cover.calendar"
+      title="Calendar Tile"
+      description="A tile that shows an Calendar for the site."
+      icon="++resource++collective.cover/img/tile-basic.png"
+      add_permission="cmf.ModifyPortalContent"
+      schema=".calendar.ICalendarTile"
+      class=".calendar.CalendarTile"
+      permission="zope2.View"
+      for="*"
+      />
+
 </configure>
