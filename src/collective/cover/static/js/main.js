@@ -1,8 +1,8 @@
 $(function() {
   $('#content').on(
     'click',
-    '.cover-calendar-tile a.calendarPrev, ' +
-    '.cover-calendar-tile a.calendarNext',
+    '.cover-calendar-tile a.calendar-tile-prev, ' +
+    '.cover-calendar-tile a.calendar-tile-next',
     function(e) {
     e.preventDefault();
     var $a = $(this);
