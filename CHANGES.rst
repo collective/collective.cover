@@ -6,6 +6,9 @@ There's a frood who really knows where his towel is.
 1.1b2 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Add Tile Calendar.
+  [rodfersou]
+
 - Handle `AssertionError` on upgrade step to profile 13 to avoid failures when a cover object has duplicated tiles on it.
   Now, an error message will be logged and the object will be skipped;
   you must manually remove the duplicated tiles (closes #619).
