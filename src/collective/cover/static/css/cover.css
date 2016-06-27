@@ -249,10 +249,6 @@ table.invisible
 }
 
 /* Tile Calendar */
-.cover-calendar-tile
-{
-    font-size: 80%;
-}
 .cover-calendar-tile .calendar-tile-header
 {
     font-weight: bold;
