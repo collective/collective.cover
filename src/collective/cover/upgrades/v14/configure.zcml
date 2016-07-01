@@ -10,15 +10,15 @@
       profile="collective.cover:default">
 
     <genericsetup:upgradeStep
-        title="Register Tile Calendar"
-        description="Register Tile Calendar."
-        handler=".register_tile_calendar"
+        title="Register calendar tile"
+        description="Register calendar tile and make it available for inmediate use."
+        handler=".register_calendar_tile"
         />
 
     <genericsetup:upgradeStep
-        title="Add cover.js script"
-        description="Add cover.js script with Tile Calendar next/prev events."
-        handler=".add_cover_js_script"
+        title="Register calendar script"
+        description="Register script to deal with tile's next/prev events."
+        handler=".register_calendar_script"
         />
 
     <genericsetup:upgradeStep

@@ -282,17 +282,13 @@ class UpdateTile(grok.View):
     grok.require('zope2.View')
 
     def render(self):
-        tile_type = self.request.form.get('tile-type')
-        tile_id = self.request.form.get('tile-id')
-        if not all([tile_type, tile_id]):
+        tile_id = self.request.form.get('tile-id', None)
+        try:
+            tile = self.context.get_tile(tile_id)
+        except ValueError:
+            # requested tile does not exist
             self.request.response.setStatus(400)
-            return 'Invalid parameters'
-        available_tiles = api.portal.get_registry_record(
-            name='available_tiles', interface=ICoverSettings)
-        if tile_type not in available_tiles:
-            self.request.response.setStatus(400)
-            return 'Invalid parameters'
-        tile = self.context.restrictedTraverse('{0}/{1}'.format(tile_type, tile_id))
+            return
         return tile()
 
 

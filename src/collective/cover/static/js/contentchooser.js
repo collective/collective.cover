@@ -468,7 +468,6 @@ var coveractions = {
               $.ajax({
                 url: '@@updatetile',
                 data: {
-                  'tile-type': origin_type,
                   'tile-id': draggable_id,
                 },
                 success: function(info) {

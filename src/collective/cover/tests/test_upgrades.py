@@ -518,44 +518,57 @@ class Upgrade13to14TestCase(UpgradeTestCaseBase):
 
     def test_registrations(self):
         version = self.setup.getLastVersionForProfile(self.profile_id)[0]
-        self.assertTrue(int(version) >= int(self.to_version))
+        self.assertGreaterEqual(int(version), int(self.to_version))
         self.assertEqual(self._how_many_upgrades_to_do(), 4)
 
-    def test_register_tile_calendar(self):
+    def test_register_calendar_tile(self):
         # address also an issue with Setup permission
-        title = u'Register Tile Calendar'
+        title = u'Register calendar tile'
         step = self._get_upgrade_step(title)
-        self.assertIsNotNone(step)
+        assert step is not None
 
         # simulate state on previous version
-        registered_tiles = api.portal.get_registry_record(name='plone.app.tiles')
-        registered_tiles.remove('collective.cover.calendar')
-        api.portal.set_registry_record(
-            name='plone.app.tiles', value=registered_tiles)
-        registered_tiles = api.portal.get_registry_record(name='plone.app.tiles')
-        self.assertNotIn('collective.cover.calendar', registered_tiles)
+        tile = u'collective.cover.calendar'
+
+        record = dict(name='plone.app.tiles')
+        registered_tiles = api.portal.get_registry_record(**record)
+        registered_tiles.remove(tile)
+        api.portal.set_registry_record(value=registered_tiles, **record)
+        registered_tiles = api.portal.get_registry_record(**record)
+        assert tile not in registered_tiles
+
+        record = dict(interface=ICoverSettings, name='available_tiles')
+        available_tiles = api.portal.get_registry_record(**record)
+        available_tiles.remove(tile)
+        api.portal.set_registry_record(value=available_tiles, **record)
+        available_tiles = api.portal.get_registry_record(**record)
+        assert tile not in available_tiles
 
         # run the upgrade step to validate the update
         self._do_upgrade_step(step)
 
-        registered_tiles = api.portal.get_registry_record(name='plone.app.tiles')
-        self.assertIn('collective.cover.calendar', registered_tiles)
+        registered_tiles = api.portal.get_registry_record(
+            name='plone.app.tiles')
+        self.assertIn(tile, registered_tiles)
 
-    def test_add_cover_js_script(self):
+        available_tiles = api.portal.get_registry_record(
+            interface=ICoverSettings, name='available_tiles')
+        self.assertIn(tile, available_tiles)
+
+    def test_register_calendar_script(self):
         # address also an issue with Setup permission
-        title = u'Add cover.js script'
+        title = u'Register calendar script'
         step = self._get_upgrade_step(title)
-        self.assertIsNotNone(step)
+        assert step is not None
 
         # simulate state on previous version
         js_tool = api.portal.get_tool('portal_javascripts')
         js_tool.unregisterResource('++resource++collective.cover/js/main.js')
 
-        js_ids = js_tool.getResourceIds()
-        self.assertNotIn('++resource++collective.cover/js/main.js', js_ids)
+        script = '++resource++collective.cover/js/main.js'
+        assert script not in js_tool.getResourceIds()
 
         # run the upgrade step to validate the update
         self._do_upgrade_step(step)
 
-        js_ids = js_tool.getResourceIds()
-        self.assertIn('++resource++collective.cover/js/main.js', js_ids)
+        self.assertIn(script, js_tool.getResourceIds())

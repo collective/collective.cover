@@ -10,7 +10,6 @@ $(function() {
     $.ajax({
       url: '@@updatetile',
       data: {
-        'tile-type': 'collective.cover.calendar',
         'tile-id': $tile.attr('id'),
         'month:int': $a.attr('data-month'),
         'year:int': $a.attr('data-year')
