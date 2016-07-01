@@ -279,16 +279,17 @@ class MoveTileContent(BrowserView):
 
 class UpdateTile(grok.View):
     grok.context(ICover)
-    grok.require('cmf.ModifyPortalContent')
+    grok.require('zope2.View')
 
     def render(self):
-        tile_type = self.request.form.get('tile-type')
-        tile_id = self.request.form.get('tile-id')
-
-        if tile_type and tile_id:
-            tile = self.context.restrictedTraverse(tile_type)
-            tile_instance = tile[tile_id]
-        return tile_instance()
+        tile_id = self.request.form.get('tile-id', None)
+        try:
+            tile = self.context.get_tile(tile_id)
+        except ValueError:
+            # requested tile does not exist
+            self.request.response.setStatus(400)
+            return u''
+        return tile()
 
 
 class UpdateListTileContent(grok.View):

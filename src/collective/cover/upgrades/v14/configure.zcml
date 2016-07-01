@@ -1,0 +1,38 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+    xmlns:i18n="http://namespaces.zope.org/i18n"
+    i18n_domain="collective.cover">
+
+  <genericsetup:upgradeSteps
+      source="13"
+      destination="14"
+      profile="collective.cover:default">
+
+    <genericsetup:upgradeStep
+        title="Register calendar tile"
+        description="Register calendar tile and make it available for inmediate use."
+        handler=".register_calendar_tile"
+        />
+
+    <genericsetup:upgradeStep
+        title="Register calendar script"
+        description="Register script to deal with tile's next/prev events."
+        handler=".register_calendar_script"
+        />
+
+    <genericsetup:upgradeStep
+        title="Cook CSS resources"
+        description="There were changes in the CSS files, so we need to cook the resources."
+        handler="..cook_css_resources"
+        />
+
+    <genericsetup:upgradeStep
+        title="Cook JS resources"
+        description="There were changes in the JS files, so we need to cook the resources."
+        handler="..cook_javascript_resources"
+        />
+
+  </genericsetup:upgradeSteps>
+
+</configure>

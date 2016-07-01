@@ -509,3 +509,66 @@ class Upgrade12to13TestCase(UpgradeTestCaseBase):
         self.assertEqual(
             cover_type.icon_expr,
             'string:${portal_url}/++resource++collective.cover/img/frontpage_icon.png')
+
+
+class Upgrade13to14TestCase(UpgradeTestCaseBase):
+
+    def setUp(self):
+        UpgradeTestCaseBase.setUp(self, u'13', u'14')
+
+    def test_registrations(self):
+        version = self.setup.getLastVersionForProfile(self.profile_id)[0]
+        self.assertGreaterEqual(int(version), int(self.to_version))
+        self.assertEqual(self._how_many_upgrades_to_do(), 4)
+
+    def test_register_calendar_tile(self):
+        # address also an issue with Setup permission
+        title = u'Register calendar tile'
+        step = self._get_upgrade_step(title)
+        assert step is not None
+
+        # simulate state on previous version
+        tile = u'collective.cover.calendar'
+
+        record = dict(name='plone.app.tiles')
+        registered_tiles = api.portal.get_registry_record(**record)
+        registered_tiles.remove(tile)
+        api.portal.set_registry_record(value=registered_tiles, **record)
+        registered_tiles = api.portal.get_registry_record(**record)
+        assert tile not in registered_tiles
+
+        record = dict(interface=ICoverSettings, name='available_tiles')
+        available_tiles = api.portal.get_registry_record(**record)
+        available_tiles.remove(tile)
+        api.portal.set_registry_record(value=available_tiles, **record)
+        available_tiles = api.portal.get_registry_record(**record)
+        assert tile not in available_tiles
+
+        # run the upgrade step to validate the update
+        self._do_upgrade_step(step)
+
+        registered_tiles = api.portal.get_registry_record(
+            name='plone.app.tiles')
+        self.assertIn(tile, registered_tiles)
+
+        available_tiles = api.portal.get_registry_record(
+            interface=ICoverSettings, name='available_tiles')
+        self.assertIn(tile, available_tiles)
+
+    def test_register_calendar_script(self):
+        # address also an issue with Setup permission
+        title = u'Register calendar script'
+        step = self._get_upgrade_step(title)
+        assert step is not None
+
+        # simulate state on previous version
+        js_tool = api.portal.get_tool('portal_javascripts')
+        js_tool.unregisterResource('++resource++collective.cover/js/main.js')
+
+        script = '++resource++collective.cover/js/main.js'
+        assert script not in js_tool.getResourceIds()
+
+        # run the upgrade step to validate the update
+        self._do_upgrade_step(step)
+
+        self.assertIn(script, js_tool.getResourceIds())

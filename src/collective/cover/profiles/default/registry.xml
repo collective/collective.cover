@@ -41,6 +41,7 @@
     <value purge="false">
       <element>collective.cover.banner</element>
       <element>collective.cover.basic</element>
+      <element>collective.cover.calendar</element>
       <element>collective.cover.carousel</element>
       <element>collective.cover.collection</element>
       <element>collective.cover.contentbody</element>

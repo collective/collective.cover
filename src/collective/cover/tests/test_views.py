@@ -72,6 +72,28 @@ class BrowserViewsTestCase(unittest.TestCase):
         self.assertEqual(
             len(html.xpath('.//body[contains(@class, "cover-layout-layout-a")]')), 1)
 
+    # @@updatetile
+    def test_update_tile_view(self):
+        # valid tile-id parameter returns tile
+        tile_id = self.c1.list_tiles()[0]  # use a tile on the layout
+        self.request.form['tile-id'] = tile_id
+        view = api.content.get_view(u'updatetile', self.c1, self.request)
+        self.assertNotEqual(view(), u'')
+        self.assertEqual(view.response.status, 200)
+
+    def test_update_tile_view_no_tile_id(self):
+        # no tile-id parameter results on Bad Request
+        view = api.content.get_view(u'updatetile', self.c1, self.request)
+        self.assertEqual(view(), u'')
+        self.assertEqual(view.response.status, 400)
+
+    def test_update_tile_view_invalid_tile_id(self):
+        # invalid tile-id parameter results on Bad Request
+        self.request.form['tile-id'] = 'invalid'
+        view = api.content.get_view(u'updatetile', self.c1, self.request)
+        self.assertEqual(view(), u'')
+        self.assertEqual(view.response.status, 400)
+
 
 class RemoveItemFromListTileTestCase(unittest.TestCase):
 

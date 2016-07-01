@@ -7,6 +7,7 @@ PROJECTNAME = 'collective.cover'
 DEFAULT_AVAILABLE_TILES = [
     'collective.cover.banner',
     'collective.cover.basic',
+    'collective.cover.calendar',
     'collective.cover.carousel',
     'collective.cover.collection',
     'collective.cover.contentbody',
