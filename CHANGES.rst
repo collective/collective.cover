@@ -6,7 +6,7 @@ There's a frood who really knows where his towel is.
 1.1b2 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
-- Add new calendar tile was added.
+- A new calendar tile was added.
   The tile dislays a calendar that highlights the events taking place on the current month,
   the same way as the standard calendar portlet does.
   [rodfersou]
