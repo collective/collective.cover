@@ -288,7 +288,7 @@ class UpdateTile(grok.View):
         except ValueError:
             # requested tile does not exist
             self.request.response.setStatus(400)
-            return
+            return u''
         return tile()
 
 
