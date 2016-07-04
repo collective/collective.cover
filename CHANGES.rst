@@ -3,7 +3,7 @@ Changelog
 
 There's a frood who really knows where his towel is.
 
-1.1b2 (unreleased)
+1.2b1 (2016-07-04)
 ^^^^^^^^^^^^^^^^^^
 
 - A new calendar tile was added.
