@@ -6,7 +6,8 @@ There's a frood who really knows where his towel is.
 1.2b2 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
-- Nothing changed yet.
+- Enforce usage of plone.api >= 1.4.11 to avoid `TypeError` while running upgrade step to profile 14.
+  [hvelarde]
 
 
 1.2b1 (2016-07-04)
