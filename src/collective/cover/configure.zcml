@@ -6,8 +6,7 @@
     xmlns:grok="http://namespaces.zope.org/grok"
     xmlns:i18n="http://namespaces.zope.org/i18n"
     xmlns:plone="http://namespaces.plone.org/plone"
-    i18n_domain="collective.cover"
-    >
+    i18n_domain="collective.cover">
 
   <i18n:registerTranslations directory="locales" />
   <five:registerPackage package="." />
@@ -34,37 +33,6 @@
       directory="static"
       />
 
-  <browser:page
-      name="cover-settings"
-      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
-      class=".controlpanel.CoverSettingsControlPanel"
-      permission="collective.cover.Setup"
-      />
-
-  <browser:page
-      name="plone_layout"
-      for="collective.cover.interfaces.ICover"
-      permission="zope.Public"
-      class=".layoutpolicy.LayoutPolicy"
-      allowed_interface="plone.app.layout.globals.interfaces.ILayoutPolicy"
-      layer="collective.cover.interfaces.ICoverLayer"
-      />
-
-  <browser:pages
-      for="*"
-      class=".browser.contentchooser.SearchItemsBrowserView"
-      permission="zope2.View">
-    <browser:page attribute="jsonByType" name="jsonbytype" />
-  </browser:pages>
-
-  <browser:page
-      for="collective.cover.content.ICover"
-      name="plone"
-      class=".adapters.PloneView"
-      permission="zope.Public"
-      allowed_interface="Products.CMFPlone.browser.interfaces.IPlone"
-      />
-
   <class class=".widgets.selectpreview.SelectPreviewWidget">
     <require
         permission="zope.Public"
@@ -78,19 +46,5 @@
         interface=".widgets.interfaces.ITextLinesSortableWidget"
         />
   </class>
-
-  <browser:menuItems
-      for="collective.cover.content.ICover"
-      menu="plone_displayviews"
-      >
-    <browser:menuItem
-        title="Front page view"
-        action="view"
-        />
-    <browser:menuItem
-        title="Standard view"
-        action="standard"
-        />
-  </browser:menuItems>
 
 </configure>

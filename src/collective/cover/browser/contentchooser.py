@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
-
 from Acquisition import aq_inner
 from Acquisition import aq_parent
 from collective.cover.controlpanel import ICoverSettings
-from five import grok
 from plone import api
 from plone.app.layout.navigation.interfaces import INavigationRoot
 from plone.app.layout.navigation.root import getNavigationRoot
@@ -17,61 +15,40 @@ from Products.Five.browser import BrowserView
 from zope.browserpage.viewpagetemplatefile import ViewPageTemplateFile
 from zope.component import getUtility
 from zope.component import queryUtility
-from zope.interface import Interface
 from zope.schema.interfaces import IVocabularyFactory
 from zope.schema.vocabulary import SimpleTerm
 
 import json
 
+
 VOCAB_ID = u'plone.app.vocabularies.ReallyUserFriendlyTypes'
-
-grok.templatedir('contentchooser_templates')
-
-
 ITEMS_BY_REQUEST = 20
 
 
-# XXX: what's the purpose of this view?
-#      why is here if it's intendes for tests?
-#      can we get rid of it?
-class TestContent(grok.View):
-    """
-    test contentchooser for selecting
-    """
-    grok.context(Interface)
-    grok.name('test-content-contentchooser')
-    grok.require('zope2.View')
-    grok.template('test_content_contentchooser')
+class SelectContent(BrowserView):
 
+    """Contentchooser for selecting."""
 
-class SelectContent(grok.View):
-    """
-    contentchooser for selecting
-    """
-    grok.context(Interface)
-    grok.name('select-content-contentchooser')
-    grok.require('zope2.View')
-    grok.template('content_contentchooser')
-
-    def update(self):
-        pass
+    index = ViewPageTemplateFile('templates/content_contentchooser.pt')
 
     def post_url(self):
         return self.context.absolute_url() + '/@@content-search'
 
+    def render(self):
+        return self.index()
 
-class ContentSearch(grok.View):
-    """
-    returns the html with the list of results and icons
-    """
-    grok.context(Interface)
-    grok.name('content-search')
-    grok.require('zope2.View')
+    def __call__(self):
+        return self.render()
 
-    list_template = ViewPageTemplateFile('contentchooser_templates/search_list.pt')
-    tree_template = ViewPageTemplateFile('contentchooser_templates/tree_template.pt')
 
-    def update(self):
+class ContentSearch(BrowserView):
+
+    """Returns the html with the list of results and icons."""
+
+    list_template = ViewPageTemplateFile('templates/search_list.pt')
+    tree_template = ViewPageTemplateFile('templates/tree_template.pt')
+
+    def setup(self):
         self.query = self.request.get('q', None)
         self.tab = self.request.get('tab', None)
         page = int(self.request.get('page', 1))
@@ -87,9 +64,6 @@ class ContentSearch(grok.View):
         children = [strategy.decoratorFactory({'item': node}) for node in result]
         self.level = 1
         self.children = children
-
-    def render(self):
-        return self.list_template()
 
     def search(self, query=None, page=1, b_size=ITEMS_BY_REQUEST, uuids=None):
         # XXX uuids parameter not used anywhere
@@ -115,9 +89,17 @@ class ContentSearch(grok.View):
         value = brain.getPath()[len(self.portal_path):]
         return SimpleTerm(value, token=brain.getPath(), title=brain.Title)
 
+    def render(self):
+        return self.list_template()
+
+    def __call__(self):
+        self.setup()
+        return self.render()
+
 
 class SearchItemsBrowserView(BrowserView):
-    """ Returns a folderish like listing in JSON """
+
+    """Returns a folderish like listing in JSON."""
 
     def __init__(self, context, request, **kwargs):
         """ Contructor """

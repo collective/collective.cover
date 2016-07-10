@@ -1,37 +1,90 @@
 # -*- coding: utf-8 -*-
+from AccessControl import getSecurityManager
 from Acquisition import aq_inner
 from collective.cover import _
 from collective.cover.controlpanel import ICoverSettings
-from collective.cover.interfaces import ICover
 from collective.cover.interfaces import IGridSystem
 from collective.cover.tiles.list import IListTile
 from collective.cover.utils import assign_tile_ids
+from collective.cover.vocabularies import TileStylesVocabulary
 from five import grok
+from plone import api
 from plone.app.uuid.utils import uuidToObject
+from plone.dexterity.events import EditBegunEvent
 from plone.registry.interfaces import IRegistry
 from plone.tiles.interfaces import ITileDataManager
 from plone.tiles.interfaces import ITileType
+from Products.Five.browser import BrowserView
 from zope.browserpage.viewpagetemplatefile import ViewPageTemplateFile
 from zope.component import getUtility
 from zope.component import queryUtility
+from zope.event import notify
 from zope.schema.interfaces import IVocabularyFactory
 
 import json
 
 
-class PageLayout(grok.View):
+grok.templatedir('templates')
+
+
+# TODO: implement EditCancelledEvent and EditFinishedEvent
+# XXX: we need to leave the view after saving or cancelling editing
+class LayoutEdit(BrowserView):
+
+    index = ViewPageTemplateFile('templates/layoutedit.pt')
+
+    def setup(self):
+        self.context = aq_inner(self.context)
+        vocab = TileStylesVocabulary()
+        self.css_classes = vocab(self.context)
+        # XXX: used to lock the object when someone is editing it
+        notify(EditBegunEvent(self.context))
+
+    def can_export_layout(self):
+        sm = getSecurityManager()
+        portal = api.portal.get()
+        # TODO: check permission locally and not in portal context
+        return sm.checkPermission('collective.cover: Can Export Layout', portal)
+
+    def layoutmanager_settings(self):
+        registry = getUtility(IRegistry)
+        settings = registry.forInterface(ICoverSettings)
+        grid = getUtility(IGridSystem, name=settings.grid_system)
+
+        return json.dumps({'ncolumns': grid.ncolumns})
+
+    def render(self):
+        if 'export-layout' in self.request and self.can_export_layout():
+            name = self.request.get('layout-name', None)
+            if name:
+                layout = self.context.cover_layout
+
+                registry = getUtility(IRegistry)
+                settings = registry.forInterface(ICoverSettings)
+
+                # Store name and layout as unicode.  Note that the
+                # name must only contain ascii because it is used as
+                # value for a vocabulary.
+                name = name.decode('ascii', 'ignore')
+                layout = layout.decode('utf-8')
+                settings.layouts[name] = layout
+
+        return self.index()
+
+    def __call__(self):
+        self.setup()
+        return self.render()
+
+
+class PageLayout(BrowserView):
 
     """Renders a layout for the cover object."""
 
-    grok.context(ICover)
-    grok.name('layout')
-    grok.require('zope2.View')
-
-    pagelayout = ViewPageTemplateFile('layout_templates/pagelayout.pt')
-    row = ViewPageTemplateFile('layout_templates/row.pt')
-    group = ViewPageTemplateFile('layout_templates/group.pt')
-    tile = ViewPageTemplateFile('layout_templates/tile.pt')
-    generalmarkup = ViewPageTemplateFile('layout_templates/generalmarkup.pt')
+    pagelayout = ViewPageTemplateFile('templates/pagelayout.pt')
+    row = ViewPageTemplateFile('templates/row.pt')
+    group = ViewPageTemplateFile('templates/group.pt')
+    tile = ViewPageTemplateFile('templates/tile.pt')
+    generalmarkup = ViewPageTemplateFile('templates/generalmarkup.pt')
 
     def get_layout(self, mode):
         layout = json.loads(self.context.cover_layout)
@@ -170,13 +223,13 @@ class PageLayout(grok.View):
         tile = self.context.restrictedTraverse('{0}/{1}'.format(str(tile_type), str(tile_id)))
         return IListTile.providedBy(tile)
 
+    def __call__(self):
+        return self.render_view()
 
-class LayoutSave(grok.View):
-    grok.context(ICover)
-    grok.name('save_layout')
-    grok.require('zope2.View')
 
-    def save(self):
+class LayoutSave(BrowserView):
+
+    def render(self):
         cover_layout = self.request.get('cover_layout')
 
         layout = json.loads(cover_layout)
@@ -188,19 +241,17 @@ class LayoutSave(grok.View):
         self.context.cover_layout = cover_layout
         self.context.reindexObject()
 
-        return cover_layout
-
-    def render(self):
-        self.save()
         return 'saved'
 
+    def __call__(self):
+        return self.render()
 
-class TileList(grok.View):
-    grok.context(ICover)
-    grok.name('tile_list')
-    grok.require('zope2.View')
 
-    def update(self):
+class TileList(BrowserView):
+
+    index = ViewPageTemplateFile('templates/tilelist.pt')
+
+    def setup(self):
         self.context = aq_inner(self.context)
         vocab_name = 'collective.cover.AvailableTiles'
         available_tiles = queryUtility(IVocabularyFactory, vocab_name)
@@ -223,13 +274,19 @@ class TileList(grok.View):
 
         return tile_metadata
 
+    def render(self):
+        self.setup()
+        return self.index()
 
-class GroupSelect(grok.View):
-    grok.context(ICover)
-    grok.name('group_select')
-    grok.require('zope2.View')
+    def __call__(self):
+        return self.render()
 
-    def update(self):
+
+class GroupSelect(BrowserView):
+
+    index = ViewPageTemplateFile('templates/groupselect.pt')
+
+    def setup(self):
         vocab_name = 'plone.app.vocabularies.Groups'
         groups_factory = queryUtility(IVocabularyFactory, vocab_name)
         self.groups = groups_factory(self.context)
@@ -243,6 +300,13 @@ class GroupSelect(grok.View):
                 tile = self.context.restrictedTraverse('{0}/{1}'.format(tile_type, tile_id))
                 tile.setAllowedGroupsForEdit(groups)
                 i += 1
+
+    def render(self):
+        self.setup()
+        return self.index()
+
+    def __call__(self):
+        return self.render()
 
 
 class BaseGrid(object):
@@ -322,7 +386,7 @@ class Bootstrap2(BaseGrid, grok.GlobalUtility):
         return columns
 
 
-class Deco16Grid (BaseGrid, grok.GlobalUtility):
+class Deco16Grid(BaseGrid, grok.GlobalUtility):
 
     """Deco grid system (16 columns)."""
 

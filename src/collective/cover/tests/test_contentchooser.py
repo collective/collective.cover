@@ -21,19 +21,12 @@ class ContentChooserTestCase(unittest.TestCase):
         self.portal = self.layer['portal']
         self.request = self.layer['request']
 
-    # XXX: can we get rid of this?
-    def test_render(self):
-        rendered = self.portal.restrictedTraverse('@@test-content-contentchooser')()
-        tree = etree.parse(StringIO(rendered), parser)
-        document_match = tree.xpath("//li[@data-content-type='Document']/a[@class='contenttype-document state-missing-value'][contains(@title, 'This document was created for testing purposes')][contains(@title, '/my-document')][@rel='1']")
-        self.assertTrue(document_match)
-
     def test_jsonbytype(self):
         catalog = self.portal['portal_catalog']
         results = catalog()
         portal_objects_ids = [i.id for i in results]
 
-        view = self.portal.restrictedTraverse('@@jsonbytype')
+        view = self.portal.unrestrictedTraverse('@@jsonbytype')
         json_response = json.loads(view(False, '', ''))
         self.assertIn('parent_url', json_response)
         self.assertIn('path', json_response)
@@ -96,5 +89,5 @@ class ContentChooserTestCase(unittest.TestCase):
         view = api.content.get_view(u'content-search', self.portal, self.request)
         self.request.set('page', 1)
         self.request.set('b_size', 1)
-        view.update()
+        view.setup()
         self.assertEqual(view.nextpage, 2)
