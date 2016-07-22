@@ -33,6 +33,10 @@ if PLONE_VERSION.startswith('4.2') or \
         (PLONE_VERSION.startswith('4.3') and DEXTERITY_ONLY):
     noncritical.append('issue_615')
 
+# FIXME: https://github.com/collective/collective.cover/issues/637
+if PLONE_VERSION.startswith('4.3') and DEXTERITY_ONLY:
+    noncritical.append('issue_637')
+
 
 def test_suite():
     suite = unittest.TestSuite()

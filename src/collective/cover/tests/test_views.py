@@ -47,6 +47,13 @@ class BrowserViewsTestCase(unittest.TestCase):
         self.assertEqual(
             len(html.xpath('.//div[contains(text(),"My Description")]')), 0)
 
+    def test_default_view_forbids_image_indexing(self):
+        view = api.content.get_view(u'view', self.c1, self.request)
+        view()  # render the view to get the response
+        response = self.request.RESPONSE
+        self.assertIn('x-robots-tag', response.headers)
+        self.assertEqual(response.getHeader('x-robots-tag'), 'noimageindex')
+
     def test_alternate_view_registration(self):
         portal_types = self.portal['portal_types']
         view_methods = portal_types['collective.cover.content'].view_methods

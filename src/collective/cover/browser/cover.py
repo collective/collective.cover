@@ -34,6 +34,10 @@ class View(grok.View):
     grok.require('zope2.View')
     grok.name('view')
 
+    def update(self):
+        """Forbid image indexing as scales are volatile."""
+        self.request.RESPONSE.setHeader('X-Robots-Tag', 'noimageindex')
+
 
 class Standard(grok.View):
     grok.context(ICover)
