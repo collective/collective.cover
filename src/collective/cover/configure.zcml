@@ -19,6 +19,7 @@
   <include file="profiles.zcml" />
   <include file="subscribers.zcml" />
   <include file="vocabularies.zcml" />
+  <include file="grids.zcml" />
 
   <include package=".behaviors" />
   <include package=".browser" />
