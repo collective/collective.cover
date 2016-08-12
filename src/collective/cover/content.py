@@ -5,7 +5,6 @@ from collective.cover.interfaces import ICover
 from collective.cover.interfaces import ISearchableText
 from collective.cover.tiles.list import IListTile
 from collective.cover.tiles.richtext import IRichTextTile
-from five import grok
 from plone.app.linkintegrity.handlers import getObjectsFromLinks
 from plone.app.linkintegrity.parser import extractLinks
 from plone.app.uuid.utils import uuidToObject
@@ -177,5 +176,3 @@ def searchableText(obj):
     ) if entry]
     searchable_text = u' '.join(searchable_text)
     return searchable_text
-
-grok.global_adapter(searchableText, name='SearchableText')
