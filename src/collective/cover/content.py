@@ -1,25 +1,20 @@
 # -*- coding: utf-8 -*-
 from collective.cover.behaviors.interfaces import IRefresh
 from collective.cover.config import PROJECTNAME
-from collective.cover.controlpanel import ICoverSettings
 from collective.cover.interfaces import ICover
 from collective.cover.interfaces import ISearchableText
 from collective.cover.tiles.list import IListTile
 from collective.cover.tiles.richtext import IRichTextTile
-from collective.cover.utils import assign_tile_ids
 from five import grok
 from plone.app.linkintegrity.handlers import getObjectsFromLinks
 from plone.app.linkintegrity.parser import extractLinks
 from plone.app.uuid.utils import uuidToObject
 from plone.dexterity.content import Item
 from plone.indexer import indexer
-from plone.registry.interfaces import IRegistry
 from plone.tiles.interfaces import ITileDataManager
 from Products.CMFPlone.utils import safe_unicode
 from Products.GenericSetup.interfaces import IDAVAware
-from zope.component import getUtility
 from zope.component import queryAdapter
-from zope.container.interfaces import IObjectAddedEvent
 from zope.interface import implementer
 
 import json
@@ -160,22 +155,6 @@ class Cover(Item):
                 links = extractLinks(value)
                 refs |= getObjectsFromLinks(self, links)
         return refs
-
-
-@grok.subscribe(ICover, IObjectAddedEvent)
-def assign_id_for_tiles(cover, event):
-    if not cover.cover_layout:
-        # When versioning, a new cover gets created, so, if we already
-        # have a cover_layout stored, do not overwrite it
-        registry = getUtility(IRegistry)
-        settings = registry.forInterface(ICoverSettings)
-
-        layout = settings.layouts.get(cover.template_layout)
-        if layout:
-            layout = json.loads(layout)
-            assign_tile_ids(layout)
-
-            cover.cover_layout = json.dumps(layout)
 
 
 @indexer(ICover)

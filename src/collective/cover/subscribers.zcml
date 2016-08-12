@@ -8,14 +8,26 @@
 
   <subscriber
       for="collective.cover.interfaces.ICover
+           plone.app.iterate.interfaces.ICheckinEvent"
+      handler=".subscribers.override_object_annotations"
+      />
+
+  <subscriber
+      for="collective.cover.interfaces.ICover
            OFS.interfaces.IObjectClonedEvent"
-      handler=".events.update_link_integrity"
+      handler=".subscribers.update_link_integrity"
       />
 
   <subscriber
       for="collective.cover.interfaces.ICover
            zope.lifecycleevent.interfaces.IObjectModifiedEvent"
-      handler=".events.update_link_integrity"
+      handler=".subscribers.update_link_integrity"
+      />
+
+  <subscriber
+      for="collective.cover.interfaces.ICover
+           zope.container.interfaces.IObjectAddedEvent"
+      handler=".subscribers.assign_id_for_tiles"
       />
 
   <subscriber zcml:condition="not-have plone-5"
