@@ -237,18 +237,29 @@ and ships with support for 12-column Bootstrap 2 and Bootstrap 3 grids.
 If your theme provides a CSS framework with a different grid system (such as Zurb Foundation) you can use that instead of the default one.
 To do so, your theme package should provide a new grid system class which implements the ``collective.cover.interfaces.IGridSystem`` interface:
 
+.. code-block:: xml
+
+    <configure
+        xmlns="http://namespaces.zope.org/zope"
+        i18n_domain="collective.cover">
+
+      <utility
+          name="mygrid"
+          factory=".grids.MyGrid"
+          />
+
+    </configure>
+
 .. code-block:: python
 
     from collective.cover.interfaces import IGridSystem
     from collective.cover.layout import BaseGrid
-    from five import grok
+    from zope.interface import implementer
 
-    class MyGrid(BaseGrid, grok.GlobalUtility):
+    @implementer(IGridSystem)
+    class MyGrid(BaseGrid):
 
         """Bootstrap 3 grid system for small devices (12 columns)."""
-
-        grok.name('mygrid')
-        grok.implements(IGridSystem)
 
         ncolumns = 12
         title = _(u'MyGrid')

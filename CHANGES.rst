@@ -6,7 +6,9 @@ There's a frood who really knows where his towel is.
 1.2b2 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
-- Remove Grok dependency for views.
+- Remove Grok dependency.
+  Now every view used in compose tab uses cmf.ModifyPortalContent permission.
+  And every view used in layout tab uses collective.cover.CanEditLayout permission.
   [l34marr, rodfersou]
 
 - Use the `X-Robots-Tag` header to avoid indexing of image scales on default view;
