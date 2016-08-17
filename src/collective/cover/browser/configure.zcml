@@ -146,5 +146,12 @@
       permission="zope.Public"
       allowed_interface="Products.CMFPlone.browser.interfaces.IPlone"
       />
+  <!-- Image scale support for tile images -->
+  <browser:page
+      name="images"
+      for="..tiles.base.IPersistentCoverTile"
+      class=".scaling.ImageScaling"
+      permission="zope2.View"
+      />
 
 </configure>
