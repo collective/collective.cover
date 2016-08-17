@@ -31,6 +31,8 @@ grok.templatedir('templates')
 # XXX: we need to leave the view after saving or cancelling editing
 class LayoutEdit(BrowserView):
 
+    """Layout Tab."""
+
     index = ViewPageTemplateFile('templates/layoutedit.pt')
 
     def setup(self):
@@ -229,25 +231,29 @@ class PageLayout(BrowserView):
 
 class LayoutSave(BrowserView):
 
-    def render(self):
-        cover_layout = self.request.get('cover_layout')
+    """Helper browser view to save the layout of a tile."""
 
-        layout = json.loads(cover_layout)
+    def setup(self):
+        self.cover_layout = self.request.get('cover_layout')
+
+    def __call__(self):
+        self.setup()
+
+        layout = json.loads(self.cover_layout)
 
         assign_tile_ids(layout, override=False)
 
-        cover_layout = json.dumps(layout)
+        self.cover_layout = json.dumps(layout)
 
-        self.context.cover_layout = cover_layout
+        self.context.cover_layout = self.cover_layout
         self.context.reindexObject()
 
         return 'saved'
 
-    def __call__(self):
-        return self.render()
-
 
 class TileList(BrowserView):
+
+    """Helper browser view to create a list of tiles."""
 
     index = ViewPageTemplateFile('templates/tilelist.pt')
 
@@ -274,15 +280,14 @@ class TileList(BrowserView):
 
         return tile_metadata
 
-    def render(self):
+    def __call__(self):
         self.setup()
         return self.index()
 
-    def __call__(self):
-        return self.render()
-
 
 class GroupSelect(BrowserView):
+
+    """Helper browser view to create a list of groups to manage the tile."""
 
     index = ViewPageTemplateFile('templates/groupselect.pt')
 
@@ -301,12 +306,9 @@ class GroupSelect(BrowserView):
                 tile.setAllowedGroupsForEdit(groups)
                 i += 1
 
-    def render(self):
+    def __call__(self):
         self.setup()
         return self.index()
-
-    def __call__(self):
-        return self.render()
 
 
 class BaseGrid(object):

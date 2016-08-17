@@ -14,12 +14,12 @@
       />
   <browser:page
       name="content-search"
-      for="*"
+      for="..interfaces.ICover"
       permission="cmf.ModifyPortalContent"
       class=".contentchooser.ContentSearch"
       />
   <browser:pages
-      for="*"
+      for="Products.CMFCore.interfaces.IFolderish"
       class=".contentchooser.SearchItemsBrowserView"
       permission="cmf.ModifyPortalContent">
     <browser:page attribute="jsonByType" name="jsonbytype" />
@@ -32,36 +32,6 @@
       for="..interfaces.ICover"
       permission="cmf.ModifyPortalContent"
       class=".compose.Compose"
-      />
-  <browser:page
-      name="addctwidget"
-      for="..interfaces.ICover"
-      permission="cmf.ModifyPortalContent"
-      class=".compose.AddCTWidget"
-      />
-  <browser:page
-      name="addtilewidget"
-      for="..interfaces.ICover"
-      permission="cmf.ModifyPortalContent"
-      class=".compose.AddTileWidget"
-      />
-  <browser:page
-      name="setwidgetmap"
-      for="..interfaces.ICover"
-      permission="cmf.ModifyPortalContent"
-      class=".compose.SetWidgetMap"
-      />
-  <browser:page
-      name="updatewidget"
-      for="..interfaces.ICover"
-      permission="cmf.ModifyPortalContent"
-      class=".compose.UpdateWidget"
-      />
-  <browser:page
-      name="removetilewidget"
-      for="..interfaces.ICover"
-      permission="cmf.ModifyPortalContent"
-      class=".compose.RemoveTileWidget"
       />
   <browser:page
       name="updatetilecontent"
@@ -116,16 +86,9 @@
       />
   <browser:menuItems
       for="collective.cover.content.ICover"
-      menu="plone_displayviews"
-      >
-    <browser:menuItem
-        title="Front page view"
-        action="view"
-        />
-    <browser:menuItem
-        title="Standard view"
-        action="standard"
-        />
+      menu="plone_displayviews">
+    <browser:menuItem title="Front page view" action="view" />
+    <browser:menuItem title="Standard view" action="standard" />
   </browser:menuItems>
   <!-- cover -->
 
@@ -139,25 +102,25 @@
   <browser:page
       name="layout"
       for="..interfaces.ICover"
-      permission="cmf.ModifyPortalContent"
+      permission="collective.cover.CanEditLayout"
       class=".layout.PageLayout"
       />
   <browser:page
       name="save_layout"
       for="..interfaces.ICover"
-      permission="cmf.ModifyPortalContent"
+      permission="collective.cover.CanEditLayout"
       class=".layout.LayoutSave"
       />
   <browser:page
       name="tile_list"
       for="..interfaces.ICover"
-      permission="cmf.ModifyPortalContent"
+      permission="collective.cover.CanEditLayout"
       class=".layout.TileList"
       />
   <browser:page
       name="group_select"
       for="..interfaces.ICover"
-      permission="cmf.ModifyPortalContent"
+      permission="collective.cover.CanEditLayout"
       class=".layout.GroupSelect"
       />
   <!-- layout -->

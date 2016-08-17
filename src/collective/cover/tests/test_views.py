@@ -4,6 +4,7 @@ from collective.cover.testing import INTEGRATION_TESTING
 from collective.cover.tiles.list import ListTile
 from lxml import etree
 from plone import api
+from plone.app.testing import logout
 from zope.interface import alsoProvides
 
 import unittest
@@ -81,10 +82,12 @@ class BrowserViewsTestCase(unittest.TestCase):
 
     # @@updatetile
     def test_update_tile_view(self):
+        # This view should be available to Anonymous users
+        logout()
         # valid tile-id parameter returns tile
         tile_id = self.c1.list_tiles()[0]  # use a tile on the layout
         self.request.form['tile-id'] = tile_id
-        view = api.content.get_view(u'updatetile', self.c1, self.request)
+        view = self.c1.restrictedTraverse('@@updatetile')
         self.assertNotEqual(view(), u'')
         self.assertEqual(view.request.RESPONSE.status, 200)
 
@@ -134,7 +137,7 @@ class RemoveItemFromListTileTestCase(unittest.TestCase):
             u'removeitemfromlisttile', self.cover, self.request)
 
         self.assertIn(obj1, tile.results())
-        view.render()
+        view()
         self.assertNotIn(obj1, tile.results())
 
 

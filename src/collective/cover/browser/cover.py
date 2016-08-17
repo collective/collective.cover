@@ -12,13 +12,10 @@ class View(BrowserView):
 
     index = ViewPageTemplateFile('templates/view.pt')
 
-    def render(self):
+    def __call__(self):
         # forbid image indexing as scales are volatile
         self.request.RESPONSE.setHeader('X-Robots-Tag', 'noimageindex')
         return self.index()
-
-    def __call__(self):
-        return self.render()
 
 
 @implementer(IBlocksTransformEnabled)
@@ -28,19 +25,20 @@ class Standard(BrowserView):
 
     index = ViewPageTemplateFile('templates/standard.pt')
 
-    def render(self):
-        return self.index()
-
     def __call__(self):
-        return self.render()
+        return self.index()
 
 
 class UpdateTile(BrowserView):
 
+    """Helper browser view to update the tile with Ajax."""
+
+    def setup(self):
+        self.tile_id = self.request.form.get('tile-id', None)
+
     def render(self):
-        tile_id = self.request.form.get('tile-id', None)
         try:
-            tile = self.context.get_tile(tile_id)
+            tile = self.context.get_tile(self.tile_id)
         except ValueError:
             # requested tile does not exist
             self.request.response.setStatus(400)
@@ -48,4 +46,5 @@ class UpdateTile(BrowserView):
         return tile()
 
     def __call__(self):
+        self.setup()
         return self.render()
