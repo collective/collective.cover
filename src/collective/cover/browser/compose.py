@@ -14,7 +14,7 @@ from zope.interface import implementer
 
 
 # TODO: implement EditCancelledEvent and EditFinishedEvent
-# XXX: we need to leave the view after saving or cancelling editing
+#       we need to leave the view after saving or cancelling editing
 @implementer(IBlocksTransformEnabled)
 class Compose(BrowserView):
 
@@ -23,7 +23,7 @@ class Compose(BrowserView):
     index = ViewPageTemplateFile('templates/compose.pt')
 
     def __call__(self):
-        # XXX: used to lock the object when someone is editing it
+        # lock the object when someone is editing it
         notify(EditBegunEvent(self.context))
         return self.index()
 
@@ -39,16 +39,18 @@ class UpdateTileContent(BrowserView):
 
     def render(self):
         """Render a tile after populating it with an object."""
-        if all((self.tile_type, self.tile_id, self.uuid)):
-            catalog = api.portal.get_tool('portal_catalog')
-            results = catalog(UID=self.uuid)
-            if results:
-                obj = results[0].getObject()
-                tile = self.context.restrictedTraverse('{0}/{1}'.format(self.tile_type, self.tile_id))
-                tile.populate_with_object(obj)
-                return tile()
-        else:
+        if not all((self.tile_type, self.tile_id, self.uuid)):
             raise BadRequest('Invalid parameters')
+
+        catalog = api.portal.get_tool('portal_catalog')
+        results = catalog(UID=self.uuid)
+        assert len(results) in (0, 1)
+        if results:
+            obj = results[0].getObject()
+            path = '{0}/{1}'.format(self.tile_type, self.tile_id)
+            tile = self.context.restrictedTraverse(path)
+            tile.populate_with_object(obj)
+            return tile()
 
     def __call__(self):
         self.setup()
@@ -98,6 +100,7 @@ class MoveTileContent(BrowserView):
         """Render a tile after populating it with an object."""
         if not all((self.origin_type, self.origin_id, self.target_type, self.target_id)):
             raise BadRequest('Invalid parameters')
+
         origin_tile = self.context.restrictedTraverse(
             '{0}/{1}'.format(self.origin_type, self.origin_id))
         target_tile = self.context.restrictedTraverse(
@@ -127,16 +130,13 @@ class UpdateListTileContent(BrowserView):
             self.uuids = [self.uuids]
 
     def render(self):
-        html = ''
-        if all((self.tile_type, self.tile_id, self.uuids)):
-            tile = self.context.restrictedTraverse(self.tile_type)
-            tile_instance = tile[self.tile_id]
-            tile_instance.replace_with_uuids(self.uuids)
-            html = tile_instance()
+        if not all((self.tile_type, self.tile_id, self.uuids)):
+            return u''
 
-        # XXX: Calling the tile will return the HTML with the headers, need to
-        #      find out if this affects us in any way.
-        return html
+        tile = self.context.restrictedTraverse(self.tile_type)
+        tile_instance = tile[self.tile_id]
+        tile_instance.replace_with_uuids(self.uuids)
+        return tile_instance()
 
     def __call__(self):
         self.setup()
@@ -147,21 +147,24 @@ class RemoveItemFromListTile(BrowserView):
 
     """Helper browser view to remove an object from a list tile."""
 
+    def setup(self):
+        self.tile_type = self.request.form.get('tile-type')
+        self.tile_id = self.request.form.get('tile-id')
+        self.uuid = self.request.form.get('uuid')
+
     def render(self):
         """Render a tile after removing an object from it."""
-        tile_type = self.request.form.get('tile-type')
-        tile_id = self.request.form.get('tile-id')
-        uuid = self.request.form.get('uuid')
-        if tile_type and tile_id and uuid:
-            tile = self.context.restrictedTraverse(
-                '{0}/{1}'.format(tile_type, tile_id))
-            if IListTile.providedBy(tile):
-                tile.remove_item(uuid)
-                return tile()
-        else:
+        if not all((self.tile_type, self.tile_id, self.uuid)):
             raise BadRequest('Invalid parameters')
 
+        path = '{0}/{1}'.format(self.tile_type, self.tile_id)
+        tile = self.context.restrictedTraverse(path)
+        if IListTile.providedBy(tile):
+            tile.remove_item(self.uuid)
+            return tile()
+
     def __call__(self):
+        self.setup()
         return self.render()
 
 
@@ -175,8 +178,8 @@ class DeleteTile(BrowserView):
 
     def render(self):
         if self.tile_type and self.tile_id:
-            tile = self.context.restrictedTraverse(
-                '{0}/{1}'.format(self.tile_type, self.tile_id))
+            path = '{0}/{1}'.format(self.tile_type, self.tile_id)
+            tile = self.context.restrictedTraverse(path)
             tile.delete()
 
     def __call__(self):

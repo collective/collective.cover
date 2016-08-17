@@ -43,9 +43,6 @@
         />
   </class>
 
-  <adapter
-      name="SearchableText"
-      factory=".content.searchableText"
-      />
+  <adapter name="SearchableText" factory=".content.searchableText" />
 
 </configure>

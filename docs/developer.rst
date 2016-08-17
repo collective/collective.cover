@@ -237,19 +237,6 @@ and ships with support for 12-column Bootstrap 2 and Bootstrap 3 grids.
 If your theme provides a CSS framework with a different grid system (such as Zurb Foundation) you can use that instead of the default one.
 To do so, your theme package should provide a new grid system class which implements the ``collective.cover.interfaces.IGridSystem`` interface:
 
-.. code-block:: xml
-
-    <configure
-        xmlns="http://namespaces.zope.org/zope"
-        i18n_domain="collective.cover">
-
-      <utility
-          name="mygrid"
-          factory=".grids.MyGrid"
-          />
-
-    </configure>
-
 .. code-block:: python
 
     from collective.cover.interfaces import IGridSystem
@@ -274,6 +261,12 @@ To do so, your theme package should provide a new grid system class which implem
                         column['css-class']
                     )
             return columns
+
+Don't forget to register the utility in your ``configure.zcml``:
+
+.. code-block:: xml
+
+    <utility name="mygrid" factory="my.package.MyGrid" />
 
 Once registered you can select your grid system on the Cover Settings control panel configlet.
 
@@ -307,4 +300,10 @@ make sure you clear the default cover layouts and/or save your own layout with t
 Custom Cover Views
 ^^^^^^^^^^^^^^^^^^
 
-In case you want to create custom cover views, you can find the existing ones under browser/cover.py. Note that from version 1.0a12 collective.cover uses plone.app.blocks 2.0.0, which means that a cover view (or any view that includes tiles), must implement plone.app.blocks.interfaces.IBlocksTransformEnabled (using five.grok.implements(), zope.interface.implements() or @zope.interface.implementer()) within it's view class. Without this the resulting HTML would only contain tile placeholders, not the tiles themselves.
+In case you want to create custom cover views,
+you can find the existing ones under ``browser/cover.py``.
+Note that from version 1.0a12 collective.cover uses plone.app.blocks 2.0.0,
+which means that a cover view (or any view that includes tiles),
+must implement ``plone.app.blocks.interfaces.IBlocksTransformEnabled`` (using ``@zope.interface.implementer()``) within it's view class.
+Without this the resulting HTML would only contain tile placeholders,
+not the tiles themselves.

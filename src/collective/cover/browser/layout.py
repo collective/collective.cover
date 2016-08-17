@@ -34,7 +34,7 @@ class LayoutEdit(BrowserView):
         self.context = aq_inner(self.context)
         vocab = TileStylesVocabulary()
         self.css_classes = vocab(self.context)
-        # XXX: used to lock the object when someone is editing it
+        # lock the object when someone is editing it
         notify(EditBegunEvent(self.context))
 
     def can_export_layout(self):
@@ -47,7 +47,6 @@ class LayoutEdit(BrowserView):
         registry = getUtility(IRegistry)
         settings = registry.forInterface(ICoverSettings)
         grid = getUtility(IGridSystem, name=settings.grid_system)
-
         return json.dumps({'ncolumns': grid.ncolumns})
 
     def render(self):
@@ -170,9 +169,9 @@ class PageLayout(BrowserView):
     def can_compose_tile_class(self, tile_type, tile_id):
         tile = self.context.restrictedTraverse('{0}/{1}'.format(str(tile_type), str(tile_id)))
         if not tile.isAllowedToEdit():
-            return 'disabled'
+            return u'disabled'
         else:
-            return ''
+            return u''
 
     def render_view(self):
         # XXX: There *must* be a better way of doing this, maybe write it

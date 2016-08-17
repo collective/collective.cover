@@ -1,6 +1,4 @@
-<configure
-    xmlns="http://namespaces.zope.org/zope"
-    i18n_domain="collective.cover">
+<configure xmlns="http://namespaces.zope.org/zope">
 
   <utility name="bootstrap3" factory=".grids.Bootstrap3" />
   <utility name="bootstrap2" factory=".grids.Bootstrap2" />

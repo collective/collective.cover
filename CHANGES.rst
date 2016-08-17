@@ -6,9 +6,14 @@ There's a frood who really knows where his towel is.
 1.2b2 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
-- Remove Grok dependency.
-  Now every view used in compose tab uses cmf.ModifyPortalContent permission.
-  And every view used in layout tab uses collective.cover.CanEditLayout permission.
+.. Warning::
+    A huge code refactoring was made as part of the removal of the dependency on five.grok.
+    The following unused views were removed: ``AddCTWidget``, ``AddTileWidget``, ``SetWidgetMap``, ``UpdateWidget`` and ``RemoveTileWidget``.
+    All Compose tab helper views use now ``cmf.ModifyPortalContent`` permission.
+    All Layout tab helper views use now ``collective.cover.CanEditLayout`` permission.
+    The ``BaseGrid`` class is now located in the ``collective.cover.grids`` module.
+
+- Remove dependency on five.grok (closes `#510`_).
   [l34marr, rodfersou]
 
 - Use the `X-Robots-Tag` header to avoid indexing of image scales on default view;
@@ -102,6 +107,7 @@ Previous entries can be found in the HISTORY.rst file.
 
 .. _`#414`: https://github.com/collective/collective.cover/issues/414
 .. _`#487`: https://github.com/collective/collective.cover/issues/487
+.. _`#510`: https://github.com/collective/collective.cover/issues/510
 .. _`#543`: https://github.com/collective/collective.cover/issues/543
 .. _`#574`: https://github.com/collective/collective.cover/issues/574
 .. _`#578`: https://github.com/collective/collective.cover/issues/578

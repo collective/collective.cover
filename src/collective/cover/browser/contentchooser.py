@@ -34,11 +34,8 @@ class SelectContent(BrowserView):
     def post_url(self):
         return self.context.absolute_url() + '/@@content-search'
 
-    def render(self):
-        return self.index()
-
     def __call__(self):
-        return self.render()
+        return self.index()
 
 
 class ContentSearch(BrowserView):
