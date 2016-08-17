@@ -304,5 +304,3 @@ class GroupSelect(BrowserView):
     def __call__(self):
         self.setup()
         return self.index()
-
-
