@@ -62,14 +62,6 @@
         />
   </class>
 
-  <!-- Image scale support for tile images -->
-  <browser:page
-      name="images"
-      for=".base.IPersistentCoverTile"
-      class=".base.ImageScaling"
-      permission="zope2.View"
-      />
-
   <adapter for="zope.interface.Interface
                 zope.publisher.interfaces.browser.IBrowserRequest
                 collective.cover.tiles.base.IPersistentCoverTile"

@@ -1,9 +1,12 @@
 # -*- coding: utf-8 -*-
 from collective.cover.config import PLONE_VERSION
-from collective.cover.interfaces import ICover
-from five import grok
-from plone.app.iterate.interfaces import ICheckinEvent
+from collective.cover.controlpanel import ICoverSettings
+from collective.cover.utils import assign_tile_ids
+from plone.registry.interfaces import IRegistry
 from zope.annotation.interfaces import IAnnotations
+from zope.component import getUtility
+
+import json
 
 if PLONE_VERSION.startswith('5'):
     from plone.app.linkintegrity.handlers import updateReferences
@@ -13,7 +16,6 @@ else:
     from Products.Archetypes.interfaces import IReferenceable
 
 
-@grok.subscribe(ICover, ICheckinEvent)
 def override_object_annotations(cover, event):
     """
     We need to override the annotations stored in the old object with the
@@ -55,3 +57,18 @@ def update_link_integrity(obj, event):
         if adapted is None:
             return
         updateReferences(adapted, referencedRelationship, refs)
+
+
+def assign_id_for_tiles(cover, event):
+    if not cover.cover_layout:
+        # When versioning, a new cover gets created, so, if we already
+        # have a cover_layout stored, do not overwrite it
+        registry = getUtility(IRegistry)
+        settings = registry.forInterface(ICoverSettings)
+
+        layout = settings.layouts.get(cover.template_layout)
+        if layout:
+            layout = json.loads(layout)
+            assign_tile_ids(layout)
+
+            cover.cover_layout = json.dumps(layout)

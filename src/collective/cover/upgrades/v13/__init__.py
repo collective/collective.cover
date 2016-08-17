@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 from collective.cover.config import PROJECTNAME
-from collective.cover.events import update_link_integrity
 from collective.cover.interfaces import ICover
 from collective.cover.logger import logger
+from collective.cover.subscribers import update_link_integrity
 from plone import api
 
 

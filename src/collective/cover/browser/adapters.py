@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 from Acquisition import aq_inner
 from Products.CMFPlone.browser.ploneview import Plone
 
