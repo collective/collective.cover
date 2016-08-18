@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+from collective.cover.config import IS_PLONE_5
 from collective.cover.controlpanel import ICoverSettings
 from collective.cover.testing import INTEGRATION_TESTING
 from plone.registry.interfaces import IRegistry
@@ -33,38 +33,53 @@ class VocabulariesTestCase(unittest.TestCase):
         vocabulary = queryUtility(IVocabularyFactory, name)
         self.assertIsNotNone(vocabulary)
         tiles = vocabulary(self.portal)
-        self.assertEqual(len(tiles), 10)
-        self.assertIn(u'collective.cover.banner', tiles)
-        self.assertIn(u'collective.cover.basic', tiles)
-        self.assertIn(u'collective.cover.carousel', tiles)
-        self.assertIn(u'collective.cover.collection', tiles)
-        self.assertIn(u'collective.cover.contentbody', tiles)
-        self.assertIn(u'collective.cover.embed', tiles)
-        self.assertIn(u'collective.cover.file', tiles)
-        self.assertIn(u'collective.cover.list', tiles)
-        self.assertIn(u'collective.cover.richtext', tiles)
+        expected = [
+            'collective.cover.banner',
+            'collective.cover.basic',
+            'collective.cover.calendar',
+            'collective.cover.carousel',
+            'collective.cover.collection',
+            'collective.cover.contentbody',
+            'collective.cover.embed',
+            'collective.cover.file',
+            'collective.cover.list',
+            'collective.cover.richtext',
+        ]
+
+        # FIXME: https://github.com/collective/collective.cover/issues/633
+        if IS_PLONE_5:
+            expected.remove('collective.cover.calendar')
+
+        self.assertEqual(len(tiles), len(expected))
+        for i in expected:
+            self.assertIn(i, tiles)
 
     def test_enabled_tiles_vocabulary(self):
         name = 'collective.cover.EnabledTiles'
         vocabulary = queryUtility(IVocabularyFactory, name)
         self.assertIsNotNone(vocabulary)
         tiles = vocabulary(self.portal)
-        self.assertEqual(len(tiles), 11)
-        self.assertIn(u'collective.cover.banner', tiles)
-        self.assertIn(u'collective.cover.basic', tiles)
-        self.assertIn(u'collective.cover.carousel', tiles)
-        self.assertIn(u'collective.cover.collection', tiles)
-        self.assertIn(u'collective.cover.contentbody', tiles)
-        self.assertIn(u'collective.cover.embed', tiles)
-        self.assertIn(u'collective.cover.file', tiles)
-        self.assertIn(u'collective.cover.list', tiles)
-        self.assertIn(u'collective.cover.richtext', tiles)
-        # FIXME see: https://github.com/collective/collective.cover/issues/194
-        self.assertIn(u'collective.cover.pfg', tiles)
-        # XXX: https://github.com/collective/collective.cover/issues/81
-        # standard tiles are not enabled... yet
-        self.assertNotIn(u'plone.app.imagetile', tiles)
-        self.assertNotIn(u'plone.app.texttile', tiles)
+        expected = [
+            'collective.cover.banner',
+            'collective.cover.basic',
+            'collective.cover.calendar',
+            'collective.cover.carousel',
+            'collective.cover.collection',
+            'collective.cover.contentbody',
+            'collective.cover.embed',
+            'collective.cover.file',
+            'collective.cover.list',
+            'collective.cover.pfg',  # FIXME: https://github.com/collective/collective.cover/issues/194
+            'collective.cover.richtext',
+        ]
+
+        # FIXME: https://github.com/collective/collective.cover/issues/633
+        if IS_PLONE_5:
+            expected.remove('collective.cover.calendar')
+
+        self.assertEqual(len(tiles), len(expected))
+        for i in expected:
+            self.assertIn(i, tiles)
 
     def test_available_content_types_vocabulary(self):
         name = 'collective.cover.AvailableContentTypes'
