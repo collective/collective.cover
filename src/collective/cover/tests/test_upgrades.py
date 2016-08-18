@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from collective.cover.config import DEFAULT_GRID_SYSTEM
+from collective.cover.config import IS_PLONE_5
 from collective.cover.controlpanel import ICoverSettings
 from collective.cover.testing import INTEGRATION_TESTING
 from persistent.mapping import PersistentMapping
@@ -69,6 +70,7 @@ class Upgrade5to6TestCase(UpgradeTestCaseBase):
         self.assertGreaterEqual(int(version), int(self.to_version))
         self.assertEqual(self._how_many_upgrades_to_do(), 2)
 
+    @unittest.skipIf(IS_PLONE_5, 'Upgrade step not supported under Plone 5')
     def test_issue_201(self):
         # check if the upgrade step is registered
         title = u'issue 201'
@@ -442,6 +444,7 @@ class Upgrade12to13TestCase(UpgradeTestCaseBase):
         self.assertTrue(int(version) >= int(self.to_version))
         self.assertEqual(self._how_many_upgrades_to_do(), 4)
 
+    @unittest.skipIf(IS_PLONE_5, 'Upgrade step not supported under Plone 5')
     def test_fix_resources_references(self):
         # address also an issue with Setup permission
         title = u'Fix resource references'

@@ -27,6 +27,7 @@ DEFAULT_SEARCHABLE_CONTENT_TYPES = [
     'News Item'
 ]
 
+IS_PLONE_5 = api.env.plone_version().startswith('5')
 PLONE_VERSION = api.env.plone_version()
 
 DEFAULT_GRID_SYSTEM = 'deco16_grid' if PLONE_VERSION < '5.0' else 'bootstrap3'
