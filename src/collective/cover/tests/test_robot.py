@@ -10,15 +10,16 @@ Mandelbug
 Issue related
     They are failing under certain reproducible circunstances.
 """
-from collective.cover.config import PLONE_VERSION
 from collective.cover.testing import DEXTERITY_ONLY
 from collective.cover.testing import ROBOT_TESTING
+from plone import api
 from plone.testing import layered
 
 import os
 import robotsuite
 import unittest
 
+PLONE_VERSION = api.env.plone_version()
 
 dirname = os.path.dirname(__file__)
 files = os.listdir(dirname)

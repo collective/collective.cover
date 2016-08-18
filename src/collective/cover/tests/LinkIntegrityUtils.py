@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """Helper function to test link integrity feature."""
-from collective.cover.config import PLONE_VERSION
+from collective.cover.config import IS_PLONE_5
 from plone import api
 from plone.app.referenceablebehavior.referenceable import IReferenceable
 from plone.dexterity.interfaces import IDexterityFTI
@@ -8,8 +8,7 @@ from zope.component import queryUtility
 
 import transaction
 
-
-NEEDS_REFERENCEABLE_BEHAVIOR = PLONE_VERSION.startswith('4')
+NEEDS_REFERENCEABLE_BEHAVIOR = not IS_PLONE_5
 
 
 def setup_link_integrity():

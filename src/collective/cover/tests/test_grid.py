@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from collective.cover.config import DEFAULT_GRID_SYSTEM
-from collective.cover.config import PLONE_VERSION
+from collective.cover.config import IS_PLONE_5
 from collective.cover.controlpanel import ICoverSettings
 from collective.cover.testing import INTEGRATION_TESTING
 from plone import api
@@ -40,10 +40,10 @@ class GridTestCase(unittest.TestCase):
         self.view = folder.cover.restrictedTraverse('view')
 
     def test_default_grid(self):
-        if PLONE_VERSION < '5.0':
-            self.assertEqual(DEFAULT_GRID_SYSTEM, 'deco16_grid')
-        else:
+        if IS_PLONE_5:
             self.assertEqual(DEFAULT_GRID_SYSTEM, 'bootstrap3')
+        else:
+            self.assertEqual(DEFAULT_GRID_SYSTEM, 'deco16_grid')
 
     def _switch_grid_system(self, grid):
         registry = getUtility(IRegistry)
