@@ -5,11 +5,12 @@ from collective.cover.config import DEFAULT_AVAILABLE_TILES
 from collective.cover.config import DEFAULT_GRID_SYSTEM
 from collective.cover.config import DEFAULT_SEARCHABLE_CONTENT_TYPES
 from plone.app.registry.browser import controlpanel
-from plone.directives import form
+from plone.supermodel import model
+from plone.autoform import directives as form
 from zope import schema
 
 
-class ICoverSettings(form.Schema):
+class ICoverSettings(model.Schema):
     """ Interface for the control panel form.
     """
 

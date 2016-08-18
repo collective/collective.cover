@@ -13,6 +13,9 @@ There's a frood who really knows where his towel is.
     All Layout tab helper views use now ``collective.cover.CanEditLayout`` permission.
     The ``BaseGrid`` class is now located in the ``collective.cover.grids`` module.
 
+- Remove dependency on plone.directives.form.
+  [l34marr]
+
 - Remove dependency on five.grok (closes `#510`_).
   [l34marr, rodfersou]
 
