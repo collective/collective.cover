@@ -38,9 +38,3 @@ class TimeToLiveValidator(validator.SimpleFieldValidator):
 validator.WidgetValidatorDiscriminators(TimeToLiveValidator, field=IRefresh['ttl'])
 
 alsoProvides(IRefresh, IFormFieldProvider)
-
-
-@form.validator(field=IRefresh['ttl'])
-def validate_ttl(value):
-    if value <= 0:
-        raise Invalid(_(u'Value must be greater than zero.'))
