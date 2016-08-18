@@ -38,6 +38,10 @@ if PLONE_VERSION.startswith('4.2') or \
 if PLONE_VERSION.startswith('4.3') and DEXTERITY_ONLY:
     noncritical.append('issue_637')
 
+# FIXME: skip RobotFramework tests in Plone 5
+if PLONE_VERSION.startswith('5'):
+    tests = []
+
 
 def test_suite():
     suite = unittest.TestSuite()
