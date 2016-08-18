@@ -2,10 +2,11 @@
 from collective.cover import _
 from plone.autoform.interfaces import IFormFieldProvider
 from plone.supermodel import model
+from z3c.form import validator
 from zope import schema
+from zope.component import provideAdapter
 from zope.interface import alsoProvides
 from zope.interface import Invalid
-from z3c.form import validator
 
 
 class IRefresh(model.Schema):
@@ -38,4 +39,8 @@ class TimeToLiveValidator(validator.SimpleFieldValidator):
         if value <= 0:
             raise Invalid(_(u'Value must be greater than zero.'))
 
+# set conditions for which fields the validator class applies
 validator.WidgetValidatorDiscriminators(TimeToLiveValidator, field=IRefresh['ttl'])
+
+# register the validator so it will be looked up by z3c.form machinery
+provideAdapter(TimeToLiveValidator)
