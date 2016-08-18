@@ -26,6 +26,9 @@ class IRefresh(model.Schema):
         default=300,
     )
 
+alsoProvides(IRefresh, IFormFieldProvider)
+
+
 class TimeToLiveValidator(validator.SimpleFieldValidator):
 
     """z3c.form validator class for time to live"""
@@ -36,5 +39,3 @@ class TimeToLiveValidator(validator.SimpleFieldValidator):
             raise Invalid(_(u'Value must be greater than zero.'))
 
 validator.WidgetValidatorDiscriminators(TimeToLiveValidator, field=IRefresh['ttl'])
-
-alsoProvides(IRefresh, IFormFieldProvider)
