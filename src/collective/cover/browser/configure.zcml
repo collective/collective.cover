@@ -102,7 +102,7 @@
   <browser:page
       name="layout"
       for="..interfaces.ICover"
-      permission="collective.cover.CanEditLayout"
+      permission="zope2.View"
       class=".layout.PageLayout"
       />
   <browser:page
