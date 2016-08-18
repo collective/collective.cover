@@ -169,7 +169,7 @@ class Fixture(PloneSandboxLayer):
 
         portal_workflow = portal.portal_workflow
         portal_workflow.setChainForPortalTypes(
-            ['Collection'], ['simple_publication_workflow'])
+            ['Event', 'Collection'], ['simple_publication_workflow'])
 
         # Prevent kss validation errors in Plone 4.2
         portal_kss = getattr(portal, 'portal_kss', None)

@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from collective.cover.config import IS_PLONE_5
 from collective.cover.controlpanel import ICoverSettings
 from collective.cover.testing import INTEGRATION_TESTING
 from plone.registry.interfaces import IRegistry
@@ -46,10 +45,6 @@ class VocabulariesTestCase(unittest.TestCase):
             'collective.cover.richtext',
         ]
 
-        # FIXME: https://github.com/collective/collective.cover/issues/633
-        if IS_PLONE_5:
-            expected.remove('collective.cover.calendar')
-
         self.assertEqual(len(tiles), len(expected))
         for i in expected:
             self.assertIn(i, tiles)
@@ -72,10 +67,6 @@ class VocabulariesTestCase(unittest.TestCase):
             'collective.cover.pfg',  # FIXME: https://github.com/collective/collective.cover/issues/194
             'collective.cover.richtext',
         ]
-
-        # FIXME: https://github.com/collective/collective.cover/issues/633
-        if IS_PLONE_5:
-            expected.remove('collective.cover.calendar')
 
         self.assertEqual(len(tiles), len(expected))
         for i in expected:

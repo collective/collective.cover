@@ -1,20 +1,28 @@
 # -*- coding: utf-8 -*-
+# Avoid to import wrong calendar module
+# http://stackoverflow.com/a/8280677/2116850
+from __future__ import absolute_import
 from Acquisition import aq_inner
 from collective.cover import _
 from collective.cover.tiles.base import IPersistentCoverTile
 from collective.cover.tiles.base import PersistentCoverTile
 from DateTime import DateTime
+from plone import api
+from plone.api.exc import InvalidParameterError
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.utils import safe_unicode
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from time import localtime
 from urllib import quote_plus
-from zope.component import getMultiAdapter
 from zope.i18nmessageid import MessageFactory
 from zope.interface import implementer
 
+import calendar
+
 
 PLMF = MessageFactory('plonelocales')
+EVENT_INTERFACES = [
+    'plone.event.interfaces.IEvent', 'Products.ATContentTypes.interfaces.event.IATEvent']
 
 
 class ICalendarTile(IPersistentCoverTile):
@@ -39,7 +47,6 @@ class CalendarTile(PersistentCoverTile):
 
     def _setup(self):
         context = aq_inner(self.context)
-        self.calendar = getToolByName(context, 'portal_calendar')
         self._ts = getToolByName(context, 'translation_service')
         self.url_quote_plus = quote_plus
 
@@ -56,31 +63,57 @@ class CalendarTile(PersistentCoverTile):
 
         self.monthName = PLMF(self._ts.month_msgid(month),
                               default=self._ts.month_english(month))
+        self._set_first_weekday()
+
+    def _set_first_weekday(self):
+        try:  # Plone 5.x
+            first_weekday = api.portal.get_registry_record('plone.first_weekday')
+        except InvalidParameterError:
+            try:  # plone.app.event
+                first_weekday = api.portal.get_registry_record('plone.app.event.first_weekday')
+            except InvalidParameterError:  # Plone 4.x
+                portal_calendar = api.portal.get_tool('portal_calendar')
+                first_weekday = getattr(portal_calendar, 'firstweekday', calendar.SUNDAY)
+        calendar.setfirstweekday(first_weekday)
 
     def accepted_ct(self):
         """Return an empty list as no content types are accepted."""
         return []
 
-    def getEventsForCalendar(self):
-        context = aq_inner(self.context)
-        year = self.year
-        month = self.month
-        portal_state = getMultiAdapter((self.context, self.request), name='plone_portal_state')
-        navigation_root_path = portal_state.navigation_root_path()
-        weeks = self.calendar.getEventsForCalendar(month, year, path=navigation_root_path)
-        for week in weeks:
-            for day in week:
-                daynumber = day['day']
-                if daynumber == 0:
-                    continue
-                day['is_today'] = self.isToday(daynumber)
-                if day['event']:
-                    cur_date = DateTime(year, month, daynumber)
-                    localized_date = [self._ts.ulocalized_time(cur_date, context=context, request=self.request)]
-                    day['eventstring'] = '\n'.join(localized_date + [
-                        ' {0}'.format(self.getEventString(e)) for e in day['eventslist']])
-                    day['date_string'] = '{0}-{1}-{2}'.format(year, month, daynumber)
+    def addEvents(self, day):
+        catalog = api.portal.get_tool('portal_catalog')
+        start = DateTime(self.year, self.month, day['day'])
+        end = start + 1
+        query = dict(
+            object_provides=EVENT_INTERFACES, review_state='published',
+            start={'query': (start, end), 'range': 'min:max'}, sort_on='start')
+        for brain in catalog(**query):
+            day['event'] += 1
+            day['date_string'] = '{0}-{1}-{2}'.format(self.year, self.month, day['day'])
+            if 'eventslist' not in day:
+                day['eventslist'] = []
+            event = dict(
+                start=brain.start.Time(), end=brain.end.Time(), title=brain.Title or brain.id)
+            day['eventslist'].append(event)
+            if 'eventstring' not in day:
+                localized_date = self._ts.ulocalized_time(
+                    start, context=self.context, request=self.request)
+                day['eventstring'] = localized_date
+            day['eventstring'] += '\n {0}'.format(self.getEventString(event))
+        return day
 
+    def getEventsForCalendar(self):
+        monthcalendar = calendar.monthcalendar(self.year, self.month)
+        weeks = []
+        for w in monthcalendar:
+            week = []
+            for d in w:
+                day = {'day': d, 'event': 0, 'eventslist': []}
+                if d > 0:
+                    day['is_today'] = self.isToday(d)
+                    day = self.addEvents(day)
+                week.append(day)
+            weeks.append(week)
         return weeks
 
     def getEventString(self, event):
@@ -100,21 +133,11 @@ class CalendarTile(PersistentCoverTile):
         return eventstring
 
     def getYearAndMonthToDisplay(self):
-        session = None
         request = self.request
 
         # First priority goes to the data in the REQUEST
         year = request.get('year', None)
         month = request.get('month', None)
-
-        # Next get the data from the SESSION
-        if self.calendar.getUseSession():
-            session = request.get('SESSION', None)
-            if session:
-                if not year:
-                    year = session.get('calendar_year', None)
-                if not month:
-                    month = session.get('calendar_month', None)
 
         # Last resort to today
         if not year:
@@ -128,11 +151,6 @@ class CalendarTile(PersistentCoverTile):
             year, month = int(year), int(month)
         except (TypeError, ValueError):
             year, month = self.now[:2]
-
-        # Store the results in the session for next time
-        if session:
-            session.set('calendar_year', year)
-            session.set('calendar_month', month)
 
         # Finally return the results
         return year, month
@@ -153,12 +171,12 @@ class CalendarTile(PersistentCoverTile):
 
     def getWeekdays(self):
         """Returns a list of Messages for the weekday names."""
-        weekdays = []
-        # list of ordered weekdays as numbers
-        for day in self.calendar.getDayNumbers():
-            weekdays.append(PLMF(self._ts.day_msgid(day, format='s'),
-                                 default=self._ts.weekday_english(day, format='a')))
 
+        weekheaders = calendar.weekheader(3).split()
+        weekdays = []
+        for header in weekheaders:
+            weekdays.append(PLMF('weekday_{0}_short'.format(header.lower()),
+                                 default=header))
         return weekdays
 
     def isToday(self, day):
@@ -169,11 +187,13 @@ class CalendarTile(PersistentCoverTile):
             self.now[2] == day and self.now[1] == self.month and self.now[0] == self.year)
 
     def getReviewStateString(self):
-        states = self.calendar.getCalendarStates()
+        states = ['published']
         return ''.join(map(lambda x: 'review_state={0}&amp;'.format(self.url_quote_plus(x)), states))
 
     def getEventTypes(self):
-        types = self.calendar.getCalendarTypes()
+        catalog = api.portal.get_tool('portal_catalog')
+        query = dict(object_provides=EVENT_INTERFACES)
+        types = set([b.portal_type for b in catalog(**query)])
         return ''.join(map(lambda x: 'Type={0}&amp;'.format(self.url_quote_plus(x)), types))
 
     def getQueryString(self):
