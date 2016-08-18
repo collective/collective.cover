@@ -28,9 +28,8 @@ DEFAULT_SEARCHABLE_CONTENT_TYPES = [
 ]
 
 IS_PLONE_5 = api.env.plone_version().startswith('5')
-PLONE_VERSION = api.env.plone_version()
 
-DEFAULT_GRID_SYSTEM = 'deco16_grid' if PLONE_VERSION < '5.0' else 'bootstrap3'
+DEFAULT_GRID_SYSTEM = 'bootstrap3' if IS_PLONE_5 else 'deco16_grid'
 
 # z3c.form.widget.SequenceWidget used for css_class field
 # has a default null value of '--NOVALUE--'

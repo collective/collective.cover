@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from collective.cover.config import PLONE_VERSION
+from collective.cover.config import IS_PLONE_5
 from collective.cover.controlpanel import ICoverSettings
 from collective.cover.utils import assign_tile_ids
 from plone.registry.interfaces import IRegistry
@@ -8,7 +8,7 @@ from zope.component import getUtility
 
 import json
 
-if PLONE_VERSION.startswith('5'):
+if IS_PLONE_5:
     from plone.app.linkintegrity.handlers import updateReferences
 else:
     from plone.app.linkintegrity.handlers import referencedRelationship
@@ -49,7 +49,7 @@ def update_link_integrity(obj, event):
     """
     refs = obj.get_referenced_objects()
 
-    if PLONE_VERSION.startswith('5'):
+    if IS_PLONE_5:
         updateReferences(obj, refs)
     else:
         # needed by plone.app.linkintegrity under Plone 4.x

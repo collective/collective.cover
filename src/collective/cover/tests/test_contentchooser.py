@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-
-from collective.cover.config import PLONE_VERSION
 from collective.cover.testing import INTEGRATION_TESTING
 from lxml import etree
 from plone import api
@@ -9,6 +7,7 @@ from StringIO import StringIO
 import json
 import unittest
 
+IS_PLONE_42 = api.env.plone_version().startswith('4.2')
 
 parser = etree.HTMLParser()
 
@@ -48,9 +47,7 @@ class ContentChooserTestCase(unittest.TestCase):
         image_match = tree.xpath("//li[@data-content-type='Image']/a[@class='contenttype-image state-missing-value'][contains(@title, 'This image #2 was created for testing purposes')][contains(@title, '/my-image')][@rel='1']")
         self.assertTrue(image_match)
 
-    @unittest.skipIf(
-        PLONE_VERSION < '4.3',
-        'On Plone 4.2 we need to install Products.UnicodeLexicon')
+    @unittest.skipIf(IS_PLONE_42, 'Need to install Products.UnicodeLexicon')
     def test_unicode_aware_lexicon(self):
         """See: https://github.com/collective/collective.cover/issues/276
         """

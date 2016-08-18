@@ -10,7 +10,7 @@ plone.app.contenttypes:
 Products.PloneFormGen
     installed under Plone 4 only
 """
-from collective.cover.config import PLONE_VERSION
+from collective.cover.config import IS_PLONE_5
 from collective.cover.tests.utils import create_standard_content_for_tests
 from collective.cover.tests.utils import set_file_field
 from collective.cover.tests.utils import set_image_field
@@ -118,7 +118,7 @@ class Fixture(PloneSandboxLayer):
     defaultBases = (PLONE_FIXTURE,)
 
     def setUpZope(self, app, configurationContext):
-        if PLONE_VERSION.startswith('5'):
+        if IS_PLONE_5:
             import plone.app.contenttypes
             self.loadZCML(package=plone.app.contenttypes)
         else:
@@ -147,7 +147,7 @@ class Fixture(PloneSandboxLayer):
             manage_addVirtualHostMonster(app, 'virtual_hosting')
 
     def setUpPloneSite(self, portal):
-        if PLONE_VERSION.startswith('5'):
+        if IS_PLONE_5:
             self.applyProfile(portal, 'plone.app.contenttypes:default')
         else:
             if DEXTERITY_ONLY:
