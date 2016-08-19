@@ -30,6 +30,9 @@ There's a frood who really knows where his towel is.
 1.2b1 (2016-07-04)
 ^^^^^^^^^^^^^^^^^^
 
+- Remove needless adapter used to return a modified <base> tag.
+  [rodfersou]
+
 - A new calendar tile was added.
   The tile dislays a calendar that highlights the events taking place on the current month,
   the same way as the standard calendar portlet does.

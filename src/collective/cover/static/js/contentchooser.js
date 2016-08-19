@@ -232,7 +232,7 @@ var coveractions = {
     };
     $('#ajax-spinner').show();
     ajaxSearchRequest.push($.ajax({
-      url: url,
+      url: $('#cover-root').text() + url,
       data: data,
       success: function(data) {
         $('#ajax-spinner').hide();
@@ -269,7 +269,7 @@ var coveractions = {
       };
       $('#ajax-spinner').show();
       ajaxSearchRequest.push($.ajax({
-        url: url,
+        url: $('#cover-root').text() + url,
         data: data,
         success: function(info) {
           $('#ajax-spinner').hide();
@@ -330,7 +330,7 @@ var coveractions = {
     $(document).on("click", "#recent .contentchooser-clear", function(e) {
       $(e.currentTarget).prev().children("input").val("");
       ajaxSearchRequest.push($.ajax({
-        url: portal_url + "/@@content-search",
+        url: $('#cover-root').text() + "/@@content-search",
         success: function(info) {
           $("#contentchooser-content-search #recent .item-list").html(info);
           $('#recent .filter-count').text("");
@@ -424,7 +424,7 @@ var coveractions = {
             //       we should take out the sort functionality of list tile and put it into edit overlay (like carousel tile)
             if ($('#' + draggable_id + ' [data-content-uuid=' + draggable_uuid + ']').length > 0) {
               $.ajax({
-                url: "@@removeitemfromlisttile",
+                url: $('#cover-root').text() + "@@removeitemfromlisttile",
                 data: {
                   'tile-type': origin_type,
                   'tile-id': draggable_id,
@@ -450,7 +450,7 @@ var coveractions = {
           };
           $origin.find('.loading-mask').addClass('show');
           $.ajax({
-            url: '@@movetilecontent',
+            url: $('#cover-root').text() + '@@movetilecontent',
             data: {
               'origin-type': origin_type,
               'origin-id': draggable_id,
@@ -466,7 +466,7 @@ var coveractions = {
                 $target.attr('data-content-type', draggable_type);
               }
               $.ajax({
-                url: '@@updatetile',
+                url: $('#cover-root').text() + '@@updatetile',
                 data: {
                   'tile-id': draggable_id,
                 },
@@ -496,7 +496,7 @@ var coveractions = {
           });
         } else {
           $.ajax({
-            url: '@@updatetilecontent',
+            url: $('#cover-root').text() + '@@updatetilecontent',
             data: {
               'tile-type': target_type,
               'tile-id': target_id,

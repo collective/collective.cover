@@ -94,7 +94,7 @@ var rm_button = function(data) {
             var tile_type = "collective.cover.carousel";
             var tile_id = tile.attr("id");
             $.ajax({
-              url: "@@removeitemfromlisttile",
+              url: $('#cover-root').text() + "@@removeitemfromlisttile",
               data: {
                 'tile-type': tile_type,
                 'tile-id': tile_id,

@@ -34,6 +34,7 @@
         </metal:styles>
         <metal:main fill-slot="main">
             <tal:block tal:define="can_export_layout view/can_export_layout">
+                <span id="cover-root" class="hiddenStructure" tal:content="string:${context/absolute_url}/"></span>
                 <div id="sidebar">
                     <ul class="layout-actions">
                         <li>

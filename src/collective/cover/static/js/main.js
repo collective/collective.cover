@@ -8,7 +8,7 @@ $(function() {
     var $a = $(this);
     var $tile = $a.parents('.tile');
     $.ajax({
-      url: '@@updatetile',
+      url: $('#cover-root').text() + '@@updatetile',
       data: {
         'tile-id': $tile.attr('id'),
         'month:int': $a.attr('data-month'),

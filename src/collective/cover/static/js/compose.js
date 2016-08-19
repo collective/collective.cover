@@ -27,7 +27,7 @@ function removeObjFromTile() {
     var tile_type = tile.attr("data-tile-type");
     var tile_id = tile.attr("id");
     $.ajax({
-      url: "@@removeitemfromlisttile",
+      url: $('#cover-root').text() + "@@removeitemfromlisttile",
       data: {
         'tile-type': tile_type,
         'tile-id': tile_id,
@@ -74,7 +74,7 @@ $(document).ready(function() {
       var tile_type = tile.attr("data-tile-type");
       var tile_id = tile.attr("id");
       $.ajax({
-        url: "@@updatelisttilecontent",
+        url: $('#cover-root').text() + "@@updatelisttilecontent",
         data: {
           'tile-type': tile_type,
           'tile-id': tile_id,

@@ -14,6 +14,7 @@
 </head>
 <body>
 <metal:main fill-slot="main">
+    <span id="cover-root" class="hiddenStructure" tal:content="string:${context/absolute_url}/"></span>
     <div tal:define="layout nocall:context/@@layout"
          tal:replace="structure layout/render_view" />
 </metal:main>
