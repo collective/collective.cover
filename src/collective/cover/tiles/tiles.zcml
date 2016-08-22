@@ -129,7 +129,7 @@
   <plone:tile
       name="collective.cover.calendar"
       title="Calendar Tile"
-      description="A tile that shows an Calendar for the site."
+      description="A tile that shows a calendar of published events."
       icon="++resource++collective.cover/img/tile-calendar.png"
       add_permission="cmf.ModifyPortalContent"
       schema=".calendar.ICalendarTile"
