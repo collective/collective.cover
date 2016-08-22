@@ -73,6 +73,7 @@ class CalendarTile(PersistentCoverTile):
         self._set_first_weekday()
 
     def _set_first_weekday(self):
+        """Set calendar library first weekday for calendar."""
         try:  # Plone 5.x
             first_weekday = api.portal.get_registry_record('plone.first_weekday')
         except InvalidParameterError:
@@ -89,6 +90,7 @@ class CalendarTile(PersistentCoverTile):
 
     @ram.cache(_catalog_counter_cachekey)
     def getEvents(self):
+        """Return all events in the selected month."""
         catalog = api.portal.get_tool('portal_catalog')
         _, last_day = calendar.monthrange(self.year, self.month)
         start = DateTime(self.year, self.month, 1)
@@ -105,6 +107,7 @@ class CalendarTile(PersistentCoverTile):
         return events
 
     def getEventsForCalendar(self):
+        """Return the month data filled with events."""
         events = self.getEvents()
         monthcalendar = calendar.monthcalendar(self.year, self.month)
         weeks = []
@@ -133,6 +136,7 @@ class CalendarTile(PersistentCoverTile):
         return weeks
 
     def getEventString(self, event):
+        """Get event string to make event list hint on mouse over."""
         start = event['start'] and ':'.join(event['start'].split(':')[:2]) or ''
         end = event['end'] and ':'.join(event['end'].split(':')[:2]) or ''
         title = safe_unicode(event['title']) or u'event'
@@ -173,6 +177,7 @@ class CalendarTile(PersistentCoverTile):
         return year, month
 
     def getPreviousMonth(self, year, month):
+        """Get previous month."""
         if month == 0 or month == 1:
             month, year = 12, year - 1
         else:
@@ -180,6 +185,7 @@ class CalendarTile(PersistentCoverTile):
         return (year, month)
 
     def getNextMonth(self, year, month):
+        """Get next month."""
         if month == 12:
             month, year = 1, year + 1
         else:
@@ -204,17 +210,20 @@ class CalendarTile(PersistentCoverTile):
             self.now[2] == day and self.now[1] == self.month and self.now[0] == self.year)
 
     def getReviewStateString(self):
+        """Get Review State String."""
         states = ['published']
         return ''.join(map(lambda x: 'review_state={0}&amp;'.format(self.url_quote_plus(x)), states))
 
     @ram.cache(_catalog_counter_cachekey)
     def getEventTypes(self):
+        """Get a list of events portal types."""
         catalog = api.portal.get_tool('portal_catalog')
         query = dict(object_provides=EVENT_INTERFACES)
         types = set([b.portal_type for b in catalog(**query)])
         return ''.join(map(lambda x: 'Type={0}&amp;'.format(self.url_quote_plus(x)), types))
 
     def getQueryString(self):
+        """Get current url get parameters."""
         request = self.request
         query_string = request.get('orig_query',
                                    request.get('QUERY_STRING', None))
