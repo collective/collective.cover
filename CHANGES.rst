@@ -6,6 +6,9 @@ There's a frood who really knows where his towel is.
 1.3b2 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Add plone.protect when save layout (fixes `#651`_).
+  [rodfersou]
+
 - Use pat-modal instead of prepOverlay for Plone 5 (fixes `#641`_).
   [rodfersou]
 
@@ -129,3 +132,4 @@ Previous entries can be found in the HISTORY.rst file.
 .. _`#584`: https://github.com/collective/collective.cover/issues/584
 .. _`#608`: https://github.com/collective/collective.cover/issues/608
 .. _`#641`: https://github.com/collective/collective.cover/issues/641
+.. _`#651`: https://github.com/collective/collective.cover/issues/651
