@@ -4,8 +4,14 @@ from collective.cover.tiles.calendar import CalendarTile
 from collective.cover.tiles.calendar import ICalendarTile
 from datetime import datetime
 from plone import api
+from plone.api.exc import InvalidParameterError
+from tzlocal import get_localzone
 
+import calendar
 import unittest
+
+
+TZNAME = get_localzone().zone
 
 
 class CalendarTileTestCase(TestTileMixin, unittest.TestCase):
@@ -17,6 +23,17 @@ class CalendarTileTestCase(TestTileMixin, unittest.TestCase):
         self.request['year'] = 2016
         self.request['month'] = 8
 
+        # Pin first weekday to monday
+        try:  # Plone 5.x
+            api.portal.set_registry_record('plone.first_weekday', calendar.MONDAY)
+        except InvalidParameterError:
+            try:  # plone.app.event
+                api.portal.set_registry_record('plone.app.event.first_weekday', calendar.MONDAY)
+            except InvalidParameterError:  # Plone 4.x
+                portal_calendar = api.portal.get_tool('portal_calendar')
+                portal_calendar.firstweekday = calendar.MONDAY
+
+        # Create tile
         self.tile = CalendarTile(self.cover, self.request)
         self.tile.__name__ = u'collective.cover.calendar'
         self.tile.id = u'test'
@@ -31,7 +48,7 @@ class CalendarTileTestCase(TestTileMixin, unittest.TestCase):
                 end = datetime(2016, 8, i, 11, 30)
                 obj = api.content.create(
                     container=self.portal, type='Event', id='e{0}'.format(i),
-                    startDate=start, endDate=end, start=start, end=end)
+                    startDate=start, endDate=end, start=start, end=end, timezone=TZNAME)
                 api.content.transition(obj, 'publish')
 
     @unittest.expectedFailure  # FIXME: raises BrokenImplementation
