@@ -96,117 +96,119 @@ $(document).ready(function() {
 
   TitleMarkupSetup();
 
-  $('a.edit-tile-link').prepOverlay({
-    subtype: 'ajax',
-    filter: '.tile-content',
-    formselector: '#edit_tile',
-    closeselector: '[name="buttons.cancel"]',
-    noform: 'close',
-    beforepost: function(return_value, data_parent) {
-      // Before post data, populate the textarea (textarea.mce_editable) with the contents of  iframe created by TinyMCE call.
-      // TODO: This does not solves, if we have more of a textarea widget in tiles. What's the solution?
-      var iframes = jQuery('#edit_tile iframe');
-      var mcs = {};
+  if ($.fn.prepOverlay !== undefined) {
+    $('a.edit-tile-link').prepOverlay({
+      subtype: 'ajax',
+      filter: '.tile-content',
+      formselector: '#edit_tile',
+      closeselector: '[name="buttons.cancel"]',
+      noform: 'close',
+      beforepost: function(return_value, data_parent) {
+        // Before post data, populate the textarea (textarea.mce_editable) with the contents of  iframe created by TinyMCE call.
+        // TODO: This does not solves, if we have more of a textarea widget in tiles. What's the solution?
+        var iframes = jQuery('#edit_tile iframe');
+        var mcs = {};
 
-      iframes.each(function(index) {
-        var iframe = $(this);
-        var idFrame = iframe.attr('id');
-        var idFrameLen = idFrame.length;
+        iframes.each(function(index) {
+          var iframe = $(this);
+          var idFrame = iframe.attr('id');
+          var idFrameLen = idFrame.length;
 
-        if (idFrameLen > 4 && idFrame.slice(idFrameLen - 4, idFrameLen) == "_ifr") {
-          mcs[idFrame.slice(0, -4)] = iframe;
+          if (idFrameLen > 4 && idFrame.slice(idFrameLen - 4, idFrameLen) == "_ifr") {
+            mcs[idFrame.slice(0, -4)] = iframe;
+          }
+        });
+
+        var newlist = $.map(data_parent, function(value, i) {
+          if (data_parent[i].type == "textarea" && mcs[data_parent[i].name] !== undefined) {
+            value.value = mcs[value.name].contents().find('body').html();
+          }
+          return value;
+        });
+      },
+      afterpost: function(return_value, data_parent) {
+        var tileId = data_parent.data('pbo').src.split('/').pop();
+        var tile = $('#' + tileId);
+        // Get tile type
+        var tileType = tile.data('tile-type');
+        // List of tile types that make a page reload
+        if (root.reloadTypes.indexOf(tileType) > -1) {
+          location.reload();
+        } else {
+          tile.html(return_value);
         }
-      });
-
-      var newlist = $.map(data_parent, function(value, i) {
-        if (data_parent[i].type == "textarea" && mcs[data_parent[i].name] !== undefined) {
-          value.value = mcs[value.name].contents().find('body').html();
-        }
-        return value;
-      });
-    },
-    afterpost: function(return_value, data_parent) {
-      var tileId = data_parent.data('pbo').src.split('/').pop();
-      var tile = $('#' + tileId);
-      // Get tile type
-      var tileType = tile.data('tile-type');
-      // List of tile types that make a page reload
-      if (root.reloadTypes.indexOf(tileType) > -1) {
-        location.reload();
-      } else {
-        tile.html(return_value);
-      }
-    },
-    config: {
-      onLoad: function() {
-        // With plone.app.widgets and Plone 4.3
-        if (typeof require !== 'undefined' && require.defined('pat-registry')) {
-          // Remove old editors references to work with ajax
-          if (typeof tinyMCE !== 'undefined' && tinyMCE !== null) {
-            if (tinyMCE.EditorManager != null) {
-              tinyMCE.EditorManager.editors = [];
+      },
+      config: {
+        onLoad: function() {
+          // With plone.app.widgets and Plone 4.3
+          if (typeof require !== 'undefined' && require.defined('pat-registry')) {
+            // Remove old editors references to work with ajax
+            if (typeof tinyMCE !== 'undefined' && tinyMCE !== null) {
+              if (tinyMCE.EditorManager != null) {
+                tinyMCE.EditorManager.editors = [];
+              }
             }
-          }
-          // Add tinymce
-          $('.overlay textarea.mce_editable').addClass('pat-tinymce');
-          require('pat-registry').scan($('.overlay'), ['tinymce']);
-          // Wire save buttom to save tinymce
-          $( '.overlay input#buttons-save').on('click', function() {
-            tinyMCE.triggerSave();
-          });
-          // Hack to make overlay work over overlay
-          $('.overlay').on('mouseover', function() {
-            $('div.plone-modal-wrapper').css('z-index', '10050');
-          });
-        } else if (typeof initTinyMCE !== 'undefined') { // Plone 4.3
-          // Remove old editors references to work with ajax
-          if (typeof tinyMCE !== 'undefined' && tinyMCE !== null) {
-            if (tinyMCE.EditorManager != null) {
-              tinyMCE.EditorManager.editors = [];
-            }
-          }
-          // Add tinymce
-          initTinyMCE(this.getOverlay());
-        } else if (typeof TinyMCEConfig !== 'undefined') { // Plone 4.2
-          var textarea_id = $('.overlay textarea.mce_editable').attr('id');
-          if (typeof textarea_id !== 'undefined') {
-            var config = new TinyMCEConfig(textarea_id);
-            delete InitializedTinyMCEInstances[textarea_id];
-            config.init();
-          }
-        }
-        // Remove unecessary link, use HTML button of EditorManager
-        $('div.suppressVisualEditor').remove();
-
-        //carousel
-        var carousel = $('div[data-carousel="carousel-sort"]');
-        if (carousel[0] !== undefined) {
-
-          var serial_sort = function(textarea, sortable) {
-            textarea.empty();
-            sortable.find('[data-content-uuid]').each(function(e) {
-              textarea.append($(this).attr('data-content-uuid') + "\n");
+            // Add tinymce
+            $('.overlay textarea.mce_editable').addClass('pat-tinymce');
+            require('pat-registry').scan($('.overlay'), ['tinymce']);
+            // Wire save buttom to save tinymce
+            $( '.overlay input#buttons-save').on('click', function() {
+              tinyMCE.triggerSave();
             });
-          };
-
-          var textarea = carousel.find('>textarea');
-          var sortable = carousel.find('.sortable');
-          textarea.hide();
-
-          sortable.sortable({
-            stop: function(event, ui) {
-              serial_sort(textarea, sortable);
+            // Hack to make overlay work over overlay
+            $('.overlay').on('mouseover', function() {
+              $('div.plone-modal-wrapper').css('z-index', '10050');
+            });
+          } else if (typeof initTinyMCE !== 'undefined') { // Plone 4.3
+            // Remove old editors references to work with ajax
+            if (typeof tinyMCE !== 'undefined' && tinyMCE !== null) {
+              if (tinyMCE.EditorManager != null) {
+                tinyMCE.EditorManager.editors = [];
+              }
             }
-          });
+            // Add tinymce
+            initTinyMCE(this.getOverlay());
+          } else if (typeof TinyMCEConfig !== 'undefined') { // Plone 4.2
+            var textarea_id = $('.overlay textarea.mce_editable').attr('id');
+            if (typeof textarea_id !== 'undefined') {
+              var config = new TinyMCEConfig(textarea_id);
+              delete InitializedTinyMCEInstances[textarea_id];
+              config.init();
+            }
+          }
+          // Remove unecessary link, use HTML button of EditorManager
+          $('div.suppressVisualEditor').remove();
 
-          //create delete buttons
-          sortable.find('[data-content-uuid]').append("<i class='tile-remove-item' data-content-uuid=''><span class='text'>remove</span></i>");
-          sortable.find('[data-content-uuid]').find('.tile-remove-item').click(function(e) {
-            $(this).parent('.textline-sortable-element').remove();
-            serial_sort(textarea, sortable);
-          });
+          //carousel
+          var carousel = $('div[data-carousel="carousel-sort"]');
+          if (carousel[0] !== undefined) {
+
+            var serial_sort = function(textarea, sortable) {
+              textarea.empty();
+              sortable.find('[data-content-uuid]').each(function(e) {
+                textarea.append($(this).attr('data-content-uuid') + "\n");
+              });
+            };
+
+            var textarea = carousel.find('>textarea');
+            var sortable = carousel.find('.sortable');
+            textarea.hide();
+
+            sortable.sortable({
+              stop: function(event, ui) {
+                serial_sort(textarea, sortable);
+              }
+            });
+
+            //create delete buttons
+            sortable.find('[data-content-uuid]').append("<i class='tile-remove-item' data-content-uuid=''><span class='text'>remove</span></i>");
+            sortable.find('[data-content-uuid]').find('.tile-remove-item').click(function(e) {
+              $(this).parent('.textline-sortable-element').remove();
+              serial_sort(textarea, sortable);
+            });
+          }
         }
       }
-    }
-  });
+    });
+  }
 });
