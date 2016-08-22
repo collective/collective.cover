@@ -9,6 +9,7 @@ from collective.cover.tiles.base import PersistentCoverTile
 from DateTime import DateTime
 from plone import api
 from plone.api.exc import InvalidParameterError
+from plone.memoize import ram
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.utils import safe_unicode
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
@@ -23,6 +24,12 @@ import calendar
 PLMF = MessageFactory('plonelocales')
 EVENT_INTERFACES = [
     'plone.event.interfaces.IEvent', 'Products.ATContentTypes.interfaces.event.IATEvent']
+
+
+def _catalog_counter_cachekey(method, self):
+    """Return a cachekey based on catalog updates."""
+    catalog = api.portal.get_tool('portal_catalog')
+    return str(catalog.getCounter())
 
 
 class ICalendarTile(IPersistentCoverTile):
@@ -80,29 +87,25 @@ class CalendarTile(PersistentCoverTile):
         """Return an empty list as no content types are accepted."""
         return []
 
-    def addEvents(self, day):
+    @ram.cache(_catalog_counter_cachekey)
+    def getEvents(self):
         catalog = api.portal.get_tool('portal_catalog')
-        start = DateTime(self.year, self.month, day['day'])
-        end = start + 1
+        _, last_day = calendar.monthrange(self.year, self.month)
+        start = DateTime(self.year, self.month, 1)
+        end = DateTime(self.year, self.month, last_day, 23, 59)
         query = dict(
             object_provides=EVENT_INTERFACES, review_state='published',
             start={'query': (start, end), 'range': 'min:max'}, sort_on='start')
+        events = {}
         for brain in catalog(**query):
-            day['event'] += 1
-            day['date_string'] = '{0}-{1}-{2}'.format(self.year, self.month, day['day'])
-            if 'eventslist' not in day:
-                day['eventslist'] = []
-            event = dict(
-                start=brain.start.Time(), end=brain.end.Time(), title=brain.Title or brain.id)
-            day['eventslist'].append(event)
-            if 'eventstring' not in day:
-                localized_date = self._ts.ulocalized_time(
-                    start, context=self.context, request=self.request)
-                day['eventstring'] = localized_date
-            day['eventstring'] += '\n {0}'.format(self.getEventString(event))
-        return day
+            day = brain.start.day()
+            if day not in events:
+                events[day] = []
+            events[day].append(brain)
+        return events
 
     def getEventsForCalendar(self):
+        events = self.getEvents()
         monthcalendar = calendar.monthcalendar(self.year, self.month)
         weeks = []
         for w in monthcalendar:
@@ -111,7 +114,20 @@ class CalendarTile(PersistentCoverTile):
                 day = {'day': d, 'event': 0, 'eventslist': []}
                 if d > 0:
                     day['is_today'] = self.isToday(d)
-                    day = self.addEvents(day)
+                day_events = []
+                if d in events:
+                    day_events = events[d]
+                    day['date_string'] = '{0}-{1}-{2}'.format(self.year, self.month, d)
+                    day['event'] += len(day_events)
+                    day['eventslist'] = []
+                    localized_date = self._ts.ulocalized_time(
+                        day_events[0].start, context=self.context, request=self.request)
+                    day['eventstring'] = localized_date
+                for e in day_events:
+                    event = dict(
+                        start=e.start.Time(), end=e.end.Time(), title=e.Title or e.id)
+                    day['eventslist'].append(event)
+                    day['eventstring'] += '\n {0}'.format(self.getEventString(event))
                 week.append(day)
             weeks.append(week)
         return weeks
@@ -133,6 +149,7 @@ class CalendarTile(PersistentCoverTile):
         return eventstring
 
     def getYearAndMonthToDisplay(self):
+        """Return calendar year and month."""
         request = self.request
 
         # First priority goes to the data in the REQUEST
@@ -190,6 +207,7 @@ class CalendarTile(PersistentCoverTile):
         states = ['published']
         return ''.join(map(lambda x: 'review_state={0}&amp;'.format(self.url_quote_plus(x)), states))
 
+    @ram.cache(_catalog_counter_cachekey)
     def getEventTypes(self):
         catalog = api.portal.get_tool('portal_catalog')
         query = dict(object_provides=EVENT_INTERFACES)
