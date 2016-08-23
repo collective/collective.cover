@@ -166,8 +166,8 @@ class Fixture(PloneSandboxLayer):
         set_image_field(portal['my-image1'], generate_jpeg(50, 50))
         set_image_field(portal['my-image2'], generate_jpeg(50, 50))
         set_image_field(portal['my-news-item'], generate_jpeg(50, 50))
-
-        portal.portal_workflow.setDefaultChain('simple_publication_workflow')
+        portal_workflow = portal.portal_workflow
+        portal_workflow.setChainForPortalTypes(['Collection'], ['simple_publication_workflow'])
 
         # Prevent kss validation errors in Plone 4.2
         portal_kss = getattr(portal, 'portal_kss', None)
