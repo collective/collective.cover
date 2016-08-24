@@ -35,20 +35,44 @@ Test Calendar Tile
     # test next / prev buttons
     ${nextyear} =  Execute Javascript
     ...  return (function() {
-    ...    var $next = jQuery('a.calendar-tile-next');
+    ...    var $next = jQuery('a.calendarNext');
+    ...    var str_klasses = $next.attr('class');
+    ...    if (str_klasses.indexOf('kssattr') >= 0) {
+    ...      var klasses = str_klasses.split(' ');
+    ...      var i, klass, len, year, year_check;
+    ...      for (i = 0, len = klasses.length; i < len; i++) {
+    ...        klass = klasses[i];
+    ...        year_check = 'kssattr-year-';
+    ...        if (klass.indexOf(year_check) === 0) {
+    ...          return klass.slice(year_check.length);
+    ...        }
+    ...      }
+    ...    }
     ...    return $next.attr('data-year');
     ...  })();
     ${nextmonth} =  Execute Javascript
     ...  return (function() {
-    ...    var $next = jQuery('a.calendar-tile-next');
+    ...    var $next = jQuery('a.calendarNext');
+    ...    var str_klasses = $next.attr('class');
+    ...    if (str_klasses.indexOf('kssattr') >= 0) {
+    ...      var klasses = str_klasses.split(' ');
+    ...      var i, klass, len, month, month_check;
+    ...      for (i = 0, len = klasses.length; i < len; i++) {
+    ...        klass = klasses[i];
+    ...        month_check = 'kssattr-month-';
+    ...        if (klass.indexOf(month_check) === 0) {
+    ...          return klass.slice(month_check.length);
+    ...        }
+    ...      }
+    ...    }
     ...    return $next.attr('data-month');
     ...  })();
-    Wait Until Keyword Succeeds  5 sec  1 sec  Click Link  css=a.calendar-tile-next
-    Wait Until Keyword Succeeds  5 sec  1 sec  Click Link  css=a.calendar-tile-next
-    Page Should Contain Element  xpath=.//a[@class='calendar-tile-prev'][@data-month='${nextmonth}'][@data-year='${nextyear}']
-    Wait Until Keyword Succeeds  5 sec  1 sec  Click Link  css=a.calendar-tile-prev
-    Wait Until Keyword Succeeds  5 sec  1 sec  Click Link  css=a.calendar-tile-prev
-    Page Should Contain Element  xpath=.//a[@class='calendar-tile-next'][@data-month='${nextmonth}'][@data-year='${nextyear}']
+    Wait Until Keyword Succeeds  5 sec  1 sec  Click Link  css=a.calendarNext
+    Wait Until Keyword Succeeds  5 sec  1 sec  Click Link  css=a.calendarNext
+    Page Should Contain Element  jquery=a.calendarPrevious[data-month=${nextmonth}][data-year=${nextyear}],a.calendarPrevious.kssattr-month-${nextmonth}.kssattr-year-${nextyear}
+    Wait Until Keyword Succeeds  5 sec  1 sec  Click Link  css=a.calendarPrevious
+    Wait Until Keyword Succeeds  5 sec  1 sec  Click Link  css=a.calendarPrevious
+    Page Should Contain Element  jquery=a.calendarNext[data-month=${nextmonth}][data-year=${nextyear}],a.calendarNext.kssattr-month-${nextmonth}.kssattr-year-${nextyear}
 
     # delete the tile
     Open Layout Tab

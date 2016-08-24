@@ -8,9 +8,11 @@ from zope.interface import implementer
 try:  # plone.app.event
     from plone.app.event.portlets.portlet_calendar import Assignment
     from plone.app.event.portlets.portlet_calendar import Renderer
+    HAS_PLONE_APP_EVENT = True
 except ImportError:  # Plone 4.x
     from plone.app.portlets.portlets.calendar import Assignment
     from plone.app.portlets.portlets.calendar import Renderer
+    HAS_PLONE_APP_EVENT = False
 
 
 class ICalendarTile(IPersistentCoverTile):
@@ -40,26 +42,10 @@ class CalendarTile(PersistentCoverTile):
         helper = Renderer(self.context, self.request, None, None, Assignment())
         helper.update()
 
-        self._ts = helper._ts
-        self.url_quote_plus = helper.url_quote_plus
-
-        self.now = helper.now
-        self.year = year = helper.year
-        self.month = month = helper.month
-
-        self.showPrevMonth = helper.showPrevMonth
-        self.showNextMonth = helper.showNextMonth
-
-        self.prevMonthYear, self.prevMonthMonth = helper.getPreviousMonth(year, month)
-        self.nextMonthYear, self.nextMonthMonth = helper.getNextMonth(year, month)
-
-        self.monthName = helper.monthName
-
-        self.getQueryString = helper.getQueryString
-        self.getWeekdays = helper.getWeekdays
-        self.getEventsForCalendar = helper.getEventsForCalendar
-        self.getReviewStateString = helper.getReviewStateString
-        self.getEventTypes = helper.getEventTypes
+        if HAS_PLONE_APP_EVENT:
+            self.helper_template = helper.render
+        else:
+            self.helper_template = helper._template
 
     def accepted_ct(self):
         """Return an empty list as no content types are accepted."""
