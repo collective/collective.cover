@@ -524,7 +524,6 @@ class Upgrade13to14TestCase(UpgradeTestCaseBase):
         self.assertGreaterEqual(int(version), int(self.to_version))
         self.assertEqual(self._how_many_upgrades_to_do(), 4)
 
-    # FIXME: https://github.com/collective/collective.cover/issues/633
     @unittest.skipIf(IS_PLONE_5, 'Upgrade step not supported under Plone 5')
     def test_register_calendar_tile(self):
         # address also an issue with Setup permission
@@ -577,3 +576,14 @@ class Upgrade13to14TestCase(UpgradeTestCaseBase):
         self._do_upgrade_step(step)
 
         self.assertIn(script, js_tool.getResourceIds())
+
+
+class Upgrade14to15TestCase(UpgradeTestCaseBase):
+
+    def setUp(self):
+        UpgradeTestCaseBase.setUp(self, u'14', u'15')
+
+    def test_registrations(self):
+        version = self.setup.getLastVersionForProfile(self.profile_id)[0]
+        self.assertGreaterEqual(int(version), int(self.to_version))
+        self.assertEqual(self._how_many_upgrades_to_do(), 2)

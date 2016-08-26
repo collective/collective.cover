@@ -249,30 +249,23 @@ table.invisible
 }
 
 /* Tile Calendar */
-.cover-calendar-tile .calendar-tile-header
+.cover-calendar-tile .portletCalendar
 {
-    font-weight: bold;
-    line-height: normal;
-
-    padding: .42em 1em;
-
-    text-align: center;
-
-    background: #ddd;
+    font-size: 1em;
 }
-#content .cover-calendar-tile a.calendar-tile-prev,
-#content .cover-calendar-tile a.calendar-tile-next
+#content .cover-calendar-tile a.calendarPrevious,
+#content .cover-calendar-tile a.calendarNext
 {
     margin: 0 -.5em;
     padding: 0 1em;
 
     border-bottom: none;
 }
-.cover-calendar-tile a.calendar-tile-prev
+.cover-calendar-tile a.calendarPrevious
 {
     float: left;
 }
-.cover-calendar-tile a.calendar-tile-next
+.cover-calendar-tile a.calendarNext
 {
     float: right;
 }

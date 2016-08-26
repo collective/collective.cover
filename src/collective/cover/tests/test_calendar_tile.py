@@ -14,7 +14,6 @@ class CalendarTileTestCase(TestTileMixin, unittest.TestCase):
         self.tile.__name__ = u'collective.cover.calendar'
         self.tile.id = u'test'
 
-    @unittest.expectedFailure  # FIXME: raises BrokenImplementation
     def test_interface(self):
         self.interface = ICalendarTile
         self.klass = CalendarTile
@@ -27,13 +26,3 @@ class CalendarTileTestCase(TestTileMixin, unittest.TestCase):
 
     def test_accepted_content_types(self):
         self.assertEqual(self.tile.accepted_ct(), [])
-
-
-# load tests only in Plone < 5
-def test_suite():
-    # FIXME: https://github.com/collective/collective.cover/issues/633
-    from collective.cover.config import IS_PLONE_5
-    if IS_PLONE_5:
-        return unittest.TestSuite()
-
-    return unittest.defaultTestLoader.loadTestsFromName(__name__)

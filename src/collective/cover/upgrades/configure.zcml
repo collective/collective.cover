@@ -4,5 +4,6 @@
   <include package=".v12" />
   <include package=".v13" />
   <include package=".v14" />
+  <include package=".v15" />
 
 </configure>

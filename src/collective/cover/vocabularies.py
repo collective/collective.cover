@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from collective.cover.config import IS_PLONE_5
 from collective.cover.controlpanel import ICoverSettings
 from collective.cover.interfaces import IGridSystem
 from collective.cover.tiles.base import IPersistentCoverTile
@@ -36,10 +35,6 @@ class AvailableTilesVocabulary(object):
         settings = registry.forInterface(ICoverSettings)
         tiles = settings.available_tiles
 
-        # FIXME: https://github.com/collective/collective.cover/issues/633
-        if IS_PLONE_5 and 'collective.cover.calendar' in tiles:
-            tiles.remove('collective.cover.calendar')
-
         items = [SimpleTerm(value=i, title=i) for i in tiles]
         return SimpleVocabulary(items)
 
@@ -59,10 +54,6 @@ class EnabledTilesVocabulary(object):
     """Return a list of tiles ready to work with collective.cover."""
 
     def _enabled(self, name):
-        # FIXME: https://github.com/collective/collective.cover/issues/633
-        if IS_PLONE_5 and name == 'collective.cover.calendar':
-            return False
-
         tile_type = queryUtility(ITileType, name)
         if tile_type:
             return issubclass(tile_type.schema, IPersistentCoverTile)
