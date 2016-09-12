@@ -16,9 +16,6 @@ There's a frood who really knows where his towel is.
 - Update Traditional Chinese translation.
   [l34marr]
 
-- Remove dependency on plone.directives.form.
-  [l34marr]
-
 - Remove dependency on five.grok (closes `#510`_).
   [l34marr, rodfersou]
 
