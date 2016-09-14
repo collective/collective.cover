@@ -278,9 +278,11 @@ Once registered you can select your grid system on the Cover Settings control pa
     In collective.cover 1.0a11 the data structure for the columns was changed. If you already implemented your own custom grid, check the example above and fix the retrieval of 'column-size' and addition of the css-class attribute.
 
 .. NOTE::
-    ``collective.cover`` does not provide any grid system styles,
-    only changes the HTML output.
-    Be sure your theme have all necessary styles for the grid system you choose.
+    ``collective.cover`` does not provide any CSS for the grid system it ships with, it *only* changes the HTML output.
+    You will therefore need to make sure your theme has all the necessary styles for the grid system you choose.
+    For example if you want to enable the Bootstrap 2 or 3 Grids mentioned above you will probably want to include the appropriate version of the `collective.js.bootstrap`_ product.
+
+.. _`collective.js.bootstrap`: https://pypi.python.org/pypi/collective.js.bootstrap
 
 Layouts
 ^^^^^^^
