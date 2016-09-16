@@ -13,7 +13,7 @@ $(document).ready(function() {
       });
       $this.find('span').text('Saving...');
       $.ajax({
-        'url': '@@save_layout',
+        'url': '@@save_layout' + location.search,
         'data': {
           'cover_layout': JSON.stringify(json)
         },
