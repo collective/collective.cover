@@ -45,10 +45,10 @@ Test Calendar Tile
     ...  })();
     Wait Until Keyword Succeeds  5 sec  1 sec  Click Link  css=a.calendar-tile-next
     Wait Until Keyword Succeeds  5 sec  1 sec  Click Link  css=a.calendar-tile-next
-    Page Should Contain Element  xpath=.//a[@class='calendar-tile-prev'][@data-month='${nextmonth}'][@data-year='${nextyear}']
+    Wait Until Page Contains Element  xpath=.//a[@class='calendar-tile-prev'][@data-month='${nextmonth}'][@data-year='${nextyear}']
     Wait Until Keyword Succeeds  5 sec  1 sec  Click Link  css=a.calendar-tile-prev
     Wait Until Keyword Succeeds  5 sec  1 sec  Click Link  css=a.calendar-tile-prev
-    Page Should Contain Element  xpath=.//a[@class='calendar-tile-next'][@data-month='${nextmonth}'][@data-year='${nextyear}']
+    Wait Until Page Contains Element  xpath=.//a[@class='calendar-tile-next'][@data-month='${nextmonth}'][@data-year='${nextyear}']
 
     # delete the tile
     Open Layout Tab
