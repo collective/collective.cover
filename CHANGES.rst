@@ -6,7 +6,8 @@ There's a frood who really knows where his towel is.
 1.3b2 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
-- Nothing changed yet.
+- Enforce usage of plone.app.tiles >= 1.1.0 to avoid creation of zillions of empty blob files when using versioning (fixes `#532`_, huge HT @datakurre).
+  [hvelarde]
 
 
 1.3b1 (2016-09-12)
@@ -117,6 +118,7 @@ Previous entries can be found in the HISTORY.rst file.
 .. _`#414`: https://github.com/collective/collective.cover/issues/414
 .. _`#487`: https://github.com/collective/collective.cover/issues/487
 .. _`#510`: https://github.com/collective/collective.cover/issues/510
+.. _`#532`: https://github.com/collective/collective.cover/issues/532
 .. _`#543`: https://github.com/collective/collective.cover/issues/543
 .. _`#574`: https://github.com/collective/collective.cover/issues/574
 .. _`#578`: https://github.com/collective/collective.cover/issues/578

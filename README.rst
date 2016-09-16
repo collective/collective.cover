@@ -84,11 +84,6 @@ Got an idea? Found a bug? Let us know by `opening a support ticket <https://gith
 Known issues
 ^^^^^^^^^^^^
 
-* `Versioning creates zillions of empty blob files <https://github.com/collective/collective.cover/issues/532>`_.
-  If you're using this feature in your site you have to take special attention to the number of free inodes in your file system,
-  as you can run out of them;
-  use the ``df -i`` command to check it.
-
 * `Package is not compatible with standard Plone tiles <https://github.com/collective/collective.cover/issues/81>`_.
   This will be addressed in a future release, if we get an sponsor.
 
@@ -122,7 +117,7 @@ Edit your buildout.cfg and add add the following to it:
     collective.js.bootstrap = 2.3.1.1
     plone.app.blocks = 2.2.1
     plone.app.drafts = 1.0
-    plone.app.tiles = 1.0.2
+    plone.app.tiles = 1.1.0
     plone.tiles = 1.5.2
 
 If you are using Plone 4.2.x you need to add the following also:
