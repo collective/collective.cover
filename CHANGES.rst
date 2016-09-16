@@ -6,6 +6,9 @@ There's a frood who really knows where his towel is.
 1.3b2 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Use pat-modal instead of prepOverlay for Plone 5 (fixes `#641`_).
+  [rodfersou]
+
 - Enforce usage of plone.app.tiles >= 1.1.0 to avoid creation of zillions of empty blob files when using versioning (fixes `#532`_, huge HT @datakurre).
   [hvelarde]
 
@@ -125,3 +128,4 @@ Previous entries can be found in the HISTORY.rst file.
 .. _`#581`: https://github.com/collective/collective.cover/issues/581
 .. _`#584`: https://github.com/collective/collective.cover/issues/584
 .. _`#608`: https://github.com/collective/collective.cover/issues/608
+.. _`#641`: https://github.com/collective/collective.cover/issues/641
