@@ -14,6 +14,7 @@ from Products.CMFPlone.utils import safe_unicode
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zope import schema
 from zope.component import queryUtility
+from zope.deprecation.deprecation import deprecate
 from zope.interface import implementer
 from zope.schema import getFieldsInOrder
 
@@ -21,6 +22,8 @@ import random
 
 
 class ICollectionTile(IPersistentCoverTile):
+
+    """A tile that shows the result of a collection."""
 
     header = schema.TextLine(
         title=_(u'Header'),
@@ -74,7 +77,7 @@ class ICollectionTile(IPersistentCoverTile):
 
     form.omitted(IDefaultConfigureForm, 'random')
     random = schema.Bool(
-        title=_(u"Select random items"),
+        title=_(u'Select random items'),
         required=False,
         default=False
     )
@@ -82,9 +85,10 @@ class ICollectionTile(IPersistentCoverTile):
     footer = schema.TextLine(
         title=_(u'Footer'),
         required=False,
+        default=_(u'More…'),
     )
 
-    uuid = schema.TextLine(
+    uuid = schema.ASCIILine(
         title=_(u'UUID'),
         required=False,
         readonly=True,
@@ -94,68 +98,66 @@ class ICollectionTile(IPersistentCoverTile):
 @implementer(ICollectionTile)
 class CollectionTile(PersistentCoverTile):
 
-    index = ViewPageTemplateFile('templates/collection.pt')
+    """A tile that shows the result of a collection."""
 
+    index = ViewPageTemplateFile('templates/collection.pt')
     is_configurable = True
     is_editable = True
     short_name = _(u'msg_short_name_collection', default=u'Collection')
-    configured_fields = []
+
+    def __call__(self):
+        """Initialize configured_fields on each call."""
+        self.configured_fields = self.get_configured_fields()
+        return super(CollectionTile, self).__call__()
 
     def get_title(self):
         return self.data['title']
 
     def results(self):
-        self.configured_fields = self.get_configured_fields()
-        size_conf = [i for i in self.configured_fields if i['id'] == 'number_to_show']
-
-        if size_conf and 'size' in size_conf[0].keys():
-            size = int(size_conf[0]['size'])
-        else:
-            size = 4
-
-        offset = 0
-        offset_conf = [i for i in self.configured_fields if i['id'] == 'offset']
-        if offset_conf:
-            try:
-                offset = int(offset_conf[0].get('offset', 0))
-            except ValueError:
-                offset = 0
-
         uuid = self.data.get('uuid', None)
         obj = uuidToObject(uuid)
-        if uuid and obj:
-            results = obj.results(batch=False)
-            if self.data.get('random', False):
-                if size > len(results):
-                    size = len(results)
-                return random.sample(results, size)
-
-            return results[offset:offset + size]
-        else:
-            self.remove_relation()
+        if obj is None:
+            self.remove_relation()  # the referenced object was removed
             return []
 
+        results = obj.results(batch=False)
+
+        if self.data.get('random', False):
+            # return a sample of the population
+            size = min(self.count, len(results))
+            return random.sample(results, size)
+
+        # return a slice of the list
+        start, end = self.offset, self.offset + self.count
+        return results[start:end]
+
+    @property
+    def count(self):
+        field = self.get_field_configuration('number_to_show')
+        return int(field.get('size', 5))
+
+    @property
+    def offset(self):
+        field = self.get_field_configuration('offset')
+        return int(field.get('offset', 0))
+
     def is_empty(self):
-        return self.data.get('uuid', None) is None or \
+        return (
+            self.data.get('uuid', None) is None or
             uuidToObject(self.data.get('uuid')) is None
+        )
 
     def populate_with_object(self, obj):
         super(CollectionTile, self).populate_with_object(obj)  # check permission
-
         if obj.portal_type in self.accepted_ct():
-            header = safe_unicode(obj.Title())  # use collection's title as header
-            footer = _(u'More…')  # XXX: can we use field's default?
-
             data_mgr = ITileDataManager(self)
             data_mgr.set({
-                'header': header,
-                'footer': footer,
+                'header': safe_unicode(obj.Title()),  # use collection's title
+                'footer': _(u'More…'),  # XXX: field default's dont work, why?
                 'uuid': IUUID(obj),
             })
 
     def accepted_ct(self):
-        """Return Collection as the only content type accepted in the tile.
-        """
         return ['Collection']
 
     def get_configured_fields(self):
@@ -198,26 +200,30 @@ class CollectionTile(PersistentCoverTile):
 
         return results
 
+    @view.memoize
     def thumbnail(self, item):
-        """Return a thumbnail of an image if the item has an image field and
-        the field is visible in the tile.
+        """Return a thumbnail according to the tile configuration if
+        the item has an image field and the field is configured as
+        visible. Return the original image in case that's selected.
 
         :param item: [required]
         :type item: content object
+        :returns: the scale object
+        :rtype: ImageScale class
         """
         if self._has_image_field(item) and self._field_is_visible('image'):
-            tile_conf = self.get_tile_configuration()
-            image_conf = tile_conf.get('image', None)
-            if image_conf:
-                scaleconf = image_conf['imgsize']
-                # scale string is something like: 'mini 200:200'
-                # we need the name only: 'mini'
-                if scaleconf == '_original':
-                    scale = None
-                else:
-                    scale = scaleconf.split(' ')[0]
-                scales = item.restrictedTraverse('@@images')
-                return scales.scale('image', scale)
+            field = self.get_field_configuration('image')
+            imgsize = field.get('imgsize', 'mini 200:200')
+
+            # XXX: there's a bug here; same in list tile
+            if imgsize == '_original':
+                return None  # FIXME: should return original image
+
+            # scale string is something like: 'mini 200:200'
+            # we need the name only: 'mini'
+            scale = imgsize.split(' ')[0]
+            scales = item.restrictedTraverse('@@images')
+            return scales.scale('image', scale)
 
     def get_alt(self, obj):
         """Return the alt attribute for the image in the obj."""
@@ -225,10 +231,8 @@ class CollectionTile(PersistentCoverTile):
 
     @view.memoize
     def get_image_position(self):
-        tile_conf = self.get_tile_configuration()
-        image_conf = tile_conf.get('image', None)
-        if image_conf:
-            return image_conf['position']
+        field = self.get_field_configuration('image')
+        return field.get('position', 'left')
 
     def remove_relation(self):
         data_mgr = ITileDataManager(self)
@@ -240,7 +244,13 @@ class CollectionTile(PersistentCoverTile):
     def show_header(self):
         return self._field_is_visible('header')
 
+    @deprecate('Use url method instead')
     def collection_url(self):
+        return self.url
+
+    @property
+    def url(self):
+        """Return the URL of the referenced collection."""
         uuid = self.data.get('uuid', None)
         obj = uuidToObject(uuid)
         return obj.absolute_url() if obj else ''

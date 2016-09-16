@@ -94,6 +94,9 @@ class IPersistentCoverTile(model.Schema):
         dictionary from this method
         """
 
+    def get_field_configuration(field):
+        """Return the configuration of the specified field."""
+
     def setAllowedGroupsForEdit(groups):
         """
         This method assigns the groups that have edit permission to the tile
@@ -258,6 +261,20 @@ class PersistentCoverTile(tiles.PersistentTile, ESITile):
             results.append(field)
 
         return results
+
+    def get_field_configuration(self, field):
+        """Return the configuration of the specified field.
+
+        :param field: [required] name of the field
+        :type field: str
+        :returns: the configuration of the field, if exist
+        :rtype: dict or None
+        """
+        fields = self.get_configured_fields()
+        try:
+            return [f for f in fields if f['id'] == field][0]
+        except IndexError:
+            return None
 
     def _include_updated_field(self, field, field_conf):
         # Return True or False to say if the field should be included.

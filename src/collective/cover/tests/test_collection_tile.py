@@ -114,17 +114,18 @@ class CollectionTileTestCase(TestTileMixin, unittest.TestCase):
         self.assertTrue(thumbnail)
         # the thumbnail is an ImageScale
         # FIXME: https://github.com/plone/plone.app.contenttypes/issues/315
-        # from plone.app.imaging.interfaces import IImageScale
-        # self.assertTrue(IImageScale.providedBy(thumbnail))
+        from plone.app.imaging.interfaces import IImageScale
+        self.assertTrue(IImageScale.providedBy(thumbnail))
 
+    def test_thumbnail_not_visible(self):
         # turn visibility off, we should have no thumbnail
         # XXX: refactor; we need a method to easily change field visibility
         tile_conf = self.tile.get_tile_configuration()
         tile_conf['image']['visibility'] = u'off'
         self.tile.set_tile_configuration(tile_conf)
-
-        self.assertFalse(self.tile._field_is_visible('image'))
-        self.assertFalse(self.tile.thumbnail(obj))
+        assert not self.tile._field_is_visible('image')
+        obj = self.portal['my-image']
+        self.assertIsNone(self.tile.thumbnail(obj))
 
     def test_number_of_items(self):
         obj = self.portal['mandelbrot-set']

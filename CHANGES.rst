@@ -6,7 +6,9 @@ There's a frood who really knows where his towel is.
 1.3b2 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
-- Nothing changed yet.
+- Collection tile was refactored;
+  the thumbnail method is now cached on each request to avoid multiple calls.
+  [hvelarde]
 
 
 1.3b1 (2016-09-12)
