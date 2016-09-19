@@ -81,7 +81,7 @@ Test Basic Tile
     Open Content Chooser
     Drag And Drop  css=${image_selector}  css=${tile_selector}
     Wait Until Page Contains Element  css=div.cover-basic-tile a img
-    Page Should Contain  Internal Server Error
+    Wait Until Page Contains  Internal Server Error
     Remove Patch Populate With Object
 
     # drag&drop a Link
