@@ -115,7 +115,7 @@ Edit your buildout.cfg and add add the following to it:
     [versions]
     ...
     collective.js.bootstrap = 2.3.1.1
-    plone.app.blocks = 2.2.1
+    plone.app.blocks = 3.1.0
     plone.app.drafts = 1.0
     plone.app.tiles = 1.1.0
     plone.tiles = 1.5.2
