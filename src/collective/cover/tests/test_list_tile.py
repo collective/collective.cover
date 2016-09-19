@@ -210,3 +210,39 @@ class ListTileTestCase(TestTileMixin, unittest.TestCase):
         self.assertIn('<img ', rendered)
         self.assertIn(
             'alt="This image was created for testing purposes"', rendered)
+
+    def test_thumbnail(self):
+        # as a File does not have an image field, we should have no thumbnail
+        obj = self.portal['my-file']
+        self.assertFalse(self.tile.thumbnail(obj))
+
+        # as an Image does have an image field, we should have a thumbnail
+        obj = self.portal['my-image']
+        thumbnail = self.tile.thumbnail(obj)
+        self.assertTrue(thumbnail)
+
+        # FIXME: https://github.com/plone/plone.app.contenttypes/issues/315
+        from collective.cover.testing import DEXTERITY_ONLY
+        from plone.app.imaging.interfaces import IImageScale
+        if not DEXTERITY_ONLY:
+            # the thumbnail is an ImageScale
+            self.assertTrue(IImageScale.providedBy(thumbnail))
+
+    def test_thumbnail_not_visible(self):
+        # turn visibility off, we should have no thumbnail
+        # XXX: refactor; we need a method to easily change field visibility
+        tile_conf = self.tile.get_tile_configuration()
+        tile_conf['image']['visibility'] = u'off'
+        self.tile.set_tile_configuration(tile_conf)
+        assert not self.tile._field_is_visible('image')
+        obj = self.portal['my-image']
+        self.assertIsNone(self.tile.thumbnail(obj))
+
+    def test_thumbnail_original_image(self):
+        # use original image instead of a thumbnail
+        tile_conf = self.tile.get_tile_configuration()
+        tile_conf['image']['imgsize'] = '_original'
+        self.tile.set_tile_configuration(tile_conf)
+        obj = self.portal['my-image']
+        self.assertTrue(self.tile.thumbnail(obj))
+        self.assertIsInstance(self.tile(), unicode)
