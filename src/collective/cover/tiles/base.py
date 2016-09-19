@@ -11,7 +11,6 @@ from collective.cover.tiles.configuration import ITilesConfigurationScreen
 from collective.cover.tiles.configuration_view import IDefaultConfigureForm
 from collective.cover.tiles.permissions import ITilesPermissions
 from plone import api
-from plone import tiles
 from plone.app.textfield.interfaces import ITransformer
 from plone.app.textfield.value import RichTextValue
 from plone.autoform import directives as form
@@ -21,7 +20,7 @@ from plone.namedfile.interfaces import INamedImage
 from plone.namedfile.interfaces import INamedImageField
 from plone.registry.interfaces import IRegistry
 from plone.supermodel import model
-from plone.tiles.esi import ESITile
+from plone.tiles.esi import ESIPersistentTile
 from plone.tiles.interfaces import ITileDataManager
 from plone.tiles.interfaces import ITileType
 from Products.CMFPlone.utils import safe_hasattr
@@ -114,7 +113,7 @@ class IPersistentCoverTile(model.Schema):
 
 
 @implementer(IPersistentCoverTile)
-class PersistentCoverTile(tiles.PersistentTile, ESITile):
+class PersistentCoverTile(ESIPersistentTile):
 
     is_configurable = False
     is_editable = True

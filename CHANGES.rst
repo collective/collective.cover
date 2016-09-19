@@ -6,6 +6,9 @@ There's a frood who really knows where his towel is.
 1.3b2 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- ESI support was refactored; now all tiles inherit from ``ESIPersistentTile`` by default.
+  [hvelarde]
+
 - Add plone.protect when save layout (fixes `#651`_).
   [rodfersou]
 
