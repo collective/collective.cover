@@ -118,7 +118,7 @@ Edit your buildout.cfg and add add the following to it:
     plone.app.blocks = 2.2.1
     plone.app.drafts = 1.0
     plone.app.tiles = 1.1.0
-    plone.tiles = 1.5.2
+    plone.tiles = 1.8.0
 
 If you are using Plone 4.2.x you need to add the following also:
 
