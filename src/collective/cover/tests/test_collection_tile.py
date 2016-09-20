@@ -190,14 +190,12 @@ class CollectionTileTestCase(TestTileMixin, unittest.TestCase):
 
         # now, return results in random order
         self.tile.data['random'] = True
-        i = 0
-        while i < 3:
+        for i in range(0, 10):
             results = [o for o in self.tile.results()]
             if results != ordered:
                 return
-            i += 1
 
-        self.fail('No random order after 3 attemps')
+        self.fail('No random order after 10 attemps')
 
     def _create_events_collection(self):
         with api.env.adopt_roles(['Manager']):
