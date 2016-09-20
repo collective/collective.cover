@@ -74,7 +74,7 @@ class ICollectionTile(IPersistentCoverTile):
 
     form.omitted(IDefaultConfigureForm, 'random')
     random = schema.Bool(
-        title=_(u"Select random items"),
+        title=_(u'Select random items'),
         required=False,
         default=False
     )
