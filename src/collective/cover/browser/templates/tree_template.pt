@@ -5,7 +5,8 @@
                         children node/children;
                         item_url node/getURL;
                         item_token python:view.getTermByBrain(node['item']).token;
-                        item_icon node/item_icon;
+                        plone_layout context/@@plone_layout;
+                        item_icon python:plone_layout.getIcon(node);
                         selectable python:True;
                         li_folder_class python:show_children and ' navTreeFolderish' or '';
                         li_selectable_class python:selectable and ' selectable' or '';
@@ -19,7 +20,8 @@
                                    title node/Description;
                                    class string:$item_class"
                    href="#content-tree">
-                    <img tal:replace="structure item_icon/html_tag|item_icon" />
+                    <img tal:condition="nocall:item_icon"
+                         tal:replace="structure item_icon/html_tag|nothing" />
                     <span tal:content="node/Title">Selected Item Title</span>
                 </a>
               </tal:block>

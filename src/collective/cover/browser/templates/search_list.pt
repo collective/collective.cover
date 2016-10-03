@@ -10,7 +10,8 @@
                             children python: [];
                             item_url node/getURL;
                             item_token  python:view.getTermByBrain(node['item']).token;
-                            item_icon node/item_icon;
+                            plone_layout context/@@plone_layout;
+                            item_icon python:plone_layout.getIcon(node);
                             content_type node/portal_type;
                             content_path python:node['path'][len(portal_path):]"
                 tal:attributes="data-content-type type;
@@ -20,7 +21,8 @@
                         <a tal:attributes="rel level;
                                            class string:$item_class;
                                            title string:${node/Description} : ${content_path}">
-                            <img tal:replace="structure item_icon/html_tag|item_icon" />
+                            <img tal:condition="nocall:item_icon"
+                                 tal:replace="structure item_icon/html_tag|nothing" />
                             <span tal:content="node/Title">Selected Item Title</span>
                         </a>
                     </tal:block>
