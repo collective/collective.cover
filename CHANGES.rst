@@ -6,6 +6,10 @@ There's a frood who really knows where his towel is.
 1.3b2 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Add helper function to get the human representation of a mime-type on Dexterity-based content types.
+  This fixed an ``AttributeError`` that was causing an exception on Plone 5.
+  [hvelarde]
+
 - We now get the types that use the view action in listings in Plone 5 also.
   [hvelarde]
 

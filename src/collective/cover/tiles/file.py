@@ -37,6 +37,23 @@ def get_download_html(url, portal_url, icon, mime_type, size):
     return HTML.format(url, portal_url, icon, mime_type, size_str)
 
 
+def lookupMime(obj, name):
+    """Given an id, return the human representation of mime-type.
+    This is a helper funtion to deal with API inconsistencies.
+    It's based on a simplified version of the `lookupMime` script
+    included in Products.Archetypes `archetypes` skin.
+    """
+    mtr = api.portal.get_tool('mimetypes_registry')
+    try:
+        mimetypes = mtr.lookup(name)
+    except MimeTypeException:
+        return None
+
+    if len(mimetypes):
+        return mimetypes[0].name()
+    return name
+
+
 class IFileTile(IPersistentCoverTile):
 
     title = schema.TextLine(
@@ -117,7 +134,7 @@ class FileTile(PersistentCoverTile):
             except AttributeError:
                 # Dexterity
                 icon = self.getBestIcon(obj)
-                mime = obj.lookupMime(content_type)
+                mime = lookupMime(obj, content_type)
                 size = obj.file.size
 
             return get_download_html(url, portal_url, icon, mime, size)
