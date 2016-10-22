@@ -111,14 +111,7 @@ class CollectionTileTestCase(TestTileMixin, unittest.TestCase):
         # as an Image does have an image field, we should have a thumbnail
         obj = self.portal['my-image']
         thumbnail = self.tile.thumbnail(obj)
-        self.assertTrue(thumbnail)
-
-        # FIXME: https://github.com/plone/plone.app.contenttypes/issues/315
-        from collective.cover.testing import DEXTERITY_ONLY
-        from plone.app.imaging.interfaces import IImageScale
-        if not DEXTERITY_ONLY:
-            # the thumbnail is an ImageScale
-            self.assertTrue(IImageScale.providedBy(thumbnail))
+        self.assertIsNotNone(thumbnail)
 
     def test_thumbnail_not_visible(self):
         # turn visibility off, we should have no thumbnail
