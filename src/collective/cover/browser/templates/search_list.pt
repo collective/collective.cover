@@ -10,7 +10,7 @@
                             children python: [];
                             item_url node/getURL;
                             item_token  python:view.getTermByBrain(node['item']).token;
-                            item_icon node/item_icon;
+                            item_icon node/item_icon|nothing;
                             content_type node/portal_type;
                             content_path python:node['path'][len(portal_path):]"
                 tal:attributes="data-content-type type;
