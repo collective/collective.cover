@@ -4,9 +4,9 @@ from collective.cover.interfaces import ICoverUIDsProvider
 from collective.cover.interfaces import ITileEditForm
 from collective.cover.tiles.list import IListTile
 from collective.cover.tiles.list import ListTile
+from collective.cover.utils import get_types_use_view_action_in_listings
 from collective.cover.widgets.interfaces import ITextLinesSortableWidget
 from collective.cover.widgets.textlinessortable import TextLinesSortableFieldWidget
-from plone import api
 from plone.app.uuid.utils import uuidToObject
 from plone.autoform import directives as form
 from plone.tiles.interfaces import ITileDataManager
@@ -118,16 +118,6 @@ class CarouselTile(ListTile):
                 description = uuids[uuid].get('custom_description')
         return description
 
-    def _get_types_that_use_view_action(self):
-        """Return a list of types that use the view action in listings.
-
-        :returns: a list of content types
-        :rtype: tuple
-        """
-        portal_properties = api.portal.get_tool('portal_properties')
-        return portal_properties.site_properties.getProperty(
-            'typesUseViewActionInListings', ())
-
     def get_url(self, item):
         """Get the URL of the item, or the custom URL if set.
 
@@ -138,8 +128,8 @@ class CarouselTile(ListTile):
         """
         # First we get the url for the item itself
         url = item.absolute_url()
-        if item.portal_type in self._get_types_that_use_view_action():
-            url = url + '/view'
+        if item.portal_type in get_types_use_view_action_in_listings():
+            url += '/view'
         uuid = self.get_uuid(item)
         data_mgr = ITileDataManager(self)
         data = data_mgr.get()

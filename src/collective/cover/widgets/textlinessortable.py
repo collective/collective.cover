@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
-
+from collective.cover.utils import get_types_use_view_action_in_listings
 from collective.cover.utils import uuidToObject
 from collective.cover.widgets.interfaces import ITextLinesSortableWidget
-from plone import api
 from Products.CMFPlone.utils import base_hasattr
 from z3c.form import interfaces
 from z3c.form import widget
@@ -119,12 +118,9 @@ class TextLinesSortableWidget(textlines.TextLinesWidget):
             return url
         # If didn't find, get object url
         obj = uuidToObject(uuid)
-        portal_properties = api.portal.get_tool(name='portal_properties')
-        use_view_action = portal_properties.site_properties.getProperty(
-            'typesUseViewActionInListings', ())
         url = obj.absolute_url()
-        if obj.portal_type in use_view_action:
-            url = url + '/view'
+        if obj.portal_type in get_types_use_view_action_in_listings():
+            url += '/view'
         return url
 
     def extract(self):
@@ -132,9 +128,6 @@ class TextLinesSortableWidget(textlines.TextLinesWidget):
 
         :returns: A dictionary with the information
         """
-        portal_properties = api.portal.get_tool(name='portal_properties')
-        use_view_action = portal_properties.site_properties.getProperty(
-            'typesUseViewActionInListings', ())
         values = self.request.get(self.name).splitlines()
         uuids = [i for i in values if i]
         results = dict()
@@ -159,8 +152,8 @@ class TextLinesSortableWidget(textlines.TextLinesWidget):
                 '{0}.custom_url.{1}'.format(self.name, uuid), ''
             )
             url = obj.absolute_url()
-            if obj.portal_type in use_view_action:
-                url = url + '/view'
+            if obj.portal_type in get_types_use_view_action_in_listings():
+                url += '/view'
             if (custom_url != u'' and
                custom_url != url):
                 results[uuid][u'custom_url'] = unicode(custom_url)

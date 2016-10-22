@@ -6,6 +6,9 @@ There's a frood who really knows where his towel is.
 1.3b2 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- We now get the types that use the view action in listings in Plone 5 also.
+  [hvelarde]
+
 - ESI support was refactored; now all tiles inherit from ``ESIPersistentTile`` by default.
   [hvelarde]
 

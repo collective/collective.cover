@@ -3,11 +3,10 @@ from Acquisition import aq_base
 from collective.cover import _
 from collective.cover.tiles.base import IPersistentCoverTile
 from collective.cover.tiles.base import PersistentCoverTile
-from plone import api
+from collective.cover.utils import get_types_use_view_action_in_listings
 from plone.namedfile import field
 from plone.tiles.interfaces import ITileDataManager
 from plone.uuid.interfaces import IUUID
-from Products.CMFPlone.utils import safe_hasattr
 from Products.CMFPlone.utils import safe_unicode
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zope import schema
@@ -64,18 +63,9 @@ class BannerTile(PersistentCoverTile):
             except AttributeError:
                 remote_url = obj.remoteUrl  # Dexterity
         else:
-            # Get object URL
-            # For Image and File objects (or any other in typesUseViewActionInListings)
-            # we must add a /view to prevent the download of the file
-            obj_url = obj.absolute_url_path()
-            props = api.portal.get_tool('portal_properties')
-            stp = props.site_properties
-            view_action_types = stp.getProperty('typesUseViewActionInListings', ())
-
-            if safe_hasattr(obj, 'portal_type') and obj.portal_type in view_action_types:
-                obj_url += '/view'
-
-            remote_url = obj_url
+            remote_url = obj.absolute_url()
+            if obj.portal_type in get_types_use_view_action_in_listings():
+                remote_url += '/view'
 
         image = self.get_image_data(obj)
         if image:
