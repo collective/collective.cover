@@ -6,6 +6,9 @@ There's a frood who really knows where his towel is.
 1.3b2 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- "Add Content" button is now shown also in Plone 5.
+  [hvelarde]
+
 - Avoid exceptions while using the content chooser in Plone 5.
   [hvelarde]
 
