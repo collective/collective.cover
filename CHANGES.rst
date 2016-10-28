@@ -6,6 +6,10 @@ There's a frood who really knows where his towel is.
 1.3b2 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- The ``replace_with_objects`` method was removed from the list tile;
+  use ``replace_with_uuids`` instead.
+  [hvelarde]
+
 - "Add Content" button is now shown also in Plone 5.
   [hvelarde]
 

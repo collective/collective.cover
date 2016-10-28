@@ -87,7 +87,7 @@ Known issues
 * `Package is not compatible with standard Plone tiles <https://github.com/collective/collective.cover/issues/81>`_.
   This will be addressed in a future release, if we get an sponsor.
 
-See the `complete list of bugs on GitHub <https://github.com/collective/collective.cover/issues?labels=bug&milestone=&page=1&state=open>`_.
+See the `complete list of bugs on GitHub <hhttps://github.com/collective/collective.cover/labels/bug>`_.
 
 Don't Panic
 -----------
