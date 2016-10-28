@@ -45,7 +45,7 @@ Test Carousel Tile
 
     # Test if we can edit the cover without any content added to it yet
     Click Link  css=${edit_link_selector}
-    Page Should Contain  Edit Carousel Tile
+    Wait Until Page Contains  Edit Carousel Tile
     Click Button  Cancel
 
     # drag&drop an Image
@@ -113,6 +113,7 @@ Test Carousel Tile
     # Set custom Title
     Compose Cover
     Click Link  css=${edit_link_selector}
+    Wait Until Page Contains  Edit Carousel Tile
     Input Text  xpath=.//div[contains(@class,"textline-sortable-element")][2]//input[@class='custom-title-input']  New Title
     Click Button  Save
     Sleep  2s  Wait for carousel to load
@@ -143,6 +144,7 @@ Test Carousel Tile
     # Set custom Description
     Compose Cover
     Click Link  css=${edit_link_selector}
+    Wait Until Page Contains  Edit Carousel Tile
     Input Text  xpath=.//div[contains(@class,"textline-sortable-element")][2]//textarea[@class='custom-description-input']  New Description
     Click Button  Save
     Sleep  2s  Wait for carousel to load
@@ -173,6 +175,7 @@ Test Carousel Tile
     # Set custom URL
     Compose Cover
     Click Link  css=${edit_link_selector}
+    Wait Until Page Contains  Edit Carousel Tile
     Input Text  xpath=.//div[contains(@class,"textline-sortable-element")][2]//input[@class='custom-url-input']  http://www.google.com
     Click Button  Save
     Sleep  2s  Wait for carousel to load
