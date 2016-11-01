@@ -6,6 +6,9 @@ There's a frood who really knows where his towel is.
 1.3b2 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Don't show image on tile collection if image attribute is None.
+  [rodfersou]
+
 - The ``replace_with_objects`` method was removed from the list tile;
   use ``replace_with_uuids`` instead.
   [hvelarde]
