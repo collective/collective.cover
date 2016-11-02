@@ -47,9 +47,11 @@
       <div class="collection-item" tal:repeat="item results">
         <tal:items define="obj item/getObject">
           <tal:fields repeat="field view/configured_fields">
-            <tal:image define="thumbnail python:view.thumbnail(obj);"
-                       condition="python:field['id'] == 'image' and thumbnail">
-              <a tal:attributes="href obj/absolute_url">
+            <tal:image define="image obj/image|nothing"
+              condition="python:field['id'] == 'image' and image">
+              <a tal:define="thumbnail python:view.thumbnail(obj);"
+                 tal:condition="thumbnail"
+                 tal:attributes="href obj/absolute_url">
                 <img tal:attributes="src thumbnail/url;
                                      width thumbnail/width;
                                      height thumbnail/height;
