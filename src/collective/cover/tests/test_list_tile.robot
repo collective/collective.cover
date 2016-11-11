@@ -95,7 +95,7 @@ Test List Tile
     Drag And Drop  css=${first_item}  css=${last_item}
     Sleep  1s  Wait for reordering to occur
 
-    # ensure that the reodering is reflected in the DOM
+    # ensure that the reordering is reflected in the DOM
     ${first_item_title} =  Get Text  css=${first_item} h2
     ${last_item_title} =  Get Text  css=${last_item} h2
     Should Be Equal  ${first_item_title}  My file
@@ -108,6 +108,21 @@ Test List Tile
     # ensure that the reodering is reflected in the DOM
     ${first_item_title} =  Get Text  css=${first_item} h2
     Should Be Equal  ${first_item_title}  My document
+
+    # Set options on the Edit screen of the tile.
+    # Set a title and set the 'Mandelbrot set' collection as 'more' link.
+    Compose Cover
+    Click Link  css=.edit-tile-link
+    Input Text  id=collective-cover-list-tile_title  Custom List Tile Title
+    Click Button  css=.more_link_search_button
+    Click Link  css=.results .item-list li a.contenttype-collection
+    Input Text  id=collective-cover-list-more_link_text  Custom More Link Text
+    Click Button  Save
+    # Wait until the overlay is closed, otherwise the View link is not clickable.
+    Wait Until Element Is Not Visible  css=#exposeMask
+    Click Link  link=View
+    Page Should Contain  Custom List Tile Title
+    Page Should Contain  Custom More Link Text
 
     # delete the tile
     Open Layout Tab
