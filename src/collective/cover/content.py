@@ -163,7 +163,8 @@ def searchableText(obj):
     text_list = []
     tiles = obj.get_tiles()
     for tile in tiles:
-        tile_obj = obj.restrictedTraverse('@@{0}/{1}'.format(tile['type'], tile['id']))
+        tile_obj = obj.restrictedTraverse(
+            '@@{0}/{1}'.format(tile['type'], tile['id']))
         searchable = queryAdapter(tile_obj, ISearchableText)
         if searchable:
             text_list.append(searchable.SearchableText())
