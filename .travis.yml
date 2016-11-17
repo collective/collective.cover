@@ -12,6 +12,7 @@ addons:
     permissions: public-read
     paths:
     - $(find parts/test -type f | tr "\n" ":")
+  firefox: "latest-esr"
 env:
   matrix:
     - PLONE_VERSION=4.2
@@ -40,6 +41,11 @@ after_success:
 - bin/createcoverage -t "--layer=!Robot"
 - pip install coveralls
 - coveralls
+after_script:
+# Firefox complains: GConf-WARNING **: Got Disconnected from DBus.
+# And then it keeps hanging, causing a failed job over 30-50 minutes.
+# So we kill Firefox.
+- pkill -9 firefox
 notifications:
   irc:
     on_success: change
