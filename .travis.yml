@@ -41,6 +41,11 @@ after_success:
 - bin/createcoverage -t "--layer=!Robot"
 - pip install coveralls
 - coveralls
+after_script:
+# Firefox complains: GConf-WARNING **: Got Disconnected from DBus.
+# And then it keeps hanging, causing a failed job after 30-50 minutes.
+# So we just kill Firefox.
+- pkill -9 firefox
 notifications:
   irc:
     on_success: change
