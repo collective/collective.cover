@@ -6,6 +6,10 @@ There's a frood who really knows where his towel is.
 1.3b2 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Fixed adding a 'more' link in list tiles.
+  Previously you could select an item to use as 'more' link,
+  but it did not stick.  [maurits]
+
 - The ``replace_with_objects`` method was removed from the list tile;
   use ``replace_with_uuids`` instead.
   [hvelarde]

@@ -16,7 +16,7 @@
         <div class="search">
             <input class="search" />
             <button tal:attributes="data-url view/form/context/absolute_url"
-                    class="search" type="button">Search</button>
+                    class="search more_link_search_button" type="button">Search</button>
         </div>
         <ul class="results"></ul>
         <script>
@@ -47,7 +47,7 @@
          });
 
          $field.find('.results').on('click', 'li', function() {
-             $field.find('.uuid').val( $(this).attr ('uuid') );
+             $field.find('.uuid').val( $(this).attr ('data-content-uuid') );
              $field.find('.title').text( $(this).find ('a').text () );
              toggle_unlink();
          });
