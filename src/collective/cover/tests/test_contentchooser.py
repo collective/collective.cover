@@ -7,6 +7,7 @@ from StringIO import StringIO
 import json
 import unittest
 
+
 IS_PLONE_42 = api.env.plone_version().startswith('4.2')
 
 parser = etree.HTMLParser()

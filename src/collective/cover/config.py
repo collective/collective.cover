@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from plone import api
 
+
 PROJECTNAME = 'collective.cover'
 
 # by default, all cover tiles will be available on layouts
