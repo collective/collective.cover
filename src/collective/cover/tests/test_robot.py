@@ -19,6 +19,7 @@ import os
 import robotsuite
 import unittest
 
+
 PLONE_VERSION = api.env.plone_version()
 
 dirname = os.path.dirname(__file__)

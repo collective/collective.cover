@@ -8,6 +8,7 @@ from zope.component import queryUtility
 
 import transaction
 
+
 NEEDS_REFERENCEABLE_BEHAVIOR = not IS_PLONE_5
 
 

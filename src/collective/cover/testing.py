@@ -25,6 +25,7 @@ import os
 import pkg_resources
 import random
 
+
 try:
     pkg_resources.get_distribution('plone.app.contenttypes')
 except pkg_resources.DistributionNotFound:

@@ -8,6 +8,7 @@ from zope.component import getUtility
 
 import json
 
+
 if IS_PLONE_5:
     from plone.app.linkintegrity.handlers import updateReferences
 else:
