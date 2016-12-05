@@ -10,6 +10,12 @@
       profile="collective.cover:default">
 
     <genericsetup:upgradeStep
+        title="Update all tiles to fix modified date"
+        description="Modified date should be DateTime object instead of string of timestamp"
+        handler=".fix_image_modified_date"
+        />
+
+    <genericsetup:upgradeStep
         title="Cook JS resources"
         description="There were changes in the JS files, so we need to cook the resources."
         handler="..cook_javascript_resources"

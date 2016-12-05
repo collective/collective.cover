@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 from collective.cover.tiles.base import IPersistentCoverTile
 from persistent.dict import PersistentDict
 from plone.namedfile.interfaces import INamedImage
@@ -52,9 +51,9 @@ class PersistentCoverTileDataManager(PersistentTileDataManager):
                      data[k] != self.annotations[self.key][k])):
                     # set modification time of the image
                     notify(Purge(self.tile))
-                    data[mtime_key] = repr(time.time())
+                    data[mtime_key] = time.time()
                 else:
-                    data[mtime_key] = self.annotations[self.key].get(mtime_key, '')
+                    data[mtime_key] = self.annotations[self.key].get(mtime_key, None)
 
         self.annotations[self.key] = PersistentDict(data)
         notify(ObjectModifiedEvent(self.context))

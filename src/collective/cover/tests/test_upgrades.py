@@ -3,6 +3,7 @@ from collective.cover.config import DEFAULT_GRID_SYSTEM
 from collective.cover.config import IS_PLONE_5
 from collective.cover.controlpanel import ICoverSettings
 from collective.cover.testing import INTEGRATION_TESTING
+from persistent.dict import PersistentDict
 from persistent.mapping import PersistentMapping
 from plone import api
 from plone.registry.interfaces import IRegistry
@@ -587,4 +588,36 @@ class Upgrade14to15TestCase(UpgradeTestCaseBase):
     def test_registrations(self):
         version = self.setup.getLastVersionForProfile(self.profile_id)[0]
         self.assertGreaterEqual(int(version), int(self.to_version))
-        self.assertEqual(self._how_many_upgrades_to_do(), 1)
+        self.assertEqual(self._how_many_upgrades_to_do(), 2)
+
+    def test_fix_image_modified_date(self):
+        title = u'Update all tiles to fix modified date'
+        step = self._get_upgrade_step(title)
+        assert step is not None
+
+        # simulate state on previous version
+        cover = self._create_cover('test-cover', 'Empty layout')
+        cover.cover_layout = (
+            '[{"type": "row", "children": [{"column-size": 16, "type": '
+            '"group", "children": [{"tile-type": '
+            '"collective.cover.basic", "type": "tile", "id": '
+            '"ca6ba6675ef145e4a569c5e410af7511"}], "roles": ["Manager"]}]}]'
+        )
+
+        tile = cover.get_tile('ca6ba6675ef145e4a569c5e410af7511')
+        obj = self.portal['my-image']
+        tile.populate_with_object(obj)
+
+        dmgr = ITileDataManager(tile)
+        old_data = dmgr.get()
+        old_data['image_mtime'] = repr(old_data['image_mtime'])
+        dmgr.annotations[dmgr.key] = PersistentDict(old_data)
+
+        data = dmgr.get()
+        self.assertIsInstance(data['image_mtime'], str)
+
+        # run the upgrade step to validate the update
+        self._do_upgrade_step(step)
+
+        data = dmgr.get()
+        self.assertIsInstance(data['image_mtime'], float)
