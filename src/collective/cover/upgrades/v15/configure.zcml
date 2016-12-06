@@ -10,9 +10,9 @@
       profile="collective.cover:default">
 
     <genericsetup:upgradeStep
-        title="Update all tiles to fix modified date"
-        description="Modified date should be DateTime object instead of string of timestamp"
-        handler=".fix_image_modified_date"
+        title="Fix image field modification time"
+        description="Fix image modification time to be float timestamp instead of string."
+        handler=".fix_image_field_modification_time"
         />
 
     <genericsetup:upgradeStep

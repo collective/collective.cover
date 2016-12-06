@@ -3,7 +3,6 @@ from collective.cover.config import DEFAULT_GRID_SYSTEM
 from collective.cover.config import IS_PLONE_5
 from collective.cover.controlpanel import ICoverSettings
 from collective.cover.testing import INTEGRATION_TESTING
-from persistent.dict import PersistentDict
 from persistent.mapping import PersistentMapping
 from plone import api
 from plone.registry.interfaces import IRegistry
@@ -590,8 +589,9 @@ class Upgrade14to15TestCase(UpgradeTestCaseBase):
         self.assertGreaterEqual(int(version), int(self.to_version))
         self.assertEqual(self._how_many_upgrades_to_do(), 2)
 
-    def test_fix_image_modified_date(self):
-        title = u'Update all tiles to fix modified date'
+    def test_fix_image_field_modification_time(self):
+        from persistent.dict import PersistentDict
+        title = u'Fix image field modification time'
         step = self._get_upgrade_step(title)
         assert step is not None
 
@@ -614,7 +614,7 @@ class Upgrade14to15TestCase(UpgradeTestCaseBase):
         dmgr.annotations[dmgr.key] = PersistentDict(old_data)
 
         data = dmgr.get()
-        self.assertIsInstance(data['image_mtime'], str)
+        assert isinstance(data['image_mtime'], str)
 
         # run the upgrade step to validate the update
         self._do_upgrade_step(step)

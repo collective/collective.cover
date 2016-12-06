@@ -9,7 +9,7 @@ There's a frood who really knows where his towel is.
 - Fix ``@@updatetilecontent`` view to avoid rendering outdated data.
   [hvelarde]
 
-- Use timestamp object instead of string of timestamp to represent image modified date (fixes `#686`_).
+- Fix ``TypeError`` when changing default image scale on basic tiles (fixes `#686`_).
   [rodfersou]
 
 - Fixed adding a 'more' link in list tiles.

@@ -161,9 +161,7 @@ class ImageScaling(BaseImageScaling):
         mtime = None
         for k, v in self.context.data.items():
             if INamedImage.providedBy(v):
-                image_time = self.context.data.get('{0}_mtime'.format(k), None)
-                if mtime is None or image_time > mtime:
-                    mtime = image_time
+                mtime = self.context.data.get('{0}_mtime'.format(k), None)
 
         return mtime
 
