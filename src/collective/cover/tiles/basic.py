@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from collective.cover import _
 from collective.cover.interfaces import ISearchableText
+from collective.cover.logger import logger
 from collective.cover.tiles.base import IPersistentCoverTile
 from collective.cover.tiles.base import PersistentCoverTile
 from collective.cover.tiles.configuration_view import IDefaultConfigureForm
@@ -118,6 +119,9 @@ class BasicTile(PersistentCoverTile):
 
         data_mgr = ITileDataManager(self)
         data_mgr.set(data)
+
+        msg = 'tile "{0}"" populated with data: {1}'
+        logger.debug(msg.format(self.id, data))
 
     @property
     def alt(self):
