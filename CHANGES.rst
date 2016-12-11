@@ -6,6 +6,9 @@ There's a frood who really knows where his towel is.
 1.3b2 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Fix ``@@updatetilecontent`` view to avoid rendering outdated data.
+  [hvelarde]
+
 - Fixed adding a 'more' link in list tiles.
   Previously you could select an item to use as 'more' link,
   but it did not stick.  [maurits]

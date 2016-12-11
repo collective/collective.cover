@@ -50,10 +50,16 @@ class UpdateTileContent(BrowserView):
             path = '{0}/{1}'.format(self.tile_type, self.tile_id)
             tile = self.context.restrictedTraverse(path)
             tile.populate_with_object(obj)
+            # reinstantiate tile to update rendering with new data
+            tile = self.context.restrictedTraverse(path)
             return tile()
 
     def __call__(self):
         self.setup()
+        # avoid caching the response on intermediate proxies
+        # as this is a GET request, a misconfiguration could
+        # result on outdated content being rendered
+        self.request.response.setHeader('Cache-Control', 'no-cache')
         return self.render()
 
 
