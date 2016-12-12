@@ -55,6 +55,7 @@ These are some of the sites using ``collective.cover``:
 * `Portal Brasil <http://www.brasil.gov.br/>`_ (BR)
 * `Rede Brasil Atual <http://www.redebrasilatual.com.br/>`_ (BR)
 * `Venezolana de Televisión <http://www.vtv.gov.ve/>`_ (VE)
+* `European Climate Adaptation Platform <http://climate-adapt.eea.europa.eu/>`_ (EU)
 
 .. figure:: https://raw.github.com/collective/collective.cover/master/cover.png
     :align: center
