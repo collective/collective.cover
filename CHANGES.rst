@@ -9,6 +9,9 @@ There's a frood who really knows where his towel is.
 - Fix ``@@updatetilecontent`` view to avoid rendering outdated data.
   [hvelarde]
 
+- Fix ``TypeError`` when changing default image scale on basic tiles (fixes `#686`_).
+  [rodfersou]
+
 - Fixed adding a 'more' link in list tiles.
   Previously you could select an item to use as 'more' link,
   but it did not stick.  [maurits]
@@ -160,3 +163,4 @@ Previous entries can be found in the HISTORY.rst file.
 .. _`#608`: https://github.com/collective/collective.cover/issues/608
 .. _`#641`: https://github.com/collective/collective.cover/issues/641
 .. _`#651`: https://github.com/collective/collective.cover/issues/651
+.. _`#686`: https://github.com/collective/collective.cover/issues/686
