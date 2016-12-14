@@ -3,7 +3,7 @@ Changelog
 
 There's a frood who really knows where his towel is.
 
-1.3b2 (unreleased)
+1.4b1 (2016-12-14)
 ^^^^^^^^^^^^^^^^^^
 
 - Fix ``@@updatetilecontent`` view to avoid rendering outdated data.
