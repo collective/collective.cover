@@ -39,7 +39,7 @@ There's a frood who really knows where his towel is.
 - Add plone.protect when save layout (fixes `#651`_).
   [rodfersou]
 
-- Use pat-modal instead of prepOverlay for Plone 5 (fixes `#641`_).
+- Use ``pat-modal`` instead of ``prepOverlay`` for Plone 5 (fixes `#641`_).
   [rodfersou]
 
 - Enforce usage of plone.app.tiles >= 1.1.0 to avoid creation of zillions of empty blob files when using versioning (fixes `#532`_, huge HT @datakurre).
