@@ -35,7 +35,7 @@
 
                     <div tal:attributes="class python:'%s' % section.get('css_class', '');
                                          id tile_id">
-                        <div tal:attributes="data-tile python:'%s' %(tile_url);">
+                        <div tal:attributes="data-tile python:'%s/%s' % (view.context.absolute_url(), tile_url);">
                             Tile content replaced during the blocks transform.
                         </div>
                     </div>
