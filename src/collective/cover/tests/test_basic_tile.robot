@@ -70,6 +70,11 @@ Test Basic Tile
     Drag And Drop  css=${image_selector}  css=${tile_selector}
     Wait Until Page Contains Element  css=div.cover-basic-tile a img
 
+    # https://github.com/collective/collective.cover/issues/637
+    Click Link  css=${edit_link_selector}
+    Click Button  Save
+    Page Should Not Contain  There were some errors.
+
     # move to the default view and check tile persisted
     Click Link  link=View
     Page Should Contain  Test image
