@@ -11,6 +11,9 @@ There's a frood who really knows where his towel is.
     You should explicitly add plone.app.drafts to the `eggs` part of your buildout configuration to avoid issues.
     You can safely unistall plone.app.drafts after that, if you are not using it.
 
+- Convert data back to string when drop object with image (fixes `#637`_).
+  [rodfersou]
+
 - Update recommended versions of Blocks dependencies to keep in sync with curren Mosaic development.
   [hvelarde]
 
@@ -187,6 +190,7 @@ Previous entries can be found in the HISTORY.rst file.
 .. _`#581`: https://github.com/collective/collective.cover/issues/581
 .. _`#584`: https://github.com/collective/collective.cover/issues/584
 .. _`#608`: https://github.com/collective/collective.cover/issues/608
+.. _`#637`: https://github.com/collective/collective.cover/issues/637
 .. _`#641`: https://github.com/collective/collective.cover/issues/641
 .. _`#651`: https://github.com/collective/collective.cover/issues/651
 .. _`#686`: https://github.com/collective/collective.cover/issues/686

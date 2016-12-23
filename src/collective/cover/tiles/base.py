@@ -400,6 +400,7 @@ class PersistentCoverTile(ESIPersistentTile):
             if isinstance(image.data, NamedBlobImage):
                 # Dexterity
                 image = image.data
+                image.contentType = str(image.contentType)
             else:
                 # Archetypes
                 data = image.data
