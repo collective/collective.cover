@@ -12,7 +12,7 @@ addons:
     permissions: public-read
     paths:
     - $(find parts/test -type f | tr "\n" ":")
-  firefox: latest-esr
+  firefox: 45.8.0esr
 env:
   matrix:
     - PLONE_VERSION=4.2
