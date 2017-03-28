@@ -102,7 +102,7 @@ class SearchItemsBrowserView(BrowserView):
         """ Contructor """
         self.context = context
         self.request = request
-        util = api.content.get_view(u'plone', self.context, self.request)
+        util = api.content.get_view(u'plone_layout', self.context, self.request)
         self.getIcon = util.getIcon
 
         # check if object is a folderish object, if not, get it's parent.
