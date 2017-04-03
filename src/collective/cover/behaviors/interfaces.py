@@ -1,8 +1,10 @@
 # coding: utf-8
 from collective.cover import _
-from plone.directives import form
+from plone.autoform.interfaces import IFormFieldProvider
 from plone.supermodel import model
+from z3c.form import validator
 from zope import schema
+from zope.component import provideAdapter
 from zope.interface import alsoProvides
 from zope.interface import Invalid
 
@@ -25,10 +27,20 @@ class IRefresh(model.Schema):
         default=300,
     )
 
-alsoProvides(IRefresh, form.IFormFieldProvider)
+alsoProvides(IRefresh, IFormFieldProvider)
 
 
-@form.validator(field=IRefresh['ttl'])
-def validate_ttl(value):
-    if value <= 0:
-        raise Invalid(_(u'Value must be greater than zero.'))
+class TimeToLiveValidator(validator.SimpleFieldValidator):
+
+    """z3c.form validator class for time to live"""
+
+    def validate(self, value):
+        """Validate the value on time to live input"""
+        if value <= 0:
+            raise Invalid(_(u'Value must be greater than zero.'))
+
+# set conditions for which fields the validator class applies
+validator.WidgetValidatorDiscriminators(TimeToLiveValidator, field=IRefresh['ttl'])
+
+# register the validator so it will be looked up by z3c.form machinery
+provideAdapter(TimeToLiveValidator)

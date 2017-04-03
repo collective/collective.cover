@@ -6,90 +6,89 @@ Library  Remote  ${PLONE_URL}/RobotRemote
 Suite Setup  Open Test Browser
 Suite Teardown  Close all browsers
 
+# XXX: test is randomly failing under Plone 4.2 only
+Default Tags  Mandelbug
+
 *** Variables ***
 
 ${collection_tile_location}  'collective.cover.collection'
 ${collection_selector}  .ui-draggable .contenttype-collection
 ${tile_selector}  div.tile-container div.tile
+${tile_header_selector}  div.tile-header h2
 ${title_field_id}  collective-cover-collection-header
-${title_sample}  Some text for title
-${title_other_sample}  This text should never be saved
+${title}  Mandelbrot set
+${title_alternate}  An alternate title for the tile
 ${edit_link_selector}  a.edit-tile-link
+${no_results_msg}  The collection doesn't have any results
+${related_msg}  Go to related collection
+${more_msg}  More?
 
 *** Test cases ***
 
 Test Collection Tile
+    # XXX: test is randomly failing under Plone 4.2 only
+    Run keyword if  '${CMFPLONE_VERSION}' >= '4.3'  Remove Tags  Mandelbug
+
     Enable Autologin as  Site Administrator
     Go to Homepage
     Create Cover  My Cover  Description
 
     # add a collection tile to the layout
-    Edit Cover Layout
-    Page Should Contain  Export layout
+    Open Layout Tab
     Add Tile  ${collection_tile_location}
     Save Cover Layout
 
-    # as tile is empty, we see default message
     Compose Cover
+    # tile is empty, we must see default message
     Page Should Contain  Please drop a collection here to fill the tile
 
-    # drag&drop a Collection
+    # drag and drop a collection
     Open Content Chooser
     Drag And Drop  css=${collection_selector}  css=${tile_selector}
-    Wait Until Page Contains  The collection doesn't have any results
-    Page Should Contain  Go to related collection
-
-    # move to the default view and check tile persisted
-    Click Link  link=View
-    Page Should Contain  The collection doesn't have any results
-    Page Should Not Contain  Go to related collection
-
-    # edit the tile and check AJAX refresh
-    Compose Cover
-    # this is to demonstrate the bug mentioned above
-    Page Should Contain  Go to related collection
-    Click Link  css=${edit_link_selector}
-    Wait until page contains element  id=${title_field_id}
-    Input Text  id=${title_field_id}  ${title_sample}
-    Click Button  Save
-    Wait Until Page Contains  ${title_sample}
-
-    # edit the tile but cancel operation
-    Compose Cover
-    Click Link  css=${edit_link_selector}
-    Wait until page contains element  id=${title_field_id}
-    Input Text  id=${title_field_id}  ${title_other_sample}
-    Click Button  Cancel
-    Wait Until Page Contains  ${title_sample}
-
-    # change criteria for collection so it shows images
-    Click Link  link=My collection
-    Click Link  link=Edit
-    Select From List  xpath=//select[@name="addindex"]  portal_type
-    # deal with AJAX delays
-    Wait Until Page Contains Element  xpath=//input[@value="Image"]
-    Select Checkbox  xpath=//input[@value="Image"]
-    Select From List  xpath=//select[@name="sort_on"]  getId
-    Click Button  Save
-
-    # collection tile has results
-    Click Link  link=My Cover
-    Page Should Not Contain  The collection doesn't have any results
+    # check tile is properly populated
+    Wait Until Element Contains  css=${tile_header_selector}  ${title}
     Page Should Contain  Test image
+    Page Should Contain  This image was created for testing purposes
+    Page Should Contain Link  ${more_msg}
+    Page Should Contain Link  ${related_msg}
+    Page Should Not Contain  ${no_results_msg}
+
+    # move to the default view
+    Click Link  link=View
+    # check information persisted
+    Wait Until Element Contains  css=${tile_header_selector}  ${title}
+    Page Should Contain  Test image
+    Page Should Contain  This image was created for testing purposes
+    Page Should Contain Link  ${more_msg}
+    Page Should Not Contain Link  ${related_msg}
+    Page Should Not Contain  ${no_results_msg}
+
+    # go back to compose view and edit the tile
+    Compose Cover
+    Wait Until Element Contains  css=${tile_header_selector}  ${title}
+    Click Link  css=${edit_link_selector}
+    Wait Until Page Contains  Edit Collection Tile
+    Input Text  id=${title_field_id}  ${title_alternate}
+    Click Button  Save
+    Wait Until Page Does Not Contain  Edit Collection Tile
+
+    # check for successful AJAX refresh
+    Wait Until Page Contains  ${title_alternate}
 
     # change header and title HTML tag
-    Edit Cover Layout
+    Open Layout Tab
     Click Element  css=a.config-tile-link
-    Select From List  xpath=//select[@name="collective.cover.collection.header.htmltag"]  h3
+    Wait Until Page Contains  Configure Collection Tile
+    Select From List  xpath=//select[@name="collective.cover.collection.header.htmltag"]  h1
     Select From List  xpath=//select[@name="collective.cover.collection.title.htmltag"]  h4
     Click Button  Save
 
     # title and item header should be same as the one configured above
     Compose Cover
-    Element Text Should Be  css=.tile-header h3  Some text for title
+    Element Text Should Be  css=.tile-header h1  ${title_alternate}
     Element Text Should Be  css=.collection-item h4:first-child  Test image
 
     # delete the tile
-    Edit Cover Layout
+    Open Layout Tab
     Delete Tile
     Save Cover Layout

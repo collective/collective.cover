@@ -15,7 +15,9 @@
     </div>
     <tal:items repeat="obj view/results">
       <div class="list-item" style="position:relative"
-           tal:attributes="data-uid python:view.get_uid(obj)">
+           tal:attributes="data-tile-id view/id;
+                           data-content-type obj/portal_type;
+                           data-content-uuid python:view.get_uuid(obj)">
         <tal:fields repeat="field view/get_configured_fields">
           <tal:image define="thumbnail python:view.thumbnail(obj);"
                      condition="python:field['id'] == 'image' and thumbnail">
@@ -24,7 +26,7 @@
                                    width thumbnail/width;
                                    height thumbnail/height;
                                    class view/get_image_position;
-                                   alt obj/Title;" />
+                                   alt python:view.get_alt(obj);" />
             </a>
           </tal:image>
 
@@ -36,10 +38,15 @@
              tal:content="obj/Description"
              />
 
-          <p tal:define="toLocalizedTime nocall:context/@@plone/toLocalizedTime"
-             tal:condition="python:field['id'] == 'date'"
-             tal:content="python:toLocalizedTime(view.Date(obj), True)"
-             />
+          <tal:datetime condition="python:field['id'] == 'date'">
+            <time
+                tal:define="datetime python:view.Date(obj);
+                            format python:field.get('format', 'datetime')"
+                tal:attributes="datetime datetime"
+                tal:content="python:view.get_localized_time(datetime, format)">
+              Jul 15, 2015 01:23 PM
+            </time>
+          </tal:datetime>
         </tal:fields>
         <div class="visualClear"><!-- --></div>
       </div>

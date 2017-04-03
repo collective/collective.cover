@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 from collective.cover import _
+from collective.cover.interfaces import ISearchableText
+from collective.cover.logger import logger
 from collective.cover.tiles.base import IPersistentCoverTile
 from collective.cover.tiles.base import PersistentCoverTile
 from collective.cover.tiles.configuration_view import IDefaultConfigureForm
@@ -12,7 +14,7 @@ from plone.uuid.interfaces import IUUID
 from Products.CMFPlone.utils import safe_unicode
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zope import schema
-from zope.interface import implements
+from zope.interface import implementer
 
 
 class IBasicTile(IPersistentCoverTile):
@@ -57,9 +59,8 @@ class IBasicTile(IPersistentCoverTile):
     )
 
 
+@implementer(IBasicTile)
 class BasicTile(PersistentCoverTile):
-
-    implements(IBasicTile)
 
     index = ViewPageTemplateFile('templates/basic.pt')
 
@@ -106,7 +107,7 @@ class BasicTile(PersistentCoverTile):
         data = {
             'title': safe_unicode(obj.Title()),
             'description': safe_unicode(obj.Description()),
-            'uuid': IUUID(obj, None),  # XXX: can we get None here? see below
+            'uuid': IUUID(obj),
             'date': True,
             'subjects': True,
             'image': self.get_image_data(obj)
@@ -118,3 +119,23 @@ class BasicTile(PersistentCoverTile):
 
         data_mgr = ITileDataManager(self)
         data_mgr.set(data)
+
+        msg = 'tile "{0}"" populated with data: {1}'
+        logger.debug(msg.format(self.id, data))
+
+    @property
+    def alt(self):
+        """Return the alt attribute for the image."""
+        return self.data.get('description') or self.data.get('title')
+
+
+@implementer(ISearchableText)
+class SearchableBasicTile(object):
+
+    def __init__(self, context):
+        self.context = context
+
+    def SearchableText(self):
+        context = self.context
+        return u'{0} {1}'.format(
+            context.data['title'] or '', context.data['description'] or '')

@@ -18,7 +18,7 @@ Test Basic Layout Operations
     Go to Homepage
 
     Create Cover  Title  Description
-    Edit Cover Layout
+    Open Layout Tab
     # empty layout has one column and one row by default
     # TODO: test if there is 1 row and 1 column
     #       this can be done using Xpath Should Match X Times
@@ -51,7 +51,7 @@ Test Basic Layout Operations
     Save Cover Layout
 
     # load layout again, it has to be the new one
-    Edit Cover Layout
+    Open Layout Tab
 
     #3 columns and 2 rows
     Count Number of Columns  5
@@ -73,18 +73,37 @@ Test Basic Layout Operations
     Click Config from Tile  ${tile_class}
     Wait until element is visible  id=buttons-cancel
     # Move Categories to second place
-    Drag And Drop  css=#formfield-collective-cover-basic-subjects  css=#configure_tile div.field:nth-child(2)
+    Drag And Drop  css=#formfield-collective-cover-basic-subjects label  css=#configure_tile div.field:nth-child(2) label
     # Move Date over Categories
-    Drag And Drop  css=#formfield-collective-cover-basic-date  css=#formfield-collective-cover-basic-subjects
+    Drag And Drop  css=#formfield-collective-cover-basic-date label  css=#formfield-collective-cover-basic-subjects label
     # Try to move Date over CSS
-    Drag And Drop  css=#formfield-collective-cover-basic-date  css=#formfield-collective-cover-basic-css_class
+    Drag And Drop  css=#formfield-collective-cover-basic-date label  css=#formfield-collective-cover-basic-css_class label
     # Hide Description
     Click Element  css=#formfield-collective-cover-basic-description .visibility-no
     Click Button  id=buttons-save
+    # Change row class
+    Click Element  css=.config-row-link:nth-child(1)
+    Wait until element is visible  id=class-chooser
+    Select From List  css=#class-chooser select  Shadow
+    Click Element  css=.ui-dialog:last-child .ui-dialog-titlebar-close
+    # Change column class
+    Click Element  css=.config-column-link:nth-child(1)
+    Wait until element is visible  id=class-chooser
+    Select From List  css=#class-chooser select  Border
+    Click Element  css=.ui-dialog:last-child .ui-dialog-titlebar-close
     Save Cover Layout
 
+    # Test row and column classes
+    Compose Cover
+    Page Should Contain Element  css=.row.tile-shadow
+    Page Should Contain Element  css=.cell.tile-edge
+    Click Link  link=View
+    Page Should Contain Element  css=.row.tile-shadow
+    Page Should Contain Element  css=.cell.tile-edge
+
+
     # Reopen Layout and check configuration
-    Edit Cover Layout
+    Open Layout Tab
     Click Config from Tile  ${tile_class}
     Wait until element is visible  id=buttons-cancel
     # Date should be first in order (order is 1-indexed)
@@ -144,4 +163,3 @@ Click Config from Tile
     [arguments]  ${tile}
 
     Click Element  css=${tile} .config-tile-link
-

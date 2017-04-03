@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
-
 from collective.cover import _
 from collective.cover.config import DEFAULT_AVAILABLE_TILES
 from collective.cover.config import DEFAULT_GRID_SYSTEM
 from collective.cover.config import DEFAULT_SEARCHABLE_CONTENT_TYPES
 from plone.app.registry.browser import controlpanel
-from plone.directives import form
+from plone.autoform import directives as form
+from plone.supermodel import model
 from zope import schema
 
 
-class ICoverSettings(form.Schema):
+class ICoverSettings(model.Schema):
     """ Interface for the control panel form.
     """
 
@@ -27,7 +27,7 @@ class ICoverSettings(form.Schema):
         required=True,
         default=DEFAULT_AVAILABLE_TILES,
         value_type=schema.Choice(
-            vocabulary=u'collective.cover.EnabledTiles'),
+            vocabulary='collective.cover.EnabledTiles'),
     )
 
     searchable_content_types = schema.List(
@@ -38,7 +38,7 @@ class ICoverSettings(form.Schema):
         default=DEFAULT_SEARCHABLE_CONTENT_TYPES,
         # we are going to list only the main content types in the widget
         value_type=schema.Choice(
-            vocabulary=u'collective.cover.AvailableContentTypes'),
+            vocabulary='collective.cover.AvailableContentTypes'),
     )
 
     form.widget(styles='z3c.form.browser.textlines.TextLinesFieldWidget')
@@ -57,7 +57,7 @@ class ICoverSettings(form.Schema):
         description=_(u'Choose a grid system'),
         required=True,
         default=DEFAULT_GRID_SYSTEM,
-        vocabulary=u'collective.cover.GridSystems',
+        vocabulary='collective.cover.GridSystems',
     )
 
 

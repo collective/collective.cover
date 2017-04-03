@@ -19,12 +19,10 @@ ${tile_selector}  div.tile-container div.tile
 *** Test Cases ***
 
 Test Locked Cover
-    [Tags]  Expected Failure
-
     Log in as site owner
     Goto Homepage
     Create Cover  My Cover  Description
-    Edit Cover Layout
+    Open Layout Tab
 
     Add Tile  ${basic_tile_location}
     Save Cover Layout
@@ -67,7 +65,7 @@ Test Locked Cover
     Switch Browser  1
     Click Link  link=My Cover
     Page Should Not Contain  Locked  ${LOCKED_MESSAGE}
-    Edit Cover Layout
+    Open Layout Tab
 
     Switch Browser  2
     Click Link  link=My Cover
@@ -80,7 +78,7 @@ Test Locked Cover
     Switch Browser  2
     Click Link  link=My Cover
     Page Should Not Contain  Locked  ${LOCKED_MESSAGE}
-    Edit Cover Layout
+    Open Layout Tab
 
     Switch Browser  1
     Click Link  link=My Cover

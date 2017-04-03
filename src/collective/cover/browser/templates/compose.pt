@@ -8,12 +8,12 @@
 <body>
 
 <metal:js fill-slot="javascript_head_slot">
-    <script type="text/javascript"
+    <script type="application/javascript"
         tal:define="navroot context/@@plone_portal_state/navigation_root_url"
-        tal:attributes="src string:${navroot}/++resource++collective.cover/cover.js">
+        tal:attributes="src string:${navroot}/++resource++collective.cover/js/compose.js">
     </script>
 
-    <script type="text/javascript">
+    <script type="application/javascript">
       jQuery(document).ready(function() {
         if (typeof(plone) !== 'undefined') {
           jQuery(window).unload(plone.UnlockHandler.execute);
@@ -25,7 +25,7 @@
 <metal:styles fill-slot="style_slot">
     <link rel="stylesheet" type="text/css" media="screen" href=""
           tal:define="navroot context/@@plone_portal_state/navigation_root_url"
-          tal:attributes="href string:${navroot}/++resource++collective.cover/cover.css"
+          tal:attributes="href string:${navroot}/++resource++collective.cover/css/cover.css"
           />
 </metal:styles>
 

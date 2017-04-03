@@ -22,14 +22,13 @@ ${last_item}   .list-item:last-child
 *** Test cases ***
 
 Test List Tile
-    [Tags]  Expected Failure
-
     Enable Autologin as  Site Administrator
     Go to Homepage
+
     Create Cover  Title  Description
 
     # add a list tile to the layout
-    Edit Cover Layout
+    Open Layout Tab
     Add Tile  ${list_tile_location}
     Save Cover Layout
 
@@ -56,7 +55,7 @@ Test List Tile
     # drag&drop an Image
     Drag And Drop  css=${image_selector}  css=${tile_selector}
     Wait Until Page Contains  Test image
-    Page Should Contain  This image was created for testing purposes
+    Wait Until Page Contains Element  css=div.cover-list-tile a img
 
     # drag&drop a Link
     Drag And Drop  css=${link_selector}  css=${tile_selector}
@@ -96,13 +95,36 @@ Test List Tile
     Drag And Drop  css=${first_item}  css=${last_item}
     Sleep  1s  Wait for reordering to occur
 
-    # ensure that the reodering is reflected in the DOM
+    # ensure that the reordering is reflected in the DOM
     ${first_item_title} =  Get Text  css=${first_item} h2
     ${last_item_title} =  Get Text  css=${last_item} h2
     Should Be Equal  ${first_item_title}  My file
     Should Be Equal  ${last_item_title}  My document
 
+    # first item is now last. Let's move it back to the top
+    Drag And Drop  css=${last_item}  css=${first_item}
+    Sleep  1s  Wait for reordering to occur
+
+    # ensure that the reodering is reflected in the DOM
+    ${first_item_title} =  Get Text  css=${first_item} h2
+    Should Be Equal  ${first_item_title}  My document
+
+    # Set options on the Edit screen of the tile.
+    # Set a title and set the 'Mandelbrot set' collection as 'more' link.
+    Compose Cover
+    Click Link  css=.edit-tile-link
+    Input Text  id=collective-cover-list-tile_title  Custom List Tile Title
+    Click Button  css=.more_link_search_button
+    Click Link  css=.results .item-list li a.contenttype-collection
+    Input Text  id=collective-cover-list-more_link_text  Custom More Link Text
+    Click Button  Save
+    # Wait until the overlay is closed, otherwise the View link is not clickable.
+    Wait Until Element Is Not Visible  css=#exposeMask
+    Click Link  link=View
+    Page Should Contain  Custom List Tile Title
+    Page Should Contain  Custom More Link Text
+
     # delete the tile
-    Edit Cover Layout
+    Open Layout Tab
     Delete Tile
     Save Cover Layout

@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from collective.cover.tests.base import TestTileMixin
+from collective.cover.tests.utils import set_text_field
 from collective.cover.tiles.configuration import ITilesConfigurationScreen
 from collective.cover.tiles.contentbody import ContentBodyTile
 from collective.cover.tiles.contentbody import IContentBodyTile
@@ -46,7 +47,7 @@ class ContentBodyTileTestCase(TestTileMixin, unittest.TestCase):
     def test_body(self):
         text = '<h2>Peace of mind</h2>'
         obj = self.portal['my-news-item']
-        obj.setText(text)
+        set_text_field(obj, text)  # handle Archetypes and Dexterity
         self.tile.populate_with_object(obj)
         self.assertEqual(self.tile.body(), text)
 
@@ -62,7 +63,7 @@ class ContentBodyTileTestCase(TestTileMixin, unittest.TestCase):
     def test_render(self):
         text = '<h2>Peace of mind</h2>'
         obj = self.portal['my-news-item']
-        obj.setText(text)
+        set_text_field(obj, text)  # handle Archetypes and Dexterity
 
         self.tile.populate_with_object(obj)
         rendered = self.tile()
@@ -73,7 +74,7 @@ class ContentBodyTileTestCase(TestTileMixin, unittest.TestCase):
     def test_render_deleted_object(self):
         text = '<h2>Peace of mind</h2>'
         obj = self.portal['my-news-item']
-        obj.setText(text)
+        set_text_field(obj, text)  # handle Archetypes and Dexterity
 
         self.tile.populate_with_object(obj)
         # Delete original object
@@ -89,7 +90,7 @@ class ContentBodyTileTestCase(TestTileMixin, unittest.TestCase):
     def test_render_restricted_object(self):
         text = '<h2>Peace of mind</h2>'
         obj = self.portal['my-news-item']
-        obj.setText(text)
+        set_text_field(obj, text)  # handle Archetypes and Dexterity
 
         self.tile.populate_with_object(obj)
         obj.manage_permission('View', [], 0)

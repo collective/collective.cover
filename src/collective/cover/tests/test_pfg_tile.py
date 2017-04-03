@@ -118,8 +118,8 @@ class PFGTileTestCase(TestTileMixin, unittest.TestCase):
 def test_suite():
     # XXX: load tests only in Plone < 5
     from collective.cover.testing import HAS_PFG
-    from collective.cover.testing import PLONE_VERSION
-    if HAS_PFG and PLONE_VERSION < '5.0':
+    from collective.cover.config import IS_PLONE_5
+    if HAS_PFG and not IS_PLONE_5:
         return unittest.defaultTestLoader.loadTestsFromName(__name__)
     else:
         return unittest.TestSuite()

@@ -1,16 +1,16 @@
 # -*- coding: utf-8 -*-
-
 from Acquisition import aq_base
 from collective.cover import _
 from collective.cover.tiles.base import IPersistentCoverTile
 from collective.cover.tiles.base import PersistentCoverTile
-from plone import api
+from collective.cover.utils import get_types_use_view_action_in_listings
 from plone.namedfile import field
 from plone.tiles.interfaces import ITileDataManager
+from plone.uuid.interfaces import IUUID
 from Products.CMFPlone.utils import safe_unicode
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zope import schema
-from zope.interface import implements
+from zope.interface import implementer
 
 
 class IBannerTile(IPersistentCoverTile):
@@ -30,10 +30,15 @@ class IBannerTile(IPersistentCoverTile):
         required=False,
     )
 
+    uuid = schema.TextLine(
+        title=_(u'UUID'),
+        required=False,
+        readonly=True,
+    )
 
+
+@implementer(IBannerTile)
 class BannerTile(PersistentCoverTile):
-
-    implements(IBannerTile)
 
     index = ViewPageTemplateFile('templates/banner.pt')
     is_configurable = True
@@ -52,21 +57,15 @@ class BannerTile(PersistentCoverTile):
 
         super(BannerTile, self).populate_with_object(obj)  # check permissions
 
-        if hasattr(obj, 'getRemoteUrl'):
-            remote_url = obj.getRemoteUrl()
+        if obj.portal_type == 'Link':
+            try:
+                remote_url = obj.getRemoteUrl()  # Archetypes
+            except AttributeError:
+                remote_url = obj.remoteUrl  # Dexterity
         else:
-            # Get object URL
-            # For Image and File objects (or any other in typesUseViewActionInListings)
-            # we must add a /view to prevent the download of the file
-            obj_url = obj.absolute_url_path()
-            props = api.portal.get_tool('portal_properties')
-            stp = props.site_properties
-            view_action_types = stp.getProperty('typesUseViewActionInListings', ())
-
-            if hasattr(obj, 'portal_type') and obj.portal_type in view_action_types:
-                obj_url += '/view'
-
-            remote_url = obj_url
+            remote_url = obj.absolute_url()
+            if obj.portal_type in get_types_use_view_action_in_listings():
+                remote_url += '/view'
 
         image = self.get_image_data(obj)
         if image:
@@ -75,23 +74,23 @@ class BannerTile(PersistentCoverTile):
 
         obj = aq_base(obj)  # avoid acquisition
         title = safe_unicode(obj.Title())
+        description = safe_unicode(obj.Description())
 
         data_mgr = ITileDataManager(self)
         data_mgr.set({
             'title': title,
+            'description': description,
+            'uuid': IUUID(obj),
             'image': image,
             'remote_url': remote_url,
         })
-
-    def Title(self):
-        return self.data.get('title', None)
 
     def getRemoteUrl(self):
         return self.data.get('remote_url', None)
 
     @property
     def is_empty(self):
-        return not (self.Title() or self.has_image or self.getRemoteUrl())
+        return not(self.data.get('title') or self.has_image or self.getRemoteUrl())
 
     @property
     def css_class(self):
@@ -108,3 +107,8 @@ class BannerTile(PersistentCoverTile):
         if title_conf:
             htmltag = title_conf['htmltag']
             return htmltag
+
+    @property
+    def alt(self):
+        """Return the alt attribute for the image."""
+        return self.data.get('description') or self.data.get('title')

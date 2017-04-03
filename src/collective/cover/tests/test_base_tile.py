@@ -10,6 +10,7 @@ from zope.configuration.xmlconfig import xmlconfig
 
 import unittest
 
+
 ZCML = """
 <configure
     xmlns="http://namespaces.zope.org/zope"

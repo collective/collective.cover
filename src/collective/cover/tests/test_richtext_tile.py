@@ -1,8 +1,11 @@
 # -*- coding: utf-8 -*-
+from collective.cover.interfaces import ISearchableText
 from collective.cover.tests.base import TestTileMixin
 from collective.cover.tiles.richtext import IRichTextTile
 from collective.cover.tiles.richtext import RichTextTile
 from mock import Mock
+from plone.app.textfield.value import RichTextValue
+from zope.component import queryAdapter
 
 import unittest
 
@@ -29,10 +32,6 @@ class RichTextTileTestCase(TestTileMixin, unittest.TestCase):
     def test_accepted_content_types(self):
         self.assertEqual(self.tile.accepted_ct(), ['Document'])
 
-    def test_populate_with_object(self):
-        self.tile.populate_with_object(self.portal['my-document'])
-        self.assertEqual(self.tile.getText(), '')
-
     def test_render_empty(self):
         msg = 'Please edit the tile to enter some text.'
 
@@ -43,8 +42,21 @@ class RichTextTileTestCase(TestTileMixin, unittest.TestCase):
         self.assertNotIn(msg, self.tile())
 
     def test_render(self):
+        from collective.cover.tests.utils import set_text_field
+        text = '<p>My document text...</p>'
         obj = self.portal['my-document']
-        obj.setText('<p>My document text...</p>')
+        set_text_field(obj, text)  # handle Archetypes and Dexterity
         self.tile.populate_with_object(obj)
         rendered = self.tile()
-        self.assertIn('<p>My document text...</p>', rendered)
+        self.assertIn(text, rendered)
+
+    def test_seachable_text(self):
+        searchable = queryAdapter(self.tile, ISearchableText)
+        text = '<p>My document text...</p>'
+        value = RichTextValue(
+            raw=text,
+            mimeType='text/x-html-safe',
+            outputMimeType='text/x-html-safe'
+        )
+        self.tile.data['text'] = value
+        self.assertEqual(searchable.SearchableText(), 'My document text...')

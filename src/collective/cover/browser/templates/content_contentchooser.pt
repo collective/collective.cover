@@ -1,0 +1,64 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      i18n:domain="collective.cover"
+      tal:omit-tag="">
+<body tal:omit-tag="">
+
+<div id="contentchooser-content-search" class="right ui-widget-content">
+    <div class="close">
+        <a href="#" class="hiddenStructure" title="Close this box">Close this box.</a>
+    </div>
+    <ul class="formTabs">
+      <li class="formTab"><a href="#recent" i18n:translate="">Recent items</a></li>
+      <li class="formTab"><a href="#content-tree" i18n:translate="">Content tree</a></li>
+    </ul>
+
+    <div class="panes">
+      <div id="recent" class="tab-pane active">
+        <div class="input" id="contentchooser-content-search-input-container">
+          <input class="contentchooser-content-trees" id="contentchooser-content-search-input" type="text"
+            title="Filter items" placeholder="Filter items" name="contentchooser-search"
+            i18n:attributes="title; placeholder"/>
+        </div>
+        <a class="ui-icon ui-icon-close contentchooser-clear"></a>
+
+        <span class="filter-count" i18n:translate=""></span>
+
+        <input type="button" value="ok" id="contentchooser-content-search-button"
+         tal:attributes="data-url view/post_url"
+         i18n:attributes="value" />
+        <ul class="item-list"
+            tal:replace="structure context/@@content-search">
+        </ul>
+      </div>
+
+      <div id="content-trees" class="tab-pane">
+          <div class="input" id="contentchooser-content-trees-container">
+              <input id="contentchooser-content-trees"
+              name="contentchooser-content-trees" type="text" title="Filter items"
+              placeholder="Filter items" i18n:attributes="title; placeholder" />
+          </div>
+          <a class="ui-icon ui-icon-close contentchooser-clear"></a>
+
+          <span class="filter-count" i18n:translate=""></span>
+
+          <fieldset id="general_panel">
+            <div id="internalpath" class="formHelp" i18n:translate=""></div>
+          </fieldset>
+
+          <ul class="item-list">
+            <li />
+          </ul>
+
+      </div>
+    </div>
+
+    <div id="contentchooser-content-search-compose-button" style="display: none;"
+        i18n:translate="">Add Content</div>
+
+</div>
+</body>
+</html>

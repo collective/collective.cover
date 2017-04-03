@@ -1,45 +1,62 @@
 language: python
 python: 2.7
+sudo: false
+cache:
+  directories:
+  - eggs
+  - parts/node
+addons:
+  artifacts:
+    s3_region: sa-east-1
+    bucket: collective-cover
+    permissions: public-read
+    paths:
+    - $(find parts/test -type f | tr "\n" ":")
+  firefox: latest-esr
 env:
-  global:
-    - ARTIFACTS_AWS_REGION=sa-east-1
-    - ARTIFACTS_S3_BUCKET=collective-cover
-    - secure: "Ll2tTrfw0vpGlk+tfdcOD8HOylIWlyFDtNL+ShfQtAZ9wHZEOFJJyVsaSpDbdgWD1Y+muSz8I9xcvNY7ag17jm8udSEWecGaMIodeHB5hIklEi/OovKoAUgPqaVtbNE/FtyURZf7KE+Nb7zCege6XjCD635U4W2P1/072aEY3CU="
-    - secure: "bPiRnG3qFbWjD1zgVcTJAcOy8uuUwLKDIaVe15L6M5xLz49SfHFe6Zwc8jQ0g4J9xIDRqX4gcLnJffr0xJmBytXZGohFCjQRPUFruoy/stWWOrdgYT+9Jm9/TbVwoh+Cudo5iTNdIsaVnzcA6IyuTae/i9CJ9QQ7MBKyrjRV+T4="
   matrix:
     - PLONE_VERSION=4.2
-    - PLONE_VERSION=4.3 QA=true
-    - PLONE_VERSION=4.3 JQUERY=1.8.3
+    - PLONE_VERSION=4.3
+    - PLONE_VERSION=4.3 DEXTERITY_ONLY=true
+    - PLONE_VERSION=4.3 JQUERY=1.9.1.3
     - PLONE_VERSION=5.0
+    - PLONE_VERSION=5.1
 matrix:
-  allow_failures:
-    - env: PLONE_VERSION=5.0
   fast_finish: true
 install:
-  - sed -ie "s#travis-4.x.cfg#travis-$PLONE_VERSION.x.cfg#" travis.cfg
-  - sed -ie "s#versions-4.x.cfg#versions-$PLONE_VERSION.x.cfg#" travis.cfg
-  - test $JQUERY && sed -ie "s#plone.app.jquery = 1.7.2#plone.app.jquery = $JQUERY#" versions-4.3.x.cfg || true
-  - mkdir -p buildout-cache/downloads
-  - python bootstrap.py -c travis.cfg
-  - bin/buildout -c travis.cfg annotate
-  - bin/buildout -c travis.cfg -N -q
+- sed -ie "s#test-4.3#test-$PLONE_VERSION#" buildout.cfg
+- sed -ie "s#versions-4.3#versions-$PLONE_VERSION#" buildout.cfg
+- test $JQUERY && sed -ie "s#plone.app.jquery = 1.7.2#plone.app.jquery = $JQUERY#" versions-4.3.x.cfg || true
+- python bootstrap.py
+- bin/buildout annotate
+- bin/buildout
 before_script:
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
-script: bin/code-analysis && bin/test
-after_success:
-  - test $QA && bin/buildout -c coverage.cfg -N -q || true
-  - test $QA && bin/coverage.sh && pip install -q coveralls && coveralls || true
-after_failure:
   - firefox -v
-  - gem install travis-artifacts -q
-  - travis-artifacts upload --path parts/test
+script:
+- bin/code-analysis
+- bin/test
+after_success:
+- bin/createcoverage -t "--layer=!Robot"
+- pip install coveralls
+- coveralls
+after_script:
+# Firefox complains: GConf-WARNING **: Got Disconnected from DBus.
+# And then it keeps hanging, causing a failed job after 30-50 minutes.
+# So we just kill Firefox.
+- pkill -9 firefox
 notifications:
   irc:
+    on_success: change
     channels: irc.freenode.org#simplesconsultoria
     template:
       - "%{repository}#%{build_number} (%{branch} - %{commit} : %{author}): %{message}"
       - "Change view : %{compare_url}"
       - "Build details : %{build_url}"
-      - "Robot Test Report for Plone 4.2: http://collective-cover.s3-website-sa-east-1.amazonaws.com/artifacts/%{build_number}/%{build_number}.1/robot_report.html"
-      - "Robot Test Report for Plone 4.3: http://collective-cover.s3-website-sa-east-1.amazonaws.com/artifacts/%{build_number}/%{build_number}.2/robot_report.html"
+      - "Robot Test Report for Plone 4.2: http://s3-sa-east-1.amazonaws.com/collective-cover/collective/collective.cover/%{build_number}/%{build_number}.1/parts/test/robot_log.html"
+      - "Robot Test Report for Plone 4.3: http://s3-sa-east-1.amazonaws.com/collective-cover/collective/collective.cover/%{build_number}/%{build_number}.2/parts/test/robot_log.html"
+      - "Robot Test Report for plone.app.contenttypes: http://s3-sa-east-1.amazonaws.com/collective-cover/collective/collective.cover/%{build_number}/%{build_number}.3/parts/test/robot_log.html"
+      - "Robot Test Report for jQuery 1.9: http://s3-sa-east-1.amazonaws.com/collective-cover/collective/collective.cover/%{build_number}/%{build_number}.4/parts/test/robot_log.html"
+      - "Robot Test Report for Plone 5.0: http://s3-sa-east-1.amazonaws.com/collective-cover/collective/collective.cover/%{build_number}/%{build_number}.5/parts/test/robot_log.html"
+      - "Robot Test Report for Plone 5.1: http://s3-sa-east-1.amazonaws.com/collective-cover/collective/collective.cover/%{build_number}/%{build_number}.6/parts/test/robot_log.html"

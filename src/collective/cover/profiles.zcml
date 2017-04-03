@@ -29,6 +29,8 @@
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
 
+  <utility factory=".setuphandlers.HiddenProfiles" name="collective.cover" />
+
   <genericsetup:upgradeSteps
       source="5"
       destination="6"
@@ -109,6 +111,19 @@
         description="There were changes in the JS files, so we need to cook the resources."
         handler=".upgrades.cook_javascript_resources"
         />
+  </genericsetup:upgradeSteps>
+
+  <genericsetup:upgradeSteps
+      source="9"
+      destination="10"
+      profile="collective.cover:default">
+
+    <genericsetup:upgradeStep
+        title="Upgrade carousel tiles"
+        description="Carousel tile now allows to set a custom URL to items. Upgrade existing ones to support this."
+        handler=".upgrades.upgrade_carousel_tiles_custom_url"
+        />
+
   </genericsetup:upgradeSteps>
 
 </configure>

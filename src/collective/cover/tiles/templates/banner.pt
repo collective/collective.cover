@@ -11,7 +11,7 @@
 
   <div class="cover-banner-tile tile-content"
        tal:condition="not:is_empty"
-       tal:define="title view/Title;
+       tal:define="title view/data/title;
                    has_image view/has_image;
                    remote_url view/getRemoteUrl">
 
@@ -25,7 +25,7 @@
                                width thumbnail/width;
                                height thumbnail/height;
                                class view/css_class;
-                               alt title" />
+                               alt view/alt" />
         </a>
     </tal:image>
 

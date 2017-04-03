@@ -18,22 +18,3 @@
   </span>
 </div>
 </metal:subjects>
-
-<metal:image define-macro="image" i18n:domain="collective.cover">
-<tal:image condition="python:field['id'] == 'image'"
-             define="scale python:field.get('scale', 'large').split()[0];
-                     scale python:scale != '_original' and scale or None;
-                     position python:field.get('position', '');">
-  <a class="imag" tal:attributes="href view/getURL|string:#;
-                                  title description|nothing;">
-    <img tal:define="scales view/@@images;
-                     thumbnail python:scale and scales.scale('image', scale=scale) or scales.scale('image');"
-         tal:condition="thumbnail"
-         tal:attributes="src thumbnail/url;
-                         width thumbnail/width;
-                         height thumbnail/height;
-                         class position;
-                         alt string:Image" />
-  </a>
-</tal:image>
-</metal:image>

@@ -50,7 +50,8 @@ Create Cover
     [arguments]  ${title}  ${description}  ${layout}=Empty layout
 
     Click Add Cover
-    Input Text  css=${title_selector}  ${title}
+    # deal with delays caused by plone4.csrffixes
+    Input Text For Sure  css=${title_selector}  ${title}
     Input Text  css=${description_selector}  ${description}
     Select From List  css=${layout_selector}  ${layout}
     Click Button  Save
@@ -71,13 +72,10 @@ Delete
     Click Button  Delete
     Page Should Contain  Plone site
 
-Edit Cover Layout
-    [Documentation]  Click on Layout tab and wait until the layout has been
-    ...              loaded. Buttons related with layout operations must be
-    ...              also visible.
+Open Layout Tab
+    [Documentation]  Click on Layout tab and wait until it loads.
     Click Link  link=Layout
-    Sleep  1s  Wait for cover layout to load
-    Page Should Contain  Export layout
+    Wait Until Page Contains  Export layout
     Page Should Contain  Saved
 
 Save Cover Layout
@@ -105,7 +103,7 @@ Delete Tile
 Compose Cover
     [Documentation]  Click on Compose tab and wait until the layout has been
     ...              loaded.
-    Click Link  link=Compose
+    Wait Until Keyword Succeeds  5 sec  1 sec  Click Link  link=Compose
     Sleep  1s  Wait for cover compose to load
     Wait Until Page Contains Element  css=div#contentchooser-content-show-button
     Page Should Contain  Add Content

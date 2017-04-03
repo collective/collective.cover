@@ -1,6 +1,11 @@
 <configure xmlns="http://namespaces.zope.org/zope">
 
   <permission
+      id="collective.cover.Setup"
+      title="collective.cover: Setup"
+      />
+
+  <permission
       id="collective.cover.CanExportLayout"
       title="collective.cover: Can Export Layout"
       />
@@ -11,10 +16,8 @@
       />
 
   <permission
-      id="collective.cover.Setup"
-      title="collective.cover: Setup">
-    <role name="Manager"/>
-    <role name="Site Administrator"/>
-  </permission>
+      id="collective.cover.EmbedCode"
+      title="collective.cover: Embed Code"
+      />
 
 </configure>

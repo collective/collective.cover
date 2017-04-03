@@ -4,7 +4,7 @@ from collective.cover.tiles.base import IPersistentCoverTile
 from collective.cover.tiles.base import PersistentCoverTile
 from collective.cover.tiles.configuration_view import IDefaultConfigureForm
 from plone.app.uuid.utils import uuidToObject
-from plone.directives import form
+from plone.autoform import directives as form
 from plone.memoize import view
 from plone.namedfile.field import NamedBlobImage as NamedImage
 from plone.tiles.interfaces import ITileDataManager
@@ -14,8 +14,10 @@ from Products.CMFPlone.utils import safe_unicode
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zope import schema
 from zope.component import queryUtility
-from zope.interface import implements
+from zope.interface import implementer
 from zope.schema import getFieldsInOrder
+
+import random
 
 
 class ICollectionTile(IPersistentCoverTile):
@@ -70,6 +72,13 @@ class ICollectionTile(IPersistentCoverTile):
         default=0,
     )
 
+    form.omitted(IDefaultConfigureForm, 'random')
+    random = schema.Bool(
+        title=_(u'Select random items'),
+        required=False,
+        default=False
+    )
+
     footer = schema.TextLine(
         title=_(u'Footer'),
         required=False,
@@ -77,13 +86,13 @@ class ICollectionTile(IPersistentCoverTile):
 
     uuid = schema.TextLine(
         title=_(u'UUID'),
+        required=False,
         readonly=True,
     )
 
 
+@implementer(ICollectionTile)
 class CollectionTile(PersistentCoverTile):
-
-    implements(ICollectionTile)
 
     index = ViewPageTemplateFile('templates/collection.pt')
 
@@ -115,7 +124,13 @@ class CollectionTile(PersistentCoverTile):
         uuid = self.data.get('uuid', None)
         obj = uuidToObject(uuid)
         if uuid and obj:
-            return obj.results(batch=False)[offset:offset + size]
+            results = obj.results(batch=False)
+            if self.data.get('random', False):
+                if size > len(results):
+                    size = len(results)
+                return random.sample(results, size)
+
+            return results[offset:offset + size]
         else:
             self.remove_relation()
             return []
@@ -130,13 +145,12 @@ class CollectionTile(PersistentCoverTile):
         if obj.portal_type in self.accepted_ct():
             header = safe_unicode(obj.Title())  # use collection's title as header
             footer = _(u'More…')  # XXX: can we use field's default?
-            uuid = IUUID(obj)
 
             data_mgr = ITileDataManager(self)
             data_mgr.set({
                 'header': header,
                 'footer': footer,
-                'uuid': uuid,
+                'uuid': IUUID(obj),
             })
 
     def accepted_ct(self):
@@ -171,6 +185,9 @@ class CollectionTile(PersistentCoverTile):
                 if 'imgsize' in field_conf:
                     field['scale'] = field_conf['imgsize']
 
+                if 'format' in field_conf:
+                    field['format'] = field_conf['format']
+
                 if 'size' in field_conf:
                     field['size'] = field_conf['size']
 
@@ -201,6 +218,10 @@ class CollectionTile(PersistentCoverTile):
                     scale = scaleconf.split(' ')[0]
                 scales = item.restrictedTraverse('@@images')
                 return scales.scale('image', scale)
+
+    def get_alt(self, obj):
+        """Return the alt attribute for the image in the obj."""
+        return obj.Description() or obj.Title()
 
     @view.memoize
     def get_image_position(self):

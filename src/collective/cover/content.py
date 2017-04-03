@@ -1,35 +1,35 @@
 # -*- coding: utf-8 -*-
 from collective.cover.behaviors.interfaces import IRefresh
 from collective.cover.config import PROJECTNAME
-from collective.cover.controlpanel import ICoverSettings
 from collective.cover.interfaces import ICover
-from collective.cover.utils import assign_tile_ids
-from five import grok
-from plone.app.textfield.interfaces import ITransformer
+from collective.cover.interfaces import ISearchableText
+from collective.cover.tiles.list import IListTile
+from collective.cover.tiles.richtext import IRichTextTile
+from plone.app.linkintegrity.handlers import getObjectsFromLinks
+from plone.app.linkintegrity.parser import extractLinks
+from plone.app.uuid.utils import uuidToObject
 from plone.dexterity.content import Item
 from plone.indexer import indexer
-from plone.registry.interfaces import IRegistry
 from plone.tiles.interfaces import ITileDataManager
 from Products.CMFPlone.utils import safe_unicode
 from Products.GenericSetup.interfaces import IDAVAware
-from zope.component import getUtility
-from zope.container.interfaces import IObjectAddedEvent
-from zope.interface import implements
+from zope.component import queryAdapter
+from zope.interface import implementer
 
 import json
 import logging
 
+
 logger = logging.getLogger(PROJECTNAME)
 
 
+# XXX: Provide this so Cover items can be imported using the import
+#      content from GS, until a proper solution is found.
+#      ref: http://thread.gmane.org/gmane.comp.web.zope.plone.devel/31799
+@implementer(IDAVAware)
 class Cover(Item):
 
     """A composable page."""
-
-    # XXX: Provide this so Cover items can be imported using the import
-    #      content from GS, until a proper solution is found.
-    #      ref: http://thread.gmane.org/gmane.comp.web.zope.plone.devel/31799
-    implements(IDAVAware)
 
     @property
     def refresh(self):
@@ -128,41 +128,51 @@ class Cover(Item):
         data_mgr = ITileDataManager(tile)
         data_mgr.set(data)
 
+    def get_referenced_objects(self):
+        """Get referenced objects from cover object.
 
-@grok.subscribe(ICover, IObjectAddedEvent)
-def assign_id_for_tiles(cover, event):
-    if not cover.cover_layout:
-        # When versioning, a new cover gets created, so, if we already
-        # have a cover_layout stored, do not overwrite it
-        registry = getUtility(IRegistry)
-        settings = registry.forInterface(ICoverSettings)
-
-        layout = settings.layouts.get(cover.template_layout)
-        if layout:
-            layout = json.loads(layout)
-            assign_tile_ids(layout)
-
-            cover.cover_layout = json.dumps(layout)
+        :returns: a set of objects referenced
+        :rtype: set of objects
+        """
+        refs = set()
+        for tile_uuid in self.list_tiles():
+            tile = self.get_tile(tile_uuid)
+            uuid = tile.data.get('uuid', None)
+            if uuid is not None:
+                refs |= set([uuidToObject(uuid)])
+            if IListTile.providedBy(tile):
+                uuids = tile.data.get('uuids', [])
+                if uuids is None:
+                    continue
+                for uuid in uuids:
+                    refs |= set([uuidToObject(uuid)])
+            elif IRichTextTile.providedBy(tile):
+                value = tile.data.get('text')
+                if value is None:
+                    continue
+                value = value.raw
+                links = extractLinks(value)
+                refs |= getObjectsFromLinks(self, links)
+        return refs
 
 
 @indexer(ICover)
 def searchableText(obj):
     """Return searchable text to be used as indexer. Includes id, title,
     description and text from Rich Text tiles."""
-    transformer = ITransformer(obj)
-    tiles_text = ''
-    for t in obj.list_tiles('collective.cover.richtext'):
-        tile = obj.restrictedTraverse(
-            '@@collective.cover.richtext/{0}'.format(str(t)))
-        tiles_text += transformer(tile.data['text'], 'text/plain')
-
+    text_list = []
+    tiles = obj.get_tiles()
+    for tile in tiles:
+        tile_obj = obj.restrictedTraverse('@@{0}/{1}'.format(tile['type'], tile['id']))
+        searchable = queryAdapter(tile_obj, ISearchableText)
+        if searchable:
+            text_list.append(searchable.SearchableText())
+    tiles_text = u' '.join(text_list)
     searchable_text = [safe_unicode(entry) for entry in (
         obj.id,
         obj.Title(),
         obj.Description(),
         tiles_text,
     ) if entry]
-
-    return u' '.join(searchable_text)
-
-grok.global_adapter(searchableText, name='SearchableText')
+    searchable_text = u' '.join(searchable_text)
+    return searchable_text

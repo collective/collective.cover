@@ -43,11 +43,14 @@ item will show an image, title and description. Carousel tiles are 100%
 responsive, support native-like swipe movements and use hardware optimized
 animations.
 
-You can drop any object in a Carousel tile. Right now, you can not edit
-individual items metadata in the carousel, but you can remove or reorder them.
-You can also specify if the carousel will start playing the slideshow
-automatically or not. Every item in the slideshow will have a link pointing
-back to the original object.
+You can drop any object into a Carousel tile.
+You can edit the metadata (title, description and URL) of items in the carousel,
+and you can reorder or remove them from the tile.
+You can also specify if the carousel will start playing the slideshow automatically or not.
+Every item in the slideshow will have a link pointing back to the original object.
+
+If you drop a folder or a collection into this tile,
+it will take every item into the folder or into the collection and insert it until it reaches the max items specified into configuration.
 
 Carousel tile is fully responsive, so be sure to configure it to use the image size that fits better the maximum desired size.
 
@@ -105,6 +108,9 @@ with the objects metadata; if an object has an image, it will be shown also.
 Right now, you can not edit individual items metadata in the list, but you can
 remove or reorder them. The title and image fields will include a link to the
 original object location.
+
+If you drop a folder or a collection into this tile,
+it will take every item into the folder or into the collection and insert it until it reaches the max items specified into configuration.
 
 Rich Text
 +++++++++
@@ -192,18 +198,46 @@ steps:
 
 There are also two other navigation options to find content.
 
-Searching for content
-+++++++++++++++++++++
+Moving content among tiles
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-You can use the search field in the content selection window to locate the
-content you want:
+While managing a cover on your site you will eventually need to move items among tiles.
 
-#. Type the term you want to find.
+Moving content among tiles is easy:
 
-#. Push the "Search" button.
+#. Select the "Compose" tab.
 
-The items related to the term you search will be displayed and can be used
-according to the steps above.
+#. Drag the content you want to move and drop it into the destination tile.
+
+.. figure:: https://raw.github.com/collective/collective.cover/master/docs/move-content1.gif
+    :align: center
+    :height: 529px
+    :width: 856px
+
+You can move any piece of content among any kind of tiles,
+but there are some considerations to take into account:
+If you move content among tiles of the same type,
+all customizations will be maintained except for the tile configuration.
+If you move content to a list or carousel tiles,
+all customizations will be lost.
+
+For list and carousel tiles there is an advanced feature that lets you move all the content in one simple step:
+
+#. Select the "Compose" tab.
+
+#. Drag the tile from the "move" icon and drop it into a tile of the same type.
+
+.. figure:: https://raw.github.com/collective/collective.cover/master/docs/move-content2.gif
+    :align: center
+    :height: 531px
+    :width: 803px
+
+Filtering recent items
+++++++++++++++++++++++
+
+You can use the search box in the recent items tab to filter content.
+Just type the term you want to find and the items containing it on their title field will be displayed.
+The items will be shown sorted by publication date with the more recent appearing first.
 
 Content tree
 ++++++++++++
@@ -251,6 +285,11 @@ The changes will be applied to your cover immediately.
 
 Behaviors
 ^^^^^^^^^
+
+To enable behaviors go to 'Site Setup' and select 'Dexterity content types'.
+Look for 'Cover' content type, select it and then select 'Behaviors'.
+
+The following behaviors are included in this package:
 
 Refresh
 +++++++
@@ -315,16 +354,18 @@ You can control the width of each column individually:
     :height: 450px
     :width: 670px
 
-By default, ``collective.cover`` uses a grid of 16 units. Therefore, the sum
-of the all widths in a column must not exceed 16. To make it easier to edit
-the width of all columns, first adjust the width of the smallest column.
+.. TIP::
+    By default, ``collective.cover`` uses a 16-column grid system.
+    Therefore, the sum of the width of all columns in a row must not exceed 16.
+    To make it easier to edit the width of all columns,
+    first adjust the width of the smallest column.
 
 Adding new tiles
 ^^^^^^^^^^^^^^^^
 
 Now that you have created columns, you can add tiles to it:
 
-#. In the Layout tab, select one of the available Tile icons and drag it 
+#. In the Layout tab, select one of the available Tile icons and drag it
    to the column where you want to place it.
 
 #. Change the configuration as desired.
@@ -368,11 +409,10 @@ your website:
 
 #. Select the Layout tab.
 
-#. Click the "Export layout" button. 
+#. Click the "Export layout" button.
 
 #. Enter a name for your model.
 
 #. Click "Export layout"".
 
-Now this layout can be used as a model to create new covers, as explained in
-the section "Adding a cover".
+Now this layout can be used as a model to create new covers, as explained in the section "Adding a cover".

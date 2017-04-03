@@ -1,0 +1,43 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      i18n:domain="collective.cover"
+      tal:omit-tag="">
+    <body tal:omit-tag="">
+
+        <tal:mode define="mode options/mode;">
+            <tal:layoutedit tal:condition="python:mode == 'layout_edit'">
+                <div tal:define="section options/section | nothing;
+                                 data python:section.get('data', '') if section else None"
+                     tal:condition="section"
+                     tal:attributes="class python:'%s' % section.get('class', '');
+                                     data-css-class python: section.get('css-class', None)">
+
+                    <a href="#" class="config-row-link">
+                        <i class="config-icon"></i>
+                    </a>
+
+                    <tal:children repeat="child python:section.get('children') or []">
+                        <div tal:replace="structure python:view.render_section(child, mode)" />
+                    </tal:children>
+
+                </div>
+            </tal:layoutedit>
+            <tal:other tal:condition="python:mode != 'layout_edit'">
+                <div tal:define="section options/section | nothing;
+                                 data python:section.get('data', '') if section else None"
+                     tal:condition="section"
+                     tal:attributes="class python:'%s' % section.get('class', '')">
+
+                    <tal:children repeat="child python:section.get('children') or []">
+                        <div tal:replace="structure python:view.render_section(child, mode)" />
+                    </tal:children>
+
+                </div>
+            </tal:other>
+        </tal:mode>
+
+    </body>
+</html>

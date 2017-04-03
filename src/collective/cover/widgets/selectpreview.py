@@ -61,7 +61,7 @@ class SelectPreviewWidget(select.SelectWidget):
 
             if element['type'] == 'group':
                 item['type'] = 'group'
-                item['size'] = element['data']['column-size']
+                item['size'] = element['column-size']
 
             if element['type'] == 'tile':
                 item['type'] = 'tile'

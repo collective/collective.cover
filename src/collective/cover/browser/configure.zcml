@@ -1,0 +1,157 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:i18n="http://namespaces.zope.org/i18n"
+    xmlns:plone="http://namespaces.plone.org/plone"
+    i18n_domain="collective.cover">
+
+  <!-- contentchooser -->
+  <browser:page
+      name="select-content-contentchooser"
+      for="..interfaces.ICover"
+      permission="cmf.ModifyPortalContent"
+      class=".contentchooser.SelectContent"
+      />
+  <browser:page
+      name="content-search"
+      for="..interfaces.ICover"
+      permission="cmf.ModifyPortalContent"
+      class=".contentchooser.ContentSearch"
+      />
+  <browser:pages
+      for="Products.CMFCore.interfaces.IFolderish"
+      class=".contentchooser.SearchItemsBrowserView"
+      permission="cmf.ModifyPortalContent">
+    <browser:page attribute="jsonByType" name="jsonbytype" />
+  </browser:pages>
+  <!-- contentchooser -->
+
+  <!-- compose -->
+  <browser:page
+      name="compose"
+      for="..interfaces.ICover"
+      permission="cmf.ModifyPortalContent"
+      class=".compose.Compose"
+      />
+  <browser:page
+      name="updatetilecontent"
+      for="..interfaces.ICover"
+      permission="cmf.ModifyPortalContent"
+      class=".compose.UpdateTileContent"
+      />
+  <browser:page
+      name="movetilecontent"
+      for="..interfaces.ICover"
+      permission="cmf.ModifyPortalContent"
+      class=".compose.MoveTileContent"
+      />
+  <browser:page
+      name="updatelisttilecontent"
+      for="..interfaces.ICover"
+      permission="cmf.ModifyPortalContent"
+      class=".compose.UpdateListTileContent"
+      />
+  <browser:page
+      name="removeitemfromlisttile"
+      for="..interfaces.ICover"
+      permission="cmf.ModifyPortalContent"
+      class=".compose.RemoveItemFromListTile"
+      />
+  <browser:page
+      name="deletetile"
+      for="..interfaces.ICover"
+      permission="cmf.ModifyPortalContent"
+      class=".compose.DeleteTile"
+      />
+  <!-- compose -->
+
+  <!-- cover -->
+  <browser:page
+      name="view"
+      for="..interfaces.ICover"
+      permission="zope2.View"
+      class=".cover.View"
+      />
+  <browser:page
+      name="standard"
+      for="..interfaces.ICover"
+      permission="zope2.View"
+      class=".cover.Standard"
+      />
+  <browser:page
+      name="updatetile"
+      for="..interfaces.ICover"
+      permission="zope2.View"
+      class=".cover.UpdateTile"
+      />
+  <browser:menuItems
+      for="collective.cover.content.ICover"
+      menu="plone_displayviews">
+    <browser:menuItem title="Front page view" action="view" />
+    <browser:menuItem title="Standard view" action="standard" />
+  </browser:menuItems>
+  <!-- cover -->
+
+  <!-- layout -->
+  <browser:page
+      name="layoutedit"
+      for="..interfaces.ICover"
+      permission="collective.cover.CanEditLayout"
+      class=".layout.LayoutEdit"
+      />
+  <browser:page
+      name="layout"
+      for="..interfaces.ICover"
+      permission="zope2.View"
+      class=".layout.PageLayout"
+      />
+  <browser:page
+      name="save_layout"
+      for="..interfaces.ICover"
+      permission="collective.cover.CanEditLayout"
+      class=".layout.LayoutSave"
+      />
+  <browser:page
+      name="tile_list"
+      for="..interfaces.ICover"
+      permission="collective.cover.CanEditLayout"
+      class=".layout.TileList"
+      />
+  <browser:page
+      name="group_select"
+      for="..interfaces.ICover"
+      permission="collective.cover.CanEditLayout"
+      class=".layout.GroupSelect"
+      />
+  <!-- layout -->
+
+  <browser:page
+      name="cover-settings"
+      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      class="..controlpanel.CoverSettingsControlPanel"
+      permission="collective.cover.Setup"
+      />
+  <browser:page
+      name="plone_layout"
+      for="collective.cover.interfaces.ICover"
+      permission="zope.Public"
+      class=".layoutpolicy.LayoutPolicy"
+      allowed_interface="plone.app.layout.globals.interfaces.ILayoutPolicy"
+      layer="collective.cover.interfaces.ICoverLayer"
+      />
+  <browser:page
+      for="collective.cover.content.ICover"
+      name="plone"
+      class=".adapters.PloneView"
+      permission="zope.Public"
+      allowed_interface="Products.CMFPlone.browser.interfaces.IPlone"
+      />
+  <!-- Image scale support for tile images -->
+  <browser:page
+      name="images"
+      for="..tiles.base.IPersistentCoverTile"
+      class=".scaling.ImageScaling"
+      permission="zope2.View"
+      />
+
+</configure>

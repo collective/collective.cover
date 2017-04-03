@@ -1,0 +1,15 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      i18n:domain="collective.cover"
+      tal:omit-tag="">
+    <body tal:omit-tag="">
+        <tal:mode define="mode python:options.get('mode', 'view');">
+            <tal:section repeat="section python:view.get_layout(mode)">
+                <div tal:replace="structure python:view.render_section(section, mode)" />
+            </tal:section>
+        </tal:mode>
+    </body>
+</html>

@@ -1,0 +1,42 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      i18n:domain="collective.cover"
+      tal:omit-tag="">
+    <body tal:omit-tag="">
+        <tal:mode define="mode options/mode">
+            <tal:block tal:define="section options/section | nothing"
+                       tal:condition="section">
+                <tal:layoutedit tal:condition="python:mode == 'layout_edit'">
+                    <div tal:define="klass python:section.get('class', '')"
+                         tal:attributes="class python:'%s %s' % (klass, '' if view.is_user_allowed_in_group() else 'disabled');
+                                         data-panel python: section.get('id', '');
+                                         data-column-size python: section.get('column-size', 1);
+                                         data-css-class python: section.get('css-class', None)">
+
+                        <a href="#" class="config-column-link">
+                            <i class="config-icon"></i>
+                        </a>
+
+                        <tal:children repeat="child python:section.get('children') or []">
+                            <div tal:replace="structure python:view.render_section(child, mode)" />
+                        </tal:children>
+
+                    </div>
+                </tal:layoutedit>
+                <tal:other tal:condition="python:mode != 'layout_edit'">
+                    <div tal:attributes="class python:'%s %s' % (section.get('class', ''), '' if view.is_user_allowed_in_group() else 'disabled');
+                                         data-panel python: section.get('id', '')">
+
+                        <tal:children repeat="child python:section.get('children') or []">
+                            <div tal:replace="structure python:view.render_section(child, mode)" />
+                        </tal:children>
+
+                    </div>
+                </tal:other>
+            </tal:block>
+        </tal:mode>
+    </body>
+</html>

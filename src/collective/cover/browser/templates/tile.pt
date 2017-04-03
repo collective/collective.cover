@@ -1,0 +1,97 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      i18n:domain="collective.cover"
+      tal:omit-tag="">
+    <body tal:omit-tag="">
+        <tal:mode define="mode options/mode;
+                          section options/section | nothing;
+                          tile_url options/tile_url;
+                          tile_type python:section.get('tile-type', '');
+                          tile_title python:section.get('tile-title', '');
+                          tile_id python:section.get('id', '');
+                          css_id python:'tile-%s' % tile_id;
+                          has_subitem python:view.get_has_subitem(tile_type, tile_id)">
+
+            <tal:view tal:condition="python:mode == 'view'">
+                <tal:co condition="section">
+                    <div tal:replace="nothing">
+                        **************************************************************************************************************
+                        data-tile is an attribute HTML 5 used to provide the url the tile, then some machinery
+                        in the publisher provided by plone.app.blocks performs the following steps:
+
+                        1. It finds all the divs with a data-tile attribute (let's call them tile placeholders).
+
+                        2. For each one, it performs a subrequest to fetch the contents of the tile. Using a URI
+                        makes tiles very flexible: a tile could be a browser view, or it could come from some external system.
+
+                        3. The tile placeholder is replaced with the contents of the tile's body tag.
+
+                        Here we used relative url, avoiding a bug when we are behind a server proxy "context.absolute_url(relative=1)"
+                        ***************************************************************************************************************
+                    </div>
+
+                    <div tal:attributes="class python:'%s' % section.get('css_class', '');
+                                         id tile_id">
+                        <div tal:attributes="data-tile python:'%s' %(tile_url);">
+                            Tile content replaced during the blocks transform.
+                        </div>
+                    </div>
+                </tal:co>
+            </tal:view>
+
+            <tal:compose tal:condition="python:mode == 'compose'">
+                <div tal:condition="section" class="tile-container">
+                    <span class="tile-type-name" tal:content="tile_title" />
+                    <div tal:attributes="class python:'%s %s' % (section.get('css_class', ''), view.can_compose_tile_class(tile_type, tile_id));
+                                         data-tile-type tile_type;
+                                         data-tile-valid-ct python:view.accepted_ct_for_tile(tile_type);
+                                         data-content-type python:view.get_content_portal_type(tile_type, tile_id);
+                                         data-content-uuid python:view.get_content_uuid(tile_type, tile_id);
+                                         data-has-subitem has_subitem;
+                                         data-is-droppable python:view.tile_is_droppable(tile_type);
+                                         id tile_id">
+                        <div tal:attributes="data-tile python:'%s' %(tile_url);">
+                            Tile content replaced during the blocks transform.
+                        </div>
+                    </div>
+                    <a href="#" class="edit-tile-link pat-plone-modal"
+                       data-pat-plone-modal="content: .tile-content"
+                       tal:condition="python:view.tile_is_editable(tile_type)"
+                       tal:attributes="href string:${context/absolute_url}/@@edit-tile/${tile_type}/${tile_id}"
+                       i18n:translate="">Edit</a>
+                   <i class="tile-move"
+                      tal:attributes="data-tile-id tile_id;
+                                      data-tile-type tile_type;
+                                      title string:Move all items of tile"
+                      i18n:attributes="title"
+                      tal:condition="has_subitem">
+                      <span class='text'>move tile</span>
+                  </i>
+                </div>
+            </tal:compose>
+
+            <tal:layoutedit tal:condition="python:mode == 'layout_edit'">
+                <tal:block tal:define="section options/section | nothing;
+                                       tile_type python:section.get('tile-type', '');
+                                       tile_title python:section.get('tile-title', '');
+                                       tile_id python:section.get('id', '')"
+                           tal:condition="section">
+                    <div tal:attributes="class python:'%s' % section.get('css_class', '');
+                                         data-tile-type tile_type;
+                                         id tile_id">
+                        <a href="#" class="config-tile-link"
+                           tal:condition="python:view.tile_is_configurable(tile_type)"
+                           tal:attributes="href string:${context/absolute_url}/@@configure-tile/${tile_type}/${tile_id}">
+                            <i class="config-icon"></i>
+                        </a>
+                        <span class="tile-name" tal:content="tile_title" />
+                    </div>
+                </tal:block>
+            </tal:layoutedit>
+
+        </tal:mode>
+    </body>
+</html>

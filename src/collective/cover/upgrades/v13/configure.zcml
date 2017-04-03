@@ -1,0 +1,38 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+    xmlns:i18n="http://namespaces.zope.org/i18n"
+    i18n_domain="collective.cover">
+
+  <genericsetup:upgradeSteps
+      source="12"
+      destination="13"
+      profile="collective.cover:default">
+
+    <genericsetup:upgradeStep
+        title="Fix resource references"
+        description="Fix resource references after static files reorganization."
+        handler=".fix_resources_references"
+        />
+
+    <genericsetup:upgradeStep
+        title="Cook CSS resources"
+        description="There were changes in the CSS files, so we need to cook the resources."
+        handler="..cook_css_resources"
+        />
+
+    <genericsetup:upgradeStep
+        title="Cook JS resources"
+        description="There were changes in the JS files, so we need to cook the resources."
+        handler="..cook_javascript_resources"
+        />
+
+    <genericsetup:upgradeStep
+        title="Update references"
+        description="Update references used for link integrity checking."
+        handler=".update_references"
+        />
+
+  </genericsetup:upgradeSteps>
+
+</configure>

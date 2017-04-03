@@ -2,6 +2,7 @@
 
 from collective.cover import _
 from collective.cover.tiles.configuration import ITilesConfigurationScreen
+from datetime import datetime
 from plone import api
 from plone.app.tiles.browser.base import TileForm
 from plone.app.tiles.browser.traversal import TileTraverser
@@ -13,7 +14,7 @@ from z3c.form.interfaces import IDataManager
 from z3c.form.interfaces import NO_VALUE
 from zope.component import getMultiAdapter
 from zope.event import notify
-from zope.interface import implements
+from zope.interface import implementer
 from zope.interface import Interface
 from zope.lifecycleevent import ObjectModifiedEvent
 from zope.publisher.interfaces.browser import IBrowserView
@@ -67,6 +68,7 @@ class ConfigureTile(TileTraverser):
         raise KeyError(name)
 
 
+@implementer(IDefaultConfigureForm)
 class DefaultConfigureForm(TileForm, form.Form):
     """
     Standard tile configure form, which is wrapped by DefaultConfigureView (see
@@ -75,8 +77,6 @@ class DefaultConfigureForm(TileForm, form.Form):
     This form is capable of rendering the fields of any tile schema as defined
     by an ITileType utility.
     """
-    implements(IDefaultConfigureForm)
-
     mode = 'configure'
     name = 'configure_tile'
 
@@ -175,7 +175,7 @@ class DefaultConfigureForm(TileForm, form.Form):
         tile_conf_adapter.set_configuration(data)
 
         # notify about modification
-        notify(ObjectModifiedEvent(tile))
+        notify(ObjectModifiedEvent(self.context))
         api.portal.show_message(
             _(u'Tile configuration saved.'), self.request, type='info')
 
@@ -198,6 +198,15 @@ class DefaultConfigureForm(TileForm, form.Form):
         super(DefaultConfigureForm, self).updateActions()
         self.actions['save'].addClass('context')
         self.actions['cancel'].addClass('standalone')
+
+    def datetime_widget_options(self):
+        """Return the options that can be used on a datetime widget."""
+        now = datetime.now()
+        return (
+            ('datetime', api.portal.get_localized_time(now, long_format=True, time_only=False)),
+            ('dateonly', api.portal.get_localized_time(now, long_format=False, time_only=False)),
+            ('timeonly', api.portal.get_localized_time(now, long_format=False, time_only=True)),
+        )
 
 
 class DefaultConfigureView(layout.FormWrapper):
@@ -229,3 +238,11 @@ class DefaultConfigureView(layout.FormWrapper):
         if self.form_instance is not None:
             if getattr(self.form_instance, 'tileType', None) is None:
                 self.form_instance.tileType = tileType
+
+    def __call__(self):
+        # We add Cache-Control here because IE9-11 cache XHR GET requests. If
+        # you configure a tile, save and reconfigure you get the previouw
+        # request. IE will list the request as 304 not modified, in its F12
+        # tools, but it is never even requested from the server.
+        self.request.response.setHeader('Cache-Control', 'no-cache, must-revalidate')
+        return super(DefaultConfigureView, self).__call__()

@@ -1,0 +1,50 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+    xmlns:i18n="http://namespaces.zope.org/i18n"
+    i18n_domain="collective.cover">
+
+  <genericsetup:upgradeSteps
+      source="10"
+      destination="11"
+      profile="collective.cover:default">
+
+    <genericsetup:upgradeStep
+        title="Revert PersistentMapping back to dict"
+        description="Initial structure should not be a PersistentMapping, but regular dictionaries."
+        handler=".fix_persistentmap_to_dict"
+        />
+
+    <genericsetup:upgradeStep
+        title="Update layouts"
+        description="Remove CSS class from registry and cover layouts."
+        handler=".remove_css_class_layout"
+        />
+
+    <genericsetup:upgradeStep
+        title="Remove orphan annotations"
+        description="This upgrade step was pending from v10."
+        handler=".remove_orphan_annotations"
+        />
+
+    <genericsetup:upgradeStep
+        title="Cook CSS resources"
+        description="There were changes in the CSS files, so we need to cook the resources."
+        handler="..cook_css_resources"
+        />
+
+    <genericsetup:upgradeStep
+        title="Cook JS resources"
+        description="There were changes in the JS files, so we need to cook the resources."
+        handler="..cook_javascript_resources"
+        />
+
+    <genericsetup:upgradeStep
+        title="Simplify layouts"
+        description="Remove data and layout-type items, and move column-size to the parent."
+        handler=".simplify_layout"
+        />
+
+  </genericsetup:upgradeSteps>
+
+</configure>

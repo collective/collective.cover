@@ -41,3 +41,17 @@ class TestTileMixin:
 
     def test_accepted_content_types(self):
         raise NotImplementedError
+
+    def test_esi_render(self):
+        """Test ESI rendering capable tiles."""
+        from plone.tiles.interfaces import ESI_HEADER_KEY
+        from zope.component import queryMultiAdapter
+        self.request.environ[ESI_HEADER_KEY] = 'true'
+        # tile supports ESI
+        from plone.tiles.interfaces import IESIRendered
+        IESIRendered.providedBy(self.tile)
+        # head and body helper views are available
+        head = queryMultiAdapter((self.tile, self.request), name='esi-head')
+        self.assertIsNotNone(head)
+        body = queryMultiAdapter((self.tile, self.request), name='esi-body')
+        self.assertIsNotNone(body)

@@ -1,0 +1,26 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+    xmlns:i18n="http://namespaces.zope.org/i18n"
+    i18n_domain="collective.cover">
+
+  <genericsetup:upgradeSteps
+      source="14"
+      destination="15"
+      profile="collective.cover:default">
+
+    <genericsetup:upgradeStep
+        title="Fix image field modification time"
+        description="Fix image modification time to be float timestamp instead of string."
+        handler=".fix_image_field_modification_time"
+        />
+
+    <genericsetup:upgradeStep
+        title="Cook JS resources"
+        description="There were changes in the JS files, so we need to cook the resources."
+        handler="..cook_javascript_resources"
+        />
+
+  </genericsetup:upgradeSteps>
+
+</configure>

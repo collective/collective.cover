@@ -1,19 +1,16 @@
 # -*- coding: utf-8 -*-
 from AccessControl import Unauthorized
+from collective.cover.config import DEFAULT_GRID_SYSTEM
 from collective.cover.controlpanel import ICoverSettings
 from collective.cover.interfaces import ICover
 from collective.cover.testing import INTEGRATION_TESTING
-from collective.cover.testing import MULTIPLE_GRIDS_INTEGRATION_TESTING
 from plone import api
 from plone.app.dexterity.behaviors.exclfromnav import IExcludeFromNavigation
 from plone.app.lockingbehavior.behaviors import ILocking
-from plone.app.referenceablebehavior.referenceable import IReferenceable
-from plone.app.stagingbehavior.interfaces import IStagingSupport
 from plone.app.testing import setRoles
 from plone.app.testing import TEST_USER_ID
 from plone.dexterity.interfaces import IDexterityFTI
 from plone.registry.interfaces import IRegistry
-from plone.uuid.interfaces import IAttributeUUID
 from zope.component import createObject
 from zope.component import getUtility
 from zope.component import queryUtility
@@ -59,13 +56,6 @@ class CoverIntegrationTestCase(unittest.TestCase):
     def test_locking_behavior(self):
         self.assertTrue(ILocking.providedBy(self.cover))
 
-    def test_is_referenceable(self):
-        self.assertTrue(IReferenceable.providedBy(self.cover))
-        self.assertTrue(IAttributeUUID.providedBy(self.cover))
-
-    def test_staging_behavior(self):
-        self.assertTrue(IStagingSupport.providedBy(self.cover))
-
     def test_cover_selectable_as_folder_default_view(self):
         self.folder.setDefaultPage('c1')
         self.assertEqual(self.folder.getDefaultPage(), 'c1')
@@ -88,43 +78,85 @@ class CoverIntegrationTestCase(unittest.TestCase):
         self.assertFalse(layout_edit.can_export_layout())
         self.assertNotIn('<span>Export layout</span>', layout_edit())
 
+    # TODO: move this to a browser view test
     def test_layoutmanager_settings(self):
         setRoles(self.portal, TEST_USER_ID, ['Manager'])
         layout_edit = self.cover.restrictedTraverse('layoutedit')
         settings = json.loads(layout_edit.layoutmanager_settings())
-        self.assertEqual(settings, {'ncolumns': 16})
-
-    # TODO: add test for plone.app.relationfield.behavior.IRelatedItems
-
-
-class CoverMultipleGridsIntegrationTestCase(unittest.TestCase):
-
-    layer = MULTIPLE_GRIDS_INTEGRATION_TESTING
-
-    def setUp(self):
-        self.portal = self.layer['portal']
-
-        with api.env.adopt_roles(['Manager']):
-            self.folder = api.content.create(self.portal, 'Folder', 'folder')
-
-        self.cover = api.content.create(
-            self.folder,
-            'collective.cover.content',
-            'cover',
-            template_layout='Layout A',
-        )
-
-    def test_layoutmanager_settings(self):
-        setRoles(self.portal, TEST_USER_ID, ['Manager'])
-        layout_edit = self.cover.restrictedTraverse('layoutedit')
-        settings = json.loads(layout_edit.layoutmanager_settings())
-        self.assertEqual(settings, {'ncolumns': 16})
+        if DEFAULT_GRID_SYSTEM == 'deco16_grid':
+            self.assertEqual(settings, {'ncolumns': 16})
+        elif DEFAULT_GRID_SYSTEM == 'bootstrap3':
+            self.assertEqual(settings, {'ncolumns': 12})
 
         # Choose different grid.
         registry = getUtility(IRegistry)
         cover_settings = registry.forInterface(ICoverSettings)
-        cover_settings.grid_system = 'bootstrap3'
+        if DEFAULT_GRID_SYSTEM == 'deco16_grid':
+            cover_settings.grid_system = 'bootstrap3'
+
+            # The number of columns should be different now.
+            settings = json.loads(layout_edit.layoutmanager_settings())
+            self.assertEqual(settings, {'ncolumns': 12})
+        elif DEFAULT_GRID_SYSTEM == 'bootstrap3':
+            cover_settings.grid_system = 'deco16_grid'
+
+            # The number of columns should be different now.
+            settings = json.loads(layout_edit.layoutmanager_settings())
+            self.assertEqual(settings, {'ncolumns': 16})
+
+        # Choose different grid.
+        registry = getUtility(IRegistry)
+        cover_settings = registry.forInterface(ICoverSettings)
+        cover_settings.grid_system = 'bootstrap2'
 
         # The number of columns should be different now.
         settings = json.loads(layout_edit.layoutmanager_settings())
         self.assertEqual(settings, {'ncolumns': 12})
+
+    def test_searchabletext_indexer(self):
+        from collective.cover.content import searchableText
+        from plone.app.textfield.value import RichTextValue
+        from plone.tiles.interfaces import ITileDataManager
+        self.cover.title = u'Lorem ipsum'
+        self.cover.description = u'Neque porro'
+        # set up a simple layout with a two RichText tiles
+        self.cover.cover_layout = u"""
+            [{"children":
+                [{"children": [
+                    {"class": "tile",
+                     "id": "test1",
+                     "tile-type": "collective.cover.richtext",
+                     "type": "tile"},
+                    {"class": "tile",
+                     "id": "test2",
+                     "tile-type": "collective.cover.richtext",
+                     "type": "tile"}],
+                "column-size": 8,
+                "id": "group1",
+                "roles": ["Manager"],
+                "type": "group"}],
+            "class": "row",
+            "type": "row"}]
+            """
+        tile = self.cover.restrictedTraverse('collective.cover.richtext/test1')
+        value1 = RichTextValue(
+            raw=u'<p>01234</p>',
+            mimeType='text/x-html-safe',
+            outputMimeType='text/x-html-safe')
+        data_mgr = ITileDataManager(tile)
+        data_mgr.set({'text': value1})
+        tile = self.cover.restrictedTraverse('collective.cover.richtext/test2')
+        data_mgr = ITileDataManager(tile)
+        value2 = RichTextValue(
+            raw=u'<p>56789</p>',
+            mimeType='text/x-html-safe',
+            outputMimeType='text/x-html-safe')
+        data_mgr.set({'text': value2})
+
+        # indexer should contain id, title, description and text in tiles
+        self.assertEqual(
+            searchableText(self.cover)(),
+            u'c1 Lorem ipsum Neque porro 01234 56789'
+        )
+
+    # TODO: add test for plone.app.relationfield.behavior.IRelatedItems

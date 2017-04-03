@@ -1,16 +1,26 @@
 # -*- coding: utf-8 -*-
 from collective.cover.tests.base import TestTileMixin
+from collective.cover.tests.utils import today
 from collective.cover.tiles.collection import CollectionTile
 from collective.cover.tiles.collection import ICollectionTile
 from mock import Mock
-from plone.app.imaging.interfaces import IImageScale
-from plone.app.testing import login
-from plone.app.testing import setRoles
-from plone.app.testing import TEST_USER_ID
-from plone.app.testing import TEST_USER_NAME
+from plone import api
 from plone.uuid.interfaces import IUUID
 
 import unittest
+
+
+EMPTY = [dict(
+    i='portal_type',
+    o='plone.app.querystring.operation.selection.is',
+    v='Foo',
+)]
+
+EVENTS = [dict(
+    i='portal_type',
+    o='plone.app.querystring.operation.selection.is',
+    v='Event',
+)]
 
 
 class CollectionTileTestCase(TestTileMixin, unittest.TestCase):
@@ -43,7 +53,7 @@ class CollectionTileTestCase(TestTileMixin, unittest.TestCase):
         fields to avoid UnicodeDecodeError.
         """
         title = u'El veloz murciélago hindú comía feliz cardillo y kiwi'
-        obj = self.portal['my-collection']
+        obj = self.portal['mandelbrot-set']
         obj.setTitle(title)
         obj.reindexObject()
         self.tile.populate_with_object(obj)
@@ -58,14 +68,11 @@ class CollectionTileTestCase(TestTileMixin, unittest.TestCase):
         using strings instead of unicode objects.
         """
         title = 'The quick brown fox jumps over the lazy dog'
-        obj = self.portal['my-collection']
+        obj = self.portal['mandelbrot-set']
         obj.setTitle(title)
         obj.reindexObject()
         self.tile.populate_with_object(obj)
-        self.assertEqual(
-            unicode(title, 'utf-8'),
-            self.tile.data.get('header')
-        )
+        self.assertEqual(unicode(title, 'utf-8'), self.tile.data.get('header'))
         self.assertTrue(self.tile.data.get('footer'))
         self.assertEqual(self.tile.data.get('uuid'), IUUID(obj))
 
@@ -74,24 +81,19 @@ class CollectionTileTestCase(TestTileMixin, unittest.TestCase):
         self.tile.populate_with_object(obj)
         self.assertTrue(self.tile.is_empty())
 
-    def test_collection_tile_render(self):
-        obj = self.portal['my-collection']
+    def test_render_empty_collection(self):
+        obj = self.portal['mandelbrot-set']
+        obj.setQuery(EMPTY)
         self.tile.populate_with_object(obj)
         rendered = self.tile()
+        self.assertIn("The collection doesn't have any results.", rendered)
 
-        self.assertIn("<p>The collection doesn't have any results.</p>", rendered)
-
-    def test_delete_collection(self):
-        obj = self.portal['my-collection']
+    def test_render_deleted_collection(self):
+        obj = self.portal['mandelbrot-set']
         self.tile.populate_with_object(obj)
-        self.tile.populate_with_object(obj)
-        rendered = self.tile()
 
-        self.assertIn("<p>The collection doesn't have any results.</p>", rendered)
-
-        setRoles(self.portal, TEST_USER_ID, ['Manager', 'Editor', 'Reviewer'])
-        login(self.portal, TEST_USER_NAME)
-        self.portal.manage_delObjects(['my-collection'])
+        with api.env.adopt_roles(['Manager']):
+            self.portal.manage_delObjects(['mandelbrot-set'])
 
         msg = 'Please drop a collection here to fill the tile.'
 
@@ -109,31 +111,30 @@ class CollectionTileTestCase(TestTileMixin, unittest.TestCase):
         # as an Image does have an image field, we should have a thumbnail
         obj = self.portal['my-image']
         thumbnail = self.tile.thumbnail(obj)
-        self.assertTrue(thumbnail)
-        # the thumbnail is an ImageScale
-        self.assertTrue(IImageScale.providedBy(thumbnail))
+        self.assertIsNotNone(thumbnail)
 
+    def test_thumbnail_not_visible(self):
         # turn visibility off, we should have no thumbnail
         # XXX: refactor; we need a method to easily change field visibility
         tile_conf = self.tile.get_tile_configuration()
         tile_conf['image']['visibility'] = u'off'
         self.tile.set_tile_configuration(tile_conf)
+        assert not self.tile._field_is_visible('image')
+        obj = self.portal['my-image']
+        self.assertIsNone(self.tile.thumbnail(obj))
 
-        self.assertFalse(self.tile._field_is_visible('image'))
-        self.assertFalse(self.tile.thumbnail(obj))
-
-        # TODO: test against Dexterity-based content types
+    def test_thumbnail_original_image(self):
+        # use original image instead of a thumbnail
+        tile_conf = self.tile.get_tile_configuration()
+        tile_conf['image']['imgsize'] = '_original'
+        self.tile.set_tile_configuration(tile_conf)
+        obj = self.portal['my-image']
+        self.assertTrue(self.tile.thumbnail(obj))
+        self.assertIsInstance(self.tile(), unicode)
 
     def test_number_of_items(self):
-        collection = self.portal['my-collection']
-        image_query = [{
-            'i': 'Type',
-            'o': 'plone.app.querystring.operation.string.is',
-            'v': 'Image',
-        }]
-        collection.setQuery(image_query)
-        collection.setSort_on('id')
-        self.tile.populate_with_object(collection)
+        obj = self.portal['mandelbrot-set']
+        self.tile.populate_with_object(obj)
 
         # Collection has three images and shows them all.
         self.assertEqual(len(self.tile.results()), 3)
@@ -149,15 +150,8 @@ class CollectionTileTestCase(TestTileMixin, unittest.TestCase):
         self.assertEqual(items[1].getId(), 'my-image1')
 
     def test_offset(self):
-        collection = self.portal['my-collection']
-        image_query = [{
-            'i': 'Type',
-            'o': 'plone.app.querystring.operation.string.is',
-            'v': 'Image',
-        }]
-        collection.setQuery(image_query)
-        collection.setSort_on('id')
-        self.tile.populate_with_object(collection)
+        obj = self.portal['mandelbrot-set']
+        self.tile.populate_with_object(obj)
 
         tile_conf = self.tile.get_tile_configuration()
         tile_conf['offset']['offset'] = 1
@@ -177,26 +171,90 @@ class CollectionTileTestCase(TestTileMixin, unittest.TestCase):
         self.assertEqual(len(items), 1)
         self.assertEqual(items[0].getId(), 'my-image1')
 
-    def test_show_start_date_on_events(self):
-        from DateTime import DateTime
-        from plone import api
-        tomorrow = DateTime() + 1
-        # create an Event starting tomorrow and a Collection listing it
-        with api.env.adopt_roles(['Manager']):
-            event = api.content.create(
-                self.portal, 'Event', 'event', startDate=tomorrow)
-            api.content.transition(event, 'publish')
-            query = [dict(
-                i='portal_type',
-                o='plone.app.querystring.operation.selection.is',
-                v='Event',
-            )]
-            collection = api.content.create(
-                self.portal, 'Collection', 'collection', query=query)
-            api.content.transition(collection, 'publish')
-            self.assertEqual(len(collection.results()), 1)
+    def test_random_items(self):
+        obj = self.portal['mandelbrot-set']
+        self.tile.populate_with_object(obj)
 
-        self.tile.populate_with_object(collection)
+        # we need to compare lists of objects
+        ordered = [o for o in obj.results()]
+        results = [o for o in self.tile.results()]
+        # default behavior return results in order
+        self.assertEqual(results, ordered)
+
+        # now, return results in random order
+        self.tile.data['random'] = True
+        for i in range(0, 10):
+            results = [o for o in self.tile.results()]
+            if results != ordered:
+                return
+
+        self.fail('No random order after 10 attemps')
+
+    def _create_events_collection(self):
+        with api.env.adopt_roles(['Manager']):
+            obj = api.content.create(
+                self.portal, 'Collection', 'collection', query=EVENTS)
+            api.content.transition(obj, 'publish')
+            assert len(obj.results()) == 1
+        return obj
+
+    def test_show_start_date_on_events(self):
+        obj = self._create_events_collection()
+        self.tile.populate_with_object(obj)
         rendered = self.tile()
-        tomorrow = api.portal.get_localized_time(tomorrow, long_format=True)
-        self.assertIn(tomorrow, rendered)
+        start_date = api.portal.get_localized_time(today, long_format=True)
+        self.assertIn(start_date, rendered)
+
+    def test_date_on_items(self):
+        collection = self.portal['mandelbrot-set']
+        self.tile.populate_with_object(collection)
+
+        tile_config = self.tile.get_tile_configuration()
+        self.assertEqual(tile_config['date']['visibility'], u'on')
+
+        # Get the first news item from the collection
+        content_listing_obj = collection.results()[0]
+
+        date = self.tile.Date(content_listing_obj)
+        self.assertFalse(callable(date), 'Date should not be calleable')
+
+        fmt_date = self.portal.toLocalizedTime(date, True)
+
+        rendered = self.tile()
+        self.assertTrue(
+            fmt_date in rendered,
+            'Formatted date should be in rendered tile'
+        )
+
+    def test_localized_time_is_rendered(self):
+        obj = self._create_events_collection()
+        self.tile.populate_with_object(obj)
+        rendered = self.tile()
+        expected = api.portal.get_localized_time(
+            today, long_format=True, time_only=False)
+        self.assertIn(expected, rendered)  # u'Jul 15, 2015 01:23 PM'
+
+        tile_conf = self.tile.get_tile_configuration()
+        tile_conf['date']['format'] = 'dateonly'
+        self.tile.set_tile_configuration(tile_conf)
+        rendered = self.tile()
+        expected = api.portal.get_localized_time(
+            today, long_format=False, time_only=False)
+        self.assertIn(expected, rendered)  # u'Jul 15, 2015
+
+        tile_conf = self.tile.get_tile_configuration()
+        tile_conf['date']['format'] = 'timeonly'
+        self.tile.set_tile_configuration(tile_conf)
+        rendered = self.tile()
+        expected = api.portal.get_localized_time(
+            today, long_format=False, time_only=True)
+        self.assertIn(expected, rendered)  # u'01:23 PM'
+
+    def test_get_alt(self):
+        obj = self.portal['mandelbrot-set']
+        self.tile.populate_with_object(obj)
+        rendered = self.tile()
+        # the image is there and the alt attribute is set
+        self.assertIn('<img ', rendered)
+        self.assertIn(
+            'alt="This image was created for testing purposes"', rendered)

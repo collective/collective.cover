@@ -1,0 +1,34 @@
+<tal:master define="level view/level|python:0; children view/children | nothing; portal_path context/portal_url/getPortalPath"
+            i18n:domain="collective.cover">
+    <ul class="item-list"
+        tal:attributes="data-total-results view/total_results;
+                        data-has-next view/has_next;
+                        data-nextpage view/nextpage">
+        <tal:navitem repeat="node children" condition="children">
+            <li tal:define="uuid node/UID;
+                            type node/portal_type;
+                            children python: [];
+                            item_url node/getURL;
+                            item_token  python:view.getTermByBrain(node['item']).token;
+                            item_icon node/item_icon|nothing;
+                            content_type node/portal_type;
+                            content_path python:node['path'][len(portal_path):]"
+                tal:attributes="data-content-type type;
+                                data-content-uuid uuid">
+                <tal:level define="item_class string:contenttype-${node/normalized_portal_type} state-${node/normalized_review_state}">
+                    <tal:block>
+                        <a tal:attributes="rel level;
+                                           class string:$item_class;
+                                           title string:${node/Description} : ${content_path}">
+                            <img tal:replace="structure item_icon/html_tag|item_icon" />
+                            <span tal:content="node/Title">Selected Item Title</span>
+                        </a>
+                    </tal:block>
+                </tal:level>
+            </li>
+        </tal:navitem>
+        <tal:nothasresult condition="python: not children">
+            <li></li>
+        </tal:nothasresult>
+    </ul>
+</tal:master>

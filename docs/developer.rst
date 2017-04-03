@@ -3,8 +3,8 @@ Developer documentation
 
 .. contents:: Table of Contents
 
-Views
-^^^^^
+Tile Views
+^^^^^^^^^^
 
 Tiles for the collective.cover package provide 3 different views:
 
@@ -39,7 +39,7 @@ different aspects of the tile. From here you can specify which fields get
 rendered when viewing the tile, or the order in which they show up.
 
 In addition, each field widget can provide specific configuration options.
-For instance, an ITextLinesWidget will provide an extra configuration 
+For instance, an ITextLinesWidget will provide an extra configuration
 option, "HTML tag", which allows to specify the HTML tag to be used when
 rendering data saved in this field.
 
@@ -53,7 +53,7 @@ Writing a custom widget in "configure" mode for a field
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The configuration view uses z3c.form to automatically render a form based on
-the tile's schema definition. For that, it renders widgets in a "configure" 
+the tile's schema definition. For that, it renders widgets in a "configure"
 mode. You can see how existing ones are defined, checking the configure.zcml
 file under tiles/configuration_widgets
 
@@ -70,7 +70,9 @@ interface class should inherit from
 Instead of inheriting from ``plone.tiles.PersistentTile``, the tile
 must inherit from ``collective.cover.tile.base.PersistentCoverTile``.
 
-Register your tile on the registry using the "plone.app.tiles" record::
+Register your tile on the registry using the "plone.app.tiles" record:
+
+.. code-block:: xml
 
   <?xml version="1.0"?>
   <registry>
@@ -107,7 +109,7 @@ Storage
 Data and configuration for tiles are stored in an annotation of the context
 where the tile is being shown.
 
-You can see how this works by looking into data.py and configuration.py under 
+You can see how this works by looking into data.py and configuration.py under
 the tiles directory.
 
 Render view
@@ -134,10 +136,12 @@ render it. For that, you need to take a few things into consideration.
    CSS class name. This way, after configuration or edition, the tile will
    be automatically reloaded via AJAX. If you don't include this, edition
    and configuration will missbehave.
-   Here's and example::
+   Here's and example:
+
+.. code-block:: html
 
     <div class="my-custom-tile tile-content">
-         Some really cool stuff just your tile is able to do
+        Some really cool stuff just your tile is able to do
     </div>
 
    Check `this package tile templates to see more examples.`_
@@ -150,7 +154,9 @@ work, check all tiles provided by this package, under the tiles directory.
 Image field and scales
 ++++++++++++++++++++++
 
-To add an image field to your tile::
+To add an image field to your tile:
+
+.. code-block:: python
 
     image = NamedImage(
         title=_(u'Image'),
@@ -159,18 +165,23 @@ To add an image field to your tile::
 
 Then, you have several ways of using image scales in your tile templates.
 
-#. You can pass width and height to the ``scale`` method explicitly::
+#. You can pass width and height to the ``scale`` method explicitly:
+
+.. code-block:: html
 
     <img tal:define="scales view/@@images;
                      thumbnail python: scales.scale('image', width=64, height=64);"
-       tal:condition="thumbnail"
-       tal:attributes="src thumbnail/url;
-                       width thumbnail/width;
-                       height thumbnail/height;
-                       class position;
-                       alt view/data/title" />
+        tal:condition="thumbnail"
+        tal:attributes="src thumbnail/url;
+                        width thumbnail/width;
+                        height thumbnail/height;
+                        class position;
+                        alt view/data/title"
+        />
 
-#. Or you can use Plone predefined scales::
+#. Or you can use Plone predefined scales:
+
+.. code-block:: html
 
     <img tal:define="scales view/@@images;
                      thumbnail python: scales.scale('image', scale=scale);"
@@ -191,52 +202,110 @@ will honor the image and scales in the original object. This way the image
 data isn't duplicated and products than allow scales modifications are
 supported.
 
-
 .. _`Using tiles to provide more flexible Plone layouts`: http://glicksoftware.com/blog/using-tiles-to-provide-more-flexible-plone-layouts
 
 
-Grid systems
-++++++++++++
+Searchable text in new tiles
+++++++++++++++++++++++++++++
 
-By default collective.cover uses a deco 16 column grid.
+The content of new tiles is not searchable by default. To enable that functionality
+you need to register a new adapter for the ISearchableText interface. It is as simple
+as copying the code provided for ``plone.tiles.BasicTile`` and adding a new ZCML
+registration.
 
-If your theme provides a css framework with a different grid system
-(such as Twitter Bootstrap or Zurb Foundation) you can use that
-instead of the default deco grid.  To do so, your theme package should
-provide a new grid system class which implements the
-collective.cover.interfaces.IGridSystem interface.
+.. code-block:: python
 
-#. Implement a grid system::
+    class SearchableBasicTile(object):
 
-    from five import grok
-    from collective.cover.layout import Deco16Grid
+        implements(ISearchableText)
 
-    class Bootstrap3(Deco16Grid):
-        grok.name('bootstrap3')
+        def __init__(self, context):
+            self.context = context
+
+        def SearchableText(self):
+            context = self.context
+            return u'{0} {1}'.format(
+                context.data['title'] or '', context.data['description'] or '')
+
+
+Grid Systems
+^^^^^^^^^^^^
+
+By default ``collective.cover`` uses 16-column Deco grid,
+and ships with support for 12-column Bootstrap 2 and Bootstrap 3 grids.
+
+If your theme provides a CSS framework with a different grid system (such as Zurb Foundation) you can use that instead of the default one.
+To do so, your theme package should provide a new grid system class which implements the ``collective.cover.interfaces.IGridSystem`` interface:
+
+.. code-block:: python
+
+    from collective.cover.interfaces import IGridSystem
+    from collective.cover.layout import BaseGrid
+    from zope.interface import implementer
+
+    @implementer(IGridSystem)
+    class MyGrid(BaseGrid):
+
+        """Bootstrap 3 grid system for small devices (12 columns)."""
+
         ncolumns = 12
-        title = _(u'Bootstrap 3')
+        title = _(u'MyGrid')
 
         def columns_formatter(self, columns):
-            prefix = 'col-md-'
+            prefix = 'col-sm-'
             for column in columns:
-                width = column['data']['column-size'] if 'data' in column else 1
+                width = column.get('column-size', 1)
                 column['class'] = self.column_class + ' ' + (prefix + str(width))
-
+                if 'css-class' in column:
+                    column['class'] += ' {0}'.format(
+                        column['css-class']
+                    )
             return columns
 
-#. Register your new grid system (in configure.zcml) ::
+Don't forget to register the utility in your ``configure.zcml``:
 
-    <utility factory="my.theme.module.Bootstrap3" name="bootstrap3" />
+.. code-block:: xml
 
-#. Or using grok::
+    <utility name="mygrid" factory="my.package.MyGrid" />
 
-    <grok:grok package="." />
+Once registered you can select your grid system on the Cover Settings control panel configlet.
 
+.. WARNING::
+    Switching the grid system will apply to all new and existing covers.
+    If you already made layouts for a 16-column grid and switch to e.g. a 12-column grid, you will have to manually update all existing covers (their layout is not recalculated automatically).
 
-Once registered you can select your grid system on the Cover Settings
-panel.
+.. WARNING::
+    In collective.cover 1.0a11 the data structure for the columns was changed. If you already implemented your own custom grid, check the example above and fix the retrieval of 'column-size' and addition of the css-class attribute.
 
-WARNING: Switching the grid system will apply to all new and existing
-covers.  If you already made layouts for a 16 column grid and switch to
-e.g. a 12 column grid, you will have to manually update all existing
-covers (their layout is not recalculated automatically).
+.. NOTE::
+    ``collective.cover`` does not provide any CSS for the grid system it ships with, it *only* changes the HTML output.
+    You will therefore need to make sure your theme has all the necessary styles for the grid system you choose.
+    For example if you want to enable the Bootstrap 2 or 3 Grids mentioned above you will probably want to include the appropriate version of the `collective.js.bootstrap`_ product.
+
+.. _`collective.js.bootstrap`: https://pypi.python.org/pypi/collective.js.bootstrap
+
+Layouts
+^^^^^^^
+
+``collective.cover`` supports saving layout designs by exporting them to a JSON/Python dictionary which are stored in the Plone registry.
+You always start a new cover by selecting one of these layout designs on the Add Cover page.
+
+.. NOTE::
+    ``collective.cover`` inserts a few of these saved preset layouts upon installation.
+    Check ``registry.xml`` in the source of the package.
+
+If you switch from the default 16-column Deco grid to another grid with a different number of columns,
+these saved layouts will still contain a 16-column width and this can mock up your design in small ways.
+In that case,
+make sure you clear the default cover layouts and/or save your own layout with the correct number of columns.
+
+Custom Cover Views
+^^^^^^^^^^^^^^^^^^
+
+In case you want to create custom cover views,
+you can find the existing ones under ``browser/cover.py``.
+Note that from version 1.0a12 collective.cover uses plone.app.blocks 2.0.0,
+which means that a cover view (or any view that includes tiles),
+must implement ``plone.app.blocks.interfaces.IBlocksTransformEnabled`` (using ``@zope.interface.implementer()``) within it's view class.
+Without this the resulting HTML would only contain tile placeholders,
+not the tiles themselves.

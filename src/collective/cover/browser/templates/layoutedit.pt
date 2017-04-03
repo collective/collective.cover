@@ -5,82 +5,87 @@
       lang="en"
       metal:use-macro="context/main_template/macros/master"
       i18n:domain="collective.cover">
-<body>
-
-<metal:js fill-slot="javascript_head_slot">
-  <script type="text/javascript"
-          tal:define="navroot context/@@plone_portal_state/navigation_root_url"
-          tal:attributes="src string:${navroot}/++resource++collective.cover/jss.min.js">
-  </script>
-  <script type="text/javascript"
-          tal:define="navroot context/@@plone_portal_state/navigation_root_url"
-          tal:attributes="src string:${navroot}/++resource++collective.cover/layout_base.js">
-  </script>
-  <script type="text/javascript"
-          tal:define="navroot context/@@plone_portal_state/navigation_root_url"
-          tal:attributes="src string:${navroot}/++resource++collective.cover/layout_edit.js">
-  </script>
-
-  <script type="text/javascript">
-    jQuery(document).ready(function() {
-      if (typeof(plone) !== 'undefined') {
-        jQuery(window).unload(plone.UnlockHandler.execute);
-      }
-    });
-  </script>
-
-</metal:js>
-
-<metal:styles fill-slot="style_slot">
-  <link rel="stylesheet" type="text/css" media="screen" href=""
-        tal:define="navroot context/@@plone_portal_state/navigation_root_url"
-        tal:attributes="href string:${navroot}/++resource++collective.cover/layout_edit.css"
-        />
-</metal:styles>
-
-<metal:main fill-slot="main">
-  <tal:block tal:define="can_export_layout view/can_export_layout">
-    <div id="sidebar">
-        <ul class="layout-actions">
-            <li>
-                <a id="btn-row" class="btn btn-small btn-inverse draggable"><i class="icon-white"></i><span i18n:translate="">Row</span></a>
-            </li>
-            <li>
-                <a id="btn-column" class="btn btn-small btn-inverse draggable"><i class="icon-white"></i><span i18n:translate="">Column</span></a>
-            </li>
-        </ul>
-        <div tal:replace="structure context/@@tile_list"></div>
-    </div>
-    <div class="layout" tal:attributes="data-layoutmanager-settings view/layoutmanager_settings">
-        <div tal:define="layout nocall:context/@@layout"
-             tal:replace="structure layout/render_layout_edit" />
-        <!--div class="content-contentchooser" tal:replace="structure context/@@select-content-contentchooser"></div-->
-    </div>
-    <div id="group-select-list" class="modal hide" tal:replace="structure context/@@group_select"></div>
-    <div id="tile-configure" class="modal hide"></div>
-    <div id="export-layout" class="modal hide" tal:condition="can_export_layout">
-      <h1 class="documentFirstHeading">Export Layout</h1>
-      <p class="discreen">Save a copy of this layout under a new name</p>
-      <form action="." tal:attributes="action request/URL" method="post"
-          enctype="multipart/form-data">
-
-        <div class="modal-fields">
-          <label for="layout-name" i18n:translate="">Layout name</label>
-          <input type="text" name="layout-name" value="" />
-        </div>
-
-      <div class="formControls">
-        <input type="submit" value="Save" name="export-layout" i18n:attributes="value" />
-        <input type="button" value="Cancel" id="btn-cancel-export-layout" />
-      </div>
-      </form>
-    </div>
-    <div class="navbar">
-      <a id="btn-export" class="btn btn-inverse" tal:condition="can_export_layout"><span i18n:translate="">Export layout</span></a>
-      <a id="btn-save" class="btn btn-success saved"><span i18n:translate="">Saved</span></a>
-    </div>
-  </tal:block>
-</metal:main>
-
-</body>
+    <body>
+        <metal:js fill-slot="javascript_head_slot">
+            <script type="application/javascript"
+                    tal:define="navroot context/@@plone_portal_state/navigation_root_url"
+                    tal:attributes="src string:${navroot}/++resource++collective.cover/js/vendor/jss.min.js">
+            </script>
+            <script type="application/javascript"
+                    tal:define="navroot context/@@plone_portal_state/navigation_root_url"
+                    tal:attributes="src string:${navroot}/++resource++collective.cover/js/layout_base.js">
+            </script>
+            <script type="application/javascript"
+                    tal:define="navroot context/@@plone_portal_state/navigation_root_url"
+                    tal:attributes="src string:${navroot}/++resource++collective.cover/js/layout_edit.js">
+            </script>
+            <script type="application/javascript">
+            jQuery(document).ready(function() {
+                if (typeof(plone) !== 'undefined') {
+                    jQuery(window).unload(plone.UnlockHandler.execute);
+                }
+            });
+            </script>
+        </metal:js>
+        <metal:styles fill-slot="style_slot">
+            <link rel="stylesheet" type="text/css" media="screen" href=""
+                  tal:define="navroot context/@@plone_portal_state/navigation_root_url"
+                  tal:attributes="href string:${navroot}/++resource++collective.cover/css/layout_edit.css" />
+        </metal:styles>
+        <metal:main fill-slot="main">
+            <tal:block tal:define="can_export_layout view/can_export_layout">
+                <div id="sidebar">
+                    <ul class="layout-actions">
+                        <li>
+                            <a id="btn-row" class="btn btn-small btn-inverse draggable"><i class="icon-white"></i><span i18n:translate="">Row</span></a>
+                        </li>
+                        <li>
+                            <a id="btn-column" class="btn btn-small btn-inverse draggable"><i class="icon-white"></i><span i18n:translate="">Column</span></a>
+                        </li>
+                    </ul>
+                    <div tal:replace="structure context/@@tile_list"></div>
+                </div>
+                <div class="layout" tal:attributes="data-layoutmanager-settings view/layoutmanager_settings">
+                    <div tal:define="layout nocall:context/@@layout"
+                         tal:replace="structure layout/render_layout_edit" />
+                    <div id="resizer" title="Resize Column">
+                        <p id="column-size-resize">
+                            Actual column size: <span></span>
+                        </p>
+                        <div id="slider"></div>
+                    </div>
+                    <div id="class-chooser" title="Choose Class">
+                        <select>
+                            <tal:classes repeat="item view/css_classes">
+                                <option tal:attributes="value item/value"
+                                        tal:content="item/title">
+                                </option>
+                            </tal:classes>
+                        </select>
+                    </div>
+                </div>
+                <div id="group-select-list" class="modal hide" tal:replace="structure context/@@group_select"></div>
+                <div id="tile-configure" class="modal hide"></div>
+                <div id="export-layout" class="modal hide" tal:condition="can_export_layout">
+                    <h1 class="documentFirstHeading">Export Layout</h1>
+                    <p class="discreen">Save a copy of this layout under a new name</p>
+                    <form action="." tal:attributes="action request/URL" method="post"
+                          enctype="multipart/form-data">
+                        <div class="modal-fields">
+                            <label for="layout-name" i18n:translate="">Layout name</label>
+                            <input type="text" name="layout-name" value="" />
+                        </div>
+                        <div class="formControls">
+                            <input type="submit" value="Save" name="export-layout" i18n:attributes="value" />
+                            <input type="button" value="Cancel" id="btn-cancel-export-layout" />
+                        </div>
+                    </form>
+                </div>
+                <div class="navbar">
+                    <a id="btn-export" class="btn btn-inverse" tal:condition="can_export_layout"><span i18n:translate="">Export layout</span></a>
+                    <a id="btn-save" class="btn btn-success saved"><span i18n:translate="">Saved</span></a>
+                </div>
+            </tal:block>
+        </metal:main>
+    </body>
 </html>

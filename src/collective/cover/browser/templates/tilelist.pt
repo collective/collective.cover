@@ -1,0 +1,30 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      i18n:domain="collective.cover"
+      tal:omit-tag="">
+<body tal:omit-tag="">
+
+    <div id="tiles-list">
+      <ul>
+      <tal:tiles repeat="tile view/tiles">
+        <li tal:define="metadata python:view.get_tile_metadata(tile['tile_type'])">
+          <a class="btn-tile draggable" data-tile-type=""
+             tal:attributes="data-tile-type tile/tile_type;
+                             data-tile-name metadata/title;
+                             data-tile-configurable metadata/is_configurable;
+                             title metadata/description;
+                             id tile/tile_type">
+            <img src="" tal:attributes="src python:metadata['icon'] if metadata['icon'] else '++resource++collective.cover/img/tile-generic.png';
+                                       alt metadata/description"/>
+            <span i18n:translate="" tal:content="metadata/title"></span>
+          </a>
+        </li>
+      </tal:tiles>
+      </ul>
+    </div>
+
+</body>
+</html>

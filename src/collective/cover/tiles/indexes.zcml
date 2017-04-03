@@ -1,0 +1,21 @@
+<configure xmlns="http://namespaces.zope.org/zope">
+
+  <adapter
+      factory=".basic.SearchableBasicTile"
+      provides="collective.cover.interfaces.ISearchableText"
+      for=".basic.BasicTile"
+      />
+
+  <adapter
+      factory=".embed.SearchableEmbedTile"
+      provides="collective.cover.interfaces.ISearchableText"
+      for=".embed.EmbedTile"
+      />
+
+  <adapter
+      factory=".richtext.SearchableRichTextTile"
+      provides="collective.cover.interfaces.ISearchableText"
+      for=".richtext.RichTextTile"
+      />
+
+</configure>

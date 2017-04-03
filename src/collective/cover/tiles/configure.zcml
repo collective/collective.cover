@@ -3,6 +3,7 @@
     xmlns:browser="http://namespaces.zope.org/browser"
     xmlns:i18n="http://namespaces.zope.org/i18n"
     xmlns:plone="http://namespaces.plone.org/plone"
+    xmlns:zcml="http://namespaces.zope.org/zcml"
     i18n_domain="collective.cover"
     >
 
@@ -11,6 +12,9 @@
 
   <!-- Data manager for "our" tiles -->
   <adapter factory=".data.PersistentCoverTileDataManager" />
+
+  <!-- Data converters -->
+  <adapter factory=".carousel.UUIDSFieldDataConverter" />
 
   <browser:page
       name="configure-tile"
@@ -58,14 +62,6 @@
         />
   </class>
 
-  <!-- Image scale support for tile images -->
-  <browser:page
-      name="images"
-      for=".base.IPersistentCoverTile"
-      class=".base.ImageScaling"
-      permission="zope2.View"
-      />
-
   <adapter for="zope.interface.Interface
                 zope.publisher.interfaces.browser.IBrowserRequest
                 collective.cover.tiles.base.IPersistentCoverTile"
@@ -95,8 +91,18 @@
       factory=".list.FolderUIDsProvider"
       />
 
+  <!-- Archetypes-based collection -->
   <adapter
+      zcml:condition="installed plone.app.collection"
       for="plone.app.collection.interfaces.ICollection"
+      provides="..interfaces.ICoverUIDsProvider"
+      factory=".list.CollectionUIDsProvider"
+      />
+
+  <!-- Dexterity-based collection -->
+  <adapter
+      zcml:condition="installed plone.app.contenttypes"
+      for="plone.app.contenttypes.interfaces.ICollection"
       provides="..interfaces.ICoverUIDsProvider"
       factory=".list.CollectionUIDsProvider"
       />
@@ -113,5 +119,6 @@
       />
 
   <include file="tiles.zcml" />
+  <include file="indexes.zcml" />
 
 </configure>

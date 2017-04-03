@@ -12,7 +12,7 @@ Suite Teardown  Close all browsers
 ${contentbody_tile_location}  'collective.cover.contentbody'
 ${document_selector}  .ui-draggable .contenttype-document
 ${tile_selector}  div.tile-container div.tile
-${text_sample}  Some text for document
+${text_sample}  The quick brown fox jumps over the lazy dog
 ${edit_link_selector}  a.edit-tile-link
 ${document_body}  body.portaltype-document
 
@@ -20,21 +20,11 @@ ${document_body}  body.portaltype-document
 
 Test Content Body Tile
     Enable Autologin as  Site Administrator
-
-    # edit document so it contains text
-    Click Link  link=My document
-    Click Link  link=Edit
-    Input Text  id=text  ${text_sample}
-    Click Button  Save
-    Page Should Contain  ${text_sample}
-
-    # create cover
     Go to Homepage
     Create Cover  My Cover  Description
 
     # add a content body tile to the layout
-    Edit Cover Layout
-    Page Should Contain  Export layout
+    Open Layout Tab
     Add Tile  ${contentbody_tile_location}
     Save Cover Layout
 
@@ -50,7 +40,7 @@ Test Content Body Tile
 
     # move to the default view and check tile persisted
     Click Link  link=View
-    Page Should Contain  ${text_sample}
+    Wait Until Page Contains  ${text_sample}
     Page Should Not Contain  Drag&drop some content to populate the tile.
 
     # when content chooser is opened again , the tile has a link to the referenced item
@@ -66,6 +56,6 @@ Test Content Body Tile
     Page Should Not Contain  css=${edit_link_selector}
 
     # delete the tile
-    Edit Cover Layout
+    Open Layout Tab
     Delete Tile
     Save Cover Layout

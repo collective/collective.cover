@@ -8,17 +8,20 @@ from plone.tiles.interfaces import ITileDataManager
 from plone.uuid.interfaces import IUUID
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zope import schema
-from zope.interface import implements
+from zope.interface import implementer
 
 
 class IContentBodyTile(IPersistentCoverTile):
 
-    uuid = schema.TextLine(title=u'Collection uuid', readonly=True)
+    uuid = schema.TextLine(
+        title=_(u'UUID'),
+        required=False,
+        readonly=True,
+    )
 
 
+@implementer(IContentBodyTile)
 class ContentBodyTile(PersistentCoverTile):
-
-    implements(IContentBodyTile)
 
     index = ViewPageTemplateFile('templates/contentbody.pt')
 
@@ -31,25 +34,26 @@ class ContentBodyTile(PersistentCoverTile):
         return not self.data.get('uuid', False)
 
     def body(self):
-        body = ''
+        """Return the body text of the related object."""
         uuid = self.data.get('uuid', None)
         try:
             obj = uuid and uuidToObject(uuid)
         except Unauthorized:
-            obj = None
-        if obj is not None:
-            if hasattr(obj, 'getText'):
-                body = obj.getText()
-            else:
-                # Probably Dexterity.
-                body = obj.text.output
-        return body
+            return  # TODO: handle exception and show message on template
+
+        if obj is None:
+            return ''  # obj was deleted
+
+        try:
+            return obj.getText()  # Archetypes
+        except AttributeError:
+            return obj.text.output if obj.text is not None else ''  # Dexterity
 
     def populate_with_object(self, obj):
         super(ContentBodyTile, self).populate_with_object(obj)
 
         data = {
-            'uuid': IUUID(obj, None),  # XXX: can we get None here? see below
+            'uuid': IUUID(obj),
         }
 
         data_mgr = ITileDataManager(self)

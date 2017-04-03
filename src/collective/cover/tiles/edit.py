@@ -1,24 +1,21 @@
 # -*- coding: utf-8 -*-
 
 from AccessControl import Unauthorized
+from collective.cover import _
+from collective.cover.interfaces import ITileEditForm
 from plone import api
 from plone.app.tiles.browser.edit import DefaultEditForm
 from plone.app.tiles.browser.edit import DefaultEditView
 from plone.app.tiles.browser.traversal import EditTile
 from plone.app.tiles.utils import appendJSONData
 from plone.tiles.interfaces import ITileDataManager
+from plone.z3cform.interfaces import IDeferSecurityCheck
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from z3c.form import button
-from zope.event import notify
-from zope.interface import implements
-from zope.lifecycleevent import ObjectModifiedEvent
+from zope.component import getMultiAdapter
+from zope.interface import implementer
 from zope.publisher.interfaces.browser import IBrowserView
 from zope.traversing.browser.absoluteurl import absoluteURL
-from zope.component import getMultiAdapter
-from plone.z3cform.interfaces import IDeferSecurityCheck
-
-from collective.cover import _
-from collective.cover.interfaces import ITileEditForm
 
 
 class ICoverTileEditView(IBrowserView):
@@ -26,6 +23,7 @@ class ICoverTileEditView(IBrowserView):
     """
 
 
+@implementer(ITileEditForm)
 class CustomEditForm(DefaultEditForm):
     """Standard tile edit form, which is wrapped by DefaultEditView (see
     below).
@@ -33,8 +31,6 @@ class CustomEditForm(DefaultEditForm):
     This form is capable of rendering the fields of any tile schema as defined
     by an ITileType utility.
     """
-
-    implements(ITileEditForm)
 
     def update(self):
         super(CustomEditForm, self).update()
@@ -65,8 +61,6 @@ class CustomEditForm(DefaultEditForm):
             old_data[item] = data[item]
         dataManager.set(old_data)
 
-        # notify about modification
-        notify(ObjectModifiedEvent(tile))
         api.portal.show_message(_(u'Tile saved'), self.request, type='info')
 
         # Look up the URL - we need to do this after we've set the data to
@@ -90,7 +84,7 @@ class CustomEditForm(DefaultEditForm):
                                    name=self.tileType.__name__)
             return view[self.tileId]
         else:
-            return self.context.restrictedTraverse('@@%s/%s' % (
+            return self.context.restrictedTraverse('@@{0}/{1}'.format(
                 self.tileType.__name__, self.tileId,))
 
     def getContent(self):
@@ -106,6 +100,14 @@ class CustomTileEdit(DefaultEditView):
 
     form = CustomEditForm
     index = ViewPageTemplateFile('templates/tileformlayout.pt')
+
+    def __call__(self):
+        # We add Cache-Control here because IE9-11 cache XHR GET requests. If
+        # you edit a tile, save and re-edit you get the previouw request. IE
+        # will list the request as 304 not modified, in its F12 tools, but it
+        # is never even requested from the server.
+        self.request.response.setHeader('Cache-Control', 'no-cache, must-revalidate')
+        return super(CustomTileEdit, self).__call__()
 
 
 class CoverTileEditView(EditTile):

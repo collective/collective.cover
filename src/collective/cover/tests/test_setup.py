@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+from collective.cover.config import IS_PLONE_5
 from collective.cover.config import PROJECTNAME
 from collective.cover.testing import INTEGRATION_TESTING
 from plone import api
@@ -7,15 +7,16 @@ from plone.browserlayer.utils import registered_layers
 
 import unittest
 
+
 JS = [
-    '++resource++collective.cover/contentchooser.js',
+    '++resource++collective.cover/js/contentchooser.js',
     '++resource++collective.js.bootstrap/js/bootstrap.min.js',
-    '++resource++collective.cover/jquery.endless-scroll.js',
+    '++resource++collective.cover/js/vendor/jquery.endless-scroll.js',
 ]
 
 CSS = [
-    '++resource++collective.cover/contentchooser.css',
-    '++resource++collective.cover/cover.css',
+    '++resource++collective.cover/css/contentchooser.css',
+    '++resource++collective.cover/css/cover.css',
 ]
 
 
@@ -25,20 +26,22 @@ class InstallTestCase(unittest.TestCase):
 
     def setUp(self):
         self.portal = self.layer['portal']
+        self.qi = self.portal['portal_quickinstaller']
 
     def test_installed(self):
-        qi = self.portal['portal_quickinstaller']
-        self.assertTrue(qi.isProductInstalled(PROJECTNAME))
+        self.assertTrue(self.qi.isProductInstalled(PROJECTNAME))
 
     def test_addon_layer(self):
         layers = [l.getName() for l in registered_layers()]
         self.assertIn('ICoverLayer', layers)
 
+    @unittest.skipIf(IS_PLONE_5, 'No easy way to test this under Plone 5')
     def test_jsregistry(self):
         resource_ids = self.portal.portal_javascripts.getResourceIds()
         for id in JS:
             self.assertIn(id, resource_ids, '{0} not installed'.format(id))
 
+    @unittest.skipIf(IS_PLONE_5, 'No easy way to test this under Plone 5')
     def test_cssregistry(self):
         resource_ids = self.portal.portal_css.getResourceIds()
         for id in CSS:
@@ -56,13 +59,6 @@ class InstallTestCase(unittest.TestCase):
             ps.runAllImportStepsFromProfile('profile-collective.cover:default')
         except AttributeError:
             self.fail('Reinstall fails when the record was changed')
-
-    def test_can_export_layout_permission(self):
-        permission = 'collective.cover: Can Export Layout'
-        roles = self.portal.rolesOfPermission(permission)
-        roles = [r['name'] for r in roles if r['selected']]
-        expected = ['Manager', 'Site Administrator']
-        self.assertListEqual(roles, expected)
 
 
 class UninstallTestCase(unittest.TestCase):
@@ -83,11 +79,13 @@ class UninstallTestCase(unittest.TestCase):
         layers = [l.getName() for l in registered_layers()]
         self.assertNotIn('ICoverLayer', layers)
 
+    @unittest.skipIf(IS_PLONE_5, 'No easy way to test this under Plone 5')
     def test_jsregistry_removed(self):
         resource_ids = self.portal.portal_javascripts.getResourceIds()
         for id in JS:
             self.assertNotIn(id, resource_ids, '{0} not removed'.format(id))
 
+    @unittest.skipIf(IS_PLONE_5, 'No easy way to test this under Plone 5')
     def test_cssregistry_removed(self):
         resource_ids = self.portal.portal_css.getResourceIds()
         for id in CSS:

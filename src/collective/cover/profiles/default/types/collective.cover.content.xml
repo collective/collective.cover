@@ -6,7 +6,7 @@
   <!-- Basic metadata -->
   <property name="title" i18n:translate="">Cover</property>
   <property name="description" i18n:translate="">A cover page.</property>
-  <property name="content_icon">++resource++collective.cover/frontpage_icon.png</property>
+  <property name="content_icon">++resource++collective.cover/img/frontpage_icon.png</property>
   <property name="factory">collective.cover.content</property>
   <property name="global_allow">True</property>
   <property name="filter_content_types">False</property>
@@ -22,9 +22,7 @@
     <element value="plone.app.dexterity.behaviors.metadata.IBasic" />
     <element value="plone.app.dexterity.behaviors.exclfromnav.IExcludeFromNavigation" />
     <element value="plone.app.lockingbehavior.behaviors.ILocking" />
-    <element value="plone.app.referenceablebehavior.referenceable.IReferenceable" />
     <element value="plone.app.relationfield.behavior.IRelatedItems" />
-    <element value="plone.app.stagingbehavior.interfaces.IStagingSupport" />
   </property>
 
   <!-- View information -->

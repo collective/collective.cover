@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
-
+from collective.cover.config import IS_PLONE_5
 from collective.cover.controlpanel import ICoverSettings
 from collective.cover.testing import INTEGRATION_TESTING
-from collective.cover.testing import MULTIPLE_GRIDS_INTEGRATION_TESTING
 from plone.registry.interfaces import IRegistry
 from zope.component import getUtility
 from zope.component import queryUtility
@@ -19,7 +18,7 @@ class VocabulariesTestCase(unittest.TestCase):
         self.portal = self.layer['portal']
 
     def test_layouts_vocabulary(self):
-        name = u'collective.cover.AvailableLayouts'
+        name = 'collective.cover.AvailableLayouts'
         vocabulary = queryUtility(IVocabularyFactory, name)
         self.assertIsNotNone(vocabulary)
         layouts = vocabulary(self.portal)
@@ -30,45 +29,60 @@ class VocabulariesTestCase(unittest.TestCase):
         self.assertIn(u'Empty layout', layouts)
 
     def test_available_tiles_vocabulary(self):
-        name = u'collective.cover.AvailableTiles'
+        name = 'collective.cover.AvailableTiles'
         vocabulary = queryUtility(IVocabularyFactory, name)
         self.assertIsNotNone(vocabulary)
         tiles = vocabulary(self.portal)
-        self.assertEqual(len(tiles), 9)
-        self.assertIn(u'collective.cover.banner', tiles)
-        self.assertIn(u'collective.cover.basic', tiles)
-        self.assertIn(u'collective.cover.carousel', tiles)
-        self.assertIn(u'collective.cover.collection', tiles)
-        self.assertIn(u'collective.cover.contentbody', tiles)
-        self.assertIn(u'collective.cover.embed', tiles)
-        self.assertIn(u'collective.cover.file', tiles)
-        self.assertIn(u'collective.cover.list', tiles)
-        self.assertIn(u'collective.cover.richtext', tiles)
+        expected = [
+            'collective.cover.banner',
+            'collective.cover.basic',
+            'collective.cover.calendar',
+            'collective.cover.carousel',
+            'collective.cover.collection',
+            'collective.cover.contentbody',
+            'collective.cover.embed',
+            'collective.cover.file',
+            'collective.cover.list',
+            'collective.cover.richtext',
+        ]
+
+        # FIXME: https://github.com/collective/collective.cover/issues/633
+        if IS_PLONE_5:
+            expected.remove('collective.cover.calendar')
+
+        self.assertEqual(len(tiles), len(expected))
+        for i in expected:
+            self.assertIn(i, tiles)
 
     def test_enabled_tiles_vocabulary(self):
-        name = u'collective.cover.EnabledTiles'
+        name = 'collective.cover.EnabledTiles'
         vocabulary = queryUtility(IVocabularyFactory, name)
         self.assertIsNotNone(vocabulary)
         tiles = vocabulary(self.portal)
-        self.assertEqual(len(tiles), 10)
-        self.assertIn(u'collective.cover.banner', tiles)
-        self.assertIn(u'collective.cover.basic', tiles)
-        self.assertIn(u'collective.cover.carousel', tiles)
-        self.assertIn(u'collective.cover.collection', tiles)
-        self.assertIn(u'collective.cover.contentbody', tiles)
-        self.assertIn(u'collective.cover.embed', tiles)
-        self.assertIn(u'collective.cover.file', tiles)
-        self.assertIn(u'collective.cover.list', tiles)
-        self.assertIn(u'collective.cover.richtext', tiles)
-        # FIXME see: https://github.com/collective/collective.cover/issues/194
-        self.assertIn(u'collective.cover.pfg', tiles)
-        # XXX: https://github.com/collective/collective.cover/issues/81
-        # standard tiles are not enabled... yet
-        self.assertNotIn(u'plone.app.imagetile', tiles)
-        self.assertNotIn(u'plone.app.texttile', tiles)
+        expected = [
+            'collective.cover.banner',
+            'collective.cover.basic',
+            'collective.cover.calendar',
+            'collective.cover.carousel',
+            'collective.cover.collection',
+            'collective.cover.contentbody',
+            'collective.cover.embed',
+            'collective.cover.file',
+            'collective.cover.list',
+            'collective.cover.pfg',  # FIXME: https://github.com/collective/collective.cover/issues/194
+            'collective.cover.richtext',
+        ]
+
+        # FIXME: https://github.com/collective/collective.cover/issues/633
+        if IS_PLONE_5:
+            expected.remove('collective.cover.calendar')
+
+        self.assertEqual(len(tiles), len(expected))
+        for i in expected:
+            self.assertIn(i, tiles)
 
     def test_available_content_types_vocabulary(self):
-        name = u'collective.cover.AvailableContentTypes'
+        name = 'collective.cover.AvailableContentTypes'
         vocabulary = queryUtility(IVocabularyFactory, name)
         self.assertIsNotNone(vocabulary)
         available_content_types = vocabulary(self.portal)
@@ -76,7 +90,7 @@ class VocabulariesTestCase(unittest.TestCase):
         self.assertNotIn(u'collective.cover.content', available_content_types)
 
     def test_tile_styles_vocabulary(self):
-        name = u'collective.cover.TileStyles'
+        name = 'collective.cover.TileStyles'
         vocabulary = queryUtility(IVocabularyFactory, name)
         self.assertIsNotNone(vocabulary)
         # in the beginning the vocabulary should contain the default styles
@@ -106,33 +120,16 @@ class VocabulariesTestCase(unittest.TestCase):
         self.assertEqual(styles.by_value.keys()[0], u'tile-default')
 
     def test_grid_systems(self):
-        name = u'collective.cover.GridSystems'
+        name = 'collective.cover.GridSystems'
         vocabulary = queryUtility(IVocabularyFactory, name)
         self.assertIsNotNone(vocabulary)
 
         # Our default grid system must be in the vocabulary.
         grids = vocabulary(self.portal)
-        self.assertEqual(len(grids), 1)
-        self.assertIn(u'deco16_grid', grids)
-
-
-class VocabulariesMultipleGridsTestCase(unittest.TestCase):
-
-    layer = MULTIPLE_GRIDS_INTEGRATION_TESTING
-
-    def setUp(self):
-        self.portal = self.layer['portal']
-
-    def test_grid_systems(self):
-        name = u'collective.cover.GridSystems'
-        vocabulary = queryUtility(IVocabularyFactory, name)
-        self.assertIsNotNone(vocabulary)
-        grids = vocabulary(self.portal)
-        self.assertEqual(len(grids), 2)
-
-        # Our default grid system must be in the vocabulary.
-        self.assertIn(u'deco16_grid', grids)
-
-        # The layer has setup a second grid.
+        self.assertEqual(len(grids), 3)
         self.assertIn(u'bootstrap3', grids)
+        self.assertIn(u'bootstrap2', grids)
+        self.assertIn(u'deco16_grid', grids)
         self.assertEqual(grids.getTerm('bootstrap3').title, u'Bootstrap 3')
+        self.assertEqual(grids.getTerm('bootstrap2').title, u'Bootstrap 2')
+        self.assertEqual(grids.getTerm('deco16_grid').title, u'Deco (16 columns)')

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from plone.directives import form
+from plone.supermodel import model
 from zope.interface import Attribute
 from zope.interface import Interface
 
@@ -9,11 +9,11 @@ class ICoverLayer(Interface):
     """
 
 
-class ICover(form.Schema):
+class ICover(model.Schema):
 
     """A composable page."""
 
-    form.model('models/cover.xml')
+    model.load('models/cover.xml')
 
 
 class IJSONSearch(Interface):
@@ -32,11 +32,11 @@ class IJSONSearch(Interface):
 class ICoverUIDsProvider(Interface):
 
     def getUIDs(self):
-        """ Get UIDs associated with the object.
-            could be the UID of the object or a
-            list of related UIDs.
+        """Get UUIDs associated with the object.
+            could be the UUID of the object or a
+            list of related UUIDs.
 
-        @return: iterable of UIDs
+        @return: iterable of UUIDs
         """
 
 
@@ -51,3 +51,11 @@ class IGridSystem(Interface):
 
     title = Attribute('The user-visible title for this grid.')
     ncolums = Attribute('Number of colums in a grid.')
+
+
+class ISearchableText(Interface):
+
+    """Interface to adapt tile to provide indexable content."""
+
+    def SearchableText(self):
+        """Content of the tile provided as plain text."""

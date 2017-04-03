@@ -9,31 +9,33 @@ from collective.cover.tiles.base import PersistentCoverTile
 from collective.cover.tiles.configuration_view import IDefaultConfigureForm
 from plone import api
 from plone.app.uuid.utils import uuidToObject
-from plone.directives import form
+from plone.autoform import directives as form
 from plone.memoize import view
 from plone.namedfile.field import NamedBlobImage
 from plone.tiles.interfaces import ITileDataManager
 from plone.tiles.interfaces import ITileType
 from plone.uuid.interfaces import IUUID
-from Products.CMFCore.utils import getToolByName
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zope import schema
 from zope.component import queryUtility
-from zope.event import notify
-from zope.interface import implements
-from zope.lifecycleevent import ObjectModifiedEvent
+from zope.interface import implementer
 from zope.schema import getFieldsInOrder
 
 import logging
+
 
 logger = logging.getLogger(PROJECTNAME)
 
 
 class IListTile(IPersistentCoverTile):
 
-    uuids = schema.List(
+    uuids = schema.Dict(
         title=_(u'Elements'),
-        value_type=schema.TextLine(),
+        key_type=schema.TextLine(),
+        value_type=schema.Dict(
+            key_type=schema.TextLine(),
+            value_type=schema.TextLine(),
+        ),
         required=False,
     )
     form.omitted('uuids')
@@ -89,9 +91,8 @@ class IListTile(IPersistentCoverTile):
     form.no_omit(ITileEditForm, 'more_link_text')
 
 
+@implementer(IListTile)
 class ListTile(PersistentCoverTile):
-
-    implements(IListTile)
 
     index = ViewPageTemplateFile('templates/list.pt')
 
@@ -112,27 +113,27 @@ class ListTile(PersistentCoverTile):
         # always get the latest data
         uuids = ITileDataManager(self).get().get('uuids', None)
 
-        results, remove = [], []
+        results = list()
         if uuids:
-            for uid in uuids:
-                obj = uuidToObject(uid)
+            ordered_uuids = [(k, v) for k, v in uuids.items()]
+            ordered_uuids.sort(key=lambda x: x[1]['order'])
+
+            for uuid in [i[0] for i in ordered_uuids]:
+                obj = uuidToObject(uuid)
                 if obj:
                     results.append(obj)
                 else:
                     # maybe the user has no permission to access the object
                     # so we try to get it bypassing the restrictions
                     catalog = api.portal.get_tool('portal_catalog')
-                    brain = catalog.unrestrictedSearchResults(UID=uid)
+                    brain = catalog.unrestrictedSearchResults(UID=uuid)
                     if not brain:
                         # the object was deleted; remove it from the tile
-                        # we deal with this below as you can't modify the
-                        # list directly as it's been used on the for loop
-                        remove.append(uid)
-
-            for uid in remove:
-                self.remove_item(uid)
-                logger.debug(
-                    'Nonexistent object {0} removed from tile'.format(uid))
+                        self.remove_item(uuid)
+                        logger.debug(
+                            'Nonexistent object {0} removed from '
+                            'tile'.format(uuid)
+                        )
 
         return results[:self.limit]
 
@@ -150,7 +151,7 @@ class ListTile(PersistentCoverTile):
         #      to be careful because there must be tiles derived from it,
         #      like the Carousel tile
         catalog = api.portal.get_tool('portal_catalog')
-        brain = catalog(UID=self.get_uid(obj))
+        brain = catalog(UID=self.get_uuid(obj))
         assert len(brain) == 1
         return super(ListTile, self).Date(brain[0])
 
@@ -161,12 +162,23 @@ class ListTile(PersistentCoverTile):
                 self.limit = int(field.get('size', self.limit))
 
     def populate_with_object(self, obj):
+        """ Add an object to the list of items
+
+        :param obj: [required] The object to be added
+        :type obj: Content object
+        """
         super(ListTile, self).populate_with_object(obj)  # check permission
-        uids = ICoverUIDsProvider(obj).getUIDs()
-        if uids:
-            self.populate_with_uids(uids)
+        uuids = ICoverUIDsProvider(obj).getUIDs()
+        if uuids:
+            self.populate_with_uuids(uuids)
 
-    def populate_with_uids(self, uuids):
+    def populate_with_uuids(self, uuids):
+        """ Add a list of elements to the list of items. This method will
+        append new elements to the already existing list of items
+
+        :param uuids: The list of objects' UUIDs to be used
+        :type uuids: List of strings
+        """
         if not self.isAllowedToEdit():
             raise Unauthorized(
                 _('You are not allowed to add content to this tile'))
@@ -174,43 +186,73 @@ class ListTile(PersistentCoverTile):
         data_mgr = ITileDataManager(self)
 
         old_data = data_mgr.get()
-        for uuid in uuids:
-            if old_data['uuids']:
-                if type(old_data['uuids']) != list:
-                    old_data['uuids'] = [uuid]
-                elif uuid not in old_data['uuids']:
-                    old_data['uuids'].append(uuid)
-            else:
-                old_data['uuids'] = [uuid]
-        data_mgr.set(old_data)
-        notify(ObjectModifiedEvent(self))
+        if old_data['uuids'] is None:
+            # If there is no content yet, just assign an empty dict
+            old_data['uuids'] = dict()
 
-    def replace_with_objects(self, uids):
-        if not self.isAllowedToEdit():
-            raise Unauthorized(
-                _('You are not allowed to add content to this tile'))
-        self.set_limit()
-        data_mgr = ITileDataManager(self)
-        old_data = data_mgr.get()
-        if type(uids) == list:
-            old_data['uuids'] = [i for i in uids][:self.limit]
+        uuids_dict = old_data.get('uuids')
+        if not isinstance(uuids_dict, dict):
+            # Make sure this is a dict
+            uuids_dict = old_data['uuids'] = dict()
+
+        if uuids_dict and len(uuids_dict) > self.limit:
+            # Do not allow adding more objects than the defined limit
+            return
+
+        order_list = [int(val.get('order', 0))
+                      for key, val in uuids_dict.items()]
+        if len(order_list) == 0:
+            # First entry
+            order = 0
         else:
-            old_data['uuids'] = [uids]
+            # Get last order position and increment 1
+            order_list.sort()
+            order = order_list.pop() + 1
 
+        for uuid in uuids:
+            if uuid not in uuids_dict.keys():
+                entry = dict()
+                entry[u'order'] = unicode(order)
+                uuids_dict[uuid] = entry
+                order += 1
+
+        old_data['uuids'] = uuids_dict
         data_mgr.set(old_data)
-        notify(ObjectModifiedEvent(self))
 
-    def remove_item(self, uid):
-        super(ListTile, self).remove_item(uid)  # check permission
+    def replace_with_uuids(self, uuids):
+        """ Replaces the whole list of items with a new list of items
+
+        :param uuids: The list of objects' UUIDs to be used
+        :type uuids: List of strings
+        """
+        if not self.isAllowedToEdit():
+            raise Unauthorized(
+                _('You are not allowed to add content to this tile'))
         data_mgr = ITileDataManager(self)
         old_data = data_mgr.get()
-        uids = data_mgr.get()['uuids']
-        if uid in uids:
-            del uids[uids.index(uid)]
-        old_data['uuids'] = uids
+        # Clean old data
+        old_data['uuids'] = dict()
+        data_mgr.set(old_data)
+        # Repopulate with clean list
+        self.populate_with_uuids(uuids)
+
+    def remove_item(self, uuid):
+        """ Removes an item from the list
+
+        :param uuid: [required] uuid for the object that wants to be removed
+        :type uuid: string
+        """
+        super(ListTile, self).remove_item(uuid)  # check permission
+        data_mgr = ITileDataManager(self)
+        old_data = data_mgr.get()
+        uuids = data_mgr.get()['uuids']
+        if uuid in uuids.keys():
+            del uuids[uuid]
+        old_data['uuids'] = uuids
         data_mgr.set(old_data)
 
-    def get_uid(self, obj):
+    @view.memoize
+    def get_uuid(self, obj):
         """Return the UUID of the object.
 
         :param obj: [required]
@@ -218,6 +260,10 @@ class ListTile(PersistentCoverTile):
         :returns: the object's UUID
         """
         return IUUID(obj, None)
+
+    def get_alt(self, obj):
+        """Return the alt attribute for the image in the obj."""
+        return obj.Description() or obj.Title()
 
     # XXX: refactoring the tile's schema should be a way to avoid this
     def get_configured_fields(self):
@@ -243,6 +289,9 @@ class ListTile(PersistentCoverTile):
                     # If this field has the capability to change its html tag
                     # render, save it here
                     field['htmltag'] = field_conf['htmltag']
+
+                if 'format' in field_conf:
+                    field['format'] = field_conf['format']
 
                 if 'imgsize' in field_conf:
                     field['scale'] = field_conf['imgsize']
@@ -294,7 +343,7 @@ class ListTile(PersistentCoverTile):
         if not (self.data['more_link'] and self.data['more_link_text']):
             return None
 
-        pc = getToolByName(self.context, 'portal_catalog')
+        pc = api.portal.get_tool('portal_catalog')
         brainz = pc(UID=self.data['more_link'])
         if not len(brainz):
             return None
@@ -329,40 +378,34 @@ class ListTile(PersistentCoverTile):
         return self._get_title_tag(item)
 
 
+@implementer(ICoverUIDsProvider)
 class CollectionUIDsProvider(object):
-
-    implements(ICoverUIDsProvider)
 
     def __init__(self, context):
         self.context = context
 
     def getUIDs(self):
-        """ Return a list of UIDs of collection objects.
-        """
+        """Return a list of UUIDs of collection objects."""
         return [i.UID for i in self.context.queryCatalog()]
 
 
+@implementer(ICoverUIDsProvider)
 class FolderUIDsProvider(object):
-
-    implements(ICoverUIDsProvider)
 
     def __init__(self, context):
         self.context = context
 
     def getUIDs(self):
-        """ Return a list of UIDs of collection objects.
-        """
+        """Return a list of UUIDs of collection objects."""
         return [i.UID for i in self.context.getFolderContents()]
 
 
+@implementer(ICoverUIDsProvider)
 class GenericUIDsProvider(object):
-
-    implements(ICoverUIDsProvider)
 
     def __init__(self, context):
         self.context = context
 
     def getUIDs(self):
-        """ Return a list of UIDs of collection objects.
-        """
+        """Return a list of UUIDs of collection objects."""
         return [IUUID(self.context)]
