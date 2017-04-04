@@ -202,36 +202,6 @@ class BasicTileTestCase(TestTileMixin, unittest.TestCase):
         # there is no image...
         self.assertNotIn('test/@@images', rendered)
 
-    def test_image_traverser(self):
-        # XXX: probably this should be moved to a new test views module
-
-        def images_are_equal(str1, str2):
-            # XXX: refactor
-            from PIL import Image
-            from PIL import ImageChops
-            from StringIO import StringIO
-            im1 = StringIO()
-            im2 = StringIO()
-            im1.write(str1)
-            im1.seek(0)
-            im2.write(str2)
-            im2.seek(0)
-            return ImageChops.difference(Image.open(im1), Image.open(im2)).getbbox() is None
-
-        obj = self.portal['my-image']
-        self.tile.populate_with_object(obj)
-
-        scales = self.cover.restrictedTraverse(
-            '@@{0}/{1}/@@images'.format('collective.cover.basic', 'test'))
-        scale = scales.scale('image')
-
-        try:
-            image = obj.getImage()  # Archetypes
-        except AttributeError:
-            image = obj.image.data  # Dexterity
-
-        self.assertTrue(images_are_equal(image, scale.data.data))
-
     def test_basic_tile_image(self):
         obj = self.portal['my-news-item']
         self.tile.populate_with_object(obj)
