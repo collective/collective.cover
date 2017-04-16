@@ -1,3 +1,6 @@
+.. image:: https://badge.waffle.io/collective/collective.cover.png?label=ready&title=Ready 
+ :target: https://waffle.io/collective/collective.cover
+ :alt: 'Stories in Ready'
 ****************
 collective.cover
 ****************
