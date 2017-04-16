@@ -8,6 +8,8 @@ Variables  plone/app/testing/interfaces.py
 ${PORT} =  55001
 ${ZOPE_URL} =  http://localhost:${PORT}
 ${PLONE_URL} =  ${ZOPE_URL}/plone
+${ALT_ZOPE_HOST} =  127.0.0.1
+${ALT_PLONE_URL} =  http://${ALT_ZOPE_HOST}:${PORT}/plone
 ${BROWSER} =  Firefox
 
 ${title_selector} =  input#form-widgets-IBasic-title

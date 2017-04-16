@@ -9,8 +9,6 @@ Suite Teardown  Close all browsers
 
 *** Variables ***
 
-${ALT_ZOPE_HOST}  127.0.0.1
-${ALT_PLONE_URL}  http://${ALT_ZOPE_HOST}:${ZOPE_PORT}/${PLONE_SITE_ID}
 ${LOCKED_MESSAGE}  This item was locked by admin 1 minute ago.
 ${basic_tile_location}  'collective.cover.basic'
 ${document_selector}  .ui-draggable .contenttype-document
@@ -20,7 +18,7 @@ ${tile_selector}  div.tile-container div.tile
 
 Test Locked Cover
     Log in as site owner
-    Goto Homepage
+    Click Link  link=Home
     Create Cover  My Cover  Description
     Open Layout Tab
 
@@ -41,7 +39,7 @@ Test Locked Cover
     # open a new browser to simulate a 2-user interaction
     Open Browser  ${ALT_PLONE_URL}
     Enable Autologin as  Site Administrator
-    Goto Homepage
+    Go to  ${ALT_PLONE_URL}
     Click Link  link=My Cover
     Page Should Contain  Locked  ${LOCKED_MESSAGE}
 
