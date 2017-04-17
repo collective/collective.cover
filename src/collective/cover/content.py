@@ -12,9 +12,7 @@ from plone.dexterity.content import Item
 from plone.indexer import indexer
 from plone.tiles.interfaces import ITileDataManager
 from Products.CMFPlone.utils import safe_unicode
-from Products.GenericSetup.interfaces import IDAVAware
 from zope.component import queryAdapter
-from zope.interface import implementer
 
 import json
 import logging
@@ -23,12 +21,7 @@ import logging
 logger = logging.getLogger(PROJECTNAME)
 
 
-# XXX: Provide this so Cover items can be imported using the import
-#      content from GS, until a proper solution is found.
-#      ref: http://thread.gmane.org/gmane.comp.web.zope.plone.devel/31799
-@implementer(IDAVAware)
 class Cover(Item):
-
     """A composable page."""
 
     @property
