@@ -6,7 +6,8 @@ There's a frood who really knows where his towel is.
 1.4b2 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
-- Nothing changed yet.
+- Do not declare the ``Cover`` class as an implementer of ``IDAVAware``;
+  This makes absolutely no sense and is causing an error when doing a GenericSetup export (fixes `#396`_).
 
 
 1.4b1 (2016-12-14)
@@ -157,6 +158,7 @@ There's a frood who really knows where his towel is.
 Previous entries can be found in the HISTORY.rst file.
 
 
+.. _`#396`: https://github.com/collective/collective.cover/issues/396
 .. _`#414`: https://github.com/collective/collective.cover/issues/414
 .. _`#487`: https://github.com/collective/collective.cover/issues/487
 .. _`#510`: https://github.com/collective/collective.cover/issues/510
