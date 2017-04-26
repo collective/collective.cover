@@ -94,7 +94,7 @@ msgstr "Bootstrap 3"
 
 #: collective/cover/controlpanel.py:52 collective/cover/tiles/base.py:65
 msgid "CSS Class"
-msgstr "Clase CSS"
+msgstr "Classe CSS"
 
 #: collective/cover/tiles/configuration_view.py:188
 #: collective/cover/tiles/edit.py:77
@@ -202,7 +202,7 @@ msgstr "Habilita a atualização automática da página atual."
 
 #: collective/cover/controlpanel.py:47
 msgid "Enter a list of styles to appear in the style pulldown. Format is title|className, one per line."
-msgstr "Digite uma lista de estilos para aparecer no menu pulldown de estilo. Formato é título|nomeDeClase, um por linha."
+msgstr "Digite uma lista de estilos para aparecer no menu pulldown de estilo. Formato é título|nomeDeClasse, um por linha."
 
 #: collective/cover/browser/templates/layoutedit.pt:85
 msgid "Export layout"
