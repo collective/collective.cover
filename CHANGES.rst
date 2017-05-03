@@ -6,6 +6,9 @@ There's a frood who really knows where his towel is.
 1.4b2 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Do not assume all tile types have schemas.
+  [alecm]
+
 - Do not declare the ``Cover`` class as an implementer of ``IDAVAware``;
   This makes absolutely no sense and is causing an error when doing a GenericSetup export (fixes `#396`_).
 
