@@ -64,7 +64,7 @@ class EnabledTilesVocabulary(object):
             return False
 
         tile_type = queryUtility(ITileType, name)
-        if tile_type:
+        if tile_type and tile_type.schema:
             return issubclass(tile_type.schema, IPersistentCoverTile)
 
     def __call__(self, context):
