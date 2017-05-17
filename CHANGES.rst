@@ -6,11 +6,15 @@ There's a frood who really knows where his towel is.
 1.4b2 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Review content chooser events to happen just at compose tab (fixes `#710`_).
+  [rodfersou]
+
 - Do not assume all tile types have schemas.
   [alecm]
 
 - Do not declare the ``Cover`` class as an implementer of ``IDAVAware``;
   This makes absolutely no sense and is causing an error when doing a GenericSetup export (fixes `#396`_).
+  [hvelarde]
 
 
 1.4b1 (2016-12-14)
@@ -175,3 +179,4 @@ Previous entries can be found in the HISTORY.rst file.
 .. _`#641`: https://github.com/collective/collective.cover/issues/641
 .. _`#651`: https://github.com/collective/collective.cover/issues/651
 .. _`#686`: https://github.com/collective/collective.cover/issues/686
+.. _`#710`: https://github.com/collective/collective.cover/issues/710

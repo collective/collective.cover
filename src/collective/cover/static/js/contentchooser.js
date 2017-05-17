@@ -369,9 +369,9 @@ var coveractions = {
 
     contentchooserMaker({
       draggable: '#contentchooser-content-search .item-list li, ' +
-                 '#content .tile, ' +
-                 '#content .tile-move, ' +
-                 '[data-tile-type=collective\\.cover\\.carousel] [data-content-uuid]',
+                 '.template-compose #content .tile, ' +
+                 '.template-compose #content .tile-move, ' +
+                 '.template-compose [data-tile-type=collective\\.cover\\.carousel] [data-content-uuid]',
       draggable_acepted: function($origin) {
         var $target = $(this);
         var ct = $target.data('tileValidCt');
@@ -400,7 +400,7 @@ var coveractions = {
         return valid;
       },
       windowId: '#contentchooser-content-search',
-      droppable: '#content .tile',
+      droppable: '.template-compose #content .tile',
       dropped: function(event, ui) {
         var $draggable = ui.draggable;  // JQuery UI copy of $origin
         var $target = $(this);

@@ -621,3 +621,14 @@ class Upgrade14to15TestCase(UpgradeTestCaseBase):
 
         data = dmgr.get()
         self.assertIsInstance(data['image_mtime'], float)
+
+
+class Upgrade15to16TestCase(UpgradeTestCaseBase):
+
+    def setUp(self):
+        UpgradeTestCaseBase.setUp(self, u'15', u'16')
+
+    def test_registrations(self):
+        version = self.setup.getLastVersionForProfile(self.profile_id)[0]
+        self.assertGreaterEqual(int(version), int(self.to_version))
+        self.assertEqual(self._how_many_upgrades_to_do(), 1)
