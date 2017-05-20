@@ -11,6 +11,11 @@ There's a frood who really knows where his towel is.
     You should explicitly add plone.app.drafts to the `eggs` part of your buildout configuration to avoid issues.
     You can safely unistall plone.app.drafts after that, if you are not using it.
 
+- Enable collection and folders to be listed at tile list;
+  Tile carousel don't accept folder anymore;
+  Removed adapter to handle content dropped at tile list as it don't make sense anymore. (closes `#713`_).
+  [rodfersou]
+
 - Update recommended versions of Blocks dependencies to keep in sync with curren Mosaic development.
   [hvelarde]
 
@@ -191,3 +196,4 @@ Previous entries can be found in the HISTORY.rst file.
 .. _`#651`: https://github.com/collective/collective.cover/issues/651
 .. _`#686`: https://github.com/collective/collective.cover/issues/686
 .. _`#710`: https://github.com/collective/collective.cover/issues/710
+.. _`#713`: https://github.com/collective/collective.cover/issues/713

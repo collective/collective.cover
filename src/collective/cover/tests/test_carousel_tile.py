@@ -1,13 +1,15 @@
 # -*- coding: utf-8 -*-
-from collective.cover.testing import ALL_CONTENT_TYPES
+from collective.cover.controlpanel import ICoverSettings
 from collective.cover.tests.base import TestTileMixin
 from collective.cover.tiles.carousel import CarouselTile
 from collective.cover.tiles.carousel import ICarouselTile
 from collective.cover.tiles.carousel import UUIDSFieldDataConverter
 from collective.cover.widgets.textlinessortable import TextLinesSortableWidget
 from plone import api
+from plone.registry.interfaces import IRegistry
 from plone.tiles.interfaces import ITileDataManager
 from plone.uuid.interfaces import IUUID
+from zope.component import getUtility
 
 import unittest
 
@@ -37,7 +39,14 @@ class CarouselTileTestCase(TestTileMixin, unittest.TestCase):
         self.assertTrue(self.tile.is_editable)
 
     def test_accepted_content_types(self):
-        self.assertEqual(self.tile.accepted_ct(), ALL_CONTENT_TYPES)
+        # Add folder to default accepted_ct
+        registry = getUtility(IRegistry)
+        settings = registry.forInterface(ICoverSettings)
+        settings.searchable_content_types += ['Folder']
+        self.assertNotIn('Folder', self.tile.accepted_ct())
+
+        expected = ['Document', 'Image', 'Collection', 'Link', 'File', 'News Item']
+        self.assertEqual(self.tile.accepted_ct(), expected)
 
     def test_tile_is_empty(self):
         self.assertTrue(self.tile.is_empty())

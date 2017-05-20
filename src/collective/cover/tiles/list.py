@@ -18,6 +18,7 @@ from plone.uuid.interfaces import IUUID
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zope import schema
 from zope.component import queryUtility
+from zope.deprecation import deprecate
 from zope.interface import implementer
 from zope.schema import getFieldsInOrder
 
@@ -168,9 +169,7 @@ class ListTile(PersistentCoverTile):
         :type obj: Content object
         """
         super(ListTile, self).populate_with_object(obj)  # check permission
-        uuids = ICoverUIDsProvider(obj).getUIDs()
-        if uuids:
-            self.populate_with_uuids(uuids)
+        self.populate_with_uuids([self.get_uuid(obj)])
 
     def populate_with_uuids(self, uuids):
         """ Add a list of elements to the list of items. This method will
@@ -379,33 +378,13 @@ class ListTile(PersistentCoverTile):
 
 
 @implementer(ICoverUIDsProvider)
-class CollectionUIDsProvider(object):
-
-    def __init__(self, context):
-        self.context = context
-
-    def getUIDs(self):
-        """Return a list of UUIDs of collection objects."""
-        return [i.UID for i in self.context.queryCatalog()]
-
-
-@implementer(ICoverUIDsProvider)
-class FolderUIDsProvider(object):
-
-    def __init__(self, context):
-        self.context = context
-
-    def getUIDs(self):
-        """Return a list of UUIDs of collection objects."""
-        return [i.UID for i in self.context.getFolderContents()]
-
-
-@implementer(ICoverUIDsProvider)
 class GenericUIDsProvider(object):
 
+    @deprecate('Adapter deprecated')
     def __init__(self, context):
         self.context = context
 
+    @deprecate('Adapter deprecated')
     def getUIDs(self):
         """Return a list of UUIDs of collection objects."""
         return [IUUID(self.context)]

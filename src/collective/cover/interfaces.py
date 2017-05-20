@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from plone.supermodel import model
+from zope.deprecation import deprecate
 from zope.interface import Attribute
 from zope.interface import Interface
 
@@ -31,6 +32,7 @@ class IJSONSearch(Interface):
 
 class ICoverUIDsProvider(Interface):
 
+    @deprecate('Adapter deprecated')
     def getUIDs(self):
         """Get UUIDs associated with the object.
             could be the UUID of the object or a
