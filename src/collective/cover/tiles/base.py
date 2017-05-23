@@ -189,8 +189,6 @@ class PersistentCoverTile(ESIPersistentTile):
         return configuration
 
     def set_tile_configuration(self, configuration):
-        ''' Set tile configuration
-        '''
         tile_conf_adapter = getMultiAdapter(
             (self.context, self.request, self), ITilesConfigurationScreen)
         tile_conf_adapter.set_configuration(configuration)
