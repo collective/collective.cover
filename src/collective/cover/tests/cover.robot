@@ -88,7 +88,7 @@ Save Cover Layout
 Add Tile
     [arguments]  ${tile}
 
-    Drag And Drop  xpath=//a[contains(@data-tile-type, ${tile})]  css=${tile_drop_area_selector}
+    Drag And Drop  xpath=//a[@data-tile-type=${tile}]  css=${tile_drop_area_selector}
     Wait Until Page Contains Element  css=.tile-name
 
 Select Tile to Add
