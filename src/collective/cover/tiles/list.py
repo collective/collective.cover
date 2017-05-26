@@ -116,7 +116,7 @@ class ListTile(PersistentCoverTile):
         results = list()
         if uuids:
             ordered_uuids = [(k, v) for k, v in uuids.items()]
-            ordered_uuids.sort(key=lambda x: x[1]['order'])
+            ordered_uuids.sort(key=lambda x: int(x[1]['order']))
 
             for uuid in [i[0] for i in ordered_uuids]:
                 obj = uuidToObject(uuid)

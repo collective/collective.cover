@@ -6,6 +6,9 @@ There's a frood who really knows where his towel is.
 1.4b2 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Fix order of uuids of sorted function in ListTile's 'results' method.
+  [idgserpro]
+
 - Review content chooser events to happen just at compose tab (fixes `#710`_).
   [rodfersou]
 

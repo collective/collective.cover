@@ -171,6 +171,27 @@ class ListTileTestCase(TestTileMixin, unittest.TestCase):
         for i in range(2, 7):
             self.assertIn(folder[str(i)], results)
 
+    def test_results_ordering_uuids_dict(self):
+        # set standard workflow for News Items
+        wt = self.portal['portal_workflow']
+        wt.setChainForPortalTypes(['News Item'], 'simple_publication_workflow')
+        # create some testing content and add it to the tile
+        with api.env.adopt_roles(['Manager']):
+            folder = api.content.create(self.portal, 'Folder', id='test')
+
+        # Test more than 10 items: this situation can happen if you're inheriting
+        # from the TileList.
+        self.tile.limit = 16
+        obj_uuids = []
+        original_order = []
+        for i in range(1, self.tile.limit):
+            obj = api.content.create(folder, 'News Item', id=str(i))
+            obj_uuids.append(obj.UID())
+            original_order.append(int(i))
+            self.tile.populate_with_object(obj)
+        new_order = [int(i.id) for i in self.tile.results()]
+        self.assertEqual(new_order, original_order)
+
     def test_show_start_date_on_events(self):
         event = self.portal['my-event']
         self.tile.populate_with_object(event)
