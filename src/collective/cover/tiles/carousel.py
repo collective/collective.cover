@@ -8,7 +8,6 @@ from collective.cover.widgets.interfaces import ITextLinesSortableWidget
 from collective.cover.widgets.textlinessortable import TextLinesSortableFieldWidget
 from plone.app.uuid.utils import uuidToObject
 from plone.autoform import directives as form
-from plone.memoize import view
 from plone.tiles.interfaces import ITileDataManager
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from z3c.form.converter import BaseDataConverter
@@ -66,7 +65,7 @@ class CarouselTile(ListTile):
         :type uuids: List of strings
         """
         super(ListTile, self).populate_with_object(obj)  # check permission
-        if obj.portal_type in ('Topic', 'Collection'):
+        if obj.portal_type == 'Collection':
             uuids = [i.UID for i in obj.queryCatalog()]
         else:
             uuids = [self.get_uuid(obj)]
@@ -74,12 +73,6 @@ class CarouselTile(ListTile):
         uuids = [i for i in uuids if self._has_image_field(uuidToObject(i))]
         if uuids:
             self.populate_with_uuids(uuids)
-
-    @view.memoize
-    def accepted_ct(self):
-        """Return all content types available (default value)."""
-        cts = set(super(CarouselTile, self).accepted_ct())
-        return list(cts - frozenset(['Folder']))
 
     def autoplay(self):
         if self.data['autoplay'] is None:

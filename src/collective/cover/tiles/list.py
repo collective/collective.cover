@@ -2,7 +2,6 @@
 from AccessControl import Unauthorized
 from collective.cover import _
 from collective.cover.config import PROJECTNAME
-from collective.cover.interfaces import ICoverUIDsProvider
 from collective.cover.interfaces import ITileEditForm
 from collective.cover.tiles.base import IPersistentCoverTile
 from collective.cover.tiles.base import PersistentCoverTile
@@ -250,7 +249,6 @@ class ListTile(PersistentCoverTile):
         old_data['uuids'] = uuids
         data_mgr.set(old_data)
 
-    @view.memoize
     def get_uuid(self, obj):
         """Return the UUID of the object.
 
@@ -377,14 +375,40 @@ class ListTile(PersistentCoverTile):
         return self._get_title_tag(item)
 
 
-@implementer(ICoverUIDsProvider)
+class CollectionUIDsProvider(object):
+
+    MSG = 'CollectionUIDsProvider adapter is deprecated and will be removed in collective.cover v1.7.'
+
+    @deprecate(MSG)
+    def __init__(self, context):
+        pass
+
+    @deprecate(MSG)
+    def getUIDs(self):
+        pass
+
+
+class FolderUIDsProvider(object):
+
+    MSG = 'FolderUIDsProvider adapter is deprecated and will be removed in collective.cover v1.7.'
+
+    @deprecate(MSG)
+    def __init__(self, context):
+        pass
+
+    @deprecate(MSG)
+    def getUIDs(self):
+        pass
+
+
 class GenericUIDsProvider(object):
 
-    @deprecate('Adapter deprecated')
-    def __init__(self, context):
-        self.context = context
+    MSG = 'GenericUIDsProvider adapter is deprecated and will be removed in collective.cover v1.7.'
 
-    @deprecate('Adapter deprecated')
+    @deprecate(MSG)
+    def __init__(self, context):
+        pass
+
+    @deprecate(MSG)
     def getUIDs(self):
-        """Return a list of UUIDs of collection objects."""
-        return [IUUID(self.context)]
+        pass

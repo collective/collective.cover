@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
-from collective.cover.controlpanel import ICoverSettings
 from collective.cover.testing import ALL_CONTENT_TYPES
+from collective.cover.testing import zptlogo
 from collective.cover.tests.base import TestTileMixin
+from collective.cover.tests.utils import set_image_field
 from collective.cover.tests.utils import today
 from collective.cover.tiles.list import IListTile
 from collective.cover.tiles.list import ListTile
@@ -10,10 +11,8 @@ from plone import api
 from plone.app.testing import login
 from plone.app.testing import logout
 from plone.app.testing import TEST_USER_NAME
-from plone.registry.interfaces import IRegistry
 from plone.tiles.interfaces import ITileDataManager
 from plone.uuid.interfaces import IUUID
-from zope.component import getUtility
 
 import unittest
 
@@ -265,45 +264,33 @@ class ListTileTestCase(TestTileMixin, unittest.TestCase):
         self.assertIsInstance(self.tile(), unicode)
 
     def test_populate_with_collection(self):
-        from collective.cover.testing import zptlogo
-        from collective.cover.tests.utils import set_image_field
         with api.env.adopt_roles(['Manager']):
-            api.content.create(self.portal, 'News Item', id='new1')
-            api.content.create(self.portal, 'News Item', id='new2')
-            api.content.create(self.portal, 'News Item', id='new3')
+            api.content.create(self.portal, 'News Item', id='item')
             # handle Archetypes and Dexterity
-            set_image_field(self.portal['new1'], zptlogo)
-            set_image_field(self.portal['new2'], zptlogo)
+            set_image_field(self.portal['item'], zptlogo)
 
             query = [dict(
                 i='portal_type',
                 o='plone.app.querystring.operation.selection.is',
                 v='News Item',
             )]
-            col = api.content.create(
-                self.portal, 'Collection', 'collection', query=query)
+            collection = api.content.create(
+                self.portal, 'Collection', id='collection', query=query)
 
-        self.tile.populate_with_object(col)
+        self.tile.populate_with_object(collection)
         rendered = self.tile()
-        self.assertIn(u'<h2><a href="http://nohost/plone/collection', rendered)
+        self.assertIn(u'<a href="http://nohost/plone/collection"></a>', rendered)
+        self.assertNotIn(u'<a href="http://nohost/plone/item"></a>', rendered)
 
     def test_populate_with_folder(self):
-        # Add folder to default accepted_ct
-        registry = getUtility(IRegistry)
-        settings = registry.forInterface(ICoverSettings)
-        settings.searchable_content_types += ['Folder']
-
-        from collective.cover.testing import zptlogo
-        from collective.cover.tests.utils import set_image_field
         with api.env.adopt_roles(['Manager']):
-            folder = api.content.create(self.portal, 'Folder', id='folder')
-            api.content.create(folder, 'News Item', id='new1')
-            api.content.create(folder, 'News Item', id='new2')
-            api.content.create(folder, 'News Item', id='new3')
+            api.content.create(self.portal, 'News Item', id='item')
             # handle Archetypes and Dexterity
-            set_image_field(folder['new1'], zptlogo)
-            set_image_field(folder['new2'], zptlogo)
+            set_image_field(self.portal['item'], zptlogo)
+
+            folder = api.content.create(self.portal, 'Folder', id='folder')
 
         self.tile.populate_with_object(folder)
         rendered = self.tile()
-        self.assertIn(u'<h2><a href="http://nohost/plone/folder', rendered)
+        self.assertIn(u'<a href="http://nohost/plone/folder"></a>', rendered)
+        self.assertNotIn(u'<a href="http://nohost/plone/item"></a>', rendered)
