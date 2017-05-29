@@ -6,6 +6,14 @@ There's a frood who really knows where his towel is.
 1.4b2 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+.. Warning::
+    If you are upgrading plone.app.tiles note that latests versions of this package no longer depend on plone.app.drafts.
+    You should explicitly add plone.app.drafts to the `eggs` part of your buildout configuration to avoid issues.
+    You can safely unistall plone.app.drafts after that, if you are not using it.
+
+- Update recommended versions of Blocks dependencies to keep in sync with curren Mosaic development.
+  [hvelarde]
+
 - Fix order of uuids of sorted function in ListTile's 'results' method.
   [idgserpro]
 
