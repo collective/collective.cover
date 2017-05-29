@@ -11,8 +11,8 @@ There's a frood who really knows where his towel is.
     You should explicitly add plone.app.drafts to the `eggs` part of your buildout configuration to avoid issues.
     You can safely unistall plone.app.drafts after that, if you are not using it.
 
-- Convert data back to string when drop object with image (fixes `#637`_).
-  [rodfersou]
+- Enfoce usage of plone.namedfile >= 3.0.11 to avoid ``Wrong contained type`` while updating basic tiles with images (fixes `#637`_).
+  [hvelarde]
 
 - Update recommended versions of Blocks dependencies to keep in sync with curren Mosaic development.
   [hvelarde]
