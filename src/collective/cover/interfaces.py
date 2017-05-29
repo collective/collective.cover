@@ -3,6 +3,8 @@ from plone.supermodel import model
 from zope.interface import Attribute
 from zope.interface import Interface
 
+import warnings
+
 
 class ICoverLayer(Interface):
     """ A layer specific for this add-on product.
@@ -30,9 +32,8 @@ class IJSONSearch(Interface):
 
 
 class ICoverUIDsProvider(Interface):
-    """XXX: ICoverUIDsProvider interface is deprecated and will be
-    removed in collective.cover v1.7.
-    """
+    """GenericUIDsProvider interface will be removed in collective.cover v1.7."""
+    warnings.warn(__doc__, DeprecationWarning)
 
 
 class ITileEditForm(Interface):

@@ -17,11 +17,11 @@ from plone.uuid.interfaces import IUUID
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zope import schema
 from zope.component import queryUtility
-from zope.deprecation import deprecate
 from zope.interface import implementer
 from zope.schema import getFieldsInOrder
 
 import logging
+import warnings
 
 
 logger = logging.getLogger(PROJECTNAME)
@@ -376,39 +376,33 @@ class ListTile(PersistentCoverTile):
 
 
 class CollectionUIDsProvider(object):
+    """CollectionUIDsProvider adapter will be removed in collective.cover v1.7."""
+    warnings.warn(__doc__, DeprecationWarning)
 
-    MSG = 'CollectionUIDsProvider adapter is deprecated and will be removed in collective.cover v1.7.'
-
-    @deprecate(MSG)
     def __init__(self, context):
         pass
 
-    @deprecate(MSG)
     def getUIDs(self):
         pass
 
 
 class FolderUIDsProvider(object):
+    """FolderUIDsProvider adapter will be removed in collective.cover v1.7."""
+    warnings.warn(__doc__, DeprecationWarning)
 
-    MSG = 'FolderUIDsProvider adapter is deprecated and will be removed in collective.cover v1.7.'
-
-    @deprecate(MSG)
     def __init__(self, context):
         pass
 
-    @deprecate(MSG)
     def getUIDs(self):
         pass
 
 
 class GenericUIDsProvider(object):
+    """GenericUIDsProvider adapter will be removed in collective.cover v1.7."""
+    warnings.warn(__doc__, DeprecationWarning)
 
-    MSG = 'GenericUIDsProvider adapter is deprecated and will be removed in collective.cover v1.7.'
-
-    @deprecate(MSG)
     def __init__(self, context):
         pass
 
-    @deprecate(MSG)
     def getUIDs(self):
         pass
