@@ -35,14 +35,6 @@ else:
     DEXTERITY_ONLY = os.environ.get('DEXTERITY_ONLY') is not None
 
 try:
-    pkg_resources.get_distribution('plone.app.widgets')
-except pkg_resources.DistributionNotFound:
-    PLONE_WIDGETS = False
-else:
-    # this environment variable is set in .travis.yml test matrix
-    PLONE_WIDGETS = os.environ.get('PLONE_WIDGETS') is not None
-
-try:
     pkg_resources.get_distribution('Products.PloneFormGen')
 except pkg_resources.DistributionNotFound:
     HAS_PFG = False
@@ -146,11 +138,6 @@ class Fixture(PloneSandboxLayer):
                 self.loadZCML(package=Products.PloneFormGen)
                 z2.installProduct(app, 'Products.PloneFormGen')
 
-            if PLONE_WIDGETS:
-                import plone.app.widgets
-                self.loadZCML(package=plone.app.widgets)
-                z2.installProduct(app, 'plone.app.widgets')
-
         import collective.cover
         self.loadZCML(package=collective.cover)
 
@@ -170,9 +157,6 @@ class Fixture(PloneSandboxLayer):
 
             if HAS_PFG:
                 self.applyProfile(portal, 'Products.PloneFormGen:default')
-
-            if PLONE_WIDGETS:
-                self.applyProfile(portal, 'plone.app.widgets:default')
 
         self.applyProfile(portal, 'collective.cover:default')
         self.applyProfile(portal, 'collective.cover:testfixture')

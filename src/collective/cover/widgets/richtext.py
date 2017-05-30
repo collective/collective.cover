@@ -15,7 +15,12 @@ from zope.interface import implementer
 
 
 class TileRichTextWidget(RichTextWidget):
-    """ """
+    """ fix plone.app.widgets.dx.RichTextWidget for @@edit-tile view.
+        We have to get the parent of self.wrapped_context to render the
+        tinymce_options correctly.tinymce_options
+        XXX: this code should go to plone.app.widgets instead
+             see https://github.com/plone/plone.app.widgets/issues/161
+    """
 
     def _base_args(self):
         args = {
