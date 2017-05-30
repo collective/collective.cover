@@ -11,6 +11,10 @@ There's a frood who really knows where his towel is.
     You should explicitly add plone.app.drafts to the `eggs` part of your buildout configuration to avoid issues.
     You can safely unistall plone.app.drafts after that, if you are not using it.
 
+- Fix Plone 4.3 with plone.app.widgets 1.x installed. The tile-edit forms are now opened
+  with .pat-plone-modal (fixes `#719`_)
+  [petschki]
+
 - Update recommended versions of Blocks dependencies to keep in sync with curren Mosaic development.
   [hvelarde]
 
@@ -191,3 +195,4 @@ Previous entries can be found in the HISTORY.rst file.
 .. _`#651`: https://github.com/collective/collective.cover/issues/651
 .. _`#686`: https://github.com/collective/collective.cover/issues/686
 .. _`#710`: https://github.com/collective/collective.cover/issues/710
+.. _`#719`: https://github.com/collective/collective.cover/issues/719
