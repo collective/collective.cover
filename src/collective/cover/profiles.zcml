@@ -126,4 +126,16 @@
 
   </genericsetup:upgradeSteps>
 
+  <genericsetup:upgradeSteps
+      source="16"
+      destination="17"
+      profile="collective.cover:default">
+
+    <genericsetup:upgradeStep
+        title="issue_719"
+        description="Fix tile edit modals in Plone 4.3 with plone.app.widgets 1.x installed."
+        handler=".upgrades.cook_javascript_resources"
+        />
+  </genericsetup:upgradeSteps>
+
 </configure>
