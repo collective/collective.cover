@@ -5,6 +5,7 @@
     xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
     xmlns:i18n="http://namespaces.zope.org/i18n"
     xmlns:plone="http://namespaces.plone.org/plone"
+    xmlns:zcml="http://namespaces.zope.org/zcml"
     i18n_domain="collective.cover">
 
   <i18n:registerTranslations directory="locales" />
@@ -42,6 +43,10 @@
         interface=".widgets.interfaces.ITextLinesSortableWidget"
         />
   </class>
+
+  <configure zcml:condition="installed plone.app.widgets">
+      <adapter factory=".widgets.richtext.TileRichTextFieldWidget" />
+  </configure>
 
   <adapter name="SearchableText" factory=".content.searchableText" />
 

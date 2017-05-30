@@ -96,7 +96,9 @@ $(document).ready(function() {
 
   TitleMarkupSetup();
 
-  if ($.fn.prepOverlay !== undefined) {
+  // if mockup is installed let pat-plone-modal do its job
+  // XXX: the check for require === 'undefined' should probably be more explicit
+  if ($.fn.prepOverlay !== undefined && typeof require === 'undefined') {
     $('a.edit-tile-link').prepOverlay({
       subtype: 'ajax',
       filter: '.tile-content',
@@ -140,26 +142,7 @@ $(document).ready(function() {
       },
       config: {
         onLoad: function() {
-          // With plone.app.widgets and Plone 4.3
-          if (typeof require !== 'undefined' && require.defined('pat-registry')) {
-            // Remove old editors references to work with ajax
-            if (typeof tinyMCE !== 'undefined' && tinyMCE !== null) {
-              if (tinyMCE.EditorManager != null) {
-                tinyMCE.EditorManager.editors = [];
-              }
-            }
-            // Add tinymce
-            $('.overlay textarea.mce_editable').addClass('pat-tinymce');
-            require('pat-registry').scan($('.overlay'), ['tinymce']);
-            // Wire save buttom to save tinymce
-            $( '.overlay input#buttons-save').on('click', function() {
-              tinyMCE.triggerSave();
-            });
-            // Hack to make overlay work over overlay
-            $('.overlay').on('mouseover', function() {
-              $('div.plone-modal-wrapper').css('z-index', '10050');
-            });
-          } else if (typeof initTinyMCE !== 'undefined') { // Plone 4.3
+          if (typeof initTinyMCE !== 'undefined') { // Plone 4.3
             // Remove old editors references to work with ajax
             if (typeof tinyMCE !== 'undefined' && tinyMCE !== null) {
               if (tinyMCE.EditorManager != null) {
