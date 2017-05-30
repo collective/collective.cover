@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 
 from Acquisition import aq_parent
-from Products.CMFCore.utils import getToolByName
 from collective.cover.tiles.richtext import IRichTextTile
 from plone.app.widgets.base import dict_merge
 from plone.app.widgets.dx import RichTextWidget
 from plone.app.widgets.utils import get_tinymce_options
+from Products.CMFCore.utils import getToolByName
 from z3c.form.interfaces import IFieldWidget
 from z3c.form.interfaces import IFormLayer
 from z3c.form.util import getSpecification

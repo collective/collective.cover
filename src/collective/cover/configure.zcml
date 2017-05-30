@@ -44,8 +44,10 @@
         />
   </class>
 
-  <configure zcml:condition="installed plone.app.widgets">
-      <adapter factory=".widgets.richtext.TileRichTextFieldWidget" />
+  <configure zcml:condition="not-have plone-5">
+    <configure zcml:condition="installed plone.app.widgets">
+        <adapter factory=".widgets.richtext.TileRichTextFieldWidget" />
+    </configure>
   </configure>
 
   <adapter name="SearchableText" factory=".content.searchableText" />
