@@ -3,6 +3,8 @@ from plone.supermodel import model
 from zope.interface import Attribute
 from zope.interface import Interface
 
+import warnings
+
 
 class ICoverLayer(Interface):
     """ A layer specific for this add-on product.
@@ -30,14 +32,8 @@ class IJSONSearch(Interface):
 
 
 class ICoverUIDsProvider(Interface):
-
-    def getUIDs(self):
-        """Get UUIDs associated with the object.
-            could be the UUID of the object or a
-            list of related UUIDs.
-
-        @return: iterable of UUIDs
-        """
+    """GenericUIDsProvider interface will be removed in collective.cover v1.7."""
+    warnings.warn(__doc__, DeprecationWarning)
 
 
 class ITileEditForm(Interface):
