@@ -51,7 +51,7 @@ notifications:
     on_success: change
     channels: irc.freenode.org#simplesconsultoria
     template:
-      - "%{repository}#%{build_number} (%{branch} - %{commit} : %{author}): %{message}"
+      - "%{repository}#%{build_number} (%{branch}  - %{commit} : %{author}): %{message}"
       - "Change view : %{compare_url}"
       - "Build details : %{build_url}"
       - "Robot Test Report for Plone 4.2: http://s3-sa-east-1.amazonaws.com/collective-cover/collective/collective.cover/%{build_number}/%{build_number}.1/parts/test/robot_log.html"
