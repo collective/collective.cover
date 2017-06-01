@@ -11,9 +11,20 @@ There's a frood who really knows where his towel is.
     You should explicitly add plone.app.drafts to the `eggs` part of your buildout configuration to avoid issues.
     You can safely unistall plone.app.drafts after that, if you are not using it.
 
+    Adapters used to get the items inside a folder or the results of the query in a collection were deprecated.
+    The following classes will be removed in collective.cover v1.7: ``ICoverUIDsProvider``, ``CollectionUIDsProvider``, ``FolderUIDsProvider`` and ``GenericUIDsProvider``.
+
 - Fix Plone 4.3 with plone.app.widgets 1.x installed. The tile-edit forms are now opened
   with .pat-plone-modal (fixes `#719`_)
   [petschki]
+
+- Dropping a folder on a carousel tile no longer populates the tile with the items inside the folder;
+  populating the carousel tile with the results of the query in a collection is still supported.
+  [rodfersou, hvelarde]
+
+- Dropping a folder or a collection into a list tile previously resulted in the tile being populated with the items inside the folder or the results of the query in the collection,
+  making impossible to have folders or collection as items of the list tile themselves (fixes `#713`_).
+  [rodfersou, hvelarde]
 
 - Update recommended versions of Blocks dependencies to keep in sync with curren Mosaic development.
   [hvelarde]
@@ -195,4 +206,5 @@ Previous entries can be found in the HISTORY.rst file.
 .. _`#651`: https://github.com/collective/collective.cover/issues/651
 .. _`#686`: https://github.com/collective/collective.cover/issues/686
 .. _`#710`: https://github.com/collective/collective.cover/issues/710
+.. _`#713`: https://github.com/collective/collective.cover/issues/713
 .. _`#719`: https://github.com/collective/collective.cover/issues/719

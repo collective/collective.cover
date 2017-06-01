@@ -2,7 +2,6 @@
 from AccessControl import Unauthorized
 from collective.cover import _
 from collective.cover.config import PROJECTNAME
-from collective.cover.interfaces import ICoverUIDsProvider
 from collective.cover.interfaces import ITileEditForm
 from collective.cover.tiles.base import IPersistentCoverTile
 from collective.cover.tiles.base import PersistentCoverTile
@@ -22,6 +21,7 @@ from zope.interface import implementer
 from zope.schema import getFieldsInOrder
 
 import logging
+import warnings
 
 
 logger = logging.getLogger(PROJECTNAME)
@@ -168,9 +168,7 @@ class ListTile(PersistentCoverTile):
         :type obj: Content object
         """
         super(ListTile, self).populate_with_object(obj)  # check permission
-        uuids = ICoverUIDsProvider(obj).getUIDs()
-        if uuids:
-            self.populate_with_uuids(uuids)
+        self.populate_with_uuids([self.get_uuid(obj)])
 
     def populate_with_uuids(self, uuids):
         """ Add a list of elements to the list of items. This method will
@@ -251,7 +249,6 @@ class ListTile(PersistentCoverTile):
         old_data['uuids'] = uuids
         data_mgr.set(old_data)
 
-    @view.memoize
     def get_uuid(self, obj):
         """Return the UUID of the object.
 
@@ -378,34 +375,34 @@ class ListTile(PersistentCoverTile):
         return self._get_title_tag(item)
 
 
-@implementer(ICoverUIDsProvider)
 class CollectionUIDsProvider(object):
+    """CollectionUIDsProvider adapter will be removed in collective.cover v1.7."""
+    warnings.warn(__doc__, DeprecationWarning)
 
     def __init__(self, context):
-        self.context = context
+        pass
 
     def getUIDs(self):
-        """Return a list of UUIDs of collection objects."""
-        return [i.UID for i in self.context.queryCatalog()]
+        pass
 
 
-@implementer(ICoverUIDsProvider)
 class FolderUIDsProvider(object):
+    """FolderUIDsProvider adapter will be removed in collective.cover v1.7."""
+    warnings.warn(__doc__, DeprecationWarning)
 
     def __init__(self, context):
-        self.context = context
+        pass
 
     def getUIDs(self):
-        """Return a list of UUIDs of collection objects."""
-        return [i.UID for i in self.context.getFolderContents()]
+        pass
 
 
-@implementer(ICoverUIDsProvider)
 class GenericUIDsProvider(object):
+    """GenericUIDsProvider adapter will be removed in collective.cover v1.7."""
+    warnings.warn(__doc__, DeprecationWarning)
 
     def __init__(self, context):
-        self.context = context
+        pass
 
     def getUIDs(self):
-        """Return a list of UUIDs of collection objects."""
-        return [IUUID(self.context)]
+        pass

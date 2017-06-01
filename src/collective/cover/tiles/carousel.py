@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from collective.cover import _
-from collective.cover.interfaces import ICoverUIDsProvider
 from collective.cover.interfaces import ITileEditForm
 from collective.cover.tiles.list import IListTile
 from collective.cover.tiles.list import ListTile
@@ -66,7 +65,10 @@ class CarouselTile(ListTile):
         :type uuids: List of strings
         """
         super(ListTile, self).populate_with_object(obj)  # check permission
-        uuids = ICoverUIDsProvider(obj).getUIDs()
+        if obj.portal_type == 'Collection':
+            uuids = [i.UID for i in obj.queryCatalog()]
+        else:
+            uuids = [self.get_uuid(obj)]
         # accept just elements with a lead image
         uuids = [i for i in uuids if self._has_image_field(uuidToObject(i))]
         if uuids:

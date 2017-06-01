@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from collective.cover.testing import ALL_CONTENT_TYPES
+from collective.cover.testing import zptlogo
 from collective.cover.tests.base import TestTileMixin
+from collective.cover.tests.utils import set_image_field
 from collective.cover.tests.utils import today
 from collective.cover.tiles.list import IListTile
 from collective.cover.tiles.list import ListTile
@@ -260,3 +262,35 @@ class ListTileTestCase(TestTileMixin, unittest.TestCase):
         obj = self.portal['my-image']
         self.assertTrue(self.tile.thumbnail(obj))
         self.assertIsInstance(self.tile(), unicode)
+
+    def test_populate_with_collection(self):
+        with api.env.adopt_roles(['Manager']):
+            api.content.create(self.portal, 'News Item', id='item')
+            # handle Archetypes and Dexterity
+            set_image_field(self.portal['item'], zptlogo)
+
+            query = [dict(
+                i='portal_type',
+                o='plone.app.querystring.operation.selection.is',
+                v='News Item',
+            )]
+            collection = api.content.create(
+                self.portal, 'Collection', id='collection', query=query)
+
+        self.tile.populate_with_object(collection)
+        rendered = self.tile()
+        self.assertIn(u'<a href="http://nohost/plone/collection"></a>', rendered)
+        self.assertNotIn(u'<a href="http://nohost/plone/item"></a>', rendered)
+
+    def test_populate_with_folder(self):
+        with api.env.adopt_roles(['Manager']):
+            api.content.create(self.portal, 'News Item', id='item')
+            # handle Archetypes and Dexterity
+            set_image_field(self.portal['item'], zptlogo)
+
+            folder = api.content.create(self.portal, 'Folder', id='folder')
+
+        self.tile.populate_with_object(folder)
+        rendered = self.tile()
+        self.assertIn(u'<a href="http://nohost/plone/folder"></a>', rendered)
+        self.assertNotIn(u'<a href="http://nohost/plone/item"></a>', rendered)

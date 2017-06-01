@@ -43,14 +43,14 @@ item will show an image, title and description. Carousel tiles are 100%
 responsive, support native-like swipe movements and use hardware optimized
 animations.
 
-You can drop any object into a Carousel tile.
+You can drop any object with an image into a Carousel tile.
+Besides that, if you drop a collection into this tile,
+it will take every item in the query result and insert it into the carousel until it reaches the max items specified in the configuration.
+
 You can edit the metadata (title, description and URL) of items in the carousel,
 and you can reorder or remove them from the tile.
 You can also specify if the carousel will start playing the slideshow automatically or not.
 Every item in the slideshow will have a link pointing back to the original object.
-
-If you drop a folder or a collection into this tile,
-it will take every item into the folder or into the collection and insert it until it reaches the max items specified into configuration.
 
 Carousel tile is fully responsive, so be sure to configure it to use the image size that fits better the maximum desired size.
 
@@ -108,9 +108,6 @@ with the objects metadata; if an object has an image, it will be shown also.
 Right now, you can not edit individual items metadata in the list, but you can
 remove or reorder them. The title and image fields will include a link to the
 original object location.
-
-If you drop a folder or a collection into this tile,
-it will take every item into the folder or into the collection and insert it until it reaches the max items specified into configuration.
 
 Rich Text
 +++++++++

@@ -236,15 +236,19 @@ class CarouselTileTestCase(TestTileMixin, unittest.TestCase):
             'alt="This image was created for testing purposes"', rendered)
 
     def test_populate_with_collection(self):
+        """Populating a carousel tile with a collection should result on
+        the tile being populated with the results that have an image
+        field.
+        """
         from collective.cover.testing import zptlogo
         from collective.cover.tests.utils import set_image_field
         with api.env.adopt_roles(['Manager']):
-            api.content.create(self.portal, 'News Item', id='new1')
-            api.content.create(self.portal, 'News Item', id='new2')
-            api.content.create(self.portal, 'News Item', id='new3')
+            api.content.create(self.portal, 'News Item', id='item1')
+            api.content.create(self.portal, 'News Item', id='item2')
+            api.content.create(self.portal, 'News Item', id='item3')
             # handle Archetypes and Dexterity
-            set_image_field(self.portal['new1'], zptlogo)
-            set_image_field(self.portal['new2'], zptlogo)
+            set_image_field(self.portal['item1'], zptlogo)
+            set_image_field(self.portal['item2'], zptlogo)
 
             query = [dict(
                 i='portal_type',
@@ -252,10 +256,11 @@ class CarouselTileTestCase(TestTileMixin, unittest.TestCase):
                 v='News Item',
             )]
             col = api.content.create(
-                self.portal, 'Collection', 'collection', query=query)
+                self.portal, 'Collection', id='collection', query=query)
 
         self.tile.populate_with_object(col)
         rendered = self.tile()
-        self.assertIn(u'<img src="http://nohost/plone/new1', rendered)
-        self.assertIn(u'<img src="http://nohost/plone/new2', rendered)
-        self.assertNotIn(u'<img src="http://nohost/plone/new3', rendered)
+        self.assertNotIn(u'<img src="http://nohost/plone/folder', rendered)
+        self.assertIn(u'<img src="http://nohost/plone/item1', rendered)
+        self.assertIn(u'<img src="http://nohost/plone/item2', rendered)
+        self.assertNotIn(u'<img src="http://nohost/plone/item3', rendered)
