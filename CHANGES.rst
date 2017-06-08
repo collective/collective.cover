@@ -14,6 +14,9 @@ There's a frood who really knows where his towel is.
     Adapters used to get the items inside a folder or the results of the query in a collection were deprecated.
     The following classes will be removed in collective.cover v1.7: ``ICoverUIDsProvider``, ``CollectionUIDsProvider``, ``FolderUIDsProvider`` and ``GenericUIDsProvider``.
 
+- Information stored on basic tiles populated with private content is no longer shown to users without proper permissions (fixes `#721`_).
+  [hvelarde]
+
 - Dropping a folder on a carousel tile no longer populates the tile with the items inside the folder;
   populating the carousel tile with the results of the query in a collection is still supported.
   [rodfersou, hvelarde]
@@ -203,3 +206,4 @@ Previous entries can be found in the HISTORY.rst file.
 .. _`#686`: https://github.com/collective/collective.cover/issues/686
 .. _`#710`: https://github.com/collective/collective.cover/issues/710
 .. _`#713`: https://github.com/collective/collective.cover/issues/713
+.. _`#721`: https://github.com/collective/collective.cover/issues/721
