@@ -75,6 +75,7 @@ class BasicTileTestCase(TestTileMixin, unittest.TestCase):
         self.assertTrue(tile.is_empty())
 
     def test_manually_populated(self):
+        # simulate user populating tile by editing it (no drag-and-drop)
         data = dict(title='foo')
         data_mgr = ITileDataManager(self.tile)
         data_mgr.set(data)
@@ -149,17 +150,17 @@ class BasicTileTestCase(TestTileMixin, unittest.TestCase):
         obj = self.portal['my-image']
         self.tile.populate_with_object(obj)
 
-        # Normally the image will be displayed
+        # image is shown normally
         rendered = self.tile()
         self.assertIn('@@images', rendered)
 
-        # Delete original object
         with api.env.adopt_roles(['Manager']):
-            self.portal.manage_delObjects(['my-image', ])
+            api.content.delete(obj)
+
         tile = self.get_tile  # avoid data caching on tile
         rendered = tile()
-        # if deleted object, the image should still show since it was
-        # copied over
+
+        # image should still be shown since it was copied to the tile
         self.assertIn('@@images', rendered)
 
     def test_render(self):
