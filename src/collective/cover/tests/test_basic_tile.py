@@ -9,8 +9,7 @@ from collective.cover.tiles.permissions import ITilesPermissions
 from DateTime import DateTime
 from mock import Mock
 from plone import api
-from plone.app.testing import setRoles
-from plone.app.testing import TEST_USER_ID
+from plone.app.testing import logout
 from plone.cachepurging.hooks import queuePurge
 from plone.cachepurging.interfaces import ICachePurgingSettings
 from plone.namedfile.file import NamedBlobImage
@@ -36,6 +35,12 @@ class BasicTileTestCase(TestTileMixin, unittest.TestCase):
         self.tile.__name__ = u'collective.cover.basic'
         self.tile.id = u'test'
 
+    @property
+    def get_tile(self):
+        """Return a new instance of the tile to avoid data caching."""
+        return self.cover.restrictedTraverse(
+            '@@{0}/{1}'.format(self.tile.__name__, self.tile.id))
+
     @unittest.expectedFailure  # FIXME: raises BrokenImplementation
     def test_interface(self):
         self.interface = IBasicTile
@@ -53,10 +58,33 @@ class BasicTileTestCase(TestTileMixin, unittest.TestCase):
     def test_is_empty(self):
         self.assertTrue(self.tile.is_empty())
 
-    def test_is_not_empty(self):
+    def test_populated(self):
         obj = self.portal['my-news-item']
         self.tile.populate_with_object(obj)
         self.assertFalse(self.tile.is_empty())
+
+    def test_populated_with_private_content(self):
+        with api.env.adopt_roles(['Manager']):
+            obj = api.content.create(self.portal, 'Collection', 'foo')
+        self.tile.populate_with_object(obj)
+        self.assertFalse(self.tile.is_empty())
+
+        # tile must be empty for anonymous user
+        logout()
+        tile = self.get_tile  # avoid data caching on tile
+        self.assertTrue(tile.is_empty())
+
+    def test_manually_populated(self):
+        # simulate user populating tile by editing it (no drag-and-drop)
+        data = dict(title='foo')
+        data_mgr = ITileDataManager(self.tile)
+        data_mgr.set(data)
+        self.assertFalse(self.tile.is_empty())
+
+        # tile must not be empty for anonymous user
+        logout()
+        tile = self.get_tile  # avoid data caching on tile
+        self.assertFalse(tile.is_empty())
 
     def test_date_on_empty_tile(self):
         self.assertIsNone(self.tile.Date())
@@ -122,20 +150,17 @@ class BasicTileTestCase(TestTileMixin, unittest.TestCase):
         obj = self.portal['my-image']
         self.tile.populate_with_object(obj)
 
-        # Normally the image will be displayed
+        # image is shown normally
         rendered = self.tile()
         self.assertIn('@@images', rendered)
 
-        # Delete original object
-        setRoles(self.portal, TEST_USER_ID, ['Manager'])
-        self.portal.manage_delObjects(['my-image', ])
-        # tile's data attribute is cached; reinstantiate it
-        tile = self.cover.restrictedTraverse(
-            '@@{0}/{1}'.format('collective.cover.basic', 'test'))
-        tile.is_empty()
+        with api.env.adopt_roles(['Manager']):
+            api.content.delete(obj)
+
+        tile = self.get_tile  # avoid data caching on tile
         rendered = tile()
-        # if deleted object, the image should still show since it was
-        # copied over
+
+        # image should still be shown since it was copied to the tile
         self.assertIn('@@images', rendered)
 
     def test_render(self):
