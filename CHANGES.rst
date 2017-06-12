@@ -28,10 +28,10 @@ There's a frood who really knows where his towel is.
 - Update recommended versions of Blocks dependencies to keep in sync with curren Mosaic development.
   [hvelarde]
 
-- Fix order of uuids of sorted function in ListTile's 'results' method.
+- Fix order of UUIDs of sorted function in ListTile's 'results' method.
   [idgserpro]
 
-- Review content chooser events to happen just at compose tab (fixes `#710`_).
+- Review content chooser events to happen just at Compose tab (fixes `#710`_).
   [rodfersou]
 
 - Do not assume all tile types have schemas.
