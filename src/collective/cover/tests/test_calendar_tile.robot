@@ -6,7 +6,7 @@ Library  Remote  ${PLONE_URL}/RobotRemote
 Suite Setup  Open Test Browser
 Suite Teardown  Close all browsers
 
-# XXX: test is randomly failing under Plone 4.2 only
+# FIXME: this test is randomly failing
 Default Tags  Mandelbug
 
 *** Variables ***
@@ -16,9 +16,6 @@ ${calendar_tile_location}  'collective.cover.calendar'
 *** Test cases ***
 
 Test Calendar Tile
-    # XXX: test is randomly failing under Plone 4.2 only
-    Run keyword if  '${CMFPLONE_VERSION}' >= '4.3'  Remove Tags  Mandelbug
-
     Enable Autologin as  Site Administrator
     Go to Homepage
     Create Cover  Title  Description
