@@ -3,7 +3,7 @@ Changelog
 
 There's a frood who really knows where his towel is.
 
-1.4b2 (unreleased)
+1.5b1 (2017-06-12)
 ^^^^^^^^^^^^^^^^^^
 
 .. Warning::
