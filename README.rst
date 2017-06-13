@@ -120,18 +120,6 @@ Edit your buildout.cfg and add add the following to it:
     plone.app.tiles = 3.0.3
     plone.tiles = 2.0.0b2
 
-If you are using Plone 4.2.x you need to add the following also:
-
-.. code-block:: ini
-
-    [versions]
-    collective.js.jqueryui = 1.8.16.9
-    plone.app.blocks = 3.1.0
-    plone.app.jquery = 1.7.2
-    plone.app.jquerytools = 1.5.7
-    plone.app.z3cform = 0.6.3
-    plone.directives.form = 1.1
-
 If you want to use a newer release of ``collective.js.bootstrap``, you will need to update ``plone.app.jquery``:
 
 .. code-block:: ini

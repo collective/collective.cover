@@ -6,6 +6,9 @@ There's a frood who really knows where his towel is.
 1.5b2 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Drop support for Plone 4.2.
+  [hvelarde]
+
 - Fix typo in basic tile template (``is_empty`` is not a property but a function).
   [hvelarde]
 

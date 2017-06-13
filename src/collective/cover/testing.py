@@ -173,13 +173,8 @@ class Fixture(PloneSandboxLayer):
         portal_workflow.setChainForPortalTypes(
             ['Collection'], ['simple_publication_workflow'])
 
-        # Prevent kss validation errors in Plone 4.2
-        portal_kss = getattr(portal, 'portal_kss', None)
-        if portal_kss:
-            portal_kss.getResource('++resource++plone.app.z3cform').setEnabled(False)
 
 FIXTURE = Fixture()
-
 
 INTEGRATION_TESTING = IntegrationTesting(
     bases=(FIXTURE,),
