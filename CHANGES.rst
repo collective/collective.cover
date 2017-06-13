@@ -16,7 +16,7 @@ There's a frood who really knows where his towel is.
 .. Warning::
     If you are upgrading plone.app.tiles note that latests versions of this package no longer depend on plone.app.drafts.
     You should explicitly add plone.app.drafts to the `eggs` part of your buildout configuration to avoid issues.
-    You can safely unistall plone.app.drafts after that, if you are not using it.
+    You can safely uninstall plone.app.drafts after that, if you are not using it.
 
     Adapters used to get the items inside a folder or the results of the query in a collection were deprecated.
     The following classes will be removed in collective.cover v1.7: ``ICoverUIDsProvider``, ``CollectionUIDsProvider``, ``FolderUIDsProvider`` and ``GenericUIDsProvider``.
@@ -32,7 +32,7 @@ There's a frood who really knows where his towel is.
   making impossible to have folders or collection as items of the list tile themselves (fixes `#713`_).
   [rodfersou, hvelarde]
 
-- Update recommended versions of Blocks dependencies to keep in sync with curren Mosaic development.
+- Update recommended versions of Blocks dependencies to keep in sync with current Mosaic development.
   [hvelarde]
 
 - Fix order of UUIDs of sorted function in ListTile's 'results' method.
