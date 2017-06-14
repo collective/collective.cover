@@ -15,7 +15,6 @@ addons:
   firefox: 45.8.0esr
 env:
   matrix:
-    - PLONE_VERSION=4.2
     - PLONE_VERSION=4.3
     - PLONE_VERSION=4.3 DEXTERITY_ONLY=true
     - PLONE_VERSION=4.3 JQUERY=1.9.1.3
@@ -54,9 +53,8 @@ notifications:
       - "%{repository}#%{build_number} (%{branch} - %{commit} : %{author}): %{message}"
       - "Change view : %{compare_url}"
       - "Build details : %{build_url}"
-      - "Robot Test Report for Plone 4.2: http://s3-sa-east-1.amazonaws.com/collective-cover/collective/collective.cover/%{build_number}/%{build_number}.1/parts/test/robot_log.html"
-      - "Robot Test Report for Plone 4.3: http://s3-sa-east-1.amazonaws.com/collective-cover/collective/collective.cover/%{build_number}/%{build_number}.2/parts/test/robot_log.html"
-      - "Robot Test Report for plone.app.contenttypes: http://s3-sa-east-1.amazonaws.com/collective-cover/collective/collective.cover/%{build_number}/%{build_number}.3/parts/test/robot_log.html"
-      - "Robot Test Report for jQuery 1.9: http://s3-sa-east-1.amazonaws.com/collective-cover/collective/collective.cover/%{build_number}/%{build_number}.4/parts/test/robot_log.html"
-      - "Robot Test Report for Plone 5.0: http://s3-sa-east-1.amazonaws.com/collective-cover/collective/collective.cover/%{build_number}/%{build_number}.5/parts/test/robot_log.html"
-      - "Robot Test Report for Plone 5.1: http://s3-sa-east-1.amazonaws.com/collective-cover/collective/collective.cover/%{build_number}/%{build_number}.6/parts/test/robot_log.html"
+      - "Robot Test Report for Plone 4.3: http://s3-sa-east-1.amazonaws.com/collective-cover/collective/collective.cover/%{build_number}/%{build_number}.1/parts/test/robot_log.html"
+      - "Robot Test Report for plone.app.contenttypes: http://s3-sa-east-1.amazonaws.com/collective-cover/collective/collective.cover/%{build_number}/%{build_number}.2/parts/test/robot_log.html"
+      - "Robot Test Report for jQuery 1.9: http://s3-sa-east-1.amazonaws.com/collective-cover/collective/collective.cover/%{build_number}/%{build_number}.3/parts/test/robot_log.html"
+      - "Robot Test Report for Plone 5.0: http://s3-sa-east-1.amazonaws.com/collective-cover/collective/collective.cover/%{build_number}/%{build_number}.4/parts/test/robot_log.html"
+      - "Robot Test Report for Plone 5.1: http://s3-sa-east-1.amazonaws.com/collective-cover/collective/collective.cover/%{build_number}/%{build_number}.5/parts/test/robot_log.html"

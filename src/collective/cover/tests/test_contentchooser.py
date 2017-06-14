@@ -8,8 +8,6 @@ import json
 import unittest
 
 
-IS_PLONE_42 = api.env.plone_version().startswith('4.2')
-
 parser = etree.HTMLParser()
 
 
@@ -48,7 +46,6 @@ class ContentChooserTestCase(unittest.TestCase):
         image_match = tree.xpath("//li[@data-content-type='Image']/a[@class='contenttype-image state-missing-value'][contains(@title, 'This image #2 was created for testing purposes')][contains(@title, '/my-image')][@rel='1']")
         self.assertTrue(image_match)
 
-    @unittest.skipIf(IS_PLONE_42, 'Need to install Products.UnicodeLexicon')
     def test_unicode_aware_lexicon(self):
         """See: https://github.com/collective/collective.cover/issues/276
         """

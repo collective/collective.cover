@@ -6,9 +6,6 @@ Library  Remote  ${PLONE_URL}/RobotRemote
 Suite Setup  Open Test Browser
 Suite Teardown  Close all browsers
 
-# XXX: test is randomly failing under Plone 4.2 only
-Default Tags  Mandelbug
-
 *** Variables ***
 
 ${embed_tile_location}  'collective.cover.embed'
@@ -21,9 +18,6 @@ ${edit_link_selector}  a.edit-tile-link
 *** Test cases ***
 
 Test Embed Tile
-    # XXX: test is randomly failing under Plone 4.2 only
-    Run keyword if  '${CMFPLONE_VERSION}' >= '4.3'  Remove Tags  Mandelbug
-
     Enable Autologin as  Site Administrator
     Go to Homepage
     Create Cover  Title  Description

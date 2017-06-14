@@ -6,5 +6,6 @@
   <include package=".v14" />
   <include package=".v15" />
   <include package=".v16" />
+  <include package=".v17" />
 
 </configure>

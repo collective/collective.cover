@@ -632,3 +632,14 @@ class Upgrade15to16TestCase(UpgradeTestCaseBase):
         version = self.setup.getLastVersionForProfile(self.profile_id)[0]
         self.assertGreaterEqual(int(version), int(self.to_version))
         self.assertEqual(self._how_many_upgrades_to_do(), 1)
+
+
+class Upgrade16to17TestCase(UpgradeTestCaseBase):
+
+    def setUp(self):
+        UpgradeTestCaseBase.setUp(self, u'16', u'17')
+
+    def test_registrations(self):
+        version = self.setup.getLastVersionForProfile(self.profile_id)[0]
+        self.assertGreaterEqual(int(version), int(self.to_version))
+        self.assertEqual(self._how_many_upgrades_to_do(), 1)
