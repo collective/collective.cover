@@ -331,8 +331,9 @@ var coveractions = {
 
     $(document).on("click", "#recent .contentchooser-clear", function(e) {
       $(e.currentTarget).prev().children("input").val("");
+      var url = $("#contentchooser-content-search-button").attr("data-url");
       ajaxSearchRequest.push($.ajax({
-        url: portal_url + "/@@content-search",
+        url: url,
         success: function(info) {
           $("#contentchooser-content-search #recent .item-list").html(info);
           $('#recent .filter-count').text("");
