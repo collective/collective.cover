@@ -6,6 +6,10 @@ There's a frood who really knows where his towel is.
 1.5b2 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Use absolute url for root in content chooser tree.
+  This fixes `issue #733 <https://github.com/collective/collective.cover/issues/733>`_.
+  [maurits]
+
 - Fix content chooser clear button to update results (closes `#727`_).
   [rodfersou]
 

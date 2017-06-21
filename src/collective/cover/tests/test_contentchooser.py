@@ -37,6 +37,12 @@ class ContentChooserTestCase(unittest.TestCase):
 
         self.assertItemsEqual(json_objects_ids, portal_objects_ids)
 
+        paths = json_response['path']
+        self.assertEqual(len(paths), 1)
+        path = paths[0]
+        self.assertEqual(path[u'title'], u'Plone site')
+        self.assertEqual(path[u'url'], self.portal.absolute_url())
+
     def test_searches(self):
         self.request.set('q', 'Image')
         view = api.content.get_view(u'content-search', self.cover, self.request)

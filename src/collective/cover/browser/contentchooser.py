@@ -141,7 +141,7 @@ class SearchItemsBrowserView(BrowserView):
         if path is None:
             # Add siteroot
             result.append({'title': root.title_or_id(),
-                           'url': '/'.join(root.getPhysicalPath())})
+                           'url': root_url})
 
         for i in range(len(relative)):
             now = relative[:i + 1]
