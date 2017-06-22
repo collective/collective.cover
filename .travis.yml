@@ -17,7 +17,7 @@ env:
   matrix:
     - PLONE_VERSION=4.3
     - PLONE_VERSION=4.3 DEXTERITY_ONLY=true
-    - PLONE_VERSION=4.3 JQUERY=1.9.1.3
+    - PLONE_VERSION=4.3 VERSIONS=versions:plone.app.jquery=1.9.2
     - PLONE_VERSION=5.0
     - PLONE_VERSION=5.1
 matrix:
@@ -25,10 +25,9 @@ matrix:
 install:
 - sed -ie "s#test-4.3#test-$PLONE_VERSION#" buildout.cfg
 - sed -ie "s#versions-4.3#versions-$PLONE_VERSION#" buildout.cfg
-- test $JQUERY && sed -ie "s#plone.app.jquery = 1.7.2.1#plone.app.jquery = $JQUERY#" versions-4.3.x.cfg || true
 - python bootstrap.py
-- bin/buildout annotate
-- bin/buildout
+- bin/buildout $VERSIONS annotate
+- bin/buildout $VERSIONS
 before_script:
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
