@@ -25,7 +25,7 @@ matrix:
 install:
 - sed -ie "s#test-4.3#test-$PLONE_VERSION#" buildout.cfg
 - sed -ie "s#versions-4.3#versions-$PLONE_VERSION#" buildout.cfg
-- test $JQUERY && sed -ie "s#plone.app.jquery = 1.7.2#plone.app.jquery = $JQUERY#" versions-4.3.x.cfg || true
+- test $JQUERY && sed -ie "s#plone.app.jquery = 1.7.2.1#plone.app.jquery = $JQUERY#" versions-4.3.x.cfg || true
 - python bootstrap.py
 - bin/buildout annotate
 - bin/buildout
