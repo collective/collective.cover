@@ -4,7 +4,7 @@ Resource  cover.robot
 Library  Remote  ${PLONE_URL}/RobotRemote
 Library  ${CURDIR}/TestInternalServerError.py
 
-Suite Setup  Open Test Browser
+Suite Setup  Open and Maximize Test Browser
 Suite Teardown  Close all browsers
 
 *** Variables ***

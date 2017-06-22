@@ -26,6 +26,10 @@ ${CONTENT_CHOOSER_SELECTOR} =  div#contentchooser-content-search
 
 *** Keywords ***
 
+Open and Maximize Test Browser
+    Open Test Browser
+    Set Window Size  1366  768
+
 Start Browser and Autologin as
     [arguments]  ${role}
 

@@ -3,7 +3,7 @@
 Resource  cover.robot
 Library  Remote  ${PLONE_URL}/RobotRemote
 
-Test Setup  Open Test Browser
+Test Setup  Open and Maximize Test Browser
 Test Teardown  Close all browsers
 
 *** Test cases ***
