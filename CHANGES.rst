@@ -3,7 +3,7 @@ Changelog
 
 There's a frood who really knows where his towel is.
 
-1.5b2 (unreleased)
+1.6b1 (2017-06-23)
 ^^^^^^^^^^^^^^^^^^
 
 - Fix deprecation of adapters made in previous release, as they were incorrectly removed.
