@@ -6,6 +6,11 @@ There's a frood who really knows where his towel is.
 1.5b2 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Fix adapters ``ICoverUIDsProvider``, ``CollectionUIDsProvider``,
+``FolderUIDsProvider`` and ``GenericUIDsProvider`` that were incorrectly removed
+  in 1.5b1. These classes will still be removed in collective.cover 1.7.
+  [idgserpro]
+
 - Use absolute url for root in content chooser tree.
   This fixes `issue #733 <https://github.com/collective/collective.cover/issues/733>`_.
   [maurits]
