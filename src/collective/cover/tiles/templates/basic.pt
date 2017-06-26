@@ -5,7 +5,7 @@
       i18n:domain="collective.cover">
 
 <body tal:define="is_empty nocall:view/is_empty">
-  <p tal:condition="python: is_empty and view.is_compose_mode()" i18n:translate="">
+  <p tal:condition="python: is_empty() and view.is_compose_mode()" i18n:translate="">
     Please drag&amp;drop some content here to populate the tile.
   </p>
 

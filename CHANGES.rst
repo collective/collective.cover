@@ -3,20 +3,47 @@ Changelog
 
 There's a frood who really knows where his towel is.
 
-1.4b2 (unreleased)
+1.6b2 (unreleased)
+^^^^^^^^^^^^^^^^^^
+
+- Fix Plone 4.3 with plone.app.widgets 1.x installed. The tile-edit forms are now opened
+  with .pat-plone-modal (fixes `#719`_)
+  [petschki]
+
+
+1.6b1 (2017-06-23)
+^^^^^^^^^^^^^^^^^^
+
+- Fix deprecation of adapters made in previous release, as they were incorrectly removed.
+  Code removal will still happen in collective.cover v1.7.
+  [idgserpro]
+
+- Use absolute URL for root in content chooser tree (fixes `#733 <https://github.com/collective/collective.cover/issues/733>`_).
+  [maurits]
+
+- Fix content chooser clear button to update results (closes `#727`_).
+  [rodfersou]
+
+- Drop support for Plone 4.2.
+  [hvelarde]
+
+- Fix typo in basic tile template (``is_empty`` is not a property but a function).
+  [hvelarde]
+
+
+1.5b1 (2017-06-12)
 ^^^^^^^^^^^^^^^^^^
 
 .. Warning::
     If you are upgrading plone.app.tiles note that latests versions of this package no longer depend on plone.app.drafts.
     You should explicitly add plone.app.drafts to the `eggs` part of your buildout configuration to avoid issues.
-    You can safely unistall plone.app.drafts after that, if you are not using it.
+    You can safely uninstall plone.app.drafts after that, if you are not using it.
 
     Adapters used to get the items inside a folder or the results of the query in a collection were deprecated.
     The following classes will be removed in collective.cover v1.7: ``ICoverUIDsProvider``, ``CollectionUIDsProvider``, ``FolderUIDsProvider`` and ``GenericUIDsProvider``.
 
-- Fix Plone 4.3 with plone.app.widgets 1.x installed. The tile-edit forms are now opened
-  with .pat-plone-modal (fixes `#719`_)
-  [petschki]
+- Information stored on basic tiles populated with private content is no longer shown to users without proper permissions (fixes `#721`_).
+  [hvelarde]
 
 - Dropping a folder on a carousel tile no longer populates the tile with the items inside the folder;
   populating the carousel tile with the results of the query in a collection is still supported.
@@ -26,13 +53,13 @@ There's a frood who really knows where his towel is.
   making impossible to have folders or collection as items of the list tile themselves (fixes `#713`_).
   [rodfersou, hvelarde]
 
-- Update recommended versions of Blocks dependencies to keep in sync with curren Mosaic development.
+- Update recommended versions of Blocks dependencies to keep in sync with current Mosaic development.
   [hvelarde]
 
-- Fix order of uuids of sorted function in ListTile's 'results' method.
+- Fix order of UUIDs of sorted function in ListTile's 'results' method.
   [idgserpro]
 
-- Review content chooser events to happen just at compose tab (fixes `#710`_).
+- Review content chooser events to happen just at Compose tab (fixes `#710`_).
   [rodfersou]
 
 - Do not assume all tile types have schemas.
@@ -208,3 +235,5 @@ Previous entries can be found in the HISTORY.rst file.
 .. _`#710`: https://github.com/collective/collective.cover/issues/710
 .. _`#713`: https://github.com/collective/collective.cover/issues/713
 .. _`#719`: https://github.com/collective/collective.cover/issues/719
+.. _`#721`: https://github.com/collective/collective.cover/issues/721
+.. _`#727`: https://github.com/collective/collective.cover/issues/727

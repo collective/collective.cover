@@ -69,32 +69,45 @@ class BasicTile(PersistentCoverTile):
 
     @memoizedproperty
     def brain(self):
-        catalog = api.portal.get_tool('portal_catalog')
         uuid = self.data.get('uuid')
-        result = catalog(UID=uuid) if uuid is not None else []
-        assert len(result) <= 1
-        return result[0] if result else None
+        results = api.content.find(UID=uuid)
+        assert len(results) <= 1
+        return results[0] if results else None
 
     def Date(self):
         # self.brain is None when the tile was populated by editing it
-        if self.brain is not None:
+        if self.brain:
             return super(BasicTile, self).Date(self.brain)
 
     def is_empty(self):
-        return self.brain is None and \
-            not [i for i in self.data.values() if i]
+        """Check if there is content to be shown respecting permissions."""
+        if self.brain:
+            return False
+
+        # we have two different use cases here:
+        # * the user has no permission to access the content (e.g. Private state)
+        # * the tile was manually populated without dropping content on it
+        catalog = api.portal.get_tool('portal_catalog')
+        uuid = self.data.get('uuid')
+        results = catalog.unrestrictedSearchResults(UID=uuid)
+        assert len(results) <= 1
+        if results:
+            return True  # user has no permission to access the content
+
+        # check if tile was manually populated
+        return not [i for i in self.data.values() if i]
 
     def getURL(self):
         """ Return the URL of the original object.
         """
-        if self.brain is not None:
+        if self.brain:
             return self.brain.getURL()
 
     def Subject(self):
         """ Return the categories of the original object (AKA keywords, tags
             or labels).
         """
-        if self.brain is not None:
+        if self.brain:
             return self.brain.Subject
 
     def populate_with_object(self, obj):

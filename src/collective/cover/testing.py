@@ -35,6 +35,13 @@ else:
     DEXTERITY_ONLY = os.environ.get('DEXTERITY_ONLY') is not None
 
 try:
+    pkg_resources.get_distribution('plone.app.widgets')
+except pkg_resources.DistributionNotFound:
+    HAS_WIDGETS = False
+else:
+    HAS_WIDGETS = True
+
+try:
     pkg_resources.get_distribution('Products.PloneFormGen')
 except pkg_resources.DistributionNotFound:
     HAS_PFG = False
@@ -133,6 +140,12 @@ class Fixture(PloneSandboxLayer):
                 self.loadZCML(package=plone.app.contenttypes)
                 z2.installProduct(app, 'Products.DateRecurringIndex')
 
+            if HAS_WIDGETS:
+                import plone.app.widgets
+                self.loadZCML(package=plone.app.widgets)
+                import plone.formwidget.querystring
+                self.loadZCML(package=plone.formwidget.querystring)
+
             if HAS_PFG:
                 import Products.PloneFormGen
                 self.loadZCML(package=Products.PloneFormGen)
@@ -155,6 +168,10 @@ class Fixture(PloneSandboxLayer):
             if DEXTERITY_ONLY:
                 self.applyProfile(portal, 'plone.app.contenttypes:default')
 
+            if HAS_WIDGETS:
+                self.applyProfile(portal, 'plone.app.widgets:default')
+                self.applyProfile(portal, 'plone.formwidget.querystring:default')  # noqa
+
             if HAS_PFG:
                 self.applyProfile(portal, 'Products.PloneFormGen:default')
 
@@ -173,13 +190,8 @@ class Fixture(PloneSandboxLayer):
         portal_workflow.setChainForPortalTypes(
             ['Collection'], ['simple_publication_workflow'])
 
-        # Prevent kss validation errors in Plone 4.2
-        portal_kss = getattr(portal, 'portal_kss', None)
-        if portal_kss:
-            portal_kss.getResource('++resource++plone.app.z3cform').setEnabled(False)
 
 FIXTURE = Fixture()
-
 
 INTEGRATION_TESTING = IntegrationTesting(
     bases=(FIXTURE,),

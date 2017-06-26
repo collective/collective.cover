@@ -2,6 +2,7 @@
 from AccessControl import Unauthorized
 from collective.cover import _
 from collective.cover.config import PROJECTNAME
+from collective.cover.interfaces import ICoverUIDsProvider
 from collective.cover.interfaces import ITileEditForm
 from collective.cover.tiles.base import IPersistentCoverTile
 from collective.cover.tiles.base import PersistentCoverTile
@@ -375,34 +376,40 @@ class ListTile(PersistentCoverTile):
         return self._get_title_tag(item)
 
 
+@implementer(ICoverUIDsProvider)
 class CollectionUIDsProvider(object):
     """CollectionUIDsProvider adapter will be removed in collective.cover v1.7."""
     warnings.warn(__doc__, DeprecationWarning)
 
     def __init__(self, context):
-        pass
+        self.context = context
 
     def getUIDs(self):
-        pass
+        """Return a list of UUIDs of collection objects."""
+        return [i.UID for i in self.context.queryCatalog()]
 
 
+@implementer(ICoverUIDsProvider)
 class FolderUIDsProvider(object):
     """FolderUIDsProvider adapter will be removed in collective.cover v1.7."""
     warnings.warn(__doc__, DeprecationWarning)
 
     def __init__(self, context):
-        pass
+        self.context = context
 
     def getUIDs(self):
-        pass
+        """Return a list of UUIDs of collection objects."""
+        return [i.UID for i in self.context.getFolderContents()]
 
 
+@implementer(ICoverUIDsProvider)
 class GenericUIDsProvider(object):
     """GenericUIDsProvider adapter will be removed in collective.cover v1.7."""
     warnings.warn(__doc__, DeprecationWarning)
 
     def __init__(self, context):
-        pass
+        self.context = context
 
     def getUIDs(self):
-        pass
+        """Return a list of UUIDs of collection objects."""
+        return [IUUID(self.context)]

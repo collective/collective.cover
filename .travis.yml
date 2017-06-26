@@ -15,21 +15,23 @@ addons:
   firefox: 45.8.0esr
 env:
   matrix:
-    - PLONE_VERSION=4.2
     - PLONE_VERSION=4.3
     - PLONE_VERSION=4.3 DEXTERITY_ONLY=true
-    - PLONE_VERSION=4.3 JQUERY=1.9.1.3
+    - PLONE_VERSION=4.3 VERSIONS=versions:plone.app.jquery=1.9.2
+    - PLONE_VERSION=4.3 WIDGETS=true
     - PLONE_VERSION=5.0
     - PLONE_VERSION=5.1
 matrix:
   fast_finish: true
+  allow_failures:
+    - env: PLONE_VERSION=4.3 WIDGETS=true
 install:
 - sed -ie "s#test-4.3#test-$PLONE_VERSION#" buildout.cfg
 - sed -ie "s#versions-4.3#versions-$PLONE_VERSION#" buildout.cfg
-- test $JQUERY && sed -ie "s#plone.app.jquery = 1.7.2#plone.app.jquery = $JQUERY#" versions-4.3.x.cfg || true
+- test $WIDGETS && sed -ie "s#versions-4.3.x.cfg#versions-4.3.x-widgets.cfg#" buildout.cfg || true
 - python bootstrap.py
-- bin/buildout annotate
-- bin/buildout
+- bin/buildout $VERSIONS annotate
+- bin/buildout $VERSIONS
 before_script:
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
@@ -54,9 +56,9 @@ notifications:
       - "%{repository}#%{build_number} (%{branch} - %{commit} : %{author}): %{message}"
       - "Change view : %{compare_url}"
       - "Build details : %{build_url}"
-      - "Robot Test Report for Plone 4.2: http://s3-sa-east-1.amazonaws.com/collective-cover/collective/collective.cover/%{build_number}/%{build_number}.1/parts/test/robot_log.html"
-      - "Robot Test Report for Plone 4.3: http://s3-sa-east-1.amazonaws.com/collective-cover/collective/collective.cover/%{build_number}/%{build_number}.2/parts/test/robot_log.html"
-      - "Robot Test Report for plone.app.contenttypes: http://s3-sa-east-1.amazonaws.com/collective-cover/collective/collective.cover/%{build_number}/%{build_number}.3/parts/test/robot_log.html"
-      - "Robot Test Report for jQuery 1.9: http://s3-sa-east-1.amazonaws.com/collective-cover/collective/collective.cover/%{build_number}/%{build_number}.4/parts/test/robot_log.html"
+      - "Robot Test Report for Plone 4.3: http://s3-sa-east-1.amazonaws.com/collective-cover/collective/collective.cover/%{build_number}/%{build_number}.1/parts/test/robot_log.html"
+      - "Robot Test Report for plone.app.contenttypes: http://s3-sa-east-1.amazonaws.com/collective-cover/collective/collective.cover/%{build_number}/%{build_number}.2/parts/test/robot_log.html"
+      - "Robot Test Report for jQuery 1.9: http://s3-sa-east-1.amazonaws.com/collective-cover/collective/collective.cover/%{build_number}/%{build_number}.3/parts/test/robot_log.html"
+      - "Robot Test Report for plone.app.widgets 1.x: http://s3-sa-east-1.amazonaws.com/collective-cover/collective/collective.cover/%{build_number}/%{build_number}.4/parts/test/robot_log.html"
       - "Robot Test Report for Plone 5.0: http://s3-sa-east-1.amazonaws.com/collective-cover/collective/collective.cover/%{build_number}/%{build_number}.5/parts/test/robot_log.html"
       - "Robot Test Report for Plone 5.1: http://s3-sa-east-1.amazonaws.com/collective-cover/collective/collective.cover/%{build_number}/%{build_number}.6/parts/test/robot_log.html"
