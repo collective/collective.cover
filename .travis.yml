@@ -24,7 +24,7 @@ env:
 matrix:
   fast_finish: true
   allow_failures:
-    - env: PLONE_VERSION=4.3 WIDGETS=true
+    - env: PLONE_VERSION=4.3 WIDGETS=true BOOTSTRAP_PARAMS="--buildout-version=1.7.1 --setuptools-version=20.1.1"
 install:
 - sed -ie "s#test-4.3#test-$PLONE_VERSION#" buildout.cfg
 - sed -ie "s#versions-4.3#versions-$PLONE_VERSION#" buildout.cfg
