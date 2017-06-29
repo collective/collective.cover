@@ -96,9 +96,8 @@ $(document).ready(function() {
 
   TitleMarkupSetup();
 
-  // if mockup is installed let pat-plone-modal do its job
-  // XXX: the check for require === 'undefined' should probably be more explicit
-  if ($.fn.prepOverlay !== undefined && typeof require === 'undefined') {
+  // if plone.app.widgets is installed let them do their job
+  if (!$("body").hasClass('pat-plone-widgets')) {
     $('a.edit-tile-link').prepOverlay({
       subtype: 'ajax',
       filter: '.tile-content',
