@@ -1,3 +1,21 @@
+var root = typeof exports !== "undefined" && exports !== null ? exports : this;
+
+root.initializeGallery = function() {
+  var $carousel = $(this);
+  if (!$carousel.hasClass('tile-content')) {
+    $carousel = $('.tile-content', $carousel);
+  }
+  Galleria.loadTheme('++resource++collective.cover/js/galleria.cover_theme.js');
+  Galleria.run($carousel);
+  var options = {
+    height: parseFloat($carousel.attr('data-image-ratio'))
+  };
+  if ($('body').hasClass('template-view')) {
+      options.autoplay = ($carousel.attr('data-autoplay') === 'True');
+  }
+  Galleria.configure(options);
+};
+
 $(function() {
   $('#content').on(
     'click',
@@ -24,4 +42,5 @@ $(function() {
       }
     });
   });
+  $('.cover-carousel-tile').each(root.initializeGallery);
 });
