@@ -1,5 +1,9 @@
+<html>
+<body>
 <div class="tiles-configuration">
     <h1 class="documentFirstHeading" tal:content="view/form_instance/label | nothing" />
 
     <span tal:replace="structure view/contents" />
 </div>
+</body>
+</html>

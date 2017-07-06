@@ -6,7 +6,9 @@ There's a frood who really knows where his towel is.
 1.6b2 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
-- Nothing changed yet.
+- Fix Plone 4.3 with plone.app.widgets 1.x installed. The tile-edit forms are now opened
+  with .pat-plone-modal (fixes `#719`_)
+  [petschki]
 
 
 1.6b1 (2017-06-23)
@@ -232,5 +234,6 @@ Previous entries can be found in the HISTORY.rst file.
 .. _`#686`: https://github.com/collective/collective.cover/issues/686
 .. _`#710`: https://github.com/collective/collective.cover/issues/710
 .. _`#713`: https://github.com/collective/collective.cover/issues/713
+.. _`#719`: https://github.com/collective/collective.cover/issues/719
 .. _`#721`: https://github.com/collective/collective.cover/issues/721
 .. _`#727`: https://github.com/collective/collective.cover/issues/727

@@ -96,8 +96,18 @@ $(document).ready(function() {
 
   TitleMarkupSetup();
 
-  if ($.fn.prepOverlay !== undefined) {
-    $('a.edit-tile-link').prepOverlay({
+  $('body').on('click', 'a.edit-tile-link', function(e) {
+
+    // XXX: need to check for body class here, because it might not been when document.ready() :(
+    if($("body").hasClass("pat-plone-widgets")) {
+      // XXX: reload tile content asynchronously here when destroying the modal
+      //      need to find the right event where to hook in
+      return  // exit here
+    }
+
+    e.preventDefault();
+    // prepare overlayhelper
+    $(e.currentTarget).prepOverlay({
       subtype: 'ajax',
       filter: '.tile-content',
       formselector: '#edit_tile',
@@ -140,26 +150,7 @@ $(document).ready(function() {
       },
       config: {
         onLoad: function() {
-          // With plone.app.widgets and Plone 4.3
-          if (typeof require !== 'undefined' && require.defined('pat-registry')) {
-            // Remove old editors references to work with ajax
-            if (typeof tinyMCE !== 'undefined' && tinyMCE !== null) {
-              if (tinyMCE.EditorManager != null) {
-                tinyMCE.EditorManager.editors = [];
-              }
-            }
-            // Add tinymce
-            $('.overlay textarea.mce_editable').addClass('pat-tinymce');
-            require('pat-registry').scan($('.overlay'), ['tinymce']);
-            // Wire save buttom to save tinymce
-            $( '.overlay input#buttons-save').on('click', function() {
-              tinyMCE.triggerSave();
-            });
-            // Hack to make overlay work over overlay
-            $('.overlay').on('mouseover', function() {
-              $('div.plone-modal-wrapper').css('z-index', '10050');
-            });
-          } else if (typeof initTinyMCE !== 'undefined') { // Plone 4.3
+          if (typeof initTinyMCE !== 'undefined') { // Plone 4.3
             // Remove old editors references to work with ajax
             if (typeof tinyMCE !== 'undefined' && tinyMCE !== null) {
               if (tinyMCE.EditorManager != null) {
@@ -203,5 +194,7 @@ $(document).ready(function() {
         }
       }
     });
-  }
+    // and open the overlay
+    $(e.currentTarget).click();
+  });
 });

@@ -276,3 +276,11 @@ table.invisible
 {
     float: right;
 }
+
+/* XXX: temporary pat-plone-modal z-index Fix for TEXTING ONLY - in real life, the hidden elements are accessible */
+.plone-modal {
+    z-index: 1050;
+}
+.plone-modal-footer {
+    z-index: 1051;
+}

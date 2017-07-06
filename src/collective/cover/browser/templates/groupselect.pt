@@ -7,7 +7,7 @@
       tal:omit-tag="">
 <body tal:omit-tag="">
 
-  <div id="group-select-list" class="modal hide">
+  <div id="group-select-list" class="modal">
 
     <tal:groupselect repeat="group view/groups">
       <input class="group-select-input" name="groups" type="checkbox" value="o1"

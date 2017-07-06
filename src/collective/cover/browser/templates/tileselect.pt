@@ -7,7 +7,7 @@
       tal:omit-tag="">
 <body tal:omit-tag="">
 
-    <div id="tile-select-list" class="modal hide">
+    <div id="tile-select-list" class="modal">
       <tal:tiles repeat="tile view/tiles">
         <div class="tile-select-button" tal:content="tile/tile_type" />
       </tal:tiles>

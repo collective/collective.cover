@@ -87,6 +87,7 @@ button.close
 }
 .modal
 {
+    display:none;
     position: fixed;
     z-index: 1050;
     top: 10%;
@@ -116,10 +117,6 @@ button.close
     *border: 1px solid #999;
 }
 
-.hide
-{
-    display: none;
-}
 .show
 {
     display: block;
