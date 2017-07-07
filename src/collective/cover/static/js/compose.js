@@ -1,3 +1,4 @@
+var root = typeof exports !== "undefined" && exports !== null ? exports : this;
 (function($) {
   $.fn.liveSortable = function(opts) {
     $(document).on("mouseover", this.selector, function() {
@@ -35,6 +36,7 @@ function removeObjFromTile() {
       },
       success: function(info) {
         tile.html(info);
+        tile.trigger('change');
         TitleMarkupSetup();
         tile.find('.loading-mask').removeClass('show remove-tile');
         return false;
@@ -59,9 +61,6 @@ function TitleMarkupSetup() {
 }
 
 $(document).ready(function() {
-  var root = typeof exports !== "undefined" && exports !== null ? exports : this;
-  root.reloadTypes = ['collective.cover.carousel'];
-
   $(".sortable-tile").liveSortable({
     stop: function(event, ui) {
       var uuids = [];
@@ -82,6 +81,7 @@ $(document).ready(function() {
         },
         success: function(info) {
           tile.html(info);
+          tile.trigger('change');
           TitleMarkupSetup();
           return false;
         },
@@ -129,14 +129,8 @@ $(document).ready(function() {
       afterpost: function(return_value, data_parent) {
         var tileId = data_parent.data('pbo').src.split('/').pop();
         var tile = $('#' + tileId);
-        // Get tile type
-        var tileType = tile.data('tile-type');
-        // List of tile types that make a page reload
-        if (root.reloadTypes.indexOf(tileType) > -1) {
-          location.reload();
-        } else {
-          tile.html(return_value);
-        }
+        tile.html(return_value.children());
+        tile.trigger('change');
       },
       config: {
         onLoad: function() {
@@ -204,4 +198,5 @@ $(document).ready(function() {
       }
     });
   }
+  $('.tile[data-tile-type=collective\\.cover\\.carousel]').on('change', root.initializeGallery);
 });

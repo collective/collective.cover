@@ -17,20 +17,6 @@ from zope.interface import implementer
 from zope.schema.interfaces import IDict
 
 
-# autoplay feature is enabled in view mode only
-INIT_JS = """$(function() {{
-    Galleria.loadTheme('++resource++collective.cover/js/galleria.cover_theme.js');
-    Galleria.run('#galleria-{0}');
-
-    var options = {{ height: {1} }};
-    if ($('body').hasClass('template-view')) {{
-        options.autoplay = {2};
-    }}
-    Galleria.configure(options);
-}});
-"""
-
-
 class ICarouselTile(IListTile):
 
     """A carousel based on the Galleria JS image gallery framework."""
@@ -154,16 +140,6 @@ class CarouselTile(ListTile):
         if not ratios:
             return '1'
         return str(max(ratios))
-
-    def init_js(self):
-        if self.is_empty():
-            # Galleria will display scary error messages when it
-            # cannot find its <div>.  So don't start galleria unless
-            # the <div> is there and has some items in it.
-            return ''
-
-        return INIT_JS.format(
-            self.id, self.get_image_ratio, str(self.autoplay()).lower())
 
 
 @adapter(IDict, ITextLinesSortableWidget)

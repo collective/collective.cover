@@ -46,17 +46,17 @@ class CarouselTileTestCase(TestTileMixin, unittest.TestCase):
         # autoplay is True when tile is empty
         self.assertTrue(self.tile.autoplay())
         # but Galleria init code is not rendered
-        self.assertNotIn('options.autoplay = true', self.tile())
+        self.assertNotIn('data-autoplay="True"', self.tile())
         obj = self.portal['my-image']
         self.tile.populate_with_object(obj)
-        self.assertIn('options.autoplay = true', self.tile())
+        self.assertIn('data-autoplay="True"', self.tile())
         data_mgr = ITileDataManager(self.tile)
         data = data_mgr.get()
         data['autoplay'] = False
         data_mgr.set(data)
         self._update_tile_data()
         self.assertFalse(self.tile.autoplay())
-        self.assertIn('options.autoplay = false', self.tile())
+        self.assertIn('data-autoplay="False"', self.tile())
 
     def test_crud(self):
         # we start with an empty tile

@@ -7,8 +7,6 @@
 <head>
   <link rel="stylesheet" type="text/css"
       tal:attributes="href string:${context/@@plone_portal_state/portal_url}/++resource++collective.cover/css/galleria.cover_theme.css" />
-  <script type="application/javascript" tal:content="structure view/init_js">
-  </script>
 </head>
 
 <body tal:define="is_empty view/is_empty">
@@ -17,8 +15,11 @@
     This carousel is empty; open the content chooser and drag-and-drop some items here.
   </p>
 
-  <div id="" class="galleria slide cover-carousel-tile tile-content" tal:condition="not:is_empty"
-      tal:attributes="id string:galleria-${view/id}">
+  <div class="galleria slide cover-carousel-tile tile-content"
+       tal:condition="not:is_empty"
+       tal:attributes="id string:galleria-${view/id};
+                       data-image-ratio view/get_image_ratio;
+                       data-autoplay view/autoplay">
     <tal:items repeat="item view/results">
       <img tal:define="thumbnail python:view.thumbnail(item);
                        uuid python:view.get_uuid(item);
