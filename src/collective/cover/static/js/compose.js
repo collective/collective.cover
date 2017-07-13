@@ -98,11 +98,11 @@ $(document).ready(function() {
 
   $('body').on('click', 'a.edit-tile-link', function(e) {
 
-    // XXX: need to check for body class here, because it might not been when document.ready() :(
+    // XXX: need to check for body class here, because it might not been set when document.ready() :(
     if($("body").hasClass("pat-plone-widgets")) {
       // XXX: reload tile content asynchronously here when destroying the modal
       //      need to find the right event where to hook in
-      return  // exit here
+      return;  // exit here
     }
 
     e.preventDefault();

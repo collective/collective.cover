@@ -612,6 +612,10 @@ input[type='submit'].btn::-moz-focus-inner
 {
     display: none;
 }
+#tile-configure .config-sortable:before {
+    content: "\28FF";
+    float: left;
+}
 
 #collective-cover-list-uuids-size
 {
@@ -704,7 +708,7 @@ input[type='submit'].btn::-moz-focus-inner
 }
 .visibility-box
 {
-    position: absolute; top: 0; left: 0;
+    position: absolute; top: 0; left: 10px;
 }
 .visibility-box > span
 {
