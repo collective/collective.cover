@@ -321,9 +321,6 @@ var coveractions = {
       hoverClass: 'content-drop-hover ui-state-hover',
       drop: dropped
     });
-
-    // TODO: check if the current contentchooser requires any tabs
-    $(windowId + " ul.formTabs").tabs("div.panes > div");
   }
 
   $(function() {
