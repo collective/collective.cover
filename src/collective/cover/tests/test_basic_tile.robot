@@ -21,6 +21,11 @@ ${news_item_description}  This news item was created for testing purposes
 ${title_field_id}  collective-cover-basic-title
 ${title_sample}  Some text for title
 ${edit_link_selector}  a.edit-tile-link
+${configure_tile_selector}  a.config-tile-link
+${datetimewidget_option_datetime_selector}  select#collective-cover-basic-date-format option[value=datetime]
+${datetimewidget_option_dateonly_selector}  select#collective-cover-basic-date-format option[value=dateonly]
+${datetimewidget_option_timeonly_selector}  select#collective-cover-basic-date-format option[value=timeonly]
+${datetimewidget_compose_time_tag_selector}  div.cover-basic-tile time
 
 *** Test cases ***
 
@@ -34,6 +39,23 @@ Test Basic Tile
     Add Tile  ${basic_tile_location}
     Save Cover Layout
 
+    # Test the customized IDatetimeWidget existence
+    Click Link  css=${configure_tile_selector}
+
+    Wait Until Page Contains Element  css=${datetimewidget_option_datetime_selector}
+    ${datetimewidget_option_datetime_value}  Get Text  css=${datetimewidget_option_datetime_selector}
+    ${datetimewidget_option_datetime_length}  Get Length  ${datetimewidget_option_datetime_value}
+
+    Wait Until Page Contains Element  css=${datetimewidget_option_dateonly_selector}
+    ${datetimewidget_option_dateonly_value}  Get Text  css=${datetimewidget_option_dateonly_selector}
+    ${datetimewidget_option_dateonly_length}  Get Length  ${datetimewidget_option_dateonly_value}
+
+    Wait Until Page Contains Element  css=${datetimewidget_option_timeonly_selector}
+    ${datetimewidget_option_timeonly_value}  Get Text  css=${datetimewidget_option_timeonly_selector}
+    ${datetimewidget_option_timeonly_length}  Get Length  ${datetimewidget_option_timeonly_value}
+
+    Click Button  Save
+
     # as tile is empty, we see default message
     Compose Cover
     Page Should Contain   Please drag&drop some content here to populate the tile.
@@ -46,6 +68,55 @@ Test Basic Tile
     # move to the default view and check tile persisted
     Click Link  link=View
     Page Should Contain  My document
+
+    # Test the customized IDatetimeWidget parameters
+    # default: datetime
+    Compose Cover
+    Page Should Contain Element  css=${datetimewidget_compose_time_tag_selector}
+    # This logic of comparing the lengths is being used because in some CI environments,
+    # the persisted data in compose_time_value will be different from the data in
+    # the tile of the Compose tab. For example, 
+    # AssertionError: Aug 28, 2017 04:33 PM != Aug 28, 2017 04:31 PM, but the length
+    # would be the same.
+    ${datetimewidget_compose_time_tag_value}  Get Text  css=${datetimewidget_compose_time_tag_selector}
+    ${datetimewidget_compose_time_tag_length}  Get Length  ${datetimewidget_compose_time_tag_value}
+    Should be equal  ${datetimewidget_option_datetime_length}  ${datetimewidget_compose_time_tag_length}
+
+    # dateonly
+    Open Layout Tab
+    Click Link  css=${configure_tile_selector}
+    Wait Until Page Contains Element  css=${datetimewidget_option_dateonly_selector}
+    Click Element  css=${datetimewidget_option_dateonly_selector}
+    Click Button  Save
+    Compose Cover
+    Page Should Contain Element  css=${datetimewidget_compose_time_tag_selector}
+    ${datetimewidget_compose_time_tag_value}  Get Text  css=${datetimewidget_compose_time_tag_selector}
+    ${datetimewidget_compose_time_tag_length}  Get Length  ${datetimewidget_compose_time_tag_value}
+    Should be equal  ${datetimewidget_option_dateonly_length}  ${datetimewidget_compose_time_tag_length}
+
+    # timeonly
+    Open Layout Tab
+    Click Link  css=${configure_tile_selector}
+    Wait Until Page Contains Element  css=${datetimewidget_option_timeonly_selector}
+    Click Element  css=${datetimewidget_option_timeonly_selector}
+    Click Button  Save
+    Compose Cover
+    Page Should Contain Element  css=${datetimewidget_compose_time_tag_selector}
+    ${datetimewidget_compose_time_tag_value}  Get Text  css=${datetimewidget_compose_time_tag_selector}
+    ${datetimewidget_compose_time_tag_length}  Get Length  ${datetimewidget_compose_time_tag_value}
+    Should be equal  ${datetimewidget_option_timeonly_length}  ${datetimewidget_compose_time_tag_length}
+
+    # return to datetime, again, to test it.
+    Open Layout Tab
+    Click Link  css=${configure_tile_selector}
+    Wait Until Page Contains Element  css=${datetimewidget_option_datetime_selector}
+    Click Element  css=${datetimewidget_option_datetime_selector}
+    Click Button  Save
+    Compose Cover
+    Page Should Contain Element  css=${datetimewidget_compose_time_tag_selector}
+    ${datetimewidget_compose_time_tag_value}  Get Text  css=${datetimewidget_compose_time_tag_selector}
+    ${datetimewidget_compose_time_tag_length}  Get Length  ${datetimewidget_compose_time_tag_value}
+    Should be equal  ${datetimewidget_option_datetime_length}  ${datetimewidget_compose_time_tag_length}
 
     # drag&drop a File
     Compose Cover

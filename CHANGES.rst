@@ -6,6 +6,12 @@ There's a frood who really knows where his towel is.
 1.6b2 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Fix IDatetimeWidget tile override if using plone.app.contenttypes >= 1.1.1:
+  collective.z3cform.datetimewidget is merged into plone.formwidget.datetime,
+  so the zcml must override the template from plone.formwidget.datetime.z3cform.interfaces.IDatetimeWidget
+  as well. (closes `#745`_).
+  [idgserpro]
+
 - Review tile refresh using custom event.
   [rodfersou]
 
@@ -235,3 +241,4 @@ Previous entries can be found in the HISTORY.rst file.
 .. _`#713`: https://github.com/collective/collective.cover/issues/713
 .. _`#721`: https://github.com/collective/collective.cover/issues/721
 .. _`#727`: https://github.com/collective/collective.cover/issues/727
+.. _`#745`: https://github.com/collective/collective.cover/issues/745
