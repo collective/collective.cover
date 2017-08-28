@@ -44,12 +44,15 @@ Test Basic Tile
 
     Wait Until Page Contains Element  css=${datetimewidget_option_datetime_selector}
     ${datetimewidget_option_datetime_value}  Get Text  css=${datetimewidget_option_datetime_selector}
+    ${datetimewidget_option_datetime_length}  Get Length  ${datetimewidget_option_datetime_value}
 
     Wait Until Page Contains Element  css=${datetimewidget_option_dateonly_selector}
     ${datetimewidget_option_dateonly_value}  Get Text  css=${datetimewidget_option_dateonly_selector}
+    ${datetimewidget_option_dateonly_length}  Get Length  ${datetimewidget_option_dateonly_value}
 
     Wait Until Page Contains Element  css=${datetimewidget_option_timeonly_selector}
     ${datetimewidget_option_timeonly_value}  Get Text  css=${datetimewidget_option_timeonly_selector}
+    ${datetimewidget_option_timeonly_length}  Get Length  ${datetimewidget_option_timeonly_value}
 
     Click Button  Save
 
@@ -70,8 +73,14 @@ Test Basic Tile
     # default: datetime
     Compose Cover
     Page Should Contain Element  css=${datetimewidget_compose_time_tag_selector}
+    # This logic of comparing the lengths is being used because in some CI environments,
+    # the persisted data in compose_time_value will be different from the data in
+    # the tile of the Compose tab. For example, 
+    # AssertionError: Aug 28, 2017 04:33 PM != Aug 28, 2017 04:31 PM, but the length
+    # would be the same.
     ${datetimewidget_compose_time_tag_value}  Get Text  css=${datetimewidget_compose_time_tag_selector}
-    Should be equal  ${datetimewidget_option_datetime_value}  ${datetimewidget_compose_time_tag_value}
+    ${datetimewidget_compose_time_tag_length}  Get Length  ${datetimewidget_compose_time_tag_value}
+    Should be equal  ${datetimewidget_option_datetime_length}  ${datetimewidget_compose_time_tag_length}
 
     # dateonly
     Open Layout Tab
@@ -82,7 +91,8 @@ Test Basic Tile
     Compose Cover
     Page Should Contain Element  css=${datetimewidget_compose_time_tag_selector}
     ${datetimewidget_compose_time_tag_value}  Get Text  css=${datetimewidget_compose_time_tag_selector}
-    Should be equal  ${datetimewidget_option_dateonly_value}  ${datetimewidget_compose_time_tag_value}
+    ${datetimewidget_compose_time_tag_length}  Get Length  ${datetimewidget_compose_time_tag_value}
+    Should be equal  ${datetimewidget_option_dateonly_length}  ${datetimewidget_compose_time_tag_length}
 
     # timeonly
     Open Layout Tab
@@ -93,7 +103,8 @@ Test Basic Tile
     Compose Cover
     Page Should Contain Element  css=${datetimewidget_compose_time_tag_selector}
     ${datetimewidget_compose_time_tag_value}  Get Text  css=${datetimewidget_compose_time_tag_selector}
-    Should be equal  ${datetimewidget_option_timeonly_value}  ${datetimewidget_compose_time_tag_value}
+    ${datetimewidget_compose_time_tag_length}  Get Length  ${datetimewidget_compose_time_tag_value}
+    Should be equal  ${datetimewidget_option_timeonly_length}  ${datetimewidget_compose_time_tag_length}
 
     # return to datetime, again, to test it.
     Open Layout Tab
@@ -104,7 +115,8 @@ Test Basic Tile
     Compose Cover
     Page Should Contain Element  css=${datetimewidget_compose_time_tag_selector}
     ${datetimewidget_compose_time_tag_value}  Get Text  css=${datetimewidget_compose_time_tag_selector}
-    Should be equal  ${datetimewidget_option_datetime_value}  ${datetimewidget_compose_time_tag_value}
+    ${datetimewidget_compose_time_tag_length}  Get Length  ${datetimewidget_compose_time_tag_value}
+    Should be equal  ${datetimewidget_option_datetime_length}  ${datetimewidget_compose_time_tag_length}
 
     # drag&drop a File
     Compose Cover
