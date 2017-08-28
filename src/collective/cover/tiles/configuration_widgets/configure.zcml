@@ -1,6 +1,7 @@
 <configure
     xmlns="http://namespaces.zope.org/zope"
-    xmlns:z3c="http://namespaces.zope.org/z3c">
+    xmlns:z3c="http://namespaces.zope.org/z3c"
+    xmlns:zcml="http://namespaces.zope.org/zcml">
 
     <z3c:widgetTemplate
         mode="configure"
@@ -35,6 +36,16 @@
         widget="plone.formwidget.namedfile.interfaces.INamedImageWidget"
         layer="z3c.form.interfaces.IFormLayer"
         template="namedimage.pt"
+        />
+
+    <!--https://github.com/plone/plone.formwidget.datetime/blob/1.3.1/plone/formwidget/datetime/z3cform/configure.zcml#L77-->
+    <!--This package is used instead of collective.z3cform.datetimewidget if you're-->
+    <!--using plone.app.contenttypes >= 1.1.1.-->
+    <z3c:widgetTemplate zcml:condition="installed plone.formwidget.datetime"
+        mode="configure"
+        widget="plone.formwidget.datetime.z3cform.interfaces.IDatetimeWidget"
+        layer="z3c.form.interfaces.IFormLayer"
+        template="datetime.pt"
         />
 
     <z3c:widgetTemplate

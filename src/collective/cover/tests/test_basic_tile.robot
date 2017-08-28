@@ -21,6 +21,11 @@ ${news_item_description}  This news item was created for testing purposes
 ${title_field_id}  collective-cover-basic-title
 ${title_sample}  Some text for title
 ${edit_link_selector}  a.edit-tile-link
+${configure_tile_selector}  a.config-tile-link
+${datetimewidget_option_datetime_selector}  select#collective-cover-basic-date-format option[value=datetime]
+${datetimewidget_option_dateonly_selector}  select#collective-cover-basic-date-format option[value=dateonly]
+${datetimewidget_option_timeonly_selector}  select#collective-cover-basic-date-format option[value=timeonly]
+${datetimewidget_compose_time_tag_selector}  div.cover-basic-tile time
 
 *** Test cases ***
 
@@ -34,6 +39,20 @@ Test Basic Tile
     Add Tile  ${basic_tile_location}
     Save Cover Layout
 
+    # Test the customized IDatetimeWidget existence
+    Click Link  css=${configure_tile_selector}
+
+    Wait Until Page Contains Element  css=${datetimewidget_option_datetime_selector}
+    ${datetimewidget_option_datetime_value}  Get Text  css=${datetimewidget_option_datetime_selector}
+
+    Wait Until Page Contains Element  css=${datetimewidget_option_dateonly_selector}
+    ${datetimewidget_option_dateonly_value}  Get Text  css=${datetimewidget_option_dateonly_selector}
+
+    Wait Until Page Contains Element  css=${datetimewidget_option_timeonly_selector}
+    ${datetimewidget_option_timeonly_value}  Get Text  css=${datetimewidget_option_timeonly_selector}
+
+    Click Button  Save
+
     # as tile is empty, we see default message
     Compose Cover
     Page Should Contain   Please drag&drop some content here to populate the tile.
@@ -46,6 +65,46 @@ Test Basic Tile
     # move to the default view and check tile persisted
     Click Link  link=View
     Page Should Contain  My document
+
+    # Test the customized IDatetimeWidget parameters
+    # default: datetime
+    Compose Cover
+    Page Should Contain Element  css=${datetimewidget_compose_time_tag_selector}
+    ${datetimewidget_compose_time_tag_value}  Get Text  css=${datetimewidget_compose_time_tag_selector}
+    Should be equal  ${datetimewidget_option_datetime_value}  ${datetimewidget_compose_time_tag_value}
+
+    # dateonly
+    Open Layout Tab
+    Click Link  css=${configure_tile_selector}
+    Wait Until Page Contains Element  css=${datetimewidget_option_dateonly_selector}
+    Click Element  css=${datetimewidget_option_dateonly_selector}
+    Click Button  Save
+    Compose Cover
+    Page Should Contain Element  css=${datetimewidget_compose_time_tag_selector}
+    ${datetimewidget_compose_time_tag_value}  Get Text  css=${datetimewidget_compose_time_tag_selector}
+    Should be equal  ${datetimewidget_option_dateonly_value}  ${datetimewidget_compose_time_tag_value}
+
+    # timeonly
+    Open Layout Tab
+    Click Link  css=${configure_tile_selector}
+    Wait Until Page Contains Element  css=${datetimewidget_option_timeonly_selector}
+    Click Element  css=${datetimewidget_option_timeonly_selector}
+    Click Button  Save
+    Compose Cover
+    Page Should Contain Element  css=${datetimewidget_compose_time_tag_selector}
+    ${datetimewidget_compose_time_tag_value}  Get Text  css=${datetimewidget_compose_time_tag_selector}
+    Should be equal  ${datetimewidget_option_timeonly_value}  ${datetimewidget_compose_time_tag_value}
+
+    # return to datetime, again, to test it.
+    Open Layout Tab
+    Click Link  css=${configure_tile_selector}
+    Wait Until Page Contains Element  css=${datetimewidget_option_datetime_selector}
+    Click Element  css=${datetimewidget_option_datetime_selector}
+    Click Button  Save
+    Compose Cover
+    Page Should Contain Element  css=${datetimewidget_compose_time_tag_selector}
+    ${datetimewidget_compose_time_tag_value}  Get Text  css=${datetimewidget_compose_time_tag_selector}
+    Should be equal  ${datetimewidget_option_datetime_value}  ${datetimewidget_compose_time_tag_value}
 
     # drag&drop a File
     Compose Cover
