@@ -6,6 +6,9 @@ There's a frood who really knows where his towel is.
 1.6b2 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Use correct ``image/x-icon`` MIME type for ICO file format (fixes `#750 <https://github.com/collective/collective.cover/issues/750>`_).
+  [hvelarde]
+
 - Fix IDatetimeWidget tile override if using plone.app.contenttypes >= 1.1.1:
   collective.z3cform.datetimewidget is merged into plone.formwidget.datetime,
   so the zcml must override the template from plone.formwidget.datetime.z3cform.interfaces.IDatetimeWidget
