@@ -3,7 +3,7 @@ Changelog
 
 There's a frood who really knows where his towel is.
 
-1.6b2 (unreleased)
+1.6b2 (2017-09-01)
 ^^^^^^^^^^^^^^^^^^
 
 - Use correct ``image/x-icon`` MIME type for ICO file format (fixes `#750 <https://github.com/collective/collective.cover/issues/750>`_).
