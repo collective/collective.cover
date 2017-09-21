@@ -56,6 +56,10 @@ class CoverIntegrationTestCase(unittest.TestCase):
     def test_locking_behavior(self):
         self.assertTrue(ILocking.providedBy(self.cover))
 
+    def test_relateditems_behavior(self):
+        from plone.app.relationfield.behavior import IRelatedItems
+        self.assertTrue(IRelatedItems.providedBy(self.cover))
+
     def test_cover_selectable_as_folder_default_view(self):
         self.folder.setDefaultPage('c1')
         self.assertEqual(self.folder.getDefaultPage(), 'c1')
@@ -158,5 +162,3 @@ class CoverIntegrationTestCase(unittest.TestCase):
             searchableText(self.cover)(),
             u'c1 Lorem ipsum Neque porro 01234 56789'
         )
-
-    # TODO: add test for plone.app.relationfield.behavior.IRelatedItems
