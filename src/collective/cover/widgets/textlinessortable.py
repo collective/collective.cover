@@ -80,7 +80,7 @@ class TextLinesSortableWidget(textlines.TextLinesWidget):
             return title
         # If didn't find, get object title
         obj = uuidToObject(uuid)
-        return obj.Title()
+        return obj.Title().decode('utf-8')
 
     def get_custom_description(self, uuid):
         """ Returns the custom Description assigned to a specific item
@@ -99,7 +99,7 @@ class TextLinesSortableWidget(textlines.TextLinesWidget):
             return description
         # If didn't find, get object description
         obj = uuidToObject(uuid)
-        return obj.Description()
+        return obj.Description().decode('utf-8')
 
     def get_custom_url(self, uuid):
         """ Returns the custom URL assigned to a specific item

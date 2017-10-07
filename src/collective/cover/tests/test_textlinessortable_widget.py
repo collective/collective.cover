@@ -158,20 +158,65 @@ class TestTextLinesSortableWidget(unittest.TestCase):
         self.assertDictEqual(extracted_value, expected)
 
     def test_utf8_custom_data(self):
-        obj = self.portal['my-image']
-        obj.setDescription('áéíóú')
+        obj1 = self.portal['my-image']
+        obj1.setDescription('áéíóú')
+        obj2 = self.portal['my-image3']
+        uuids = [
+            obj1.UID(),
+            obj2.UID(),
+        ]
 
         name = 'uuid.field'
-        self.request.set(name, u'{0}'.format(obj.UID()))
-        self.request.set(u'{0}.custom_description.{1}'.format(name, obj.UID()), u'áéíóú')
+        self.request.set(name, u'\r\n'.join(uuids))
+        self.request.set(u'{0}.custom_description.{1}'.format(name, obj1.UID()), u'áéíóú')
+        self.request.set(u'{0}.custom_description.{1}'.format(name, obj2.UID()), u'')
 
         widget = TextLinesSortableWidget(self.request)
         widget.name = name
+        widget.context = {'uuids': {
+            obj1.UID(): {u'order': u'0', u'custom_description': u'áéíóú'},
+            obj2.UID(): {u'order': u'1', u'custom_description': u''},
+        }
+        }
 
         expected = {
-            obj.UID(): {u'order': u'0'},
+            obj1.UID(): {u'order': u'0'},
+            obj2.UID(): {u'order': u'1'},
         }
 
         extracted_value = widget.extract()
 
         self.assertDictEqual(extracted_value, expected)
+
+        self.assertEqual(
+            widget.get_custom_title(obj1.UID()),
+            u'Test image'
+        )
+        self.assertEqual(
+            widget.get_custom_description(obj1.UID()),
+            u'áéíóú'
+        )
+        self.assertIsInstance(
+            widget.get_custom_title(obj1.UID()),
+            unicode
+        )
+        self.assertIsInstance(
+            widget.get_custom_description(obj1.UID()),
+            unicode
+        )
+        self.assertEqual(
+            widget.get_custom_title(obj2.UID()),
+            u'Test image #3 áéíóú'
+        )
+        self.assertEqual(
+            widget.get_custom_description(obj2.UID()),
+            u'This image #3 was created for testing purposes áéíóú'
+        )
+        self.assertIsInstance(
+            widget.get_custom_title(obj2.UID()),
+            unicode
+        )
+        self.assertIsInstance(
+            widget.get_custom_description(obj2.UID()),
+            unicode
+        )
