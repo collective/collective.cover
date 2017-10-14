@@ -160,7 +160,9 @@ class TestTextLinesSortableWidget(unittest.TestCase):
     def test_utf8_custom_data(self):
         obj1 = self.portal['my-image']
         obj1.setDescription('áéíóú')
-        obj2 = self.portal['my-image3']
+        obj2 = self.portal['my-image2']
+        obj2.setTitle('áéíóú')
+        obj2.setDescription('áéíóú')
         uuids = [
             obj1.UID(),
             obj2.UID(),
@@ -206,11 +208,11 @@ class TestTextLinesSortableWidget(unittest.TestCase):
         )
         self.assertEqual(
             widget.get_custom_title(obj2.UID()),
-            u'Test image #3 áéíóú'
+            u'áéíóú'
         )
         self.assertEqual(
             widget.get_custom_description(obj2.UID()),
-            u'This image #3 was created for testing purposes áéíóú'
+            u'áéíóú'
         )
         self.assertIsInstance(
             widget.get_custom_title(obj2.UID()),
