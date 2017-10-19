@@ -16,13 +16,11 @@
             <default>Empty layout</default>
         </field>
 
-        <field name="cover_layout" type="zope.schema.Text"
-               form:omitted="z3c.form.interfaces.IForm:true
-                             z3c.form.interfaces.IAddForm:true
-                             z3c.form.interfaces.IEditForm:true">
+        <field name="cover_layout" type="zope.schema.Text">
             <description i18n:translate=""
               >The layout to be used to render groups and tiles</description>
             <title i18n:translate="">Cover Layout</title>
+            <readonly>True</readonly>
         </field>
 
     </schema>

@@ -6,7 +6,8 @@ There's a frood who really knows where his towel is.
 1.6b3 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
-- Nothing changed yet.
+- Explicitly declare ``cover_layout`` field in content type schema as ``readonly``;
+  Robot Framework tests pass again with latest version of Plone 4.3 (fixes `#759 <https://github.com/collective/collective.cover/issues/759>`_).
 
 
 1.6b2 (2017-09-01)
