@@ -8,6 +8,7 @@ There's a frood who really knows where his towel is.
 
 - Explicitly declare ``cover_layout`` field in content type schema as ``readonly``;
   Robot Framework tests pass again with latest version of Plone 4.3 (fixes `#759 <https://github.com/collective/collective.cover/issues/759>`_).
+- Fix edit view of carousel tile when one carousel item has a unicode character in its title (fixes `#757 <https://github.com/collective/collective.cover/issues/757>`_).
 
 
 1.6b2 (2017-09-01)
