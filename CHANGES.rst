@@ -3,7 +3,7 @@ Changelog
 
 There's a frood who really knows where his towel is.
 
-1.6b3 (unreleased)
+1.6b3 (2017-10-23)
 ^^^^^^^^^^^^^^^^^^
 
 - Fix edit view of carousel tile when one carousel item has a unicode character in its title (fixes `#757 <https://github.com/collective/collective.cover/issues/757>`_).
