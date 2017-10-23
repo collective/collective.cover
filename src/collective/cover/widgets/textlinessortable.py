@@ -3,6 +3,7 @@ from collective.cover.utils import get_types_use_view_action_in_listings
 from collective.cover.utils import uuidToObject
 from collective.cover.widgets.interfaces import ITextLinesSortableWidget
 from Products.CMFPlone.utils import base_hasattr
+from Products.CMFPlone.utils import safe_unicode
 from z3c.form import interfaces
 from z3c.form import widget
 from z3c.form.browser import textlines
@@ -80,7 +81,7 @@ class TextLinesSortableWidget(textlines.TextLinesWidget):
             return title
         # If didn't find, get object title
         obj = uuidToObject(uuid)
-        return obj.Title()
+        return safe_unicode(obj.Title())
 
     def get_custom_description(self, uuid):
         """ Returns the custom Description assigned to a specific item
@@ -99,7 +100,7 @@ class TextLinesSortableWidget(textlines.TextLinesWidget):
             return description
         # If didn't find, get object description
         obj = uuidToObject(uuid)
-        return obj.Description()
+        return safe_unicode(obj.Description())
 
     def get_custom_url(self, uuid):
         """ Returns the custom URL assigned to a specific item
@@ -140,13 +141,13 @@ class TextLinesSortableWidget(textlines.TextLinesWidget):
                 '{0}.custom_title.{1}'.format(self.name, uuid), ''
             )
             if (custom_title != u'' and
-               custom_title != obj.Title().decode('utf-8')):
+               custom_title != safe_unicode(obj.Title())):
                 results[uuid][u'custom_title'] = unicode(custom_title)
             custom_description = self.request.get(
                 '{0}.custom_description.{1}'.format(self.name, uuid), ''
             )
             if (custom_description != u'' and
-               custom_description != obj.Description().decode('utf-8')):
+               custom_description != safe_unicode(obj.Description())):
                 results[uuid][u'custom_description'] = unicode(custom_description)
             custom_url = self.request.get(
                 '{0}.custom_url.{1}'.format(self.name, uuid), ''
