@@ -6,7 +6,8 @@ There's a frood who really knows where his towel is.
 1.6b4 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
-- Nothing changed yet.
+- Revert declaring ``cover_layout`` field in content type schema as ``readonly`` (fixes `#761 https://github.com/collective/collective.cover/issues/761`_).
+  [hvelarde]
 
 
 1.6b3 (2017-10-23)
