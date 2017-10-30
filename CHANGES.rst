@@ -3,7 +3,7 @@ Changelog
 
 There's a frood who really knows where his towel is.
 
-1.6b4 (unreleased)
+1.6b4 (2017-10-30)
 ^^^^^^^^^^^^^^^^^^
 
 - Revert declaring ``cover_layout`` field in content type schema as ``readonly`` (fixes `#761 <https://github.com/collective/collective.cover/issues/761>`_).
