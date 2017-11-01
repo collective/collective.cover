@@ -44,7 +44,7 @@ Setup Cover Test Case
 Click Add Cover
     Open Add New Menu
     Click Link  css=a#collective-cover-content
-    Page Should Contain  Add Cover
+    Wait Until Page Contains  Add Cover
 
 Create Cover
     [arguments]  ${title}  ${description}  ${layout}=Empty layout
