@@ -6,7 +6,8 @@ There's a frood who really knows where his towel is.
 1.6b5 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
-- Nothing changed yet.
+- Do not auto include package dependencies, but declare them explicitly.
+  [hvelarde]
 
 
 1.6b4 (2017-10-30)

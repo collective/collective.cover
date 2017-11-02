@@ -8,10 +8,19 @@
     i18n_domain="collective.cover">
 
   <i18n:registerTranslations directory="locales" />
+
   <five:registerPackage package="." />
 
-  <includeDependencies package="." />
+  <include package="plone.app.blocks" />
+  <include package="plone.app.dexterity" />
+  <include package="plone.app.iterate" />
+  <include package="plone.app.lockingbehavior" />
   <include package="plone.app.relationfield" />
+  <include package="plone.app.tiles" />
+
+  <include package="collective.js.bootstrap" />
+  <include package="collective.js.galleria" />
+  <include package="collective.js.jqueryui" />
 
   <include file="permissions.zcml" />
   <include file="profiles.zcml" />
