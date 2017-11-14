@@ -12,6 +12,7 @@
   <five:registerPackage package="." />
 
   <include package="plone.app.blocks" />
+  <include package="plone.app.contentmenu" />
   <include package="plone.app.dexterity" />
   <include package="plone.app.iterate" />
   <include package="plone.app.lockingbehavior" />
