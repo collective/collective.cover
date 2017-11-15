@@ -3,6 +3,7 @@ python: 2.7
 sudo: false
 cache:
   directories:
+  - $HOME/.pylint.d
   - eggs
   - parts/node
 addons:
@@ -38,7 +39,7 @@ before_script:
 script:
 - bin/code-analysis
 - bin/test
-- bin/pylint --py3k --disable=no-absolute-import src/collective/cover || true
+- bin/pylint --py3k --disable=no-absolute-import src/collective/cover
 after_success:
 - bin/createcoverage --output-dir=htmlcov -t "--layer=!Robot"
 - pip install coveralls
