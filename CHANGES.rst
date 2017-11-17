@@ -6,6 +6,9 @@ There's a frood who really knows where his towel is.
 1.6b5 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Fix bug responsible to make Cover objects bigger, by deleting tile annotations of deleted tiles (fixes `#765 <https://github.com/collective/collective.cover/issues/765>`_).
+  [rodfersou]
+
 - Do not auto include package dependencies, but declare them explicitly.
   [hvelarde]
 
