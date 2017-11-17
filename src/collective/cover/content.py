@@ -12,6 +12,7 @@ from plone.dexterity.content import Item
 from plone.indexer import indexer
 from plone.tiles.interfaces import ITileDataManager
 from Products.CMFPlone.utils import safe_unicode
+from zope.annotation import IAnnotations
 from zope.component import queryAdapter
 
 import json
@@ -147,6 +148,39 @@ class Cover(Item):
                 links = extractLinks(value)
                 refs |= getObjectsFromLinks(self, links)
         return refs
+
+    def delete_tile(self, tile_id):
+        """Delete tile
+
+           To delete tile we just need the ID, the type can be anything.
+        """
+        tile = self.restrictedTraverse('collective.cover.basic/' + str(tile_id))
+        tile.delete()
+
+    def purge_deleted_tiles(self):
+        """Check if there are any annotation of deleted tiles and destroy it.
+
+           Cover tiles are Browser Views, and data are saved in annotations.
+           When delete a tile, the annotations are not deleted, it keeps making
+           Cover object bigger;
+           This method purge all tile annotation data for tiles where there are
+           no reference in layout.
+        """
+        prefixes = ('plone.tiles.data', 'plone.tiles.configuration', 'plone.tiles.permission')
+        layout_tiles = self.list_tiles()
+        annotations = IAnnotations(self)
+
+        tile_ids = []
+        for key in annotations:
+            if not key.startswith(prefixes):
+                continue
+            tile_id = key.split('.')[-1]
+            if tile_id in layout_tiles:
+                continue
+            if tile_id in tile_ids:
+                continue
+            tile_ids.append(tile_id)
+            self.delete_tile(tile_id)
 
 
 @indexer(ICover)
