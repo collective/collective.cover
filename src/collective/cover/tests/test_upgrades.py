@@ -654,3 +654,32 @@ class Upgrade17to18TestCase(UpgradeTestCaseBase):
         version = self.setup.getLastVersionForProfile(self.profile_id)[0]
         self.assertGreaterEqual(int(version), int(self.to_version))
         self.assertEqual(self._how_many_upgrades_to_do(), 2)
+
+
+class Upgrade18to19TestCase(UpgradeTestCaseBase):
+
+    def setUp(self):
+        UpgradeTestCaseBase.setUp(self, u'18', u'19')
+
+    def test_registrations(self):
+        version = self.setup.getLastVersionForProfile(self.profile_id)[0]
+        self.assertGreaterEqual(int(version), int(self.to_version))
+        self.assertEqual(self._how_many_upgrades_to_do(), 2)
+
+    def test_purge_deleted_tiles(self):
+        from zope.annotation import IAnnotations
+        title = u'Purge Deleted Tiles'
+        step = self._get_upgrade_step(title)
+        assert step is not None
+
+        # simulate state on previous version
+        cover = self._create_cover('test-cover', 'Empty layout')
+        annotations = IAnnotations(cover)
+        key = u'plone.tiles.data.abc123'
+        annotations[key] = u'Plone'
+        self.assertEqual(annotations[key], u'Plone')
+
+        # run the upgrade step to validate the update
+        self._do_upgrade_step(step)
+
+        self.assertNotIn(key, annotations)

@@ -8,5 +8,6 @@
   <include package=".v16" />
   <include package=".v17" />
   <include package=".v18" />
+  <include package=".v19" />
 
 </configure>
