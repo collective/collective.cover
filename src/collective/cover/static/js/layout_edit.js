@@ -293,38 +293,18 @@
         elements = elements !== undefined ? elements : le.find('.' + column_class + ', .' + tile_class + ', .' + row_class);
 
         button.click(function() {
-          var element = $(this).parent('div');
-          var tiles_to_delete = [];
-
-          if (element.hasClass('tile')) {
-            tiles_to_delete = element;
-          } else {
-            tiles_to_delete = element.find('.tile');
-          }
-
-          var success = true;
-          //XXX are you sure
-          tiles_to_delete.each(function() {
-            var $this = $(this);
-
-            $.ajax({
-              url: 'deletetile',
-              data: {
-                'tile-type': $this.data('tileType'),
-                'tile-id': $(this).attr('id')
-              },
-              success: function(e, v) {
-                $this.remove();
-              },
-              error: function() {
-                success = false;
-              }
-            });
+          var $tile = $(this).parents('.' + tile_class);
+          $.ajax({
+            url: 'deletetile',
+            data: {
+              'tile-type': $tile.data('tileType'),
+              'tile-id': $tile.attr('id')
+            },
+            success: function(e, v) {
+              $tile.remove();
+              le.trigger('modified.layout');
+            }
           });
-          if (success) {
-            element.remove();
-            le.trigger('modified.layout');
-          }
         });
         button.hover(
           function() {
