@@ -290,21 +290,10 @@
           'top': '0',
           'width': '15px'
         });
-        elements = elements !== undefined ? elements : le.find('.' + column_class + ', .' + tile_class + ', .' + row_class);
-
         button.click(function() {
-          var $tile = $(this).parents('.' + tile_class);
-          $.ajax({
-            url: 'deletetile',
-            data: {
-              'tile-type': $tile.data('tileType'),
-              'tile-id': $tile.attr('id')
-            },
-            success: function(e, v) {
-              $tile.remove();
-              le.trigger('modified.layout');
-            }
-          });
+          var element = $(this).parent('div');
+          element.remove();
+          le.trigger('modified.layout');
         });
         button.hover(
           function() {
@@ -314,6 +303,7 @@
             $(this).parent('div').removeClass('to-delete');
           }
         );
+        elements = elements !== undefined ? elements : le.find('.' + column_class + ', .' + tile_class + ', .' + row_class);
         elements.append(button);
       },
 
