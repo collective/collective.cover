@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
 from collective.cover.interfaces import ICover
 from collective.cover.logger import logger
+from plone import api
+
+
+TO_REGISTER = '++resource++collective.cover/js/layout_edit.js'
 
 
 def purge_deleted_tiles(context):
@@ -15,3 +19,10 @@ def purge_deleted_tiles(context):
         logger.info(msg.format(cover.getPath()))
 
     logger.info('Done')
+
+
+def register_resource(setup_tool):
+    """Add layout_edit.js to registered resources."""
+    js_tool = api.portal.get_tool('portal_javascripts')
+    js_tool.registerResource(id=TO_REGISTER, authenticated=True)
+    logger.info('Resource registered.')

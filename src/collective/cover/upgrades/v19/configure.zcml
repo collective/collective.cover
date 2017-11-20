@@ -16,6 +16,12 @@
         />
 
     <genericsetup:upgradeStep
+        title="Register resource"
+        description="Add layout_edit.js to registered resources."
+        handler=".register_resource"
+        />
+
+    <genericsetup:upgradeStep
         title="Cook JS resources"
         description="There were changes in the JS files, so we need to cook the resources."
         handler="..cook_javascript_resources"

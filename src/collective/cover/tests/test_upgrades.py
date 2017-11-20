@@ -664,7 +664,7 @@ class Upgrade18to19TestCase(UpgradeTestCaseBase):
     def test_registrations(self):
         version = self.setup.getLastVersionForProfile(self.profile_id)[0]
         self.assertGreaterEqual(int(version), int(self.to_version))
-        self.assertEqual(self._how_many_upgrades_to_do(), 2)
+        self.assertEqual(self._how_many_upgrades_to_do(), 3)
 
     def test_purge_deleted_tiles(self):
         from zope.annotation import IAnnotations
@@ -683,3 +683,25 @@ class Upgrade18to19TestCase(UpgradeTestCaseBase):
         self._do_upgrade_step(step)
 
         self.assertNotIn(key, annotations)
+
+    @unittest.skipIf(IS_PLONE_5, 'Upgrade step not supported under Plone 5')
+    def test_register_resource(self):
+        # address also an issue with Setup permission
+        title = u'Register resource'
+        step = self._get_upgrade_step(title)
+        self.assertIsNotNone(step)
+
+        # simulate state on previous version
+        from collective.cover.upgrades.v19 import TO_REGISTER
+
+        js_tool = api.portal.get_tool('portal_javascripts')
+        js_tool.unregisterResource(TO_REGISTER)
+
+        js_ids = js_tool.getResourceIds()
+        self.assertNotIn(TO_REGISTER, js_ids)
+
+        # run the upgrade step to validate the update
+        self._do_upgrade_step(step)
+
+        js_ids = js_tool.getResourceIds()
+        self.assertIn(TO_REGISTER, js_ids)
