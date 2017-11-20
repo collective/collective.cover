@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
+from collective.cover.tiles.configuration import ANNOTATIONS_KEY_PREFIX as CONFIGURATION_PREFIX
+from collective.cover.tiles.permissions import ANNOTATIONS_KEY_PREFIX as PERMISSIONS_PREFIX
 from plone import api
+from plone.tiles.data import ANNOTATIONS_KEY_PREFIX as DATA_PREFIX
 
 
 PROJECTNAME = 'collective.cover'
@@ -37,3 +40,5 @@ DEFAULT_GRID_SYSTEM = 'bootstrap3' if IS_PLONE_5 else 'deco16_grid'
 # In case that no value was set to that field
 # we need to detect it and use it
 DEFAULT_SEQUENCEWIDGET_VALUE = '--NOVALUE--'
+
+ANNOTATION_PREFIXES = (DATA_PREFIX, CONFIGURATION_PREFIX, PERMISSIONS_PREFIX)

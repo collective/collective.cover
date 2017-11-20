@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from collective.cover.behaviors.interfaces import IRefresh
+from collective.cover.config import ANNOTATION_PREFIXES
 from collective.cover.config import PROJECTNAME
 from collective.cover.interfaces import ICover
 from collective.cover.interfaces import ISearchableText
@@ -166,13 +167,12 @@ class Cover(Item):
            This method purge all tile annotation data for tiles where there are
            no reference in layout.
         """
-        prefixes = ('plone.tiles.data', 'plone.tiles.configuration', 'plone.tiles.permission')
         layout_tiles = self.list_tiles()
         annotations = IAnnotations(self)
 
         tile_ids = []
         for key in annotations:
-            if not key.startswith(prefixes):
+            if not key.startswith(ANNOTATION_PREFIXES):
                 continue
             tile_id = key.split('.')[-1]
             if tile_id in layout_tiles:
