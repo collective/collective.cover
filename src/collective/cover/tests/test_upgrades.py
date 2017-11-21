@@ -654,3 +654,48 @@ class Upgrade17to18TestCase(UpgradeTestCaseBase):
         version = self.setup.getLastVersionForProfile(self.profile_id)[0]
         self.assertGreaterEqual(int(version), int(self.to_version))
         self.assertEqual(self._how_many_upgrades_to_do(), 2)
+
+
+class Upgrade18to19TestCase(UpgradeTestCaseBase):
+
+    def setUp(self):
+        UpgradeTestCaseBase.setUp(self, u'18', u'19')
+
+    def test_registrations(self):
+        version = self.setup.getLastVersionForProfile(self.profile_id)[0]
+        self.assertGreaterEqual(int(version), int(self.to_version))
+        self.assertEqual(self._how_many_upgrades_to_do(), 3)
+
+    def test_purge_deleted_tiles(self):
+        from zope.annotation import IAnnotations
+        title = u'Purge Deleted Tiles'
+        step = self._get_upgrade_step(title)
+        self.assertIsNotNone(step)
+
+        # simulate state on previous version
+        cover = self._create_cover('test-cover', 'Empty layout')
+        annotations = IAnnotations(cover)
+        key = u'plone.tiles.data.abc123'
+        annotations[key] = u'Plone'
+        self.assertEqual(annotations[key], u'Plone')
+
+        # run the upgrade step to validate the update
+        self._do_upgrade_step(step)
+        self.assertNotIn(key, annotations)
+
+    @unittest.skipIf(IS_PLONE_5, 'Upgrade step not supported under Plone 5')
+    def test_register_resource(self):
+        # address also an issue with Setup permission
+        title = u'Register resource'
+        step = self._get_upgrade_step(title)
+        self.assertIsNotNone(step)
+
+        # simulate state on previous version
+        from collective.cover.upgrades.v19 import JS
+        js_tool = api.portal.get_tool('portal_javascripts')
+        js_tool.unregisterResource(JS)
+        self.assertNotIn(JS, js_tool.getResourceIds())
+
+        # run the upgrade step to validate the update
+        self._do_upgrade_step(step)
+        self.assertIn(JS, js_tool.getResourceIds())

@@ -290,41 +290,10 @@
           'top': '0',
           'width': '15px'
         });
-        elements = elements !== undefined ? elements : le.find('.' + column_class + ', .' + tile_class + ', .' + row_class);
-
         button.click(function() {
           var element = $(this).parent('div');
-          var tiles_to_delete = [];
-
-          if (element.hasClass('tile')) {
-            tiles_to_delete = element;
-          } else {
-            tiles_to_delete = element.find('.tile');
-          }
-
-          var success = true;
-          //XXX are you sure
-          tiles_to_delete.each(function() {
-            var $this = $(this);
-
-            $.ajax({
-              url: 'deletetile',
-              data: {
-                'tile-type': $this.data('tileType'),
-                'tile-id': $(this).attr('id')
-              },
-              success: function(e, v) {
-                $this.remove();
-              },
-              error: function() {
-                success = false;
-              }
-            });
-          });
-          if (success) {
-            element.remove();
-            le.trigger('modified.layout');
-          }
+          element.remove();
+          le.trigger('modified.layout');
         });
         button.hover(
           function() {
@@ -334,6 +303,7 @@
             $(this).parent('div').removeClass('to-delete');
           }
         );
+        elements = elements !== undefined ? elements : le.find('.' + column_class + ', .' + tile_class + ', .' + row_class);
         elements.append(button);
       },
 

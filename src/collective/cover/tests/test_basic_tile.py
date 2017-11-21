@@ -4,8 +4,6 @@ from collective.cover.tests.base import TestTileMixin
 from collective.cover.tests.utils import today
 from collective.cover.tiles.basic import BasicTile
 from collective.cover.tiles.basic import IBasicTile
-from collective.cover.tiles.configuration import ITilesConfigurationScreen
-from collective.cover.tiles.permissions import ITilesPermissions
 from DateTime import DateTime
 from mock import Mock
 from plone import api
@@ -17,7 +15,6 @@ from plone.registry.interfaces import IRegistry
 from plone.tiles.interfaces import ITileDataManager
 from zope.annotation.interfaces import IAnnotations
 from zope.annotation.interfaces import IAttributeAnnotatable
-from zope.component import getMultiAdapter
 from zope.component import provideUtility
 from zope.component import queryUtility
 from zope.component.globalregistry import provideHandler
@@ -191,29 +188,6 @@ class BasicTileTestCase(TestTileMixin, unittest.TestCase):
         # the image is there and the alt attribute is set
         self.assertIn('<img ', rendered)
         self.assertIn('alt="This news item was created for testing purposes"', rendered)
-
-    def test_delete_tile_persistent_data(self):
-        permissions = getMultiAdapter(
-            (self.tile.context, self.request, self.tile), ITilesPermissions)
-        permissions.set_allowed_edit('masters_of_the_universe')
-        annotations = IAnnotations(self.tile.context)
-        self.assertIn('plone.tiles.permission.test', annotations)
-
-        configuration = getMultiAdapter(
-            (self.tile.context, self.request, self.tile),
-            ITilesConfigurationScreen)
-        configuration.set_configuration({
-            'title': {'order': u'0', 'visibility': u'on'},
-            'description': {'order': u'1', 'visibility': u'off'},
-        })
-        self.assertIn('plone.tiles.configuration.test', annotations)
-
-        # Call the delete method
-        self.tile.delete()
-
-        # Now we should not see the stored data anymore
-        self.assertNotIn('plone.tiles.permission.test', annotations)
-        self.assertNotIn('plone.tiles.configuration.test', annotations)
 
     def test_populate_with_file(self):
         obj = self.portal['my-file']

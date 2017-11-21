@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from collective.cover.behaviors.interfaces import IRefresh
+from collective.cover.config import ANNOTATION_PREFIXES
 from collective.cover.config import PROJECTNAME
 from collective.cover.interfaces import ICover
 from collective.cover.interfaces import ISearchableText
@@ -12,6 +13,7 @@ from plone.dexterity.content import Item
 from plone.indexer import indexer
 from plone.tiles.interfaces import ITileDataManager
 from Products.CMFPlone.utils import safe_unicode
+from zope.annotation import IAnnotations
 from zope.component import queryAdapter
 
 import json
@@ -147,6 +149,26 @@ class Cover(Item):
                 links = extractLinks(value)
                 refs |= getObjectsFromLinks(self, links)
         return refs
+
+    def purge_deleted_tiles(self):
+        """Purge annotations of tiles that are no longer referenced on
+        the layout.
+        """
+        layout_tiles = self.list_tiles()
+        annotations = IAnnotations(self)
+
+        for key in annotations:
+            if not key.startswith(ANNOTATION_PREFIXES):
+                continue
+
+            # XXX: we need to remove tile annotations at low level as
+            #      there's no information available on the tile type
+            #      (it's no longer in the layout and we can only infer
+            #      its id); this could lead to issues in the future if
+            #      a different storage is used (see plone.tiles code)
+            tile_id = key.split('.')[-1]
+            if tile_id not in layout_tiles:
+                del annotations[key]
 
 
 @indexer(ICover)

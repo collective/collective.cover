@@ -172,22 +172,3 @@ class RemoveItemFromListTile(BrowserView):
     def __call__(self):
         self.setup()
         return self.render()
-
-
-class DeleteTile(BrowserView):
-
-    """Helper browser view to remove a tile."""
-
-    def setup(self):
-        self.tile_type = self.request.form.get('tile-type')
-        self.tile_id = self.request.form.get('tile-id')
-
-    def render(self):
-        if self.tile_type and self.tile_id:
-            path = '{0}/{1}'.format(self.tile_type, self.tile_id)
-            tile = self.context.restrictedTraverse(path)
-            tile.delete()
-
-    def __call__(self):
-        self.setup()
-        return self.render()

@@ -1,14 +1,9 @@
 # -*- coding: utf-8 -*-
 from collective.cover.tests.base import TestTileMixin
-from collective.cover.tiles.configuration import ITilesConfigurationScreen
-from collective.cover.tiles.permissions import ITilesPermissions
 from collective.cover.tiles.pfg import IPFGTile
 from collective.cover.tiles.pfg import PFGTile
 from mock import Mock
 from plone import api
-from plone.uuid.interfaces import IUUID
-from zope.annotation.interfaces import IAnnotations
-from zope.component import getMultiAdapter
 
 import unittest
 
@@ -88,31 +83,6 @@ class PFGTileTestCase(TestTileMixin, unittest.TestCase):
 
         self.tile.is_compose_mode = Mock(return_value=True)
         self.assertIn('Please drag&amp;drop', self.tile())
-
-    def test_delete_tile_persistent_data(self):
-        permissions = getMultiAdapter(
-            (self.tile.context, self.request, self.tile), ITilesPermissions)
-        permissions.set_allowed_edit('masters_of_the_universe')
-        annotations = IAnnotations(self.tile.context)
-        self.assertIn('plone.tiles.permission.test', annotations)
-
-        uuid = IUUID(self.pfg, None)
-        configuration = getMultiAdapter(
-            (self.tile.context, self.request, self.tile),
-            ITilesConfigurationScreen)
-        configuration.set_configuration({
-            'uuid': uuid,
-            'title': self.pfg.Title(),
-            'description': self.pfg.Description(),
-        })
-        self.assertIn('plone.tiles.configuration.test', annotations)
-
-        # Call the delete method
-        self.tile.delete()
-
-        # Now we should not see the stored data anymore
-        self.assertNotIn('plone.tiles.permission.test', annotations)
-        self.assertNotIn('plone.tiles.configuration.test', annotations)
 
 
 def test_suite():

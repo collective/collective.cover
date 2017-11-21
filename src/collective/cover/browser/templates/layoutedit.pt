@@ -15,10 +15,6 @@
                     tal:define="navroot context/@@plone_portal_state/navigation_root_url"
                     tal:attributes="src string:${navroot}/++resource++collective.cover/js/layout_base.js">
             </script>
-            <script type="application/javascript"
-                    tal:define="navroot context/@@plone_portal_state/navigation_root_url"
-                    tal:attributes="src string:${navroot}/++resource++collective.cover/js/layout_edit.js">
-            </script>
             <script type="application/javascript">
             jQuery(document).ready(function() {
                 if (typeof(plone) !== 'undefined') {

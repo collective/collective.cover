@@ -57,12 +57,6 @@
       permission="cmf.ModifyPortalContent"
       class=".compose.RemoveItemFromListTile"
       />
-  <browser:page
-      name="deletetile"
-      for="..interfaces.ICover"
-      permission="cmf.ModifyPortalContent"
-      class=".compose.DeleteTile"
-      />
   <!-- compose -->
 
   <!-- cover -->

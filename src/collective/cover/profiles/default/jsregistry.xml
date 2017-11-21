@@ -9,6 +9,9 @@
   <javascript id="++resource++collective.cover/js/vendor/jquery.endless-scroll.js"
       cacheable="True" compression="none" cookable="True" enabled="True"
       expression="" inline="False" authenticated="True" />
+  <javascript id="++resource++collective.cover/js/layout_edit.js"
+      cacheable="True" compression="none" cookable="True" enabled="True"
+      expression="" inline="False" authenticated="True" />
   <javascript id="++resource++collective.cover/js/main.js"
       cacheable="True" compression="none" cookable="True" enabled="True"
       expression="" inline="False" authenticated="False" />

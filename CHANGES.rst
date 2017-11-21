@@ -6,6 +6,11 @@ There's a frood who really knows where his towel is.
 1.6b5 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Fix purging of tile annotations when removing tiles from the cover layout.
+  This solves exponential growth of cover objects when using versioning,
+  leading to check in/check out (plone.app.iterate) timeouts on backends using proxy servers (fixes `#765 <https://github.com/collective/collective.cover/issues/765>`_).
+  [rodfersou]
+
 - Do not auto include package dependencies, but declare them explicitly.
   [hvelarde]
 

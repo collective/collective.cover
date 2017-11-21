@@ -240,6 +240,7 @@ class LayoutSave(BrowserView):
         self.cover_layout = json.dumps(layout)
 
         self.context.cover_layout = self.cover_layout
+        self.context.purge_deleted_tiles()
         self.context.reindexObject()
 
         return 'saved'

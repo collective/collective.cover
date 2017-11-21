@@ -1,0 +1,32 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+    xmlns:i18n="http://namespaces.zope.org/i18n"
+    i18n_domain="collective.cover">
+
+  <genericsetup:upgradeSteps
+      source="18"
+      destination="19"
+      profile="collective.cover:default">
+
+    <genericsetup:upgradeStep
+        title="Purge Deleted Tiles"
+        description="Purge all annotations of deleted tiles."
+        handler=".purge_deleted_tiles"
+        />
+
+    <genericsetup:upgradeStep
+        title="Register resource"
+        description="Add layout_edit.js to registered resources."
+        handler=".register_resource"
+        />
+
+    <genericsetup:upgradeStep
+        title="Cook JS resources"
+        description="There were changes in the JS files, so we need to cook the resources."
+        handler="..cook_javascript_resources"
+        />
+
+  </genericsetup:upgradeSteps>
+
+</configure>

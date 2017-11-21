@@ -1,15 +1,11 @@
 # -*- coding: utf-8 -*-
 from collective.cover.tests.base import TestTileMixin
 from collective.cover.tests.utils import set_text_field
-from collective.cover.tiles.configuration import ITilesConfigurationScreen
 from collective.cover.tiles.contentbody import ContentBodyTile
 from collective.cover.tiles.contentbody import IContentBodyTile
-from collective.cover.tiles.permissions import ITilesPermissions
 from mock import Mock
 from plone.app.testing import setRoles
 from plone.app.testing import TEST_USER_ID
-from zope.annotation.interfaces import IAnnotations
-from zope.component import getMultiAdapter
 
 import unittest
 
@@ -100,28 +96,6 @@ class ContentBodyTileTestCase(TestTileMixin, unittest.TestCase):
             'This item does not have any body text.',
             self.tile()
         )
-
-    def test_delete_tile_persistent_data(self):
-        permissions = getMultiAdapter(
-            (self.tile.context, self.request, self.tile), ITilesPermissions)
-        permissions.set_allowed_edit('masters_of_the_universe')
-        annotations = IAnnotations(self.tile.context)
-        self.assertIn('plone.tiles.permission.test', annotations)
-
-        configuration = getMultiAdapter(
-            (self.tile.context, self.request, self.tile),
-            ITilesConfigurationScreen)
-        configuration.set_configuration({
-            'uuid': 'c1d2e3f4g5jrw',
-        })
-        self.assertIn('plone.tiles.configuration.test', annotations)
-
-        # Call the delete method
-        self.tile.delete()
-
-        # Now we should not see the stored data anymore
-        self.assertNotIn('plone.tiles.permission.test', annotations)
-        self.assertNotIn('plone.tiles.configuration.test', annotations)
 
     def test_item_url(self):
         obj = self.portal['my-news-item']
