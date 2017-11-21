@@ -3,9 +3,13 @@ from collective.cover.testing import ALL_CONTENT_TYPES
 from collective.cover.tests.base import TestTileMixin
 from collective.cover.tiles.base import IPersistentCoverTile
 from collective.cover.tiles.base import PersistentCoverTile
+from collective.cover.tiles.configuration import ITilesConfigurationScreen
+from collective.cover.tiles.permissions import ITilesPermissions
 from cStringIO import StringIO
 from plone.tiles.interfaces import ITileDataManager
+from zope.annotation import IAnnotations
 from zope.component import eventtesting
+from zope.component import getMultiAdapter
 from zope.configuration.xmlconfig import xmlconfig
 
 import unittest
@@ -69,19 +73,31 @@ class BaseTileTestCase(TestTileMixin, unittest.TestCase):
 
     def test_delete_tile_persistent_data(self):
         eventtesting.clearEvents()
-        # First, let's store some data on the tile
+
+        annotations = IAnnotations(self.tile.context)
+
         data_mgr = ITileDataManager(self.tile)
         data_mgr.set({'test': 'data'})
-
-        # We see that the data persists
         self.assertIn('test', data_mgr.get())
         self.assertEqual(data_mgr.get()['test'], 'data')
+
+        permissions = getMultiAdapter(
+            (self.tile.context, self.request, self.tile), ITilesPermissions)
+        permissions.set_allowed_edit('masters_of_the_universe')
+        self.assertIn('plone.tiles.permission.test', annotations)
+
+        configuration = getMultiAdapter(
+            (self.tile.context, self.request, self.tile), ITilesConfigurationScreen)
+        configuration.set_configuration({'uuid': 'c1d2e3f4g5jrw'})
+        self.assertIn('plone.tiles.configuration.test', annotations)
 
         # Call the delete method
         self.tile.delete()
 
         # Now we should not see the stored data anymore
         self.assertNotIn('test', data_mgr.get())
+        self.assertNotIn('plone.tiles.permission.test', annotations)
+        self.assertNotIn('plone.tiles.configuration.test', annotations)
 
         events = eventtesting.getEvents()
 
