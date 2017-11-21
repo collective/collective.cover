@@ -150,14 +150,6 @@ class Cover(Item):
                 refs |= getObjectsFromLinks(self, links)
         return refs
 
-    def delete_tile(self, tile_id):
-        """Delete tile
-
-           To delete tile we just need the ID, the type can be anything.
-        """
-        tile = self.restrictedTraverse('collective.cover.basic/' + str(tile_id))
-        tile.delete()
-
     def purge_deleted_tiles(self):
         """Check if there are any annotation of deleted tiles and destroy it.
 
@@ -170,17 +162,15 @@ class Cover(Item):
         layout_tiles = self.list_tiles()
         annotations = IAnnotations(self)
 
-        tile_ids = []
         for key in annotations:
             if not key.startswith(ANNOTATION_PREFIXES):
                 continue
             tile_id = key.split('.')[-1]
             if tile_id in layout_tiles:
                 continue
-            if tile_id in tile_ids:
-                continue
-            tile_ids.append(tile_id)
-            self.delete_tile(tile_id)
+            # XXX: We can't use tile API because there is no way to know the tile type
+            # for deleted tiles
+            del annotations[key]
 
 
 @indexer(ICover)
