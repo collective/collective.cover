@@ -151,13 +151,8 @@ class Cover(Item):
         return refs
 
     def purge_deleted_tiles(self):
-        """Check if there are any annotation of deleted tiles and destroy it.
-
-           Cover tiles are Browser Views, and data are saved in annotations.
-           When delete a tile, the annotations are not deleted, it keeps making
-           Cover object bigger;
-           This method purge all tile annotation data for tiles where there are
-           no reference in layout.
+        """Purge annotations of tiles that are no longer referenced on
+        the layout.
         """
         layout_tiles = self.list_tiles()
         annotations = IAnnotations(self)
@@ -165,12 +160,15 @@ class Cover(Item):
         for key in annotations:
             if not key.startswith(ANNOTATION_PREFIXES):
                 continue
+
+            # XXX: we need to remove tile annotations at low level as
+            #      there's no information available on the tile type
+            #      (it's no longer in the layout and we can only infer
+            #      its id); this could lead to issues in the future if
+            #      a different storage is used (see plone.tiles code)
             tile_id = key.split('.')[-1]
-            if tile_id in layout_tiles:
-                continue
-            # XXX: We can't use tile API because there is no way to know the tile type
-            # for deleted tiles
-            del annotations[key]
+            if tile_id not in layout_tiles:
+                del annotations[key]
 
 
 @indexer(ICover)

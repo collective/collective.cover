@@ -7,8 +7,6 @@ from collective.cover.tiles.configuration import ITilesConfigurationScreen
 from collective.cover.tiles.permissions import ITilesPermissions
 from cStringIO import StringIO
 from plone.tiles.interfaces import ITileDataManager
-from zope.annotation import IAnnotations
-from zope.component import eventtesting
 from zope.component import getMultiAdapter
 from zope.configuration.xmlconfig import xmlconfig
 
@@ -49,7 +47,6 @@ class BaseTileTestCase(TestTileMixin, unittest.TestCase):
 
     def setUp(self):
         super(BaseTileTestCase, self).setUp()
-        eventtesting.setUp()
         self._register_tile()
         self.tile = PersistentCoverTile(self.cover, self.request)
         self.tile.__name__ = u'collective.cover.base'
@@ -71,9 +68,14 @@ class BaseTileTestCase(TestTileMixin, unittest.TestCase):
     def test_accepted_content_types(self):
         self.assertEqual(self.tile.accepted_ct(), ALL_CONTENT_TYPES)
 
-    def test_delete_tile_persistent_data(self):
-        eventtesting.clearEvents()
-
+    def test_delete_tile_removes_persistent_data(self):
+        # https://github.com/collective/collective.cover/issues/765
+        from collective.cover.config import CONFIGURATION_PREFIX
+        from collective.cover.config import PERMISSIONS_PREFIX
+        from zope.annotation import IAnnotations
+        from zope.component import eventtesting
+        from zope.lifecycleevent import IObjectModifiedEvent
+        eventtesting.setUp()
         annotations = IAnnotations(self.tile.context)
 
         data_mgr = ITileDataManager(self.tile)
@@ -82,24 +84,25 @@ class BaseTileTestCase(TestTileMixin, unittest.TestCase):
         self.assertEqual(data_mgr.get()['test'], 'data')
 
         permissions = getMultiAdapter(
-            (self.tile.context, self.request, self.tile), ITilesPermissions)
+            (self.cover, self.request, self.tile), ITilesPermissions)
         permissions.set_allowed_edit('masters_of_the_universe')
-        self.assertIn('plone.tiles.permission.test', annotations)
+        self.assertIn(PERMISSIONS_PREFIX + '.test', annotations)
 
         configuration = getMultiAdapter(
-            (self.tile.context, self.request, self.tile), ITilesConfigurationScreen)
+            (self.cover, self.request, self.tile), ITilesConfigurationScreen)
         configuration.set_configuration({'uuid': 'c1d2e3f4g5jrw'})
-        self.assertIn('plone.tiles.configuration.test', annotations)
+        self.assertIn(CONFIGURATION_PREFIX + '.test', annotations)
 
         # Call the delete method
+        eventtesting.clearEvents()
         self.tile.delete()
 
-        # Now we should not see the stored data anymore
+        # Now we should not see the persistent data anymore
         self.assertNotIn('test', data_mgr.get())
-        self.assertNotIn('plone.tiles.permission.test', annotations)
-        self.assertNotIn('plone.tiles.configuration.test', annotations)
-
-        events = eventtesting.getEvents()
+        self.assertNotIn(PERMISSIONS_PREFIX + '.test', annotations)
+        self.assertNotIn(CONFIGURATION_PREFIX + '.test', annotations)
 
         # Finally, test that ObjectModifiedEvent was fired for the cover
-        self.assertEqual(events[0].object, self.cover)
+        events = eventtesting.getEvents()
+        self.assertEqual(len(events), 1)
+        self.assertTrue(IObjectModifiedEvent.providedBy(events[0]))

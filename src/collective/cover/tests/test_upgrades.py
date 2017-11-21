@@ -670,7 +670,7 @@ class Upgrade18to19TestCase(UpgradeTestCaseBase):
         from zope.annotation import IAnnotations
         title = u'Purge Deleted Tiles'
         step = self._get_upgrade_step(title)
-        assert step is not None
+        self.assertIsNotNone(step)
 
         # simulate state on previous version
         cover = self._create_cover('test-cover', 'Empty layout')
@@ -681,7 +681,6 @@ class Upgrade18to19TestCase(UpgradeTestCaseBase):
 
         # run the upgrade step to validate the update
         self._do_upgrade_step(step)
-
         self.assertNotIn(key, annotations)
 
     @unittest.skipIf(IS_PLONE_5, 'Upgrade step not supported under Plone 5')
@@ -692,16 +691,11 @@ class Upgrade18to19TestCase(UpgradeTestCaseBase):
         self.assertIsNotNone(step)
 
         # simulate state on previous version
-        from collective.cover.upgrades.v19 import TO_REGISTER
-
+        from collective.cover.upgrades.v19 import JS
         js_tool = api.portal.get_tool('portal_javascripts')
-        js_tool.unregisterResource(TO_REGISTER)
-
-        js_ids = js_tool.getResourceIds()
-        self.assertNotIn(TO_REGISTER, js_ids)
+        js_tool.unregisterResource(JS)
+        self.assertNotIn(JS, js_tool.getResourceIds())
 
         # run the upgrade step to validate the update
         self._do_upgrade_step(step)
-
-        js_ids = js_tool.getResourceIds()
-        self.assertIn(TO_REGISTER, js_ids)
+        self.assertIn(JS, js_tool.getResourceIds())

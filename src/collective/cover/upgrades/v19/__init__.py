@@ -4,25 +4,23 @@ from collective.cover.logger import logger
 from plone import api
 
 
-TO_REGISTER = '++resource++collective.cover/js/layout_edit.js'
+JS = '++resource++collective.cover/js/layout_edit.js'
 
 
 def purge_deleted_tiles(context):
     """Purge all annotations of deleted tiles."""
+    results = api.content.find(object_provides=ICover.__identifier__)
+    logger.info('About to update {0} objects'.format(len(results)))
 
-    covers = context.portal_catalog(object_provides=ICover.__identifier__)
-    logger.info('About to update {0} objects'.format(len(covers)))
-    for cover in covers:
-        obj = cover.getObject()
+    for b in results:
+        obj = b.getObject()
         obj.purge_deleted_tiles()
-        msg = 'Cover {0} updated'
-        logger.info(msg.format(cover.getPath()))
-
-    logger.info('Done')
+        logger.info('Purged annotations on ' + b.getPath())
 
 
 def register_resource(setup_tool):
     """Add layout_edit.js to registered resources."""
     js_tool = api.portal.get_tool('portal_javascripts')
-    js_tool.registerResource(id=TO_REGISTER, authenticated=True)
-    logger.info('Resource registered.')
+    js_tool.registerScript(id=JS, compression='none', authenticated=True)
+    assert JS in js_tool.getResourceIds()
+    logger.info('Script registered')
