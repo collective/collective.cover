@@ -3,7 +3,7 @@ Changelog
 
 There's a frood who really knows where his towel is.
 
-1.6b5 (unreleased)
+1.6b5 (2017-11-21)
 ^^^^^^^^^^^^^^^^^^
 
 - Fix purging of tile annotations when removing tiles from the cover layout.
