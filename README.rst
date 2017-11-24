@@ -18,6 +18,10 @@ contents, built around a drag-and-drop interface.
 like `Mosaic <https://pypi.python.org/pypi/plone.app.mosaic>`_,
 the new layout solution for Plone.
 
+.. warning::
+    This package is not compatible with Plone 5.
+    See ''Known issues'' for more information.
+
 Demo
 ^^^^
 
@@ -85,6 +89,8 @@ Got an idea? Found a bug? Let us know by `opening a support ticket <https://gith
 Known issues
 ^^^^^^^^^^^^
 
+* Not compatible with Plone 5;
+  see the `list of related issues <https://github.com/collective/collective.cover/issues/642>`_ if you want to help.
 * `Package is not compatible with standard Plone tiles <https://github.com/collective/collective.cover/issues/81>`_.
   This will be addressed in a future release, if we get an sponsor.
 
