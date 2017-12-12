@@ -104,10 +104,9 @@ def generate_jpeg(width, height):
                 if abs(z) > 2.0:
                     break
                 z = z * z + c
-            # FIXME: https://github.com/gforcada/flake8-pep3101/issues/16
-            r = i % 4 * 64  # noqa: S001
-            g = i % 8 * 32  # noqa: S001
-            b = i % 16 * 16  # noqa: S001
+            r = i % 4 * 64
+            g = i % 8 * 32
+            b = i % 16 * 16
             image.putpixel((x, y), b * 65536 + g * 256 + r)
 
     output = StringIO()
