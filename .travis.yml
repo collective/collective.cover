@@ -38,6 +38,7 @@ before_script:
 script:
 - bin/code-analysis
 - bin/test
+- bin/pylint --py3k --disable=no-absolute-import src/collective/cover || true
 after_success:
 - bin/createcoverage --output-dir=htmlcov -t "--layer=!Robot"
 - pip install coveralls
