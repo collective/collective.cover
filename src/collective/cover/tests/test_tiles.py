@@ -55,6 +55,5 @@ class PageLayoutTestCase(unittest.TestCase):
         self.assertTrue(self.view.tile_is_editable('collective.cover.basic'))
 
     def test_is_configurable(self):
-        self.assertTrue(self.view.tile_is_configurable(
-            'collective.cover.basic')
-        )
+        self.assertTrue(
+            self.view.tile_is_configurable('collective.cover.basic'))

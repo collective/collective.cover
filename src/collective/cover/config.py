@@ -28,7 +28,7 @@ DEFAULT_SEARCHABLE_CONTENT_TYPES = [
     'File',
     'Image',
     'Link',
-    'News Item'
+    'News Item',
 ]
 
 IS_PLONE_5 = api.env.plone_version().startswith('5')

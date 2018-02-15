@@ -129,13 +129,9 @@ class CarouselTileTestCase(TestTileMixin, unittest.TestCase):
         # now we 2 elements
         obj1 = self.portal['my-document']
         obj2 = self.portal['my-image']
-
-        self.tile.populate_with_uuids([
-            obj1.UID(), obj2.UID()
-        ])
+        self.tile.populate_with_uuids([obj1.UID(), obj2.UID()])
 
         # For obj2 we will assign a custom_title
-
         uuids = ITileDataManager(self.tile).get().get('uuids', None)
         uuids[obj2.UID()]['custom_title'] = u'New Title'
 
@@ -157,13 +153,9 @@ class CarouselTileTestCase(TestTileMixin, unittest.TestCase):
         # now we 2 elements
         obj1 = self.portal['my-document']
         obj2 = self.portal['my-image']
-
-        self.tile.populate_with_uuids([
-            obj1.UID(), obj2.UID()
-        ])
+        self.tile.populate_with_uuids([obj1.UID(), obj2.UID()])
 
         # For obj2 we will assign a custom_description
-
         uuids = ITileDataManager(self.tile).get().get('uuids', None)
         uuids[obj2.UID()]['custom_description'] = u'New Description'
 
@@ -186,13 +178,9 @@ class CarouselTileTestCase(TestTileMixin, unittest.TestCase):
         obj1 = self.portal['my-document']
         obj2 = self.portal['my-image']
         obj3 = self.portal['my-image1']
-
-        self.tile.populate_with_uuids([
-            obj1.UID(), obj2.UID(), obj3.UID()
-        ])
+        self.tile.populate_with_uuids([obj1.UID(), obj2.UID(), obj3.UID()])
 
         # For obj2 we will assign a custom_url
-
         uuids = ITileDataManager(self.tile).get().get('uuids', None)
         uuids[obj2.UID()]['custom_url'] = u'http://www.custom_url.com'
 

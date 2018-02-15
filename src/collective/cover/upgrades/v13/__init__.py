@@ -10,7 +10,7 @@ RESOURCES_TO_FIX = {
     '++resource++collective.cover/contentchooser.css': '++resource++collective.cover/css/contentchooser.css',
     '++resource++collective.cover/cover.css': '++resource++collective.cover/css/cover.css',
     '++resource++collective.cover/contentchooser.js': '++resource++collective.cover/js/contentchooser.js',
-    '++resource++collective.cover/jquery.endless-scroll.js': '++resource++collective.cover/js/vendor/jquery.endless-scroll.js'
+    '++resource++collective.cover/jquery.endless-scroll.js': '++resource++collective.cover/js/vendor/jquery.endless-scroll.js',
 }
 
 

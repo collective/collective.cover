@@ -53,10 +53,7 @@ class BannerTileTestCase(TestTileMixin, unittest.TestCase):
         obj.setTitle(title)
         obj.reindexObject()
         self.tile.populate_with_object(obj)
-        self.assertEqual(
-            unicode(title, 'utf-8'),
-            self.tile.data.get('title')
-        )
+        self.assertEqual(unicode(title, 'utf-8'), self.tile.data.get('title'))
         self.assertTrue(self.tile.has_image)
         self.assertIsNotNone(self.tile.getRemoteUrl())
 

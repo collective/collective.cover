@@ -28,7 +28,7 @@ def create_standard_content_for_tests(portal):
                 'i': 'Type',
                 'o': 'plone.app.querystring.operation.string.is',
                 'v': ['Image'],
-            }]
+            }],
         )
 
         obj = api.content.create(

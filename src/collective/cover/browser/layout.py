@@ -270,7 +270,7 @@ class TileList(BrowserView):
             'icon': tile_type.icon,
             'description': tile_type.description,
             'title': title,
-            'is_configurable': tile.is_configurable and 1 or 0
+            'is_configurable': tile.is_configurable and 1 or 0,
         }
 
         return tile_metadata

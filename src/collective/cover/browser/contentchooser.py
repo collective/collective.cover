@@ -52,10 +52,7 @@ class ContentSearch(BrowserView):
         strategy = SitemapNavtreeStrategy(self.context)
 
         uuids = None
-        result = self.search(
-            self.query, uuids=uuids,
-            page=page
-        )
+        result = self.search(self.query, uuids=uuids, page=page)
         self.has_next = result.next is not None
         self.nextpage = result.pagenumber + 1
         children = [strategy.decoratorFactory({'item': node}) for node in result]
@@ -206,9 +203,9 @@ class SearchItemsBrowserView(BrowserView):
                 'title': brain.Title == '' and brain.id or brain.Title,
                 'icon': self.getIcon(brain).url or '',
                 'is_folderish': brain.is_folderish,
-                'description': brain.Description or ''
+                'description': brain.Description or '',
             })
-        # add catalog_ressults
+        # add catalog_results
         results['items'] = catalog_results
         # return results in JSON format
         return json.dumps(results)

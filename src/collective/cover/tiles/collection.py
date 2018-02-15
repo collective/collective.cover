@@ -76,7 +76,7 @@ class ICollectionTile(IPersistentCoverTile):
     random = schema.Bool(
         title=_(u'Select random items'),
         required=False,
-        default=False
+        default=False,
     )
 
     footer = schema.TextLine(
