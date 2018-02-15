@@ -123,7 +123,7 @@ class BasicTile(PersistentCoverTile):
             'uuid': IUUID(obj),
             'date': True,
             'subjects': True,
-            'image': self.get_image_data(obj)
+            'image': self.get_image_data(obj),
         }
 
         if data['image']:

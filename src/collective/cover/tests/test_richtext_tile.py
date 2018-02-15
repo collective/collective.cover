@@ -56,7 +56,7 @@ class RichTextTileTestCase(TestTileMixin, unittest.TestCase):
         value = RichTextValue(
             raw=text,
             mimeType='text/x-html-safe',
-            outputMimeType='text/x-html-safe'
+            outputMimeType='text/x-html-safe',
         )
         self.tile.data['text'] = value
         self.assertEqual(searchable.SearchableText(), 'My document text...')

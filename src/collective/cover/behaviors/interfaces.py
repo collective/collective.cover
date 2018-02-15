@@ -23,7 +23,7 @@ class IRefresh(model.Schema):
 
     ttl = schema.Int(
         title=_(u'Time to live'),
-        description=_(u'Number of seconds after which to reload the current page.',),
+        description=_(u'Number of seconds after which to reload the current page.'),
         default=300,
     )
 

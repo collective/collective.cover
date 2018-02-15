@@ -21,8 +21,7 @@ class BaseGrid(object):
                     element['class'] = self.row_class
                     if 'css-class' in element:
                         element['class'] += ' {0}'.format(
-                            element['css-class']
-                        )
+                            element['css-class'])
                     if 'children' in element:
                         self.transform(self.columns_formatter(element['children']))
                 if element['type'] == 'group' and 'children' in element:
@@ -50,8 +49,7 @@ class Bootstrap3(BaseGrid):
             column['class'] = self.column_class + ' ' + (prefix + str(width))
             if 'css-class' in column:
                 column['class'] += ' {0}'.format(
-                    column['css-class']
-                )
+                    column['css-class'])
 
         return columns
 
@@ -71,8 +69,7 @@ class Bootstrap2(BaseGrid):
             column['class'] = self.column_class + ' ' + (prefix + str(width))
             if 'css-class' in column:
                 column['class'] += ' {0}'.format(
-                    column['css-class']
-                )
+                    column['css-class'])
 
         return columns
 
@@ -95,7 +92,6 @@ class Deco16Grid(BaseGrid):
             column['class'] = self.column_class + ' ' + (w + str(width)) + ' ' + (p + str(offset))
             if 'css-class' in column:
                 column['class'] += ' {0}'.format(
-                    column['css-class']
-                )
+                    column['css-class'])
             offset = offset + width
         return columns

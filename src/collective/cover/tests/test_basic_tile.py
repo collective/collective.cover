@@ -124,14 +124,9 @@ class BasicTileTestCase(TestTileMixin, unittest.TestCase):
         obj.setDescription(description)
         obj.reindexObject()
         self.tile.populate_with_object(obj)
+        self.assertEqual(unicode(title, 'utf-8'), self.tile.data.get('title'))
         self.assertEqual(
-            unicode(title, 'utf-8'),
-            self.tile.data.get('title')
-        )
-        self.assertEqual(
-            unicode(description, 'utf-8'),
-            self.tile.data.get('description')
-        )
+            unicode(description, 'utf-8'), self.tile.data.get('description'))
 
     def test_render_empty(self):
         msg = 'Please drag&amp;drop some content here to populate the tile.'

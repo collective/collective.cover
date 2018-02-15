@@ -75,13 +75,10 @@ class ContentBodyTileTestCase(TestTileMixin, unittest.TestCase):
         self.tile.populate_with_object(obj)
         # Delete original object
         setRoles(self.portal, TEST_USER_ID, ['Manager'])
-        self.portal.manage_delObjects(['my-news-item', ])
+        self.portal.manage_delObjects(['my-news-item'])
 
         self.tile.is_compose_mode = Mock(return_value=True)
-        self.assertIn(
-            'This item does not have any body text.',
-            self.tile()
-        )
+        self.assertIn('This item does not have any body text.', self.tile())
 
     def test_render_restricted_object(self):
         text = '<h2>Peace of mind</h2>'
@@ -92,10 +89,7 @@ class ContentBodyTileTestCase(TestTileMixin, unittest.TestCase):
         obj.manage_permission('View', [], 0)
 
         self.tile.is_compose_mode = Mock(return_value=True)
-        self.assertIn(
-            'This item does not have any body text.',
-            self.tile()
-        )
+        self.assertIn('This item does not have any body text.', self.tile())
 
     def test_item_url(self):
         obj = self.portal['my-news-item']

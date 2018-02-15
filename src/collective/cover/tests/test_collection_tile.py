@@ -221,10 +221,7 @@ class CollectionTileTestCase(TestTileMixin, unittest.TestCase):
         fmt_date = self.portal.toLocalizedTime(date, True)
 
         rendered = self.tile()
-        self.assertTrue(
-            fmt_date in rendered,
-            'Formatted date should be in rendered tile'
-        )
+        self.assertIn(fmt_date, rendered)
 
     def test_localized_time_is_rendered(self):
         obj = self._create_events_collection()

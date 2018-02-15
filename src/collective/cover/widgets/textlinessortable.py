@@ -134,24 +134,19 @@ class TextLinesSortableWidget(textlines.TextLinesWidget):
         results = dict()
         for index, uuid in enumerate(uuids):
             obj = uuidToObject(uuid)
-            results[uuid] = {
-                u'order': unicode(index)
-            }
+            results[uuid] = {u'order': unicode(index)}
             custom_title = self.request.get(
-                '{0}.custom_title.{1}'.format(self.name, uuid), ''
-            )
+                '{0}.custom_title.{1}'.format(self.name, uuid), '')
             if (custom_title != u'' and
                custom_title != safe_unicode(obj.Title())):
                 results[uuid][u'custom_title'] = unicode(custom_title)
             custom_description = self.request.get(
-                '{0}.custom_description.{1}'.format(self.name, uuid), ''
-            )
+                '{0}.custom_description.{1}'.format(self.name, uuid), '')
             if (custom_description != u'' and
                custom_description != safe_unicode(obj.Description())):
                 results[uuid][u'custom_description'] = unicode(custom_description)
             custom_url = self.request.get(
-                '{0}.custom_url.{1}'.format(self.name, uuid), ''
-            )
+                '{0}.custom_url.{1}'.format(self.name, uuid), '')
             url = obj.absolute_url()
             if obj.portal_type in get_types_use_view_action_in_listings():
                 url += '/view'

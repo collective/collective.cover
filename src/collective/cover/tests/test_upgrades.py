@@ -333,9 +333,7 @@ class Upgrade10to11TestCase(UpgradeTestCaseBase):
         # simulate state on previous version of registry layouts
         registry = getUtility(IRegistry)
         settings = registry.forInterface(ICoverSettings)
-        settings.layouts = {
-            u'test_layout': old_data
-        }
+        settings.layouts = {u'test_layout': old_data}
 
         # simulate state on previous version of cover layout
         cover = self._create_cover('test-cover', 'Empty layout')
@@ -389,9 +387,7 @@ class Upgrade10to11TestCase(UpgradeTestCaseBase):
         # simulate state on previous version of registry layouts
         registry = getUtility(IRegistry)
         settings = registry.forInterface(ICoverSettings)
-        settings.layouts = {
-            u'test_layout': old_data
-        }
+        settings.layouts = {u'test_layout': old_data}
 
         # simulate state on previous version of cover layout
         cover = self._create_cover('test-cover', 'Empty layout')

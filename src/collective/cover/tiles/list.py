@@ -132,9 +132,7 @@ class ListTile(PersistentCoverTile):
                         # the object was deleted; remove it from the tile
                         self.remove_item(uuid)
                         logger.debug(
-                            'Nonexistent object {0} removed from '
-                            'tile'.format(uuid)
-                        )
+                            'Non-existent object {0} removed from tile'.format(uuid))  # noqa: E501
 
         return results[:self.limit]
 
@@ -348,7 +346,7 @@ class ListTile(PersistentCoverTile):
 
         return {
             'href': brainz[0].getURL(),
-            'text': self.data['more_link_text']
+            'text': self.data['more_link_text'],
         }
 
     @view.memoize
