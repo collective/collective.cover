@@ -8,6 +8,7 @@ from plone.tiles.interfaces import ITileDataManager
 from plone.uuid.interfaces import IUUID
 from Products.Five.browser import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
+from six import iteritems
 from zExceptions import BadRequest
 from zope.event import notify
 from zope.interface import implementer
@@ -90,7 +91,7 @@ class MoveTileContent(BrowserView):
             origin_data = origin_dmgr.get()
             target_dmgr = ITileDataManager(target_tile)
             target_data = target_dmgr.get()
-            for k, v in origin_data.iteritems():
+            for k, v in iteritems(origin_data):
                 if k in target_data and not k.startswith('uuid') and v is not None:
                     target_data[k] = v
             target_dmgr.set(target_data)

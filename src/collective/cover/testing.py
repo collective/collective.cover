@@ -96,9 +96,9 @@ def generate_jpeg(width, height):
     c = complex(random.random() * 2.0 - 1.0, random.random() - 0.5)
 
     for y in range(height):
-        zy = y * (yb - ya) / (height - 1) + ya
+        zy = y * (yb - ya) // (height - 1) + ya
         for x in range(width):
-            zx = x * (xb - xa) / (width - 1) + xa
+            zx = x * (xb - xa) // (width - 1) + xa
             z = complex(zx, zy)
             for i in range(maxIt):
                 if abs(z) > 2.0:

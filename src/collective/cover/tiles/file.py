@@ -30,9 +30,9 @@ def get_download_html(url, portal_url, icon, mime_type, size):
     if size < 1024:
         size_str = '{0} bytes'.format(size)
     elif 1024 <= size < 1048576:
-        size_str = '{0} kB ({1} bytes)'.format(size / 1024, size)
+        size_str = '{0} kB ({1} bytes)'.format(size // 1024, size)
     else:
-        size_str = '{0} MB ({1} bytes)'.format(size / 1048576, size)
+        size_str = '{0} MB ({1} bytes)'.format(size // 1048576, size)
 
     return HTML.format(url, portal_url, icon, mime_type, size_str)
 
