@@ -8,6 +8,7 @@ from copy import deepcopy
 from plone import api
 from plone.registry.interfaces import IRegistry
 from plone.tiles.interfaces import ITileDataManager
+from six import iteritems
 from zope.component import getUtility
 
 import json
@@ -62,7 +63,7 @@ def _remove_css_class_layout(layout, is_child=False):
     for row in layout:
         fixed_row = {
             k: v
-            for k, v in row.iteritems()
+            for k, v in iteritems(row)
             if k != u'class'
         }
         if u'children' in fixed_row:
@@ -82,7 +83,7 @@ def remove_css_class_layout(context):
     registry = getUtility(IRegistry)
     settings = registry.forInterface(ICoverSettings)
     fixed_layouts = {}
-    for name, layout in settings.layouts.iteritems():
+    for name, layout in iteritems(settings.layouts):
         fixed_layouts[name] = _remove_css_class_layout(layout)
     settings.layouts = fixed_layouts
     logger.info('Registry layouts were updated.')
@@ -157,7 +158,7 @@ def simplify_layout(context):
     registry = getUtility(IRegistry)
     settings = registry.forInterface(ICoverSettings)
     fixed_layouts = {}
-    for name, layout in settings.layouts.iteritems():
+    for name, layout in iteritems(settings.layouts):
         fixed_layouts[name] = _simplify_layout(layout)
     settings.layouts = fixed_layouts
     logger.info('Registry layouts were updated.')

@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 from collective.cover.testing import INTEGRATION_TESTING
+from io import StringIO
 from lxml import etree
 from plone import api
-from StringIO import StringIO
 
 import json
 import unittest

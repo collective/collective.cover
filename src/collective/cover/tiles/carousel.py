@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from __future__ import division
 from collective.cover import _
 from collective.cover.interfaces import ITileEditForm
 from collective.cover.tiles.list import IListTile
@@ -135,8 +136,7 @@ class CarouselTile(ListTile):
         """
         thumbs = [self.thumbnail(i) for i in self.results()]
         # exclude from calculation any item with no image
-        ratios = [
-            float(t.height) / float(t.width) for t in thumbs if t is not None]
+        ratios = [t.height / t.width for t in thumbs if t]
         if not ratios:
             return '1'
         return str(max(ratios))

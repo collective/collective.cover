@@ -9,6 +9,10 @@ There's a frood who really knows where his towel is.
 - Allow selection of multiple CSS classes in tile configuration.
   [rodfersou]
 
+- Small code refactor to increase future Python 3 compatibility;
+  add dependency on `six <https://pypi.python.org/pypi/six>`_.
+  [hvelarde]
+
 - Provide alternative text for image fields in tiles (closes `#628 <https://github.com/collective/collective.cover/issues/628>`_).
   [hvelarde]
 

@@ -7,8 +7,8 @@ from DateTime import DateTime
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.utils import safe_unicode
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
+from six.moves.urllib.parse import quote_plus
 from time import localtime
-from urllib import quote_plus
 from zope.component import getMultiAdapter
 from zope.i18nmessageid import MessageFactory
 from zope.interface import implementer
