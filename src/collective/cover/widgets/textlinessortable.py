@@ -51,12 +51,10 @@ class TextLinesSortableWidget(textlines.TextLinesWidget):
         :type item: Content object
         :returns: The <img> tag for the scale
         """
-        if not item:
-            return None
-        scales = item.restrictedTraverse('@@images')
         try:
+            scales = item.restrictedTraverse('@@images')
             return scales.scale('image', 'tile')
-        except:  # FIXME: B901 blind except: statement
+        except AttributeError:
             return None
 
     def isExpired(self, item):
