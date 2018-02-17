@@ -240,7 +240,7 @@ To do so, your theme package should provide a new grid system class which implem
 .. code-block:: python
 
     from collective.cover.interfaces import IGridSystem
-    from collective.cover.layout import BaseGrid
+    from collective.cover.grids import BaseGrid
     from zope.interface import implementer
 
     @implementer(IGridSystem)
