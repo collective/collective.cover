@@ -34,6 +34,17 @@ class IBasicTile(IPersistentCoverTile):
         required=False,
     )
 
+    form.omitted(IDefaultConfigureForm, 'alt_text')
+    alt_text = schema.TextLine(
+        title=_(
+            u'label_alt_text',
+            default=u'Alternative Text'),
+        description=_(
+            u'help_alt_text',
+            default=u'Provides a textual alternative to non-text content in web pages.'),  # noqa E501
+        required=False,
+    )
+
     form.omitted('date')
     form.no_omit(IDefaultConfigureForm, 'date')
     date = schema.Datetime(
@@ -63,7 +74,6 @@ class IBasicTile(IPersistentCoverTile):
 class BasicTile(PersistentCoverTile):
 
     index = ViewPageTemplateFile('templates/basic.pt')
-
     is_configurable = True
     short_name = _(u'msg_short_name_basic', default=u'Basic')
 
@@ -113,22 +123,28 @@ class BasicTile(PersistentCoverTile):
     def populate_with_object(self, obj):
         super(BasicTile, self).populate_with_object(obj)
 
+        title = safe_unicode(obj.Title())
+        description = safe_unicode(obj.Description())
+
+        image = self.get_image_data(obj)
+        if image:
+            # clear scales if new image is getting saved
+            self.clear_scales()
+
         # initialize the tile with all fields needed for its rendering
         # note that we include here 'date' and 'subjects', but we do not
         # really care about their value: they came directly from the catalog
         # brain
         data = {
-            'title': safe_unicode(obj.Title()),
-            'description': safe_unicode(obj.Description()),
+            'title': title,
+            'description': description,
             'uuid': IUUID(obj),
             'date': True,
             'subjects': True,
-            'image': self.get_image_data(obj),
+            'image': image,
+            # FIXME: https://github.com/collective/collective.cover/issues/778
+            'alt_text': description or title,
         }
-
-        if data['image']:
-            # clear scales if new image is getting saved
-            self.clear_scales()
 
         data_mgr = ITileDataManager(self)
         data_mgr.set(data)
@@ -138,8 +154,9 @@ class BasicTile(PersistentCoverTile):
 
     @property
     def alt(self):
-        """Return the alt attribute for the image."""
-        return self.data.get('description') or self.data.get('title')
+        """Return alternative text dealing with form init issues."""
+        alt_text = self.data['alt_text']
+        return alt_text if alt_text is not None else u''
 
 
 @implementer(ISearchableText)

@@ -156,6 +156,7 @@ class BasicTileTestCase(TestTileMixin, unittest.TestCase):
         self.assertIn('@@images', rendered)
 
     def test_render(self):
+        from lxml import etree
         obj = self.portal['my-news-item']
         obj.setSubject(['subject1', 'subject2'])
         obj.effective_date = DateTime()
@@ -171,6 +172,21 @@ class BasicTileTestCase(TestTileMixin, unittest.TestCase):
         # the description must be there
         self.assertIn(
             '<p>This news item was created for testing purposes</p>', rendered)
+
+        html = etree.HTML(self.tile())
+        img = html.find('*//img')
+        self.assertIsNotNone(img)
+        self.assertIn('alt', img.attrib)
+        self.assertEqual(img.attrib['alt'], obj.Description())
+
+        # set alternate text
+        alt_text = u'Murciélago hindú'
+        self.tile.data['alt_text'] = alt_text
+        html = etree.HTML(self.tile())
+        img = html.find('*//img')
+        self.assertIsNotNone(img)
+        self.assertIn('alt', img.attrib)
+        self.assertEqual(img.attrib['alt'], alt_text)
 
         # the localized time must be there
         date = api.portal.get_localized_time(obj.Date(), long_format=True)

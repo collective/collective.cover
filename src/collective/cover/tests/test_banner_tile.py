@@ -94,12 +94,23 @@ class BannerTileTestCase(TestTileMixin, unittest.TestCase):
         self.assertNotIn(msg, self.tile())
 
     def test_render_with_image(self):
+        from lxml import etree
         obj = self.portal['my-image']
         self.tile.populate_with_object(obj)
-        rendered = self.tile()
-        # the image is there and the alt attribute is set
-        self.assertIn('<img ', rendered)
-        self.assertIn('alt="This image was created for testing purposes"', rendered)
+        html = etree.HTML(self.tile())
+        img = html.find('*//img')
+        self.assertIsNotNone(img)
+        self.assertIn('alt', img.attrib)
+        self.assertEqual(img.attrib['alt'], obj.Description())
+
+        # set alternate text
+        alt_text = u'Murciélago hindú'
+        self.tile.data['alt_text'] = alt_text
+        html = etree.HTML(self.tile())
+        img = html.find('*//img')
+        self.assertIsNotNone(img)
+        self.assertIn('alt', img.attrib)
+        self.assertEqual(img.attrib['alt'], alt_text)
 
     def test_render_with_link(self):
         obj = self.portal['my-link']

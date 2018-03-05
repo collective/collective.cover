@@ -3,7 +3,9 @@ from Acquisition import aq_base
 from collective.cover import _
 from collective.cover.tiles.base import IPersistentCoverTile
 from collective.cover.tiles.base import PersistentCoverTile
+from collective.cover.tiles.configuration_view import IDefaultConfigureForm
 from collective.cover.utils import get_types_use_view_action_in_listings
+from plone.autoform import directives as form
 from plone.namedfile import field
 from plone.tiles.interfaces import ITileDataManager
 from plone.uuid.interfaces import IUUID
@@ -25,12 +27,23 @@ class IBannerTile(IPersistentCoverTile):
         required=False,
     )
 
-    remote_url = schema.TextLine(
+    form.omitted(IDefaultConfigureForm, 'alt_text')
+    alt_text = schema.TextLine(
+        title=_(
+            u'label_alt_text',
+            default=u'Alternative Text'),
+        description=_(
+            u'help_alt_text',
+            default=u'Provides a textual alternative to non-text content in web pages.'),  # noqa E501
+        required=False,
+    )
+
+    remote_url = schema.TextLine(  # FIXME: this must be schema.URI()
         title=_(u'URL'),
         required=False,
     )
 
-    uuid = schema.TextLine(
+    uuid = schema.TextLine(  # FIXME: this must be schema.ASCIILine()
         title=_(u'UUID'),
         required=False,
         readonly=True,
@@ -82,6 +95,8 @@ class BannerTile(PersistentCoverTile):
             'description': description,
             'uuid': IUUID(obj),
             'image': image,
+            # FIXME: https://github.com/collective/collective.cover/issues/778
+            'alt_text': description or title,
             'remote_url': remote_url,
         })
 
@@ -110,5 +125,6 @@ class BannerTile(PersistentCoverTile):
 
     @property
     def alt(self):
-        """Return the alt attribute for the image."""
-        return self.data.get('description') or self.data.get('title')
+        """Return alternative text dealing with form init issues."""
+        alt_text = self.data['alt_text']
+        return alt_text if alt_text is not None else u''
