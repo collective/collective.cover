@@ -6,7 +6,8 @@ There's a frood who really knows where his towel is.
 1.6b6 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
-- Nothing changed yet.
+- Provide alternative text for image fields in tiles (closes `#628 <https://github.com/collective/collective.cover/issues/628>`_).
+  [hvelarde]
 
 
 1.6b5 (2017-11-21)
