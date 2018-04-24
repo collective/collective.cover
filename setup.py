@@ -91,6 +91,7 @@ setup(name='collective.cover',
       ],
       extras_require={
           'test': [
+              'cssselect',
               'mock',
               'plone.app.robotframework',
               'plone.app.testing [robot]',

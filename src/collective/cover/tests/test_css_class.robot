@@ -47,7 +47,9 @@ Test CSS Class
     # change style
     Open Layout Tab
     Click Config from Tile  ${tile_class}
-    Select From List  css=select#collective-cover-basic-css_class  ${border_class}
+    Click Button  css=#formfield-collective-cover-basic-css_class .cssclasswidget
+    Click Element  name=${border_class}
+    Click Element  css=.cssclasswidget-overlay
     Wait until element is visible  id=buttons-save
     Click Button  id=buttons-save
     Save Cover Layout

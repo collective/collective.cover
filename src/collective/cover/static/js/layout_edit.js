@@ -30,6 +30,9 @@
         }
       }
       value = value.trim();
+      if (value === '') {
+        value = 'tile-default';
+      }
       this.$value.val(value);
       if (this.callback instanceof Function) {
         this.callback(value);
@@ -51,31 +54,31 @@
       }
       this.update();
     };
-    CSSClassWidget.prototype.getSelected = function() {
-      return this.$value.val();
-    };
     CSSClassWidget.prototype.onButtonClick = function(e) {
       e.preventDefault();
-      var $dialog = this.$el.parents('.ui-dialog');
+
       $('.cssclasswidget-overlay').remove();
       $('.cssclasswidget-classlist').remove();
+
       this.open = !this.open;
       if (!this.open) {
         return;
       }
+
       var $overlay = $('<div class="cssclasswidget-overlay">');
       $overlay.insertAfter(this.$el);
       $overlay.on('click', function(e) {
         $('.cssclasswidget-overlay').remove();
         $('.cssclasswidget-classlist').remove();
       });
+
       var $classlist = $('<ul class="cssclasswidget-classlist">');
       var i, key, item, $item, len;
       value = '';
       for (i = 0, len = this.order.length; i < len; i++) {
         key = this.order[i];
         item = this.options[key];
-        $item = $('<li><input type="checkbox" value="'+key+'" /> '+item.content+'</li>');
+        $item = $('<li><input name="'+key+'" type="checkbox" value="'+key+'" /> '+item.content+'</li>');
         if (item.selected) {
           $('input', $item).attr('checked', 'checked');
         }
