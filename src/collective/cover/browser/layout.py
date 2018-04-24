@@ -33,7 +33,17 @@ class LayoutEdit(BrowserView):
     def setup(self):
         self.context = aq_inner(self.context)
         vocab = TileStylesVocabulary()
-        self.css_classes = vocab(self.context)
+        items = [
+            {
+                'content': item.title,
+                'value': item.value,
+                'selected': False,
+            }
+            for item in vocab(self.context)
+            if item.value != 'tile-default'
+        ]
+        self.css_classes = json.dumps(items)
+
         # lock the object when someone is editing it
         notify(EditBegunEvent(self.context))
 

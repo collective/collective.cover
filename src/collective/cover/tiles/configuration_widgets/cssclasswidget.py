@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
-
 from interfaces import ICSSClassWidget
 from z3c.form import interfaces
 from z3c.form.browser import widget
 from z3c.form.browser.select import SelectWidget
 from z3c.form.widget import FieldWidget
 
+import json
 import zope.interface
 import zope.schema
 
@@ -20,6 +20,21 @@ class CSSClassWidget(SelectWidget):
         widget.addFieldClass(self)
         if isinstance(self.context.get('css_class'), unicode):
             self.value = [self.context.get('css_class')]
+
+    def options(self):
+        items = [
+            {
+                key: value
+                for key, value in item.iteritems()
+                if key != 'id'
+            }
+            for item in self.items
+            if item['value'] != 'tile-default'
+        ]
+        return json.dumps(items)
+
+    def selected(self):
+        return self.context.get('css_class', 'tile-default')
 
 
 @zope.component.adapter(zope.schema.interfaces.IChoice,

@@ -51,13 +51,9 @@
                         <div id="slider"></div>
                     </div>
                     <div id="class-chooser" title="Choose Class">
-                        <select>
-                            <tal:classes repeat="item view/css_classes">
-                                <option tal:attributes="value item/value"
-                                        tal:content="item/title">
-                                </option>
-                            </tal:classes>
-                        </select>
+                        <input class="cssclasswidget" type="button" value="Select options ▼"
+                               tal:attributes="data-options view/css_classes" />
+                        <input class="cssclasswidget-selected" type="hidden" value="" />
                     </div>
                 </div>
                 <div id="group-select-list" class="modal hide" tal:replace="structure context/@@group_select"></div>
