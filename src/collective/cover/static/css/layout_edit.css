@@ -747,14 +747,22 @@ body .cssclasswidget-classlist
 
     list-style-type: none !important;
 
-    cursor: pointer;
-
     border: 1px solid #A9A9A9;
     background: #FFF;
 }
+body .cssclasswidget-classlist li
+{
+    margin-bottom: .2rem;
+}
 body .cssclasswidget-classlist input
 {
+    vertical-align: bottom;
+}
+body .cssclasswidget-classlist span
+{
     cursor: pointer;
+    padding-left: 1.2rem;
+    margin-left: -1rem;
 }
 body .cssclasswidget-overlay
 {

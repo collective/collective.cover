@@ -78,7 +78,7 @@
       for (i = 0, len = this.order.length; i < len; i++) {
         key = this.order[i];
         item = this.options[key];
-        $item = $('<li><input name="'+key+'" type="checkbox" value="'+key+'" /> '+item.content+'</li>');
+        $item = $('<li><input name="'+key+'" type="checkbox" value="'+key+'" /><span class="cssclasswidget-'+key+'">'+item.content+'</span></li>');
         if (item.selected) {
           $('input', $item).attr('checked', 'checked');
         }
@@ -87,19 +87,11 @@
       $classlist.insertAfter(this.$el);
       $classlist.offset(this.$el.offset());
       $classlist.css('transform', 'translateY('+(this.$el.height()+4)+'px)');
-      $('input', $classlist).on('change', this.onCheckboxChange.bind(this));
-      $('li', $classlist).on('click', this.onItemClick.bind(this));
-    };
-    CSSClassWidget.prototype.onCheckboxChange = function(e) {
-      e.preventDefault();
-      var key = e.target.value;
-      debugger;
-      this.options[key].selected = $(e.target).is(':checked');
-      this.update();
+      $('span', $classlist).on('click', this.onItemClick.bind(this));
     };
     CSSClassWidget.prototype.onItemClick = function(e) {
       e.preventDefault();
-      var $checkbox = $('input', e.target);
+      var $checkbox = $(e.target).prev()
       var key = $checkbox.attr('name');
       if ($checkbox.is(':checked')) {
         $checkbox.removeAttr('checked');
