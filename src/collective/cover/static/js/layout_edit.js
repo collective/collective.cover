@@ -88,11 +88,25 @@
       $classlist.offset(this.$el.offset());
       $classlist.css('transform', 'translateY('+(this.$el.height()+4)+'px)');
       $('input', $classlist).on('change', this.onCheckboxChange.bind(this));
+      $('li', $classlist).on('click', this.onItemClick.bind(this));
     };
     CSSClassWidget.prototype.onCheckboxChange = function(e) {
       e.preventDefault();
       var key = e.target.value;
+      debugger;
       this.options[key].selected = $(e.target).is(':checked');
+      this.update();
+    };
+    CSSClassWidget.prototype.onItemClick = function(e) {
+      e.preventDefault();
+      var $checkbox = $('input', e.target);
+      var key = $checkbox.attr('name');
+      if ($checkbox.is(':checked')) {
+        $checkbox.removeAttr('checked');
+      } else {
+        $checkbox.attr('checked', 'checked')
+      }
+      this.options[key].selected = $checkbox.is(':checked');
       this.update();
     };
     return CSSClassWidget;

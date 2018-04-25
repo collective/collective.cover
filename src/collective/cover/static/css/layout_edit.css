@@ -731,7 +731,12 @@ input[type='submit'].btn::-moz-focus-inner
 {
     cursor: move;
 }
-body .cssclasswidget-classlist {
+body .cssclasswidget
+{
+    cursor: pointer;
+}
+body .cssclasswidget-classlist
+{
     position: absolute;
     z-index: 1001;
 
@@ -742,14 +747,21 @@ body .cssclasswidget-classlist {
 
     list-style-type: none !important;
 
+    cursor: pointer;
+
     border: 1px solid #A9A9A9;
     background: #FFF;
 }
-body .cssclasswidget-overlay {
+body .cssclasswidget-classlist input
+{
+    cursor: pointer;
+}
+body .cssclasswidget-overlay
+{
     position: fixed;
     z-index: 1000;
     top: 0;
+    right: 0;
     bottom: 0;
     left: 0;
-    right: 0;
 }
