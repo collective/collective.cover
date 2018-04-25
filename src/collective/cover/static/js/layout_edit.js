@@ -553,7 +553,7 @@
           var $widget = $('#class-chooser > .cssclasswidget');
           var $value = $('#class-chooser > .cssclasswidget-selected');
           $value.val($target.attr('data-css-class'));
-          var widget = new CSSClassWidget($widget, function(value) {
+          new CSSClassWidget($widget, function(value) {
             $target.attr('data-css-class', value);
           });
           $('#class-chooser').dialog("open");

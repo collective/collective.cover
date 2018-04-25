@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from interfaces import ICSSClassWidget
+from six import iteritems
 from z3c.form import interfaces
 from z3c.form.browser import widget
 from z3c.form.browser.select import SelectWidget
@@ -25,7 +26,7 @@ class CSSClassWidget(SelectWidget):
         items = [
             {
                 key: value
-                for key, value in item.iteritems()
+                for key, value in iteritems(item)
                 if key != 'id'
             }
             for item in self.items

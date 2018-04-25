@@ -7,7 +7,8 @@
      i18n:domain="collective.cover"
      tal:omit-tag="">
     <input class="cssclasswidget" type="button" value="Select options ▼"
-           tal:attributes="data-options view/options" />
+           tal:attributes="data-options view/options"
+           i18n:attributes="value" />
     <input class="cssclasswidget-selected" type="hidden"
            tal:attributes="id view/id;
                            name string:${view/name}:list;
