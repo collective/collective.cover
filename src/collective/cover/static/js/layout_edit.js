@@ -67,10 +67,7 @@
 
       var $overlay = $('<div class="cssclasswidget-overlay">');
       $overlay.insertAfter(this.$el);
-      $overlay.on('click', function(e) {
-        $('.cssclasswidget-overlay').remove();
-        $('.cssclasswidget-classlist').remove();
-      });
+      $overlay.on('click', this.onOverlayClick.bind(this));
 
       var $classlist = $('<ul class="cssclasswidget-classlist">');
       var i, key, item, $item, len;
@@ -88,6 +85,12 @@
       $classlist.offset(this.$el.offset());
       $classlist.css('transform', 'translateY('+(this.$el.height()+4)+'px)');
       $('span', $classlist).on('click', this.onItemClick.bind(this));
+    };
+    CSSClassWidget.prototype.onOverlayClick = function(e) {
+      e.preventDefault();
+      this.open = false;
+      $('.cssclasswidget-overlay').remove();
+      $('.cssclasswidget-classlist').remove();
     };
     CSSClassWidget.prototype.onItemClick = function(e) {
       e.preventDefault();
