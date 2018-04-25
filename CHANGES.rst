@@ -6,6 +6,9 @@ There's a frood who really knows where his towel is.
 1.6b6 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Select multiple CSS class in cover configuration.
+  [rodfersou]
+
 - Provide alternative text for image fields in tiles (closes `#628 <https://github.com/collective/collective.cover/issues/628>`_).
   [hvelarde]
 
