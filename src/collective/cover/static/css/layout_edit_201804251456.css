@@ -731,3 +731,45 @@ input[type='submit'].btn::-moz-focus-inner
 {
     cursor: move;
 }
+body .cssclasswidget
+{
+    cursor: pointer;
+}
+body .cssclasswidget-classlist
+{
+    position: absolute;
+    z-index: 1001;
+
+    display: flex;
+    flex-direction: column;
+
+    padding: .4rem;
+
+    list-style-type: none !important;
+
+    border: 1px solid #A9A9A9;
+    background: #FFF;
+}
+body .cssclasswidget-classlist li
+{
+    margin-bottom: .2rem;
+}
+body .cssclasswidget-classlist input
+{
+    vertical-align: bottom;
+}
+body .cssclasswidget-classlist span
+{
+    cursor: pointer;
+    padding-left: 1.2rem;
+    margin-left: -1rem;
+}
+body .cssclasswidget-overlay
+{
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}

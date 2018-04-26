@@ -695,3 +695,14 @@ class Upgrade18to19TestCase(UpgradeTestCaseBase):
         # run the upgrade step to validate the update
         self._do_upgrade_step(step)
         self.assertIn(JS, js_tool.getResourceIds())
+
+
+class Upgrade19to20TestCase(UpgradeTestCaseBase):
+
+    def setUp(self):
+        UpgradeTestCaseBase.setUp(self, u'19', u'20')
+
+    def test_registrations(self):
+        version = self.setup.getLastVersionForProfile(self.profile_id)[0]
+        self.assertGreaterEqual(int(version), int(self.to_version))
+        self.assertEqual(self._how_many_upgrades_to_do(), 1)

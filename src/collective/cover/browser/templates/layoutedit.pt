@@ -26,7 +26,7 @@
         <metal:styles fill-slot="style_slot">
             <link rel="stylesheet" type="text/css" media="screen" href=""
                   tal:define="navroot context/@@plone_portal_state/navigation_root_url"
-                  tal:attributes="href string:${navroot}/++resource++collective.cover/css/layout_edit.css" />
+                  tal:attributes="href string:${navroot}/++resource++collective.cover/css/layout_edit_201804251456.css" />
         </metal:styles>
         <metal:main fill-slot="main">
             <tal:block tal:define="can_export_layout view/can_export_layout">
@@ -50,14 +50,12 @@
                         </p>
                         <div id="slider"></div>
                     </div>
-                    <div id="class-chooser" title="Choose Class">
-                        <select>
-                            <tal:classes repeat="item view/css_classes">
-                                <option tal:attributes="value item/value"
-                                        tal:content="item/title">
-                                </option>
-                            </tal:classes>
-                        </select>
+                    <div id="class-chooser" title="Choose Class"
+                         i18n:attributes="title">
+                        <input class="cssclasswidget" type="button" value="Select options ▼"
+                               tal:attributes="data-options view/css_classes"
+                               i18n:attributes="value" />
+                        <input class="cssclasswidget-selected" type="hidden" value="" />
                     </div>
                 </div>
                 <div id="group-select-list" class="modal hide" tal:replace="structure context/@@group_select"></div>
