@@ -20,4 +20,3 @@ msgstr "Remplir"
 
 msgid "Layout"
 msgstr "Organiser"
-

@@ -6,7 +6,7 @@
      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
      i18n:domain="collective.cover"
      tal:omit-tag="">
-    <input class="cssclasswidget" type="button" value="Select options ▼"
+    <input class="cssclasswidget" type="button" value="Select&hellip; &#9660;"
            tal:attributes="data-options view/options"
            i18n:attributes="value" />
     <input class="cssclasswidget-selected" type="hidden"

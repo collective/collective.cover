@@ -22,4 +22,3 @@ msgstr "Componi la pagina"
 
 msgid "Layout"
 msgstr "Layout"
-

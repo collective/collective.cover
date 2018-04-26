@@ -50,9 +50,8 @@
                         </p>
                         <div id="slider"></div>
                     </div>
-                    <div id="class-chooser" title="Choose Class"
-                         i18n:attributes="title">
-                        <input class="cssclasswidget" type="button" value="Select options ▼"
+                    <div id="class-chooser">
+                        <input class="cssclasswidget" type="button" value="Select&hellip; &#9660;"
                                tal:attributes="data-options view/css_classes"
                                i18n:attributes="value" />
                         <input class="cssclasswidget-selected" type="hidden" value="" />

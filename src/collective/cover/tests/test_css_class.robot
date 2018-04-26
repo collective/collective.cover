@@ -18,7 +18,7 @@ ${tile_class}  div.cover-tile
 
 *** Test cases ***
 
-Test CSS Class
+Test CSS Classes
     Enable Autologin as  Site Administrator
     Go to Homepage
 

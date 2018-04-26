@@ -6,6 +6,9 @@ There's a frood who really knows where his towel is.
 1.6b6 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Update i18n, Brazilian Portuguese and Spanish translations.
+  [hvelarde]
+
 - Allow selection of multiple CSS classes in tile configuration.
   [rodfersou]
 

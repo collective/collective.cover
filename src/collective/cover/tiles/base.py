@@ -49,7 +49,7 @@ class IPersistentCoverTile(model.Schema):
     """
 
     css_class = Choice(
-        title=_(u'CSS Class'),
+        title=_(u'CSS Classes'),
         vocabulary='collective.cover.TileStyles',
         required=True,
         default=u'tile-default',

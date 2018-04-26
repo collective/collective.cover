@@ -49,7 +49,7 @@ class ICoverSettings(model.Schema):
             u'Format is title|className, one per line.'),
         required=False,
         default=set(),
-        value_type=schema.ASCIILine(title=_(u'CSS Class')),
+        value_type=schema.ASCIILine(title=_(u'CSS Classes')),
     )
 
     grid_system = schema.Choice(

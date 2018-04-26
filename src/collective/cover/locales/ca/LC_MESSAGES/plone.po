@@ -20,4 +20,3 @@ msgstr "Compondre"
 
 msgid "Layout"
 msgstr "Disseny"
-

@@ -24,4 +24,3 @@ msgstr "Komponere"
 
 msgid "Layout"
 msgstr "Layout"
-

@@ -22,4 +22,3 @@ msgstr "Gestalten"
 
 msgid "Layout"
 msgstr "Stilvorlagen"
-

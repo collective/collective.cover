@@ -22,4 +22,3 @@ msgstr "作成"
 
 msgid "Layout"
 msgstr "レイアウト"
-

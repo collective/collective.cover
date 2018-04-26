@@ -19,4 +19,3 @@ msgstr "封面"
 
 msgid "Layout"
 msgstr "版面"
-

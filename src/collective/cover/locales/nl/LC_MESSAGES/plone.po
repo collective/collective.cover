@@ -22,4 +22,3 @@ msgstr "Stel samen"
 
 msgid "Layout"
 msgstr "Indeling"
-
