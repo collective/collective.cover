@@ -40,7 +40,7 @@ Test Link Integrity on Basic Tile
     Go to Homepage
     Click Link  link=My document
     Click Delete Action
-    Page Should Contain  Potential link breakage
+    Wait Until Page Contains  Potential link breakage
     Click Button  Cancel
 
 Test Link Integrity on RichText Tile
@@ -64,7 +64,7 @@ Test Link Integrity on RichText Tile
     Go to Homepage
     Click Link  link=My document
     Click Delete Action
-    Page Should Contain  Potential link breakage
+    Wait Until Page Contains  Potential link breakage
     Click Button  Cancel
 
 *** Keywords ***
