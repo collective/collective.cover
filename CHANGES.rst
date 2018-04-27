@@ -3,7 +3,7 @@ Changelog
 
 There's a frood who really knows where his towel is.
 
-1.7b2 (unreleased)
+1.7b2 (2018-04-27)
 ^^^^^^^^^^^^^^^^^^
 
 - Fix multiple CSS class selection in tile configuration for tiles different from basic tile.
