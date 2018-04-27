@@ -6,7 +6,8 @@ There's a frood who really knows where his towel is.
 1.7b2 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
-- Nothing changed yet.
+- Fix multiple CSS class selection in tile configuration for tiles different from basic tile.
+  [rodfersou]
 
 
 1.7b1 (2018-04-27)

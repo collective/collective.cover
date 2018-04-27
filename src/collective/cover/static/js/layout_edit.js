@@ -604,7 +604,7 @@
             success: function(data) {
               $('#tile-configure').html(data);
               // Make sure CSS field is in first place
-              var css_id = 'formfield-collective-cover-basic-css_class';
+              var css_id = $('[id$=css_class]').attr('id');
               var first = $('#configure_tile div.field:first');
               if (first.attr('id') != css_id) {
                 $('#' + css_id).insertBefore(first);
