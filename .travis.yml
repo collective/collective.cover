@@ -39,9 +39,15 @@ script:
 - bin/test
 - bin/pylint --py3k --disable=no-absolute-import src/collective/cover || true
 after_success:
-- bin/createcoverage --output-dir=htmlcov -t "--layer=!Robot"
+- pip install coverage
+- coverage run bin/test
+# Coveralls
 - pip install coveralls
 - coveralls
+# Codacy
+- coverage xml
+- pip install codacy-coverage
+- python-codacy-coverage -r coverage.xml
 notifications:
   irc:
     on_success: change
