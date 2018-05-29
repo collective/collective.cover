@@ -41,7 +41,7 @@ script:
 - bin/pylint --py3k --disable=no-absolute-import src/collective/cover || true
 after_success:
 - pip install coverage
-- coverage run bin/test
+- coverage run bin/test --layer=\!Robot
 # Coveralls
 - pip install coveralls
 - coveralls
