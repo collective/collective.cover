@@ -6,6 +6,13 @@ There's a frood who really knows where his towel is.
 1.7b4 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+.. warning::
+    Upgrading from versions below 1.2b1 is no longer supported.
+    You must upgrade at least to version 1.2b1 before upgrading to this release.
+
+- Remove upgrade steps for old, unsupported releases.
+  [hvelarde]
+
 - Remove deprecated adapters ``CollectionUIDsProvider``, ``FolderUIDsProvider`` and ``GenericUIDsProvider``.
   [hvelarde]
 
