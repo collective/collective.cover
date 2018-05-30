@@ -2,8 +2,7 @@
     xmlns="http://namespaces.zope.org/zope"
     xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
     xmlns:i18n="http://namespaces.zope.org/i18n"
-    i18n_domain="collective.cover"
-    >
+    i18n_domain="collective.cover">
 
   <genericsetup:registerProfile
       name="default"
@@ -30,100 +29,5 @@
       />
 
   <utility factory=".setuphandlers.HiddenProfiles" name="collective.cover" />
-
-  <genericsetup:upgradeSteps
-      source="5"
-      destination="6"
-      profile="collective.cover:default"
-      >
-
-    <genericsetup:upgradeStep
-        title="issue 201"
-        description="Depend on collective.js.bootstrap."
-        handler=".upgrades.issue_201"
-        />
-
-    <genericsetup:upgradeStep
-        title="issue 303"
-        description="Remove unused bundles from portal_javascript."
-        handler=".upgrades.issue_303"
-        />
-
-  </genericsetup:upgradeSteps>
-
-  <genericsetup:upgradeSteps
-      source="6"
-      destination="7"
-      profile="collective.cover:default"
-      >
-
-    <genericsetup:upgradeStep
-        title="issue 330"
-        description="Add grid_system field to registry"
-        handler=".upgrades.issue_330"
-        />
-
-    <genericsetup:upgradeStep
-        title="New permission for Layout edit tab"
-        description="Protect Layout edit tab with new permission granted to Managers and Site Admins"
-        handler=".upgrades.layout_edit_permission"
-        />
-
-    <genericsetup:upgradeStep
-        title="Cook css resources"
-        description="There were changes in the css files, so we need to cook the css resources"
-        handler=".upgrades.cook_css_resources"
-        />
-
-  </genericsetup:upgradeSteps>
-
-  <genericsetup:upgradeSteps
-      source="7"
-      destination="8"
-      profile="collective.cover:default">
-
-    <genericsetup:upgradeStep
-        title="issue_371"
-        description="Fix carousel tile so it doesn't break cover when dropping content with no image field."
-        handler=".upgrades.cook_css_resources"
-        />
-  </genericsetup:upgradeSteps>
-
-  <genericsetup:upgradeSteps
-      source="8"
-      destination="9"
-      profile="collective.cover:default">
-
-    <genericsetup:upgradeStep
-        title="issue_423"
-        description="Allow Site Administrator to access configlet."
-        handler=".upgrades.change_configlet_permissions"
-        />
-
-    <genericsetup:upgradeStep
-        title="Cook CSS resources"
-        description="There were changes in the CSS files, so we need to cook the resources."
-        handler=".upgrades.cook_css_resources"
-        />
-
-    <genericsetup:upgradeStep
-        title="Cook JS resources"
-        description="There were changes in the JS files, so we need to cook the resources."
-        handler=".upgrades.cook_javascript_resources"
-        />
-  </genericsetup:upgradeSteps>
-
-  <genericsetup:upgradeSteps
-      source="9"
-      destination="10"
-      profile="collective.cover:default">
-
-    <genericsetup:upgradeStep
-        title="Upgrade carousel tiles"
-        description="Carousel tile now allows to set a custom URL to items. Upgrade existing ones to support this."
-        handler=".upgrades.upgrade_carousel_tiles_custom_url"
-        />
-
-  </genericsetup:upgradeSteps>
 
 </configure>

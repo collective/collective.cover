@@ -1,8 +1,4 @@
 <configure xmlns="http://namespaces.zope.org/zope">
-
-  <include package=".v11" />
-  <include package=".v12" />
-  <include package=".v13" />
   <include package=".v14" />
   <include package=".v15" />
   <include package=".v16" />
@@ -11,5 +7,4 @@
   <include package=".v19" />
   <include package=".v20" />
   <include package=".v21" />
-
 </configure>
