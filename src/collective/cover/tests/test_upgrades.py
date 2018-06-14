@@ -526,7 +526,7 @@ class Upgrade13to14TestCase(UpgradeTestCaseBase):
         # address also an issue with Setup permission
         title = u'Register calendar tile'
         step = self._get_upgrade_step(title)
-        assert step is not None
+        self.assertIsNotNone(step)
 
         # simulate state on previous version
         tile = u'collective.cover.calendar'
@@ -560,7 +560,7 @@ class Upgrade13to14TestCase(UpgradeTestCaseBase):
         # address also an issue with Setup permission
         title = u'Register calendar script'
         step = self._get_upgrade_step(title)
-        assert step is not None
+        self.assertIsNotNone(step)
 
         # simulate state on previous version
         js_tool = api.portal.get_tool('portal_javascripts')
@@ -589,7 +589,7 @@ class Upgrade14to15TestCase(UpgradeTestCaseBase):
         from persistent.dict import PersistentDict
         title = u'Fix image field modification time'
         step = self._get_upgrade_step(title)
-        assert step is not None
+        self.assertIsNotNone(step)
 
         # simulate state on previous version
         cover = self._create_cover('test-cover', 'Empty layout')
