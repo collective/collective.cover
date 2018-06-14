@@ -13,13 +13,10 @@ addons:
     permissions: public-read
     paths:
     - $(find parts/test -type f | tr "\n" ":")
-  firefox: 45.8.0esr
+  firefox: latest-esr
 env:
   matrix:
     - PLONE_VERSION=4.3
-    - PLONE_VERSION=4.3 DEXTERITY_ONLY=true
-    - PLONE_VERSION=4.3 VERSIONS=versions:plone.app.jquery=1.9.2
-    - PLONE_VERSION=5.1
 matrix:
   fast_finish: true
 before_install:
