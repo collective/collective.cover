@@ -1,3 +1,4 @@
 exclude_paths:
 - bootstrap.py
 - setup.py
+- src/collective/cover/static/js/vendor/*
