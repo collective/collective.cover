@@ -13,7 +13,7 @@ addons:
     permissions: public-read
     paths:
     - $(find parts/test -type f | tr "\n" ":")
-  firefox: latest-esr
+  firefox: latest
 env:
   matrix:
     - PLONE_VERSION=4.3
@@ -22,6 +22,10 @@ matrix:
 before_install:
 # FIXME: I have no idea how and why six==1.11.0 is being installed
 - pip uninstall -y six
+# install geckodriver
+- wget https://github.com/mozilla/geckodriver/releases/download/v0.20.1/geckodriver-v0.20.1-linux64.tar.gz
+- tar -xvzf geckodriver-v0.20.1-linux64.tar.gz
+- mv geckodriver $HOME/firefox-latest/firefox
 install:
 - sed -ie "s#test-4.3#test-$PLONE_VERSION#" buildout.cfg
 - sed -ie "s#versions-4.3#versions-$PLONE_VERSION#" buildout.cfg
