@@ -25,7 +25,8 @@ before_install:
 # install geckodriver
 - wget https://github.com/mozilla/geckodriver/releases/download/v0.20.1/geckodriver-v0.20.1-linux64.tar.gz
 - tar -xvzf geckodriver-v0.20.1-linux64.tar.gz
-- mv geckodriver $HOME/firefox-latest/firefox
+- export PATH=$(pwd):$PATH
+- export MOZ_HEADLESS=1
 install:
 - sed -ie "s#test-4.3#test-$PLONE_VERSION#" buildout.cfg
 - sed -ie "s#versions-4.3#versions-$PLONE_VERSION#" buildout.cfg
@@ -39,7 +40,7 @@ before_script:
   - firefox -v
 script:
 - bin/code-analysis
-- bin/test
+- bin/test --layer=Robot --test="!(layout|list)"
 - bin/pylint --py3k --disable=no-absolute-import src/collective/cover || true
 after_success:
 - pip install coverage
