@@ -741,8 +741,10 @@ body .cssclasswidget-classlist
     z-index: 1001;
 
     display: flex;
+    overflow: auto;
     flex-direction: column;
 
+    max-height: 4rem;
     padding: .4rem;
 
     list-style-type: none !important;
