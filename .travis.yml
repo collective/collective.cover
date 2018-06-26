@@ -39,7 +39,7 @@ before_script:
 script:
 - bin/code-analysis
 - bin/test
-- bin/pylint --py3k --disable=no-absolute-import src/collective/cover || true
+- bin/pylint --py3k --disable=no-absolute-import src/collective/cover
 after_success:
 - pip install coverage
 - coverage run bin/test --layer=\!Robot
