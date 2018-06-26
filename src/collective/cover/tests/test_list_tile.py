@@ -14,6 +14,7 @@ from plone.app.testing import TEST_USER_NAME
 from plone.tiles.interfaces import ITileDataManager
 from plone.uuid.interfaces import IUUID
 
+import six
 import unittest
 
 
@@ -261,7 +262,7 @@ class ListTileTestCase(TestTileMixin, unittest.TestCase):
         self.tile.set_tile_configuration(tile_conf)
         obj = self.portal['my-image']
         self.assertTrue(self.tile.thumbnail(obj))
-        self.assertIsInstance(self.tile(), unicode)
+        self.assertIsInstance(self.tile(), six.text_type)
 
     def test_populate_with_collection(self):
         with api.env.adopt_roles(['Manager']):

@@ -21,6 +21,7 @@ from zope.component.globalregistry import provideHandler
 from zope.globalrequest import setRequest
 from zope.interface import alsoProvides
 
+import six
 import unittest
 
 
@@ -97,7 +98,7 @@ class BasicTileTestCase(TestTileMixin, unittest.TestCase):
         self.assertEqual('This news item was created for testing purposes',
                          self.tile.data['description'])
 
-    def test_populate_with_object_unicode(self):
+    def test_populate_with_object_text(self):
         """We must store unicode always on schema.TextLine and schema.Text
         fields to avoid UnicodeDecodeError.
         """
@@ -110,8 +111,8 @@ class BasicTileTestCase(TestTileMixin, unittest.TestCase):
         self.tile.populate_with_object(obj)
         self.assertEqual(title, self.tile.data['title'])
         self.assertEqual(description, self.tile.data['description'])
-        self.assertIsInstance(self.tile.data.get('title'), unicode)
-        self.assertIsInstance(self.tile.data.get('description'), unicode)
+        self.assertIsInstance(self.tile.data.get('title'), six.text_type)
+        self.assertIsInstance(self.tile.data.get('description'), six.text_type)
 
     def test_populate_with_object_string(self):
         """This test complements test_populate_with_object_unicode
@@ -124,9 +125,10 @@ class BasicTileTestCase(TestTileMixin, unittest.TestCase):
         obj.setDescription(description)
         obj.reindexObject()
         self.tile.populate_with_object(obj)
-        self.assertEqual(unicode(title, 'utf-8'), self.tile.data.get('title'))
         self.assertEqual(
-            unicode(description, 'utf-8'), self.tile.data.get('description'))
+            six.text_type(title, 'utf-8'), self.tile.data.get('title'))
+        self.assertEqual(
+            six.text_type(description, 'utf-8'), self.tile.data.get('description'))
 
     def test_render_empty(self):
         msg = 'Please drag&amp;drop some content here to populate the tile.'

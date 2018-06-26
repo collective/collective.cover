@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-
 from collective.cover.testing import INTEGRATION_TESTING
 from collective.cover.widgets.textlinessortable import TextLinesSortableWidget
 
+import six
 import unittest
 
 
@@ -189,14 +189,14 @@ class TestTextLinesSortableWidget(unittest.TestCase):
         self.assertEqual(
             widget.get_custom_description(obj1.UID()), u'áéíóú')
         self.assertIsInstance(
-            widget.get_custom_title(obj1.UID()), unicode)
+            widget.get_custom_title(obj1.UID()), six.text_type)
         self.assertIsInstance(
-            widget.get_custom_description(obj1.UID()), unicode)
+            widget.get_custom_description(obj1.UID()), six.text_type)
         self.assertEqual(
             widget.get_custom_title(obj2.UID()), u'áéíóú')
         self.assertEqual(
             widget.get_custom_description(obj2.UID()), u'áéíóú')
         self.assertIsInstance(
-            widget.get_custom_title(obj2.UID()), unicode)
+            widget.get_custom_title(obj2.UID()), six.text_type)
         self.assertIsInstance(
-            widget.get_custom_description(obj2.UID()), unicode)
+            widget.get_custom_description(obj2.UID()), six.text_type)

@@ -6,6 +6,7 @@ from collective.cover.tiles.file import IFileTile
 from plone import api
 from plone.uuid.interfaces import IUUID
 
+import six
 import unittest
 
 
@@ -34,7 +35,7 @@ class FileTileTestCase(TestTileMixin, unittest.TestCase):
     def test_tile_is_empty(self):
         self.assertTrue(self.tile.is_empty())
 
-    def test_populate_tile_with_object_unicode(self):
+    def test_populate_tile_with_object_text(self):
         """We must store unicode always on schema.TextLine and schema.Text
         fields to avoid UnicodeDecodeError.
         """
@@ -48,8 +49,8 @@ class FileTileTestCase(TestTileMixin, unittest.TestCase):
         self.assertEqual(self.tile.data.get('title'), title)
         self.assertEqual(self.tile.data.get('description'), description)
         self.assertEqual(self.tile.data.get('uuid'), IUUID(obj))
-        self.assertIsInstance(self.tile.data.get('title'), unicode)
-        self.assertIsInstance(self.tile.data.get('description'), unicode)
+        self.assertIsInstance(self.tile.data.get('title'), six.text_type)
+        self.assertIsInstance(self.tile.data.get('description'), six.text_type)
 
     def test_populate_tile_with_object_string(self):
         """This test complements test_populate_with_object_unicode
@@ -62,9 +63,10 @@ class FileTileTestCase(TestTileMixin, unittest.TestCase):
         obj.setDescription(description)
         obj.reindexObject()
         self.tile.populate_with_object(obj)
-        self.assertEqual(unicode(title, 'utf-8'), self.tile.data.get('title'))
         self.assertEqual(
-            unicode(description, 'utf-8'), self.tile.data.get('description'))
+            six.text_type(title, 'utf-8'), self.tile.data.get('title'))
+        self.assertEqual(
+            six.text_type(description, 'utf-8'), self.tile.data.get('description'))
         self.assertEqual(self.tile.data.get('uuid'), IUUID(obj))
 
     def test_populate_tile_with_invalid_object(self):

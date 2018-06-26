@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 from interfaces import ICSSClassWidget
-from six import iteritems
 from z3c.form import interfaces
 from z3c.form.browser import widget
 from z3c.form.browser.select import SelectWidget
 from z3c.form.widget import FieldWidget
 
 import json
+import six
 import zope.interface
 import zope.schema
 
@@ -19,14 +19,14 @@ class CSSClassWidget(SelectWidget):
         """See z3c.form.interfaces.IWidget."""
         super(SelectWidget, self).update()
         widget.addFieldClass(self)
-        if isinstance(self.context.get('css_class'), unicode):
+        if isinstance(self.context.get('css_class'), six.text_type):
             self.value = [self.context.get('css_class')]
 
     def options(self):
         items = [
             {
                 key: value
-                for key, value in iteritems(item)
+                for key, value in six.iteritems(item)
                 if key != 'id'
             }
             for item in self.items

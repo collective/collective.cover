@@ -22,6 +22,7 @@ from zope.interface import implementer
 from zope.schema import getFieldsInOrder
 
 import logging
+import six
 import warnings
 
 
@@ -209,7 +210,7 @@ class ListTile(PersistentCoverTile):
         for uuid in uuids:
             if uuid not in uuids_dict:
                 entry = dict()
-                entry[u'order'] = unicode(order)
+                entry[u'order'] = six.text_type(order)
                 uuids_dict[uuid] = entry
                 order += 1
 

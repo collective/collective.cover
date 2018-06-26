@@ -7,6 +7,7 @@ from mock import Mock
 from plone import api
 from plone.uuid.interfaces import IUUID
 
+import six
 import unittest
 
 
@@ -48,7 +49,7 @@ class CollectionTileTestCase(TestTileMixin, unittest.TestCase):
     def test_tile_is_empty(self):
         self.assertTrue(self.tile.is_empty())
 
-    def test_populate_tile_with_object_unicode(self):
+    def test_populate_tile_with_object_text(self):
         """We must store unicode always on schema.TextLine and schema.Text
         fields to avoid UnicodeDecodeError.
         """
@@ -60,8 +61,8 @@ class CollectionTileTestCase(TestTileMixin, unittest.TestCase):
         self.assertEqual(self.tile.data.get('header'), title)
         self.assertTrue(self.tile.data.get('footer'))
         self.assertEqual(self.tile.data.get('uuid'), IUUID(obj))
-        self.assertIsInstance(self.tile.data.get('header'), unicode)
-        self.assertIsInstance(self.tile.data.get('footer'), unicode)
+        self.assertIsInstance(self.tile.data.get('header'), six.text_type)
+        self.assertIsInstance(self.tile.data.get('footer'), six.text_type)
 
     def test_populate_tile_with_object_string(self):
         """This test complements test_populate_with_object_unicode
@@ -72,7 +73,8 @@ class CollectionTileTestCase(TestTileMixin, unittest.TestCase):
         obj.setTitle(title)
         obj.reindexObject()
         self.tile.populate_with_object(obj)
-        self.assertEqual(unicode(title, 'utf-8'), self.tile.data.get('header'))
+        self.assertEqual(
+            six.text_type(title, 'utf-8'), self.tile.data.get('header'))
         self.assertTrue(self.tile.data.get('footer'))
         self.assertEqual(self.tile.data.get('uuid'), IUUID(obj))
 
@@ -130,7 +132,7 @@ class CollectionTileTestCase(TestTileMixin, unittest.TestCase):
         self.tile.set_tile_configuration(tile_conf)
         obj = self.portal['my-image']
         self.assertTrue(self.tile.thumbnail(obj))
-        self.assertIsInstance(self.tile(), unicode)
+        self.assertIsInstance(self.tile(), six.text_type)
 
     def test_number_of_items(self):
         obj = self.portal['mandelbrot-set']
