@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
-
 # Basic implementation taken from
 # http://davisagli.com/blog/using-tiles-to-provide-more-flexible-plone-layouts
-
 from collective.cover import _
 from collective.cover.interfaces import ISearchableText
 from collective.cover.tiles.base import IPersistentCoverTile
@@ -17,6 +15,8 @@ from Products.CMFPlone.utils import safe_hasattr
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zope import schema
 from zope.interface import implementer
+
+import six
 
 
 class IRichTextTile(IPersistentCoverTile):
@@ -47,7 +47,7 @@ class RichTextTile(PersistentCoverTile):
             # We expect that the text has a mimeType and an output
             # attribute, but someone may be using a different widget
             # returning a simple unicode, so check that.
-            if not isinstance(text, basestring):
+            if not isinstance(text, six.string_types):
                 transformer = ITransformer(self.context, None)
                 if transformer is not None:
                     text = transformer(text, 'text/x-html-safe')

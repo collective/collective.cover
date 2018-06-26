@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
-
 from persistent.dict import PersistentDict
 from zope.annotation.interfaces import IAnnotations
 from zope.interface import implementer
 from zope.interface import Interface
+
+import six
 
 
 ANNOTATIONS_KEY_PREFIX = u'plone.tiles.permission'
@@ -50,7 +51,7 @@ class TilesPermissions(object):
 
         if isinstance(group_ids, list):
             group_ids = tuple(group_ids)
-        elif isinstance(group_ids, basestring):
+        elif isinstance(group_ids, six.string_types):
             group_ids = (group_ids,)
 
         permissions['edit'] = group_ids
