@@ -207,7 +207,7 @@ class ListTile(PersistentCoverTile):
             order = order_list.pop() + 1
 
         for uuid in uuids:
-            if uuid not in uuids_dict.keys():
+            if uuid not in uuids_dict:
                 entry = dict()
                 entry[u'order'] = unicode(order)
                 uuids_dict[uuid] = entry

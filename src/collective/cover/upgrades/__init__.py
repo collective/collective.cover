@@ -155,7 +155,7 @@ def upgrade_carousel_tiles_custom_url(context):
             new_data = dict()
             order = 0
             for uuid in uuids:
-                if uuid not in new_data.keys():
+                if uuid not in new_data:
                     entry = dict()
                     entry[u'order'] = unicode(order)
                     new_data[uuid] = entry
