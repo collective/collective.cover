@@ -6,7 +6,8 @@ There's a frood who really knows where his towel is.
 1.7b3 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
-- Nothing changed yet.
+- Small code refactor to increase future Python 3 compatibility.
+  [hvelarde]
 
 
 1.7b2 (2018-04-27)
