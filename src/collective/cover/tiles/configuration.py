@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 from persistent.dict import PersistentDict
 from plone.namedfile.interfaces import INamedBlobImageField
 from plone.tiles.interfaces import ITileType
@@ -12,6 +11,8 @@ from zope.schema import getFieldsInOrder
 from zope.schema.interfaces import IDatetime
 from zope.schema.interfaces import IInt
 from zope.schema.interfaces import ITextLine
+
+import six
 
 
 ANNOTATIONS_KEY_PREFIX = u'plone.tiles.configuration'
@@ -105,7 +106,7 @@ class TilesConfigurationScreen(object):
         fields = getFieldNamesInOrder(tile_type.schema)
 
         for name, field in getFieldsInOrder(tile_type.schema):
-            order = unicode(fields.index(name))
+            order = six.text_type(fields.index(name))
             # default configuration attributes for all fields
             defaults[name] = {'order': order, 'visibility': u'on'}
             if name == 'css_class':

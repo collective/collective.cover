@@ -38,6 +38,7 @@ from zope.schema import getFieldsInOrder
 
 import logging
 import Missing
+import six
 
 
 logger = logging.getLogger(PROJECTNAME)
@@ -264,7 +265,7 @@ class PersistentCoverTile(ESIPersistentTile):
             # By default all fields are included.
             return True
 
-        if isinstance(field_conf, basestring):
+        if isinstance(field_conf, six.string_types):
             # css_class simply has a simple string, not a dictionary,
             # so there is nothing left to check.
             return True
@@ -308,7 +309,7 @@ class PersistentCoverTile(ESIPersistentTile):
         pm = api.portal.get_tool('portal_membership')
 
         if user:
-            if isinstance(user, basestring):
+            if isinstance(user, six.string_types):
                 user = pm.getMemberById(user)
         else:
             user = pm.getAuthenticatedMember()

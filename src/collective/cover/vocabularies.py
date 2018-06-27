@@ -58,7 +58,8 @@ class EnabledTilesVocabulary(object):
 
     """Return a list of tiles ready to work with collective.cover."""
 
-    def _enabled(self, name):
+    @staticmethod
+    def enabled(name):
         # FIXME: https://github.com/collective/collective.cover/issues/633
         if IS_PLONE_5 and name == 'collective.cover.calendar':
             return False
@@ -71,7 +72,7 @@ class EnabledTilesVocabulary(object):
         registry = getUtility(IRegistry)
         tiles = registry['plone.app.tiles']
 
-        tiles = filter(self._enabled, tiles)  # only enabled tiles
+        tiles = [t for t in tiles if self.enabled(t)]
         items = []
         for tile in tiles:
             tile_type = getUtility(ITileType, tile)

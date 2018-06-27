@@ -9,6 +9,8 @@ from plone.tiles.interfaces import ITileType
 from zope.component import getUtility
 from zope.schema.interfaces import IVocabularyFactory
 
+import six
+
 
 PROFILE_ID = 'profile-collective.cover:default'
 
@@ -155,9 +157,9 @@ def upgrade_carousel_tiles_custom_url(context):
             new_data = dict()
             order = 0
             for uuid in uuids:
-                if uuid not in new_data.keys():
+                if uuid not in new_data:
                     entry = dict()
-                    entry[u'order'] = unicode(order)
+                    entry[u'order'] = six.text_type(order)
                     new_data[uuid] = entry
                     order += 1
 

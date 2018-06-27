@@ -5,6 +5,7 @@ from collective.cover.tiles.banner import BannerTile
 from collective.cover.tiles.banner import IBannerTile
 from mock import Mock
 
+import six
 import unittest
 
 
@@ -30,7 +31,7 @@ class BannerTileTestCase(TestTileMixin, unittest.TestCase):
     def test_accepted_content_types(self):
         self.assertEqual(self.tile.accepted_ct(), ALL_CONTENT_TYPES)
 
-    def test_populate_with_image_object_unicode(self):
+    def test_populate_with_image_object_text(self):
         """We must store unicode always on schema.TextLine and schema.Text
         fields to avoid UnicodeDecodeError.
         """
@@ -40,7 +41,7 @@ class BannerTileTestCase(TestTileMixin, unittest.TestCase):
         obj.reindexObject()
         self.tile.populate_with_object(obj)
         self.assertEqual(self.tile.data.get('title'), title)
-        self.assertIsInstance(self.tile.data.get('title'), unicode)
+        self.assertIsInstance(self.tile.data.get('title'), six.text_type)
         self.assertTrue(self.tile.has_image)
         self.assertIsNotNone(self.tile.getRemoteUrl())
 
@@ -53,11 +54,12 @@ class BannerTileTestCase(TestTileMixin, unittest.TestCase):
         obj.setTitle(title)
         obj.reindexObject()
         self.tile.populate_with_object(obj)
-        self.assertEqual(unicode(title, 'utf-8'), self.tile.data.get('title'))
+        self.assertEqual(
+            six.text_type(title, 'utf-8'), self.tile.data.get('title'))
         self.assertTrue(self.tile.has_image)
         self.assertIsNotNone(self.tile.getRemoteUrl())
 
-    def test_populate_with_link_object_unicode(self):
+    def test_populate_with_link_object_text(self):
         """We must store unicode always on schema.TextLine and schema.Text
         fields to avoid UnicodeDecodeError.
         """
@@ -67,7 +69,7 @@ class BannerTileTestCase(TestTileMixin, unittest.TestCase):
         obj.reindexObject()
         self.tile.populate_with_object(obj)
         self.assertEqual(self.tile.data.get('title'), title)
-        self.assertIsInstance(self.tile.data.get('title'), unicode)
+        self.assertIsInstance(self.tile.data.get('title'), six.text_type)
         self.assertFalse(self.tile.has_image)
         self.assertEqual(self.tile.getRemoteUrl(), 'http://plone.org')
 
@@ -80,7 +82,8 @@ class BannerTileTestCase(TestTileMixin, unittest.TestCase):
         obj.setTitle(title)
         obj.reindexObject()
         self.tile.populate_with_object(obj)
-        self.assertEqual(unicode(title, 'utf-8'), self.tile.data.get('title'))
+        self.assertEqual(
+            six.text_type(title, 'utf-8'), self.tile.data.get('title'))
         self.assertFalse(self.tile.has_image)
         self.assertEqual(self.tile.getRemoteUrl(), 'http://plone.org')
 
