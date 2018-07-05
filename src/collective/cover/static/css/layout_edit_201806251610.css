@@ -751,7 +751,7 @@ body .cssclasswidget-classlist
     z-index: 1001;
 
     display: flex;
-    overflow: auto;
+    overflow-y: scroll;
     flex-direction: column;
 
     max-height: 4rem;
