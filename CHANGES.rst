@@ -3,7 +3,7 @@ Changelog
 
 There's a frood who really knows where his towel is.
 
-1.7b3 (unreleased)
+1.7b3 (2018-07-09)
 ^^^^^^^^^^^^^^^^^^
 
 - Review multiple class selection when there are many classes (closes `#785 <https://github.com/collective/collective.cover/issues/785>`_).

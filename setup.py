@@ -3,7 +3,7 @@
 from setuptools import find_packages
 from setuptools import setup
 
-version = '1.7b3.dev0'
+version = '1.7b3'
 description = 'A sane, working, editor-friendly way of creating front pages and other composite pages. Working now, for mere mortals.'
 long_description = (
     open('README.rst').read() + '\n' +
