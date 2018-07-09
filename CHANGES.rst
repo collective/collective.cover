@@ -6,6 +6,9 @@ There's a frood who really knows where his towel is.
 1.7b3 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Review multiple class selection when there are many classes (closes `#785 <https://github.com/collective/collective.cover/issues/785>`_).
+  [rodfersou]
+
 - Small code refactor to increase future Python 3 compatibility.
   [hvelarde]
 

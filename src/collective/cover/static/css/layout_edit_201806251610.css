@@ -735,20 +735,33 @@ body .cssclasswidget
 {
     cursor: pointer;
 }
+/* https://stackoverflow.com/a/10100209 */
+body .cssclasswidget-classlist::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 7px;
+}
+body .cssclasswidget-classlist::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: rgba(0,0,0,.5);
+    -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
+}
 body .cssclasswidget-classlist
 {
     position: absolute;
     z-index: 1001;
 
     display: flex;
+    overflow-y: scroll;
     flex-direction: column;
 
+    max-height: 4rem;
     padding: .4rem;
 
     list-style-type: none !important;
 
     border: 1px solid #A9A9A9;
     background: #FFF;
+
 }
 body .cssclasswidget-classlist li
 {
