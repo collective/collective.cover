@@ -31,7 +31,7 @@ Test Purge Data
 
     # keep edit url and compose url for later use
     ${compose_url} =  Get Location
-    ${edit_url} =  Get Element Attribute  css=${edit_link_selector}@href
+    ${edit_url} =  Get Element Attribute  css=${edit_link_selector}  attribute=href
 
     Click Link  css=${edit_link_selector}
     Wait Until Page Contains  Edit Basic Tile

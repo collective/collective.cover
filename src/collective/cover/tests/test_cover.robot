@@ -21,13 +21,13 @@ Test renderBase
     Goto Homepage
 
     Create Cover  Title  Description
-    ${BASE}  Get Element Attribute  tag=base@href
+    ${BASE}  Get Element Attribute  tag=base  attribute=href
     Should Be Equal  ${BASE}  ${PLONE_URL}/title-1/
     Compose Cover
-    ${BASE}  Get Element Attribute  tag=base@href
+    ${BASE}  Get Element Attribute  tag=base  attribute=href
     Should Be Equal  ${BASE}  ${PLONE_URL}/title-1/
     Open Layout Tab
-    ${BASE}  Get Element Attribute  tag=base@href
+    ${BASE}  Get Element Attribute  tag=base  attribute=href
     Should Be Equal  ${BASE}  ${PLONE_URL}/title-1/
 
 *** Keywords ***
