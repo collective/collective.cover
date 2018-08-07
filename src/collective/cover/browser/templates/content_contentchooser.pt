@@ -8,10 +8,15 @@
 <body tal:omit-tag="">
 
 <div id="contentchooser-content-search" class="right ui-widget-content pat-autotoc"
-     data-pat-autotoc="levels: legend; section: fieldset; className: autotabs">
+     data-pat-autotoc="levels: legend; section: fieldset; className: autotabs"
+     tal:attributes="data-is-plone-5 view/is_plone_5">
     <div class="close">
         <a href="#" class="hiddenStructure" title="Close this box">Close this box.</a>
     </div>
+    <ul class="formTabs" tal:condition="not:view/is_plone_5">
+      <li class="formTab"><a href="#recent" i18n:translate="">Recent items</a></li>
+      <li class="formTab"><a href="#content-tree" i18n:translate="">Content tree</a></li>
+    </ul>
 
       <fieldset id="recent" class="tab-pane active">
         <legend>Recent Items</legend>

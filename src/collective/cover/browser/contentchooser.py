@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from Acquisition import aq_inner
 from Acquisition import aq_parent
+from collective.cover.config import IS_PLONE_5
 from collective.cover.controlpanel import ICoverSettings
 from plone import api
 from plone.app.layout.navigation.interfaces import INavigationRoot
@@ -33,6 +34,9 @@ class SelectContent(BrowserView):
 
     def post_url(self):
         return self.context.absolute_url() + '/@@content-search'
+
+    def is_plone_5(self):
+        return IS_PLONE_5
 
     def __call__(self):
         return self.index()
