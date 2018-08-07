@@ -35,7 +35,8 @@ class SelectContent(BrowserView):
     def post_url(self):
         return self.context.absolute_url() + '/@@content-search'
 
-    def is_plone_5(self):
+    @staticmethod
+    def is_plone_5():
         return IS_PLONE_5
 
     def __call__(self):

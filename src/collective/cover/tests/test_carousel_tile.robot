@@ -9,10 +9,10 @@ Suite Teardown  Close all browsers
 *** Variables ***
 
 ${carousel_tile_location}  "collective.cover.carousel"
-${document_selector}  //div[@id="content-trees"]//li[@class="ui-draggable"]/a[@data-ct-type="Document"]/span[text()='My document']/..
-${image_selector}  //div[@id="content-trees"]//li[@class="ui-draggable"]/a[@data-ct-type="Image"]/span[text()='Test image']/..
+${document_selector}  //fieldset[@id="content-trees"]//li[@class="ui-draggable"]/a[@data-ct-type="Document"]/span[text()='My document']/..
+${image_selector}  //fieldset[@id="content-trees"]//li[@class="ui-draggable"]/a[@data-ct-type="Image"]/span[text()='Test image']/..
 ${image_title}  //div[@class="galleria-info-title"]/a[text()='Test image']/..
-${image_selector2}  //div[@id="content-trees"]//li[@class="ui-draggable"]/a[@data-ct-type="Image"]/span[text()='Test image #1']/..
+${image_selector2}  //fieldset[@id="content-trees"]//li[@class="ui-draggable"]/a[@data-ct-type="Image"]/span[text()='Test image #1']/..
 ${image_title2}  //div[@class="galleria-info-title"]/a[text()='Test image #1']/..
 ${image_title_test}  //div[@class="galleria-info-title"]/a[text()='New Title']/..
 ${tile_selector}  div.tile-container div.tile
