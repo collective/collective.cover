@@ -9,7 +9,7 @@ Suite Teardown  Close all browsers
 *** Variables ***
 
 ${basic_tile_name} =  "collective.cover.basic"
-${image_selector}  //div[@id="content-trees"]//li[@class="ui-draggable"]/a[@data-ct-type="Image"]/span[text()='Test image']/..
+${image_selector}  //fieldset[@id="content-trees"]//li[@class="ui-draggable"]/a[@data-ct-type="Image"]/span[text()='Test image']/..
 ${tile_selector}  div.tile-container div.tile
 ${tile_class} =  div.cover-tile
 

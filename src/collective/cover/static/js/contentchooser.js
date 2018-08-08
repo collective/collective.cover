@@ -308,6 +308,7 @@ var coveractions = {
     var draggable = options.draggable;
     var draggable_acepted = options.draggable_acepted;
     var dropped = options.dropped;
+    var isPlone5 = ($(windowId).attr('data-is-plone-5') === 'True');
 
     //items inside contentchooser should be draggable
     $(draggable).liveDraggable({
@@ -322,8 +323,11 @@ var coveractions = {
       drop: dropped
     });
 
-    // TODO: check if the current contentchooser requires any tabs
-    $(windowId + " ul.formTabs").tabs("div.panes > div");
+    if (!isPlone5) {
+      $(windowId + ' .tab-pane').css('border', 0);
+      $(windowId + ' legend').remove();
+      $(windowId + ' ul.formTabs').tabs(windowId + ' .tab-pane');
+    }
   }
 
   $(function() {

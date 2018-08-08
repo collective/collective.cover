@@ -6,7 +6,8 @@ There's a frood who really knows where his towel is.
 1.7b4 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
-- Nothing changed yet.
+- Fix display of tabs in content chooser for Plone 5.
+  [cdw9, rodfersou]
 
 
 1.7b3 (2018-07-09)
