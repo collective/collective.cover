@@ -31,13 +31,6 @@
         template="list.pt"
         />
 
-    <z3c:widgetTemplate
-        mode="configure"
-        widget="plone.formwidget.namedfile.interfaces.INamedImageWidget"
-        layer="z3c.form.interfaces.IFormLayer"
-        template="namedimage.pt"
-        />
-
     <!--BEGIN IDatetimeWidget customization
         https://github.com/plone/plone.formwidget.datetime/blob/1.3.1/plone/formwidget/datetime/z3cform/configure.zcml#L77
         This package is used instead of collective.z3cform.datetimewidget if you're
@@ -71,6 +64,18 @@
         widget=".cssclasswidget.ICSSClassWidget"
         layer="z3c.form.interfaces.IFormLayer"
         template="cssclasswidget.pt"
+        />
+
+    <class class=".namedimage.NamedImageWidget">
+        <require permission="zope.Public"
+                 interface=".interfaces.INamedImageWidget" />
+    </class>
+
+    <z3c:widgetTemplate
+        mode="configure"
+        widget=".namedimage.INamedImageWidget"
+        layer="z3c.form.interfaces.IFormLayer"
+        template="namedimage.pt"
         />
 
 </configure>

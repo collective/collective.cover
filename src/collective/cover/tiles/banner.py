@@ -22,6 +22,7 @@ class IBannerTile(IPersistentCoverTile):
         required=False,
     )
 
+    form.widget(image='collective.cover.tiles.configuration_widgets.namedimage.NamedImageFieldWidget')
     image = field.NamedBlobImage(
         title=_(u'Image'),
         required=False,

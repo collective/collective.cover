@@ -6,6 +6,9 @@ There's a frood who really knows where his towel is.
 1.7b4 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Review list of image size in tile layout configuration for Plone 5.
+  [rodfersou]
+
 - Fix display of tabs in content chooser for Plone 5.
   [cdw9, rodfersou]
 
