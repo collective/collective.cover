@@ -6,7 +6,10 @@ There's a frood who really knows where his towel is.
 1.7b4 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
-- Fix edit list element in compose tab on Plone 5.
+- Review list of image size in tile layout configuration for Plone 5.
+  [rodfersou]
+
+- Fix edit list element in compose tab on Plone 5 (fixes `#770 <https://github.com/collective/collective.cover/issues/770>`_).
   [rodfersou]
 
 - Fix display of tabs in content chooser for Plone 5.

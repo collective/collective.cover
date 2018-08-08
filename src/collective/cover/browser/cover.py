@@ -2,7 +2,9 @@
 from plone.app.blocks.interfaces import IBlocksTransformEnabled
 from Products.Five.browser import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
+from zope.component import getUtility
 from zope.interface import implementer
+from zope.schema.interfaces import IVocabularyFactory
 
 
 @implementer(IBlocksTransformEnabled)
@@ -48,3 +50,13 @@ class UpdateTile(BrowserView):
     def __call__(self):
         self.setup()
         return self.render()
+
+
+class Helper(BrowserView):
+
+    """Helper browser view used by cover."""
+
+    def allowed_sizes(self):
+        factory = getUtility(IVocabularyFactory, 'plone.app.vocabularies.ImagesScales')
+        vocabulary = factory(self.context)
+        return [term.title for term in vocabulary]
