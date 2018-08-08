@@ -50,6 +50,7 @@ class ICollectionTile(IPersistentCoverTile):
 
     form.omitted('image')
     form.no_omit(IDefaultConfigureForm, 'image')
+    form.widget(image='collective.cover.tiles.configuration_widgets.namedimage.NamedImageFieldWidget')
     image = NamedImage(
         title=_(u'Image'),
         required=False,

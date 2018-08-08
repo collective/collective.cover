@@ -29,6 +29,7 @@ class IBasicTile(IPersistentCoverTile):
         required=False,
     )
 
+    form.widget(image='collective.cover.tiles.configuration_widgets.namedimage.NamedImageFieldWidget')
     image = NamedImage(
         title=_(u'Image'),
         required=False,
