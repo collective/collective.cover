@@ -57,8 +57,11 @@ class Helper(BrowserView):
     configuration widget.
     """
 
-    def get_image_scales(self):
+    @staticmethod
+    def get_image_scales():
         """List all image scales which are available on the site."""
-        factory = getUtility(IVocabularyFactory, 'plone.app.vocabularies.ImagesScales')
-        vocabulary = factory(self.context)
+        factory = getUtility(
+            IVocabularyFactory, 'plone.app.vocabularies.ImagesScales')
+        vocabulary = factory(None)
+        # TODO: fix scales order upsteam in plone.app.vocabularies
         return [term.title for term in vocabulary]
