@@ -4,14 +4,19 @@ inconsistencies among Archetypes and Dexterity.
 """
 from datetime import datetime
 from datetime import timedelta
+from tzlocal import get_localzone
 
 
 today = datetime.today()
 tomorrow = today + timedelta(days=1)
 
+TZNAME = get_localzone().zone
+
 
 def create_standard_content_for_tests(portal):
     """Create one instance of each standard content type, at least."""
+    from collective.cover.testing import DEXTERITY_ONLY
+    from DateTime import DateTime
     from plone import api
 
     with api.env.adopt_roles(['Manager']):
@@ -37,14 +42,23 @@ def create_standard_content_for_tests(portal):
         # XXX: handle setting text field for both, Archetypes and Dexterity
         set_text_field(obj, u'<p>The quick brown fox jumps over the lazy dog</p>')
 
-        obj = api.content.create(
-            container=portal,
-            type='Event',
-            title=u'My event',
-        )
-
-        # XXX: workaround https://github.com/plone/plone.api/issues/364
-        set_date_fields(obj, today, tomorrow)
+        if DEXTERITY_ONLY:
+            api.content.create(
+                container=portal,
+                type='Event',
+                title=u'My event',
+                start=today,
+                end=tomorrow,
+                timezone=TZNAME,
+            )
+        else:
+            api.content.create(
+                container=portal,
+                type='Event',
+                title=u'My event',
+                startDate=DateTime(today),
+                endDate=DateTime(tomorrow),
+            )
 
         api.content.create(
             container=portal,
@@ -110,20 +124,5 @@ def set_text_field(obj, text):
         obj.setText(text)  # Archetypes
     except AttributeError:
         obj.text = RichTextValue(text, 'text/html', 'text/html')  # Dexterity
-    finally:
-        obj.reindexObject()
-
-
-def set_date_fields(obj, start, end):
-    """Set start and end fields in object on both, Archetypes and Dexterity."""
-    try:
-        # Archetypes
-        from DateTime import DateTime
-        obj.setStartDate(DateTime(start))
-        obj.setEndDate(DateTime(end))
-    except AttributeError:
-        # Dexterity
-        obj.start = start
-        obj.end = end
     finally:
         obj.reindexObject()
