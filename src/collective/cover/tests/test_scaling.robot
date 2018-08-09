@@ -37,7 +37,7 @@ Test Scaling
     Open Layout Tab
     Click Config from Tile  ${tile_class}
     Wait until element is visible  id=buttons-cancel
-    Select From List  css=#collective-cover-basic-image-imgsize  listing 16:16
+    Select From List  css=#collective-cover-basic-image-imgsize  listing 16x16
     Click Button  id=buttons-save
     Save Cover Layout
 
@@ -47,7 +47,7 @@ Test Scaling
     Open Layout Tab
     Click Config from Tile  ${tile_class}
     Wait until element is visible  id=buttons-cancel
-    Select From List  css=#collective-cover-basic-image-imgsize  icon 32:32
+    Select From List  css=#collective-cover-basic-image-imgsize  icon 32x32
     Click Button  id=buttons-save
     Save Cover Layout
 

@@ -78,6 +78,12 @@
       permission="zope2.View"
       class=".cover.UpdateTile"
       />
+  <browser:page
+      name="cover-helper"
+      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      permission="collective.cover.CanEditLayout"
+      class=".cover.Helper"
+      />
   <browser:menuItems
       for="collective.cover.content.ICover"
       menu="plone_displayviews">

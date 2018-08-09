@@ -2,7 +2,9 @@
 from plone.app.blocks.interfaces import IBlocksTransformEnabled
 from Products.Five.browser import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
+from zope.component import getUtility
 from zope.interface import implementer
+from zope.schema.interfaces import IVocabularyFactory
 
 
 @implementer(IBlocksTransformEnabled)
@@ -48,3 +50,18 @@ class UpdateTile(BrowserView):
     def __call__(self):
         self.setup()
         return self.render()
+
+
+class Helper(BrowserView):
+    """Helper view used to retrieve image scales on the namedimage
+    configuration widget.
+    """
+
+    @staticmethod
+    def get_image_scales():
+        """List all image scales which are available on the site."""
+        factory = getUtility(
+            IVocabularyFactory, 'plone.app.vocabularies.ImagesScales')
+        vocabulary = factory(None)
+        # TODO: fix scales order upsteam in plone.app.vocabularies
+        return [term.title for term in vocabulary]
