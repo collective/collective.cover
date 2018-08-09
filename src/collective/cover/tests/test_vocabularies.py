@@ -133,3 +133,13 @@ class VocabulariesTestCase(unittest.TestCase):
         self.assertEqual(grids.getTerm('bootstrap3').title, u'Bootstrap 3')
         self.assertEqual(grids.getTerm('bootstrap2').title, u'Bootstrap 2')
         self.assertEqual(grids.getTerm('deco16_grid').title, u'Deco (16 columns)')
+
+    def test_image_scales(self):
+        from collective.cover.browser.cover import Helper
+        vocabulary = Helper.get_image_scales()
+
+        self.assertGreater(len(vocabulary), 0)
+        # test against some expected values
+        self.assertIn(u'imagescale_mini', vocabulary)
+        self.assertIn(u'imagescale_preview', vocabulary)
+        self.assertIn(u'imagescale_large', vocabulary)
