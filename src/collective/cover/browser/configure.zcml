@@ -81,7 +81,7 @@
   <browser:page
       name="cover-helper"
       for="Products.CMFPlone.interfaces.IPloneSiteRoot"
-      permission="cmf.ModifyPortalContent"
+      permission="collective.cover.CanEditLayout"
       class=".cover.Helper"
       />
   <browser:menuItems
