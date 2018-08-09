@@ -323,7 +323,7 @@ var coveractions = {
       drop: dropped
     });
 
-    if (!isPlone5) {
+    if (isPlone5 === false && $('.template-compose').length > 0) {
       $(windowId + ' .tab-pane').css('border', 0);
       $(windowId + ' legend').remove();
       $(windowId + ' ul.formTabs').tabs(windowId + ' .tab-pane');
