@@ -17,7 +17,6 @@ from collective.cover.tests.utils import set_image_field
 from plone.app.robotframework.testing import AUTOLOGIN_LIBRARY_FIXTURE
 from plone.app.testing import FunctionalTesting
 from plone.app.testing import IntegrationTesting
-from plone.app.testing import PLONE_FIXTURE
 from plone.app.testing import PloneSandboxLayer
 from plone.testing import z2
 
@@ -29,10 +28,11 @@ import random
 try:
     pkg_resources.get_distribution('plone.app.contenttypes')
 except pkg_resources.DistributionNotFound:
+    from plone.app.testing import PLONE_FIXTURE
     DEXTERITY_ONLY = False
 else:
-    # this environment variable is set in .travis.yml test matrix
-    DEXTERITY_ONLY = os.environ.get('DEXTERITY_ONLY') is not None
+    from plone.app.contenttypes.testing import PLONE_APP_CONTENTTYPES_FIXTURE as PLONE_FIXTURE
+    DEXTERITY_ONLY = True
 
 
 # XXX: PFG tile is deprecated and will be removed in collective.cover 3
@@ -119,7 +119,7 @@ def generate_jpeg(width, height):
 
 # FIXME: workaround for https://github.com/plone/plone.app.testing/issues/39
 #        Products.TinyMCE is used only in Plone 4
-if not IS_PLONE_5:
+if not DEXTERITY_ONLY:
     autoform = ('plone.autoform', {'loadZCML': True})
     tinymce = ('Products.TinyMCE', {'loadZCML': True})
     products = list(PLONE_FIXTURE.products)
@@ -132,18 +132,10 @@ class Fixture(PloneSandboxLayer):
     defaultBases = (PLONE_FIXTURE,)
 
     def setUpZope(self, app, configurationContext):
-        if IS_PLONE_5:
-            import plone.app.contenttypes
-            self.loadZCML(package=plone.app.contenttypes)
-        else:
+        if not IS_PLONE_5:
             # needed by plone.app.linkintegrity under Plone 4.x
             import plone.app.referenceablebehavior
             self.loadZCML(package=plone.app.referenceablebehavior)
-
-            if DEXTERITY_ONLY:
-                import plone.app.contenttypes
-                self.loadZCML(package=plone.app.contenttypes)
-                z2.installProduct(app, 'Products.DateRecurringIndex')
 
         if HAS_PFG:
             import Products.PloneFormGen
@@ -161,12 +153,6 @@ class Fixture(PloneSandboxLayer):
             manage_addVirtualHostMonster(app, 'virtual_hosting')
 
     def setUpPloneSite(self, portal):
-        if IS_PLONE_5:
-            self.applyProfile(portal, 'plone.app.contenttypes:default')
-        else:
-            if DEXTERITY_ONLY:
-                self.applyProfile(portal, 'plone.app.contenttypes:default')
-
         if HAS_PFG:
             self.applyProfile(portal, 'Products.PloneFormGen:default')
 

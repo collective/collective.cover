@@ -17,7 +17,7 @@ addons:
 env:
   matrix:
     - PLONE_VERSION=4.3
-    - PLONE_VERSION=4.3 DEXTERITY_ONLY=true
+    - PLONE_VERSION=4.3 TEST_EGGS=buildout:test-eggs=plone.app.contenttypes
     - PLONE_VERSION=4.3 VERSIONS=versions:plone.app.jquery=1.9.2
     - PLONE_VERSION=5.1
 matrix:
@@ -29,8 +29,8 @@ install:
 - sed -ie "s#test-4.3#test-$PLONE_VERSION#" buildout.cfg
 - sed -ie "s#versions-4.3#versions-$PLONE_VERSION#" buildout.cfg
 - python bootstrap.py
-- bin/buildout $VERSIONS annotate
-- bin/buildout $VERSIONS
+- bin/buildout $TEST_EGGS $VERSIONS annotate
+- bin/buildout $TEST_EGGS $VERSIONS
 before_script:
   - export ROBOT_SELENIUM2LIBRARY_RUN_ON_FAILURE="Capture Page Screenshot"
   - export DISPLAY=:99.0
