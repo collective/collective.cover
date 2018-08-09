@@ -96,6 +96,37 @@ $(document).ready(function() {
 
   TitleMarkupSetup();
 
+  var editSortable = function() {
+    //carousel
+    var carousel = $('div[data-carousel="carousel-sort"]');
+    if (carousel[0] !== undefined) {
+
+      var serial_sort = function(textarea, sortable) {
+        textarea.empty();
+        sortable.find('[data-content-uuid]').each(function(e) {
+          textarea.append($(this).attr('data-content-uuid') + "\n");
+        });
+      };
+
+      var textarea = carousel.find('>textarea');
+      var sortable = carousel.find('.sortable');
+      textarea.hide();
+
+      sortable.sortable({
+        stop: function(event, ui) {
+          serial_sort(textarea, sortable);
+        }
+      });
+
+      //create delete buttons
+      sortable.find('[data-content-uuid]').append("<i class='tile-remove-item' data-content-uuid=''><span class='text'>remove</span></i>");
+      sortable.find('[data-content-uuid]').find('.tile-remove-item').click(function(e) {
+        $(this).parent('.textline-sortable-element').remove();
+        serial_sort(textarea, sortable);
+      });
+    }
+  };
+
   if ($.fn.prepOverlay !== undefined) {
     $('a.edit-tile-link').prepOverlay({
       subtype: 'ajax',
@@ -165,38 +196,12 @@ $(document).ready(function() {
           }
           // Remove unecessary link, use HTML button of EditorManager
           $('div.suppressVisualEditor').remove();
-
-          //carousel
-          var carousel = $('div[data-carousel="carousel-sort"]');
-          if (carousel[0] !== undefined) {
-
-            var serial_sort = function(textarea, sortable) {
-              textarea.empty();
-              sortable.find('[data-content-uuid]').each(function(e) {
-                textarea.append($(this).attr('data-content-uuid') + "\n");
-              });
-            };
-
-            var textarea = carousel.find('>textarea');
-            var sortable = carousel.find('.sortable');
-            textarea.hide();
-
-            sortable.sortable({
-              stop: function(event, ui) {
-                serial_sort(textarea, sortable);
-              }
-            });
-
-            //create delete buttons
-            sortable.find('[data-content-uuid]').append("<i class='tile-remove-item' data-content-uuid=''><span class='text'>remove</span></i>");
-            sortable.find('[data-content-uuid]').find('.tile-remove-item').click(function(e) {
-              $(this).parent('.textline-sortable-element').remove();
-              serial_sort(textarea, sortable);
-            });
-          }
+          editSortable();
         }
       }
     });
+  } else {  // Plone 5
+    $('a.edit-tile-link').on('show.plone-modal.patterns', editSortable);
   }
   $('.tile[data-tile-type=collective\\.cover\\.carousel]').on('change', root.initializeGallery);
 });
