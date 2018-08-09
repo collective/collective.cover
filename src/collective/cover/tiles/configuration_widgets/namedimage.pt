@@ -9,7 +9,7 @@
 
     <tal:stored_data define="stored_data python:view.form.getFieldConfiguration(view);
                              portal context/@@plone_portal_state/portal;
-                             helper portal/@@cover_helper">
+                             helper portal/@@cover-helper">
 
         <div class="visibility-box">
         <span i18n:translate="">Visible</span>

@@ -57,6 +57,7 @@ class Helper(BrowserView):
     """Helper browser view used by cover."""
 
     def allowed_sizes(self):
+        """List all image allowed sizes."""
         factory = getUtility(IVocabularyFactory, 'plone.app.vocabularies.ImagesScales')
         vocabulary = factory(self.context)
         return [term.title for term in vocabulary]

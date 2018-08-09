@@ -79,9 +79,9 @@
       class=".cover.UpdateTile"
       />
   <browser:page
-      name="cover_helper"
+      name="cover-helper"
       for="Products.CMFPlone.interfaces.IPloneSiteRoot"
-      permission="zope2.View"
+      permission="cmf.ModifyPortalContent"
       class=".cover.Helper"
       />
   <browser:menuItems
