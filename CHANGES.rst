@@ -6,7 +6,7 @@ There's a frood who really knows where his towel is.
 1.7b4 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
-- Review list of image size in tile layout configuration for Plone 5.
+- Fix retrieval of available image scales in tile layout configuration for Plone 5 (fixes `#781 <https://github.com/collective/collective.cover/issues/781>`_).
   [rodfersou]
 
 - Fix edit list element in compose tab on Plone 5 (fixes `#770 <https://github.com/collective/collective.cover/issues/770>`_).

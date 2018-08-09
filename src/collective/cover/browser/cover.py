@@ -53,11 +53,12 @@ class UpdateTile(BrowserView):
 
 
 class Helper(BrowserView):
+    """Helper view used to retrieve image scales on the namedimage
+    configuration widget.
+    """
 
-    """Helper browser view used by cover."""
-
-    def allowed_sizes(self):
-        """List all image allowed sizes."""
+    def get_image_scales(self):
+        """List all image scales which are available on the site."""
         factory = getUtility(IVocabularyFactory, 'plone.app.vocabularies.ImagesScales')
         vocabulary = factory(self.context)
         return [term.title for term in vocabulary]

@@ -9,7 +9,7 @@
 
     <tal:stored_data define="stored_data python:view.form.getFieldConfiguration(view);
                              portal context/@@plone_portal_state/portal;
-                             helper portal/@@cover-helper">
+                             allowed_sizes portal/@@cover-helper/get_image_scales">
 
         <div class="visibility-box">
         <span i18n:translate="">Visible</span>
@@ -57,7 +57,7 @@
                             class view/klass;
                             tabindex view/tabindex;
                             accesskey view/accesskey|nothing;"
-            tal:define="values helper/allowed_sizes">
+            tal:define="values allowed_sizes">
 
             <option tal:repeat="value values"
                     tal:attributes="value value;
