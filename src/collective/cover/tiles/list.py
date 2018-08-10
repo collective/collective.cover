@@ -44,10 +44,10 @@ class IListTile(IPersistentCoverTile):
 
     form.omitted('count')
     form.no_omit(IDefaultConfigureForm, 'count')
-    count = schema.Int(
+    count = schema.List(
         title=_(u'Number of items to display'),
+        value_type=schema.TextLine(),
         required=False,
-        default=5,
     )
 
     form.omitted('title')
@@ -155,11 +155,14 @@ class ListTile(PersistentCoverTile):
         return super(ListTile, self).Date(brain[0])
 
     def set_limit(self):
-        self.configured_fields = self.get_tile_configuration()
-        limit_conf = self.configured_fields.get('count',None)
+        self.config_fields = self.get_tile_configuration()
+        limit_conf = self.config_fields.get('count', None)
 
-        if limit_conf:
-            self.limit = int(limit_conf.get('offset', self.limit))
+        if limit_conf and 'size' in limit_conf.keys():
+            self.limit = int(limit_conf.get('size', self.limit))
+
+        size = self.limit
+        offset = self.config_fields.get('offset', 0)
 
     def populate_with_object(self, obj):
         """ Add an object to the list of items
