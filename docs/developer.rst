@@ -289,11 +289,6 @@ Layouts
 
 ``collective.cover`` supports saving layout designs by exporting them to a JSON/Python dictionary which are stored in the Plone registry.
 You always start a new cover by selecting one of these layout designs on the Add Cover page.
-
-.. NOTE::
-    ``collective.cover`` inserts a few of these saved preset layouts upon installation.
-    Check ``registry.xml`` in the source of the package.
-
 If you switch from the default 16-column Deco grid to another grid with a different number of columns,
 these saved layouts will still contain a 16-column width and this can mock up your design in small ways.
 In that case,

@@ -10,6 +10,11 @@ There's a frood who really knows where his towel is.
     Upgrading from versions below 1.2b1 is no longer supported.
     You must upgrade at least to version 1.2b1 before upgrading to this release.
 
+- Remove cover predefined Layouts.
+  This avoid layout break between Plone 4 and Plone 5 because they use different layout systems.
+  The Layout functionality still works as always (closes `#652 <https://github.com/collective/collective.cover/issues/652>`_).
+  [rodfersou]
+
 - Remove upgrade steps for old, unsupported releases.
   [hvelarde]
 
