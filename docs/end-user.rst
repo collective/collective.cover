@@ -144,8 +144,7 @@ You add a cover like you would any type of content in Plone:
     "Title" and "Description"
         Same as with other Plone content, like Page.
     "Layout"
-        Choose one of the predefined cover layouts (you will see a preview of
-        the selected layout).
+        Choose one of the saved layout models (you will see a preview of the selected layout).
 
 #. "Save".
 
@@ -401,8 +400,7 @@ around:
 Saving a layout as a model
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-You can save one of your covers as a template for creating other covers on
-your website:
+You can save the layout of one of your cover objects as a template for creating other covers on your website:
 
 #. Select the Layout tab.
 
@@ -413,3 +411,16 @@ your website:
 #. Click "Export layout"".
 
 Now this layout can be used as a model to create new covers, as explained in the section "Adding a cover".
+
+Using a different grid system
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Layout models support the use of different grid systems.
+The default grid system depends on which Plone version is used: **Deco** (16 columns), in Plone 4, and **Bootstrap 3** (12 columns), in Plone 5.
+You can change the default grid system in the control panel configuration.
+
+.. warning::
+    If you switch from the default grid system to one that has a different number of columns,
+    all existing cover objects and saved layout models will remain with the previous grid system column number.
+    In that case, you will have to manually edit and save all your existing objects and layout models to adjust the width of rows and columns according to the new grid system.
+    Check the Developer Documentation for a code example if you want to do so programmatically.
