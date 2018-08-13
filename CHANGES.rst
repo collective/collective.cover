@@ -6,6 +6,9 @@ There's a frood who really knows where his towel is.
 1.7b4 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Remove deprecated adapters ``CollectionUIDsProvider``, ``FolderUIDsProvider`` and ``GenericUIDsProvider``.
+  [hvelarde]
+
 - Fix retrieval of available image scales in tile layout configuration for Plone 5 (fixes `#781 <https://github.com/collective/collective.cover/issues/781>`_).
   [rodfersou]
 

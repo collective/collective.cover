@@ -87,36 +87,6 @@
       permission="zope.Public"
       />
 
-  <!--BEGIN DEPRECATED ADAPTERS. They will be removed on collective.cover 1.7.-->
-  <adapter
-      for="Products.ATContentTypes.interface.IATFolder"
-      provides="..interfaces.ICoverUIDsProvider"
-      factory=".list.FolderUIDsProvider"
-      />
-
-  <!-- Archetypes-based collection -->
-  <adapter
-      zcml:condition="installed plone.app.collection"
-      for="plone.app.collection.interfaces.ICollection"
-      provides="..interfaces.ICoverUIDsProvider"
-      factory=".list.CollectionUIDsProvider"
-      />
-
-  <!-- Dexterity-based collection -->
-  <adapter
-      zcml:condition="installed plone.app.contenttypes"
-      for="plone.app.contenttypes.interfaces.ICollection"
-      provides="..interfaces.ICoverUIDsProvider"
-      factory=".list.CollectionUIDsProvider"
-      />
-
-  <adapter
-      for="*"
-      provides="..interfaces.ICoverUIDsProvider"
-      factory=".list.GenericUIDsProvider"
-      />
-  <!--END DEPRECATED ADAPTERS. They will be removed on collective.cover 1.7.-->
-
   <adapter
       factory=".base.PersistentCoverTilePurgePaths"
       name="collective.cover.tiles"
