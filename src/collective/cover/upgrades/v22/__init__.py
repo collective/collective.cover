@@ -3,13 +3,15 @@ from collective.cover.controlpanel import ICoverSettings
 from collective.cover.interfaces import ICover
 from collective.cover.logger import logger
 from collective.cover.tiles.configuration import ANNOTATIONS_KEY_PREFIX as PREFIX
-from collective.cover.upgrades import _get_tiles_inherit_from_interface
 from copy import deepcopy
 from plone import api
 from plone.registry.interfaces import IRegistry
 from plone.tiles.interfaces import ITileDataManager
+from plone.tiles.interfaces import ITileType
 from six import iteritems
 from zope.component import getUtility
+from zope.dottedname.resolve import resolve
+from zope.schema.interfaces import IVocabularyFactory
 
 import json
 
@@ -41,3 +43,17 @@ def fix_fields(context):
                 logger.info(msg.format(tile_id, cover.getPath()))
 
     logger.info('Done')
+
+def _get_tiles_inherit_from_interface(context, iface=None):
+    """Returns a list of all tiles inherited from a given interface."""
+    name = 'collective.cover.EnabledTiles'
+    tiles_to_update = []
+    if iface:
+        Iface = resolve(iface)
+        enabled_tiles = getUtility(IVocabularyFactory, name)(context)
+        tiles_to_update = []
+        for i in enabled_tiles:
+            tile = getUtility(ITileType, i.value)
+            if issubclass(tile.schema, Iface):
+                tiles_to_update.append(i.value)
+    return tiles_to_update
