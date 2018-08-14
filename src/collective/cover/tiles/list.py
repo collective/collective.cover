@@ -159,9 +159,6 @@ class ListTile(PersistentCoverTile):
         if limit_conf and 'size' in limit_conf.keys():
             self.limit = int(limit_conf.get('size', self.limit))
 
-        size = self.limit
-        offset = self.config_fields.get('offset', 0)
-
     def populate_with_object(self, obj):
         """ Add an object to the list of items
 
