@@ -2,6 +2,18 @@
 <registry>
   <records interface="collective.cover.controlpanel.ICoverSettings" />
 
+  <record field="layouts"
+          interface="collective.cover.controlpanel.ICoverSettings"
+          name="collective.cover.controlpanel.ICoverSettings.layouts">
+    <field type="plone.registry.field.Dict">
+      <key_type type="plone.registry.field.TextLine"/>
+      <value_type type="plone.registry.field.TextLine"/>
+    </field>
+    <value purge="false">
+      <element key="Empty layout">[]</element>
+    </value>
+  </record>
+
   <record
       field="styles"
       interface="collective.cover.controlpanel.ICoverSettings"
