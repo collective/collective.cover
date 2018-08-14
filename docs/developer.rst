@@ -231,8 +231,8 @@ registration.
 Grid Systems
 ^^^^^^^^^^^^
 
-By default ``collective.cover`` uses 16-column Deco grid,
-and ships with support for 12-column Bootstrap 2 and Bootstrap 3 grids.
+``collective.cover`` ships with support for different grid systems.
+By default it uses **Deco** (16-column grid) for Plone 4.3, and **Bootstrap 3** (12-column grid) for Plone 5.
 
 If your theme provides a CSS framework with a different grid system (such as Zurb Foundation) you can use that instead of the default one.
 To do so, your theme package should provide a new grid system class which implements the ``collective.cover.interfaces.IGridSystem`` interface:
@@ -270,34 +270,40 @@ Don't forget to register the utility in your ``configure.zcml``:
 
 Once registered you can select your grid system on the Cover Settings control panel configlet.
 
-.. WARNING::
-    Switching the grid system will apply to all new and existing covers.
-    If you already made layouts for a 16-column grid and switch to e.g. a 12-column grid, you will have to manually update all existing covers (their layout is not recalculated automatically).
-
-.. WARNING::
-    In collective.cover 1.0a11 the data structure for the columns was changed. If you already implemented your own custom grid, check the example above and fix the retrieval of 'column-size' and addition of the css-class attribute.
-
 .. NOTE::
     ``collective.cover`` does not provide any CSS for the grid system it ships with, it *only* changes the HTML output.
     You will therefore need to make sure your theme has all the necessary styles for the grid system you choose.
-    For example if you want to enable the Bootstrap 2 or 3 Grids mentioned above you will probably want to include the appropriate version of the `collective.js.bootstrap`_ product.
-
-.. _`collective.js.bootstrap`: https://pypi.python.org/pypi/collective.js.bootstrap
+    For example, if you want to enable the Bootstrap 3 grid system in Plone 4,
+    you may want to include the appropriate version of `collective.js.bootstrap <https://pypi.python.org/pypi/collective.js.bootstrap>`_.
 
 Layouts
 ^^^^^^^
 
 ``collective.cover`` supports saving layout designs by exporting them to a JSON/Python dictionary which are stored in the Plone registry.
-You always start a new cover by selecting one of these layout designs on the Add Cover page.
 
-.. NOTE::
-    ``collective.cover`` inserts a few of these saved preset layouts upon installation.
-    Check ``registry.xml`` in the source of the package.
+It's possible to modify the number of columns on a layout programmatically.
+The following code example will change the grid system used on a layout from 16 to 12 columns:
 
-If you switch from the default 16-column Deco grid to another grid with a different number of columns,
-these saved layouts will still contain a 16-column width and this can mock up your design in small ways.
-In that case,
-make sure you clear the default cover layouts and/or save your own layout with the correct number of columns.
+.. code-block:: python
+
+    def fix_column_width(layout, columns=1):
+        """Traverse the layout tree and fix columns width. Resulting width
+        depends on the number of columns in a row (width = 12 / columns).
+        """
+        new_layout = []
+        for e in layout:
+            if 'column-size' in e:
+                e['column-size'] = 12 // columns
+            if e['type'] == 'row':
+                columns = len(e['children'])
+                e['children'] = fix_column_width(e['children'], columns)
+            new_layout.append(e)
+        return new_layout
+
+    import json
+    layout = json.loads(obj.cover_layout)
+    layout = fix_column_width(layout)
+    obj.cover_layout = json.dumps(layout)
 
 Custom Cover Views
 ^^^^^^^^^^^^^^^^^^
