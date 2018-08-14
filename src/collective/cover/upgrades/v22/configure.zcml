@@ -1,0 +1,20 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+    xmlns:i18n="http://namespaces.zope.org/i18n"
+    i18n_domain="collective.cover">
+
+  <genericsetup:upgradeSteps
+      source="21"
+      destination="22"
+      profile="collective.cover:default">
+
+    <genericsetup:upgradeStep
+        title="Revert the collection field of number_to_show to count"
+        description=""
+        handler=".fix_fields"
+        />
+
+  </genericsetup:upgradeSteps>
+
+</configure>

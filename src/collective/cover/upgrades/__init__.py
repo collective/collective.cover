@@ -7,6 +7,7 @@ from plone.registry.interfaces import IRegistry
 from plone.tiles.interfaces import ITileDataManager
 from plone.tiles.interfaces import ITileType
 from zope.component import getUtility
+from zope.dottedname.resolve import resolve
 from zope.schema.interfaces import IVocabularyFactory
 
 import six
@@ -125,6 +126,22 @@ def _get_tiles_inherit_from_list(context):
         tile = getUtility(ITileType, i.value)
         if issubclass(tile.schema, IListTile):
             tiles_to_update.append(i.value)
+    return tiles_to_update
+
+
+def _get_tiles_inherit_from_interface(context, iface=None):
+    """Returns a list of all tiles inherited from a given interface."""
+    name = 'collective.cover.EnabledTiles'
+    tiles_to_update = []
+
+    if iface:
+        Iface = resolve(iface)
+        enabled_tiles = getUtility(IVocabularyFactory, name)(context)
+        tiles_to_update = []
+        for i in enabled_tiles:
+            tile = getUtility(ITileType, i.value)
+            if issubclass(tile.schema, Iface):
+                tiles_to_update.append(i.value)
     return tiles_to_update
 
 
