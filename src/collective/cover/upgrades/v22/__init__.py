@@ -1,19 +1,9 @@
 # -*- coding: utf-8 -*-
-from collective.cover.controlpanel import ICoverSettings
-from collective.cover.interfaces import ICover
 from collective.cover.logger import logger
-from collective.cover.tiles.configuration import ANNOTATIONS_KEY_PREFIX as PREFIX
-from copy import deepcopy
-from plone import api
-from plone.registry.interfaces import IRegistry
-from plone.tiles.interfaces import ITileDataManager
 from plone.tiles.interfaces import ITileType
-from six import iteritems
 from zope.component import getUtility
 from zope.dottedname.resolve import resolve
 from zope.schema.interfaces import IVocabularyFactory
-
-import json
 
 
 def fix_fields(context):
@@ -21,10 +11,9 @@ def fix_fields(context):
 
     # Get covers
     covers = context.portal_catalog(portal_type='collective.cover.content')
-    iface = "collective.cover.tiles.collection.ICollectionTile"
+    iface = 'collective.cover.tiles.collection.ICollectionTile'
     logger.info('About to update {0} objects'.format(len(covers)))
-    tiles_to_update = _get_tiles_inherit_from_interface(context,
-            iface=iface)
+    tiles_to_update = _get_tiles_inherit_from_interface(context, iface=iface)
     logger.info('{0} tile types will be updated ({1})'.format(
         len(tiles_to_update), ', '.join(tiles_to_update)))
     for cover in covers:
@@ -34,7 +23,7 @@ def fix_fields(context):
             tile = obj.get_tile(tile_id)
             tile_conf = tile.get_tile_configuration()
 
-            if tile_conf.has_key('number_to_show'):
+            if 'number_to_show' in tile_conf.keys():
                 tile_conf['count'] = tile_conf['number_to_show']
                 tile_conf.pop('number_to_show')
                 tile.set_tile_configuration(tile_conf)
@@ -43,6 +32,7 @@ def fix_fields(context):
                 logger.info(msg.format(tile_id, cover.getPath()))
 
     logger.info('Done')
+
 
 def _get_tiles_inherit_from_interface(context, iface=None):
     """Returns a list of all tiles inherited from a given interface."""
