@@ -8,9 +8,8 @@
      tal:omit-tag="">
 
     <tal:stored_data define="stored_data python:view.form.getFieldConfiguration(view);
-                             properties view/form/context/@@plone_tools/properties;
-                             imaging_properties properties/imaging_properties;
-                             allowed_sizes python:imaging_properties.getProperty('allowed_sizes')">
+                             portal view/form/context/@@plone_portal_state/portal;
+                             allowed_sizes portal/@@cover-helper/get_image_scales">
 
         <div class="visibility-box">
         <span i18n:translate="">Visible</span>

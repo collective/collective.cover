@@ -6,6 +6,22 @@ There's a frood who really knows where his towel is.
 1.7b4 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+.. warning::
+    Upgrading from versions below 1.2b1 is no longer supported.
+    You must upgrade at least to version 1.2b1 before upgrading to this release.
+
+- Remove upgrade steps for old, unsupported releases.
+  [hvelarde]
+
+- Remove deprecated adapters ``CollectionUIDsProvider``, ``FolderUIDsProvider`` and ``GenericUIDsProvider``.
+  [hvelarde]
+
+- Fix retrieval of available image scales in tile layout configuration for Plone 5 (fixes `#781 <https://github.com/collective/collective.cover/issues/781>`_).
+  [rodfersou]
+
+- Fix edit list element in compose tab on Plone 5 (fixes `#770 <https://github.com/collective/collective.cover/issues/770>`_).
+  [rodfersou]
+
 - Fix display of tabs in content chooser for Plone 5.
   [cdw9, rodfersou]
 
