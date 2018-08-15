@@ -59,12 +59,12 @@ class GridTestCase(unittest.TestCase):
         cells1 = rows[1].cssselect('div.cell')
         cells2 = rows[2].cssselect('div.cell')
 
-        self.assertTrue(_has_classes(cells0[0], ('width-16', 'position-0')))
-        self.assertTrue(_has_classes(cells1[0], ('width-8', 'position-0')))
-        self.assertTrue(_has_classes(cells1[1], ('width-8', 'position-8')))
-        self.assertTrue(_has_classes(cells2[0], ('width-5', 'position-0')))
-        self.assertTrue(_has_classes(cells2[1], ('width-5', 'position-5')))
-        self.assertTrue(_has_classes(cells2[2], ('width-5', 'position-10')))
+        self.assertTrue(_has_classes(cells0[0], ('width-12', 'position-0')))
+        self.assertTrue(_has_classes(cells1[0], ('width-6', 'position-0')))
+        self.assertTrue(_has_classes(cells1[1], ('width-6', 'position-6')))
+        self.assertTrue(_has_classes(cells2[0], ('width-4', 'position-0')))
+        self.assertTrue(_has_classes(cells2[1], ('width-4', 'position-4')))
+        self.assertTrue(_has_classes(cells2[2], ('width-4', 'position-8')))
 
     def test_bootstrap3_grid(self):
         self._switch_grid_system('bootstrap3')
@@ -75,12 +75,12 @@ class GridTestCase(unittest.TestCase):
         cells1 = rows[1].cssselect('div.column')
         cells2 = rows[2].cssselect('div.column')
 
-        self.assertTrue(_has_classes(cells0[0], ('col-md-16',)))
-        self.assertTrue(_has_classes(cells1[0], ('col-md-8',)))
-        self.assertTrue(_has_classes(cells1[1], ('col-md-8',)))
-        self.assertTrue(_has_classes(cells2[0], ('col-md-5',)))
-        self.assertTrue(_has_classes(cells2[1], ('col-md-5',)))
-        self.assertTrue(_has_classes(cells2[2], ('col-md-5',)))
+        self.assertTrue(_has_classes(cells0[0], ('col-md-12',)))
+        self.assertTrue(_has_classes(cells1[0], ('col-md-6',)))
+        self.assertTrue(_has_classes(cells1[1], ('col-md-6',)))
+        self.assertTrue(_has_classes(cells2[0], ('col-md-4',)))
+        self.assertTrue(_has_classes(cells2[1], ('col-md-4',)))
+        self.assertTrue(_has_classes(cells2[2], ('col-md-4',)))
 
     def test_bootstrap2_grid(self):
         self._switch_grid_system('bootstrap2')
@@ -91,9 +91,9 @@ class GridTestCase(unittest.TestCase):
         cells1 = rows[1].cssselect('div.column')
         cells2 = rows[2].cssselect('div.column')
 
-        self.assertTrue(_has_classes(cells0[0], ('span16',)))
-        self.assertTrue(_has_classes(cells1[0], ('span8',)))
-        self.assertTrue(_has_classes(cells1[1], ('span8',)))
-        self.assertTrue(_has_classes(cells2[0], ('span5',)))
-        self.assertTrue(_has_classes(cells2[1], ('span5',)))
-        self.assertTrue(_has_classes(cells2[2], ('span5',)))
+        self.assertTrue(_has_classes(cells0[0], ('span12',)))
+        self.assertTrue(_has_classes(cells1[0], ('span6',)))
+        self.assertTrue(_has_classes(cells1[1], ('span6',)))
+        self.assertTrue(_has_classes(cells2[0], ('span4',)))
+        self.assertTrue(_has_classes(cells2[1], ('span4',)))
+        self.assertTrue(_has_classes(cells2[2], ('span4',)))
