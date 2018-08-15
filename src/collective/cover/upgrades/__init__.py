@@ -15,4 +15,3 @@ def cook_javascript_resources(context):  # pragma: no cover
     js_tool = api.portal.get_tool('portal_javascripts')
     js_tool.cookResources()
     logger.info('JavaScript resources were cooked')
-
