@@ -11,7 +11,7 @@ Suite Teardown  Close all browsers
 
 ${ALT_ZOPE_HOST}  127.0.0.1
 ${ALT_PLONE_URL}  http://${ALT_ZOPE_HOST}:${ZOPE_PORT}/${PLONE_SITE_ID}
-${LOCKED_MESSAGE}  This item was locked by admin 1 minute ago.
+${LOCKED_MESSAGE}  This item was locked by
 ${basic_tile_location}  'collective.cover.basic'
 ${document_selector}  .ui-draggable .contenttype-document
 ${tile_selector}  div.tile-container div.tile
@@ -43,43 +43,43 @@ Test Locked Cover
     Enable Autologin as  Site Administrator
     Goto Homepage
     Click Link  link=My Cover
-    Page Should Contain  Locked  ${LOCKED_MESSAGE}
+    Wait Until Page Contains  ${LOCKED_MESSAGE}
 
     Switch Browser  1
     Click Link  link=View
-    Page Should Not Contain  Locked  ${LOCKED_MESSAGE}
+    Page Should Not Contain  ${LOCKED_MESSAGE}
 
     Switch Browser  2
     Click Link  link=My Cover
-    Page Should Not Contain  Locked  ${LOCKED_MESSAGE}
+    Page Should Not Contain  ${LOCKED_MESSAGE}
     Compose Cover
 
     Switch Browser  1
     Click Link  link=My Cover
-    Page Should Contain  Locked  ${LOCKED_MESSAGE}
+    Wait Until Page Contains  ${LOCKED_MESSAGE}
 
     Switch Browser  2
     Click Link  link=View
-    Page Should Not Contain  Locked  ${LOCKED_MESSAGE}
+    Page Should Not Contain  ${LOCKED_MESSAGE}
 
     Switch Browser  1
     Click Link  link=My Cover
-    Page Should Not Contain  Locked  ${LOCKED_MESSAGE}
+    Page Should Not Contain  ${LOCKED_MESSAGE}
     Open Layout Tab
 
     Switch Browser  2
     Click Link  link=My Cover
-    Page Should Contain  Locked  ${LOCKED_MESSAGE}
+    Wait Until Page Contains  ${LOCKED_MESSAGE}
 
     Switch Browser  1
     Click Link  link=View
-    Page Should Not Contain  Locked  ${LOCKED_MESSAGE}
+    Page Should Not Contain  ${LOCKED_MESSAGE}
 
     Switch Browser  2
     Click Link  link=My Cover
-    Page Should Not Contain  Locked  ${LOCKED_MESSAGE}
+    Page Should Not Contain  ${LOCKED_MESSAGE}
     Open Layout Tab
 
     Switch Browser  1
     Click Link  link=My Cover
-    Page Should Contain  Locked  ${LOCKED_MESSAGE}
+    Wait Until Page Contains  ${LOCKED_MESSAGE}
