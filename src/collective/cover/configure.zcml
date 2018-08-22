@@ -16,7 +16,6 @@
   <include package="plone.app.dexterity" />
   <include package="plone.app.iterate" />
   <include package="plone.app.lockingbehavior" />
-  <include package="plone.app.relationfield" />
   <include package="plone.app.tiles" />
 
   <include package="collective.js.bootstrap" />

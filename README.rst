@@ -110,7 +110,7 @@ Installation
 
 To enable this package in a buildout-based installation:
 
-Edit your buildout.cfg and add add the following to it:
+Edit your buildout.cfg and add the following to it:
 
 .. code-block:: ini
 
@@ -143,6 +143,19 @@ Check the box next to ``collective.cover`` and click the 'Activate' button.
 .. Note::
     You may have to empty your browser cache and save your resource registries
     in order to see the effects of the product installation.
+
+Content relations
+^^^^^^^^^^^^^^^^^
+
+If you want to use the ``IRelatedItems`` behavior you must use the ``[relations]`` extra in your buildout configuration.
+
+.. code-block:: ini
+
+    [buildout]
+    ...
+    eggs =
+        collective.cover [relations]
+
 
 Not entirely unlike
 -------------------

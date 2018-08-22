@@ -10,6 +10,7 @@
       directory="profiles/default"
       description="A sane, working, editor-friendly way of creating front pages and other composite pages. Working now, for mere mortals."
       provides="Products.GenericSetup.interfaces.EXTENSION"
+      post_handler="collective.cover.setuphandlers.run_after"
       />
 
   <genericsetup:registerProfile

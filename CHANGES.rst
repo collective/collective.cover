@@ -7,8 +7,14 @@ There's a frood who really knows where his towel is.
 ^^^^^^^^^^^^^^^^^^
 
 .. warning::
+    This version removes the hard dependency on ``plone.app.relationfield``;
+    you must use the ``[relations]`` extra if you are using the ``IRelatedItems`` behavior.
     Upgrading from versions below 1.2b1 is no longer supported.
     You must upgrade at least to version 1.2b1 before upgrading to this release.
+
+- Remove hard dependency on ``plone.app.relationfield``;
+  if you use the ``IRelatedItems`` behavior you must use the ``[relations]`` extra (closes `#684 <https://github.com/collective/collective.cover/issues/684>`_).
+  [hvelarde]
 
 - Remove predefined layouts as they were created using Deco grid system and they are broken in Plone 5 (closes `#652 <https://github.com/collective/collective.cover/issues/652>`_).
   You can still create your own layouts using your favorite grid system as usually.
