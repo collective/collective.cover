@@ -16,8 +16,8 @@ ${link_selector}  .ui-draggable .contenttype-link
 ${news-item_selector}  .ui-draggable .contenttype-news-item
 ${tile_selector}  div.tile-container div.tile
 
-${first_item}  .list-item:first-child
-${last_item}   .list-item:last-child
+${first_item}  .list-item:nth-child(1)
+${second_item}   .list-item:nth-child(2)
 
 *** Test cases ***
 
@@ -81,28 +81,22 @@ Test List Tile
 
     # check the existing order
     ${first_item_title} =  Get Text  css=${first_item} h2
-    ${last_item_title} =  Get Text  css=${last_item} h2
+    ${second_item_title} =  Get Text  css=${second_item} h2
     Should Be Equal  ${first_item_title}  My document
-    Should Be Equal  ${last_item_title}  Test news item
+    Should Be Equal  ${second_item_title}  My file
 
-    # move first item to the end
-
-    # Selenium doesn't seem to handle drag&drop correctly if the
-    # drop-target is not in the viewport. This code tries to work
-    # around the issue.
-    Execute Javascript    window.scroll(0, 800)
-
-    Drag And Drop  css=${first_item}  css=${last_item}
+    # move second item to first place
+    Drag And Drop  css=${second_item}  css=${first_item}
     Sleep  1s  Wait for reordering to occur
 
     # ensure that the reordering is reflected in the DOM
     ${first_item_title} =  Get Text  css=${first_item} h2
-    ${last_item_title} =  Get Text  css=${last_item} h2
+    ${second_item_title} =  Get Text  css=${second_item} h2
     Should Be Equal  ${first_item_title}  My file
-    Should Be Equal  ${last_item_title}  My document
+    Should Be Equal  ${second_item_title}  My document
 
-    # first item is now last. Let's move it back to the top
-    Drag And Drop  css=${last_item}  css=${first_item}
+    # first item is now second; let's move it back to the top
+    Drag And Drop  css=${second_item}  css=${first_item}
     Sleep  1s  Wait for reordering to occur
 
     # ensure that the reodering is reflected in the DOM
@@ -118,6 +112,7 @@ Test List Tile
     Click Link  css=.results .item-list li a.contenttype-collection
     Input Text  id=collective-cover-list-more_link_text  Custom More Link Text
     Click Button  Save
+
     # Wait until the overlay is closed, otherwise the View link is not clickable.
     Wait Until Element Is Not Visible  css=#exposeMask
     Click Link  link=View

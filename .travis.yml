@@ -13,18 +13,19 @@ addons:
     permissions: public-read
     paths:
     - $(find parts/test -type f | tr "\n" ":")
-  firefox: 45.8.0esr
+  firefox: latest
 env:
   matrix:
     - PLONE_VERSION=4.3
-    - PLONE_VERSION=4.3 DEXTERITY_ONLY=true
-    - PLONE_VERSION=4.3 VERSIONS=versions:plone.app.jquery=1.9.2
-    - PLONE_VERSION=5.1
 matrix:
   fast_finish: true
 before_install:
 # FIXME: I have no idea how and why six==1.11.0 is being installed
 - pip uninstall -y six
+# install geckodriver
+- ./get_geckodriver.sh
+- export PATH=$(pwd):$PATH
+- export MOZ_HEADLESS=1
 install:
 - sed -ie "s#test-4.3#test-$PLONE_VERSION#" buildout.cfg
 - sed -ie "s#versions-4.3#versions-$PLONE_VERSION#" buildout.cfg
@@ -38,7 +39,7 @@ before_script:
   - firefox -v
 script:
 - bin/code-analysis
-- bin/test
+- bin/test --layer=Robot --test="!(layout|list)"
 - bin/pylint --py3k --disable=no-absolute-import src/collective/cover || true
 after_success:
 - pip install coverage
