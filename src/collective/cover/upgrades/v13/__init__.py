@@ -35,7 +35,8 @@ def fix_resources_references(setup_tool):
     setup_tool.runImportStepFromProfile(profile, 'controlpanel')
     logger.info('Updated controlpanel icon reference.')
 
-    setup_tool.runImportStepFromProfile(profile, 'typeinfo')
+    fti = api.portal.get_tool('portal_types')['collective.cover.content']
+    fti.icon_expr = 'string:${portal_url}/++resource++collective.cover/img/frontpage_icon.png'
     logger.info('Updated content type icon reference.')
 
 
