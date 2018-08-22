@@ -22,7 +22,6 @@
     <element value="plone.app.dexterity.behaviors.metadata.IBasic" />
     <element value="plone.app.dexterity.behaviors.exclfromnav.IExcludeFromNavigation" />
     <element value="plone.app.lockingbehavior.behaviors.ILocking" />
-    <element value="plone.app.relationfield.behavior.IRelatedItems" />
   </property>
 
   <!-- View information -->
