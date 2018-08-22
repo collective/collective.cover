@@ -6,7 +6,8 @@ There's a frood who really knows where his towel is.
 1.7b4 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
-- Nothing changed yet.
+- Fix upgrade step 13 to avoid purging behaviors (fixes `#638 <https://github.com/collective/collective.cover/issues/638>`_).
+  [hvelarde]
 
 
 1.7b3 (2018-07-09)
