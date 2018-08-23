@@ -18,7 +18,7 @@ contents, built around a drag-and-drop interface.
 like `Mosaic <https://pypi.python.org/pypi/plone.app.mosaic>`_,
 the new layout solution for Plone.
 
-.. info::
+.. note::
     Starting from version 2.0b1 this package is compatible with Plone 5.1;
     nevertheless, there are some `known issues <https://github.com/collective/collective.cover/issues?q=is%3Aissue+is%3Aopen+label%3A%22plone+5%22>`_.
 
@@ -92,7 +92,7 @@ Known issues
 * `Package is not compatible with standard Plone tiles <https://github.com/collective/collective.cover/issues/81>`_.
   This will be addressed in a future release, if we get an sponsor.
 
-See the `complete list of bugs on GitHub <hhttps://github.com/collective/collective.cover/labels/bug>`_.
+See the `complete list of bugs on GitHub <https://github.com/collective/collective.cover/labels/bug>`_.
 
 Don't Panic
 -----------
