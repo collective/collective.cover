@@ -7,7 +7,6 @@
     <dependency>profile-plone.app.blocks:default</dependency>
     <dependency>profile-plone.app.dexterity:default</dependency>
     <dependency>profile-plone.app.iterate:plone.app.iterate</dependency>
-    <dependency>profile-plone.app.relationfield:default</dependency>
     <dependency>profile-plone.app.tiles:default</dependency>
   </dependencies>
 </metadata>
