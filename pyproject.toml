@@ -1,0 +1,3 @@
+[tool.dependencychecker]
+Zope2 = ['App', 'OFS','Products.Five']
+ignore-packages = ['plone.app.relationfield', 'Products.PloneFormGen']
