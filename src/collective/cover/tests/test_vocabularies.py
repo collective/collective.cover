@@ -77,7 +77,8 @@ class VocabulariesTestCase(unittest.TestCase):
             expected.remove('collective.cover.calendar')
 
         # XXX: PFG tile is deprecated and will be removed in collective.cover 3
-        if not IS_PLONE_5 and 'collective.cover.pfg' not in tiles:
+        from collective.cover.testing import HAS_PFG
+        if HAS_PFG and 'collective.cover.pfg' not in expected:
             expected.append('collective.cover.pfg')
 
         self.assertEqual(len(tiles), len(expected))
