@@ -69,13 +69,16 @@ class VocabulariesTestCase(unittest.TestCase):
             'collective.cover.embed',
             'collective.cover.file',
             'collective.cover.list',
-            'collective.cover.pfg',  # FIXME: https://github.com/collective/collective.cover/issues/194
             'collective.cover.richtext',
         ]
 
         # FIXME: https://github.com/collective/collective.cover/issues/633
         if IS_PLONE_5:
             expected.remove('collective.cover.calendar')
+
+        # XXX: PFG tile is deprecated and will be removed in collective.cover 3
+        if not IS_PLONE_5 and 'collective.cover.pfg' not in tiles:
+            expected.append('collective.cover.pfg')
 
         self.assertEqual(len(tiles), len(expected))
         for i in expected:

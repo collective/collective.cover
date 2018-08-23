@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+"""PFG tile is deprecated and will be removed in collective.cover 3"""
 from AccessControl import Unauthorized
 from collective.cover import _
 from collective.cover.tiles.base import IPersistentCoverTile
@@ -10,6 +11,11 @@ from Products.CMFPlone.utils import safe_unicode
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zope import schema
 from zope.interface import implementer
+
+import warnings
+
+
+warnings.warn(__doc__, DeprecationWarning)
 
 
 class IPFGTile(IPersistentCoverTile):

@@ -109,6 +109,11 @@ Right now, you can not edit individual items metadata in the list, but you can
 remove or reorder them. The title and image fields will include a link to the
 original object location.
 
+FormGen
++++++++
+
+A tile to show a 'FormFolder' is also included in Plone 4 but is now deprecated; do not use it.
+
 Rich Text
 +++++++++
 
