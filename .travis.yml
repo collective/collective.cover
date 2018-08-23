@@ -17,7 +17,7 @@ addons:
 env:
   matrix:
     - PLONE_VERSION=4.3
-    - PLONE_VERSION=4.3 TEST_EGGS=buildout:test-eggs=plone.app.contenttypes
+    - PLONE_VERSION=4.3 TEST_EGGS=buildout:test-eggs+=plone.app.contenttypes
     - PLONE_VERSION=4.3 VERSIONS=versions:plone.app.jquery=1.9.2
     - PLONE_VERSION=5.1
 matrix:
