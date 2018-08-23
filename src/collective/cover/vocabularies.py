@@ -40,6 +40,10 @@ class AvailableTilesVocabulary(object):
         if IS_PLONE_5 and 'collective.cover.calendar' in tiles:
             tiles.remove('collective.cover.calendar')
 
+        # XXX: PFG tile is deprecated and will be removed in collective.cover 3
+        if IS_PLONE_5 and 'collective.cover.pfg' in tiles:
+            tiles.remove('collective.cover.pfg')
+
         items = [SimpleTerm(value=i, title=i) for i in tiles]
         return SimpleVocabulary(items)
 
@@ -62,6 +66,10 @@ class EnabledTilesVocabulary(object):
     def enabled(name):
         # FIXME: https://github.com/collective/collective.cover/issues/633
         if IS_PLONE_5 and name == 'collective.cover.calendar':
+            return False
+
+        # XXX: PFG tile is deprecated and will be removed in collective.cover 3
+        if IS_PLONE_5 and name == 'collective.cover.pfg':
             return False
 
         tile_type = queryUtility(ITileType, name)

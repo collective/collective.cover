@@ -1,4 +1,10 @@
 # -*- coding: utf-8 -*-
+"""Test for the PloneFormGen tile.
+
+They run only if Products.PloneFormGen is installed.
+
+XXX: PFG tile is deprecated and will be removed in collective.cover 3
+"""
 from collective.cover.tests.base import TestTileMixin
 from collective.cover.tiles.pfg import IPFGTile
 from collective.cover.tiles.pfg import PFGTile
@@ -86,10 +92,9 @@ class PFGTileTestCase(TestTileMixin, unittest.TestCase):
 
 
 def test_suite():
-    # XXX: load tests only in Plone < 5
+    """Run tests only if Products.PloneFormGen is installed."""
     from collective.cover.testing import HAS_PFG
-    from collective.cover.config import IS_PLONE_5
-    if HAS_PFG and not IS_PLONE_5:
+    if HAS_PFG:
         return unittest.defaultTestLoader.loadTestsFromName(__name__)
     else:
         return unittest.TestSuite()
