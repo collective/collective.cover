@@ -24,6 +24,19 @@ class HiddenProfiles(object):  # pragma: no cover
         ]
 
 
+def add_default_layout():
+    """Add an empty layout as default."""
+    from collective.cover.config import EMPTY_LAYOUT
+    from collective.cover.controlpanel import ICoverSettings
+    from plone.registry.interfaces import IRegistry
+    from zope.component import getUtility
+    registry = getUtility(IRegistry)
+    settings = registry.forInterface(ICoverSettings)
+    default = u'Empty layout'
+    if settings.layouts.get(default) == u'[]':
+        settings.layouts[default] = EMPTY_LAYOUT
+
+
 def install_relationfield():
     """Install plone.app.relationfield."""
     from plone import api
@@ -34,5 +47,7 @@ def install_relationfield():
 
 
 def run_after(portal_setup):
+    add_default_layout()
+
     if HAS_RELATIONFIELD:
         install_relationfield()
