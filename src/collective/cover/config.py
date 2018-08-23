@@ -35,6 +35,10 @@ IS_PLONE_5 = api.env.plone_version().startswith('5')
 
 DEFAULT_GRID_SYSTEM = 'bootstrap3' if IS_PLONE_5 else 'deco16_grid'
 
+_ = u'[{{"type": "row", "children": [{{"type": "group", "column-size": {size}, "roles": ["Manager"]}}]}}]'
+_SIZE = 12 if IS_PLONE_5 else 16
+EMPTY_LAYOUT = _.format(size=_SIZE)
+
 # z3c.form.widget.SequenceWidget used for css_class field
 # has a default null value of '--NOVALUE--'
 # In case that no value was set to that field
