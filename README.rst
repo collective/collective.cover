@@ -124,6 +124,15 @@ Edit your buildout.cfg and add the following to it:
     plone.app.tiles = 3.1.0
     plone.tiles = 2.1
 
+If you want to use the relation field you must use the ``[relations]`` extra in your buildout configuration.
+
+.. code-block:: ini
+
+    [buildout]
+    ...
+    eggs =
+        collective.cover [relations]
+
 If you want to use a newer release of ``collective.js.bootstrap``, you will need to update ``plone.app.jquery``:
 
 .. code-block:: ini
@@ -138,22 +147,20 @@ Go to the 'Site Setup' page in a Plone site and click on the 'Add-ons' link.
 
 Check the box next to ``collective.cover`` and click the 'Activate' button.
 
-.. Note::
+.. note::
     You may have to empty your browser cache and save your resource registries
     in order to see the effects of the product installation.
 
-Content relations
-^^^^^^^^^^^^^^^^^
+Upgrading from 1.x to 2.x
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
-If you want to use the ``IRelatedItems`` behavior you must use the ``[relations]`` extra in your buildout configuration.
+In version 2.0b1 we removed a hard dependency on ``plone.app.relationfield``.
+You must use the ``[relations]`` extra in your buildout configuration as stated above,
+or your site will break with the following error:
 
-.. code-block:: ini
+.. code-block:: pytb
 
-    [buildout]
-    ...
-    eggs =
-        collective.cover [relations]
-
+    AttributeError: type object 'ICatalog' has no attribute '__iro__'
 
 Not entirely unlike
 -------------------

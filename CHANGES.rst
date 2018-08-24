@@ -9,7 +9,7 @@ There's a frood who really knows where his towel is.
 .. warning::
     The PFG tile is now deprecated an will be removed in collective.cover 3.
     This version removes the hard dependency on ``plone.app.relationfield``;
-    you must use the ``[relations]`` extra if you are using the ``IRelatedItems`` behavior.
+    if you're ugrading from a previous version of ``collective.cover`` you must add the extra ``[relations]``.
     Upgrading from versions below 1.2b1 is no longer supported.
     You must upgrade at least to version 1.2b1 before upgrading to this release.
 
@@ -20,7 +20,7 @@ There's a frood who really knows where his towel is.
   [hvelarde]
 
 - Remove hard dependency on ``plone.app.relationfield``;
-  if you use the ``IRelatedItems`` behavior you must use the ``[relations]`` extra (closes `#684 <https://github.com/collective/collective.cover/issues/684>`_).
+  if you're ugrading from a previous version of ``collective.cover`` you must add the extra ``[relations]`` (closes `#684 <https://github.com/collective/collective.cover/issues/684>`_).
   [hvelarde]
 
 - Remove predefined layouts as they were created using Deco grid system and they are broken in Plone 5 (closes `#652 <https://github.com/collective/collective.cover/issues/652>`_).
