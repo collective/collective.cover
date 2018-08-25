@@ -142,7 +142,7 @@ class CollectionTileTestCase(TestTileMixin, unittest.TestCase):
         self.assertEqual(len(self.tile.results()), 3)
 
         tile_conf = self.tile.get_tile_configuration()
-        tile_conf['number_to_show']['size'] = 2
+        tile_conf['count']['size'] = 2
         self.tile.set_tile_configuration(tile_conf)
 
         # Collection has three images and shows the first two items.
@@ -166,7 +166,7 @@ class CollectionTileTestCase(TestTileMixin, unittest.TestCase):
         self.assertEqual(items[1].getId(), 'my-image2')
 
         # Add a size, so only one item is left.
-        tile_conf['number_to_show']['size'] = 1
+        tile_conf['count']['size'] = 1
         self.tile.set_tile_configuration(tile_conf)
 
         items = self.tile.results()

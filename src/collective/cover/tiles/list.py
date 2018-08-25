@@ -40,13 +40,12 @@ class IListTile(IPersistentCoverTile):
     )
     form.omitted('uuids')
 
-    # XXX: this field should be used to replace the 'limit' attribute
     form.omitted('count')
     form.no_omit(IDefaultConfigureForm, 'count')
-    count = schema.Int(
+    count = schema.List(
         title=_(u'Number of items to display'),
+        value_type=schema.TextLine(),
         required=False,
-        default=5,
     )
 
     form.omitted('title')
@@ -153,11 +152,12 @@ class ListTile(PersistentCoverTile):
         assert len(brain) == 1
         return super(ListTile, self).Date(brain[0])
 
-    # TODO: get rid of this by replacing it with the 'count' field
     def set_limit(self):
-        for field in self.get_configured_fields():
-            if field and field.get('id') == 'uuids':
-                self.limit = int(field.get('size', self.limit))
+        self.config_fields = self.get_tile_configuration()
+        limit_conf = self.config_fields.get('count', None)
+
+        if limit_conf and 'size' in limit_conf.keys():
+            self.limit = int(limit_conf.get('size', self.limit))
 
     def populate_with_object(self, obj):
         """ Add an object to the list of items

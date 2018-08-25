@@ -55,10 +55,9 @@ class ICollectionTile(IPersistentCoverTile):
         required=False,
     )
 
-    # FIXME: this field should be named 'count'
-    form.omitted('number_to_show')
-    form.no_omit(IDefaultConfigureForm, 'number_to_show')
-    number_to_show = schema.List(
+    form.omitted('count')
+    form.no_omit(IDefaultConfigureForm, 'count')
+    count = schema.List(
         title=_(u'Number of items to display'),
         value_type=schema.TextLine(),
         required=False,
@@ -106,7 +105,7 @@ class CollectionTile(PersistentCoverTile):
 
     def results(self):
         self.configured_fields = self.get_configured_fields()
-        size_conf = [i for i in self.configured_fields if i['id'] == 'number_to_show']
+        size_conf = [i for i in self.configured_fields if i['id'] == 'count']
 
         if size_conf and 'size' in size_conf[0].keys():
             size = int(size_conf[0]['size'])
