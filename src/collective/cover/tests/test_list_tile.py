@@ -251,7 +251,7 @@ class ListTileTestCase(TestTileMixin, unittest.TestCase):
         tile_conf = self.tile.get_tile_configuration()
         tile_conf['image']['visibility'] = u'off'
         self.tile.set_tile_configuration(tile_conf)
-        assert not self.tile._field_is_visible('image')
+        self.assertFalse(self.tile._field_is_visible('image'))
         obj = self.portal['my-image']
         self.assertIsNone(self.tile.thumbnail(obj))
 

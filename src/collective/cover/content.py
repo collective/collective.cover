@@ -62,7 +62,7 @@ class Cover(Item):
                 layout = []
         else:
             # we are recursively processing the layout
-            assert isinstance(layout, list)
+            assert isinstance(layout, list)  # nosec
 
         tiles = []
         for e in layout:
@@ -94,7 +94,7 @@ class Cover(Item):
         :raises ValueError: if the tile does not exists
         """
         tile = [t for t in self.get_tiles() if t['id'] == id]
-        assert len(tile) in (0, 1)
+        assert len(tile) in (0, 1)  # nosec
         if len(tile) == 0:
             raise ValueError
         return tile[0]['type']

@@ -52,7 +52,6 @@ class UpgradeTestCaseBase(unittest.TestCase):
     def _how_many_upgrades_to_do(self):
         self.setup.setLastVersionForProfile(self.profile_id, self.from_version)
         upgrades = self.setup.listUpgrades(self.profile_id)
-        assert len(upgrades) > 0
         return len(upgrades[0])
 
 
@@ -82,14 +81,14 @@ class Upgrade13to14TestCase(UpgradeTestCaseBase):
         registered_tiles.remove(tile)
         api.portal.set_registry_record(value=registered_tiles, **record)
         registered_tiles = api.portal.get_registry_record(**record)
-        assert tile not in registered_tiles
+        self.assertNotIn(tile, registered_tiles)
 
         record = dict(interface=ICoverSettings, name='available_tiles')
         available_tiles = api.portal.get_registry_record(**record)
         available_tiles.remove(tile)
         api.portal.set_registry_record(value=available_tiles, **record)
         available_tiles = api.portal.get_registry_record(**record)
-        assert tile not in available_tiles
+        self.assertNotIn(tile, available_tiles)
 
         # run the upgrade step to validate the update
         self._do_upgrade_step(step)
@@ -113,7 +112,7 @@ class Upgrade13to14TestCase(UpgradeTestCaseBase):
         js_tool.unregisterResource('++resource++collective.cover/js/main.js')
 
         script = '++resource++collective.cover/js/main.js'
-        assert script not in js_tool.getResourceIds()
+        self.assertNotIn(script, js_tool.getResourceIds())
 
         # run the upgrade step to validate the update
         self._do_upgrade_step(step)
@@ -156,7 +155,7 @@ class Upgrade14to15TestCase(UpgradeTestCaseBase):
         dmgr.annotations[dmgr.key] = PersistentDict(old_data)
 
         data = dmgr.get()
-        assert isinstance(data['image_mtime'], str)
+        self.assertIsInstance(data['image_mtime'], str)
 
         # run the upgrade step to validate the update
         self._do_upgrade_step(step)

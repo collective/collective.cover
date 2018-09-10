@@ -150,7 +150,7 @@ class ListTile(PersistentCoverTile):
         #      like the Carousel tile
         catalog = api.portal.get_tool('portal_catalog')
         brain = catalog(UID=self.get_uuid(obj))
-        assert len(brain) == 1
+        assert len(brain) == 1  # nosec
         return super(ListTile, self).Date(brain[0])
 
     # TODO: get rid of this by replacing it with the 'count' field

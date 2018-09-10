@@ -81,7 +81,7 @@ class BasicTile(PersistentCoverTile):
     def brain(self):
         uuid = self.data.get('uuid')
         results = api.content.find(UID=uuid)
-        assert len(results) <= 1
+        assert len(results) <= 1  # nosec
         return results[0] if results else None
 
     def Date(self):

@@ -121,7 +121,7 @@ class CollectionTileTestCase(TestTileMixin, unittest.TestCase):
         tile_conf = self.tile.get_tile_configuration()
         tile_conf['image']['visibility'] = u'off'
         self.tile.set_tile_configuration(tile_conf)
-        assert not self.tile._field_is_visible('image')
+        self.assertFalse(self.tile._field_is_visible('image'))
         obj = self.portal['my-image']
         self.assertIsNone(self.tile.thumbnail(obj))
 
@@ -197,7 +197,7 @@ class CollectionTileTestCase(TestTileMixin, unittest.TestCase):
             obj = api.content.create(
                 self.portal, 'Collection', 'collection', query=EVENTS)
             api.content.transition(obj, 'publish')
-            assert len(obj.results()) == 1
+            assert len(obj.results()) == 1  # nosec
         return obj
 
     def test_show_start_date_on_events(self):

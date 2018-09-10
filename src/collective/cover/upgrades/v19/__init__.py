@@ -22,5 +22,5 @@ def register_resource(setup_tool):
     """Add layout_edit.js to registered resources."""
     js_tool = api.portal.get_tool('portal_javascripts')
     js_tool.registerScript(id=JS, compression='none', authenticated=True)
-    assert JS in js_tool.getResourceIds()
+    assert JS in js_tool.getResourceIds()  # nosec
     logger.info('Script registered')
