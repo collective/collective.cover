@@ -435,7 +435,7 @@ class PersistentCoverTilePurgePaths(object):
         portal_url = api.portal.get().portal_url()
         prefix = context.url.replace(portal_url, '', 1)
         yield prefix
-        for k, v in context.data.items():
+        for v in context.data.values():
             if INamedImage.providedBy(v):
                 yield '{0}/@@images/image'.format(prefix)
                 scales = parent.unrestrictedTraverse(

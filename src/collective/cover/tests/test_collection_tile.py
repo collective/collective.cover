@@ -185,7 +185,7 @@ class CollectionTileTestCase(TestTileMixin, unittest.TestCase):
 
         # now, return results in random order
         self.tile.data['random'] = True
-        for i in range(0, 10):
+        for _ in range(0, 10):
             results = [o for o in self.tile.results()]
             if results != ordered:
                 return

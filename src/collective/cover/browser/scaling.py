@@ -90,7 +90,7 @@ class ImageScaling(BaseImageScaling):
         elif '-' in name:
             # we got a uuid...
             if '.' in name:
-                name, ext = name.rsplit('.', 1)
+                name, _ = name.rsplit('.', 1)
             storage = AnnotationStorage(self.context)
             info = storage.get(name)
             if info is not None:
