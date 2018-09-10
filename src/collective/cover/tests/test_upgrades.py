@@ -19,11 +19,12 @@ class UpgradeTestCaseBase(unittest.TestCase):
         self.from_version = from_version
         self.to_version = to_version
 
-    def _create_cover(self, id, layout):
+    def _create_cover(self, id_, layout):
         with api.env.adopt_roles(['Manager']):
             return api.content.create(
-                self.portal, 'collective.cover.content',
-                id,
+                self.portal,
+                'collective.cover.content',
+                id_,
                 template_layout=layout,
             )
 
