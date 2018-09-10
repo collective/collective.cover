@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <repositorytool>
   <policymap>
-    <type remove="true" name="collective.cover.content" />
+    <type purge="true" name="collective.cover.content" />
   </policymap>
 </repositorytool>
