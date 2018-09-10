@@ -67,6 +67,7 @@ class InstallTestCase(unittest.TestCase):
         policy_map = repository.getPolicyMap()['collective.cover.content']
         self.assertEqual(policy_map, [u'version_on_revert'])
 
+    @unittest.skipIf(IS_PLONE_5, 'Plone 4.3 only')
     def test_tinymce_linkable(self):
         tinymce = self.portal['portal_tinymce']
         linkable = tinymce.linkable.split('\n')
@@ -109,6 +110,7 @@ class UninstallTestCase(unittest.TestCase):
         policy_map = repository.getPolicyMap()
         self.assertNotIn('collective.cover.content', policy_map)
 
+    @unittest.skipIf(IS_PLONE_5, 'Plone 4.3 only')
     def test_tinymce_linkable_removed(self):
         tinymce = self.portal['portal_tinymce']
         linkable = tinymce.linkable.split('\n')
