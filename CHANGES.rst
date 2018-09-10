@@ -6,7 +6,8 @@ There's a frood who really knows where his towel is.
 2.0b2 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
-- Nothing changed yet.
+- Fix package uninstall.
+  [hvelarde]
 
 
 2.0b1 (2018-08-24)

@@ -34,16 +34,14 @@ class ControlPanelTestCase(unittest.TestCase):
             self.portal.restrictedTraverse('@@cover-settings')
 
     def test_controlpanel_installed(self):
-        actions = [a.getAction(self)['id']
-                   for a in self.controlpanel.listActions()]
+        actions = [a.id for a in self.controlpanel.listActions()]
         self.assertIn('cover', actions)
 
     def test_controlpanel_removed_on_uninstall(self):
         qi = self.portal['portal_quickinstaller']
         with api.env.adopt_roles(['Manager']):
             qi.uninstallProducts(products=[PROJECTNAME])
-        actions = [a.getAction(self)['id']
-                   for a in self.controlpanel.listActions()]
+        actions = [a.id for a in self.controlpanel.listActions()]
         self.assertNotIn('cover', actions)
 
     def test_controlpanel_permissions(self):

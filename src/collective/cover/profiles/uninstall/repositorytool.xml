@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<repositorytool>
+  <policymap>
+    <type purge="true" name="collective.cover.content" />
+  </policymap>
+</repositorytool>
