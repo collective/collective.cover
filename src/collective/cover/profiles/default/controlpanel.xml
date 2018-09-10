@@ -3,15 +3,15 @@
     xmlns:i18n="http://xml.zope.org/namespaces/i18n"
     i18n:domain="collective.cover"
     purge="False">
-    <configlet title="Cover Settings"
-        action_id="cover"
-        appId="collective.cover"
-        category="Products"
-        condition_expr=""
-        url_expr="string:${portal_url}/@@cover-settings"
-        icon_expr="string:${portal_url}/++resource++collective.cover/img/frontpage_icon.png"
-        visible="True"
-        i18n:attributes="title">
-      <permission>collective.cover: Setup</permission>
-    </configlet>
+  <configlet title="Cover Settings"
+      action_id="cover"
+      appId="collective.cover"
+      category="Products"
+      condition_expr=""
+      url_expr="string:${portal_url}/@@cover-settings"
+      icon_expr="string:${portal_url}/++resource++collective.cover/img/frontpage_icon.png"
+      visible="True"
+      i18n:attributes="title">
+    <permission>collective.cover: Setup</permission>
+  </configlet>
 </object>

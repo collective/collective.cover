@@ -10,8 +10,10 @@ import unittest
 
 JS = [
     '++resource++collective.cover/js/contentchooser.js',
-    '++resource++collective.js.bootstrap/js/bootstrap.min.js',
+    '++resource++collective.cover/js/layout_edit.js',
+    '++resource++collective.cover/js/main.js',
     '++resource++collective.cover/js/vendor/jquery.endless-scroll.js',
+    '++resource++collective.js.bootstrap/js/bootstrap.min.js',
 ]
 
 CSS = [
@@ -60,6 +62,16 @@ class InstallTestCase(unittest.TestCase):
         except AttributeError:
             self.fail('Reinstall fails when the record was changed')
 
+    def test_policy_map(self):
+        repository = self.portal['portal_repository']
+        policy_map = repository.getPolicyMap()['collective.cover.content']
+        self.assertEqual(policy_map, [u'version_on_revert'])
+
+    def test_tinymce_linkable(self):
+        tinymce = self.portal['portal_tinymce']
+        linkable = tinymce.linkable.split('\n')
+        self.assertIn('collective.cover.content', linkable)
+
 
 class UninstallTestCase(unittest.TestCase):
 
@@ -90,3 +102,13 @@ class UninstallTestCase(unittest.TestCase):
         resource_ids = self.portal.portal_css.getResourceIds()
         for id in CSS:
             self.assertNotIn(id, resource_ids, '{0} not removed'.format(id))
+
+    def test_policy_map_removed(self):
+        repository = self.portal['portal_repository']
+        policy_map = repository.getPolicyMap()
+        self.assertNotIn('collective.cover.content', policy_map)
+
+    def test_tinymce_linkable_removed(self):
+        tinymce = self.portal['portal_tinymce']
+        linkable = tinymce.linkable.split('\n')
+        self.assertNotIn('collective.cover.content', linkable)

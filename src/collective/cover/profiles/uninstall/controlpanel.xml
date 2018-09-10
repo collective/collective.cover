@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<object name="portal_controlpanel">
+  <configlet
+      remove="True"
+      title="Cover Settings"
+      action_id="cover"
+      appId="collective.cover"
+      category="Products"
+      />
+</object>
