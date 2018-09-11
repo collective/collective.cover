@@ -2,7 +2,7 @@
 from collective.cover.interfaces import ICoverLayer
 from collective.cover.testing import INTEGRATION_TESTING
 from collective.cover.tiles.list import ListTile
-from lxml import etree
+from lxml import etree  # nosec
 from plone import api
 from plone.app.testing import logout
 from zope.interface import alsoProvides

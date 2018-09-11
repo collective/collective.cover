@@ -158,7 +158,7 @@ class BasicTileTestCase(TestTileMixin, unittest.TestCase):
         self.assertIn('@@images', rendered)
 
     def test_render(self):
-        from lxml import etree
+        from lxml import etree  # nosec
         obj = self.portal['my-news-item']
         obj.setSubject(['subject1', 'subject2'])
         obj.effective_date = DateTime()

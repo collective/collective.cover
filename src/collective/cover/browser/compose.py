@@ -45,7 +45,7 @@ class UpdateTileContent(BrowserView):
 
         catalog = api.portal.get_tool('portal_catalog')
         results = catalog(UID=self.uuid)
-        assert len(results) in (0, 1)
+        assert len(results) in (0, 1)  # nosec
         if results:
             obj = results[0].getObject()
             path = '{0}/{1}'.format(self.tile_type, self.tile_id)

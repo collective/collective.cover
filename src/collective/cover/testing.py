@@ -96,7 +96,7 @@ def generate_jpeg(width, height):
     maxIt = 25  # max iterations allowed
     # image size
     image = Image.new('RGB', (width, height))
-    c = complex(random.random() * 2.0 - 1.0, random.random() - 0.5)
+    c = complex(random.random() * 2.0 - 1.0, random.random() - 0.5)  # nosec
 
     for y in range(height):
         zy = y * (yb - ya) // (height - 1) + ya

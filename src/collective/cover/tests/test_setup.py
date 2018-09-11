@@ -40,19 +40,19 @@ class InstallTestCase(unittest.TestCase):
     @unittest.skipIf(IS_PLONE_5, 'No easy way to test this under Plone 5')
     def test_jsregistry(self):
         resource_ids = self.portal.portal_javascripts.getResourceIds()
-        for id in JS:
-            self.assertIn(id, resource_ids, '{0} not installed'.format(id))
+        for id_ in JS:
+            self.assertIn(id_, resource_ids, '{0} not installed'.format(id))
 
     @unittest.skipIf(IS_PLONE_5, 'No easy way to test this under Plone 5')
     def test_cssregistry(self):
         resource_ids = self.portal.portal_css.getResourceIds()
-        for id in CSS:
-            self.assertIn(id, resource_ids, '{0} not installed'.format(id))
+        for id_ in CSS:
+            self.assertIn(id_, resource_ids, '{0} not installed'.format(id))
 
     def test_resources_available(self):
         resources = CSS + JS
-        for id in resources:
-            res = self.portal.restrictedTraverse(id)
+        for id_ in resources:
+            res = self.portal.restrictedTraverse(id_)
             self.assertTrue(res)
 
     def test_reinstall_with_changed_registry(self):
@@ -95,14 +95,14 @@ class UninstallTestCase(unittest.TestCase):
     @unittest.skipIf(IS_PLONE_5, 'No easy way to test this under Plone 5')
     def test_jsregistry_removed(self):
         resource_ids = self.portal.portal_javascripts.getResourceIds()
-        for id in JS:
-            self.assertNotIn(id, resource_ids, '{0} not removed'.format(id))
+        for id_ in JS:
+            self.assertNotIn(id_, resource_ids, '{0} not removed'.format(id))
 
     @unittest.skipIf(IS_PLONE_5, 'No easy way to test this under Plone 5')
     def test_cssregistry_removed(self):
         resource_ids = self.portal.portal_css.getResourceIds()
-        for id in CSS:
-            self.assertNotIn(id, resource_ids, '{0} not removed'.format(id))
+        for id_ in CSS:
+            self.assertNotIn(id_, resource_ids, '{0} not removed'.format(id))
 
     @unittest.expectedFailure  # XXX: not pretty sure how to test this
     def test_versioning_policy_removed(self):

@@ -7,7 +7,7 @@ from plone import api
 from plone.registry.interfaces import IRegistry
 from zope.component import getUtility
 
-import lxml
+import lxml  # nosec
 import unittest
 
 
