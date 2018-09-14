@@ -15,7 +15,6 @@ TZNAME = get_localzone().zone
 
 def create_standard_content_for_tests(portal):
     """Create one instance of each standard content type, at least."""
-    from collective.cover.testing import DEXTERITY_ONLY
     from DateTime import DateTime
     from plone import api
 
@@ -42,23 +41,16 @@ def create_standard_content_for_tests(portal):
         # XXX: handle setting text field for both, Archetypes and Dexterity
         set_text_field(obj, u'<p>The quick brown fox jumps over the lazy dog</p>')
 
-        if DEXTERITY_ONLY:
-            api.content.create(
-                container=portal,
-                type='Event',
-                title=u'My event',
-                start=today,
-                end=tomorrow,
-                timezone=TZNAME,
-            )
-        else:
-            api.content.create(
-                container=portal,
-                type='Event',
-                title=u'My event',
-                startDate=DateTime(today),
-                endDate=DateTime(tomorrow),
-            )
+        api.content.create(
+            container=portal,
+            type='Event',
+            title=u'My event',
+            startDate=DateTime(today),  # Archetypes
+            endDate=DateTime(tomorrow),
+            start=today,  # Dexterity
+            end=tomorrow,
+            timezone=TZNAME,
+        )
 
         api.content.create(
             container=portal,
