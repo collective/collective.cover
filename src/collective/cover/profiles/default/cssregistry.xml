@@ -1,9 +1,6 @@
 <?xml version="1.0"?>
 <object name="portal_css" meta_type="Stylesheets Registry">
  <stylesheet title="" cacheable="True" compression="safe" cookable="True"
-    enabled="1" expression="" id="++resource++collective.cover/css/contentchooser.css" media="screen"
-    rel="stylesheet" rendering="link"/>
- <stylesheet title="" cacheable="True" compression="safe" cookable="True"
-    enabled="1" expression="" id="++resource++collective.cover/css/cover.css" media="screen"
+    enabled="1" expression="" id="++resource++collective.cover/cover.css" media="screen"
     rel="stylesheet" rendering="link"/>
 </object>
