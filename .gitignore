@@ -28,3 +28,4 @@ parts/
 report.html
 selenium*
 var/
+src/collective/cover/static/

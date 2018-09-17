@@ -152,6 +152,7 @@ var jss = (function() {
     function swapAdjSelAttr(selector) {
         var swap = '';
         var lastIndex = 0;
+        var match;
             
         while ((match = adjSelAttrRegex.exec(selector)) != null) {
             if (match[0] === '')

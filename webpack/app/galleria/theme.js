@@ -19,7 +19,7 @@ var rm_button = function(data) {
   Galleria.addTheme({
     name: 'cover_theme',
     author: 'Simples',
-    css: '++resource++collective.cover/css/galleria.cover_theme.css',
+    css: '++resource++collective.cover/galleria/theme.css',
     defaults: {
       transition: 'slide',
       transition_speed: 500,

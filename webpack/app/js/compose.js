@@ -1,4 +1,3 @@
-var root = typeof exports !== "undefined" && exports !== null ? exports : this;
 (function($) {
   $.fn.liveSortable = function(opts) {
     $(document).on("mouseover", this.selector, function() {
@@ -166,7 +165,7 @@ $(document).ready(function() {
       config: {
         onLoad: function() {
           // With plone.app.widgets and Plone 4.3
-          if (typeof require !== 'undefined' && require.defined('pat-registry')) {
+          if (typeof __non_webpack_require !== 'undefined' && __non_webpack_require.defined('pat-registry')) {
             // Remove old editors references to work with ajax
             if (typeof tinyMCE !== 'undefined' && tinyMCE !== null) {
               if (tinyMCE.EditorManager != null) {
@@ -175,7 +174,7 @@ $(document).ready(function() {
             }
             // Add tinymce
             $('.overlay textarea.mce_editable').addClass('pat-tinymce');
-            require('pat-registry').scan($('.overlay'), ['tinymce']);
+            __non_webpack_require('pat-registry').scan($('.overlay'), ['tinymce']);
             // Wire save buttom to save tinymce
             $( '.overlay input#buttons-save').on('click', function() {
               tinyMCE.triggerSave();
@@ -203,5 +202,4 @@ $(document).ready(function() {
   } else {  // Plone 5
     $('a.edit-tile-link').on('show.plone-modal.patterns', editSortable);
   }
-  $('.tile[data-tile-type=collective\\.cover\\.carousel]').on('change', root.initializeGallery);
 });
