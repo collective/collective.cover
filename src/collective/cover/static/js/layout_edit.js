@@ -50,6 +50,9 @@
         if (key === 'tile-default') {
           continue;
         }
+        if (this.options[key] == null) {
+          continue;
+        }
         this.options[key].selected = true;
       }
       this.update();
