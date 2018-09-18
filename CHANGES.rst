@@ -6,6 +6,9 @@ There's a frood who really knows where his towel is.
 1.7b4 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Avoid ``KeyError`` when tile schema has changed (refs. `brasil.gov.portal#524 <https://github.com/plonegovbr/brasil.gov.portal/issues/524>`_).
+  [hvelarde]
+
 - Fix upgrade step 13 to avoid purging behaviors (fixes `#638 <https://github.com/collective/collective.cover/issues/638>`_).
   [hvelarde]
 
