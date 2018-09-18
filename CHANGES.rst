@@ -3,7 +3,7 @@ Changelog
 
 There's a frood who really knows where his towel is.
 
-1.7b4 (unreleased)
+1.7b4 (2018-09-18)
 ^^^^^^^^^^^^^^^^^^
 
 - Avoid ``TypeError`` when a style used on a tile was removed (fixes `#827 <https://github.com/collective/collective.cover/issues/827>`_).
