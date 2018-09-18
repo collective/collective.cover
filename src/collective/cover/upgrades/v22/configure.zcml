@@ -1,0 +1,17 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:genericsetup="http://namespaces.zope.org/genericsetup">
+
+  <genericsetup:upgradeSteps
+      source="21"
+      destination="22"
+      profile="collective.cover:default">
+
+    <genericsetup:upgradeStep
+        title="Cook JS resources"
+        handler="..cook_javascript_resources"
+        />
+
+  </genericsetup:upgradeSteps>
+
+</configure>

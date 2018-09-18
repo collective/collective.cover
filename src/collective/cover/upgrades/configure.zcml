@@ -11,5 +11,6 @@
   <include package=".v19" />
   <include package=".v20" />
   <include package=".v21" />
+  <include package=".v22" />
 
 </configure>
