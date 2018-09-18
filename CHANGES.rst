@@ -6,7 +6,9 @@ There's a frood who really knows where his towel is.
 1.7b5 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
-- Nothing changed yet.
+- Avoid ``ValueError`` on tile initialization;
+  this fixes a regression on release 1.7b4.
+  [hvelarde]
 
 
 1.7b4 (2018-09-18)
