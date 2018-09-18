@@ -6,6 +6,9 @@ There's a frood who really knows where his towel is.
 1.7b4 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Avoid ``TypeError`` when remove used style (refs. `#827 <https://github.com/collective/collective.cover/issues/827>`_).
+  [rodfersou]
+
 - Avoid ``KeyError`` when tile schema has changed (refs. `brasil.gov.portal#524 <https://github.com/plonegovbr/brasil.gov.portal/issues/524>`_).
   [hvelarde]
 
