@@ -3,7 +3,7 @@ Changelog
 
 There's a frood who really knows where his towel is.
 
-1.7b5 (unreleased)
+1.7b5 (2018-09-19)
 ^^^^^^^^^^^^^^^^^^
 
 - Avoid ``ValueError`` on tile initialization;
