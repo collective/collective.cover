@@ -1,6 +1,6 @@
-// import Compose from './js/compose.js';
 // import ContentChooser from './js/contentchooser.js';
-import LayoutManager from './js/layoutmanager.js';
+import ComposeView from './js/compose.js';
+import LayoutView from './js/layout.js';
 
 import CalendarTile from './js/tiles/calendar.js';
 import CarouselTile from './js/tiles/carousel.js';
@@ -11,9 +11,11 @@ jQuery.prototype[Symbol.iterator] = Array.prototype[Symbol.iterator];
 
 
 $(() => {
-  let $layout = $('.layout');
-  if ($layout[0] !== undefined) {
-    new LayoutManager($layout);
+  if ($('.template-compose')[0] !== undefined) {
+    new ComposeView();
+  }
+  if ($('.template-layoutedit')[0] !== undefined) {
+    new LayoutView();
   }
 
   for (let tile of $('.cover-carousel-tile')) {
@@ -29,7 +31,8 @@ $(() => {
 
 
 export default {
-  LayoutManager,
+  ComposeView,
+  LayoutView,
   CalendarTile,
   CarouselTile,
 }
