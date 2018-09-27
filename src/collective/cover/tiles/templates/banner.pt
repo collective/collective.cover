@@ -16,7 +16,8 @@
                    remote_url view/getRemoteUrl">
 
     <tal:image condition="has_image">
-        <a tal:attributes="href remote_url">
+        <a tal:omit-tag="not:remote_url"
+           tal:attributes="href remote_url">
           <img tal:define="scale view/scale;
                            scales view/@@images;
                            thumbnail python:scales.scale('image', scale=scale)"
@@ -33,16 +34,22 @@
         define="htmltag view/htmltag">
 
       <h2 tal:condition="python:htmltag == 'h2'">
-         <a tal:attributes="href remote_url"
-            tal:content="title" />
+        <a tal:omit-tag="not:remote_url"
+           tal:attributes="href remote_url"
+           tal:content="title"
+           />
       </h2>
       <h3 tal:condition="python:htmltag == 'h3'">
-         <a tal:attributes="href remote_url"
-            tal:content="title" />
+        <a tal:omit-tag="not:remote_url"
+           tal:attributes="href remote_url"
+           tal:content="title"
+           />
       </h3>
       <h4 tal:condition="python:htmltag == 'h4'">
-         <a tal:attributes="href remote_url"
-            tal:content="title" />
+        <a tal:omit-tag="not:remote_url"
+           tal:attributes="href remote_url"
+           tal:content="title"
+           />
       </h4>
     </tal:text>
 
