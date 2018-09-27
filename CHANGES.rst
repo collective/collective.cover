@@ -6,6 +6,9 @@ There's a frood who really knows where his towel is.
 2.0b2 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Links on Basic tiles are now editable (fixes `#397 <https://github.com/collective/collective.cover/issues/397>`_).
+  [hvelarde]
+
 - Avoid ``TypeError`` when a style used on a tile was removed (fixes `#827 <https://github.com/collective/collective.cover/issues/827>`_).
   [rodfersou]
 

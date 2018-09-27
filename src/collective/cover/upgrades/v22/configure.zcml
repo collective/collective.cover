@@ -14,6 +14,11 @@
         handler="..cook_javascript_resources"
         />
 
+    <genericsetup:upgradeStep
+        title="Add remote_url field to Basic tiles"
+        handler=".add_remote_url_field"
+        />
+
   </genericsetup:upgradeSteps>
 
 </configure>
