@@ -1,8 +1,12 @@
+import ContentChooser from './contentchooser.js';
+
+
 export default class ComposeView {
   constructor() {
     this.bindEvents();
     this.update();
     this.prepareRichText();
+    new ContentChooser(this);
   }
   bindEvents() {
     $(document).on('mouseover', '.sortable-tile', this.onMouseOverSortable.bind(this));

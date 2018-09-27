@@ -1,0 +1,142 @@
+#contentchooser-content-show-button {
+  padding: .5em 1em;
+  cursor: pointer;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+#contentchooser-content-search {
+  position: fixed;
+  z-index: 9999;
+  display: none;
+  padding: 20px;
+  cursor: pointer;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  &.right {
+    right: 0;
+  }
+  .item-list {
+    overflow: auto;
+    width: 500px;
+    max-width: 100%;
+    height: 250px;
+    margin: 10px 0 0;
+    padding: 5px;
+    border: 1px solid #ccc;
+    li {
+      list-style-type: none;
+      list-style-image: none;
+      cursor: url('data:image/x-icon;base64,AAACAAEAICACAAcABQAwAQAAFgAAACgAAAAgAAAAQAAAAAEAAQAAAAAAAAEAAAAAAAAAAAAAAgAAAAAAAAAAAAAA////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD8AAAA/AAAAfwAAAP+AAAH/gAAB/8AAA//AAAd/wAAGf+AAAH9gAADbYAAA2yAAAZsAAAGbAAAAGAAAAAAAAA//////////////////////////////////////////////////////////////////////////////////////gH///4B///8Af//+AD///AA///wAH//4AB//8AAf//AAD//5AA///gAP//4AD//8AF///AB///5A////5///8='), all-scroll;
+      cursor: grab;
+      &.ui-draggable-dragging {
+        cursor: url('data:image/x-icon;base64,AAACAAEAICACAAcABQAwAQAAFgAAACgAAAAgAAAAQAAAAAEAAQAAAAAAAAEAAAAAAAAAAAAAAgAAAAAAAAAAAAAA////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD8AAAA/AAAAfwAAAP+AAAH/gAAB/8AAAH/AAAB/wAAA/0AAANsAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//////////////////////////////////////////////////////////////////////////////////////gH///4B///8Af//+AD///AA///wAH//+AB///wAf//4AH//+AD///yT/////////////////////////////8='), all-scroll;
+        cursor: grabbing;
+      }
+      &.stats {
+        display: none;
+      }
+      &:hover {
+        background-color: #205c90;
+      }
+    }
+  }
+}
+
+#content #contentchooser-content-search .item-list li {
+  img {
+    display: inline-block;
+    border: 0;
+  }
+  a:link {
+    display: inline-block;
+    border-bottom: 0;
+  }
+}
+
+#contentchooser-content-show-button {
+  font-weight: bold;
+  position: relative;
+  z-index: 999;
+  top: 0;
+  right: 0;
+  float: right;
+  margin-bottom: 10px;
+  background: #fff;
+}
+
+#contentchooser-content-search .close {
+  position: absolute;
+  top: -14px;
+  left: -14px;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  // FIXME - https://github.com/simplesconsultoria/sc.recipe.staticresources/issues/44
+  background-image: url('./img/pb_close.png');
+}
+
+.current {
+  border-top-left-radius: .5em;
+  border-top-right-radius: .5em;
+  background: #fff;
+}
+
+div.input {
+  width: 200px;
+  margin: 10px 0;
+  padding: 3px 15px;
+  border: 1px solid #507aaa;
+  border-radius: 10px;
+  background: white;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+input[type='text'] {
+  &.contentchooser-content-trees, &#contentchooser-content-trees {
+    width: 100%;
+    min-width: 12em;
+    height: 16px;
+    padding-top: 1px;
+    color: #888;
+    border: 0 solid;
+    background: transparent;
+    text-shadow: 0 1px 1px white;
+  }
+}
+
+#content-trees #general_panel {
+  padding: 0;
+}
+
+#contentchooser-content-search-input-container, #contentchooser-content-trees-container, .contentchooser-clear {
+  display: inline-block;
+}
+
+#contentchooser-content-search-input-container, #contentchooser-content-trees-container {
+  width: 80%;
+}
+
+.contentchooser-clear {
+  height: 13px;
+  margin-left: -25px;
+}
+
+#more-link-field {
+  > {
+    .results > li {
+      display: block;
+      margin-bottom: .25em;
+      cursor: pointer;
+      &:hover {
+        background-color: #205c90;
+      }
+    }
+    div {
+      margin-bottom: .5em;
+    }
+  }
+  button {
+    padding: 0 .5em;
+  }
+}

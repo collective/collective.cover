@@ -38,10 +38,6 @@
   border-color: #222 #222 #000;
   border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
   background-color: #363636;
-  background-image: -moz-linear-gradient(top, #444, #222);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#444), to(#222));
-  background-image: -webkit-linear-gradient(top, #444, #222);
-  background-image: -o-linear-gradient(top, #444, #222);
   background-image: linear-gradient(to bottom, #444, #222);
   background-repeat: repeat-x;
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
@@ -85,16 +81,10 @@ button.close {
   padding: 15px;
   border: 1px solid #999;
   border: 1px solid rgba(0, 0, 0, 0.3);
-  -webkit-border-radius: 6px;
-  -moz-border-radius: 6px;
   border-radius: 6px;
   outline: 0;
   background-color: #fff;
-  -webkit-background-clip: padding-box;
-  -moz-background-clip: padding-box;
   background-clip: padding-box;
-  -webkit-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
-  -moz-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
   box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
   *border: 1px solid #999;
 }
@@ -117,9 +107,6 @@ button.close {
     background-color: #ccc \9;
   }
   &:hover {
-    -webkit-transition: background-position .1s linear;
-    -moz-transition: background-position .1s linear;
-    -o-transition: background-position .1s linear;
     transition: background-position .1s linear;
     text-decoration: none;
     color: #333;
@@ -133,16 +120,12 @@ button.close {
   &.active, &:active {
     outline: 0;
     background-image: none;
-    -webkit-box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
-    -moz-box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
     box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
   }
   &.disabled, &[disabled] {
     cursor: default;
     opacity: .65;
     background-image: none;
-    -webkit-box-shadow: none;
-    -moz-box-shadow: none;
     box-shadow: none;
     filter: alpha(opacity = 65);
   }
