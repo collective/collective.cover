@@ -6,6 +6,9 @@ There's a frood who really knows where his towel is.
 1.7b6 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Fix ``remote_url`` field definition in Banner tile and hide ``a`` tag if no URL is defined.
+  [hvelarde]
+
 - Links on Basic tiles are now editable (fixes `#397 <https://github.com/collective/collective.cover/issues/397>`_).
   [hvelarde]
 
