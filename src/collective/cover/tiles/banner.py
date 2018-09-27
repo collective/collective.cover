@@ -22,6 +22,14 @@ class IBannerTile(IPersistentCoverTile):
         required=False,
     )
 
+    form.omitted(IDefaultConfigureForm, 'remote_url')
+    remote_url = schema.URI(
+        title=_(u'label_remote_url', default=u'URL'),
+        description=_(
+            u'help_remote_url', default=u'Use absolute links only.'),
+        required=False,
+    )
+
     image = field.NamedBlobImage(
         title=_(u'Image'),
         required=False,
@@ -35,11 +43,6 @@ class IBannerTile(IPersistentCoverTile):
         description=_(
             u'help_alt_text',
             default=u'Provides a textual alternative to non-text content in web pages.'),  # noqa E501
-        required=False,
-    )
-
-    remote_url = schema.TextLine(  # FIXME: this must be schema.URI()
-        title=_(u'URL'),
         required=False,
     )
 
@@ -101,7 +104,8 @@ class BannerTile(PersistentCoverTile):
         })
 
     def getRemoteUrl(self):
-        return self.data.get('remote_url', None)
+        """Return the remote URL field."""
+        return self.data.get('remote_url') or u''  # deal with None values
 
     @property
     def is_empty(self):
