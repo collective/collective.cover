@@ -6,7 +6,8 @@ There's a frood who really knows where his towel is.
 1.7b6 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
-- Nothing changed yet.
+- Links on Basic tiles are now editable (fixes `#397 <https://github.com/collective/collective.cover/issues/397>`_).
+  [hvelarde]
 
 
 1.7b5 (2018-09-19)
