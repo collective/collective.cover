@@ -5,6 +5,7 @@ from collective.cover.tests.utils import today
 from collective.cover.tiles.basic import BasicTile
 from collective.cover.tiles.basic import IBasicTile
 from DateTime import DateTime
+from lxml import etree  # nosec
 from mock import Mock
 from plone import api
 from plone.app.testing import logout
@@ -158,7 +159,6 @@ class BasicTileTestCase(TestTileMixin, unittest.TestCase):
         self.assertIn('@@images', rendered)
 
     def test_render(self):
-        from lxml import etree
         obj = self.portal['my-news-item']
         obj.setSubject(['subject1', 'subject2'])
         obj.effective_date = DateTime()
@@ -308,3 +308,52 @@ class BasicTileTestCase(TestTileMixin, unittest.TestCase):
         self.tile.data['title'] = 'custom title'
         self.tile.data['description'] = 'custom description'
         self.assertEqual(searchable.SearchableText(), 'custom title custom description')
+
+    def test_getURL(self):
+        obj = self.portal['my-news-item']
+        self.tile.populate_with_object(obj)
+        expected = 'http://nohost/plone/my-news-item'
+        self.assertEqual(self.tile.getURL(), expected)
+
+    def test_getURL_view_action(self):
+        # on some content types we should add '/view' to the URL
+        obj = self.portal['my-image']
+        self.tile.populate_with_object(obj)
+        expected = 'http://nohost/plone/my-image/view'
+        self.assertEqual(self.tile.getURL(), expected)
+
+    def test_getURL_render(self):
+        # the URL must be rendered normally
+        obj = self.portal['my-news-item']
+        self.tile.populate_with_object(obj)
+        html = etree.HTML(self.tile())
+        a = html.find('*//a')
+        expected = 'http://nohost/plone/my-news-item'
+        self.assertEqual(a.attrib['href'], expected)
+
+    def test_getURL_render_edited(self):
+        # the alternate URL must be rendered
+        obj = self.portal['my-news-item']
+        self.tile.populate_with_object(obj)
+        remote_url = 'http://example.org/'
+        data_mgr = ITileDataManager(self.tile)
+        data = data_mgr.get()
+        data['remote_url'] = remote_url
+        data_mgr.set(data)
+        tile = self.get_tile
+        html = etree.HTML(tile())
+        a = html.find('*//a')
+        self.assertEqual(a.attrib['href'], remote_url)
+
+    def test_getURL_render_empty(self):
+        # no anchor is rendered if URL field is empty
+        obj = self.portal['my-news-item']
+        self.tile.populate_with_object(obj)
+        data_mgr = ITileDataManager(self.tile)
+        data = data_mgr.get()
+        data['remote_url'] = u''
+        data_mgr.set(data)
+        tile = self.get_tile
+        html = etree.HTML(tile())
+        a = html.find('*//a')
+        self.assertIsNone(a)

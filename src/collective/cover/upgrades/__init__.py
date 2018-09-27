@@ -108,6 +108,24 @@ def cook_javascript_resources(context):  # pragma: no cover
     logger.info('JavaScript resources were cooked')
 
 
+def get_valid_objects():
+    """Generate a list of objects associated with valid brains."""
+    results = api.content.find(portal_type='collective.cover.content')
+    logger.info('Found {0} objects in the catalog'.format(len(results)))
+    for b in results:
+        try:
+            obj = b.getObject()
+        except (AttributeError, KeyError):
+            obj = None
+
+        if obj is None:  # warn on broken entries in the catalog
+            msg = 'Invalid object reference in the catalog: {0}'
+            logger.warn(msg.format(b.getPath()))
+            continue
+
+        yield obj
+
+
 def change_configlet_permissions(context):
     """Allow Site Administrator to access configlet."""
     cptool = api.portal.get_tool('portal_controlpanel')
