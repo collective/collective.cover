@@ -10,28 +10,37 @@
   </p>
 
   <div tal:condition="not: is_empty" class="cover-basic-tile tile-content"
-       tal:define="description view/data/description|nothing">
+       tal:define="description view/data/description|nothing;
+                   remote_url view/getURL">
     <tal:fields repeat="field view/get_configured_fields">
 
          <tal:title define="htmltag python:field.get('htmltag', 'h1')"
                  condition="python:field['id'] == 'title'">
 
           <h1 tal:condition="python:htmltag == 'h1'">
-             <a tal:attributes="href view/getURL"
-              tal:content="python:field['content']" />
+            <a tal:omit-tag="not:remote_url"
+               tal:attributes="href remote_url"
+               tal:content="python:field['content']"
+               />
           </h1>
 
           <h2 tal:condition="python:htmltag == 'h2'">
-             <a tal:attributes="href view/getURL"
-              tal:content="python:field['content']" />
+            <a tal:omit-tag="not:remote_url"
+               tal:attributes="href remote_url"
+               tal:content="python:field['content']"
+               />
           </h2>
           <h3 tal:condition="python:htmltag == 'h3'">
-             <a tal:attributes="href view/getURL"
-              tal:content="python:field['content']" />
+            <a tal:omit-tag="not:remote_url"
+               tal:attributes="href remote_url"
+               tal:content="python:field['content']"
+               />
           </h3>
           <h4 tal:condition="python:htmltag == 'h4'">
-             <a tal:attributes="href view/getURL"
-              tal:content="python:field['content']" />
+            <a tal:omit-tag="not:remote_url"
+               tal:attributes="href remote_url"
+               tal:content="python:field['content']"
+               />
           </h4>
       </tal:title>
 
@@ -40,7 +49,9 @@
                  define="scale view/scale;
                          scales view/@@images;
                          thumbnail python:scales.scale('image', scale=scale)">
-        <a class="imag" tal:attributes="href view/getURL;">
+        <a class="imag"
+            tal:omit-tag="not:remote_url"
+            tal:attributes="href remote_url">
           <img tal:condition="thumbnail"
                tal:attributes="src thumbnail/url;
                                width thumbnail/width;
