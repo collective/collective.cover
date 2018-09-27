@@ -19,14 +19,10 @@ class UpgradeTestCaseBase(unittest.TestCase):
         self.from_version = from_version
         self.to_version = to_version
 
-    def _create_cover(self, id_, layout):
+    def _create_cover(self, **kwargs):
         with api.env.adopt_roles(['Manager']):
             return api.content.create(
-                self.portal,
-                'collective.cover.content',
-                id_,
-                template_layout=layout,
-            )
+                self.portal, 'collective.cover.content', **kwargs)
 
     def _get_upgrade_step(self, title):
         """Get one of the upgrade steps.
@@ -138,7 +134,7 @@ class Upgrade14to15TestCase(UpgradeTestCaseBase):
         self.assertIsNotNone(step)
 
         # simulate state on previous version
-        cover = self._create_cover('test-cover', 'Empty layout')
+        cover = self._create_cover(id='test-cover', layout='Empty layout')
         cover.cover_layout = (
             '[{"type": "row", "children": [{"column-size": 16, "type": '
             '"group", "children": [{"tile-type": '
@@ -215,7 +211,8 @@ class Upgrade18to19TestCase(UpgradeTestCaseBase):
         self.assertIsNotNone(step)
 
         # simulate state on previous version
-        cover = self._create_cover('test-cover', 'Empty layout')
+        cover = self._create_cover(id='test-cover', layout='Empty layout')
+
         annotations = IAnnotations(cover)
         key = u'plone.tiles.data.abc123'
         annotations[key] = u'Plone'
@@ -273,4 +270,53 @@ class Upgrade21to22TestCase(UpgradeTestCaseBase):
     def test_registrations(self):
         version = self.setup.getLastVersionForProfile(self.profile_id)[0]
         self.assertGreaterEqual(int(version), int(self.to_version))
-        self.assertEqual(self._how_many_upgrades_to_do(), 1)
+        self.assertEqual(self._how_many_upgrades_to_do(), 2)
+
+    @staticmethod
+    def _set_remote_url_field(tile, remote_url):
+        data_mgr = ITileDataManager(tile)
+        data = data_mgr.get()
+        data.update(remote_url=remote_url)
+        data_mgr.set(data)
+
+    def test_add_remote_url_field(self):
+        title = u'Add remote_url field to Basic tiles'
+        step = self._get_upgrade_step(title)
+        self.assertIsNotNone(step)
+
+        # simulate state on previous version
+        layout = (
+            '[{"type": "row", "children": [{"column-size": 12, "type": '
+            '"group", "children": [{"tile-type": '
+            '"collective.cover.basic", "type": "tile", "id": '
+            '"test"}], "roles": ["Manager"]}]}]'
+        )
+        obj1 = self._create_cover(id='foo', layout='Empty layout')
+        obj2 = self._create_cover(id='bar', layout='Empty layout')
+        obj1.cover_layout = obj2.cover_layout = layout
+
+        with api.env.adopt_roles(['Manager']):
+            news = api.content.create(
+                self.portal, 'News Item', title=u'Baz')
+
+        tile = obj1.restrictedTraverse('@@collective.cover.basic/test')
+        tile.populate_with_object(news)
+        self._set_remote_url_field(tile, None)
+        tile = obj1.restrictedTraverse('@@collective.cover.basic/test')
+        self.assertIsNone(tile.data['remote_url'])
+
+        tile = obj2.restrictedTraverse('@@collective.cover.basic/test')
+        tile.populate_with_object(news)
+        remote_url = 'http://example.org/'
+        self._set_remote_url_field(tile, remote_url)
+        tile = obj2.restrictedTraverse('@@collective.cover.basic/test')
+        self.assertEqual(tile.data['remote_url'], remote_url)
+
+        # run the upgrade step to validate the update
+        self._do_upgrade_step(step)
+        tile = obj1.restrictedTraverse('@@collective.cover.basic/test')
+        # field must be updated with absolute URL of referenced object
+        self.assertEqual(tile.data['remote_url'], 'http://nohost/plone/baz')
+        tile = obj2.restrictedTraverse('@@collective.cover.basic/test')
+        # field remains unchanged
+        self.assertEqual(tile.data['remote_url'], remote_url)
