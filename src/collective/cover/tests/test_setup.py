@@ -9,16 +9,12 @@ import unittest
 
 
 JS = [
-    '++resource++collective.cover/js/contentchooser.js',
-    '++resource++collective.cover/js/layout_edit.js',
-    '++resource++collective.cover/js/main.js',
-    '++resource++collective.cover/js/vendor/jquery.endless-scroll.js',
+    '++resource++collective.cover/cover.js',
     '++resource++collective.js.bootstrap/js/bootstrap.min.js',
 ]
 
 CSS = [
-    '++resource++collective.cover/css/contentchooser.css',
-    '++resource++collective.cover/css/cover.css',
+    '++resource++collective.cover/cover.css',
 ]
 
 
