@@ -3,7 +3,7 @@ Changelog
 
 There's a frood who really knows where his towel is.
 
-1.7b6 (unreleased)
+1.8b1 (2018-09-28)
 ^^^^^^^^^^^^^^^^^^
 
 - Fix ``remote_url`` field definition in Banner tile and hide ``a`` tag if no URL is defined.
