@@ -89,6 +89,8 @@ Got an idea? Found a bug? Let us know by `opening a support ticket <https://gith
 Known issues
 ^^^^^^^^^^^^
 
+* `URI validation happens outside modal window <https://github.com/collective/collective.cover/issues/838>`_.
+  This is an issue present on Banner and Basic tiles.
 * `Package is not compatible with standard Plone tiles <https://github.com/collective/collective.cover/issues/81>`_.
   This will be addressed in a future release, if we get an sponsor.
 
