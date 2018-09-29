@@ -6,15 +6,6 @@
       metal:use-macro="context/main_template/macros/master"
       i18n:domain="collective.cover">
     <body>
-        <metal:js fill-slot="javascript_head_slot">
-            <script type="application/javascript">
-            jQuery(document).ready(function() {
-                if (typeof(plone) !== 'undefined') {
-                    jQuery(window).unload(plone.UnlockHandler.execute);
-                }
-            });
-            </script>
-        </metal:js>
         <metal:main fill-slot="main">
             <tal:block tal:define="can_export_layout view/can_export_layout">
                 <div id="sidebar">

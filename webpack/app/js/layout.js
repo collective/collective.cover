@@ -32,6 +32,10 @@ export default class LayoutView {
     this.tile_dom = $(`<div class="${this.tile_class}"></div>`),
     this.bindEvents();
     this.init();
+
+    if (typeof(plone) !== 'undefined') {
+      $(window).unload(plone.UnlockHandler.execute);
+    }
   }
   onBeforeUnload(e) {
     let message = window.form_modified_message ||

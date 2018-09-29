@@ -7,6 +7,10 @@ export default class ComposeView {
     this.update();
     this.prepareRichText();
     new ContentChooser(this);
+
+    if (typeof(plone) !== 'undefined') {
+      $(window).unload(plone.UnlockHandler.execute);
+    }
   }
   bindEvents() {
     $(document).on('mouseover', '.sortable-tile', this.onMouseOverSortable.bind(this));
