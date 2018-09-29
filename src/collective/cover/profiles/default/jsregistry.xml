@@ -3,7 +3,4 @@
   <javascript id="++resource++collective.js.bootstrap/js/bootstrap.min.js"
       cacheable="True" compression="none" cookable="True" enabled="True"
       expression="" inline="False" />
-  <javascript id="++resource++collective.cover/cover.js"
-      cacheable="True" compression="none" cookable="True" enabled="True"
-      expression="" inline="False" authenticated="False" />
 </object>

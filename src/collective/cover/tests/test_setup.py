@@ -9,12 +9,7 @@ import unittest
 
 
 JS = [
-    '++resource++collective.cover/cover.js',
     '++resource++collective.js.bootstrap/js/bootstrap.min.js',
-]
-
-CSS = [
-    '++resource++collective.cover/cover.css',
 ]
 
 
@@ -39,14 +34,8 @@ class InstallTestCase(unittest.TestCase):
         for id_ in JS:
             self.assertIn(id_, resource_ids, '{0} not installed'.format(id))
 
-    @unittest.skipIf(IS_PLONE_5, 'No easy way to test this under Plone 5')
-    def test_cssregistry(self):
-        resource_ids = self.portal.portal_css.getResourceIds()
-        for id_ in CSS:
-            self.assertIn(id_, resource_ids, '{0} not installed'.format(id))
-
     def test_resources_available(self):
-        resources = CSS + JS
+        resources = JS
         for id_ in resources:
             res = self.portal.restrictedTraverse(id_)
             self.assertTrue(res)
@@ -92,12 +81,6 @@ class UninstallTestCase(unittest.TestCase):
     def test_jsregistry_removed(self):
         resource_ids = self.portal.portal_javascripts.getResourceIds()
         for id_ in JS:
-            self.assertNotIn(id_, resource_ids, '{0} not removed'.format(id))
-
-    @unittest.skipIf(IS_PLONE_5, 'No easy way to test this under Plone 5')
-    def test_cssregistry_removed(self):
-        resource_ids = self.portal.portal_css.getResourceIds()
-        for id_ in CSS:
             self.assertNotIn(id_, resource_ids, '{0} not removed'.format(id))
 
     @unittest.expectedFailure  # XXX: not pretty sure how to test this
