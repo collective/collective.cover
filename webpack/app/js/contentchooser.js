@@ -1,3 +1,6 @@
+import CarouselTile from './tiles/carousel.js';
+
+
 export default class ContentChooser {
   constructor(parent) {
     this.parent = parent;
@@ -142,6 +145,9 @@ export default class ContentChooser {
                     $origin.removeAttr('data-content-type');
                   }
                   move_callback();
+                  if ($target.attr('data-tile-type') === 'collective.cover.carousel') {
+                    new CarouselTile($target);
+                  }
                   return false;
                 },
                 error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -174,6 +180,9 @@ export default class ContentChooser {
               }
               $target.find('.loading-mask').removeClass('show');
               self.parent.update();
+              if ($target.attr('data-tile-type') === 'collective.cover.carousel') {
+                new CarouselTile($target);
+              }
               return false;
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) {
