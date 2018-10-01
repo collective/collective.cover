@@ -1,4 +1,4 @@
-// import ContentChooser from './js/contentchooser.js';
+import AddView from './js/add.js';
 import ComposeView from './js/compose.js';
 import LayoutView from './js/layout.js';
 
@@ -11,10 +11,14 @@ jQuery.prototype[Symbol.iterator] = Array.prototype[Symbol.iterator];
 
 
 $(() => {
-  if ($('.template-compose')[0] !== undefined) {
+  let $layoutPreview = $('.template-collective-cover-content #form-widgets-template_layout');
+  if ($layoutPreview[0] !== undefined) {
+    new AddView($layoutPreview);
+  }
+  if ($('.portaltype-collective-cover-content.template-compose')[0] !== undefined) {
     new ComposeView();
   }
-  if ($('.template-layoutedit')[0] !== undefined) {
+  if ($('.portaltype-collective-cover-content.template-layoutedit')[0] !== undefined) {
     new LayoutView();
   }
 
@@ -32,6 +36,7 @@ $(() => {
 
 export default {
   ComposeView,
+  AddView,
   LayoutView,
   CalendarTile,
   CarouselTile,
