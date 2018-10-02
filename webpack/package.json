@@ -25,7 +25,6 @@
   "repository": {},
   "license": "GPL-2.0",
   "dependencies": {
-    "copy-webpack-plugin": "^4.5.1",
-    "sc-recipe-staticresources": "simplesconsultoria/sc.recipe.staticresources#1.1b1"
+    "sc-recipe-staticresources": "simplesconsultoria/sc.recipe.staticresources#1.1b5"
   }
 }
