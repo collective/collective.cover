@@ -143,14 +143,14 @@ export default class ComposeView {
     }
   }
   onMouseOverSortable(e) {
-    let $el = $(e.target);
+    let $el = $(e.currentTarget);
     if ($el.data('init')) {
       return;
     }
     let onStop = function(e, ui) {
-      let $el = $(e.target);
+      let $el = $(e.currentTarget);
       let uuids = [];
-      $(e.target).children().each(function(index) {
+      $(e.currentTarget).children().each(function(index) {
         if ($el.attr('data-content-uuid') !== undefined) {
           uuids.push($el.attr('data-content-uuid'));
         }
@@ -185,7 +185,7 @@ export default class ComposeView {
   }
   onRemoveClick(e) {
     e.preventDefault();
-    let $obj = $(e.target).parent();
+    let $obj = $(e.currentTarget).parent();
     uuid = $obj.attr('data-content-uuid');
     let tile = $obj.parents('.tile');
 
