@@ -1,6 +1,6 @@
 {
   "name": "cover",
-  "version": "0.0.1",
+  "version": "2.1.2",
   "main": "app/cover.js",
   "scripts": {
     "build": "./node_modules/.bin/webpack -p",
