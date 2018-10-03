@@ -6,7 +6,11 @@ There's a frood who really knows where his towel is.
 2.1b2 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
-- Nothing changed yet.
+.. warning::
+    Running upgrade step 22 directly from an instance is discouraged as you may end with an incorrect URL on Basic tiles.
+
+- Upgrade step that adds ``remote_url`` field to Basic tiles was modified to allow processing of known tiles that inherit from it, like ``collective.nitf``.
+  [hvelarde]
 
 
 2.1b1 (2018-09-28)
