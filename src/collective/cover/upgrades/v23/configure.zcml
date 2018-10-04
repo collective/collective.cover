@@ -1,0 +1,18 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:genericsetup="http://namespaces.zope.org/genericsetup">
+
+  <genericsetup:upgradeSteps
+      source="22"
+      destination="23"
+      profile="collective.cover:default">
+
+    <genericsetup:upgradeStep
+        title="Show remote_url field on Basic tiles"
+        description="We can't go on together with suspicious tiles."
+        handler=".show_remote_url_field"
+        />
+
+  </genericsetup:upgradeSteps>
+
+</configure>
