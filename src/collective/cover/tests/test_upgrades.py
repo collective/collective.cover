@@ -270,7 +270,18 @@ class Upgrade21to22TestCase(UpgradeTestCaseBase):
     def test_registrations(self):
         version = self.setup.getLastVersionForProfile(self.profile_id)[0]
         self.assertGreaterEqual(int(version), int(self.to_version))
-        self.assertEqual(self._how_many_upgrades_to_do(), 2)
+        self.assertEqual(self._how_many_upgrades_to_do(), 1)
+
+
+class Upgrade22to23TestCase(UpgradeTestCaseBase):
+
+    def setUp(self):
+        UpgradeTestCaseBase.setUp(self, u'22', u'23')
+
+    def test_registrations(self):
+        version = self.setup.getLastVersionForProfile(self.profile_id)[0]
+        self.assertGreaterEqual(int(version), int(self.to_version))
+        self.assertEqual(self._how_many_upgrades_to_do(), 1)
 
     @staticmethod
     def _set_remote_url_field(tile, remote_url):
@@ -280,7 +291,7 @@ class Upgrade21to22TestCase(UpgradeTestCaseBase):
         data_mgr.set(data)
 
     def test_add_remote_url_field(self):
-        title = u'Add remote_url field to Basic tiles'
+        title = u'Show remote_url field on Basic tiles'
         step = self._get_upgrade_step(title)
         self.assertIsNotNone(step)
 
@@ -313,10 +324,13 @@ class Upgrade21to22TestCase(UpgradeTestCaseBase):
         self.assertEqual(tile.data['remote_url'], remote_url)
 
         # run the upgrade step to validate the update
-        self._do_upgrade_step(step)
-        tile = obj1.restrictedTraverse('@@collective.cover.basic/test')
-        # field must be updated with absolute URL of referenced object
-        self.assertEqual(tile.data['remote_url'], 'http://nohost/plone/baz')
-        tile = obj2.restrictedTraverse('@@collective.cover.basic/test')
-        # field remains unchanged
-        self.assertEqual(tile.data['remote_url'], remote_url)
+        from logging import INFO
+        from testfixtures import LogCapture
+        config = {'level': INFO, 'attributes': ['getMessage']}
+        with LogCapture('collective.cover', **config) as log:
+            self._do_upgrade_step(step)
+
+        log.check_present(
+            'Found 2 objects in the catalog',
+            '/plone/bar ("test"): remote_url=http://example.org/',
+        )

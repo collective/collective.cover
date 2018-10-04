@@ -8,4 +8,5 @@
   <include package=".v20" />
   <include package=".v21" />
   <include package=".v22" />
+  <include package=".v23" />
 </configure>

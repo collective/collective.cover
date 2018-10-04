@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from collective.cover import _
-from collective.cover import utils
 from collective.cover.interfaces import ISearchableText
 from collective.cover.logger import logger
 from collective.cover.tiles.base import IPersistentCoverTile
@@ -34,7 +33,9 @@ class IBasicTile(IPersistentCoverTile):
     remote_url = schema.URI(
         title=_(u'label_remote_url', default=u'URL'),
         description=_(
-            u'help_remote_url', default=u'Use absolute links only.'),
+            u'help_remote_url',
+            default=u'Leave this field empty to use the URL of the referenced content. '
+                    u'Enter a URL to override it (use absolute links only).'),
         required=False,
     )
 
@@ -117,8 +118,15 @@ class BasicTile(PersistentCoverTile):
         return not [i for i in self.data.values() if i]
 
     def getURL(self):
-        """Return the remote URL field."""
-        return self.data.get('remote_url') or u''  # deal with None values
+        """Return the URL of the referenced object or the value stored
+        in remote_url field.
+        """
+        remote_url = self.data.get('remote_url')
+        if remote_url:
+            return remote_url
+
+        if self.brain:
+            return self.brain.getURL()
 
     def Subject(self):
         """ Return the categories of the original object (AKA keywords, tags
@@ -145,7 +153,6 @@ class BasicTile(PersistentCoverTile):
         data = {
             'title': title,
             'description': description,
-            'remote_url': utils.get_absolute_url(obj),
             'uuid': IUUID(obj),
             'date': True,
             'subjects': True,
