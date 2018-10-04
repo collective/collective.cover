@@ -6,7 +6,10 @@ There's a frood who really knows where his towel is.
 2.1b2 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
-- Nothing changed yet.
+- Fix behavior of ``remote_url`` field on Basic tiles as populating them from an alternate URL could result on incorrect links stored.
+  Remove upgrade step from profile version 22 used to update the field;
+  we include a new upgrade step that lists suspicious tiles to help fix any issue by hand (fixes `#839 <https://github.com/collective/collective.cover/issues/839>`_).
+  [hvelarde]
 
 
 2.1b1 (2018-09-28)
