@@ -3,7 +3,7 @@ Changelog
 
 There's a frood who really knows where his towel is.
 
-2.1b2 (unreleased)
+2.1b2 (2018-10-04)
 ^^^^^^^^^^^^^^^^^^
 
 - Fix behavior of ``remote_url`` field on Basic tiles as populating them from an alternate URL could result on incorrect links stored.
