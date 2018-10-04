@@ -58,11 +58,3 @@ def get_types_use_view_action_in_listings():
         portal_properties = api.portal.get_tool(name='portal_properties')
         site_properties = portal_properties.site_properties
         return site_properties.getProperty('typesUseViewActionInListings', ())
-
-
-def get_absolute_url(obj):
-    """Return the absolute URL of an object dealing with special cases."""
-    absolute_url = obj.absolute_url()
-    if obj.portal_type in get_types_use_view_action_in_listings():
-        absolute_url += '/view'
-    return absolute_url
