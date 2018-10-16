@@ -12,6 +12,7 @@ from plone.app.textfield.value import RichTextValue
 from plone.tiles.interfaces import ITileDataManager
 from plone.uuid.interfaces import IUUID
 from Products.CMFPlone.utils import safe_hasattr
+from Products.CMFPlone.utils import safe_unicode
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zope import schema
 from zope.interface import implementer
@@ -86,17 +87,19 @@ class SearchableRichTextTile(object):
 
     def SearchableText(self):
         context = self.context
-        value = context.data['text']
-        if not value:
+        textvalue = context.data['text']
+        if not textvalue:
             return ''
-
         transforms = api.portal.get_tool('portal_transforms')
-        data = transforms.convertTo(
+        # Before you think about switching raw/output
+        # or mimeType/outputMimeType, first read
+        # https://github.com/plone/Products.CMFPlone/issues/2066
+        raw = safe_unicode(textvalue.raw)
+        if six.PY2:
+            raw = raw.encode('utf-8', 'replace')
+        searchable_text = transforms.convertTo(
             'text/plain',
-            value.encode('utf-8 ') if isinstance(value, six.text_type) else value.raw_encoded,
-            mimetype='text/html',
-            context=context,
-            encoding='utf-8' if isinstance(value, six.text_type) else value.encoding)
-
-        searchable_text = six.text_type(data.getData(), 'utf-8')
-        return searchable_text.strip()  # remove leading and trailing spaces
+            raw,
+            mimetype=textvalue.mimeType,
+        ).getData().strip()
+        return searchable_text
