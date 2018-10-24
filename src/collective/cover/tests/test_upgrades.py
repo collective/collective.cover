@@ -350,20 +350,24 @@ class Upgrade23to24TestCase(UpgradeTestCaseBase):
         title = u'Deprecate resource registries'
         step = self._get_upgrade_step(title)
         self.assertIsNotNone(step)
+
         # simulate state on previous version
-        from collective.cover.upgrades.v24 import SCRIPTS
+        from collective.cover.upgrades.v24 import JS
+        from collective.cover.upgrades.v24 import CSS
+
         js_tool = api.portal.get_tool('portal_javascripts')
-        for js in SCRIPTS:
+        for js in JS:
             js_tool.registerResource(id=js)
             self.assertIn(js, js_tool.getResourceIds())
-        from collective.cover.upgrades.v24 import STYLES
+
         css_tool = api.portal.get_tool('portal_css')
-        for css in STYLES:
+        for css in CSS:
             css_tool.registerResource(id=css)
             self.assertIn(css, css_tool.getResourceIds())
+
         # run the upgrade step to validate the update
         self._do_upgrade_step(step)
-        for js in SCRIPTS:
+        for js in JS:
             self.assertNotIn(js, js_tool.getResourceIds())
-        for css in STYLES:
+        for css in CSS:
             self.assertNotIn(css, css_tool.getResourceIds())

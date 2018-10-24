@@ -6,14 +6,11 @@ There's a frood who really knows where his towel is.
 2.1b3 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
-.. warning::
-    For development environment you may experience problems with NodeJS version after run buildout.
-    This happen because we update NodeJS version used in this buildout, and the known procedure to fix is:
-    * Remove your parts folder
-    * Run buildout
-    * If there are any other error message run buildout one more time
+- Deprecate resource registries; instead, we now use a viewlet in plone.htmlhead to load JavaScript code.
+  This simplifies maintainance of the add-on among multiple Plone versions.
+  [rodfersou]
 
-- Add webpack.
+- Process static resources using webpack.
   [rodfersou]
 
 
