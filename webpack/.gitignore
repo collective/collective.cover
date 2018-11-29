@@ -1,0 +1,5 @@
+node_modules/
+yarn.lock
+npm-debug.log
+app/img/sprite.png
+app/scss/_sprite.scss

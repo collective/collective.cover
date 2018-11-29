@@ -334,3 +334,40 @@ class Upgrade22to23TestCase(UpgradeTestCaseBase):
             'Found 2 objects in the catalog',
             '/plone/bar ("test"): remote_url=http://example.org/',
         )
+
+
+class Upgrade23to24TestCase(UpgradeTestCaseBase):
+
+    def setUp(self):
+        UpgradeTestCaseBase.setUp(self, u'23', u'24')
+
+    def test_registrations(self):
+        version = self.setup.getLastVersionForProfile(self.profile_id)[0]
+        self.assertGreaterEqual(int(version), int(self.to_version))
+        self.assertEqual(self._how_many_upgrades_to_do(), 3)
+
+    def test_deprecate_resource_registries(self):
+        title = u'Deprecate resource registries'
+        step = self._get_upgrade_step(title)
+        self.assertIsNotNone(step)
+
+        # simulate state on previous version
+        from collective.cover.upgrades.v24 import JS
+        from collective.cover.upgrades.v24 import CSS
+
+        js_tool = api.portal.get_tool('portal_javascripts')
+        for js in JS:
+            js_tool.registerResource(id=js)
+            self.assertIn(js, js_tool.getResourceIds())
+
+        css_tool = api.portal.get_tool('portal_css')
+        for css in CSS:
+            css_tool.registerResource(id=css)
+            self.assertIn(css, css_tool.getResourceIds())
+
+        # run the upgrade step to validate the update
+        self._do_upgrade_step(step)
+        for js in JS:
+            self.assertNotIn(js, js_tool.getResourceIds())
+        for css in CSS:
+            self.assertNotIn(css, css_tool.getResourceIds())

@@ -1,0 +1,6 @@
+<% for (let css in htmlWebpackPlugin.files.css) { %>
+  <link rel="stylesheet" tal:attributes="href <%= 'string:${view/site_url}/' + htmlWebpackPlugin.files.css[css] %>" />
+<% } %>
+<% for (let js in htmlWebpackPlugin.files.js) { %>
+  <script defer tal:attributes="src <%= 'string:${view/site_url}/' + htmlWebpackPlugin.files.js[js] %>"></script>
+<% } %>

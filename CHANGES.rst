@@ -6,7 +6,12 @@ There's a frood who really knows where his towel is.
 2.1b3 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
-- Nothing changed yet.
+- Deprecate resource registries; instead, we now use a viewlet in plone.htmlhead to load JavaScript code.
+  This simplifies maintainance of the add-on among multiple Plone versions.
+  [rodfersou]
+
+- Process static resources using webpack.
+  [rodfersou]
 
 
 2.1b2 (2018-10-04)

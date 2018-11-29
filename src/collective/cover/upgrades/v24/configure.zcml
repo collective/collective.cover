@@ -1,0 +1,28 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:genericsetup="http://namespaces.zope.org/genericsetup">
+
+  <genericsetup:upgradeSteps
+      source="23"
+      destination="24"
+      profile="collective.cover:default">
+
+    <genericsetup:upgradeStep
+        title="Deprecate resource registries"
+        description="Remove static resources from registries; use a viewlet instead."
+        handler=".deprecate_resource_registries"
+        />
+
+    <genericsetup:upgradeStep
+        title="Cook CSS resources"
+        handler="..cook_css_resources"
+        />
+
+    <genericsetup:upgradeStep
+        title="Cook JS resources"
+        handler="..cook_javascript_resources"
+        />
+
+  </genericsetup:upgradeSteps>
+
+</configure>

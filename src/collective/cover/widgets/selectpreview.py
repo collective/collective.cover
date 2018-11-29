@@ -22,17 +22,7 @@ class SelectPreviewWidget(select.SelectWidget):
     display_template = ViewPageTemplateFile('selectpreview_display.pt')
     input_template = ViewPageTemplateFile('selectpreview_input.pt')
 
-    # JavaScript template
-    js_template = """\
-    (function($) {
-        $().ready(function() {
-        var layouts = %(layouts)s;
-        $.fn.layoutpreview('#%(id)s', layouts);
-        });
-    })(jQuery);
-    """
-
-    def js(self):
+    def layouts(self):
         registry = getUtility(IRegistry)
         settings = registry.forInterface(ICoverSettings)
         layouts = settings.layouts
@@ -45,7 +35,7 @@ class SelectPreviewWidget(select.SelectWidget):
             self.simplify_layout(lay, simplyfied)
             simple_layouts[layout] = simplyfied
 
-        return self.js_template % dict(id=self.id, layouts=json.dumps(simple_layouts))
+        return json.dumps(simple_layouts)
 
     def render(self):
         if self.mode == interfaces.DISPLAY_MODE:

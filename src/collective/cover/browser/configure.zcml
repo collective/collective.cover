@@ -154,4 +154,19 @@
       permission="zope2.View"
       />
 
+  <browser:resourceDirectory
+      name="collective.cover"
+      directory="static"
+      />
+
+  <browser:viewlet
+      name="collective.cover.resources"
+      for="..interfaces.ICover"
+      manager="plone.app.layout.viewlets.interfaces.IHtmlHead"
+      class=".ResourcesViewlet"
+      template="static/resources.pt"
+      permission="zope2.Public"
+      layer="collective.cover.interfaces.ICoverLayer"
+      />
+
 </configure>

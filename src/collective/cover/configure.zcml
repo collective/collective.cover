@@ -33,11 +33,6 @@
   <include package=".tiles" />
   <include package=".upgrades" />
 
-  <browser:resourceDirectory
-      name="collective.cover"
-      directory="static"
-      />
-
   <class class=".widgets.selectpreview.SelectPreviewWidget">
     <require
         permission="zope.Public"
