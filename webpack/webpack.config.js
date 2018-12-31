@@ -16,7 +16,7 @@ module.exports = makeConfig(
   '++resource++collective.cover/',
 
   //callback
-  function(config, options) {
+  (config, options) => {
     config.entry.unshift(
       './app/img/dot.png',
       './app/img/frontpage_icon.png',

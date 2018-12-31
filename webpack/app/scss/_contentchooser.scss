@@ -72,8 +72,7 @@
   width: 30px;
   height: 30px;
   cursor: pointer;
-  // FIXME - https://github.com/simplesconsultoria/sc.recipe.staticresources/issues/44
-  background-image: url('./img/pb_close.png');
+  background-image: url('++resource++plone.app.jquerytools.pb_close.png');
 }
 
 .current {
