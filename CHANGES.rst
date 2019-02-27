@@ -3,7 +3,7 @@ Changelog
 
 There's a frood who really knows where his towel is.
 
-2.1b3 (unreleased)
+2.2.0 (2019-02-26)
 ^^^^^^^^^^^^^^^^^^
 
 - Deprecate resource registries; instead, we now use a viewlet in plone.htmlhead to load JavaScript code.
