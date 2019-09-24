@@ -1,3 +1,5 @@
+services:
+  - xvfb
 language: python
 python: 2.7
 sudo: false
@@ -33,8 +35,6 @@ install:
 - bin/buildout $VERSIONS
 before_script:
   - export ROBOT_SELENIUM2LIBRARY_RUN_ON_FAILURE="Capture Page Screenshot"
-  - export DISPLAY=:99.0
-  - sh -e /etc/init.d/xvfb start
   - firefox -v
 script:
 - bin/code-analysis
