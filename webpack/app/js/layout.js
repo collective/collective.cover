@@ -9,8 +9,9 @@ export default class LayoutView {
    * @param jqDomObj layout, the layout container
    */
   constructor() {
-    this.$le = $('.layout');
-    this.conf = this.$le.data('layoutmanager-settings');
+    // Renaming property from '$le' to 'le' fix several errors to close #859
+    this.le = $('.layout');
+    this.conf = this.le.data('layoutmanager-settings');
     this.n_columns = this.conf.ncolumns;
     this.row_class = 'cover-row';
     this.row_dom = $(
@@ -70,7 +71,7 @@ export default class LayoutView {
     let $button = $('#btn-save');
     let onBtnSave = function(e) {
       e.preventDefault();
-      let json = this.html2json(this.$le);
+      let json = this.html2json(this.le);
       $button.removeClass(function(index, css) {
         return (css.match(/\bbtn-\S+/g) || []).join(' ');
       });
@@ -99,7 +100,7 @@ export default class LayoutView {
     this.setup();
     this.row_events();
     this.column_events();
-    this.$le.bind('modified.layout', this.layout_modified);
+    this.le.bind('modified.layout', this.layout_modified);
     window.onbeforeunload = this.onBeforeUnload;
   }
   setup() {
@@ -130,9 +131,9 @@ export default class LayoutView {
         // to automatically add a column (closes #212)
         this.row_drop($(row));
       }
-      this.$le.trigger('modified.layout');
+      this.le.trigger('modified.layout');
     };
-    this.$le.sortable({
+    this.le.sortable({
       items: `.${this.row_class}`,
       placeholder: 'ui-sortable-placeholder',
       stop: onStop.bind(this)
@@ -224,7 +225,7 @@ export default class LayoutView {
 
     this.calculate_grid($row.find(`.${this.column_class}`));
 
-    this.$le.trigger('modified.layout');
+    this.le.trigger('modified.layout');
   }
 
   /**
@@ -232,7 +233,7 @@ export default class LayoutView {
    * makes the event setup in row/s
    **/
   row_events(row) {
-    let rows = row ? row : this.$le.find(`.${this.row_class}`);
+    let rows = row ? row : this.le.find(`.${this.row_class}`);
 
     //allow columns droppable
     let onDrop = function(e, ui) {
@@ -250,7 +251,7 @@ export default class LayoutView {
       ui.placeholder.attr('data-column-size', ui.helper.data('column-size'));
     };
     let onStop = function(e, ui) {
-      this.$le.trigger('modified.layout');
+      this.le.trigger('modified.layout');
     };
     let onReceive = function(e, ui) {
       if (ui.sender[0] != this) {
@@ -276,7 +277,7 @@ export default class LayoutView {
    * makes the event setup in column/s
    **/
   column_events(column) {
-    let columns = column ? column : this.$le.find(`.${this.column_class}`);
+    let columns = column ? column : this.le.find(`.${this.column_class}`);
 
     let onDrop = function(e, ui) {
       let new_tile = this.tile_dom.clone();
@@ -304,7 +305,7 @@ export default class LayoutView {
       $(column_elem).append(new_tile);
       this.delete_manager(new_tile);
 
-      this.$le.trigger('modified.layout');
+      this.le.trigger('modified.layout');
     };
     columns.droppable({
       activeClass: 'ui-state-default',
@@ -315,7 +316,7 @@ export default class LayoutView {
 
     //allow sortable tiles
     let onStop = function(e, ui) {
-      this.$le.trigger('modified.layout');
+      this.le.trigger('modified.layout');
     };
     columns.sortable({
       placeholder: 'tile-placeholder',
@@ -332,7 +333,7 @@ export default class LayoutView {
    * makes the event setup in tile/s
    **/
   tile_events(tile) {
-    let tiles = tile ? tile : this.$le.find(`.${this.tile_class}`);
+    let tiles = tile ? tile : this.le.find(`.${this.tile_class}`);
   }
 
   /**
@@ -353,7 +354,7 @@ export default class LayoutView {
     let onClick = function() {
       let element = button.parent('div');
       element.remove();
-      this.$le.trigger('modified.layout');
+      this.le.trigger('modified.layout');
     };
     button.on('click', onClick.bind(this));
     button.hover(
@@ -364,7 +365,7 @@ export default class LayoutView {
         $(this).parent('div').removeClass('to-delete');
       }
     );
-    elements = elements !== undefined ? elements : this.$le.find(`.${this.column_class}, .${this.tile_class}, .${this.row_class}`);
+    elements = elements !== undefined ? elements : this.le.find(`.${this.column_class}, .${this.tile_class}, .${this.row_class}`);
     elements.append(button);
   }
 
@@ -453,8 +454,9 @@ export default class LayoutView {
    *
    **/
   resize_columns_manager(columns) {
-    columns = columns !== undefined ? columns : this.$le.find(`.${this.column_class}`);
+    columns = columns !== undefined ? columns : this.le.find(`.${this.column_class}`);
 
+    let le_resize = this.le;
     let resizer = $('<i/>').addClass('resizer');
     $(columns).append(resizer);
 
@@ -473,7 +475,7 @@ export default class LayoutView {
       $('#slider').off("slide");
       $('#slider').on("slide", function(event, ui) {
         column.attr('data-column-size', ui.value);
-        le.trigger('modified.layout');
+        le_resize.trigger('modified.layout');
       });
       return false;
     });
