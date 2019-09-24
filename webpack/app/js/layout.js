@@ -300,7 +300,8 @@ export default class LayoutView {
         new_tile.append(config_link);
       }
       new_tile.append(name_tag);
-
+      //the element is taken based on the 'drop' event
+      column_elem = e.target;
       $(column_elem).append(new_tile);
       this.delete_manager(new_tile);
 
