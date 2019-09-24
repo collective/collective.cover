@@ -62,6 +62,9 @@ export default class ContentChooser {
             typeof origin_uuid === 'undefined') {
           return false;
         }
+        if ($target.attr('data-tile-type') === 'collective.cover.carousel' && $origin.attr('data-content-type') != 'Image') {
+          return false;
+        }
         return valid;
       },
       windowId: '#contentchooser-content-search',
