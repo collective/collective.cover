@@ -9,7 +9,6 @@ export default class LayoutView {
    * @param jqDomObj layout, the layout container
    */
   constructor() {
-    // Renaming property from '$le' to 'le' fix several errors to close #859
     this.le = $('.layout');
     this.conf = this.le.data('layoutmanager-settings');
     this.n_columns = this.conf.ncolumns;
