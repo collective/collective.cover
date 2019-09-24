@@ -1,14 +1,16 @@
 import jss from './vendor/jss.js';
+
 import CSSClassWidget from './cssclasswidget.js';
+
+
 export default class LayoutView {
   /**
    * @constructor
    * @param jqDomObj layout, the layout container
    */
   constructor() {
-    // Renaming property from '$le' to 'le' fix several errors to close #859
-    this.le = $('.layout');
-    this.conf = this.le.data('layoutmanager-settings');
+    this.$le = $('.layout');
+    this.conf = this.$le.data('layoutmanager-settings');
     this.n_columns = this.conf.ncolumns;
     this.row_class = 'cover-row';
     this.row_dom = $(
@@ -30,6 +32,7 @@ export default class LayoutView {
     this.tile_dom = $(`<div class="${this.tile_class}"></div>`),
     this.bindEvents();
     this.init();
+
     if (typeof(plone) !== 'undefined') {
       $(window).unload(plone.UnlockHandler.execute);
     }
@@ -62,11 +65,12 @@ export default class LayoutView {
         }
       }
     });
+
     //bind the save button
     let $button = $('#btn-save');
     let onBtnSave = function(e) {
       e.preventDefault();
-      let json = this.html2json(this.le);
+      let json = this.html2json(this.$le);
       $button.removeClass(function(index, css) {
         return (css.match(/\bbtn-\S+/g) || []).join(' ');
       });
@@ -95,7 +99,7 @@ export default class LayoutView {
     this.setup();
     this.row_events();
     this.column_events();
-    this.le.bind('modified.layout', this.layout_modified);
+    this.$le.bind('modified.layout', this.layout_modified);
     window.onbeforeunload = this.onBeforeUnload;
   }
   setup() {
@@ -112,30 +116,35 @@ export default class LayoutView {
       appendTo: 'body',
       helper: 'clone'
     });
+
     //sortable rows
     let onStop = function(e, ui) {
       if (ui.item.hasClass('btn')) {
         let row = this.row_dom.clone();
         ui.item.after(row);
         ui.item.remove();
+
         this.row_events(row);
         this.delete_manager(row);
         // after adding the row, call its drop handler
         // to automatically add a column (closes #212)
         this.row_drop($(row));
       }
-      this.le.trigger('modified.layout');
+      this.$le.trigger('modified.layout');
     };
-    this.le.sortable({
+    this.$le.sortable({
       items: `.${this.row_class}`,
       placeholder: 'ui-sortable-placeholder',
       stop: onStop.bind(this)
     });
+
     this.generate_grid_css();
     this.delete_manager();
     this.resize_columns_manager();
     this.class_chooser_manager();
+
     this.tile_config_manager();
+
     //export layout
     let $btnExport = $('#btn-export');
     $btnExport.on('click', function(e) {
@@ -144,6 +153,7 @@ export default class LayoutView {
         $('#export-layout').modal();
       }
     });
+
     $('#btn-cancel-export-layout').on('click', function(e) {
       e.preventDefault();
       $('#export-layout').modal('hide');
@@ -170,6 +180,7 @@ export default class LayoutView {
     }
     return r.toString(16);
   }
+
   /**
    * Generate an RFC 4122 version 4 compliant UUID.
    * See: http://stackoverflow.com/a/2117523/2116850
@@ -185,6 +196,7 @@ export default class LayoutView {
       this.get_random_value.bind(this)
     );
   }
+
   /**
    * Generate tile id. As we're using the generated UUID as
    * class id, we need the first char not to be a number.
@@ -197,6 +209,7 @@ export default class LayoutView {
     }
     return tile_id;
   }
+
   /**
    * Row drop handler
    * available from outside the droppable definition
@@ -208,15 +221,19 @@ export default class LayoutView {
     this.column_events(column);
     this.delete_manager(column);
     this.resize_columns_manager(column);
+
     this.calculate_grid($row.find(`.${this.column_class}`));
-    this.le.trigger('modified.layout');
+
+    this.$le.trigger('modified.layout');
   }
+
   /**
    * Row events binding
    * makes the event setup in row/s
    **/
   row_events(row) {
-    let rows = row ? row : this.le.find(`.${this.row_class}`);
+    let rows = row ? row : this.$le.find(`.${this.row_class}`);
+
     //allow columns droppable
     let onDrop = function(e, ui) {
       this.row_drop(rows);
@@ -227,12 +244,13 @@ export default class LayoutView {
       accept: '#btn-column',
       drop: onDrop.bind(this)
     });
+
     //allow sortable columns
     let onStart = function(e, ui) {
       ui.placeholder.attr('data-column-size', ui.helper.data('column-size'));
     };
     let onStop = function(e, ui) {
-      this.le.trigger('modified.layout');
+      this.$le.trigger('modified.layout');
     };
     let onReceive = function(e, ui) {
       if (ui.sender[0] != this) {
@@ -252,21 +270,26 @@ export default class LayoutView {
       receive: onReceive.bind(this)
     });
   }
+
   /**
    * column events binding
    * makes the event setup in column/s
    **/
   column_events(column) {
-    let columns = column ? column : this.le.find(`.${this.column_class}`);
+    let columns = column ? column : this.$le.find(`.${this.column_class}`);
+
     let onDrop = function(e, ui) {
       let new_tile = this.tile_dom.clone();
       let column_elem = columns;
+
       let tile_type = ui.draggable.data('tile-type');
       let is_configurable = ui.draggable.data('tile-configurable');
       new_tile.attr('data-tile-type', tile_type);
+
       let tile_id = this.generate_tile_id();
       new_tile.attr('id', tile_id);
       let url_config = `@@configure-tile/${tile_type}/${tile_id}`;
+
       let config_icon = $('<i/>').addClass('config-icon');
       let config_link = $('<a />').addClass('config-tile-link')
         .attr('href', url_config)
@@ -278,11 +301,10 @@ export default class LayoutView {
       }
       new_tile.append(name_tag);
 
-      //the element is taken based on the 'drop' event
-      column_elem = e.target;
       $(column_elem).append(new_tile);
       this.delete_manager(new_tile);
-      this.le.trigger('modified.layout');
+
+      this.$le.trigger('modified.layout');
     };
     columns.droppable({
       activeClass: 'ui-state-default',
@@ -290,9 +312,10 @@ export default class LayoutView {
       accept: '.btn-tile',
       drop: onDrop.bind(this)
     });
+
     //allow sortable tiles
     let onStop = function(e, ui) {
-      this.le.trigger('modified.layout');
+      this.$le.trigger('modified.layout');
     };
     columns.sortable({
       placeholder: 'tile-placeholder',
@@ -303,13 +326,15 @@ export default class LayoutView {
       stop: onStop.bind(this)
     });
   }
+
   /**
    * tile events binding
    * makes the event setup in tile/s
    **/
   tile_events(tile) {
-    let tiles = tile ? tile : this.le.find(`.${this.tile_class}`);
+    let tiles = tile ? tile : this.$le.find(`.${this.tile_class}`);
   }
+
   /**
    * Delete elements in layout
    * manage the delete process of layout elements
@@ -328,7 +353,7 @@ export default class LayoutView {
     let onClick = function() {
       let element = button.parent('div');
       element.remove();
-      this.le.trigger('modified.layout');
+      this.$le.trigger('modified.layout');
     };
     button.on('click', onClick.bind(this));
     button.hover(
@@ -339,9 +364,10 @@ export default class LayoutView {
         $(this).parent('div').removeClass('to-delete');
       }
     );
-    elements = elements !== undefined ? elements : this.le.find(`.${this.column_class}, .${this.tile_class}, .${this.row_class}`);
+    elements = elements !== undefined ? elements : this.$le.find(`.${this.column_class}, .${this.tile_class}, .${this.row_class}`);
     elements.append(button);
   }
+
   /**
    * Calculate Grid distribution
    * manage the grid behavior in new elements
@@ -349,10 +375,12 @@ export default class LayoutView {
   calculate_grid(elements) {
     let n_elements = elements.length;
     let column_size = Math.floor(this.n_columns / n_elements);
+
     if (n_elements <= this.n_columns) {
       $(elements).attr('data-column-size', column_size);
     }
   }
+
   /**
    * Generate grid css
    * on the fly generates an stylesheet with a dummy grid
@@ -360,6 +388,7 @@ export default class LayoutView {
    **/
   generate_grid_css() {
     let gutter = '3';
+
     jss.set(`.${this.row_class}`, {
       width: '98%'
     });
@@ -371,6 +400,7 @@ export default class LayoutView {
       'line-height': '0',
       'content': '""'
     });
+
     jss.set(`.${this.column_class}`, {
       'display': 'block',
       'float': 'left',
@@ -378,27 +408,33 @@ export default class LayoutView {
       'min-height': '30px',
       'box-sizing': 'border-box'
     });
+
     let margin_space = (this.n_columns - 1) * gutter;
     let computable_space = 100 - margin_space;
     let minimun_column_width = computable_space / this.n_columns;
+
     for (let i = 1; i <= this.n_columns; i++) {
       let column_width = minimun_column_width * i;
       let margin_width = gutter * (i - 1);
+
       jss.set(`[data-column-size="${i}"]`, {
         'width': column_width + margin_width + '%',
         'margin-left': gutter + '%'
       });
     }
+
     jss.set(`.${this.column_class}:nth-of-type(1)`, {
       'margin-left': '0'
     });
   }
+
   /**
    * Event, Layout was modified
    * XXX I can do an autocheck code, but doesn't worth it at this point
    **/
   layout_modified() {
     let save_btn = $('#btn-save');
+
     if (save_btn.hasClass('saved')) {
       $('#btn-save').find('span').text('Save');
       $('#btn-save').removeClass(function(index, css) {
@@ -406,35 +442,42 @@ export default class LayoutView {
       });
       $('#btn-save').removeClass('saved error');
       $('#btn-save').addClass('modified btn-warning');
+
       //disable export layout
       $('#btn-export').addClass('disabled');
     }
   }
+
   /**
    *  Resize columns
    *
    **/
   resize_columns_manager(columns) {
-    columns = columns !== undefined ? columns : this.le.find(`.${this.column_class}`);
-    let le_resize = this.le;
+    columns = columns !== undefined ? columns : this.$le.find(`.${this.column_class}`);
+
     let resizer = $('<i/>').addClass('resizer');
     $(columns).append(resizer);
+
     $("#resizer").dialog({
       autoOpen: false
     });
+
     $(".resizer").click(function() {
       $("#resizer").dialog("open");
+
       let column = $(this).parents('.cover-column');
       let size = column.attr('data-column-size');
+
       $("#column-size-resize span").html(size);
       $('#slider').slider("option", "value", size);
       $('#slider').off("slide");
       $('#slider').on("slide", function(event, ui) {
         column.attr('data-column-size', ui.value);
-        le_resize.trigger('modified.layout');
+        le.trigger('modified.layout');
       });
       return false;
     });
+
     $("#slider").slider({
       range: "max",
       min: 1,
@@ -446,6 +489,7 @@ export default class LayoutView {
     });
     $("#amount").val($("#slider-range-max").slider("value"));
   }
+
   /**
    *  Class chooser
    *
@@ -454,6 +498,7 @@ export default class LayoutView {
     $("#class-chooser").dialog({
       autoOpen: false
     });
+
     $(document).on('click', '.config-row-link, .config-column-link', function(e) {
       e.preventDefault();
       let $target = $(this).parent();
@@ -466,6 +511,7 @@ export default class LayoutView {
       $('#class-chooser').dialog("open");
     });
   }
+
   /**
    *  Tile Config
    *  Configuration for tiles, manage the save, open and cancel operations
@@ -543,6 +589,7 @@ export default class LayoutView {
       return false;
     });
   }
+
   /**
    * Export html2json
    *
@@ -551,33 +598,40 @@ export default class LayoutView {
     let data = [];
     let excluded_elements = '.row-droppable';
     let remove_classes = 'ui-droppable ui-sortable';
+
     let $item;
     for (let item of $(node).find('> div').not('.no-export')) {
       $item = $(item);
       if ($item.not(excluded_elements)[0] !== undefined) {
         $item.removeClass(remove_classes);
         let entry = {};
+
         let patt = new RegExp(/\bcolumn|\brow|\btile/);
         let node_type = patt.exec($item.attr('class'));
         if (node_type) {
           entry.type = node_type[0];
         }
+
         if (node_type == 'column') {
           entry.roles = ['Manager'];
           entry.type = 'group';
           entry['column-size'] = $item.data('columnSize');
         }
+
         if ($item.attr('data-css-class')) {
           entry['css-class'] = $item.attr('data-css-class');
         }
+
         let iterator = this.html2json($item);
         if (iterator[0] !== undefined) {
           entry.children = iterator;
         }
+
         let node_id = $item.attr('data-panel') || $item.attr('id');
         if (node_id !== undefined) {
           entry.id = node_id;
         }
+
         let tile_type = $item.attr('data-tile-type');
         if (tile_type !== undefined) {
           entry['tile-type'] = tile_type;
