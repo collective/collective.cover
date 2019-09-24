@@ -3,10 +3,11 @@ Changelog
 
 There's a frood who really knows where his towel is.
 
-2.2.1 (unreleased)
+2.2.1 (2019-09-24)
 ^^^^^^^^^^^^^^^^^^
 
-- Nothing changed yet.
+- Fix issue #859
+- Fix .travis.yml script
 
 
 2.2.0 (2019-02-26)
