@@ -6,7 +6,7 @@ There's a frood who really knows where his towel is.
 2.2.1 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
-- Nothing changed yet.
+- solve issue #861.
 
 
 2.2.0 (2019-02-26)
