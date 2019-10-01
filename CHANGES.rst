@@ -6,7 +6,7 @@ There's a frood who really knows where his towel is.
 2.2.1 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
-- Nothing changed yet.
+- The 'drop' event and its 'target' method are used to obtain the element (column) and not generate ambiguity (fixes `#861 <https://github.com/collective/collective.cover/issues/861>`_). [Mubra]
 
 
 2.2.0 (2019-02-26)
