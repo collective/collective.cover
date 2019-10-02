@@ -6,7 +6,11 @@ There's a frood who really knows where his towel is.
 2.2.1 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
-- The 'drop' event and its 'target' method are used to obtain the element (column) and not generate ambiguity (fixes `#861 <https://github.com/collective/collective.cover/issues/861>`_). [Mubra]
+- A "row" object is generated and its location in the DOM is added with the even "drop.target" (fixes `#868 <https://github.com/collective/collective.cover/issues/868>`_).
+  [Mubra]
+
+- The 'drop' event and its 'target' method are used to obtain the element (column) and not generate ambiguity (fixes `#861 <https://github.com/collective/collective.cover/issues/861>`_).
+  [Mubra]
 
 
 2.2.0 (2019-02-26)
