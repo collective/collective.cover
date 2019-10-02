@@ -236,10 +236,10 @@ export default class LayoutView {
 
     //allow columns droppable
     let onDrop = function(e, ui) {
-        //the origin row is taken with the "drop" event
-	let helprows = this.row_dom.clone();
-	helprows['0']=e.target;
-	this.row_drop(helprows);
+      //the origin row is taken with the "drop" event
+      let helprows = this.row_dom.clone();
+      helprows['0']=e.target;
+      this.row_drop(helprows);
     };
     rows.droppable({
       activeClass: 'ui-state-default',
