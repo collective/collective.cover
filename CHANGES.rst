@@ -6,6 +6,12 @@ There's a frood who really knows where his towel is.
 2.2.1 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- The solution was to change the selector "$ le" to "le" because it did not take the charged element, only those created (fixes `#871 <https://github.com/collective/collective.cover/issues/871>`_).
+    [Mubra]
+      
+  - This indirectly corrects issue `#859 <https://github.com/collective/collective.cover/issues/859>`_ using a variable quickly with this selector ("le_resize") (fixes `#859 <https://github.com/collective/collective.cover/issues/859>`_).
+      [Mubra]
+
 - A "row" object is generated and its location in the DOM is added with the even "drop.target" (fixes `#868 <https://github.com/collective/collective.cover/issues/868>`_).
   [Mubra]
 
