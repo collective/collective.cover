@@ -30,7 +30,7 @@ Test Reverse Proxy
     Compose Cover
     Page Should Contain   Please drag&drop some content here to populate the tile.
 
-    Open Browser  http://localhost:${PORT}/VirtualHostBase/http/127.0.0.1:${PORT}/plone/VirtualHostRoot/_vh_subplone/title-1
+    Open Browser  http://localhost:${ZOPE_PORT}/VirtualHostBase/http/127.0.0.1:${ZOPE_PORT}/plone/VirtualHostRoot/_vh_subplone/title-1
     Page Should Not Contain   Please drag&drop some content here to populate the tile.
 
     Switch Browser  1
