@@ -6,6 +6,9 @@ There's a frood who really knows where his towel is.
 2.2.1 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- An auxiliary variable is used to refer to the selected object, in this way it is always ensured that the events are correctly applied to the indicated object. (fixes `#871 <https://github.com/collective/collective.cover/issues/871>`_ and fixes `#859 <https://github.com/collective/collective.cover/issues/859>`_).
+    [Mubra]
+
 - A "row" object is generated and its location in the DOM is added with the even "drop.target" (fixes `#868 <https://github.com/collective/collective.cover/issues/868>`_).
   [Mubra]
 
