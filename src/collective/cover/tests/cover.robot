@@ -5,9 +5,6 @@ Variables  plone/app/testing/interfaces.py
 
 *** Variables ***
 
-${PORT} =  55001
-${ZOPE_URL} =  http://localhost:${PORT}
-${PLONE_URL} =  ${ZOPE_URL}/plone
 ${BROWSER} =  Firefox
 
 ${title_selector} =  input#form-widgets-IBasic-title
@@ -16,30 +13,13 @@ ${layout_selector} =  select#form-widgets-template_layout
 
 ${row_button_selector} =  a#btn-row
 ${column_button_selector} =  a#btn-column
-${tile_button_selector} =  a#btn-tile
 ${row_drop_area_selector} =  div.layout
-${column_drop_area_selector} =  div.cover-row
 ${tile_drop_area_selector} =  div.cover-column
 ${tile_cancel_area_selector} =  div.modal-backdrop
 ${delete_tile_selector} =  button.close
 ${CONTENT_CHOOSER_SELECTOR} =  div#contentchooser-content-search
 
 *** Keywords ***
-
-Start Browser and Autologin as
-    [arguments]  ${role}
-
-    Open Test Browser
-    Enable Autologin as  $role
-
-Start Browser and Log In as Site Owner
-    Open Test Browser
-    Log In As Site Owner
-    Click Link  link=Home
-
-Setup Cover Test Case
-    Start Browser and Log In as Site Owner
-    Go to Homepage
 
 Click Add Cover
     Open Add New Menu
