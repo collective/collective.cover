@@ -17,7 +17,6 @@ ${tile_class} =  div.cover-tile
 
 Test Columns and Titles
     Set Selenium Speed  0.25 seconds
-    [Tags]  Mandelbug
     Enable Autologin as  Site Administrator
     Go to Homepage
 
