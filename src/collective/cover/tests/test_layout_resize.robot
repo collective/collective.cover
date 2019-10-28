@@ -6,8 +6,6 @@ Library  Remote  ${PLONE_URL}/RobotRemote
 Suite Setup  Open Test Browser
 Suite Teardown  Close all browsers
 
-
-
 *** Variables ***
 
 ${basic_tile_name} =  "collective.cover.basic"
@@ -15,8 +13,8 @@ ${tile_class} =  div.cover-tile
 
 *** Test cases ***
 
-Test Columns and Titles
-    Set Selenium Speed  0.25 seconds
+Test Columns-Titles and Resize
+
     Enable Autologin as  Site Administrator
     Go to Homepage
 
