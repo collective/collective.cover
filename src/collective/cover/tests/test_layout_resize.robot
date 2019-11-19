@@ -59,7 +59,7 @@ Test Columns-Titles and Resize
 
 
     #check new elemets
-    Count Number of Columns  11
+    Count Number of Columns  10
     Count Number of Rows  3
     Delete the First Row
 
