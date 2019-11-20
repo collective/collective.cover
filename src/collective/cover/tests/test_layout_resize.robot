@@ -34,7 +34,7 @@ Test Columns-Titles and Resize
 
     ${data-column-size}=  Get Element Attribute  xpath=/html/body/div[1]/div[2]/div/div[2]/div[2]/div[2]/div/div@data-column-size  
 
-    Should Be Equal  ${data-column-size}  10 
+    Should Be Equal  ${data-column-size}  14 
     
     Delete the First Row
 
