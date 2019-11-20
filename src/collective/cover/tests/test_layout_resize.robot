@@ -25,8 +25,6 @@ Test Columns-Titles and Resize
     Click Element  css=i.resizer
     Wait until element is visible  id=ui-id-1
     Drag And Drop By Offset  css=a.ui-slider-handle.ui-state-default.ui-corner-all  -30  0
-    Drag And Drop By Offset  css=a.ui-slider-handle.ui-state-default.ui-corner-all  -30  0
-    Drag And Drop By Offset  css=a.ui-slider-handle.ui-state-default.ui-corner-all  -30  0
     Click Element  css=.ui-dialog-titlebar-close
     #count if there is 1 row and 1 column
     Count Number of Columns  1
