@@ -21,6 +21,7 @@ Test Columns-Titles and Resize
     Open Layout Tab
 
     Add Tile  ${basic_tile_name}
+    ${data-column-size_before2}=  Get Element Attribute  xpath=//*[@id="content"]/div[2]/div/div@data-column-size
     Click Element  css=i.resizer
     Wait until element is visible  id=ui-id-1
     ${data-column-size_before}=  Get Text  xpath=//*[@id="column-size-resize"]/span
@@ -29,7 +30,10 @@ Test Columns-Titles and Resize
     Save Cover Layout
     Click Link  link=Compose
     Open Layout Tab
+    ${data-column-size_after2}=  Get Element Attribute  xpath=//*[@id="content"]/div[2]/div/div@data-column-size
     Click Element  css=i.resizer
     Wait until element is visible  id=ui-id-1
-    ${data-column-size_after}=  Get Text  xpath=//*[@id="column-size-resize"]/span  
+    ${data-column-size_after}=  Get Text  xpath=//*[@id="column-size-resize"]/span   
+    
     Should Be True  """${data-column-size_before}""" != """${data-column-size_after}""" 
+    Should Be True  """${data-column-size_before2}""" != """${data-column-size_after2}""" 
