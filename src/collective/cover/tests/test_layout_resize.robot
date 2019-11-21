@@ -30,5 +30,5 @@ Test Columns-Titles and Resize
     Save Cover Layout
     Click Link  link=Compose
     Open Layout Tab
-    ${data-column-size_aftere}=  Get Element Attribute  xpath=//*[@id="content"]/div[2]/div/div@data-column-size  
+    ${data-column-size_after}=  Get Element Attribute  xpath=//*[@id="content"]/div[2]/div/div@data-column-size  
     Should Be True  ${data-column-size_before} != ${data-column-size_after} 
