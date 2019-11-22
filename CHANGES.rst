@@ -5,6 +5,7 @@ There's a frood who really knows where his towel is.
 
 2.2.1 (unreleased)
 ^^^^^^^^^^^^^^^^^^
+
 - Fix issue when we try delete a row or column in layout tab, adding  auxiliary variable is defined to refer to the selected object (let le_delete = this.$le; in the case of the "delete_manager" method ), in this way always it is guaranteed that the methods are applied correctly to the indicated object. This in order to avoid ambiguities with other equal elements (fixes `#871 <https://github.com/collective/collective.cover/issues/871>`_ ).
   [Mubra]
     
