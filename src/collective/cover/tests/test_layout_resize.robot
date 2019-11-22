@@ -16,24 +16,19 @@ Test Columns-Titles and Resize
 
     Enable Autologin as  Site Administrator
     Go to Homepage
-
     Create Cover  Save-Cover  Test-cover
     Open Layout Tab
-
     Add Tile  ${basic_tile_name}
-    ${data-column-size_before2}=  Get Element Attribute  xpath=//*[@id="content"]/div[2]/div/div@data-column-size
+    ${data-size-before}=  Get Element Attribute  xpath=//*[@id="content"]/div[2]/div/div@data-column-size
     Click Element  css=i.resizer
     Wait until element is visible  id=ui-id-1
-    ${data-column-size_before}=  Get Text  xpath=//*[@id="column-size-resize"]/span
+    ${data-text-before}=  Get Text  xpath=//*[@id="column-size-resize"]/span
     Drag And Drop By Offset  css=a.ui-slider-handle.ui-state-default.ui-corner-all  -30  0
+    ${data-text-after}=  Get Text  xpath=//*[@id="column-size-resize"]/span
+    Should Be True  """${data-text-before}""" != """${data-text-after}""" 
     Click Element  css=.ui-dialog-titlebar-close
     Save Cover Layout
     Click Link  link=Compose
     Open Layout Tab
-    ${data-column-size_after2}=  Get Element Attribute  xpath=//*[@id="content"]/div[2]/div/div@data-column-size
-    Click Element  css=i.resizer
-    Wait until element is visible  id=ui-id-1
-    ${data-column-size_after}=  Get Text  xpath=//*[@id="column-size-resize"]/span   
-    
-    Should Be True  """${data-column-size_before}""" != """${data-column-size_after}""" 
-    Should Be True  """${data-column-size_before2}""" != """${data-column-size_after2}""" 
+    ${data-size-after}=  Get Element Attribute  xpath=//*[@id="content"]/div[2]/div/div@data-column-size
+    Should Be True  """${data-size-before}""" != """${data-size-after}""" 
