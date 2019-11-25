@@ -9,8 +9,8 @@ Suite Teardown  Close all browsers
 *** Variables ***
 
 ${basic_tile_name} =  "collective.cover.basic"
-${xpath-size} = //*[@id="content"]/div[2]/div/div@data-column-size
-${xpath-text} = //*[@id="column-size-resize"]/span
+${xpath-size} = "//*[@id="content"]/div[2]/div/div@data-column-size"
+${xpath-text} = "//*[@id="column-size-resize"]/span"
 
 *** Test cases ***
 
@@ -33,4 +33,4 @@ Test Columns-Titles and Resize
     Click Link  link=Compose
     Open Layout Tab
     ${data-size-after}=  Get Element Attribute  xpath=${xpath-size}
-    Should Be True  """${data-size-before}""" != """${data-size-after}""" 
+    Should Be True  """${data-size-before}""" != """${data-size-after}"""
