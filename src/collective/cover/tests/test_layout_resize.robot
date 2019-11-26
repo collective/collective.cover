@@ -9,8 +9,8 @@ Suite Teardown  Close all browsers
 *** Variables ***
 
 ${basic_tile_name} =  "collective.cover.basic"
-${size_xpath} = "//*[@id="content"]/div[2]/div/div@data-column-size"
-${text_xpath} = "//*[@id="column-size-resize"]/span"
+${size_xpath} = '//*[@id="content"]/div[2]/div/div@data-column-size'
+${text_xpath} = '//*[@id="column-size-resize"]/span'
 
 *** Test cases ***
 
