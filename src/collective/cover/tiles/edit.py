@@ -37,8 +37,7 @@ class CustomEditForm(DefaultEditForm):
 
         tile = self.getTile()
 
-        if (not IDeferSecurityCheck.providedBy(self.request) and
-                not tile.isAllowedToEdit()):
+        if (not IDeferSecurityCheck.providedBy(self.request) and not tile.isAllowedToEdit()):
             # if IDeferSecurityCheck is provided by the request,
             # we're not going to worry about security, perms not set up yet
             raise Unauthorized(
