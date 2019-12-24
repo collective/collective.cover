@@ -78,9 +78,6 @@ Mostly Harmless
 .. image:: https://img.shields.io/travis/collective/collective.cover/master.svg
     :target: http://travis-ci.org/collective/collective.cover
 
-.. image:: https://badge.waffle.io/collective/collective.cover.png?label=ready&title=Ready
-    :target: https://waffle.io/collective/collective.cover
-
 .. image:: https://img.shields.io/coveralls/collective/collective.cover/master.svg
     :target: https://coveralls.io/r/collective/collective.cover
 
