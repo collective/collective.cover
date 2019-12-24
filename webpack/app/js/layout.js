@@ -345,6 +345,7 @@ export default class LayoutView {
    * manage the delete process of layout elements
    **/
   delete_manager(elements) {
+    let le_delete = this.$le;
     let button = $('<button class="close">&times;</button>').css({
       'font-size': '15px',
       'left': '0',
@@ -355,12 +356,11 @@ export default class LayoutView {
       'top': '0',
       'width': '15px'
     });
-    let onClick = function() {
-      let element = button.parent('div');
+    button.click(function() {
+      let element = $(this).parent('div');
       element.remove();
-      this.$le.trigger('modified.layout');
-    };
-    button.on('click', onClick.bind(this));
+      le_delete.trigger('modified.layout');
+    });
     button.hover(
       function() {
         $(this).parent('div').addClass('to-delete');
@@ -458,6 +458,7 @@ export default class LayoutView {
    *
    **/
   resize_columns_manager(columns) {
+    let le_resize = this.$le;
     columns = columns !== undefined ? columns : this.$le.find(`.${this.column_class}`);
 
     let resizer = $('<i/>').addClass('resizer');
@@ -478,7 +479,7 @@ export default class LayoutView {
       $('#slider').off("slide");
       $('#slider').on("slide", function(event, ui) {
         column.attr('data-column-size', ui.value);
-        le.trigger('modified.layout');
+        le_resize.trigger('modified.layout');
       });
       return false;
     });
