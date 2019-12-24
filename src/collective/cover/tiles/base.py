@@ -234,8 +234,7 @@ class PersistentCoverTile(ESIPersistentTile):
         for name, field in fields:
             image_field = INamedImageField.providedBy(field)
             data = self.data[name]
-            if not ((image_field and (data or uuid)) or
-                    (not image_field and data)):
+            if not ((image_field and (data or uuid)) or (not image_field and data)):
                 # If there's no data for this field, ignore it
                 # special condition, if the field is an image field and
                 # there is no uuid, then ignore it too

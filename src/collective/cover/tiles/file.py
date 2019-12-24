@@ -140,9 +140,7 @@ class FileTile(PersistentCoverTile):
             return get_download_html(url, portal_url, icon, mime, size)
 
     def is_empty(self):
-        return not (self.data.get('title', None) or
-                    self.data.get('description', None) or
-                    self.data.get('uuid', None))
+        return not (self.data.get('title', None) or self.data.get('description', None) or self.data.get('uuid', None))
 
     def populate_with_object(self, obj):
         super(FileTile, self).populate_with_object(obj)  # check permissions

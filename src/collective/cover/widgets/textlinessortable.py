@@ -136,21 +136,18 @@ class TextLinesSortableWidget(textlines.TextLinesWidget):
             results[uuid] = {u'order': six.text_type(index)}
             custom_title = self.request.get(
                 '{0}.custom_title.{1}'.format(self.name, uuid), '')
-            if (custom_title != u'' and
-               custom_title != safe_unicode(obj.Title())):
+            if (custom_title != u'' and custom_title != safe_unicode(obj.Title())):
                 results[uuid][u'custom_title'] = six.text_type(custom_title)
             custom_description = self.request.get(
                 '{0}.custom_description.{1}'.format(self.name, uuid), '')
-            if (custom_description != u'' and
-               custom_description != safe_unicode(obj.Description())):
+            if (custom_description != u'' and custom_description != safe_unicode(obj.Description())):
                 results[uuid][u'custom_description'] = six.text_type(custom_description)
             custom_url = self.request.get(
                 '{0}.custom_url.{1}'.format(self.name, uuid), '')
             url = obj.absolute_url()
             if obj.portal_type in get_types_use_view_action_in_listings():
                 url += '/view'
-            if (custom_url != u'' and
-               custom_url != url):
+            if (custom_url != u'' and custom_url != url):
                 results[uuid][u'custom_url'] = six.text_type(custom_url)
         return results
 
