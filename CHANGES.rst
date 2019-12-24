@@ -6,23 +6,14 @@ There's a frood who really knows where his towel is.
 2.2.1 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
-- Fix issue when we try delete a row or column in layout tab, adding  auxiliary variable is defined to refer to the selected object (let le_delete = this.$le; in the case of the "delete_manager" method ), in this way always it is guaranteed that the methods are applied correctly to the indicated object. This in order to avoid ambiguities with other equal elements (fixes `#871 <https://github.com/collective/collective.cover/issues/871>`_ ).
+- Fix multiple regressions caused by the migration of JavaScript code to webpack in release 2.2.0 (fixes `#859 <https://github.com/collective/collective.cover/issues/859>`_, `#861 <https://github.com/collective/collective.cover/issues/861>`_, `#868 <https://github.com/collective/collective.cover/issues/868>`_ and `#871 <https://github.com/collective/collective.cover/issues/871>`_).
   [Mubra]
     
-- Fix issue when we try resize a column in layout tab, adding  auxiliary variable is defined to refer to the selected object(let le_resize = this.$le; in the case of the "resize_columns_manager" method),in this way always it is guaranteed that the methods are applied correctly to the indicated object. This in order to avoid ambiguities with other equal elements (fixes `#859 <https://github.com/collective/collective.cover/issues/859>`_).
-  [Mubra]
-    
-- A "row" object is generated and its location in the DOM is added with the even "drop.target" (fixes `#868 <https://github.com/collective/collective.cover/issues/868>`_).
-  [Mubra]
-
-- The 'drop' event and its 'target' method are used to obtain the element (column) and not generate ambiguity (fixes `#861 <https://github.com/collective/collective.cover/issues/861>`_).
-  [Mubra]
-
 
 2.2.0 (2019-02-26)
 ^^^^^^^^^^^^^^^^^^
 
-- Deprecate resource registries; instead, we now use a viewlet in plone.htmlhead to load JavaScript code.
+- Deprecate resource registries; instead, we now use a viewlet in ``plone.htmlhead`` to load JavaScript code.
   This simplifies maintainance of the add-on among multiple Plone versions.
   [rodfersou]
 
