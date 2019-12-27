@@ -6,7 +6,8 @@ There's a frood who really knows where his towel is.
 2.2.2 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
-- Nothing changed yet.
+- Fix brown bag release.
+  [hvelarde]
 
 
 2.2.1 (2019-12-24)
@@ -14,7 +15,7 @@ There's a frood who really knows where his towel is.
 
 - Fix multiple regressions caused by the migration of JavaScript code to webpack in release 2.2.0 (fixes `#859 <https://github.com/collective/collective.cover/issues/859>`_, `#861 <https://github.com/collective/collective.cover/issues/861>`_, `#868 <https://github.com/collective/collective.cover/issues/868>`_ and `#871 <https://github.com/collective/collective.cover/issues/871>`_).
   [Mubra]
-    
+
 
 2.2.0 (2019-02-26)
 ^^^^^^^^^^^^^^^^^^
