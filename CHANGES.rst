@@ -3,7 +3,7 @@ Changelog
 
 There's a frood who really knows where his towel is.
 
-2.2.2 (unreleased)
+2.2.2 (2019-12-27)
 ^^^^^^^^^^^^^^^^^^
 
 - Fix brown bag release.
