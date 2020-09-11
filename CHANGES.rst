@@ -6,7 +6,8 @@ There's a frood who really knows where his towel is.
 2.2.3 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
-- Nothing changed yet.
+- Fixed changing the order in a list tile by drag and drop.
+  [maurits]
 
 
 2.2.2 (2019-12-27)

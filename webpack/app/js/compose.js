@@ -148,11 +148,12 @@ export default class ComposeView {
       return;
     }
     let onStop = function(e, ui) {
-      let $el = $(e.currentTarget);
       let uuids = [];
-      $(e.currentTarget).children().each(function(index) {
-        if ($el.attr('data-content-uuid') !== undefined) {
-          uuids.push($el.attr('data-content-uuid'));
+      // We iterate over the children of the original $el determined at the top of onMouseOverSortable.
+      $el.children().each(function(index) {
+        let child = $($el.children()[index]);
+        if (child.attr('data-content-uuid') !== undefined) {
+          uuids.push(child.attr('data-content-uuid'));
         }
       });
       let tile = $el.closest('.tile');
