@@ -25,7 +25,7 @@ class InstallTestCase(unittest.TestCase):
         self.assertTrue(self.qi.isProductInstalled(PROJECTNAME))
 
     def test_addon_layer(self):
-        layers = [l.getName() for l in registered_layers()]
+        layers = [layer.getName() for layer in registered_layers()]
         self.assertIn('ICoverLayer', layers)
 
     @unittest.skipIf(IS_PLONE_5, 'No easy way to test this under Plone 5')
@@ -74,7 +74,7 @@ class UninstallTestCase(unittest.TestCase):
         self.assertFalse(self.qi.isProductInstalled(PROJECTNAME))
 
     def test_addon_layer_removed(self):
-        layers = [l.getName() for l in registered_layers()]
+        layers = [layer.getName() for layer in registered_layers()]
         self.assertNotIn('ICoverLayer', layers)
 
     @unittest.skipIf(IS_PLONE_5, 'No easy way to test this under Plone 5')
