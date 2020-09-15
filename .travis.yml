@@ -30,7 +30,8 @@ before_install:
 install:
 - sed -ie "s#test-4.3#test-$PLONE_VERSION#" buildout.cfg
 - sed -ie "s#versions-4.3#versions-$PLONE_VERSION#" buildout.cfg
-- python bootstrap.py
+- virtualenv -p `which python` .
+- bin/pip install -r requirements.txt
 - bin/buildout $VERSIONS annotate
 - bin/buildout $VERSIONS
 before_script:
