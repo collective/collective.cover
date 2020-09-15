@@ -1,2 +1,4 @@
-setuptools==42.0.2
-zc.buildout==2.13.3
+# Use constraints from the newest Plone version we support.
+-c https://dist.plone.org/release/5.1-latest/requirements.txt
+setuptools
+zc.buildout
