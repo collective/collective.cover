@@ -2,7 +2,6 @@ services:
   - xvfb
 language: python
 python: 2.7
-sudo: false
 cache:
   directories:
   - $HOME/.pylint.d
