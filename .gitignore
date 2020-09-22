@@ -19,6 +19,7 @@ htmlcov/
 include/
 lib/
 library-settings.txt
+local
 local.cfg
 log.html
 Makefile
@@ -27,5 +28,6 @@ output.xml
 parts/
 report.html
 selenium*
+share/
 var/
 src/collective/cover/browser/static/
