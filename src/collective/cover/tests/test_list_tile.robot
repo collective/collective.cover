@@ -92,8 +92,8 @@ Test List Tile
     # around the issue.
     Execute Javascript    window.scroll(0, 800)
 
-    Drag And Drop  css=${first_item}  css=${last_item}
-    Sleep  1s  Wait for reordering to occur
+    Drag And Drop By Offset  css=${first_item}  0  580
+    Sleep  2s  Wait for reordering to occur
 
     # ensure that the reordering is reflected in the DOM
     ${first_item_title} =  Get Text  css=${first_item} h2
@@ -103,7 +103,7 @@ Test List Tile
 
     # first item is now last. Let's move it back to the top
     Drag And Drop  css=${last_item}  css=${first_item}
-    Sleep  1s  Wait for reordering to occur
+    Sleep  2s  Wait for reordering to occur
 
     # ensure that the reodering is reflected in the DOM
     ${first_item_title} =  Get Text  css=${first_item} h2
