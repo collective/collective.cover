@@ -14,6 +14,7 @@ addons:
     permissions: public-read
     paths:
     - $(find parts/test -type f | tr "\n" ":")
+  firefox: "81.0"
 env:
   matrix:
     - PLONE_VERSION=4.3
@@ -30,7 +31,7 @@ install:
 - bin/buildout $VERSIONS annotate
 - bin/buildout $VERSIONS
 before_script:
-  - GECKODRIVER_VERSION=0.26.0
+  - GECKODRIVER_VERSION=0.27.0
   - wget https://github.com/mozilla/geckodriver/releases/download/v$GECKODRIVER_VERSION/geckodriver-v$GECKODRIVER_VERSION-linux64.tar.gz
   - sudo tar -xzf geckodriver-v$GECKODRIVER_VERSION-linux64.tar.gz -C /usr/bin
   - export ROBOT_SELENIUM2LIBRARY_RUN_ON_FAILURE="Capture Page Screenshot"
