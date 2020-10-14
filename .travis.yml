@@ -4,9 +4,10 @@ language: python
 python: 2.7
 cache:
   directories:
-  - $HOME/.pylint.d
-  - eggs
-  - parts/node
+    - $HOME/.pylint.d
+    - eggs
+    - parts/node
+    - geckodriver
 addons:
   artifacts:
     s3_region: sa-east-1
@@ -31,9 +32,13 @@ install:
 - bin/buildout $VERSIONS annotate
 - bin/buildout $VERSIONS
 before_script:
-  - GECKODRIVER_VERSION=0.27.0
-  - wget https://github.com/mozilla/geckodriver/releases/download/v$GECKODRIVER_VERSION/geckodriver-v$GECKODRIVER_VERSION-linux64.tar.gz
-  - sudo tar -xzf geckodriver-v$GECKODRIVER_VERSION-linux64.tar.gz -C /usr/bin
+  - >
+    if [ ! -f geckodriver/geckodriver ]; then
+      GECKODRIVER_VERSION=0.27.0
+      wget https://github.com/mozilla/geckodriver/releases/download/v$GECKODRIVER_VERSION/geckodriver-v$GECKODRIVER_VERSION-linux64.tar.gz
+      tar -xzf geckodriver-v$GECKODRIVER_VERSION-linux64.tar.gz -C geckodriver
+    fi;
+  - export PATH=$PATH:$PWD/geckodriver
   - export ROBOT_SELENIUM2LIBRARY_RUN_ON_FAILURE="Capture Page Screenshot"
   - firefox -v
 script:
