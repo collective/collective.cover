@@ -137,7 +137,7 @@ class PageLayout(BrowserView):
         elif section['type'] == u'group':
             return self.group(section=section, mode=mode)
         elif section['type'] == u'tile':
-            tile_url = '{0}@@{1}/{2}'.format(
+            tile_url = '{0}/@@{1}/{2}'.format(
                 '/'.join(self.context.getPhysicalPath()),
                 section.get('tile-type'),
                 section.get('id'))
