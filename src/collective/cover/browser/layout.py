@@ -137,8 +137,10 @@ class PageLayout(BrowserView):
         elif section['type'] == u'group':
             return self.group(section=section, mode=mode)
         elif section['type'] == u'tile':
-            tile_url = '@@{0}/{1}'.format(section.get('tile-type'),
-                                          section.get('id'))
+            tile_url = '{0}@@{1}/{2}'.format(
+                '/'.join(self.context.getPhysicalPath()),
+                section.get('tile-type'),
+                section.get('id'))
             tile = self.context.restrictedTraverse(tile_url.encode(), None)
             if tile is None:
                 return '<div class="tileNotFound">Could not find tile</div>'
