@@ -6,6 +6,9 @@ There's a frood who really knows where his towel is.
 2.2.3 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Fix removing a list tile item.
+  [fredvd]
+
 - Fixed changing the order in a list tile by drag and drop.
   [maurits]
 
