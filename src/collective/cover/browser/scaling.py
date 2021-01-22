@@ -136,7 +136,7 @@ class ImageScaling(BaseImageScaling):
                                 height=height, width=width, **parameters)
         except (ConflictError, KeyboardInterrupt):
             raise
-        except Exception:  # FIXME: B901 blind except: statement
+        except Exception:  # noqa: B901 FIXME: blind except: statement
             logging.exception(
                 'could not scale "{0}" of {1}'.format(
                     repr(orig_value),
