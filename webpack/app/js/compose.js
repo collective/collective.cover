@@ -187,7 +187,7 @@ export default class ComposeView {
   onRemoveClick(e) {
     e.preventDefault();
     let $obj = $(e.currentTarget).parent();
-    uuid = $obj.attr('data-content-uuid');
+    let uuid = $obj.attr('data-content-uuid');
     let tile = $obj.parents('.tile');
 
     tile.find('.loading-mask').addClass('show remove-tile');
