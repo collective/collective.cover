@@ -3,7 +3,7 @@ Changelog
 
 There's a frood who really knows where his towel is.
 
-2.2.3 (unreleased)
+2.2.3 (2021-02-02)
 ^^^^^^^^^^^^^^^^^^
 
 - Fix removing a list tile item.
