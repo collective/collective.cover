@@ -233,3 +233,18 @@ following:
     the portlets, and locations can be fixed to the nearest site object, to
     facilitate inheritance. In ``collective.cover`` (this package), we don't
     want to use portlets at all.
+
+Releasing using zest.releaser
+-----------------------------
+
+Static resources on this package are generated using `webpack`_ and aren't included in VCS.
+If you release using zest.releaser you have to `upload manually the files to PyPI <https://github.com/zestsoftware/zest.releaser/issues/261>`_ or you will end with a broken distribution:
+
+* run ``longtest`` and ``fullrelease``, as usually
+* answer "no" when asked to upload to PyPI and continue normally
+* do a checkout to the tag you're releasing
+* run ``bin/build-cover`` to update static files
+* create the distribution files using ``python setup.py sdist bdist_wheel`` as usual
+* upload the files using ``twine upload dist/*``
+
+In case of errors you will have to create a new release as the PyPI Warehouse `doesn't allow for a filename to be reused <https://upload.pypi.org/help/#file-name-reuse>`_.
