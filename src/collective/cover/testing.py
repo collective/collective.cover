@@ -34,16 +34,6 @@ else:
     # this environment variable is set in .travis.yml test matrix
     DEXTERITY_ONLY = os.environ.get("DEXTERITY_ONLY") is not None
 
-
-# XXX: PFG tile is deprecated and will be removed in collective.cover 3
-try:
-    pkg_resources.get_distribution("Products.PloneFormGen")
-except pkg_resources.DistributionNotFound:
-    HAS_PFG = False
-else:
-    # XXX: even if product is present, PFG tile must not be available
-    HAS_PFG = True if not IS_PLONE_5 else False
-
 ALL_CONTENT_TYPES = [
     "Collection",
     "Document",
@@ -149,12 +139,6 @@ class Fixture(PloneSandboxLayer):
                 self.loadZCML(package=plone.app.contenttypes)
                 z2.installProduct(app, "Products.DateRecurringIndex")
 
-        if HAS_PFG:
-            import Products.PloneFormGen
-
-            self.loadZCML(package=Products.PloneFormGen)
-            z2.installProduct(app, "Products.PloneFormGen")
-
         import collective.cover
 
         self.loadZCML(package=collective.cover)
@@ -174,9 +158,6 @@ class Fixture(PloneSandboxLayer):
         else:
             if DEXTERITY_ONLY:
                 self.applyProfile(portal, "plone.app.contenttypes:default")
-
-        if HAS_PFG:
-            self.applyProfile(portal, "Products.PloneFormGen:default")
 
         self.applyProfile(portal, "collective.cover:default")
         self.applyProfile(portal, "collective.cover:testfixture")

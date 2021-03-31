@@ -114,19 +114,6 @@
       />
 
   <plone:tile
-      zcml:condition="installed Products.PloneFormGen"
-      name="collective.cover.pfg"
-      title="FormGen Tile"
-      description="A tile that shows an embedded Form Folder from Plone FormGen."
-      icon="++resource++collective.cover/img/tile-pfg.png"
-      add_permission="cmf.ModifyPortalContent"
-      schema=".pfg.IPFGTile"
-      class=".pfg.PFGTile"
-      permission="zope2.View"
-      for="*"
-      />
-
-  <plone:tile
       name="collective.cover.calendar"
       title="Calendar Tile"
       description="A tile that shows an Calendar for the site."
