@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<registry
+    xmlns:i18n="http://xml.zope.org/namespaces/i18n">
+
+  <records interface="collective.cover.controlpanel.ICoverSettings" />
+
+  <record field="layouts"
+          interface="collective.cover.controlpanel.ICoverSettings"
+          name="collective.cover.controlpanel.ICoverSettings.layouts">
+    <field type="plone.registry.field.Dict">
+      <key_type type="plone.registry.field.TextLine"/>
+      <value_type type="plone.registry.field.TextLine"/>
+    </field>
+    <value purge="false">
+      <element key="Empty layout">[]</element>
+    </value>
+  </record>
+
+  <record
+      field="styles"
+      interface="collective.cover.controlpanel.ICoverSettings"
+      name="collective.cover.controlpanel.ICoverSettings.styles">
+    <field type="plone.registry.field.Set">
+      <value_type type="plone.registry.field.ASCIILine" />
+    </field>
+    <value purge="false">
+      <element>-Default-|tile-default</element>
+      <element>Border|tile-edge</element>
+      <element>Dark Background|tile-dark</element>
+      <element>Shadow|tile-shadow</element>
+    </value>
+  </record>
+
+  <record name="plone.app.tiles">
+    <value purge="false">
+      <element>collective.cover.banner</element>
+      <element>collective.cover.basic</element>
+      <element>collective.cover.calendar</element>
+      <element>collective.cover.carousel</element>
+      <element>collective.cover.collection</element>
+      <element>collective.cover.contentbody</element>
+      <element>collective.cover.embed</element>
+      <element>collective.cover.file</element>
+      <element>collective.cover.list</element>
+      <element>collective.cover.richtext</element>
+    </value>
+  </record>
+
+</registry>
