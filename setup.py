@@ -4,7 +4,7 @@ from setuptools import find_packages
 from setuptools import setup
 
 
-version = "2.2.4.dev0"
+version = "3.0.0.dev0"
 description = "A sane, working, editor-friendly way of creating front pages and other composite pages. Working now, for mere mortals."
 long_description = "\n\n".join(
     [
@@ -23,8 +23,7 @@ setup(
         "Development Status :: 5 - Production/Stable",
         "Environment :: Web Environment",
         "Framework :: Plone",
-        "Framework :: Plone :: 4.3",
-        "Framework :: Plone :: 5.1",
+        "Framework :: Plone :: 5.2",
         "Intended Audience :: End Users/Desktop",
         "Intended Audience :: System Administrators",
         "License :: OSI Approved :: GNU General Public License v2 (GPLv2)",
