@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
+from plone.app.blocks.interfaces import IBlocksTransformEnabled
+from plone.registry.interfaces import IRegistry
 from Products.CMFPlone.interfaces.controlpanel import IImagingSchema
 from Products.Five.browser import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-from plone.app.blocks.interfaces import IBlocksTransformEnabled
-from plone.registry.interfaces import IRegistry
 from zope.component import getUtility
 from zope.interface import implementer
 

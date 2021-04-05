@@ -207,10 +207,7 @@ class ImageScaling(BaseImageScaling):
             **parameters
         )
 
-        if info is None:
-            # FIXME: F821 undefined name 'name'
-            # raise NotFound(self, name, self.request)
-            pass
-        scale_view = ImageScale(self.context, self.request, **info)
-        alsoProvides(scale_view, IStableImageScale)
-        return scale_view
+        if info is not None:
+            scale_view = ImageScale(self.context, self.request, **info)
+            alsoProvides(scale_view, IStableImageScale)
+            return scale_view
