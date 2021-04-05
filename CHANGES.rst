@@ -3,10 +3,26 @@ Changelog
 
 There's a frood who really knows where his towel is.
 
-2.2.4 (unreleased)
+3.0.0 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
-- Nothing changed yet.
+- Drop support for Plone 4.x
+  [cleberjsantos]
+
+- Initial Plone 5.2 support
+  [cleberjsantos]
+
+- Drop PFG support
+  [cleberjsantos]
+
+- Fix plone.namedfile scales
+  [cleberjsantos]
+
+- Correction of the visualization of the image scales
+  [cleberjsantos]
+
+- Fix Js registry with new concepts in Plone 5
+  [cleberjsantos]
 
 
 2.2.3 (2021-02-02)
