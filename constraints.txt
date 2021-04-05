@@ -1,1 +1,1 @@
--c constraints_plone51.txt
+-c constraints_plone52.txt
