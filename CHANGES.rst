@@ -24,6 +24,11 @@ There's a frood who really knows where his towel is.
 - Fix Js registry with new concepts in Plone 5
   [cleberjsantos]
 
+- Drop Deco grid
+  [cleberjsantos]
+
+- Refactor tests
+  [cleberjsantos]
 
 2.2.3 (2021-02-02)
 ^^^^^^^^^^^^^^^^^^
