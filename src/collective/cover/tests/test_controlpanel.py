@@ -8,7 +8,10 @@ from collective.cover.testing import INTEGRATION_TESTING
 from plone import api
 from plone.app.testing import logout
 from plone.registry.interfaces import IRegistry
+from Products.CMFCore.interfaces import ISiteRoot
+from Products.CMFPlone.utils import get_installer
 from zope.component import getUtility
+from zope.interface import alsoProvides
 
 import unittest
 
@@ -19,12 +22,14 @@ class ControlPanelTestCase(unittest.TestCase):
 
     def setUp(self):
         self.portal = self.layer["portal"]
+        self.request = self.layer["request"]
         self.controlpanel = self.portal["portal_controlpanel"]
+        self.qi = get_installer(self.portal, self.request)
 
     def test_controlpanel_has_view(self):
         request = self.layer["request"]
         view = api.content.get_view(u"cover-settings", self.portal, request)
-        view = view.__of__(self.portal)
+        alsoProvides(view, ISiteRoot)
         self.assertTrue(view())
 
     def test_controlpanel_view_is_protected(self):
@@ -39,9 +44,9 @@ class ControlPanelTestCase(unittest.TestCase):
         self.assertIn("cover", actions)
 
     def test_controlpanel_removed_on_uninstall(self):
-        qi = self.portal["portal_quickinstaller"]
+
         with api.env.adopt_roles(["Manager"]):
-            qi.uninstallProducts(products=[PROJECTNAME])
+            self.qi.uninstallProducts(products=[PROJECTNAME])
         actions = [a.id for a in self.controlpanel.listActions()]
         self.assertNotIn("cover", actions)
 
@@ -60,8 +65,10 @@ class RegistryTestCase(unittest.TestCase):
 
     def setUp(self):
         self.portal = self.layer["portal"]
+        self.request = self.layer["request"]
         self.registry = getUtility(IRegistry)
         self.settings = self.registry.forInterface(ICoverSettings)
+        self.qi = get_installer(self.portal, self.request)
 
     def test_sections_record_in_registry(self):
         self.assertTrue(hasattr(self.settings, "layouts"))
@@ -96,9 +103,8 @@ class RegistryTestCase(unittest.TestCase):
         self.assertEqual(self.settings.grid_system, DEFAULT_GRID_SYSTEM)
 
     def test_records_removed_on_uninstall(self):
-        qi = self.portal["portal_quickinstaller"]
         with api.env.adopt_roles(["Manager"]):
-            qi.uninstallProducts(products=[PROJECTNAME])
+            self.qi.uninstallProducts(products=[PROJECTNAME])
 
         BASE_REGISTRY = "collective.cover.controlpanel.ICoverSettings."
         records = [
@@ -111,22 +117,3 @@ class RegistryTestCase(unittest.TestCase):
 
         for r in records:
             self.assertNotIn(r, self.registry)
-
-    def test_records_not_overwriten_on_reinstall(self):
-        """Test changes are not purged on reinstall.
-        https://github.com/collective/collective.cover/issues/465
-        """
-        self.settings.styles = set(["foo"])
-        del self.settings.layouts["Empty layout"]
-
-        self.assertEqual(len(self.settings.styles), 1)
-        self.assertEqual(len(self.settings.layouts), 3)
-
-        qi = self.portal["portal_quickinstaller"]
-        with api.env.adopt_roles(["Manager"]):
-            qi.reinstallProducts(products=[PROJECTNAME])
-
-        self.assertIn("foo", self.settings.styles)
-        self.assertEqual(len(self.settings.styles), 5)
-        self.assertIn("Empty layout", self.settings.layouts)
-        self.assertEqual(len(self.settings.layouts), 4)

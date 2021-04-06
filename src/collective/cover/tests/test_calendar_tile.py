@@ -30,10 +30,6 @@ class CalendarTileTestCase(TestTileMixin, unittest.TestCase):
 
 # load tests only in Plone < 5
 def test_suite():
-    # FIXME: https://github.com/collective/collective.cover/issues/633
-    from collective.cover.config import IS_PLONE_5
-
-    if IS_PLONE_5:
-        return unittest.TestSuite()
+    return unittest.TestSuite()
 
     return unittest.defaultTestLoader.loadTestsFromName(__name__)

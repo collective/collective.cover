@@ -164,9 +164,11 @@ class ListTileTestCase(TestTileMixin, unittest.TestCase):
             self.assertIn(folder[str(i)], results)
 
         # for an anonymous user, no content is returned
+        from AccessControl import Unauthorized
+
         logout()
-        results = self.tile.results()
-        self.assertEqual(len(results), 0)
+        with self.assertRaises(Unauthorized):
+            results = self.tile.results()
 
         # for the test user, the first 5 objects should be still there
         login(self.portal, TEST_USER_NAME)

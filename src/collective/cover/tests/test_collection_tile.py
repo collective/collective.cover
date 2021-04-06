@@ -27,6 +27,14 @@ EVENTS = [
     )
 ]
 
+COLLECTION_FILTER = [
+    dict(
+        i="portal_type",
+        o="plone.app.querystring.operation.selection.is",
+        v=["Image"],
+    )
+]
+
 
 class CollectionTileTestCase(TestTileMixin, unittest.TestCase):
     def setUp(self):
@@ -34,6 +42,8 @@ class CollectionTileTestCase(TestTileMixin, unittest.TestCase):
         self.tile = CollectionTile(self.cover, self.request)
         self.tile.__name__ = u"collective.cover.collection"
         self.tile.id = u"test"
+        self.collection = self.portal["mandelbrot-set"]
+        self.collection.setQuery(COLLECTION_FILTER)
 
     @unittest.expectedFailure  # FIXME: raises BrokenImplementation
     def test_interface(self):
@@ -57,7 +67,7 @@ class CollectionTileTestCase(TestTileMixin, unittest.TestCase):
         fields to avoid UnicodeDecodeError.
         """
         title = u"El veloz murciélago hindú comía feliz cardillo y kiwi"
-        obj = self.portal["mandelbrot-set"]
+        obj = self.collection
         obj.setTitle(title)
         obj.reindexObject()
         self.tile.populate_with_object(obj)
@@ -72,7 +82,7 @@ class CollectionTileTestCase(TestTileMixin, unittest.TestCase):
         using strings instead of unicode objects.
         """
         title = "The quick brown fox jumps over the lazy dog"
-        obj = self.portal["mandelbrot-set"]
+        obj = self.collection
         obj.setTitle(title)
         obj.reindexObject()
         self.tile.populate_with_object(obj)
@@ -86,14 +96,14 @@ class CollectionTileTestCase(TestTileMixin, unittest.TestCase):
         self.assertTrue(self.tile.is_empty())
 
     def test_render_empty_collection(self):
-        obj = self.portal["mandelbrot-set"]
+        obj = self.collection
         obj.setQuery(EMPTY)
         self.tile.populate_with_object(obj)
         rendered = self.tile()
         self.assertIn("The collection doesn't have any results.", rendered)
 
     def test_render_deleted_collection(self):
-        obj = self.portal["mandelbrot-set"]
+        obj = self.collection
         self.tile.populate_with_object(obj)
 
         with api.env.adopt_roles(["Manager"]):
@@ -137,7 +147,7 @@ class CollectionTileTestCase(TestTileMixin, unittest.TestCase):
         self.assertIsInstance(self.tile(), six.text_type)
 
     def test_number_of_items(self):
-        obj = self.portal["mandelbrot-set"]
+        obj = self.collection
         self.tile.populate_with_object(obj)
 
         # Collection has three images and shows them all.
@@ -154,7 +164,7 @@ class CollectionTileTestCase(TestTileMixin, unittest.TestCase):
         self.assertEqual(items[1].getId(), "my-image1")
 
     def test_offset(self):
-        obj = self.portal["mandelbrot-set"]
+        obj = self.collection
         self.tile.populate_with_object(obj)
 
         tile_conf = self.tile.get_tile_configuration()
@@ -176,7 +186,7 @@ class CollectionTileTestCase(TestTileMixin, unittest.TestCase):
         self.assertEqual(items[0].getId(), "my-image1")
 
     def test_random_items(self):
-        obj = self.portal["mandelbrot-set"]
+        obj = self.collection
         self.tile.populate_with_object(obj)
 
         # we need to compare lists of objects
@@ -211,14 +221,13 @@ class CollectionTileTestCase(TestTileMixin, unittest.TestCase):
         self.assertIn(start_date, rendered)
 
     def test_date_on_items(self):
-        collection = self.portal["mandelbrot-set"]
-        self.tile.populate_with_object(collection)
+        self.tile.populate_with_object(self.collection)
 
         tile_config = self.tile.get_tile_configuration()
         self.assertEqual(tile_config["date"]["visibility"], u"on")
 
         # Get the first news item from the collection
-        content_listing_obj = collection.results()[0]
+        content_listing_obj = self.collection.results()[0]
 
         date = self.tile.Date(content_listing_obj)
         self.assertFalse(callable(date), "Date should not be calleable")
@@ -226,6 +235,7 @@ class CollectionTileTestCase(TestTileMixin, unittest.TestCase):
         fmt_date = self.portal.toLocalizedTime(date, True)
 
         rendered = self.tile()
+
         self.assertIn(fmt_date, rendered)
 
     def test_localized_time_is_rendered(self):
@@ -256,7 +266,7 @@ class CollectionTileTestCase(TestTileMixin, unittest.TestCase):
         self.assertIn(expected, rendered)  # u'01:23 PM'
 
     def test_get_alt(self):
-        obj = self.portal["mandelbrot-set"]
+        obj = self.collection
         self.tile.populate_with_object(obj)
         rendered = self.tile()
         # the image is there and the alt attribute is set
