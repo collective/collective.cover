@@ -1,16 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Setup test fixtures.
 
-We have to set different test fixtures depending on Plone versions and
-features we want to test:
-
-plone.app.contenttypes:
-    installed under Plone 4.3, if requested; installed under Plone 5
-
-Products.PloneFormGen
-    installed under Plone 4 only (now deprecated)
-"""
-from collective.cover.config import IS_PLONE_5
 from collective.cover.tests.utils import create_standard_content_for_tests
 from collective.cover.tests.utils import set_file_field
 from collective.cover.tests.utils import set_image_field
@@ -19,7 +8,7 @@ from plone.app.testing import FunctionalTesting
 from plone.app.testing import IntegrationTesting
 from plone.app.testing import PLONE_FIXTURE
 from plone.app.testing import PloneSandboxLayer
-from plone.testing import z2
+from plone.testing.zope import WSGI_SERVER
 
 import os
 import pkg_resources
@@ -29,10 +18,9 @@ import random
 try:
     pkg_resources.get_distribution("plone.app.contenttypes")
 except pkg_resources.DistributionNotFound:
-    DEXTERITY_ONLY = False
+    HAS_PACONTENTYPES = False
 else:
-    # this environment variable is set in .travis.yml test matrix
-    DEXTERITY_ONLY = os.environ.get("DEXTERITY_ONLY") is not None
+    HAS_PACONTENTYPES = True
 
 ALL_CONTENT_TYPES = [
     "Collection",
@@ -108,36 +96,14 @@ def generate_jpeg(width, height):
     return output
 
 
-# FIXME: workaround for https://github.com/plone/plone.app.testing/issues/39
-#        Products.TinyMCE is used only in Plone 4
-if not IS_PLONE_5:
-    autoform = ("plone.autoform", {"loadZCML": True})
-    tinymce = ("Products.TinyMCE", {"loadZCML": True})
-    products = list(PLONE_FIXTURE.products)
-    products.insert(products.index(tinymce), autoform)
-    PLONE_FIXTURE.products = tuple(products)
-
-
 class Fixture(PloneSandboxLayer):
 
     defaultBases = (PLONE_FIXTURE,)
 
     def setUpZope(self, app, configurationContext):
-        if IS_PLONE_5:
-            import plone.app.contenttypes
+        import plone.app.contenttypes
 
-            self.loadZCML(package=plone.app.contenttypes)
-        else:
-            # needed by plone.app.linkintegrity under Plone 4.x
-            import plone.app.referenceablebehavior
-
-            self.loadZCML(package=plone.app.referenceablebehavior)
-
-            if DEXTERITY_ONLY:
-                import plone.app.contenttypes
-
-                self.loadZCML(package=plone.app.contenttypes)
-                z2.installProduct(app, "Products.DateRecurringIndex")
+        self.loadZCML(package=plone.app.contenttypes)
 
         import collective.cover
 
@@ -153,11 +119,7 @@ class Fixture(PloneSandboxLayer):
             manage_addVirtualHostMonster(app, "virtual_hosting")
 
     def setUpPloneSite(self, portal):
-        if IS_PLONE_5:
-            self.applyProfile(portal, "plone.app.contenttypes:default")
-        else:
-            if DEXTERITY_ONLY:
-                self.applyProfile(portal, "plone.app.contenttypes:default")
+        self.applyProfile(portal, "plone.app.contenttypes:default")
 
         self.applyProfile(portal, "collective.cover:default")
         self.applyProfile(portal, "collective.cover:testfixture")
@@ -184,11 +146,11 @@ INTEGRATION_TESTING = IntegrationTesting(
 )
 
 FUNCTIONAL_TESTING = FunctionalTesting(
-    bases=(FIXTURE, z2.ZSERVER_FIXTURE),
+    bases=(FIXTURE, WSGI_SERVER),
     name="collective.cover:Functional",
 )
 
 ROBOT_TESTING = FunctionalTesting(
-    bases=(FIXTURE, AUTOLOGIN_LIBRARY_FIXTURE, z2.ZSERVER_FIXTURE),
+    bases=(FIXTURE, AUTOLOGIN_LIBRARY_FIXTURE, WSGI_SERVER),
     name="collective.cover:Robot",
 )
