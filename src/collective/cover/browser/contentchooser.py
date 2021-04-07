@@ -216,7 +216,6 @@ class SearchItemsBrowserView(BrowserView):
                         normalizer.normalize(brain.review_state or "")
                     ),
                     "title": brain.Title == "" and brain.id or brain.Title,
-                    "icon": self.getIcon(brain).url or "",
                     "is_folderish": brain.is_folderish,
                     "description": brain.Description or "",
                 }
