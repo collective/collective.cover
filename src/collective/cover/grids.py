@@ -69,27 +69,3 @@ class Bootstrap2(BaseGrid):
                 column["class"] += " {0}".format(column["css-class"])
 
         return columns
-
-
-@implementer(IGridSystem)
-class Deco16Grid(BaseGrid):
-
-    """Deco grid system (16 columns)."""
-
-    title = _(u"Deco (16 columns)")
-    ncolumns = 16
-    column_class = "cell"
-
-    def columns_formatter(self, columns):
-        w = "width-"
-        p = "position-"
-        offset = 0
-        for column in columns:
-            width = column.get("column-size", 1)
-            column["class"] = (
-                self.column_class + " " + (w + str(width)) + " " + (p + str(offset))
-            )
-            if "css-class" in column:
-                column["class"] += " {0}".format(column["css-class"])
-            offset = offset + width
-        return columns

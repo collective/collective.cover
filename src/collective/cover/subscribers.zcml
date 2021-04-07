@@ -30,10 +30,4 @@
       handler=".subscribers.assign_id_for_tiles"
       />
 
-  <subscriber zcml:condition="not-have plone-5"
-      for="collective.cover.tiles.base.IPersistentCoverTile
-           zope.lifecycleevent.interfaces.IObjectRemovedEvent"
-      handler="plone.app.linkintegrity.handlers.referencedObjectRemoved"
-      />
-
 </configure>
