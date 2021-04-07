@@ -11,7 +11,7 @@ from plone.app.tiles.utils import appendJSONData
 from plone.tiles.interfaces import ITileDataManager
 from plone.z3cform.interfaces import IDeferSecurityCheck
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-from z3c.form import button
+from z3c.form import form, button
 from zope.component import getMultiAdapter
 from zope.interface import implementer
 from zope.publisher.interfaces.browser import IBrowserView
@@ -57,8 +57,13 @@ class CustomEditForm(DefaultEditForm):
         # fields that weren't sent with the form
         dataManager = ITileDataManager(tile)
         old_data = dataManager.get()
-        for item in data:
-            old_data[item] = data[item]
+
+        form.applyChanges(self, old_data, data)
+        for group in self.groups:
+            form.applyChanges(group, old_data, data)
+
+        current_data = self.getContent()
+        current_data.update(old_data)
         dataManager.set(old_data)
 
         api.portal.show_message(_(u"Tile saved"), self.request, type="info")

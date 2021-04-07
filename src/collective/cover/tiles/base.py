@@ -449,7 +449,7 @@ class PersistentCoverTilePurgePaths(object):
                 scales = parent.unrestrictedTraverse(
                     "{0}/{1}".format(prefix.strip("/"), "@@images")
                 )
-                for size in scales.getAvailableSizes().keys():
+                for size in scales.available_sizes.keys():
                     yield "{0}/@@images/{1}".format(prefix, size)
 
     def getAbsolutePaths(self):
