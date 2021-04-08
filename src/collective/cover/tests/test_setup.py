@@ -4,13 +4,14 @@ from collective.cover.testing import INTEGRATION_TESTING
 from plone import api
 from plone.browserlayer.utils import registered_layers
 from Products.CMFPlone.utils import get_installer
+from Products.CMFPlone.interfaces import IBundleRegistry
+from plone.registry.interfaces import IRegistry
+from zope.component import getUtility
 
 import unittest
 
 
-JS = [
-    "++resource++collective.js.bootstrap/js/bootstrap.min.js",
-]
+JS = "++resource++collective.js.bootstrap/js/bootstrap.min.js"
 
 
 class InstallTestCase(unittest.TestCase):
@@ -20,20 +21,27 @@ class InstallTestCase(unittest.TestCase):
     def setUp(self):
         self.request = self.layer["request"]
         self.portal = self.layer["portal"]
+        self.registry = getUtility(IRegistry)
         self.qi = get_installer(self.portal, self.request)
 
     def test_installed(self):
-        self.assertTrue(self.qi.isProductInstalled(PROJECTNAME))
+        self.assertTrue(self.qi.is_product_installed(PROJECTNAME))
 
     def test_addon_layer(self):
         layers = [layer.getName() for layer in registered_layers()]
         self.assertIn("ICoverLayer", layers)
 
     def test_resources_available(self):
-        resources = JS
-        for id_ in resources:
-            res = self.portal.restrictedTraverse(id_)
-            self.assertTrue(res)
+        res = self.portal.restrictedTraverse(JS)
+        self.assertTrue(res)
+
+    def test_jsregistry(self):
+        bundles = self.registry.collectionOfInterface(
+            IBundleRegistry, prefix="plone.bundles"
+        )
+        bundle = bundles["bootstrap3"]
+
+        self.assertEqual(bundle.jscompilation, JS)
 
     def test_reinstall_with_changed_registry(self):
         ps = getattr(self.portal, "portal_setup")
@@ -55,17 +63,25 @@ class UninstallTestCase(unittest.TestCase):
     def setUp(self):
         self.request = self.layer["request"]
         self.portal = self.layer["portal"]
+        self.registry = getUtility(IRegistry)
         self.qi = get_installer(self.portal, self.request)
 
         with api.env.adopt_roles(["Manager"]):
-            self.qi.uninstallProducts(products=[PROJECTNAME])
+            self.qi.uninstall_product(PROJECTNAME)
 
     def test_uninstalled(self):
-        self.assertFalse(self.qi.isProductInstalled(PROJECTNAME))
+        self.assertFalse(self.qi.is_product_installed(PROJECTNAME))
 
     def test_addon_layer_removed(self):
         layers = [layer.getName() for layer in registered_layers()]
         self.assertNotIn("ICoverLayer", layers)
+
+    def test_jsregistry_removed(self):
+        bundles = self.registry.collectionOfInterface(
+            IBundleRegistry, prefix="plone.bundles"
+        )
+
+        self.assertNotIn("bootstrap3", bundles.keys())
 
     @unittest.expectedFailure  # XXX: not pretty sure how to test this
     def test_versioning_policy_removed(self):

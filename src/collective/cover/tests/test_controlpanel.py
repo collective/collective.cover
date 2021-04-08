@@ -46,7 +46,7 @@ class ControlPanelTestCase(unittest.TestCase):
     def test_controlpanel_removed_on_uninstall(self):
 
         with api.env.adopt_roles(["Manager"]):
-            self.qi.uninstallProducts(products=[PROJECTNAME])
+            self.qi.uninstall_product(PROJECTNAME)
         actions = [a.id for a in self.controlpanel.listActions()]
         self.assertNotIn("cover", actions)
 
@@ -104,7 +104,7 @@ class RegistryTestCase(unittest.TestCase):
 
     def test_records_removed_on_uninstall(self):
         with api.env.adopt_roles(["Manager"]):
-            self.qi.uninstallProducts(products=[PROJECTNAME])
+            self.qi.uninstall_product(PROJECTNAME)
 
         BASE_REGISTRY = "collective.cover.controlpanel.ICoverSettings."
         records = [
