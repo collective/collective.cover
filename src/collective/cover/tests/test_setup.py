@@ -3,9 +3,9 @@ from collective.cover.config import PROJECTNAME
 from collective.cover.testing import INTEGRATION_TESTING
 from plone import api
 from plone.browserlayer.utils import registered_layers
-from Products.CMFPlone.utils import get_installer
-from Products.CMFPlone.interfaces import IBundleRegistry
 from plone.registry.interfaces import IRegistry
+from Products.CMFPlone.interfaces import IBundleRegistry
+from Products.CMFPlone.utils import get_installer
 from zope.component import getUtility
 
 import unittest

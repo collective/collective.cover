@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
-
+from __future__ import absolute_import
 from collective.cover.tests.utils import create_standard_content_for_tests
 from collective.cover.tests.utils import set_file_field
 from collective.cover.tests.utils import set_image_field
+from PIL import Image
 from plone.app.robotframework.testing import AUTOLOGIN_LIBRARY_FIXTURE
 from plone.app.testing import FunctionalTesting
 from plone.app.testing import IntegrationTesting
@@ -13,6 +14,7 @@ from plone.testing.zope import WSGI_SERVER
 import os
 import pkg_resources
 import random
+import six
 
 
 try:
@@ -62,8 +64,6 @@ def load_file(name):
 
 
 def generate_jpeg(width, height):
-    from PIL import Image
-    from StringIO import StringIO
 
     # Mandelbrot fractal
     # FB - 201003254
@@ -91,7 +91,7 @@ def generate_jpeg(width, height):
             b = i % 16 * 16
             image.putpixel((x, y), b * 65536 + g * 256 + r)
 
-    output = StringIO()
+    output = six.BytesIO()
     image.save(output, format="PNG")
     return output
 
