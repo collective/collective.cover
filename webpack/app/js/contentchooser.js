@@ -428,9 +428,6 @@ export default class ContentChooser {
             html += `<li data-is-folderish="${data.items[i].is_folderish}" data-content-type="${data.items[i].portal_type}" data-content-uuid="${data.items[i].uuid}" class="ui-draggable">`;
 
             if (data.items[i].is_folderish) {
-              if (data.items[i].icon.length) {
-                html += '<img src="' + data.items[i].icon + '" /> ';
-              }
               html += '<a class="' +
                 data.items[i].classicon + ' ' + data.items[i].r_state + '" ';
               html += 'title="' + data.items[i].description + '" ';
@@ -438,9 +435,6 @@ export default class ContentChooser {
               html += '<span>' + data.items[i].title + '</span>';
               html += '</a>';
             } else {
-              if (data.items[i].portal_type == 'Image') {
-                html += '<img src="' + this.call_context + '/image.png" border="0"/> ';
-              }
               html += '<a data-ct-type="' +
                 data.items[i].portal_type + '" class="' +
                 data.items[i].classicon + ' ' +
