@@ -31,3 +31,4 @@ selenium*
 share/
 var/
 src/collective/cover/browser/static/
+/pyvenv.cfg
