@@ -34,3 +34,4 @@ var/
 src/collective/cover/browser/static/
 /pyvenv.cfg
 /reports/
+/coverage.xml

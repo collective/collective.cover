@@ -75,11 +75,11 @@ Mostly Harmless
 .. image:: http://img.shields.io/pypi/v/collective.cover.svg
    :target: https://pypi.python.org/pypi/collective.cover
 
-.. image:: https://img.shields.io/travis/collective/collective.cover/master.svg
-    :target: http://travis-ci.org/collective/collective.cover
+.. image:: https://img.shields.io/github/workflow/status/collective/collective.cover/Plone%20package/master?label=GitHub%20Actions
+   :target: https://github.com/collective/collective.cover/actions/workflows/plone-package.yml
 
-.. image:: https://img.shields.io/coveralls/collective/collective.cover/master.svg
-    :target: https://coveralls.io/r/collective/collective.cover
+.. image:: https://codecov.io/gh/collective/collective.cover/branch/master/graph/badge.svg?token=rQ0kzJU0jt
+   :target: https://codecov.io/gh/collective/collective.cover
 
 Got an idea? Found a bug? Let us know by `opening a support ticket <https://github.com/collective/collective.cover/issues>`_.
 
