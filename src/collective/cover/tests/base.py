@@ -15,12 +15,13 @@ class TestTileMixin:
     layer = INTEGRATION_TESTING
 
     def setUp(self):
-        self.portal = self.layer['portal']
-        self.request = self.layer['request']
+        self.portal = self.layer["portal"]
+        self.request = self.layer["request"]
 
-        with api.env.adopt_roles(['Manager']):
+        with api.env.adopt_roles(["Manager"]):
             self.cover = api.content.create(
-                self.portal, 'collective.cover.content', 'c1')
+                self.portal, "collective.cover.content", "c1"
+            )
 
     def test_interface(self):
         self.assertTrue(self.interface.implementedBy(self.klass))
@@ -34,7 +35,7 @@ class TestTileMixin:
         self.assertIsNotNone(tile_type)
         self.assertTrue(issubclass(tile_type.schema, IPersistentCoverTile))
         registry = getUtility(IRegistry)
-        self.assertIn(self.tile.__name__, registry['plone.app.tiles'])
+        self.assertIn(self.tile.__name__, registry["plone.app.tiles"])
 
     def test_default_configuration(self):
         raise NotImplementedError
@@ -46,12 +47,14 @@ class TestTileMixin:
         """Test ESI rendering capable tiles."""
         from plone.tiles.interfaces import ESI_HEADER_KEY
         from zope.component import queryMultiAdapter
-        self.request.environ[ESI_HEADER_KEY] = 'true'
+
+        self.request.environ[ESI_HEADER_KEY] = "true"
         # tile supports ESI
         from plone.tiles.interfaces import IESIRendered
+
         IESIRendered.providedBy(self.tile)
         # head and body helper views are available
-        head = queryMultiAdapter((self.tile, self.request), name='esi-head')
+        head = queryMultiAdapter((self.tile, self.request), name="esi-head")
         self.assertIsNotNone(head)
-        body = queryMultiAdapter((self.tile, self.request), name='esi-body')
+        body = queryMultiAdapter((self.tile, self.request), name="esi-body")
         self.assertIsNotNone(body)

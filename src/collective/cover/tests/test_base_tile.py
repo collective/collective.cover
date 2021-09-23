@@ -41,7 +41,6 @@ ZCML = """
 
 
 class BaseTileTestCase(TestTileMixin, unittest.TestCase):
-
     def _register_tile(self):
         xmlconfig(BytesIO(ZCML))
 
@@ -49,8 +48,8 @@ class BaseTileTestCase(TestTileMixin, unittest.TestCase):
         super(BaseTileTestCase, self).setUp()
         self._register_tile()
         self.tile = PersistentCoverTile(self.cover, self.request)
-        self.tile.__name__ = u'collective.cover.base'
-        self.tile.id = u'test'
+        self.tile.__name__ = u"collective.cover.base"
+        self.tile.id = u"test"
 
     def test_interface(self):
         self.interface = IPersistentCoverTile
@@ -75,32 +74,35 @@ class BaseTileTestCase(TestTileMixin, unittest.TestCase):
         from zope.annotation import IAnnotations
         from zope.component import eventtesting
         from zope.lifecycleevent import IObjectModifiedEvent
+
         eventtesting.setUp()
         annotations = IAnnotations(self.tile.context)
 
         data_mgr = ITileDataManager(self.tile)
-        data_mgr.set({'test': 'data'})
-        self.assertIn('test', data_mgr.get())
-        self.assertEqual(data_mgr.get()['test'], 'data')
+        data_mgr.set({"test": "data"})
+        self.assertIn("test", data_mgr.get())
+        self.assertEqual(data_mgr.get()["test"], "data")
 
         permissions = getMultiAdapter(
-            (self.cover, self.request, self.tile), ITilesPermissions)
-        permissions.set_allowed_edit('masters_of_the_universe')
-        self.assertIn(PERMISSIONS_PREFIX + '.test', annotations)
+            (self.cover, self.request, self.tile), ITilesPermissions
+        )
+        permissions.set_allowed_edit("masters_of_the_universe")
+        self.assertIn(PERMISSIONS_PREFIX + ".test", annotations)
 
         configuration = getMultiAdapter(
-            (self.cover, self.request, self.tile), ITilesConfigurationScreen)
-        configuration.set_configuration({'uuid': 'c1d2e3f4g5jrw'})
-        self.assertIn(CONFIGURATION_PREFIX + '.test', annotations)
+            (self.cover, self.request, self.tile), ITilesConfigurationScreen
+        )
+        configuration.set_configuration({"uuid": "c1d2e3f4g5jrw"})
+        self.assertIn(CONFIGURATION_PREFIX + ".test", annotations)
 
         # Call the delete method
         eventtesting.clearEvents()
         self.tile.delete()
 
         # Now we should not see the persistent data anymore
-        self.assertNotIn('test', data_mgr.get())
-        self.assertNotIn(PERMISSIONS_PREFIX + '.test', annotations)
-        self.assertNotIn(CONFIGURATION_PREFIX + '.test', annotations)
+        self.assertNotIn("test", data_mgr.get())
+        self.assertNotIn(PERMISSIONS_PREFIX + ".test", annotations)
+        self.assertNotIn(CONFIGURATION_PREFIX + ".test", annotations)
 
         # Finally, test that ObjectModifiedEvent was fired for the cover
         events = eventtesting.getEvents()

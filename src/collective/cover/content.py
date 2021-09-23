@@ -58,7 +58,7 @@ class Cover(Item):
                 #      empty layout; maybe we should fix this in other
                 #      way: cover_layout should be initiated at
                 #      object's creation and not at LayoutSave view
-                logger.debug('cover_layout attribute was empty')
+                logger.debug("cover_layout attribute was empty")
                 layout = []
         else:
             # we are recursively processing the layout
@@ -66,12 +66,12 @@ class Cover(Item):
 
         tiles = []
         for e in layout:
-            if e['type'] == 'tile':
-                if filter and e['tile-type'] not in types:
+            if e["type"] == "tile":
+                if filter and e["tile-type"] not in types:
                     continue
-                tiles.append(dict(id=e['id'], type=e['tile-type']))
-            if 'children' in e:
-                tiles.extend(self.get_tiles(types, e['children']))
+                tiles.append(dict(id=e["id"], type=e["tile-type"]))
+            if "children" in e:
+                tiles.extend(self.get_tiles(types, e["children"]))
         return tiles
 
     def list_tiles(self, types=None):
@@ -82,7 +82,7 @@ class Cover(Item):
         :returns: a list of tile ids
         :rtype: list of strings
         """
-        return [t['id'] for t in self.get_tiles(types)]
+        return [t["id"] for t in self.get_tiles(types)]
 
     def get_tile_type(self, id):
         """Get the type of the tile defined by the id.
@@ -93,11 +93,11 @@ class Cover(Item):
         :rtype: string
         :raises ValueError: if the tile does not exists
         """
-        tile = [t for t in self.get_tiles() if t['id'] == id]
+        tile = [t for t in self.get_tiles() if t["id"] == id]
         assert len(tile) in (0, 1)  # nosec
         if len(tile) == 0:
             raise ValueError
-        return tile[0]['type']
+        return tile[0]["type"]
 
     def get_tile(self, tile_id):
         """Get the tile defined by id.
@@ -109,7 +109,7 @@ class Cover(Item):
         """
         tile_type = str(self.get_tile_type(tile_id))
         tile_id = str(tile_id)
-        return self.restrictedTraverse('{0}/{1}'.format(tile_type, tile_id))
+        return self.restrictedTraverse("{0}/{1}".format(tile_type, tile_id))
 
     def set_tile_data(self, tile_id, **data):
         """Set data attributes on the tile defined by id.
@@ -132,17 +132,17 @@ class Cover(Item):
         refs = set()
         for tile_uuid in self.list_tiles():
             tile = self.get_tile(tile_uuid)
-            uuid = tile.data.get('uuid', None)
+            uuid = tile.data.get("uuid", None)
             if uuid is not None:
                 refs |= set([uuidToObject(uuid)])
             if IListTile.providedBy(tile):
-                uuids = tile.data.get('uuids', [])
+                uuids = tile.data.get("uuids", [])
                 if uuids is None:
                     continue
                 for uuid in uuids:
                     refs |= set([uuidToObject(uuid)])
             elif IRichTextTile.providedBy(tile):
-                value = tile.data.get('text')
+                value = tile.data.get("text")
                 if value is None:
                     continue
                 value = value.raw
@@ -166,7 +166,7 @@ class Cover(Item):
             #      (it's no longer in the layout and we can only infer
             #      its id); this could lead to issues in the future if
             #      a different storage is used (see plone.tiles code)
-            tile_id = key.split('.')[-1]
+            tile_id = key.split(".")[-1]
             if tile_id not in layout_tiles:
                 del annotations[key]
 
@@ -178,16 +178,20 @@ def searchableText(obj):
     text_list = []
     tiles = obj.get_tiles()
     for tile in tiles:
-        tile_obj = obj.restrictedTraverse('@@{0}/{1}'.format(tile['type'], tile['id']))
+        tile_obj = obj.restrictedTraverse("@@{0}/{1}".format(tile["type"], tile["id"]))
         searchable = queryAdapter(tile_obj, ISearchableText)
         if searchable:
             text_list.append(searchable.SearchableText())
-    tiles_text = u' '.join(text_list)
-    searchable_text = [safe_unicode(entry) for entry in (
-        obj.id,
-        obj.Title(),
-        obj.Description(),
-        tiles_text,
-    ) if entry]
-    searchable_text = u' '.join(searchable_text)
+    tiles_text = u" ".join(text_list)
+    searchable_text = [
+        safe_unicode(entry)
+        for entry in (
+            obj.id,
+            obj.Title(),
+            obj.Description(),
+            tiles_text,
+        )
+        if entry
+    ]
+    searchable_text = u" ".join(searchable_text)
     return searchable_text

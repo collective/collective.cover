@@ -10,12 +10,11 @@ import unittest
 
 
 class EmbedTileTestCase(TestTileMixin, unittest.TestCase):
-
     def setUp(self):
         super(EmbedTileTestCase, self).setUp()
         self.tile = EmbedTile(self.cover, self.request)
-        self.tile.__name__ = u'collective.cover.embed'
-        self.tile.id = u'test'
+        self.tile.__name__ = u"collective.cover.embed"
+        self.tile.id = u"test"
 
     @unittest.expectedFailure  # FIXME: raises BrokenImplementation
     def test_interface(self):
@@ -35,7 +34,7 @@ class EmbedTileTestCase(TestTileMixin, unittest.TestCase):
         self.assertTrue(self.tile.is_empty())
 
     def test_render_empty(self):
-        msg = u'Please edit the tile to add the code to be embedded.'
+        msg = u"Please edit the tile to add the code to be embedded."
 
         self.tile.is_compose_mode = Mock(return_value=True)
         self.assertIn(msg, self.tile())
@@ -45,6 +44,6 @@ class EmbedTileTestCase(TestTileMixin, unittest.TestCase):
 
     def test_seachable_text(self):
         searchable = queryAdapter(self.tile, ISearchableText)
-        self.tile.data['title'] = 'custom title'
-        self.tile.data['description'] = 'custom description'
-        self.assertEqual(searchable.SearchableText(), 'custom title custom description')
+        self.tile.data["title"] = "custom title"
+        self.tile.data["description"] = "custom description"
+        self.assertEqual(searchable.SearchableText(), "custom title custom description")

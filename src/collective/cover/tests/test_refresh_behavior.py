@@ -18,35 +18,36 @@ class RefreshBehaviorTestCase(unittest.TestCase):
     layer = INTEGRATION_TESTING
 
     def _enable_refresh_behavior(self):
-        fti = queryUtility(IDexterityFTI, name='collective.cover.content')
+        fti = queryUtility(IDexterityFTI, name="collective.cover.content")
         behaviors = list(fti.behaviors)
         behaviors.append(IRefresh.__identifier__)
         fti.behaviors = tuple(behaviors)
         # invalidate schema cache
-        notify(SchemaInvalidatedEvent('collective.cover.content'))
+        notify(SchemaInvalidatedEvent("collective.cover.content"))
 
     def _disable_refresh_behavior(self):
-        fti = queryUtility(IDexterityFTI, name='collective.cover.content')
+        fti = queryUtility(IDexterityFTI, name="collective.cover.content")
         behaviors = list(fti.behaviors)
         behaviors.remove(IRefresh.__identifier__)
         fti.behaviors = tuple(behaviors)
         # invalidate schema cache
-        notify(SchemaInvalidatedEvent('collective.cover.content'))
+        notify(SchemaInvalidatedEvent("collective.cover.content"))
 
     def setUp(self):
-        self.portal = self.layer['portal']
-        self.request = self.layer['request']
+        self.portal = self.layer["portal"]
+        self.request = self.layer["request"]
         alsoProvides(self.request, ICoverLayer)
-        with api.env.adopt_roles(['Manager']):
+        with api.env.adopt_roles(["Manager"]):
             self.cover = api.content.create(
-                self.portal, 'collective.cover.content', 'c1')
+                self.portal, "collective.cover.content", "c1"
+            )
 
     def test_refresh_registration(self):
         registration = queryUtility(IBehavior, name=IRefresh.__identifier__)
         self.assertIsNotNone(registration)
 
     def test_refresh_behavior(self):
-        view = api.content.get_view(u'view', self.cover, self.request)
+        view = api.content.get_view(u"view", self.cover, self.request)
         self.assertNotIn('<meta http-equiv="refresh" content="300" />', view())
         self._enable_refresh_behavior()
         self.cover.enable_refresh = True

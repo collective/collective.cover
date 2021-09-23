@@ -15,86 +15,87 @@ class VocabulariesTestCase(unittest.TestCase):
     layer = INTEGRATION_TESTING
 
     def setUp(self):
-        self.portal = self.layer['portal']
+        self.portal = self.layer["portal"]
 
     def test_layouts_vocabulary(self):
-        name = 'collective.cover.AvailableLayouts'
+        name = "collective.cover.AvailableLayouts"
         vocabulary = queryUtility(IVocabularyFactory, name)
         self.assertIsNotNone(vocabulary)
         layouts = vocabulary(self.portal)
         self.assertEqual(len(layouts), 4)
-        self.assertIn(u'Layout A', layouts)
-        self.assertIn(u'Layout B', layouts)
-        self.assertIn(u'Layout C', layouts)
-        self.assertIn(u'Empty layout', layouts)
+        self.assertIn(u"Layout A", layouts)
+        self.assertIn(u"Layout B", layouts)
+        self.assertIn(u"Layout C", layouts)
+        self.assertIn(u"Empty layout", layouts)
 
     def test_available_tiles_vocabulary(self):
-        name = 'collective.cover.AvailableTiles'
+        name = "collective.cover.AvailableTiles"
         vocabulary = queryUtility(IVocabularyFactory, name)
         self.assertIsNotNone(vocabulary)
         tiles = vocabulary(self.portal)
         expected = [
-            'collective.cover.banner',
-            'collective.cover.basic',
-            'collective.cover.calendar',
-            'collective.cover.carousel',
-            'collective.cover.collection',
-            'collective.cover.contentbody',
-            'collective.cover.embed',
-            'collective.cover.file',
-            'collective.cover.list',
-            'collective.cover.richtext',
+            "collective.cover.banner",
+            "collective.cover.basic",
+            "collective.cover.calendar",
+            "collective.cover.carousel",
+            "collective.cover.collection",
+            "collective.cover.contentbody",
+            "collective.cover.embed",
+            "collective.cover.file",
+            "collective.cover.list",
+            "collective.cover.richtext",
         ]
 
         # FIXME: https://github.com/collective/collective.cover/issues/633
         if IS_PLONE_5:
-            expected.remove('collective.cover.calendar')
+            expected.remove("collective.cover.calendar")
 
         self.assertEqual(len(tiles), len(expected))
         for i in expected:
             self.assertIn(i, tiles)
 
     def test_enabled_tiles_vocabulary(self):
-        name = 'collective.cover.EnabledTiles'
+        name = "collective.cover.EnabledTiles"
         vocabulary = queryUtility(IVocabularyFactory, name)
         self.assertIsNotNone(vocabulary)
         tiles = vocabulary(self.portal)
         expected = [
-            'collective.cover.banner',
-            'collective.cover.basic',
-            'collective.cover.calendar',
-            'collective.cover.carousel',
-            'collective.cover.collection',
-            'collective.cover.contentbody',
-            'collective.cover.embed',
-            'collective.cover.file',
-            'collective.cover.list',
-            'collective.cover.richtext',
+            "collective.cover.banner",
+            "collective.cover.basic",
+            "collective.cover.calendar",
+            "collective.cover.carousel",
+            "collective.cover.collection",
+            "collective.cover.contentbody",
+            "collective.cover.embed",
+            "collective.cover.file",
+            "collective.cover.list",
+            "collective.cover.richtext",
         ]
 
         # FIXME: https://github.com/collective/collective.cover/issues/633
         if IS_PLONE_5:
-            expected.remove('collective.cover.calendar')
+            expected.remove("collective.cover.calendar")
 
         # XXX: PFG tile is deprecated and will be removed in collective.cover 3
         from collective.cover.testing import HAS_PFG
-        if HAS_PFG and 'collective.cover.pfg' not in expected:
-            expected.append('collective.cover.pfg')
+
+        if HAS_PFG and "collective.cover.pfg" not in expected:
+            expected.append("collective.cover.pfg")
 
         self.assertEqual(len(tiles), len(expected))
         for i in expected:
             self.assertIn(i, tiles)
 
     def test_available_content_types_vocabulary(self):
-        name = 'collective.cover.AvailableContentTypes'
+        name = "collective.cover.AvailableContentTypes"
         vocabulary = queryUtility(IVocabularyFactory, name)
         self.assertIsNotNone(vocabulary)
         available_content_types = vocabulary(self.portal)
         self.assertTrue(len(available_content_types) > 0)
-        self.assertNotIn(u'collective.cover.content', available_content_types)
+        self.assertNotIn(u"collective.cover.content", available_content_types)
 
     def test_tile_styles_vocabulary(self):
-        name = 'collective.cover.TileStyles'
+        name = "collective.cover.TileStyles"
         vocabulary = queryUtility(IVocabularyFactory, name)
         self.assertIsNotNone(vocabulary)
         # in the beginning the vocabulary should contain the default styles
@@ -105,17 +106,19 @@ class VocabulariesTestCase(unittest.TestCase):
         # always return in the same order. When the code is migrated to Python 3 only,
         # try:
         # self.assertEqual(list(styles.by_value.keys())[0], u'tile-default')
-        self.assertIn(u'tile-default', list(styles.by_value.keys()))
+        self.assertIn(u"tile-default", list(styles.by_value.keys()))
         # let's try to put some other values on it
         registry = getUtility(IRegistry)
         settings = registry.forInterface(ICoverSettings)
-        settings.styles = set([
-            ' red background | redTile ',  # test trimming
-            'green background|greenTile',
-            'blue background|blueTile',
-        ])
+        settings.styles = set(
+            [
+                " red background | redTile ",  # test trimming
+                "green background|greenTile",
+                "blue background|blueTile",
+            ]
+        )
         styles = vocabulary(self.portal)
-        self.assertIn('redTile', styles.by_value)
+        self.assertIn("redTile", styles.by_value)
 
         # although default style is not set, vocabulary inserts it first
         self.assertEqual(len(styles), 4)
@@ -123,39 +126,40 @@ class VocabulariesTestCase(unittest.TestCase):
         # always return in the same order. When the code is migrated to Python 3 only,
         # try:
         # self.assertEqual(list(styles.by_value.keys())[0], u'tile-default')
-        self.assertIn(u'tile-default', list(styles.by_value.keys()))
+        self.assertIn(u"tile-default", list(styles.by_value.keys()))
         # adding a couple of not well formatted items result in no option
         # (except for the default one)
-        settings.styles = set(['not well formatted'])
+        settings.styles = set(["not well formatted"])
         styles = vocabulary(self.portal)
         self.assertEqual(len(styles), 1)
         # BBB: In Python 2, calling the keys method of a dict is not guaranteed to
         # always return in the same order. When the code is migrated to Python 3 only,
         # try:
         # self.assertEqual(list(styles.by_value.keys())[0], u'tile-default')
-        self.assertIn(u'tile-default', list(styles.by_value.keys()))
+        self.assertIn(u"tile-default", list(styles.by_value.keys()))
 
     def test_grid_systems(self):
-        name = 'collective.cover.GridSystems'
+        name = "collective.cover.GridSystems"
         vocabulary = queryUtility(IVocabularyFactory, name)
         self.assertIsNotNone(vocabulary)
 
         # Our default grid system must be in the vocabulary.
         grids = vocabulary(self.portal)
         self.assertEqual(len(grids), 3)
-        self.assertIn(u'bootstrap3', grids)
-        self.assertIn(u'bootstrap2', grids)
-        self.assertIn(u'deco16_grid', grids)
-        self.assertEqual(grids.getTerm('bootstrap3').title, u'Bootstrap 3')
-        self.assertEqual(grids.getTerm('bootstrap2').title, u'Bootstrap 2')
-        self.assertEqual(grids.getTerm('deco16_grid').title, u'Deco (16 columns)')
+        self.assertIn(u"bootstrap3", grids)
+        self.assertIn(u"bootstrap2", grids)
+        self.assertIn(u"deco16_grid", grids)
+        self.assertEqual(grids.getTerm("bootstrap3").title, u"Bootstrap 3")
+        self.assertEqual(grids.getTerm("bootstrap2").title, u"Bootstrap 2")
+        self.assertEqual(grids.getTerm("deco16_grid").title, u"Deco (16 columns)")
 
     def test_image_scales(self):
         from collective.cover.browser.cover import Helper
+
         vocabulary = Helper.get_image_scales()
 
         self.assertGreater(len(vocabulary), 0)
         # test against some expected values
-        self.assertIn(u'imagescale_mini', vocabulary)
-        self.assertIn(u'imagescale_preview', vocabulary)
-        self.assertIn(u'imagescale_large', vocabulary)
+        self.assertIn(u"imagescale_mini", vocabulary)
+        self.assertIn(u"imagescale_preview", vocabulary)
+        self.assertIn(u"imagescale_large", vocabulary)

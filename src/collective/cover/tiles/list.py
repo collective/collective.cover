@@ -30,7 +30,7 @@ logger = logging.getLogger(PROJECTNAME)
 class IListTile(IPersistentCoverTile):
 
     uuids = schema.Dict(
-        title=_(u'Elements'),
+        title=_(u"Elements"),
         key_type=schema.TextLine(),
         value_type=schema.Dict(
             key_type=schema.TextLine(),
@@ -38,68 +38,70 @@ class IListTile(IPersistentCoverTile):
         ),
         required=False,
     )
-    form.omitted('uuids')
+    form.omitted("uuids")
 
     # XXX: this field should be used to replace the 'limit' attribute
-    form.omitted('count')
-    form.no_omit(IDefaultConfigureForm, 'count')
+    form.omitted("count")
+    form.no_omit(IDefaultConfigureForm, "count")
     count = schema.Int(
-        title=_(u'Number of items to display'),
+        title=_(u"Number of items to display"),
         required=False,
         default=5,
     )
 
-    form.omitted('title')
-    form.no_omit(IDefaultConfigureForm, 'title')
+    form.omitted("title")
+    form.no_omit(IDefaultConfigureForm, "title")
     title = schema.TextLine(
-        title=_(u'Title'),
+        title=_(u"Title"),
         required=False,
     )
 
-    form.omitted('description')
-    form.no_omit(IDefaultConfigureForm, 'description')
+    form.omitted("description")
+    form.no_omit(IDefaultConfigureForm, "description")
     description = schema.Text(
-        title=_(u'Description'),
+        title=_(u"Description"),
         required=False,
     )
 
-    form.omitted('image')
-    form.no_omit(IDefaultConfigureForm, 'image')
+    form.omitted("image")
+    form.no_omit(IDefaultConfigureForm, "image")
     image = NamedBlobImage(
-        title=_(u'Image'),
+        title=_(u"Image"),
         required=False,
     )
 
-    form.omitted('date')
-    form.no_omit(IDefaultConfigureForm, 'date')
+    form.omitted("date")
+    form.no_omit(IDefaultConfigureForm, "date")
     date = schema.Datetime(
-        title=_(u'Date'),
+        title=_(u"Date"),
         required=False,
     )
 
-    tile_title = schema.TextLine(title=_(u'Tile Title'), required=False)
-    form.omitted('tile_title')
-    form.no_omit(ITileEditForm, 'tile_title')
+    tile_title = schema.TextLine(title=_(u"Tile Title"), required=False)
+    form.omitted("tile_title")
+    form.no_omit(ITileEditForm, "tile_title")
 
-    more_link = schema.TextLine(title=_('Show more... link'), required=False)
-    form.omitted('more_link')
-    form.no_omit(ITileEditForm, 'more_link')
-    form.widget(more_link='collective.cover.tiles.edit_widgets.more_link.MoreLinkFieldWidget')
+    more_link = schema.TextLine(title=_("Show more... link"), required=False)
+    form.omitted("more_link")
+    form.no_omit(ITileEditForm, "more_link")
+    form.widget(
+        more_link="collective.cover.tiles.edit_widgets.more_link.MoreLinkFieldWidget"
+    )
 
-    more_link_text = schema.TextLine(title=_('Show more... link text'), required=False)
-    form.omitted('more_link_text')
-    form.no_omit(ITileEditForm, 'more_link_text')
+    more_link_text = schema.TextLine(title=_("Show more... link text"), required=False)
+    form.omitted("more_link_text")
+    form.no_omit(ITileEditForm, "more_link_text")
 
 
 @implementer(IListTile)
 class ListTile(PersistentCoverTile):
 
-    index = ViewPageTemplateFile('templates/list.pt')
+    index = ViewPageTemplateFile("templates/list.pt")
 
     is_configurable = True
     is_droppable = True
     is_editable = True
-    short_name = _(u'msg_short_name_list', default=u'List')
+    short_name = _(u"msg_short_name_list", default=u"List")
     limit = 5
 
     def results(self):
@@ -111,12 +113,12 @@ class ListTile(PersistentCoverTile):
         self.set_limit()
 
         # always get the latest data
-        uuids = ITileDataManager(self).get().get('uuids', None)
+        uuids = ITileDataManager(self).get().get("uuids", None)
 
         results = list()
         if uuids:
             ordered_uuids = [(k, v) for k, v in uuids.items()]
-            ordered_uuids.sort(key=lambda x: int(x[1]['order']))
+            ordered_uuids.sort(key=lambda x: int(x[1]["order"]))
 
             for uuid in [i[0] for i in ordered_uuids]:
                 obj = uuidToObject(uuid)
@@ -125,15 +127,16 @@ class ListTile(PersistentCoverTile):
                 else:
                     # maybe the user has no permission to access the object
                     # so we try to get it bypassing the restrictions
-                    catalog = api.portal.get_tool('portal_catalog')
+                    catalog = api.portal.get_tool("portal_catalog")
                     brain = catalog.unrestrictedSearchResults(UID=uuid)
                     if not brain:
                         # the object was deleted; remove it from the tile
                         self.remove_item(uuid)
                         logger.debug(
-                            'Non-existent object {0} removed from tile'.format(uuid))  # noqa: E501
+                            "Non-existent object {0} removed from tile".format(uuid)
+                        )  # noqa: E501
 
-        return results[:self.limit]
+        return results[: self.limit]
 
     def is_empty(self):
         return self.results() == []
@@ -148,7 +151,7 @@ class ListTile(PersistentCoverTile):
         #      probably want to rewrite the `results` funtion but we have
         #      to be careful because there must be tiles derived from it,
         #      like the Carousel tile
-        catalog = api.portal.get_tool('portal_catalog')
+        catalog = api.portal.get_tool("portal_catalog")
         brain = catalog(UID=self.get_uuid(obj))
         assert len(brain) == 1  # nosec
         return super(ListTile, self).Date(brain[0])
@@ -156,11 +159,11 @@ class ListTile(PersistentCoverTile):
     # TODO: get rid of this by replacing it with the 'count' field
     def set_limit(self):
         for field in self.get_configured_fields():
-            if field and field.get('id') == 'uuids':
-                self.limit = int(field.get('size', self.limit))
+            if field and field.get("id") == "uuids":
+                self.limit = int(field.get("size", self.limit))
 
     def populate_with_object(self, obj):
-        """ Add an object to the list of items
+        """Add an object to the list of items
 
         :param obj: [required] The object to be added
         :type obj: Content object
@@ -169,34 +172,32 @@ class ListTile(PersistentCoverTile):
         self.populate_with_uuids([self.get_uuid(obj)])
 
     def populate_with_uuids(self, uuids):
-        """ Add a list of elements to the list of items. This method will
+        """Add a list of elements to the list of items. This method will
         append new elements to the already existing list of items
 
         :param uuids: The list of objects' UUIDs to be used
         :type uuids: List of strings
         """
         if not self.isAllowedToEdit():
-            raise Unauthorized(
-                _('You are not allowed to add content to this tile'))
+            raise Unauthorized(_("You are not allowed to add content to this tile"))
         self.set_limit()
         data_mgr = ITileDataManager(self)
 
         old_data = data_mgr.get()
-        if old_data['uuids'] is None:
+        if old_data["uuids"] is None:
             # If there is no content yet, just assign an empty dict
-            old_data['uuids'] = dict()
+            old_data["uuids"] = dict()
 
-        uuids_dict = old_data.get('uuids')
+        uuids_dict = old_data.get("uuids")
         if not isinstance(uuids_dict, dict):
             # Make sure this is a dict
-            uuids_dict = old_data['uuids'] = dict()
+            uuids_dict = old_data["uuids"] = dict()
 
         if uuids_dict and len(uuids_dict) > self.limit:
             # Do not allow adding more objects than the defined limit
             return
 
-        order_list = [int(val.get('order', 0))
-                      for key, val in uuids_dict.items()]
+        order_list = [int(val.get("order", 0)) for key, val in uuids_dict.items()]
         if len(order_list) == 0:
             # First entry
             order = 0
@@ -208,32 +209,31 @@ class ListTile(PersistentCoverTile):
         for uuid in uuids:
             if uuid not in uuids_dict:
                 entry = dict()
-                entry[u'order'] = six.text_type(order)
+                entry[u"order"] = six.text_type(order)
                 uuids_dict[uuid] = entry
                 order += 1
 
-        old_data['uuids'] = uuids_dict
+        old_data["uuids"] = uuids_dict
         data_mgr.set(old_data)
 
     def replace_with_uuids(self, uuids):
-        """ Replaces the whole list of items with a new list of items
+        """Replaces the whole list of items with a new list of items
 
         :param uuids: The list of objects' UUIDs to be used
         :type uuids: List of strings
         """
         if not self.isAllowedToEdit():
-            raise Unauthorized(
-                _('You are not allowed to add content to this tile'))
+            raise Unauthorized(_("You are not allowed to add content to this tile"))
         data_mgr = ITileDataManager(self)
         old_data = data_mgr.get()
         # Clean old data
-        old_data['uuids'] = dict()
+        old_data["uuids"] = dict()
         data_mgr.set(old_data)
         # Repopulate with clean list
         self.populate_with_uuids(uuids)
 
     def remove_item(self, uuid):
-        """ Removes an item from the list
+        """Removes an item from the list
 
         :param uuid: [required] uuid for the object that wants to be removed
         :type uuid: string
@@ -241,10 +241,10 @@ class ListTile(PersistentCoverTile):
         super(ListTile, self).remove_item(uuid)  # check permission
         data_mgr = ITileDataManager(self)
         old_data = data_mgr.get()
-        uuids = data_mgr.get()['uuids']
+        uuids = data_mgr.get()["uuids"]
         if uuid in uuids.keys():
             del uuids[uuid]
-        old_data['uuids'] = uuids
+        old_data["uuids"] = uuids
         data_mgr.set(old_data)
 
     def get_uuid(self, obj):
@@ -271,28 +271,27 @@ class ListTile(PersistentCoverTile):
 
         results = []
         for name, obj in fields:
-            field = {'id': name,
-                     'title': obj.title}
+            field = {"id": name, "title": obj.title}
             if name in conf:
                 field_conf = conf[name]
-                if ('visibility' in field_conf and field_conf['visibility'] == u'off'):
+                if "visibility" in field_conf and field_conf["visibility"] == u"off":
                     # If the field was configured to be invisible, then just
                     # ignore it
                     continue
 
-                if 'htmltag' in field_conf:
+                if "htmltag" in field_conf:
                     # If this field has the capability to change its html tag
                     # render, save it here
-                    field['htmltag'] = field_conf['htmltag']
+                    field["htmltag"] = field_conf["htmltag"]
 
-                if 'format' in field_conf:
-                    field['format'] = field_conf['format']
+                if "format" in field_conf:
+                    field["format"] = field_conf["format"]
 
-                if 'imgsize' in field_conf:
-                    field['scale'] = field_conf['imgsize']
+                if "imgsize" in field_conf:
+                    field["scale"] = field_conf["imgsize"]
 
-                if 'size' in field_conf:
-                    field['size'] = field_conf['size']
+                if "size" in field_conf:
+                    field["size"] = field_conf["size"]
 
             results.append(field)
 
@@ -305,19 +304,19 @@ class ListTile(PersistentCoverTile):
         :param item: [required]
         :type item: content object
         """
-        if self._has_image_field(item) and self._field_is_visible('image'):
+        if self._has_image_field(item) and self._field_is_visible("image"):
             tile_conf = self.get_tile_configuration()
-            image_conf = tile_conf.get('image', None)
+            image_conf = tile_conf.get("image", None)
             if image_conf:
-                scaleconf = image_conf['imgsize']
+                scaleconf = image_conf["imgsize"]
                 # scale string is something like: 'mini 200:200' and
                 # we need the name only: 'mini'
-                if scaleconf == '_original':
+                if scaleconf == "_original":
                     scale = None
                 else:
-                    scale = scaleconf.split(' ')[0]
-                scales = item.restrictedTraverse('@@images')
-                return scales.scale('image', scale)
+                    scale = scaleconf.split(" ")[0]
+                scales = item.restrictedTraverse("@@images")
+                return scales.scale("image", scale)
 
     def _get_image_position(self):
         """Return the image position as configured on the tile.
@@ -325,27 +324,27 @@ class ListTile(PersistentCoverTile):
         :returns: 'left' or 'right'
         """
         tile_conf = self.get_tile_configuration()
-        image_conf = tile_conf.get('image', None)
+        image_conf = tile_conf.get("image", None)
         if image_conf:
-            return image_conf.get('position', u'left')
+            return image_conf.get("position", u"left")
 
     @property
     def tile_title(self):
-        return self.data['tile_title']
+        return self.data["tile_title"]
 
     @property
     def more_link(self):
-        if not (self.data['more_link'] and self.data['more_link_text']):
+        if not (self.data["more_link"] and self.data["more_link_text"]):
             return None
 
-        pc = api.portal.get_tool('portal_catalog')
-        brainz = pc(UID=self.data['more_link'])
+        pc = api.portal.get_tool("portal_catalog")
+        brainz = pc(UID=self.data["more_link"])
         if not len(brainz):
             return None
 
         return {
-            'href': brainz[0].getURL(),
-            'text': self.data['more_link_text'],
+            "href": brainz[0].getURL(),
+            "text": self.data["more_link_text"],
         }
 
     @view.memoize
@@ -359,11 +358,11 @@ class ListTile(PersistentCoverTile):
         :type item: content object
         """
         tag = '<{heading}><a href="{href}">{title}</a></{heading}>'
-        if self._field_is_visible('title'):
+        if self._field_is_visible("title"):
             tile_conf = self.get_tile_configuration()
-            title_conf = tile_conf.get('title', None)
+            title_conf = tile_conf.get("title", None)
             if title_conf:
-                heading = title_conf.get('htmltag', 'h2')
+                heading = title_conf.get("htmltag", "h2")
                 href = item.absolute_url()
                 title = item.Title()
                 return tag.format(heading=heading, href=href, title=title)

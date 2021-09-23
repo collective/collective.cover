@@ -11,12 +11,11 @@ import unittest
 
 
 class RichTextTileTestCase(TestTileMixin, unittest.TestCase):
-
     def setUp(self):
         super(RichTextTileTestCase, self).setUp()
         self.tile = RichTextTile(self.cover, self.request)
-        self.tile.__name__ = u'collective.cover.richtext'
-        self.tile.id = u'test'
+        self.tile.__name__ = u"collective.cover.richtext"
+        self.tile.id = u"test"
 
     @unittest.expectedFailure  # FIXME: raises BrokenImplementation
     def test_interface(self):
@@ -30,10 +29,10 @@ class RichTextTileTestCase(TestTileMixin, unittest.TestCase):
         self.assertTrue(self.tile.is_droppable)
 
     def test_accepted_content_types(self):
-        self.assertEqual(self.tile.accepted_ct(), ['Document'])
+        self.assertEqual(self.tile.accepted_ct(), ["Document"])
 
     def test_render_empty(self):
-        msg = 'Please edit the tile to enter some text.'
+        msg = "Please edit the tile to enter some text."
 
         self.tile.is_compose_mode = Mock(return_value=True)
         self.assertIn(msg, self.tile())
@@ -43,8 +42,9 @@ class RichTextTileTestCase(TestTileMixin, unittest.TestCase):
 
     def test_render(self):
         from collective.cover.tests.utils import set_text_field
-        text = '<p>My document text...</p>'
-        obj = self.portal['my-document']
+
+        text = "<p>My document text...</p>"
+        obj = self.portal["my-document"]
         set_text_field(obj, text)  # handle Archetypes and Dexterity
         self.tile.populate_with_object(obj)
         rendered = self.tile()
@@ -52,11 +52,11 @@ class RichTextTileTestCase(TestTileMixin, unittest.TestCase):
 
     def test_seachable_text(self):
         searchable = queryAdapter(self.tile, ISearchableText)
-        text = '<p>My document text...</p>'
+        text = "<p>My document text...</p>"
         value = RichTextValue(
             raw=text,
-            mimeType='text/x-html-safe',
-            outputMimeType='text/x-html-safe',
+            mimeType="text/x-html-safe",
+            outputMimeType="text/x-html-safe",
         )
-        self.tile.data['text'] = value
-        self.assertEqual(searchable.SearchableText(), 'My document text...')
+        self.tile.data["text"] = value
+        self.assertEqual(searchable.SearchableText(), "My document text...")

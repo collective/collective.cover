@@ -22,14 +22,14 @@ import unittest
 
 dirname = os.path.dirname(__file__)
 files = os.listdir(dirname)
-tests = [f for f in files if f.startswith('test_') and f.endswith('.robot')]
+tests = [f for f in files if f.startswith("test_") and f.endswith(".robot")]
 
-noncritical = ['Expected Failure', 'Mandelbug']
+noncritical = ["Expected Failure", "Mandelbug"]
 
 # FIXME: under Plone 4.3 with plone.app.contenttypes installed
 #        https://github.com/collective/collective.cover/issues/615
 if not IS_PLONE_5 and DEXTERITY_ONLY:
-    noncritical.append('issue_615')
+    noncritical.append("issue_615")
 
 # FIXME: skip RobotFramework tests in Plone 5
 if IS_PLONE_5:
@@ -38,10 +38,13 @@ if IS_PLONE_5:
 
 def test_suite():
     suite = unittest.TestSuite()
-    suite.addTests([
-        layered(
-            robotsuite.RobotTestSuite(t, noncritical=noncritical),
-            layer=ROBOT_TESTING)
-        for t in tests
-    ])
+    suite.addTests(
+        [
+            layered(
+                robotsuite.RobotTestSuite(t, noncritical=noncritical),
+                layer=ROBOT_TESTING,
+            )
+            for t in tests
+        ]
+    )
     return suite

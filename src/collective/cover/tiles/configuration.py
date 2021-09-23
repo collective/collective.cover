@@ -15,11 +15,10 @@ from zope.schema.interfaces import ITextLine
 import six
 
 
-ANNOTATIONS_KEY_PREFIX = u'plone.tiles.configuration'
+ANNOTATIONS_KEY_PREFIX = u"plone.tiles.configuration"
 
 
 class ITilesConfigurationScreen(Interface):
-
     def _set_default_configuration():
         """Return a default configuration based on fields defined on the
         schema.
@@ -98,7 +97,7 @@ class TilesConfigurationScreen(object):
         self.request = request
         self.tile = tile
         self.annotations = IAnnotations(self.context)
-        self.key = '{0}.{1}'.format(ANNOTATIONS_KEY_PREFIX, tile.id)
+        self.key = "{0}.{1}".format(ANNOTATIONS_KEY_PREFIX, tile.id)
 
     def _set_default_configuration(self):
         defaults = {}
@@ -108,22 +107,22 @@ class TilesConfigurationScreen(object):
         for name, field in getFieldsInOrder(tile_type.schema):
             order = six.text_type(fields.index(name))
             # default configuration attributes for all fields
-            defaults[name] = {'order': order, 'visibility': u'on'}
-            if name == 'css_class':
+            defaults[name] = {"order": order, "visibility": u"on"}
+            if name == "css_class":
                 # css_class, set default
                 defaults[name] = field.default
             if ITextLine.providedBy(field):
                 # field is TextLine, we should add 'htmltag'
-                defaults[name]['htmltag'] = u'h2'
+                defaults[name]["htmltag"] = u"h2"
             elif INamedBlobImageField.providedBy(field):
                 # field is an image, we should add 'position' and 'imgsize'
-                defaults[name]['position'] = u'left'
-                defaults[name]['imgsize'] = u'mini 200:200'
+                defaults[name]["position"] = u"left"
+                defaults[name]["imgsize"] = u"mini 200:200"
             elif IInt.providedBy(field):
                 defaults[name][name] = field.default
             elif IDatetime.providedBy(field):
                 # field is Datetime, we should add 'format'
-                defaults[name]['format'] = 'datetime'
+                defaults[name]["format"] = "datetime"
 
         return defaults
 

@@ -5,41 +5,41 @@ from zope.interface import Interface
 
 
 class ICoverLayer(Interface):
-    """ A layer specific for this add-on product.
-    """
+    """A layer specific for this add-on product."""
 
 
 class ICover(model.Schema):
 
     """A composable page."""
 
-    model.load('models/cover.xml')
+    model.load("models/cover.xml")
 
 
 class IJSONSearch(Interface):
-    """ Returns a list of search results in JSON """
+    """Returns a list of search results in JSON"""
 
     def __init__(self, context):
-        """  Constructor """
+        """Constructor"""
 
     def getBreadcrumbs(self):
         """Get breadcrumbs"""
 
-    def getSearchResults(self, filter_portal_types, rooted, document_base_url, searchtext):
-        """ Returns the actual search results """
+    def getSearchResults(
+        self, filter_portal_types, rooted, document_base_url, searchtext
+    ):
+        """Returns the actual search results"""
 
 
 class ITileEditForm(Interface):
-    """Custom EditForm interface for a tile.
-    """
+    """Custom EditForm interface for a tile."""
 
 
 class IGridSystem(Interface):
     """Interface for classes that implement a grid system for collective
     cover."""
 
-    title = Attribute('The user-visible title for this grid.')
-    ncolums = Attribute('Number of colums in a grid.')
+    title = Attribute("The user-visible title for this grid.")
+    ncolums = Attribute("Number of colums in a grid.")
 
 
 class ISearchableText(Interface):

@@ -14,23 +14,23 @@ class ResourcesViewletTestCase(unittest.TestCase):
     layer = INTEGRATION_TESTING
 
     def setUp(self):
-        self.portal = self.layer['portal']
-        self.request = self.layer['request']
+        self.portal = self.layer["portal"]
+        self.request = self.layer["request"]
 
-        with api.env.adopt_roles(['Manager']):
+        with api.env.adopt_roles(["Manager"]):
             self.cover = api.content.create(
-                self.portal, 'collective.cover.content', 'c1')
+                self.portal, "collective.cover.content", "c1"
+            )
 
         self.viewlet = self.get_viewlet(self.cover)
 
-    def get_viewlet_manager(self, context, name='plone.htmlhead'):
+    def get_viewlet_manager(self, context, name="plone.htmlhead"):
         request = self.request
         view = BrowserView(context, request)
-        manager = getMultiAdapter(
-            (context, request, view), IViewletManager, name)
+        manager = getMultiAdapter((context, request, view), IViewletManager, name)
         return manager
 
-    def get_viewlet(self, context, name='collective.cover.resources'):
+    def get_viewlet(self, context, name="collective.cover.resources"):
         manager = self.get_viewlet_manager(context)
         manager.update()
         viewlet = [v for v in manager.viewlets if v.__name__ == name]
@@ -39,11 +39,9 @@ class ResourcesViewletTestCase(unittest.TestCase):
 
     def test_viewlet(self):
         html = etree.HTML(self.viewlet())
-        self.assertIn('defer', html.xpath('//script')[0].attrib)
+        self.assertIn("defer", html.xpath("//script")[0].attrib)
         # script name must include the hash of latest git commit
-        regexp = r'cover-[\da-f]{7}\.js$'
-        self.assertRegexpMatches(
-            html.xpath('//script')[0].attrib['src'], regexp)
-        regexp = r'cover-[\da-f]{7}\.css$'
-        self.assertRegexpMatches(
-            html.xpath('//link')[0].attrib['href'], regexp)
+        regexp = r"cover-[\da-f]{7}\.js$"
+        self.assertRegexpMatches(html.xpath("//script")[0].attrib["src"], regexp)
+        regexp = r"cover-[\da-f]{7}\.css$"
+        self.assertRegexpMatches(html.xpath("//link")[0].attrib["href"], regexp)

@@ -21,17 +21,17 @@ warnings.warn(__doc__, DeprecationWarning)
 class IPFGTile(IPersistentCoverTile):
 
     title = schema.TextLine(
-        title=_(u'Title'),
+        title=_(u"Title"),
         required=False,
     )
 
     description = schema.Text(
-        title=_(u'Description'),
+        title=_(u"Description"),
         required=False,
     )
 
     uuid = schema.TextLine(
-        title=_(u'UUID'),
+        title=_(u"UUID"),
         required=False,
         readonly=True,
     )
@@ -40,36 +40,35 @@ class IPFGTile(IPersistentCoverTile):
 @implementer(IPFGTile)
 class PFGTile(PersistentCoverTile):
 
-    index = ViewPageTemplateFile('templates/pfg.pt')
+    index = ViewPageTemplateFile("templates/pfg.pt")
 
     is_editable = True
     is_configurable = True
-    short_name = _(u'msg_short_name_pfg', default=u'FormGen')
+    short_name = _(u"msg_short_name_pfg", default=u"FormGen")
 
     def body(self):
-        body = ''
-        uuid = self.data.get('uuid', None)
+        body = ""
+        uuid = self.data.get("uuid", None)
         try:
             obj = uuid and uuidToObject(uuid)
             if obj is not None:
-                body = obj.restrictedTraverse('fg_embedded_view_p3')()
+                body = obj.restrictedTraverse("fg_embedded_view_p3")()
         except Unauthorized:
-            body = ''
+            body = ""
         return body
 
     def populate_with_object(self, obj):
         super(PFGTile, self).populate_with_object(obj)
 
         data = {
-            'title': safe_unicode(obj.Title()),
-            'description': safe_unicode(obj.Description()),
-            'uuid': IUUID(obj),
+            "title": safe_unicode(obj.Title()),
+            "description": safe_unicode(obj.Description()),
+            "uuid": IUUID(obj),
         }
 
         data_mgr = ITileDataManager(self)
         data_mgr.set(data)
 
     def accepted_ct(self):
-        """Return 'FormFolder' as the only content type accepted in the tile.
-        """
-        return ['FormFolder']
+        """Return 'FormFolder' as the only content type accepted in the tile."""
+        return ["FormFolder"]

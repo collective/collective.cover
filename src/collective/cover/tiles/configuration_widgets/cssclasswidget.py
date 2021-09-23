@@ -19,28 +19,24 @@ class CSSClassWidget(SelectWidget):
         """See z3c.form.interfaces.IWidget."""
         super(SelectWidget, self).update()
         widget.addFieldClass(self)
-        if isinstance(self.context.get('css_class'), six.text_type):
-            self.value = [self.context.get('css_class')]
+        if isinstance(self.context.get("css_class"), six.text_type):
+            self.value = [self.context.get("css_class")]
 
     def options(self):
         items = [
-            {
-                key: value
-                for key, value in six.iteritems(item)
-                if key != 'id'
-            }
+            {key: value for key, value in six.iteritems(item) if key != "id"}
             for item in self.items
-            if item['value'] != 'tile-default'
+            if item["value"] != "tile-default"
         ]
         return json.dumps(items)
 
     def selected(self):
-        return self.context.get('css_class', 'tile-default')
+        return self.context.get("css_class", "tile-default")
 
 
-@zope.component.adapter(zope.schema.interfaces.IChoice,
-                        zope.interface.Interface,
-                        interfaces.IFormLayer)
+@zope.component.adapter(
+    zope.schema.interfaces.IChoice, zope.interface.Interface, interfaces.IFormLayer
+)
 @zope.interface.implementer(interfaces.IFieldWidget)
 def CSSClassFieldWidget(field, source, request=None):
     """IFieldWidget factory for SelectWidget."""

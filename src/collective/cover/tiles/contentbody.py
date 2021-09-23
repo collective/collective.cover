@@ -14,7 +14,7 @@ from zope.interface import implementer
 class IContentBodyTile(IPersistentCoverTile):
 
     uuid = schema.TextLine(
-        title=_(u'UUID'),
+        title=_(u"UUID"),
         required=False,
         readonly=True,
     )
@@ -23,37 +23,37 @@ class IContentBodyTile(IPersistentCoverTile):
 @implementer(IContentBodyTile)
 class ContentBodyTile(PersistentCoverTile):
 
-    index = ViewPageTemplateFile('templates/contentbody.pt')
+    index = ViewPageTemplateFile("templates/contentbody.pt")
 
     is_editable = False
     is_configurable = False
-    short_name = _(u'msg_short_name_contentbody', default=u'Content Body')
+    short_name = _(u"msg_short_name_contentbody", default=u"Content Body")
 
     @property
     def is_empty(self):
-        return not self.data.get('uuid', False)
+        return not self.data.get("uuid", False)
 
     def body(self):
         """Return the body text of the related object."""
-        uuid = self.data.get('uuid', None)
+        uuid = self.data.get("uuid", None)
         try:
             obj = uuid and uuidToObject(uuid)
         except Unauthorized:
             return  # TODO: handle exception and show message on template
 
         if obj is None:
-            return ''  # obj was deleted
+            return ""  # obj was deleted
 
         try:
             return obj.getText()  # Archetypes
         except AttributeError:
-            return obj.text.output if obj.text is not None else ''  # Dexterity
+            return obj.text.output if obj.text is not None else ""  # Dexterity
 
     def populate_with_object(self, obj):
         super(ContentBodyTile, self).populate_with_object(obj)
 
         data = {
-            'uuid': IUUID(obj),
+            "uuid": IUUID(obj),
         }
 
         data_mgr = ITileDataManager(self)
@@ -63,10 +63,10 @@ class ContentBodyTile(PersistentCoverTile):
         """Return 'Document' and 'News Item' as the only content types
         accepted in the tile.
         """
-        return ['Document', 'News Item']
+        return ["Document", "News Item"]
 
     def item_url(self):
-        uuid = self.data.get('uuid', None)
+        uuid = self.data.get("uuid", None)
         try:
             obj = uuidToObject(uuid)
         except Unauthorized:

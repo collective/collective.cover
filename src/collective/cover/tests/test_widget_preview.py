@@ -17,27 +17,88 @@ class WidgetPreviewCase(unittest.TestCase):
     layer = INTEGRATION_TESTING
 
     def setUp(self):
-        self.portal = self.layer['portal']
-        self.request = self.layer['request']
+        self.portal = self.layer["portal"]
+        self.request = self.layer["request"]
 
     def test_layout_structure(self):
         portal = self.portal
-        ttool = api.portal.get_tool('portal_types')
-        setRoles(self.portal, TEST_USER_ID, ['Manager'])
-        fti = ttool.getTypeInfo('Document')
-        obj = fti.constructInstance(portal, 'test1')
+        ttool = api.portal.get_tool("portal_types")
+        setRoles(self.portal, TEST_USER_ID, ["Manager"])
+        fti = ttool.getTypeInfo("Document")
+        obj = fti.constructInstance(portal, "test1")
 
         widget = SelectPreviewWidget(self.portal.REQUEST)
         widget.context = obj
-        widget.id = 'test'
+        widget.id = "test"
 
         registry = getUtility(IRegistry)
         settings = registry.forInterface(ICoverSettings)
         layouts = settings.layouts
         sl = []
 
-        widget.simplify_layout(json.loads(layouts['Layout A']), sl)
+        widget.simplify_layout(json.loads(layouts["Layout A"]), sl)
 
-        simplified_layout = [{'type': 'row', 'children': [{'type': 'group', 'children': [{'tile-type': u'collective.cover.carousel', 'type': 'tile'}], 'size': 12}]}, {'type': 'row', 'children': [{'type': 'group', 'children': [{'tile-type': u'collective.cover.list', 'type': 'tile'}], 'size': 6}, {'type': 'group', 'children': [{'tile-type': u'collective.cover.collection', 'type': 'tile'}], 'size': 6}]}, {'type': 'row', 'children': [{'type': 'group', 'children': [{'tile-type': u'collective.cover.basic', 'type': 'tile'}], 'size': 4}, {'type': 'group', 'children': [{'tile-type': u'collective.cover.basic', 'type': 'tile'}], 'size': 4}, {'type': 'group', 'children': [{'tile-type': u'collective.cover.basic', 'type': 'tile'}], 'size': 4}]}]
+        simplified_layout = [
+            {
+                "type": "row",
+                "children": [
+                    {
+                        "type": "group",
+                        "children": [
+                            {"tile-type": u"collective.cover.carousel", "type": "tile"}
+                        ],
+                        "size": 12,
+                    }
+                ],
+            },
+            {
+                "type": "row",
+                "children": [
+                    {
+                        "type": "group",
+                        "children": [
+                            {"tile-type": u"collective.cover.list", "type": "tile"}
+                        ],
+                        "size": 6,
+                    },
+                    {
+                        "type": "group",
+                        "children": [
+                            {
+                                "tile-type": u"collective.cover.collection",
+                                "type": "tile",
+                            }
+                        ],
+                        "size": 6,
+                    },
+                ],
+            },
+            {
+                "type": "row",
+                "children": [
+                    {
+                        "type": "group",
+                        "children": [
+                            {"tile-type": u"collective.cover.basic", "type": "tile"}
+                        ],
+                        "size": 4,
+                    },
+                    {
+                        "type": "group",
+                        "children": [
+                            {"tile-type": u"collective.cover.basic", "type": "tile"}
+                        ],
+                        "size": 4,
+                    },
+                    {
+                        "type": "group",
+                        "children": [
+                            {"tile-type": u"collective.cover.basic", "type": "tile"}
+                        ],
+                        "size": 4,
+                    },
+                ],
+            },
+        ]
 
         self.assertEqual(sl, simplified_layout)

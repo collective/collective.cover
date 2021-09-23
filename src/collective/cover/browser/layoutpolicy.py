@@ -13,4 +13,4 @@ class LayoutPolicy(base.LayoutPolicy):
         body_class = super(LayoutPolicy, self).bodyClass(template, view)
         util = getUtility(IIDNormalizer)
         layout_id = util.normalize(self.context.template_layout)
-        return 'cover-layout-{0} {1}'.format(layout_id, body_class)
+        return "cover-layout-{0} {1}".format(layout_id, body_class)
