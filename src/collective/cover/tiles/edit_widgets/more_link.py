@@ -18,7 +18,7 @@ class MoreLinkWidget(TextWidget):
         if not self.value:
             return None
 
-        pc = getToolByName(self.form.context, 'portal_catalog')
+        pc = getToolByName(self.form.context, "portal_catalog")
         brainz = pc(UID=self.value)
         if len(brainz):
             return brainz[0].Title
@@ -26,9 +26,9 @@ class MoreLinkWidget(TextWidget):
         return None
 
 
-@zope.component.adapter(zope.schema.interfaces.ITextLine,
-                        zope.interface.Interface,
-                        interfaces.IFormLayer)
+@zope.component.adapter(
+    zope.schema.interfaces.ITextLine, zope.interface.Interface, interfaces.IFormLayer
+)
 @zope.interface.implementer(interfaces.IFieldWidget)
 def MoreLinkFieldWidget(field, source, request=None):
     """IFieldWidget factory for MoreLinkWidget."""

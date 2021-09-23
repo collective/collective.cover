@@ -27,18 +27,18 @@ import unittest
 
 
 class BasicTileTestCase(TestTileMixin, unittest.TestCase):
-
     def setUp(self):
         super(BasicTileTestCase, self).setUp()
         self.tile = BasicTile(self.cover, self.request)
-        self.tile.__name__ = u'collective.cover.basic'
-        self.tile.id = u'test'
+        self.tile.__name__ = u"collective.cover.basic"
+        self.tile.id = u"test"
 
     @property
     def get_tile(self):
         """Return a new instance of the tile to avoid data caching."""
         return self.cover.restrictedTraverse(
-            '@@{0}/{1}'.format(self.tile.__name__, self.tile.id))
+            "@@{0}/{1}".format(self.tile.__name__, self.tile.id)
+        )
 
     @unittest.expectedFailure  # FIXME: raises BrokenImplementation
     def test_interface(self):
@@ -58,13 +58,13 @@ class BasicTileTestCase(TestTileMixin, unittest.TestCase):
         self.assertTrue(self.tile.is_empty())
 
     def test_populated(self):
-        obj = self.portal['my-news-item']
+        obj = self.portal["my-news-item"]
         self.tile.populate_with_object(obj)
         self.assertFalse(self.tile.is_empty())
 
     def test_populated_with_private_content(self):
-        with api.env.adopt_roles(['Manager']):
-            obj = api.content.create(self.portal, 'Collection', 'foo')
+        with api.env.adopt_roles(["Manager"]):
+            obj = api.content.create(self.portal, "Collection", "foo")
         self.tile.populate_with_object(obj)
         self.assertFalse(self.tile.is_empty())
 
@@ -75,7 +75,7 @@ class BasicTileTestCase(TestTileMixin, unittest.TestCase):
 
     def test_manually_populated(self):
         # simulate user populating tile by editing it (no drag-and-drop)
-        data = dict(title='foo')
+        data = dict(title="foo")
         data_mgr = ITileDataManager(self.tile)
         data_mgr.set(data)
         self.assertFalse(self.tile.is_empty())
@@ -89,50 +89,52 @@ class BasicTileTestCase(TestTileMixin, unittest.TestCase):
         self.assertIsNone(self.tile.Date())
 
     def test_date_on_populated_tile(self):
-        obj = self.portal['my-news-item']
+        obj = self.portal["my-news-item"]
         self.tile.populate_with_object(obj)
         self.assertEqual(obj.Date(), self.tile.Date())
 
     def test_populate_with_object(self):
-        self.tile.populate_with_object(self.portal['my-news-item'])
-        self.assertEqual('Test news item', self.tile.data['title'])
-        self.assertEqual('This news item was created for testing purposes',
-                         self.tile.data['description'])
+        self.tile.populate_with_object(self.portal["my-news-item"])
+        self.assertEqual("Test news item", self.tile.data["title"])
+        self.assertEqual(
+            "This news item was created for testing purposes",
+            self.tile.data["description"],
+        )
 
     def test_populate_with_object_text(self):
         """We must store unicode always on schema.TextLine and schema.Text
         fields to avoid UnicodeDecodeError.
         """
-        title = u'παν γράμμα'
-        description = u'El veloz murciélago hindú comía feliz cardillo y kiwi'
-        obj = self.portal['my-news-item']
+        title = u"παν γράμμα"
+        description = u"El veloz murciélago hindú comía feliz cardillo y kiwi"
+        obj = self.portal["my-news-item"]
         obj.setTitle(title)
         obj.setDescription(description)
         obj.reindexObject()
         self.tile.populate_with_object(obj)
-        self.assertEqual(title, self.tile.data['title'])
-        self.assertEqual(description, self.tile.data['description'])
-        self.assertIsInstance(self.tile.data.get('title'), six.text_type)
-        self.assertIsInstance(self.tile.data.get('description'), six.text_type)
+        self.assertEqual(title, self.tile.data["title"])
+        self.assertEqual(description, self.tile.data["description"])
+        self.assertIsInstance(self.tile.data.get("title"), six.text_type)
+        self.assertIsInstance(self.tile.data.get("description"), six.text_type)
 
     def test_populate_with_object_string(self):
         """This test complements test_populate_with_object_unicode
         using strings instead of unicode objects.
         """
-        title = 'Pangram'
-        description = 'The quick brown fox jumps over the lazy dog'
-        obj = self.portal['my-news-item']
+        title = "Pangram"
+        description = "The quick brown fox jumps over the lazy dog"
+        obj = self.portal["my-news-item"]
         obj.setTitle(title)
         obj.setDescription(description)
         obj.reindexObject()
         self.tile.populate_with_object(obj)
+        self.assertEqual(six.text_type(title, "utf-8"), self.tile.data.get("title"))
         self.assertEqual(
-            six.text_type(title, 'utf-8'), self.tile.data.get('title'))
-        self.assertEqual(
-            six.text_type(description, 'utf-8'), self.tile.data.get('description'))
+            six.text_type(description, "utf-8"), self.tile.data.get("description")
+        )
 
     def test_render_empty(self):
-        msg = 'Please drag&amp;drop some content here to populate the tile.'
+        msg = "Please drag&amp;drop some content here to populate the tile."
 
         self.tile.is_compose_mode = Mock(return_value=True)
         self.assertIn(msg, self.tile())
@@ -142,25 +144,25 @@ class BasicTileTestCase(TestTileMixin, unittest.TestCase):
 
     def test_render_deleted_object(self):
         # We will use an image to test it
-        obj = self.portal['my-image']
+        obj = self.portal["my-image"]
         self.tile.populate_with_object(obj)
 
         # image is shown normally
         rendered = self.tile()
-        self.assertIn('@@images', rendered)
+        self.assertIn("@@images", rendered)
 
-        with api.env.adopt_roles(['Manager']):
+        with api.env.adopt_roles(["Manager"]):
             api.content.delete(obj)
 
         tile = self.get_tile  # avoid data caching on tile
         rendered = tile()
 
         # image should still be shown since it was copied to the tile
-        self.assertIn('@@images', rendered)
+        self.assertIn("@@images", rendered)
 
     def test_render(self):
-        obj = self.portal['my-news-item']
-        obj.setSubject(['subject1', 'subject2'])
+        obj = self.portal["my-news-item"]
+        obj.setSubject(["subject1", "subject2"])
         obj.effective_date = DateTime()
         obj.reindexObject()
 
@@ -168,43 +170,44 @@ class BasicTileTestCase(TestTileMixin, unittest.TestCase):
         rendered = self.tile()
 
         # the title and a link to the original object must be there
-        self.assertIn('Test news item', rendered)
+        self.assertIn("Test news item", rendered)
         self.assertIn(obj.absolute_url(), rendered)
 
         # the description must be there
         self.assertIn(
-            '<p>This news item was created for testing purposes</p>', rendered)
+            "<p>This news item was created for testing purposes</p>", rendered
+        )
 
         html = etree.HTML(self.tile())
-        img = html.find('*//img')
+        img = html.find("*//img")
         self.assertIsNotNone(img)
-        self.assertIn('alt', img.attrib)
-        self.assertEqual(img.attrib['alt'], obj.Description())
+        self.assertIn("alt", img.attrib)
+        self.assertEqual(img.attrib["alt"], obj.Description())
 
         # set alternate text
-        alt_text = u'Murciélago hindú'
-        self.tile.data['alt_text'] = alt_text
+        alt_text = u"Murciélago hindú"
+        self.tile.data["alt_text"] = alt_text
         html = etree.HTML(self.tile())
-        img = html.find('*//img')
+        img = html.find("*//img")
         self.assertIsNotNone(img)
-        self.assertIn('alt', img.attrib)
-        self.assertEqual(img.attrib['alt'], alt_text)
+        self.assertIn("alt", img.attrib)
+        self.assertEqual(img.attrib["alt"], alt_text)
 
         # the localized time must be there
         date = api.portal.get_localized_time(obj.Date(), long_format=True)
         self.assertIn(date, rendered)
 
         # the tags must be there
-        self.assertIn('subject1', rendered)
-        self.assertIn('subject2', rendered)
+        self.assertIn("subject1", rendered)
+        self.assertIn("subject2", rendered)
 
         # the image is there and the alt attribute is set
-        self.assertIn('<img ', rendered)
+        self.assertIn("<img ", rendered)
         self.assertIn('alt="This news item was created for testing purposes"', rendered)
 
     def test_populate_with_file(self):
-        obj = self.portal['my-file']
-        obj.setSubject(['subject1', 'subject2'])
+        obj = self.portal["my-file"]
+        obj.setSubject(["subject1", "subject2"])
         obj.effective_date = DateTime()
         obj.reindexObject()
 
@@ -212,25 +215,25 @@ class BasicTileTestCase(TestTileMixin, unittest.TestCase):
         rendered = self.tile()
 
         # there is no image...
-        self.assertNotIn('test/@@images', rendered)
+        self.assertNotIn("test/@@images", rendered)
 
     def test_basic_tile_image(self):
-        obj = self.portal['my-news-item']
+        obj = self.portal["my-news-item"]
         self.tile.populate_with_object(obj)
         rendered = self.tile()
-        self.assertIn('test/@@images', rendered)
+        self.assertIn("test/@@images", rendered)
 
     def test_double_dragging_content_with_image(self):
         # https://github.com/collective/collective.cover/issues/449
-        obj = self.portal['my-image']
+        obj = self.portal["my-image"]
         data_mgr = ITileDataManager(self.tile)
         self.tile.populate_with_object(obj)
-        self.assertIn('image_mtime', data_mgr.get())
-        self.assertTrue(float(data_mgr.get()['image_mtime']))
+        self.assertIn("image_mtime", data_mgr.get())
+        self.assertTrue(float(data_mgr.get()["image_mtime"]))
         # populate tile for second time with same object
         self.tile.populate_with_object(obj)
-        self.assertIn('image_mtime', data_mgr.get())
-        self.assertTrue(float(data_mgr.get()['image_mtime']))
+        self.assertIn("image_mtime", data_mgr.get())
+        self.assertTrue(float(data_mgr.get()["image_mtime"]))
         # tile is rendered with no issues
         rendered = self.tile()
         self.assertIn('<html xmlns="http://www.w3.org/1999/xhtml">', rendered)
@@ -248,100 +251,108 @@ class BasicTileTestCase(TestTileMixin, unittest.TestCase):
 
         settings = registry.forInterface(ICachePurgingSettings)
         settings.enabled = True
-        settings.cachingProxies = ('http://localhost:1234',)
+        settings.cachingProxies = ("http://localhost:1234",)
 
-        obj = self.portal['my-image']
+        obj = self.portal["my-image"]
         data = self.tile.data
-        scales = api.content.get_view(u'images', obj, self.request)
-        self.tile.data['image'] = NamedBlobImage(str(scales.scale('image').data))
+        scales = api.content.get_view(u"images", obj, self.request)
+        self.tile.data["image"] = NamedBlobImage(str(scales.scale("image").data))
         data_mgr = ITileDataManager(self.tile)
         data_mgr.set(data)
 
         self.assertEqual(
-            set([
-                '/c1/@@collective.cover.basic/test',
-                '/c1/@@collective.cover.basic/test/@@images/image',
-                '/c1/@@collective.cover.basic/test/@@images/icon',
-                '/c1/@@collective.cover.basic/test/@@images/mini',
-                '/c1/@@collective.cover.basic/test/@@images/large',
-                '/c1/@@collective.cover.basic/test/@@images/listing',
-                '/c1/@@collective.cover.basic/test/@@images/thumb',
-                '/c1/@@collective.cover.basic/test/@@images/preview',
-                '/c1/@@collective.cover.basic/test/@@images/tile']),
-            IAnnotations(request)['plone.cachepurging.urls'])
+            set(
+                [
+                    "/c1/@@collective.cover.basic/test",
+                    "/c1/@@collective.cover.basic/test/@@images/image",
+                    "/c1/@@collective.cover.basic/test/@@images/icon",
+                    "/c1/@@collective.cover.basic/test/@@images/mini",
+                    "/c1/@@collective.cover.basic/test/@@images/large",
+                    "/c1/@@collective.cover.basic/test/@@images/listing",
+                    "/c1/@@collective.cover.basic/test/@@images/thumb",
+                    "/c1/@@collective.cover.basic/test/@@images/preview",
+                    "/c1/@@collective.cover.basic/test/@@images/tile",
+                ]
+            ),
+            IAnnotations(request)["plone.cachepurging.urls"],
+        )
 
     def test_show_start_date_on_events(self):
-        event = self.portal['my-event']
+        event = self.portal["my-event"]
         self.tile.populate_with_object(event)
         rendered = self.tile()
         start_date = api.portal.get_localized_time(today, long_format=True)
         self.assertIn(start_date, rendered)
 
     def test_localized_time_is_rendered(self):
-        event = self.portal['my-event']
+        event = self.portal["my-event"]
         self.tile.populate_with_object(event)
         rendered = self.tile()
         expected = api.portal.get_localized_time(
-            today, long_format=True, time_only=False)
+            today, long_format=True, time_only=False
+        )
         self.assertIn(expected, rendered)  # u'Jul 15, 2015 01:23 PM'
 
         tile_conf = self.tile.get_tile_configuration()
-        tile_conf['title']['format'] = 'dateonly'
+        tile_conf["title"]["format"] = "dateonly"
         self.tile.set_tile_configuration(tile_conf)
         rendered = self.tile()
         expected = api.portal.get_localized_time(
-            today, long_format=False, time_only=False)
+            today, long_format=False, time_only=False
+        )
         self.assertIn(expected, rendered)  # u'Jul 15, 2015
 
         tile_conf = self.tile.get_tile_configuration()
-        tile_conf['title']['format'] = 'timeonly'
+        tile_conf["title"]["format"] = "timeonly"
         self.tile.set_tile_configuration(tile_conf)
         rendered = self.tile()
         expected = api.portal.get_localized_time(
-            today, long_format=False, time_only=True)
+            today, long_format=False, time_only=True
+        )
         self.assertIn(expected, rendered)  # u'01:23 PM'
 
     def test_seachable_text(self):
         from collective.cover.interfaces import ISearchableText
         from zope.component import queryAdapter
+
         searchable = queryAdapter(self.tile, ISearchableText)
-        self.tile.data['title'] = 'custom title'
-        self.tile.data['description'] = 'custom description'
-        self.assertEqual(searchable.SearchableText(), 'custom title custom description')
+        self.tile.data["title"] = "custom title"
+        self.tile.data["description"] = "custom description"
+        self.assertEqual(searchable.SearchableText(), "custom title custom description")
 
     def test_getURL(self):
-        obj = self.portal['my-news-item']
+        obj = self.portal["my-news-item"]
         self.tile.populate_with_object(obj)
-        expected = 'http://nohost/plone/my-news-item'
+        expected = "http://nohost/plone/my-news-item"
         self.assertEqual(self.tile.getURL(), expected)
 
     @unittest.expectedFailure
     def test_getURL_view_action(self):
         # on some content types we should add '/view' to the URL
-        obj = self.portal['my-image']
+        obj = self.portal["my-image"]
         self.tile.populate_with_object(obj)
-        expected = 'http://nohost/plone/my-image/view'
+        expected = "http://nohost/plone/my-image/view"
         self.assertEqual(self.tile.getURL(), expected)
 
     def test_getURL_render(self):
         # the URL must be rendered normally
-        obj = self.portal['my-news-item']
+        obj = self.portal["my-news-item"]
         self.tile.populate_with_object(obj)
         html = etree.HTML(self.tile())
-        a = html.find('*//a')
-        expected = 'http://nohost/plone/my-news-item'
-        self.assertEqual(a.attrib['href'], expected)
+        a = html.find("*//a")
+        expected = "http://nohost/plone/my-news-item"
+        self.assertEqual(a.attrib["href"], expected)
 
     def test_getURL_render_edited(self):
         # the alternate URL must be rendered
-        obj = self.portal['my-news-item']
+        obj = self.portal["my-news-item"]
         self.tile.populate_with_object(obj)
-        remote_url = 'http://example.org/'
+        remote_url = "http://example.org/"
         data_mgr = ITileDataManager(self.tile)
         data = data_mgr.get()
-        data['remote_url'] = remote_url
+        data["remote_url"] = remote_url
         data_mgr.set(data)
         tile = self.get_tile
         html = etree.HTML(tile())
-        a = html.find('*//a')
-        self.assertEqual(a.attrib['href'], remote_url)
+        a = html.find("*//a")
+        self.assertEqual(a.attrib["href"], remote_url)

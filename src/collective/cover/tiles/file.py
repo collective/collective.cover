@@ -28,11 +28,11 @@ HTML = """
 
 def get_download_html(url, portal_url, icon, mime_type, size):
     if size < 1024:
-        size_str = '{0} bytes'.format(size)
+        size_str = "{0} bytes".format(size)
     elif 1024 <= size < 1048576:
-        size_str = '{0} kB ({1} bytes)'.format(size // 1024, size)
+        size_str = "{0} kB ({1} bytes)".format(size // 1024, size)
     else:
-        size_str = '{0} MB ({1} bytes)'.format(size // 1048576, size)
+        size_str = "{0} MB ({1} bytes)".format(size // 1048576, size)
 
     return HTML.format(url, portal_url, icon, mime_type, size_str)
 
@@ -43,7 +43,7 @@ def lookupMime(obj, name):
     It's based on a simplified version of the `lookupMime` script
     included in Products.Archetypes `archetypes` skin.
     """
-    mtr = api.portal.get_tool('mimetypes_registry')
+    mtr = api.portal.get_tool("mimetypes_registry")
     try:
         mimetypes = mtr.lookup(name)
     except MimeTypeException:
@@ -57,23 +57,23 @@ def lookupMime(obj, name):
 class IFileTile(IPersistentCoverTile):
 
     title = schema.TextLine(
-        title=_(u'Title'),
+        title=_(u"Title"),
         required=False,
     )
 
     description = schema.Text(
-        title=_(u'Description'),
+        title=_(u"Description"),
         required=False,
     )
 
     download = schema.TextLine(
-        title=_(u'Download link'),
+        title=_(u"Download link"),
         required=False,
         readonly=True,  # this field can not be edited or configured
     )
 
     uuid = schema.TextLine(
-        title=_(u'UUID'),
+        title=_(u"UUID"),
         required=False,
         readonly=True,
     )
@@ -82,12 +82,12 @@ class IFileTile(IPersistentCoverTile):
 @implementer(IFileTile)
 class FileTile(PersistentCoverTile):
 
-    index = ViewPageTemplateFile('templates/file.pt')
+    index = ViewPageTemplateFile("templates/file.pt")
 
     is_configurable = False  # TODO: make the tile configurable
     is_editable = True
     is_droppable = True
-    short_name = _(u'msg_short_name_file', default=u'File')
+    short_name = _(u"msg_short_name_file", default=u"File")
 
     def get_content_type(self, obj):
         """Return MIME type for both, Archetypes and Dexterity items."""
@@ -103,7 +103,7 @@ class FileTile(PersistentCoverTile):
         included in Products.Archetypes `archetypes` skin.
         Should be probably included in plone.app.contenttypes.
         """
-        mtr = api.portal.get_tool('mimetypes_registry')
+        mtr = api.portal.get_tool("mimetypes_registry")
         content_type = obj.file.contentType
 
         try:
@@ -118,9 +118,8 @@ class FileTile(PersistentCoverTile):
         return None
 
     def download_widget(self):
-        """ Returns a download link for the file associated with the tile.
-        """
-        obj = uuidToObject(self.data['uuid'])
+        """Returns a download link for the file associated with the tile."""
+        obj = uuidToObject(self.data["uuid"])
         if obj:
             url = obj.absolute_url()
             portal_url = obj.portal_url()
@@ -140,7 +139,11 @@ class FileTile(PersistentCoverTile):
             return get_download_html(url, portal_url, icon, mime, size)
 
     def is_empty(self):
-        return not (self.data.get('title', None) or self.data.get('description', None) or self.data.get('uuid', None))
+        return not (
+            self.data.get("title", None)
+            or self.data.get("description", None)
+            or self.data.get("uuid", None)
+        )
 
     def populate_with_object(self, obj):
         super(FileTile, self).populate_with_object(obj)  # check permissions
@@ -148,14 +151,14 @@ class FileTile(PersistentCoverTile):
         if obj.portal_type not in self.accepted_ct():
             return
         data = {
-            'title': safe_unicode(obj.Title()),
-            'description': safe_unicode(obj.Description()),
-            'download': True,
-            'uuid': IUUID(obj),
+            "title": safe_unicode(obj.Title()),
+            "description": safe_unicode(obj.Description()),
+            "download": True,
+            "uuid": IUUID(obj),
         }
         data_mgr = ITileDataManager(self)
         data_mgr.set(data)
 
     def accepted_ct(self):
         """Return 'File' as the only content type accepted in the tile."""
-        return ['File']
+        return ["File"]

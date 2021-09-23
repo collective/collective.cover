@@ -21,7 +21,7 @@ class Compose(BrowserView):
 
     """Compose Tab."""
 
-    index = ViewPageTemplateFile('templates/compose.pt')
+    index = ViewPageTemplateFile("templates/compose.pt")
 
     def __call__(self):
         # lock the object when someone is editing it
@@ -34,21 +34,21 @@ class UpdateTileContent(BrowserView):
     """Helper browser view to update the content of a tile."""
 
     def setup(self):
-        self.tile_type = self.request.form.get('tile-type')
-        self.tile_id = self.request.form.get('tile-id')
-        self.uuid = self.request.form.get('uuid')
+        self.tile_type = self.request.form.get("tile-type")
+        self.tile_id = self.request.form.get("tile-id")
+        self.uuid = self.request.form.get("uuid")
 
     def render(self):
         """Render a tile after populating it with an object."""
         if not all((self.tile_type, self.tile_id, self.uuid)):
-            raise BadRequest('Invalid parameters')
+            raise BadRequest("Invalid parameters")
 
-        catalog = api.portal.get_tool('portal_catalog')
+        catalog = api.portal.get_tool("portal_catalog")
         results = catalog(UID=self.uuid)
         assert len(results) in (0, 1)  # nosec
         if results:
             obj = results[0].getObject()
-            path = '{0}/{1}'.format(self.tile_type, self.tile_id)
+            path = "{0}/{1}".format(self.tile_type, self.tile_id)
             tile = self.context.restrictedTraverse(path)
             tile.populate_with_object(obj)
             # reinstantiate tile to update rendering with new data
@@ -60,7 +60,7 @@ class UpdateTileContent(BrowserView):
         # avoid caching the response on intermediate proxies
         # as this is a GET request, a misconfiguration could
         # result on outdated content being rendered
-        self.request.response.setHeader('Cache-Control', 'no-cache')
+        self.request.response.setHeader("Cache-Control", "no-cache")
         return self.render()
 
 
@@ -73,7 +73,7 @@ class MoveTileContent(BrowserView):
         # copy data
         origin_dmgr = ITileDataManager(origin_tile)
         origin_data = origin_dmgr.get()
-        if origin_data.get('uuids', None) is None:
+        if origin_data.get("uuids", None) is None:
             return
         target_dmgr = ITileDataManager(target_tile)
         target_dmgr.set(origin_dmgr.get())
@@ -92,27 +92,31 @@ class MoveTileContent(BrowserView):
             target_dmgr = ITileDataManager(target_tile)
             target_data = target_dmgr.get()
             for k, v in iteritems(origin_data):
-                if k in target_data and not k.startswith('uuid') and v is not None:
+                if k in target_data and not k.startswith("uuid") and v is not None:
                     target_data[k] = v
             target_dmgr.set(target_data)
             origin_dmgr.delete()
 
     def setup(self):
-        self.origin_type = self.request.form.get('origin-type')
-        self.origin_id = self.request.form.get('origin-id')
-        self.target_type = self.request.form.get('target-type')
-        self.target_id = self.request.form.get('target-id')
+        self.origin_type = self.request.form.get("origin-type")
+        self.origin_id = self.request.form.get("origin-id")
+        self.target_type = self.request.form.get("target-type")
+        self.target_id = self.request.form.get("target-id")
 
     def render(self):
         """Render a tile after populating it with an object."""
-        if not all((self.origin_type, self.origin_id, self.target_type, self.target_id)):
-            raise BadRequest('Invalid parameters')
+        if not all(
+            (self.origin_type, self.origin_id, self.target_type, self.target_id)
+        ):
+            raise BadRequest("Invalid parameters")
 
         origin_tile = self.context.restrictedTraverse(
-            '{0}/{1}'.format(self.origin_type, self.origin_id))
+            "{0}/{1}".format(self.origin_type, self.origin_id)
+        )
         target_tile = self.context.restrictedTraverse(
-            '{0}/{1}'.format(self.target_type, self.target_id))
-        uuid = self.request.form.get('uuid')
+            "{0}/{1}".format(self.target_type, self.target_id)
+        )
+        uuid = self.request.form.get("uuid")
         obj = uuidToObject(uuid)
         if obj is None:
             self._move_all_content(origin_tile, target_tile)
@@ -130,15 +134,15 @@ class UpdateListTileContent(BrowserView):
     """Helper browser view to update the content of a list based tile."""
 
     def setup(self):
-        self.tile_type = self.request.form.get('tile-type')
-        self.tile_id = self.request.form.get('tile-id')
-        self.uuids = self.request.form.get('uuids[]', [])
+        self.tile_type = self.request.form.get("tile-type")
+        self.tile_id = self.request.form.get("tile-id")
+        self.uuids = self.request.form.get("uuids[]", [])
         if type(self.uuids) is not list:
             self.uuids = [self.uuids]
 
     def render(self):
         if not all((self.tile_type, self.tile_id, self.uuids)):
-            return u''
+            return u""
 
         tile = self.context.restrictedTraverse(self.tile_type)
         tile_instance = tile[self.tile_id]
@@ -155,16 +159,16 @@ class RemoveItemFromListTile(BrowserView):
     """Helper browser view to remove an object from a list tile."""
 
     def setup(self):
-        self.tile_type = self.request.form.get('tile-type')
-        self.tile_id = self.request.form.get('tile-id')
-        self.uuid = self.request.form.get('uuid')
+        self.tile_type = self.request.form.get("tile-type")
+        self.tile_id = self.request.form.get("tile-id")
+        self.uuid = self.request.form.get("uuid")
 
     def render(self):
         """Render a tile after removing an object from it."""
         if not all((self.tile_type, self.tile_id, self.uuid)):
-            raise BadRequest('Invalid parameters')
+            raise BadRequest("Invalid parameters")
 
-        path = '{0}/{1}'.format(self.tile_type, self.tile_id)
+        path = "{0}/{1}".format(self.tile_type, self.tile_id)
         tile = self.context.restrictedTraverse(path)
         if IListTile.providedBy(tile):
             tile.remove_item(self.uuid)

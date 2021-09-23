@@ -40,9 +40,8 @@ ORIGINAL_POPULATE_WITH_OBJECT = BasicTile.populate_with_object
 
 
 def apply_patch_populate_with_object():
-
     def patched_populate_with_object(self, obj):
-        raise Exception('Testing Server Error.')
+        raise Exception("Testing Server Error.")
 
     BasicTile.populate_with_object = patched_populate_with_object
 

@@ -23,12 +23,12 @@ class ICarouselTile(IListTile):
     """A carousel based on the Galleria JS image gallery framework."""
 
     autoplay = schema.Bool(
-        title=_(u'Auto play'),
+        title=_(u"Auto play"),
         required=False,
         default=True,
     )
 
-    form.no_omit(ITileEditForm, 'uuids')
+    form.no_omit(ITileEditForm, "uuids")
     form.widget(uuids=TextLinesSortableFieldWidget)
 
 
@@ -37,10 +37,10 @@ class CarouselTile(ListTile):
 
     """A carousel based on the Galleria JS image gallery framework."""
 
-    index = ViewPageTemplateFile('templates/carousel.pt')
+    index = ViewPageTemplateFile("templates/carousel.pt")
     is_configurable = True
     is_editable = True
-    short_name = _(u'msg_short_name_carousel', default=u'Carousel')
+    short_name = _(u"msg_short_name_carousel", default=u"Carousel")
 
     def populate_with_object(self, obj):
         """Add an object to the carousel. This method will append new
@@ -52,7 +52,7 @@ class CarouselTile(ListTile):
         :type uuids: List of strings
         """
         super(ListTile, self).populate_with_object(obj)  # check permission
-        if obj.portal_type == 'Collection':
+        if obj.portal_type == "Collection":
             uuids = [i.UID for i in obj.queryCatalog()]
         else:
             uuids = [self.get_uuid(obj)]
@@ -62,9 +62,9 @@ class CarouselTile(ListTile):
             self.populate_with_uuids(uuids)
 
     def autoplay(self):
-        if self.data['autoplay'] is None:
+        if self.data["autoplay"] is None:
             return True  # default value
-        return self.data['autoplay']
+        return self.data["autoplay"]
 
     def get_title(self, item):
         """Get the title of the item, or the custom title if set.
@@ -79,11 +79,11 @@ class CarouselTile(ListTile):
         uuid = self.get_uuid(item)
         data_mgr = ITileDataManager(self)
         data = data_mgr.get()
-        uuids = data['uuids']
+        uuids = data["uuids"]
         if uuid in uuids:
-            if uuids[uuid].get('custom_title', u''):
+            if uuids[uuid].get("custom_title", u""):
                 # If we had a custom title set, then get that
-                title = uuids[uuid].get('custom_title')
+                title = uuids[uuid].get("custom_title")
         return title
 
     def get_description(self, item):
@@ -100,11 +100,11 @@ class CarouselTile(ListTile):
         uuid = self.get_uuid(item)
         data_mgr = ITileDataManager(self)
         data = data_mgr.get()
-        uuids = data['uuids']
+        uuids = data["uuids"]
         if uuid in uuids:
-            if uuids[uuid].get('custom_description', u''):
+            if uuids[uuid].get("custom_description", u""):
                 # If we had a custom description set, then get that
-                description = uuids[uuid].get('custom_description')
+                description = uuids[uuid].get("custom_description")
         return description
 
     def get_url(self, item):
@@ -118,15 +118,15 @@ class CarouselTile(ListTile):
         # First we get the url for the item itself
         url = item.absolute_url()
         if item.portal_type in get_types_use_view_action_in_listings():
-            url += '/view'
+            url += "/view"
         uuid = self.get_uuid(item)
         data_mgr = ITileDataManager(self)
         data = data_mgr.get()
-        uuids = data['uuids']
+        uuids = data["uuids"]
         if uuid in uuids:
-            if uuids[uuid].get('custom_url', u''):
+            if uuids[uuid].get("custom_url", u""):
                 # If we had a custom url set, then get that
-                url = uuids[uuid].get('custom_url')
+                url = uuids[uuid].get("custom_url")
         return url
 
     @property
@@ -138,7 +138,7 @@ class CarouselTile(ListTile):
         # exclude from calculation any item with no image
         ratios = [t.height / t.width for t in thumbs if t]
         if not ratios:
-            return '1'
+            return "1"
         return str(max(ratios))
 
 
@@ -159,11 +159,11 @@ class UUIDSFieldDataConverter(BaseDataConverter):
         # A new carousel tile has no items, populate_with_uuids has not been
         # called yet, so incoming uuids is not an empty dict() but None
         if value is None:
-            return ''
+            return ""
 
         ordered_uuids = [(k, v) for k, v in value.items()]
-        ordered_uuids.sort(key=lambda x: x[1]['order'])
-        return '\r\n'.join([i[0] for i in ordered_uuids])
+        ordered_uuids.sort(key=lambda x: x[1]["order"])
+        return "\r\n".join([i[0] for i in ordered_uuids])
 
     def toFieldValue(self, value):
         """Pass the value extracted from the widget to the internal

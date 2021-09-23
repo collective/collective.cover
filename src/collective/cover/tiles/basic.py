@@ -20,61 +20,61 @@ from zope.interface import implementer
 class IBasicTile(IPersistentCoverTile):
 
     title = schema.TextLine(
-        title=_(u'Title'),
+        title=_(u"Title"),
         required=False,
     )
 
     description = schema.Text(
-        title=_(u'Description'),
+        title=_(u"Description"),
         required=False,
     )
 
-    form.omitted(IDefaultConfigureForm, 'remote_url')
+    form.omitted(IDefaultConfigureForm, "remote_url")
     remote_url = schema.URI(
-        title=_(u'label_remote_url', default=u'URL'),
+        title=_(u"label_remote_url", default=u"URL"),
         description=_(
-            u'help_remote_url',
-            default=u'Leave this field empty to use the URL of the referenced content. '
-                    u'Enter a URL to override it (use absolute links only).'),
+            u"help_remote_url",
+            default=u"Leave this field empty to use the URL of the referenced content. "
+            u"Enter a URL to override it (use absolute links only).",
+        ),
         required=False,
     )
 
     image = NamedImage(
-        title=_(u'Image'),
+        title=_(u"Image"),
         required=False,
     )
 
-    form.omitted(IDefaultConfigureForm, 'alt_text')
+    form.omitted(IDefaultConfigureForm, "alt_text")
     alt_text = schema.TextLine(
-        title=_(
-            u'label_alt_text',
-            default=u'Alternative Text'),
+        title=_(u"label_alt_text", default=u"Alternative Text"),
         description=_(
-            u'help_alt_text',
-            default=u'Provides a textual alternative to non-text content in web pages.'),  # noqa E501
+            u"help_alt_text",
+            default=u"Provides a textual alternative to non-text content in web pages.",
+        ),  # noqa E501
         required=False,
     )
 
-    form.omitted('date')
-    form.no_omit(IDefaultConfigureForm, 'date')
+    form.omitted("date")
+    form.no_omit(IDefaultConfigureForm, "date")
     date = schema.Datetime(
-        title=_(u'Date'),
+        title=_(u"Date"),
         required=False,
         readonly=False,
     )
 
-    form.omitted('subjects')
-    form.no_omit(IDefaultConfigureForm, 'subjects')
-    form.widget(subjects='z3c.form.browser.textarea.TextAreaFieldWidget')
+    form.omitted("subjects")
+    form.no_omit(IDefaultConfigureForm, "subjects")
+    form.widget(subjects="z3c.form.browser.textarea.TextAreaFieldWidget")
     subjects = schema.Tuple(
-        title=_(u'label_categories', default=u'Categories'),
+        title=_(u"label_categories", default=u"Categories"),
         required=False,
         value_type=schema.TextLine(),
         missing_value=(),
     )
 
     uuid = schema.TextLine(
-        title=_(u'UUID'),
+        title=_(u"UUID"),
         required=False,
         readonly=True,
     )
@@ -83,13 +83,13 @@ class IBasicTile(IPersistentCoverTile):
 @implementer(IBasicTile)
 class BasicTile(PersistentCoverTile):
 
-    index = ViewPageTemplateFile('templates/basic.pt')
+    index = ViewPageTemplateFile("templates/basic.pt")
     is_configurable = True
-    short_name = _(u'msg_short_name_basic', default=u'Basic')
+    short_name = _(u"msg_short_name_basic", default=u"Basic")
 
     @memoizedproperty
     def brain(self):
-        uuid = self.data.get('uuid')
+        uuid = self.data.get("uuid")
         results = api.content.find(UID=uuid)
         assert len(results) <= 1  # nosec
         return results[0] if results else None
@@ -107,8 +107,8 @@ class BasicTile(PersistentCoverTile):
         # we have two different use cases here:
         # * the user has no permission to access the content (e.g. Private state)
         # * the tile was manually populated without dropping content on it
-        catalog = api.portal.get_tool('portal_catalog')
-        uuid = self.data.get('uuid')
+        catalog = api.portal.get_tool("portal_catalog")
+        uuid = self.data.get("uuid")
         results = catalog.unrestrictedSearchResults(UID=uuid)
         assert len(results) <= 1
         if results:
@@ -121,7 +121,7 @@ class BasicTile(PersistentCoverTile):
         """Return the URL of the referenced object or the value stored
         in remote_url field.
         """
-        remote_url = self.data.get('remote_url')
+        remote_url = self.data.get("remote_url")
         if remote_url:
             return remote_url
 
@@ -129,8 +129,8 @@ class BasicTile(PersistentCoverTile):
             return self.brain.getURL()
 
     def Subject(self):
-        """ Return the categories of the original object (AKA keywords, tags
-            or labels).
+        """Return the categories of the original object (AKA keywords, tags
+        or labels).
         """
         if self.brain:
             return self.brain.Subject
@@ -151,14 +151,14 @@ class BasicTile(PersistentCoverTile):
         # really care about their value: they came directly from the catalog
         # brain
         data = {
-            'title': title,
-            'description': description,
-            'uuid': IUUID(obj),
-            'date': True,
-            'subjects': True,
-            'image': image,
+            "title": title,
+            "description": description,
+            "uuid": IUUID(obj),
+            "date": True,
+            "subjects": True,
+            "image": image,
             # FIXME: https://github.com/collective/collective.cover/issues/778
-            'alt_text': description or title,
+            "alt_text": description or title,
         }
 
         data_mgr = ITileDataManager(self)
@@ -170,17 +170,17 @@ class BasicTile(PersistentCoverTile):
     @property
     def alt(self):
         """Return alternative text dealing with form init issues."""
-        alt_text = self.data['alt_text']
-        return alt_text if alt_text is not None else u''
+        alt_text = self.data["alt_text"]
+        return alt_text if alt_text is not None else u""
 
 
 @implementer(ISearchableText)
 class SearchableBasicTile(object):
-
     def __init__(self, context):
         self.context = context
 
     def SearchableText(self):
         context = self.context
-        return u'{0} {1}'.format(
-            context.data['title'] or '', context.data['description'] or '')
+        return u"{0} {1}".format(
+            context.data["title"] or "", context.data["description"] or ""
+        )

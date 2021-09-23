@@ -19,8 +19,7 @@ from zope.traversing.browser.absoluteurl import absoluteURL
 
 
 class ICoverTileEditView(IBrowserView):
-    """
-    """
+    """ """
 
 
 @implementer(ITileEditForm)
@@ -37,13 +36,15 @@ class CustomEditForm(DefaultEditForm):
 
         tile = self.getTile()
 
-        if (not IDeferSecurityCheck.providedBy(self.request) and not tile.isAllowedToEdit()):
+        if (
+            not IDeferSecurityCheck.providedBy(self.request)
+            and not tile.isAllowedToEdit()
+        ):
             # if IDeferSecurityCheck is provided by the request,
             # we're not going to worry about security, perms not set up yet
-            raise Unauthorized(
-                _(u'You are not allowed to add this kind of tile'))
+            raise Unauthorized(_(u"You are not allowed to add this kind of tile"))
 
-    @button.buttonAndHandler(_(u'Save'), name='save')
+    @button.buttonAndHandler(_(u"Save"), name="save")
     def handleSave(self, action):
         data, errors = self.extractData()
         if errors:
@@ -60,31 +61,33 @@ class CustomEditForm(DefaultEditForm):
             old_data[item] = data[item]
         dataManager.set(old_data)
 
-        api.portal.show_message(_(u'Tile saved'), self.request, type='info')
+        api.portal.show_message(_(u"Tile saved"), self.request, type="info")
 
         # Look up the URL - we need to do this after we've set the data to
         # correctly account for transient tiles
         tileURL = absoluteURL(tile, self.request)
         self.request.response.redirect(tileURL)
 
-    @button.buttonAndHandler(_(u'Cancel'), name='cancel')
+    @button.buttonAndHandler(_(u"Cancel"), name="cancel")
     def handleCancel(self, action):
         tileDataJson = {}
-        tileDataJson['action'] = 'cancel'
+        tileDataJson["action"] = "cancel"
         url = self.request.getURL()
-        url = appendJSONData(url, 'tiledata', tileDataJson)
+        url = appendJSONData(url, "tiledata", tileDataJson)
         self.request.response.redirect(url)
 
     def getTile(self):
         # if IDeferSecurityCheck is provided by the request,
         # you can't use restricted traverse, perms aren't set up yet.
         if IDeferSecurityCheck.providedBy(self.request):
-            view = getMultiAdapter((self.context, self.request),
-                                   name=self.tileType.__name__)
+            view = getMultiAdapter(
+                (self.context, self.request), name=self.tileType.__name__
+            )
             return view[self.tileId]
         else:
-            return self.context.restrictedTraverse('@@{0}/{1}'.format(
-                self.tileType.__name__, self.tileId))
+            return self.context.restrictedTraverse(
+                "@@{0}/{1}".format(self.tileType.__name__, self.tileId)
+            )
 
     def getContent(self):
         dataManager = ITileDataManager(self.getTile())
@@ -98,14 +101,14 @@ class CustomTileEdit(DefaultEditView):
     """
 
     form = CustomEditForm
-    index = ViewPageTemplateFile('templates/tileformlayout.pt')
+    index = ViewPageTemplateFile("templates/tileformlayout.pt")
 
     def __call__(self):
         # We add Cache-Control here because IE9-11 cache XHR GET requests. If
         # you edit a tile, save and re-edit you get the previouw request. IE
         # will list the request as 304 not modified, in its F12 tools, but it
         # is never even requested from the server.
-        self.request.response.setHeader('Cache-Control', 'no-cache, must-revalidate')
+        self.request.response.setHeader("Cache-Control", "no-cache, must-revalidate")
         return super(CustomTileEdit, self).__call__()
 
 

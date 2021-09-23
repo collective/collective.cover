@@ -30,12 +30,12 @@ def override_object_annotations(cover, event):
     old_keys = list(old_annotations.keys())
     for key in old_keys:
         # First remove all annotations in relation to tiles
-        if key.startswith('plone.tiles.'):
+        if key.startswith("plone.tiles."):
             del old_annotations[key]
 
     for key in new_annotations:
         # Now, copy the ones from the new annotations
-        if key.startswith('plone.tiles.'):
+        if key.startswith("plone.tiles."):
             old_annotations[key] = new_annotations[key]
 
 

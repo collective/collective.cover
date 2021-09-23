@@ -12,11 +12,11 @@ def assign_tile_ids(layout, override=True):
     """
 
     for elem in layout:
-        if elem.get('type') == u'tile':
-            if 'id' not in elem or not elem['id'] or override:
-                elem['id'] = uuid.uuid4().hex
+        if elem.get("type") == u"tile":
+            if "id" not in elem or not elem["id"] or override:
+                elem["id"] = uuid.uuid4().hex
         else:
-            children = elem.get('children')
+            children = elem.get("children")
             if children:
                 assign_tile_ids(children, override)
 
@@ -43,7 +43,7 @@ def uuidToCatalogBrain(uuid):
     :returns: the catalog brain associated with the object or None,
         if the UUID can't be found.
     """
-    catalog = api.portal.get_tool('portal_catalog')
+    catalog = api.portal.get_tool("portal_catalog")
     # XXX: should we add a check on 'Access inactive portal content'
     #      permission before setting show_inactive?
     results = catalog(UID=uuid, show_all=1, show_inactive=1)
@@ -53,8 +53,8 @@ def uuidToCatalogBrain(uuid):
 def get_types_use_view_action_in_listings():
     """Helper funtion to deal with API inconsistencies."""
     if IS_PLONE_5:
-        return api.portal.get_registry_record('plone.types_use_view_action_in_listings')
+        return api.portal.get_registry_record("plone.types_use_view_action_in_listings")
     else:
-        portal_properties = api.portal.get_tool(name='portal_properties')
+        portal_properties = api.portal.get_tool(name="portal_properties")
         site_properties = portal_properties.site_properties
-        return site_properties.getProperty('typesUseViewActionInListings', ())
+        return site_properties.getProperty("typesUseViewActionInListings", ())

@@ -17,7 +17,6 @@ from zope.schema.vocabulary import SimpleVocabulary
 
 @implementer(IVocabularyFactory)
 class AvailableLayoutsVocabulary(object):
-
     def __call__(self, context):
 
         registry = getUtility(IRegistry)
@@ -29,7 +28,6 @@ class AvailableLayoutsVocabulary(object):
 
 @implementer(IVocabularyFactory)
 class AvailableTilesVocabulary(object):
-
     def __call__(self, context):
 
         registry = getUtility(IRegistry)
@@ -37,12 +35,12 @@ class AvailableTilesVocabulary(object):
         tiles = settings.available_tiles
 
         # FIXME: https://github.com/collective/collective.cover/issues/633
-        if IS_PLONE_5 and 'collective.cover.calendar' in tiles:
-            tiles.remove('collective.cover.calendar')
+        if IS_PLONE_5 and "collective.cover.calendar" in tiles:
+            tiles.remove("collective.cover.calendar")
 
         # XXX: PFG tile is deprecated and will be removed in collective.cover 3
-        if IS_PLONE_5 and 'collective.cover.pfg' in tiles:
-            tiles.remove('collective.cover.pfg')
+        if IS_PLONE_5 and "collective.cover.pfg" in tiles:
+            tiles.remove("collective.cover.pfg")
 
         items = [SimpleTerm(value=i, title=i) for i in tiles]
         return SimpleVocabulary(items)
@@ -50,10 +48,11 @@ class AvailableTilesVocabulary(object):
 
 @implementer(IVocabularyFactory)
 class GridSystemsVocabulary(object):
-
     def __call__(self, context):
-        items = [SimpleTerm(value=name, title=grid.title)
-                 for (name, grid) in getUtilitiesFor(IGridSystem)]
+        items = [
+            SimpleTerm(value=name, title=grid.title)
+            for (name, grid) in getUtilitiesFor(IGridSystem)
+        ]
         return SimpleVocabulary(items)
 
 
@@ -65,11 +64,11 @@ class EnabledTilesVocabulary(object):
     @staticmethod
     def enabled(name):
         # FIXME: https://github.com/collective/collective.cover/issues/633
-        if IS_PLONE_5 and name == 'collective.cover.calendar':
+        if IS_PLONE_5 and name == "collective.cover.calendar":
             return False
 
         # XXX: PFG tile is deprecated and will be removed in collective.cover 3
-        if IS_PLONE_5 and name == 'collective.cover.pfg':
+        if IS_PLONE_5 and name == "collective.cover.pfg":
             return False
 
         tile_type = queryUtility(ITileType, name)
@@ -78,7 +77,7 @@ class EnabledTilesVocabulary(object):
 
     def __call__(self, context):
         registry = getUtility(IRegistry)
-        tiles = registry['plone.app.tiles']
+        tiles = registry["plone.app.tiles"]
 
         tiles = [t for t in tiles if self.enabled(t)]
         items = []
@@ -97,14 +96,13 @@ class AvailableContentTypesVocabulary(ReallyUserFriendlyTypesVocabulary):
 
     def __call__(self, context):
         items = super(AvailableContentTypesVocabulary, self).__call__(context)
-        items = [i for i in items if i.token != 'collective.cover.content']
+        items = [i for i in items if i.token != "collective.cover.content"]
         return SimpleVocabulary(items)
 
 
 @implementer(IVocabularyFactory)
 class TileStylesVocabulary(object):
-    """Creates a vocabulary with the available styles stored in the registry.
-    """
+    """Creates a vocabulary with the available styles stored in the registry."""
 
     def __call__(self, context):
         registry = getUtility(IRegistry)
@@ -114,13 +112,13 @@ class TileStylesVocabulary(object):
         if settings.styles is not None:
             styles = list(settings.styles)
             for style in styles:
-                if style.count('|') == 1:  # skip in case of formating issues
-                    title, css_class = style.split('|')
+                if style.count("|") == 1:  # skip in case of formating issues
+                    title, css_class = style.split("|")
                     # remove any leading/trailing whitespaces
                     title, css_class = title.strip(), css_class.strip()
 
                     # make sure that default style is always first
-                    if css_class == u'tile-default':
+                    if css_class == u"tile-default":
                         items.insert(0, SimpleTerm(value=css_class, title=title))
                         with_default = True
                     else:
@@ -128,6 +126,6 @@ class TileStylesVocabulary(object):
 
         # force default style if it was removed from configuration
         if not with_default:
-            items.insert(0, SimpleTerm(value=u'tile-default', title='-Default-'))
+            items.insert(0, SimpleTerm(value=u"tile-default", title="-Default-"))
 
         return SimpleVocabulary(items)

@@ -18,36 +18,34 @@ from zope.interface import implementer
 class IBannerTile(IPersistentCoverTile):
 
     title = schema.TextLine(
-        title=_(u'Title'),
+        title=_(u"Title"),
         required=False,
     )
 
-    form.omitted(IDefaultConfigureForm, 'remote_url')
+    form.omitted(IDefaultConfigureForm, "remote_url")
     remote_url = schema.URI(
-        title=_(u'label_remote_url', default=u'URL'),
-        description=_(
-            u'help_remote_url', default=u'Use absolute links only.'),
+        title=_(u"label_remote_url", default=u"URL"),
+        description=_(u"help_remote_url", default=u"Use absolute links only."),
         required=False,
     )
 
     image = field.NamedBlobImage(
-        title=_(u'Image'),
+        title=_(u"Image"),
         required=False,
     )
 
-    form.omitted(IDefaultConfigureForm, 'alt_text')
+    form.omitted(IDefaultConfigureForm, "alt_text")
     alt_text = schema.TextLine(
-        title=_(
-            u'label_alt_text',
-            default=u'Alternative Text'),
+        title=_(u"label_alt_text", default=u"Alternative Text"),
         description=_(
-            u'help_alt_text',
-            default=u'Provides a textual alternative to non-text content in web pages.'),  # noqa E501
+            u"help_alt_text",
+            default=u"Provides a textual alternative to non-text content in web pages.",
+        ),  # noqa E501
         required=False,
     )
 
     uuid = schema.TextLine(  # FIXME: this must be schema.ASCIILine()
-        title=_(u'UUID'),
+        title=_(u"UUID"),
         required=False,
         readonly=True,
     )
@@ -56,11 +54,11 @@ class IBannerTile(IPersistentCoverTile):
 @implementer(IBannerTile)
 class BannerTile(PersistentCoverTile):
 
-    index = ViewPageTemplateFile('templates/banner.pt')
+    index = ViewPageTemplateFile("templates/banner.pt")
     is_configurable = True
     is_editable = True
     is_droppable = True
-    short_name = _(u'msg_short_name_banner', default=u'Banner')
+    short_name = _(u"msg_short_name_banner", default=u"Banner")
 
     def populate_with_object(self, obj):
         """Tile can be populated with any content type with image
@@ -73,7 +71,7 @@ class BannerTile(PersistentCoverTile):
 
         super(BannerTile, self).populate_with_object(obj)  # check permissions
 
-        if obj.portal_type == 'Link':
+        if obj.portal_type == "Link":
             try:
                 remote_url = obj.getRemoteUrl()  # Archetypes
             except AttributeError:
@@ -81,7 +79,7 @@ class BannerTile(PersistentCoverTile):
         else:
             remote_url = obj.absolute_url()
             if obj.portal_type in get_types_use_view_action_in_listings():
-                remote_url += '/view'
+                remote_url += "/view"
 
         image = self.get_image_data(obj)
         if image:
@@ -93,42 +91,44 @@ class BannerTile(PersistentCoverTile):
         description = safe_unicode(obj.Description())
 
         data_mgr = ITileDataManager(self)
-        data_mgr.set({
-            'title': title,
-            'description': description,
-            'uuid': IUUID(obj),
-            'image': image,
-            # FIXME: https://github.com/collective/collective.cover/issues/778
-            'alt_text': description or title,
-            'remote_url': remote_url,
-        })
+        data_mgr.set(
+            {
+                "title": title,
+                "description": description,
+                "uuid": IUUID(obj),
+                "image": image,
+                # FIXME: https://github.com/collective/collective.cover/issues/778
+                "alt_text": description or title,
+                "remote_url": remote_url,
+            }
+        )
 
     def getRemoteUrl(self):
         """Return the remote URL field."""
-        return self.data.get('remote_url') or u''  # deal with None values
+        return self.data.get("remote_url") or u""  # deal with None values
 
     @property
     def is_empty(self):
-        return not(self.data.get('title') or self.has_image or self.getRemoteUrl())
+        return not (self.data.get("title") or self.has_image or self.getRemoteUrl())
 
     @property
     def css_class(self):
         tile_conf = self.get_tile_configuration()
-        image_conf = tile_conf.get('image', None)
+        image_conf = tile_conf.get("image", None)
         if image_conf:
-            css_class = image_conf['position']
+            css_class = image_conf["position"]
             return css_class
 
     @property
     def htmltag(self):
         tile_conf = self.get_tile_configuration()
-        title_conf = tile_conf.get('title', None)
+        title_conf = tile_conf.get("title", None)
         if title_conf:
-            htmltag = title_conf['htmltag']
+            htmltag = title_conf["htmltag"]
             return htmltag
 
     @property
     def alt(self):
         """Return alternative text dealing with form init issues."""
-        alt_text = self.data['alt_text']
-        return alt_text if alt_text is not None else u''
+        alt_text = self.data["alt_text"]
+        return alt_text if alt_text is not None else u""

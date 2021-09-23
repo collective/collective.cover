@@ -12,11 +12,11 @@ class View(BrowserView):
 
     """Default view, a compose page."""
 
-    index = ViewPageTemplateFile('templates/view.pt')
+    index = ViewPageTemplateFile("templates/view.pt")
 
     def __call__(self):
         # forbid image indexing as scales are volatile
-        self.request.RESPONSE.setHeader('X-Robots-Tag', 'noimageindex')
+        self.request.RESPONSE.setHeader("X-Robots-Tag", "noimageindex")
         return self.index()
 
 
@@ -25,7 +25,7 @@ class Standard(BrowserView):
 
     """A standard content type like view."""
 
-    index = ViewPageTemplateFile('templates/standard.pt')
+    index = ViewPageTemplateFile("templates/standard.pt")
 
     def __call__(self):
         return self.index()
@@ -36,7 +36,7 @@ class UpdateTile(BrowserView):
     """Helper browser view to update the tile with Ajax."""
 
     def setup(self):
-        self.tile_id = self.request.form.get('tile-id', None)
+        self.tile_id = self.request.form.get("tile-id", None)
 
     def render(self):
         try:
@@ -44,7 +44,7 @@ class UpdateTile(BrowserView):
         except ValueError:
             # requested tile does not exist
             self.request.response.setStatus(400)
-            return u''
+            return u""
         return tile()
 
     def __call__(self):
@@ -60,8 +60,7 @@ class Helper(BrowserView):
     @staticmethod
     def get_image_scales():
         """List all image scales which are available on the site."""
-        factory = getUtility(
-            IVocabularyFactory, 'plone.app.vocabularies.ImagesScales')
+        factory = getUtility(IVocabularyFactory, "plone.app.vocabularies.ImagesScales")
         vocabulary = factory(None)
         # TODO: fix scales order upsteam in plone.app.vocabularies
         return [term.title for term in vocabulary]

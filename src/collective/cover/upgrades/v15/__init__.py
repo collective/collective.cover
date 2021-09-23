@@ -10,7 +10,7 @@ def fix_image_field_modification_time(context):
     """Fix image modification time to be float timestamp instead of string."""
 
     covers = context.portal_catalog(object_provides=ICover.__identifier__)
-    logger.info('About to update {0} objects'.format(len(covers)))
+    logger.info("About to update {0} objects".format(len(covers)))
     for cover in covers:
         obj = cover.getObject()
         for tile_id in obj.list_tiles():
@@ -21,11 +21,11 @@ def fix_image_field_modification_time(context):
                 if not INamedImage.providedBy(v):
                     continue
 
-                mtime_key = '{0}_mtime'.format(k)
+                mtime_key = "{0}_mtime".format(k)
                 data[mtime_key] = float(data[mtime_key])
                 # need to set changes directly into annotation
                 dmgr.annotations[dmgr.key] = PersistentDict(data)
-                msg = 'Tile {0} at {1} updated'
+                msg = "Tile {0} at {1} updated"
                 logger.info(msg.format(tile_id, cover.getPath()))
 
-    logger.info('Done')
+    logger.info("Done")

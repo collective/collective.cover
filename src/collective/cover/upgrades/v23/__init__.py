@@ -21,8 +21,8 @@ from plone.tiles.interfaces import ITileDataManager
 # collective.cover and there is no easy way to ensure we are using
 # either collective.cover >=1.8b1 or >=2.1b1 in collective.nitf code
 TILE_TYPES = [
-    'collective.cover.basic',
-    'collective.nitf',
+    "collective.cover.basic",
+    "collective.nitf",
 ]
 
 
@@ -35,7 +35,7 @@ def show_remote_url_field(setup_tool):
             tile = cover.get_tile(tile_id)
             data_mgr = ITileDataManager(tile)
             data = data_mgr.get()
-            remote_url = data.get('remote_url')
+            remote_url = data.get("remote_url")
             if not remote_url:
                 continue
 

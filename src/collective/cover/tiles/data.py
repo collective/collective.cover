@@ -35,22 +35,29 @@ class PersistentCoverTileDataManager(PersistentTileDataManager):
                 if not isinstance(field_conf, dict):
                     continue  # field is not ordered
 
-                if field_conf.get('order'):
-                    fields[field_name].order = int(field_conf['order'])
+                if field_conf.get("order"):
+                    fields[field_name].order = int(field_conf["order"])
 
     def set(self, data):
         # when setting data, we need to purge scales/image data...
         # XXX hack?
         try:
-            scale_key = self.key.replace('.data.', '.scale.')
+            scale_key = self.key.replace(".data.", ".scale.")
             del self.annotations[scale_key]
         except KeyError:
             pass
 
         for k, v in data.items():
             if INamedImage.providedBy(v):
-                mtime_key = '{0}_mtime'.format(k)
-                if (self.key not in self.annotations or k not in self.annotations[self.key] or (self.key in self.annotations and data[k] != self.annotations[self.key][k])):
+                mtime_key = "{0}_mtime".format(k)
+                if (
+                    self.key not in self.annotations
+                    or k not in self.annotations[self.key]
+                    or (
+                        self.key in self.annotations
+                        and data[k] != self.annotations[self.key][k]
+                    )
+                ):
                     # set modification time of the image
                     notify(Purge(self.tile))
                     data[mtime_key] = time.time()

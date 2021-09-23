@@ -48,11 +48,10 @@ class ConfigureTile(TileTraverser):
     targetInterface = ITileConfigureView
 
     def __call__(self):
-        raise KeyError('Please traverse to @@configure-tile/tilename/id')
+        raise KeyError("Please traverse to @@configure-tile/tilename/id")
 
     def publishTraverse(self, request, name):
-        """Allow traversal to @@<view>/tilename/tileid
-        """
+        """Allow traversal to @@<view>/tilename/tileid"""
 
         # Look up the view
         if self.view is None:
@@ -61,7 +60,7 @@ class ConfigureTile(TileTraverser):
 
         # 2. Set the id and return the view we looked up in the previous
         # traversal step.
-        elif getattr(self.view, 'tileId', None) is None:
+        elif getattr(self.view, "tileId", None) is None:
             self.view.tileId = name
             return self.view
 
@@ -77,8 +76,9 @@ class DefaultConfigureForm(TileForm, form.Form):
     This form is capable of rendering the fields of any tile schema as defined
     by an ITileType utility.
     """
-    mode = 'configure'
-    name = 'configure_tile'
+
+    mode = "configure"
+    name = "configure_tile"
 
     # Set during traversal
     tileType = None
@@ -95,11 +95,10 @@ class DefaultConfigureForm(TileForm, form.Form):
 
     def __init__(self, context, request):
         super(DefaultConfigureForm, self).__init__(context, request)
-        self.request['disable_border'] = True
+        self.request["disable_border"] = True
 
     def update(self):
-        if 'buttons.save' in self.request.form or \
-           'buttons.cancel' in self.request.form:
+        if "buttons.save" in self.request.form or "buttons.cancel" in self.request.form:
             self.ignoreRequest = False
 
         super(DefaultConfigureForm, self).update()
@@ -110,9 +109,10 @@ class DefaultConfigureForm(TileForm, form.Form):
 
         # Traverse to the tile. If it is a transient tile, it will pick up
         # query string parameters from the original request
-        tile = self.context.restrictedTraverse('@@{0}/{1}'.format(typeName, tileId))
-        tile_conf_adapter = getMultiAdapter((self.context, self.request, tile),
-                                            ITilesConfigurationScreen)
+        tile = self.context.restrictedTraverse("@@{0}/{1}".format(typeName, tileId))
+        tile_conf_adapter = getMultiAdapter(
+            (self.context, self.request, tile), ITilesConfigurationScreen
+        )
 
         configuration = tile_conf_adapter.get_configuration()
         return configuration
@@ -123,17 +123,17 @@ class DefaultConfigureForm(TileForm, form.Form):
         errors = {}
         default_order = 0
         for name, widget in self.widgets.items():
-            if name == 'css_class':
-                data[name] = ' '.join(self.request.form.get(widget.name))
+            if name == "css_class":
+                data[name] = " ".join(self.request.form.get(widget.name))
                 widget.field.order = 0
                 continue
             for key, value in self.request.form.items():
                 if key.startswith(widget.name):
-                    config_name = key[len(widget.name) + 1:]
+                    config_name = key[len(widget.name) + 1 :]
                     field = data.get(name, {})
                     field[config_name] = value
                     data[name] = field
-                    if config_name == 'order':
+                    if config_name == "order":
                         if value.isdigit():
                             widget.field.order = int(value)
                         else:
@@ -144,8 +144,7 @@ class DefaultConfigureForm(TileForm, form.Form):
         return data, errors
 
     def getFieldConfiguration(self, widget):
-        conf = getMultiAdapter((widget.context, widget.field),
-                               IDataManager).query()
+        conf = getMultiAdapter((widget.context, widget.field), IDataManager).query()
 
         if conf == NO_VALUE:
             conf = {}
@@ -156,11 +155,11 @@ class DefaultConfigureForm(TileForm, form.Form):
 
     @property
     def label(self):
-        return _(u'Configure ${name}', mapping={'name': self.tileType.title})
+        return _(u"Configure ${name}", mapping={"name": self.tileType.title})
 
     # Buttons/actions
 
-    @button.buttonAndHandler(_('Save'), name='save')
+    @button.buttonAndHandler(_("Save"), name="save")
     def handleSave(self, action):
         data, errors = self.extractData()
         if errors:
@@ -169,43 +168,57 @@ class DefaultConfigureForm(TileForm, form.Form):
 
         # Traverse to a new tile in the context, with no data
         typeName = self.tileType.__name__
-        tile = self.context.restrictedTraverse('@@{0}/{1}'.format(typeName, self.tileId))
+        tile = self.context.restrictedTraverse(
+            "@@{0}/{1}".format(typeName, self.tileId)
+        )
         tile_conf_adapter = getMultiAdapter(
-            (self.context, self.request, tile), ITilesConfigurationScreen)
+            (self.context, self.request, tile), ITilesConfigurationScreen
+        )
         tile_conf_adapter.set_configuration(data)
 
         # notify about modification
         notify(ObjectModifiedEvent(self.context))
         api.portal.show_message(
-            _(u'Tile configuration saved.'), self.request, type='info')
+            _(u"Tile configuration saved."), self.request, type="info"
+        )
 
         # Look up the URL - We need to redirect to the layout view, since
         # there's the only way from where a user would access the configuration
         contextURL = absoluteURL(tile.context, self.request)
-        layoutURL = '{0}/layoutedit'.format(contextURL)
+        layoutURL = "{0}/layoutedit".format(contextURL)
         self.request.response.redirect(layoutURL)
 
-    @button.buttonAndHandler(_(u'Cancel'), name='cancel')
+    @button.buttonAndHandler(_(u"Cancel"), name="cancel")
     def handleCancel(self, action):
         api.portal.show_message(
-            _(u'Tile configuration cancelled.'), self.request, type='info')
+            _(u"Tile configuration cancelled."), self.request, type="info"
+        )
 
         contextURL = absoluteURL(self.context, self.request)
-        layoutURL = '{0}/layoutedit'.format(contextURL)
+        layoutURL = "{0}/layoutedit".format(contextURL)
         self.request.response.redirect(layoutURL)
 
     def updateActions(self):
         super(DefaultConfigureForm, self).updateActions()
-        self.actions['save'].addClass('context')
-        self.actions['cancel'].addClass('standalone')
+        self.actions["save"].addClass("context")
+        self.actions["cancel"].addClass("standalone")
 
     def datetime_widget_options(self):
         """Return the options that can be used on a datetime widget."""
         now = datetime.now()
         return (
-            ('datetime', api.portal.get_localized_time(now, long_format=True, time_only=False)),
-            ('dateonly', api.portal.get_localized_time(now, long_format=False, time_only=False)),
-            ('timeonly', api.portal.get_localized_time(now, long_format=False, time_only=True)),
+            (
+                "datetime",
+                api.portal.get_localized_time(now, long_format=True, time_only=False),
+            ),
+            (
+                "dateonly",
+                api.portal.get_localized_time(now, long_format=False, time_only=False),
+            ),
+            (
+                "timeonly",
+                api.portal.get_localized_time(now, long_format=False, time_only=True),
+            ),
         )
 
 
@@ -219,15 +232,16 @@ class DefaultConfigureView(layout.FormWrapper):
     """
 
     form = DefaultConfigureForm
-    index = ViewPageTemplateFile('templates/tilesconfigurationlayout.pt')
+    index = ViewPageTemplateFile("templates/tilesconfigurationlayout.pt")
 
     # Set by sub-path traversal in @@configure-tile - we delegate to the form
 
     def __getTileId(self):
-        return getattr(self.form_instance, 'tileId', None)
+        return getattr(self.form_instance, "tileId", None)
 
     def __setTileId(self, value):
         self.form_instance.tileId = value
+
     tileId = property(__getTileId, __setTileId)
 
     def __init__(self, context, request, tileType):
@@ -236,7 +250,7 @@ class DefaultConfigureView(layout.FormWrapper):
 
         # Configure the form instance
         if self.form_instance is not None:
-            if getattr(self.form_instance, 'tileType', None) is None:
+            if getattr(self.form_instance, "tileType", None) is None:
                 self.form_instance.tileType = tileType
 
     def __call__(self):
@@ -244,5 +258,5 @@ class DefaultConfigureView(layout.FormWrapper):
         # you configure a tile, save and reconfigure you get the previouw
         # request. IE will list the request as 304 not modified, in its F12
         # tools, but it is never even requested from the server.
-        self.request.response.setHeader('Cache-Control', 'no-cache, must-revalidate')
+        self.request.response.setHeader("Cache-Control", "no-cache, must-revalidate")
         return super(DefaultConfigureView, self).__call__()

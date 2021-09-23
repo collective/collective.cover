@@ -7,12 +7,11 @@ import unittest
 
 
 class CalendarTileTestCase(TestTileMixin, unittest.TestCase):
-
     def setUp(self):
         super(CalendarTileTestCase, self).setUp()
         self.tile = CalendarTile(self.cover, self.request)
-        self.tile.__name__ = u'collective.cover.calendar'
-        self.tile.id = u'test'
+        self.tile.__name__ = u"collective.cover.calendar"
+        self.tile.id = u"test"
 
     @unittest.expectedFailure  # FIXME: raises BrokenImplementation
     def test_interface(self):
@@ -33,6 +32,7 @@ class CalendarTileTestCase(TestTileMixin, unittest.TestCase):
 def test_suite():
     # FIXME: https://github.com/collective/collective.cover/issues/633
     from collective.cover.config import IS_PLONE_5
+
     if IS_PLONE_5:
         return unittest.TestSuite()
 

@@ -14,13 +14,14 @@ import zope.interface
 
 
 class SelectPreviewWidget(select.SelectWidget):
-    """ Widget for adding new keywords and autocomplete with the ones in the
+    """Widget for adding new keywords and autocomplete with the ones in the
     system.
     """
+
     zope.interface.implementsOnly(ISelectPreviewWidget)
-    klass = u'keyword-widget'
-    display_template = ViewPageTemplateFile('selectpreview_display.pt')
-    input_template = ViewPageTemplateFile('selectpreview_input.pt')
+    klass = u"keyword-widget"
+    display_template = ViewPageTemplateFile("selectpreview_display.pt")
+    input_template = ViewPageTemplateFile("selectpreview_input.pt")
 
     def layouts(self):
         registry = getUtility(IRegistry)
@@ -46,28 +47,28 @@ class SelectPreviewWidget(select.SelectWidget):
     def simplify_layout(self, layout, simple_layout=[]):
         for element in layout:
             item = {}
-            if element['type'] == 'row':
-                item['type'] = 'row'
+            if element["type"] == "row":
+                item["type"] = "row"
 
-            if element['type'] == 'group':
-                item['type'] = 'group'
-                item['size'] = element['column-size']
+            if element["type"] == "group":
+                item["type"] = "group"
+                item["size"] = element["column-size"]
 
-            if element['type'] == 'tile':
-                item['type'] = 'tile'
-                item['tile-type'] = element['tile-type']
+            if element["type"] == "tile":
+                item["type"] = "tile"
+                item["tile-type"] = element["tile-type"]
 
-            if 'children' in element:
-                item['children'] = []
+            if "children" in element:
+                item["children"] = []
                 simple_layout.append(item)
-                self.simplify_layout(element['children'], item['children'])
+                self.simplify_layout(element["children"], item["children"])
             else:
                 simple_layout.append(item)
 
 
-@zope.component.adapter(zope.schema.interfaces.IChoice,
-                        zope.interface.Interface,
-                        interfaces.IFormLayer)
+@zope.component.adapter(
+    zope.schema.interfaces.IChoice, zope.interface.Interface, interfaces.IFormLayer
+)
 @zope.interface.implementer(interfaces.IFieldWidget)
 def SelectFieldWidget(field, source, request=None):
     """IFieldWidget factory for SelectWidget."""
