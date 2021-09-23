@@ -4,6 +4,7 @@
 *~
 .*.kate-swp
 .coverage
+.coverage.*
 .DS_Store
 .installed.cfg
 .mr.developer.cfg
@@ -31,3 +32,6 @@ selenium*
 share/
 var/
 src/collective/cover/browser/static/
+/pyvenv.cfg
+/reports/
+/coverage.xml

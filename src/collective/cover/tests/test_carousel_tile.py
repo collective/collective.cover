@@ -5,6 +5,7 @@ from collective.cover.tiles.carousel import CarouselTile
 from collective.cover.tiles.carousel import ICarouselTile
 from collective.cover.tiles.carousel import UUIDSFieldDataConverter
 from collective.cover.widgets.textlinessortable import TextLinesSortableWidget
+from lxml import etree
 from plone import api
 from plone.tiles.interfaces import ITileDataManager
 from plone.uuid.interfaces import IUUID
@@ -247,8 +248,11 @@ class CarouselTileTestCase(TestTileMixin, unittest.TestCase):
                 self.portal, 'Collection', id='collection', query=query)
 
         self.tile.populate_with_object(col)
-        rendered = self.tile()
-        self.assertNotIn(u'<img src="http://nohost/plone/folder', rendered)
-        self.assertIn(u'<img src="http://nohost/plone/item1', rendered)
-        self.assertIn(u'<img src="http://nohost/plone/item2', rendered)
-        self.assertNotIn(u'<img src="http://nohost/plone/item3', rendered)
+        html = etree.HTML(self.tile())
+        imgs = html.xpath('//img')
+        self.assertEqual(len(imgs), 3)
+        srcs = [img.attrib['src'] for img in imgs]
+        srcs.sort()
+        self.assertIn('http://nohost/plone/item1', srcs[0])
+        self.assertIn('http://nohost/plone/item2', srcs[1])
+        self.assertIn('http://nohost/plone/my-news-item', srcs[2])
