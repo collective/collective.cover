@@ -43,8 +43,8 @@
           </tal:fields>
       </div>
 
-
-      <div class="collection-item" tal:repeat="item results">
+      <div tal:condition="not:view/is_slidemode"
+        class="collection-item" tal:repeat="item results">
         <tal:items define="obj item/getObject">
           <tal:fields repeat="field view/configured_fields">
             <tal:image define="thumbnail python:view.thumbnail(obj);"
@@ -100,6 +100,87 @@
         </tal:items>
         <div class="visualClear"><!-- --></div>
       </div>
+
+      <div tal:condition="view/is_slidemode">
+        <div tal:attributes="id string:carousel-${view/data/uuid}"
+          class="carousel slide" data-ride="carousel">
+          <!-- Indicators -->
+          <ol class="carousel-indicators">
+            <li tal:repeat="index python:range(0, len(results))"
+              tal:attributes="data-target string:#carousel-${view/data/uuid};
+                data-slide-to index;
+                class python:index==0 and 'active' or ''"></li>
+          </ol>
+
+          <!-- Wrapper for slides -->
+          <div class="carousel-inner" role="listbox">
+            <tal:loop tal:repeat="item results">
+              <div tal:define="index repeat/item/index"
+              tal:attributes="class python:index==0 and 'item active' or 'item'">
+                <tal:items define="obj item/getObject">
+                  <tal:fields repeat="field view/configured_fields">
+                    <tal:image define="thumbnail python:view.thumbnail(obj);"
+                     condition="python:field['id'] == 'image' and thumbnail">
+                     <a tal:attributes="href obj/absolute_url">
+                      <img tal:attributes="src thumbnail/url;
+                       width thumbnail/width;
+                       height thumbnail/height;
+                       class view/get_image_position;
+                       alt obj/Title;" />
+                     </a>
+                    </tal:image>
+
+                    <tal:title define="htmltag python:field.get('htmltag', 'h1')"
+                     condition="python:field['id'] == 'title'">
+
+                     <h1 tal:condition="python:htmltag == 'h1'">
+                      <a tal:attributes="href obj/absolute_url"
+                       tal:content="obj/Title" />
+                     </h1>
+
+                     <h2 tal:condition="python:htmltag == 'h2'">
+                      <a tal:attributes="href obj/absolute_url"
+                       tal:content="obj/Title" />
+                     </h2>
+
+                     <h3 tal:condition="python:htmltag == 'h3'">
+                      <a tal:attributes="href obj/absolute_url"
+                       tal:content="obj/Title" />
+                     </h3>
+
+                     <h4 tal:condition="python:htmltag == 'h4'">
+                      <a tal:attributes="href obj/absolute_url"
+                       tal:content="obj/Title" />
+                     </h4>
+
+                    </tal:title>
+
+                    <p class="description"
+                     tal:condition="python:field['id'] == 'description'"
+                     tal:content="obj/Description" />
+
+                    <p tal:condition="python:field['id'] == 'date'"
+                       tal:content="python:toLocalizedTime(view.Date(item), True)" />
+                  </tal:fields>
+                </tal:items>
+              </div>
+            </tal:loop>
+          </div>
+
+          <!-- Controls -->
+          <a tal:attributes="href string:#carousel-${view/data/uuid}"
+            class="left carousel-control" role="button" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+          </a>
+          <a tal:attributes="href string:#carousel-${view/data/uuid}"
+            class="right carousel-control" role="button" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+          </a>
+        </div>
+      </div>
+
       <div class="tile-footer" tal:condition="view/show_footer">
         <a tal:attributes="href view/collection_url" tal:content="view/data/footer" />
       </div>
