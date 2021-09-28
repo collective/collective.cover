@@ -12,10 +12,7 @@ jobs:
             fail-fast: false
             matrix:
                 plone-version:
-                  - 'Plone43'
-                  - 'Plone43_DEXTERITY_ONLY'
-                  - 'Plone43_PLONE_APP_JQUERY_1.9.2'
-                  - 'Plone51'
+                  - 'Plone52'
                 python-version: [2.7]
 
         steps:
