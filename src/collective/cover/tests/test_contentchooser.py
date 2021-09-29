@@ -98,3 +98,15 @@ class ContentChooserTestCase(unittest.TestCase):
         self.request.set("b_size", 1)
         view()
         self.assertEqual(view.nextpage, 2)
+
+    def test_content_with_unicode_description(self):
+        with api.env.adopt_roles(["Manager"]):
+            api.content.create(
+                container=self.portal,
+                type="News Item",
+                id="noticia",
+                title=u"Noticia",
+                description=u"Isto é uma notícias",
+            )
+        view = api.content.get_view(u"content-search", self.cover, self.request)
+        self.assertIn(u"Isto é uma notícias", view())
