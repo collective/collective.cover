@@ -29,15 +29,9 @@ class AvailableLayoutsVocabulary(object):
 @implementer(IVocabularyFactory)
 class AvailableTilesVocabulary(object):
     def __call__(self, context):
-
         registry = getUtility(IRegistry)
         settings = registry.forInterface(ICoverSettings)
         tiles = settings.available_tiles
-
-        # FIXME: https://github.com/collective/collective.cover/issues/633
-        if IS_PLONE_5 and "collective.cover.calendar" in tiles:
-            tiles.remove("collective.cover.calendar")
-
         items = [SimpleTerm(value=i, title=i) for i in tiles]
         return SimpleVocabulary(items)
 
@@ -59,9 +53,6 @@ class EnabledTilesVocabulary(object):
 
     @staticmethod
     def enabled(name):
-        # FIXME: https://github.com/collective/collective.cover/issues/633
-        if IS_PLONE_5 and name == "collective.cover.calendar":
-            return False
 
         tile_type = queryUtility(ITileType, name)
         if tile_type and tile_type.schema:

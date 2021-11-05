@@ -44,9 +44,6 @@ class VocabulariesTestCase(unittest.TestCase):
             "collective.cover.list",
             "collective.cover.richtext",
         ]
-
-        expected.remove("collective.cover.calendar")
-
         self.assertEqual(len(tiles), len(expected))
         for i in expected:
             self.assertIn(i, tiles)
@@ -68,9 +65,6 @@ class VocabulariesTestCase(unittest.TestCase):
             "collective.cover.list",
             "collective.cover.richtext",
         ]
-
-        expected.remove("collective.cover.calendar")
-
         self.assertEqual(len(tiles), len(expected))
         for i in expected:
             self.assertIn(i, tiles)

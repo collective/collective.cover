@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from collective.cover.tests.base import TestTileMixin
-from collective.cover.tests.utils import today
+from plone.app.event.base import localized_today
 from collective.cover.tiles.collection import CollectionTile
 from collective.cover.tiles.collection import ICollectionTile
 from mock import Mock
@@ -218,7 +218,7 @@ class CollectionTileTestCase(TestTileMixin, unittest.TestCase):
         obj = self._create_events_collection()
         self.tile.populate_with_object(obj)
         rendered = self.tile()
-        start_date = api.portal.get_localized_time(today, long_format=True)
+        start_date = api.portal.get_localized_time(localized_today(), long_format=True)
         self.assertIn(start_date, rendered)
 
     def test_date_on_items(self):
@@ -244,7 +244,7 @@ class CollectionTileTestCase(TestTileMixin, unittest.TestCase):
         self.tile.populate_with_object(obj)
         rendered = self.tile()
         expected = api.portal.get_localized_time(
-            today, long_format=True, time_only=False
+            localized_today(), long_format=True, time_only=False
         )
         self.assertIn(expected, rendered)  # u'Jul 15, 2015 01:23 PM'
 
@@ -253,7 +253,7 @@ class CollectionTileTestCase(TestTileMixin, unittest.TestCase):
         self.tile.set_tile_configuration(tile_conf)
         rendered = self.tile()
         expected = api.portal.get_localized_time(
-            today, long_format=False, time_only=False
+            localized_today(), long_format=False, time_only=False
         )
         self.assertIn(expected, rendered)  # u'Jul 15, 2015
 
@@ -262,7 +262,7 @@ class CollectionTileTestCase(TestTileMixin, unittest.TestCase):
         self.tile.set_tile_configuration(tile_conf)
         rendered = self.tile()
         expected = api.portal.get_localized_time(
-            today, long_format=False, time_only=True
+            localized_today(), long_format=False, time_only=True
         )
         self.assertIn(expected, rendered)  # u'01:23 PM'
 

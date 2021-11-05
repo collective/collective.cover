@@ -8,10 +8,8 @@ from tzlocal import get_localzone
 
 import six
 
-today = datetime.today()
-tomorrow = today + timedelta(days=1)
-
-TZNAME = get_localzone().zone
+from plone.app.event.base import localized_today
+from plone.app.event.base import localized_now
 
 
 def create_standard_content_for_tests(portal):
@@ -43,16 +41,15 @@ def create_standard_content_for_tests(portal):
 
         # XXX: handle setting text field for both, Archetypes and Dexterity
         set_text_field(obj, u"<p>The quick brown fox jumps over the lazy dog</p>")
+        now = localized_now()
+        tomorrow = now + timedelta(days=1)
 
         api.content.create(
             container=portal,
             type="Event",
             title=u"My event",
-            startDate=DateTime(today),  # Archetypes
-            endDate=DateTime(tomorrow),
-            start=today,  # Dexterity
+            start=now,
             end=tomorrow,
-            timezone=TZNAME,
         )
 
         api.content.create(
