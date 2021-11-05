@@ -6,6 +6,7 @@ from datetime import datetime
 from datetime import timedelta
 from tzlocal import get_localzone
 
+import six
 
 today = datetime.today()
 tomorrow = today + timedelta(days=1)
@@ -94,7 +95,7 @@ def set_image_field(obj, image):
         obj.setImage(image)  # Archetypes
     except AttributeError:
         # Dexterity
-        data = image if type(image) == str else image.getvalue()
+        data = image if isinstance(image, six.binary_type) else image.getvalue()
         obj.image = NamedBlobImage(data=data, contentType="image/jpeg")
     finally:
         obj.reindexObject()

@@ -36,7 +36,7 @@ class ContentChooserTestCase(unittest.TestCase):
         self.assertIn("items", json_response)
         json_objects_ids = [i["id"] for i in json_response["items"]]
 
-        self.assertItemsEqual(json_objects_ids, portal_objects_ids)
+        self.assertCountEqual(json_objects_ids, portal_objects_ids)
 
         paths = json_response["path"]
         self.assertEqual(len(paths), 1)

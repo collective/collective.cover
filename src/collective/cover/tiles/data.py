@@ -47,7 +47,8 @@ class PersistentCoverTileDataManager(PersistentTileDataManager):
         except KeyError:
             pass
 
-        for k, v in data.items():
+        data_copy = {**data}
+        for k, v in data_copy.items():
             if INamedImage.providedBy(v):
                 mtime_key = "{0}_mtime".format(k)
                 if (

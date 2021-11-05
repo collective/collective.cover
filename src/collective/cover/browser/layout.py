@@ -20,6 +20,7 @@ from zope.event import notify
 from zope.schema.interfaces import IVocabularyFactory
 
 import json
+import six
 
 
 # TODO: implement EditCancelledEvent and EditFinishedEvent
@@ -71,8 +72,9 @@ class LayoutEdit(BrowserView):
                 # Store name and layout as unicode.  Note that the
                 # name must only contain ascii because it is used as
                 # value for a vocabulary.
-                name = name.decode("ascii", "ignore")
-                layout = layout.decode("utf-8")
+                if six.PY2:
+                    name = name.decode("ascii", "ignore")
+                    layout = layout.decode("utf-8")
                 settings.layouts[name] = layout
 
         return self.index()
@@ -148,7 +150,9 @@ class PageLayout(BrowserView):
             return self.group(section=section, mode=mode)
         elif section["type"] == u"tile":
             tile_url = "@@{0}/{1}".format(section.get("tile-type"), section.get("id"))
-            tile = self.context.restrictedTraverse(tile_url.encode(), None)
+            if six.PY2:
+                tile_url = tile_url.encode()
+            tile = self.context.restrictedTraverse(tile_url, None)
             if tile is None:
                 return '<div class="tileNotFound">Could not find tile</div>'
             if mode == "layout_edit":

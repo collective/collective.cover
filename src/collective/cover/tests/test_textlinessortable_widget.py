@@ -143,10 +143,10 @@ class TestTextLinesSortableWidget(unittest.TestCase):
         expected = {
             obj1.UID(): {
                 u"custom_url": u"custom_url",
-                u"order": u"0",
+                u"order": 0,
             },
-            obj2.UID(): {u"order": u"2"},
-            obj3.UID(): {u"order": u"1"},
+            obj2.UID(): {u"order": 2},
+            obj3.UID(): {u"order": 1},
         }
 
         extracted_value = widget.extract()
@@ -181,14 +181,14 @@ class TestTextLinesSortableWidget(unittest.TestCase):
         widget.name = name
         widget.context = {
             "uuids": {
-                obj1.UID(): {u"order": u"0", u"custom_description": u"áéíóú"},
-                obj2.UID(): {u"order": u"1", u"custom_description": u""},
+                obj1.UID(): {u"order": 0, u"custom_description": u"áéíóú"},
+                obj2.UID(): {u"order": 1, u"custom_description": u""},
             },
         }
 
         expected = {
-            obj1.UID(): {u"order": u"0"},
-            obj2.UID(): {u"order": u"1"},
+            obj1.UID(): {u"order": 0},
+            obj2.UID(): {u"order": 1},
         }
 
         extracted_value = widget.extract()

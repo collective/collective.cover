@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from interfaces import IMoreLinkWidget
+from collective.cover.tiles.edit_widgets.interfaces import IMoreLinkWidget
 from Products.CMFCore.utils import getToolByName
 from z3c.form import interfaces
 from z3c.form.browser.text import TextWidget

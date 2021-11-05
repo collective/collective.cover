@@ -13,12 +13,12 @@ import json
 import zope.interface
 
 
+@zope.interface.implementer(ISelectPreviewWidget)
 class SelectPreviewWidget(select.SelectWidget):
     """Widget for adding new keywords and autocomplete with the ones in the
     system.
     """
 
-    zope.interface.implementsOnly(ISelectPreviewWidget)
     klass = u"keyword-widget"
     display_template = ViewPageTemplateFile("selectpreview_display.pt")
     input_template = ViewPageTemplateFile("selectpreview_input.pt")
