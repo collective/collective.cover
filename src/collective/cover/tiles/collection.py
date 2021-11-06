@@ -128,7 +128,7 @@ class CollectionTile(PersistentCoverTile):
             if self.data.get("random", False):
                 if size > len(results):
                     size = len(results)
-                return random.sample(results, size)
+                return random.sample(list(results), size)
 
             return results[offset : offset + size]
         else:

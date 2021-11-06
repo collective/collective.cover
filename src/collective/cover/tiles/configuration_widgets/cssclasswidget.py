@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from interfaces import ICSSClassWidget
+from collective.cover.tiles.configuration_widgets.interfaces import ICSSClassWidget
 from z3c.form import interfaces
 from z3c.form.browser import widget
 from z3c.form.browser.select import SelectWidget

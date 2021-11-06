@@ -55,7 +55,6 @@ setup(
         "collective.js.bootstrap",
         "collective.js.galleria",
         "collective.js.jqueryui",
-        "collective.z3cform.datetimewidget",
         "Missing",
         "plone.api",
         "plone.app.blocks",

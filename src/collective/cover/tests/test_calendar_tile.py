@@ -7,6 +7,7 @@ import unittest
 
 
 class CalendarTileTestCase(TestTileMixin, unittest.TestCase):
+
     def setUp(self):
         super(CalendarTileTestCase, self).setUp()
         self.tile = CalendarTile(self.cover, self.request)
@@ -26,10 +27,3 @@ class CalendarTileTestCase(TestTileMixin, unittest.TestCase):
 
     def test_accepted_content_types(self):
         self.assertEqual(self.tile.accepted_ct(), [])
-
-
-# load tests only in Plone < 5
-def test_suite():
-    return unittest.TestSuite()
-
-    return unittest.defaultTestLoader.loadTestsFromName(__name__)
