@@ -5,8 +5,8 @@ from collective.cover.tiles.base import IPersistentCoverTile
 from collective.cover.tiles.base import PersistentCoverTile
 from collective.cover.tiles.configuration import ITilesConfigurationScreen
 from collective.cover.tiles.permissions import ITilesPermissions
-from io import StringIO
 from plone.tiles.interfaces import ITileDataManager
+from six import StringIO
 from zope.component import getMultiAdapter
 from zope.configuration.xmlconfig import xmlconfig
 

@@ -5,6 +5,7 @@ from lxml import etree  # nosec
 from plone import api
 
 import json
+import six
 import unittest
 
 
@@ -36,7 +37,11 @@ class ContentChooserTestCase(unittest.TestCase):
         self.assertIn("items", json_response)
         json_objects_ids = [i["id"] for i in json_response["items"]]
 
-        self.assertCountEqual(json_objects_ids, portal_objects_ids)
+        if six.PY2:
+            self.assertItemsEqual(json_objects_ids, portal_objects_ids)
+        else:
+            self.assertCountEqual(json_objects_ids, portal_objects_ids)
+
 
         paths = json_response["path"]
         self.assertEqual(len(paths), 1)
