@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from collective.cover.config import IS_PLONE_5
 from collective.cover.controlpanel import ICoverSettings
 from collective.cover.interfaces import IGridSystem
 from collective.cover.tiles.base import IPersistentCoverTile

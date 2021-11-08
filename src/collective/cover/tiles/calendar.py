@@ -8,15 +8,14 @@ from plone import api
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.utils import safe_unicode
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-from plone.app.event.base import get_events
 from six.moves.urllib.parse import quote_plus
 from time import localtime
 from zope.component import getMultiAdapter
 from zope.i18nmessageid import MessageFactory
 from zope.interface import implementer
-from zope.interface.declarations import providedBy
 
 import calendar
+
 
 PLMF = MessageFactory("plonelocales")
 
@@ -35,8 +34,8 @@ class CalendarTile(PersistentCoverTile):
     is_editable = False
     is_droppable = False
     short_name = _(u"msg_short_name_calendar", default=u"Calendar")
-    calendar_states = ('published',)
-    calendar_types = ('Event',)
+    calendar_states = ("published",)
+    calendar_types = ("Event",)
 
     def __init__(self, context, request):
         super(CalendarTile, self).__init__(context, request)
@@ -74,9 +73,7 @@ class CalendarTile(PersistentCoverTile):
             (self.context, self.request), name="plone_portal_state"
         )
         navigation_root_path = portal_state.navigation_root_path()
-        weeks = self.old_getEventsForCalendar(
-            month, year, path=navigation_root_path
-        )
+        weeks = self.old_getEventsForCalendar(month, year, path=navigation_root_path)
 
         for week in weeks:
             for day in week:
@@ -102,9 +99,9 @@ class CalendarTile(PersistentCoverTile):
 
         return weeks
 
-    def old_getEventsForCalendar(self, month='1', year='2002', **kw):
-        """ recreates a sequence of weeks, by days each day is a mapping.
-            {'day': #, 'url': None}
+    def old_getEventsForCalendar(self, month="1", year="2002", **kw):
+        """recreates a sequence of weeks, by days each day is a mapping.
+        {'day': #, 'url': None}
         """
         year = int(year)
         month = int(month)
@@ -114,7 +111,7 @@ class CalendarTile(PersistentCoverTile):
         #  [14, 15, 16, 17, 18, 19, 20],
         #  [21, 22, 23, 24, 25, 26, 27],
         #  [28, 29, 30, 31, 0, 0, 0]]
-        first_weekday = api.portal.get_registry_record('plone.first_weekday') + 1
+        first_weekday = api.portal.get_registry_record("plone.first_weekday") + 1
 
         calendar.setfirstweekday(first_weekday)
         daysByWeek = calendar.monthcalendar(year, month)
@@ -128,15 +125,14 @@ class CalendarTile(PersistentCoverTile):
                 if day in events:
                     days.append(events[day])
                 else:
-                    days.append({'day': day, 'event': 0, 'eventslist': []})
+                    days.append({"day": day, "event": 0, "eventslist": []})
 
             weeks.append(days)
 
         return weeks
 
     def old_catalog_getevents(self, year, month, **kw):
-        """ given a year and month return a list of days that have events
-        """
+        """given a year and month return a list of days that have events"""
         # XXX: this method violates the rules for tools/utilities:
         # it depends on a non-utility tool
         year = int(year)
@@ -146,22 +142,21 @@ class CalendarTile(PersistentCoverTile):
         last_date = self.old_getBeginAndEndTimes(last_day, month, year)[1]
 
         query_args = {
-            'portal_type': self.calendar_types,
-            'review_state': self.calendar_states,
-            'start': {'query': last_date, 'range': 'max'},
-            'end': {'query': first_date, 'range': 'min'},
-            'sort_on': 'start'}
+            "portal_type": self.calendar_types,
+            "review_state": self.calendar_states,
+            "start": {"query": last_date, "range": "max"},
+            "end": {"query": first_date, "range": "min"},
+            "sort_on": "start",
+        }
         query_args.update(kw)
 
-        ctool = getToolByName(self, 'portal_catalog')
+        ctool = getToolByName(self, "portal_catalog")
         query = ctool(**query_args)
 
         # compile a list of the days that have events
         eventDays = {}
         for daynumber in range(1, 32):  # 1 to 31
-            eventDays[daynumber] = {'eventslist': [],
-                                    'event': 0,
-                                    'day': daynumber}
+            eventDays[daynumber] = {"eventslist": [], "event": 0, "day": daynumber}
         includedevents = []
         for result in query:
             if result.getRID() in includedevents:
@@ -174,48 +169,51 @@ class CalendarTile(PersistentCoverTile):
                 # doesn't work for events that last ~12 months
                 # fix it if it's a problem, otherwise ignore
                 eventEndDay = last_day
-                event['end'] = None
+                event["end"] = None
             else:
                 eventEndDay = result.end.day
-                event['end'] = result.end.time()
+                event["end"] = result.end.time()
             # and events that started last month
             if result.start.month != month:  # same as above (12 month thing)
                 eventStartDay = 1
-                event['start'] = None
+                event["start"] = None
             else:
                 eventStartDay = result.start.day
-                event['start'] = result.start.time()
+                event["start"] = result.start.time()
 
-            event['title'] = result.Title or result.getId
+            event["title"] = result.Title or result.getId
 
             if eventStartDay != eventEndDay:
                 allEventDays = range(eventStartDay, eventEndDay + 1)
-                eventDays[eventStartDay]['eventslist'].append(
-                        {'end': None,
-                         'start': result.start.time(),
-                         'title': event['title']})
-                eventDays[eventStartDay]['event'] = 1
+                eventDays[eventStartDay]["eventslist"].append(
+                    {"end": None, "start": result.start.time(), "title": event["title"]}
+                )
+                eventDays[eventStartDay]["event"] = 1
 
                 for eventday in allEventDays[1:-1]:
-                    eventDays[eventday]['eventslist'].append(
-                        {'end': None,
-                         'start': None,
-                         'title': event['title']})
-                    eventDays[eventday]['event'] = 1
+                    eventDays[eventday]["eventslist"].append(
+                        {"end": None, "start": None, "title": event["title"]}
+                    )
+                    eventDays[eventday]["event"] = 1
 
                 if result.end == result.end.replace(hour=0, minute=0, second=0):
                     last_day_data = eventDays[allEventDays[-2]]
-                    last_days_event = last_day_data['eventslist'][-1]
-                    last_days_event['end'] = \
+                    last_days_event = last_day_data["eventslist"][-1]
+                    last_days_event["end"] = (
                         (result.end - 1).replace(hour=23, minute=59, second=59).time()
+                    )
                 else:
-                    eventDays[eventEndDay]['eventslist'].append(
-                        {'end': result.end.time(),
-                         'start': None, 'title': event['title']})
-                    eventDays[eventEndDay]['event'] = 1
+                    eventDays[eventEndDay]["eventslist"].append(
+                        {
+                            "end": result.end.time(),
+                            "start": None,
+                            "title": event["title"],
+                        }
+                    )
+                    eventDays[eventEndDay]["event"] = 1
             else:
-                eventDays[eventStartDay]['eventslist'].append(event)
-                eventDays[eventStartDay]['event'] = 1
+                eventDays[eventStartDay]["eventslist"].append(event)
+                eventDays[eventStartDay]["event"] = 1
             # This list is not uniqued and isn't sorted
             # uniquing and sorting only wastes time
             # and in this example we don't need to because
@@ -225,15 +223,15 @@ class CalendarTile(PersistentCoverTile):
         return eventDays
 
     def old_getBeginAndEndTimes(self, day, month, year):
-        """ Get two DateTime objects representing the beginning and end
+        """Get two DateTime objects representing the beginning and end
         of the given day
         """
         day = int(day)
         month = int(month)
         year = int(year)
 
-        begin = DateTime('%d/%02d/%02d 00:00:00' % (year, month, day))
-        end = DateTime('%d/%02d/%02d 23:59:59' % (year, month, day))
+        begin = DateTime("{0}/{1:02d}/{2:02d} 00:00:00".format(year, month, day))
+        end = DateTime("{0}/{1:02d}/{2:02d} 23:59:59".format(year, month, day))
 
         return (begin, end)
 
@@ -309,7 +307,7 @@ class CalendarTile(PersistentCoverTile):
     def getWeekdays(self):
         """Returns a list of Messages for the weekday names."""
         weekdays = []
-        first_weekday = api.portal.get_registry_record('plone.first_weekday') + 1
+        first_weekday = api.portal.get_registry_record("plone.first_weekday") + 1
         day_numbers = [i % 7 for i in range(first_weekday, first_weekday + 7)]
 
         # list of ordered weekdays as numbers

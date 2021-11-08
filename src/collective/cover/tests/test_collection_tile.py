@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 from collective.cover.tests.base import TestTileMixin
-from plone.app.event.base import localized_today
 from collective.cover.tiles.collection import CollectionTile
 from collective.cover.tiles.collection import ICollectionTile
 from mock import Mock
 from plone import api
+from plone.app.event.base import localized_today
 from plone.uuid.interfaces import IUUID
 from Products.CMFPlone.utils import safe_unicode
 
