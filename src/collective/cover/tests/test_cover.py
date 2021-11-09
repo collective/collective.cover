@@ -3,7 +3,6 @@ from AccessControl import Unauthorized
 from collective.cover.config import DEFAULT_GRID_SYSTEM
 from collective.cover.controlpanel import ICoverSettings
 from collective.cover.interfaces import ICover
-from collective.cover.setuphandlers import HAS_RELATIONFIELD
 from collective.cover.testing import INTEGRATION_TESTING
 from plone import api
 from plone.app.dexterity.behaviors.exclfromnav import IExcludeFromNavigation
@@ -56,7 +55,6 @@ class CoverIntegrationTestCase(unittest.TestCase):
     def test_locking_behavior(self):
         self.assertTrue(ILocking.providedBy(self.cover))
 
-    @unittest.skipUnless(HAS_RELATIONFIELD, "Needs plone.app.relationfield")
     def test_relateditems_behavior(self):
         from plone.app.relationfield.behavior import IRelatedItems
 
