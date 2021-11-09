@@ -18,10 +18,11 @@
   <property name="klass">collective.cover.content.Cover</property>
 
   <property name="behaviors">
-    <element value="plone.app.content.interfaces.INameFromTitle" />
-    <element value="plone.app.dexterity.behaviors.metadata.IBasic" />
-    <element value="plone.app.dexterity.behaviors.exclfromnav.IExcludeFromNavigation" />
-    <element value="plone.app.lockingbehavior.behaviors.ILocking" />
+    <element value="plone.namefromtitle" />
+    <element value="plone.basic" />
+    <element value="plone.excludefromnavigation" />
+    <element value="plone.locking" />
+    <element value="plone.relateditems" />
   </property>
 
   <!-- View information -->

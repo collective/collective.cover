@@ -3,10 +3,14 @@ from collective.cover.testing import INTEGRATION_TESTING
 from io import StringIO
 from lxml import etree  # nosec
 from plone import api
+from zope.component import queryUtility
+from zope.schema.interfaces import IVocabularyFactory
 
 import json
 import six
 import unittest
+
+from zope.interface.declarations import providedBy
 
 
 parser = etree.HTMLParser()
@@ -27,7 +31,10 @@ class ContentChooserTestCase(unittest.TestCase):
 
     def test_jsonbytype(self):
         catalog = self.portal["portal_catalog"]
-        results = catalog()
+        VOCAB_ID = u"plone.app.vocabularies.ReallyUserFriendlyTypes"
+        vocab = queryUtility(IVocabularyFactory, name=VOCAB_ID)(self.portal)
+        types = [i.value for i in vocab]
+        results = catalog(portal_type=types)
         portal_objects_ids = [i.id for i in results]
 
         view = self.portal.unrestrictedTraverse("@@jsonbytype")
