@@ -10,8 +10,6 @@ import json
 import six
 import unittest
 
-from zope.interface.declarations import providedBy
-
 
 parser = etree.HTMLParser()
 
