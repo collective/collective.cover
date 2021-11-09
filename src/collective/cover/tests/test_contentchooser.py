@@ -42,7 +42,6 @@ class ContentChooserTestCase(unittest.TestCase):
         else:
             self.assertCountEqual(json_objects_ids, portal_objects_ids)
 
-
         paths = json_response["path"]
         self.assertEqual(len(paths), 1)
         path = paths[0]

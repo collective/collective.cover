@@ -10,8 +10,6 @@ from z3c.form.browser import textlines
 from zope.browserpage.viewpagetemplatefile import ViewPageTemplateFile
 from zope.interface import implementer
 
-import six
-
 
 @implementer(ITextLinesSortableWidget)
 class TextLinesSortableWidget(textlines.TextLinesWidget):
@@ -155,6 +153,7 @@ class TextLinesSortableWidget(textlines.TextLinesWidget):
             if custom_url != u"" and custom_url != url:
                 results[uuid][u"custom_url"] = safe_unicode(custom_url)
         return results
+
 
 @implementer(interfaces.IFieldWidget)
 def TextLinesSortableFieldWidget(field, request):

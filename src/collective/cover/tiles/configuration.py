@@ -13,8 +13,6 @@ from zope.schema.interfaces import IDatetime
 from zope.schema.interfaces import IInt
 from zope.schema.interfaces import ITextLine
 
-import six
-
 
 ANNOTATIONS_KEY_PREFIX = u"plone.tiles.configuration"
 

@@ -2,19 +2,14 @@
 """Helper functions to create test content and work around API
 inconsistencies among Archetypes and Dexterity.
 """
-from datetime import datetime
 from datetime import timedelta
-from tzlocal import get_localzone
+from plone.app.event.base import localized_now
 
 import six
-
-from plone.app.event.base import localized_today
-from plone.app.event.base import localized_now
 
 
 def create_standard_content_for_tests(portal):
     """Create one instance of each standard content type, at least."""
-    from DateTime import DateTime
     from plone import api
 
     with api.env.adopt_roles(["Manager"]):

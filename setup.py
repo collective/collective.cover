@@ -122,7 +122,6 @@ setup(
             "robotsuite",
             "testfixtures",
             "transaction",
-            "tzlocal",
         ],
     },
     entry_points="""

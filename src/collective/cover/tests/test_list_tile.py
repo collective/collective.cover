@@ -3,11 +3,11 @@ from collective.cover.testing import ALL_CONTENT_TYPES
 from collective.cover.testing import zptlogo
 from collective.cover.tests.base import TestTileMixin
 from collective.cover.tests.utils import set_image_field
-from plone.app.event.base import localized_today
 from collective.cover.tiles.list import IListTile
 from collective.cover.tiles.list import ListTile
 from mock import Mock
 from plone import api
+from plone.app.event.base import localized_today
 from plone.app.testing import login
 from plone.app.testing import logout
 from plone.app.testing import TEST_USER_NAME

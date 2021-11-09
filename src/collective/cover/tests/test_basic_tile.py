@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 from collective.cover.testing import ALL_CONTENT_TYPES
 from collective.cover.tests.base import TestTileMixin
-from plone.app.event.base import localized_today
 from collective.cover.tiles.basic import BasicTile
 from collective.cover.tiles.basic import IBasicTile
 from DateTime import DateTime
-from lxml import etree  # nosec
+from lxml import etree
 from mock import Mock
 from plone import api
+from plone.app.event.base import localized_today
 from plone.app.testing import logout
 from plone.cachepurging.hooks import queuePurge
 from plone.cachepurging.interfaces import ICachePurgingSettings
@@ -130,9 +130,7 @@ class BasicTileTestCase(TestTileMixin, unittest.TestCase):
         obj.reindexObject()
         self.tile.populate_with_object(obj)
         self.assertEqual(safe_unicode(title), self.tile.data.get("title"))
-        self.assertEqual(
-            safe_unicode(description), self.tile.data.get("description")
-        )
+        self.assertEqual(safe_unicode(description), self.tile.data.get("description"))
 
     def test_render_empty(self):
         msg = "Please drag&amp;drop some content here to populate the tile."
