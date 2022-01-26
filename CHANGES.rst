@@ -6,10 +6,13 @@ There's a frood who really knows where his towel is.
 3.0.0 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Add suport to Python 3.6, 3.7 and 3.8.
+  [pbauer]
+
 - Drop support for Plone 4.x
   [cleberjsantos]
 
-- Initial Plone 5.2 support
+- Add support to Plone 5.2.
   [cleberjsantos]
 
 - Drop PFG support
