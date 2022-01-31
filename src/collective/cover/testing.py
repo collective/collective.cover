@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import
+
 from collective.cover.tests.utils import create_standard_content_for_tests
 from collective.cover.tests.utils import set_file_field
 from collective.cover.tests.utils import set_image_field
