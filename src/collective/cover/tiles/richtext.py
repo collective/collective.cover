@@ -12,7 +12,7 @@ from plone.app.textfield.value import RichTextValue
 from plone.tiles.interfaces import ITileDataManager
 from plone.uuid.interfaces import IUUID
 from Products.CMFPlone.utils import safe_hasattr
-from Products.CMFPlone.utils import safe_unicode
+from Products.CMFPlone.utils import safe_text
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zope import schema
 from zope.interface import implementer
@@ -100,5 +100,5 @@ class SearchableRichTextTile(object):
             encoding="utf-8" if isinstance(value, six.text_type) else value.encoding,
         )
 
-        searchable_text = safe_unicode(data.getData())
+        searchable_text = safe_text(data.getData())
         return searchable_text.strip()  # remove leading and trailing spaces

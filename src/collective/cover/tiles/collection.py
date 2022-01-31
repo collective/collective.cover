@@ -10,7 +10,7 @@ from plone.namedfile.field import NamedBlobImage as NamedImage
 from plone.tiles.interfaces import ITileDataManager
 from plone.tiles.interfaces import ITileType
 from plone.uuid.interfaces import IUUID
-from Products.CMFPlone.utils import safe_unicode
+from Products.CMFPlone.utils import safe_text
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zope import schema
 from zope.component import queryUtility
@@ -145,7 +145,7 @@ class CollectionTile(PersistentCoverTile):
         super(CollectionTile, self).populate_with_object(obj)  # check permission
 
         if obj.portal_type in self.accepted_ct():
-            header = safe_unicode(obj.Title())  # use collection's title as header
+            header = safe_text(obj.Title())  # use collection's title as header
             footer = _(u"More…")  # XXX: can we use field's default?
 
             data_mgr = ITileDataManager(self)

@@ -2,7 +2,7 @@
 from persistent.dict import PersistentDict
 from plone.namedfile.interfaces import INamedBlobImageField
 from plone.tiles.interfaces import ITileType
-from Products.CMFPlone.utils import safe_unicode
+from Products.CMFPlone.utils import safe_text
 from zope.annotation.interfaces import IAnnotations
 from zope.component import getUtility
 from zope.interface import implementer
@@ -104,7 +104,7 @@ class TilesConfigurationScreen(object):
         fields = getFieldNamesInOrder(tile_type.schema)
 
         for name, field in getFieldsInOrder(tile_type.schema):
-            order = safe_unicode(fields.index(name))
+            order = safe_text(fields.index(name))
             # default configuration attributes for all fields
             defaults[name] = {"order": order, "visibility": u"on"}
             if name == "css_class":

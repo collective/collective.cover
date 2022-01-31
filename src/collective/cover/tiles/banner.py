@@ -9,7 +9,7 @@ from plone.autoform import directives as form
 from plone.namedfile import field
 from plone.tiles.interfaces import ITileDataManager
 from plone.uuid.interfaces import IUUID
-from Products.CMFPlone.utils import safe_unicode
+from Products.CMFPlone.utils import safe_text
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zope import schema
 from zope.interface import implementer
@@ -87,8 +87,8 @@ class BannerTile(PersistentCoverTile):
             self.clear_scales()
 
         obj = aq_base(obj)  # avoid acquisition
-        title = safe_unicode(obj.Title())
-        description = safe_unicode(obj.Description())
+        title = safe_text(obj.Title())
+        description = safe_text(obj.Description())
 
         data_mgr = ITileDataManager(self)
         data_mgr.set(

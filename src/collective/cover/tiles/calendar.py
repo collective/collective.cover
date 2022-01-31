@@ -6,7 +6,7 @@ from collective.cover.tiles.base import PersistentCoverTile
 from DateTime import DateTime
 from plone import api
 from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone.utils import safe_unicode
+from Products.CMFPlone.utils import safe_text
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from six.moves.urllib.parse import quote_plus
 from time import localtime
@@ -238,7 +238,7 @@ class CalendarTile(PersistentCoverTile):
     def getEventString(self, event):
         start = event["start"] and ":".join(str(event["start"]).split(":")[:2]) or ""
         end = event["end"] and ":".join(str(event["end"]).split(":")[:2]) or ""
-        title = safe_unicode(event["title"]) or u"event"
+        title = safe_text(event["title"]) or u"event"
 
         if start and end:
             eventstring = "{0}-{1} {2}".format(start, end, title)

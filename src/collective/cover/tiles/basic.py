@@ -11,7 +11,7 @@ from plone.memoize.instance import memoizedproperty
 from plone.namedfile.field import NamedBlobImage as NamedImage
 from plone.tiles.interfaces import ITileDataManager
 from plone.uuid.interfaces import IUUID
-from Products.CMFPlone.utils import safe_unicode
+from Products.CMFPlone.utils import safe_text
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zope import schema
 from zope.interface import implementer
@@ -138,8 +138,8 @@ class BasicTile(PersistentCoverTile):
     def populate_with_object(self, obj):
         super(BasicTile, self).populate_with_object(obj)
 
-        title = safe_unicode(obj.Title())
-        description = safe_unicode(obj.Description())
+        title = safe_text(obj.Title())
+        description = safe_text(obj.Description())
 
         image = self.get_image_data(obj)
         if image:

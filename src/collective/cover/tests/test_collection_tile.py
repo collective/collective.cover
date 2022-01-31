@@ -6,7 +6,7 @@ from mock import Mock
 from plone import api
 from plone.app.event.base import localized_today
 from plone.uuid.interfaces import IUUID
-from Products.CMFPlone.utils import safe_unicode
+from Products.CMFPlone.utils import safe_text
 
 import six
 import unittest
@@ -87,7 +87,7 @@ class CollectionTileTestCase(TestTileMixin, unittest.TestCase):
         obj.setTitle(title)
         obj.reindexObject()
         self.tile.populate_with_object(obj)
-        self.assertEqual(safe_unicode(title), self.tile.data.get("header"))
+        self.assertEqual(safe_text(title), self.tile.data.get("header"))
         self.assertTrue(self.tile.data.get("footer"))
         self.assertEqual(self.tile.data.get("uuid"), IUUID(obj))
 

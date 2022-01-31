@@ -12,7 +12,7 @@ from plone.app.uuid.utils import uuidToObject
 from plone.dexterity.content import Item
 from plone.indexer import indexer
 from plone.tiles.interfaces import ITileDataManager
-from Products.CMFPlone.utils import safe_unicode
+from Products.CMFPlone.utils import safe_text
 from zope.annotation import IAnnotations
 from zope.component import queryAdapter
 
@@ -184,7 +184,7 @@ def searchableText(obj):
             text_list.append(searchable.SearchableText())
     tiles_text = u" ".join(text_list)
     searchable_text = [
-        safe_unicode(entry)
+        safe_text(entry)
         for entry in (
             obj.id,
             obj.Title(),

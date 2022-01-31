@@ -6,7 +6,7 @@ from plone import api
 from plone.app.uuid.utils import uuidToObject
 from plone.tiles.interfaces import ITileDataManager
 from plone.uuid.interfaces import IUUID
-from Products.CMFPlone.utils import safe_unicode
+from Products.CMFPlone.utils import safe_text
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zope import schema
 from zope.interface import implementer
@@ -157,8 +157,8 @@ class FileTile(PersistentCoverTile):
         if obj.portal_type not in self.accepted_ct():
             return
         data = {
-            "title": safe_unicode(obj.Title()),
-            "description": safe_unicode(obj.Description()),
+            "title": safe_text(obj.Title()),
+            "description": safe_text(obj.Description()),
             "download": True,
             "uuid": IUUID(obj),
         }

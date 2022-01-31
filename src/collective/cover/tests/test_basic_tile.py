@@ -14,7 +14,7 @@ from plone.cachepurging.interfaces import ICachePurgingSettings
 from plone.namedfile.file import NamedBlobImage
 from plone.registry.interfaces import IRegistry
 from plone.tiles.interfaces import ITileDataManager
-from Products.CMFPlone.utils import safe_unicode
+from Products.CMFPlone.utils import safe_text
 from zope.annotation.interfaces import IAnnotations
 from zope.annotation.interfaces import IAttributeAnnotatable
 from zope.component import provideUtility
@@ -129,8 +129,8 @@ class BasicTileTestCase(TestTileMixin, unittest.TestCase):
         obj.setDescription(description)
         obj.reindexObject()
         self.tile.populate_with_object(obj)
-        self.assertEqual(safe_unicode(title), self.tile.data.get("title"))
-        self.assertEqual(safe_unicode(description), self.tile.data.get("description"))
+        self.assertEqual(safe_text(title), self.tile.data.get("title"))
+        self.assertEqual(safe_text(description), self.tile.data.get("description"))
 
     def test_render_empty(self):
         msg = "Please drag&amp;drop some content here to populate the tile."

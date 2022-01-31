@@ -14,7 +14,7 @@ from plone.namedfile.field import NamedBlobImage
 from plone.tiles.interfaces import ITileDataManager
 from plone.tiles.interfaces import ITileType
 from plone.uuid.interfaces import IUUID
-from Products.CMFPlone.utils import safe_unicode
+from Products.CMFPlone.utils import safe_text
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zope import schema
 from zope.component import queryUtility
@@ -208,7 +208,7 @@ class ListTile(PersistentCoverTile):
         for uuid in uuids:
             if uuid not in uuids_dict:
                 entry = dict()
-                entry[u"order"] = safe_unicode(order)
+                entry[u"order"] = safe_text(order)
                 uuids_dict[uuid] = entry
                 order += 1
 
