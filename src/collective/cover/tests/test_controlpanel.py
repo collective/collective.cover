@@ -117,3 +117,23 @@ class RegistryTestCase(unittest.TestCase):
 
         for r in records:
             self.assertNotIn(r, self.registry)
+
+    def test_records_not_overwriten_on_reinstall(self):
+        """Test changes are not purged on reinstall.
+        https://github.com/collective/collective.cover/issues/465
+        """
+        self.settings.styles = set(["foo"])
+        del self.settings.layouts["Empty layout"]
+
+        self.assertEqual(len(self.settings.styles), 1)
+        self.assertEqual(len(self.settings.layouts), 3)
+
+        qi = self.portal["portal_quickinstaller"]
+        qi.installProducts(products=[PROJECTNAME])
+        with api.env.adopt_roles(["Manager"]):
+            qi.reinstallProducts(products=[PROJECTNAME])
+
+        self.assertIn("foo", self.settings.styles)
+        self.assertEqual(len(self.settings.styles), 5)
+        self.assertIn("Empty layout", self.settings.layouts)
+        self.assertEqual(len(self.settings.layouts), 4)
