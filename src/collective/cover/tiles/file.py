@@ -13,8 +13,6 @@ from zope import schema
 from zope.interface import implementer
 
 
-
-
 HTML = """
     <a href="{0}/at_download/file">
       <img src="{1}/{2}" alt="">
