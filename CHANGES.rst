@@ -6,6 +6,9 @@ There's a frood who really knows where his towel is.
 3.0.0 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Remove old upgrade steps.
+  [wesleybl]
+
 - Add suport to Python 3.6, 3.7 and 3.8.
   [pbauer]
 
