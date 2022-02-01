@@ -65,9 +65,9 @@ class BrowserViewsTestCase(unittest.TestCase):
         # alternate view should show title, description and viewlets
         self.assertEqual(len(html.xpath('.//h1[contains(text(),"My Title")]')), 1)
         # FIXME: html in Plone 6 is different (<p class="lead">My Description</p>)
-        # self.assertEqual(
-        #     len(html.xpath('.//div[contains(text(),"My Description")]')), 1
-        # )
+        self.assertEqual(
+            len(html.xpath('.//div[contains(text(),"My Description")]')), 1
+        )
 
     def test_body_class(self):
         view = api.content.get_view(u"view", self.c1, self.request)
