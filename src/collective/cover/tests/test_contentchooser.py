@@ -3,8 +3,11 @@ from collective.cover.testing import INTEGRATION_TESTING
 from io import StringIO
 from lxml import etree  # nosec
 from plone import api
+from zope.component import queryUtility
+from zope.schema.interfaces import IVocabularyFactory
 
 import json
+import six
 import unittest
 
 
@@ -26,7 +29,10 @@ class ContentChooserTestCase(unittest.TestCase):
 
     def test_jsonbytype(self):
         catalog = self.portal["portal_catalog"]
-        results = catalog()
+        VOCAB_ID = u"plone.app.vocabularies.ReallyUserFriendlyTypes"
+        vocab = queryUtility(IVocabularyFactory, name=VOCAB_ID)(self.portal)
+        types = [i.value for i in vocab]
+        results = catalog(portal_type=types)
         portal_objects_ids = [i.id for i in results]
 
         view = self.portal.unrestrictedTraverse("@@jsonbytype")
@@ -36,7 +42,10 @@ class ContentChooserTestCase(unittest.TestCase):
         self.assertIn("items", json_response)
         json_objects_ids = [i["id"] for i in json_response["items"]]
 
-        self.assertItemsEqual(json_objects_ids, portal_objects_ids)
+        if six.PY2:
+            self.assertItemsEqual(json_objects_ids, portal_objects_ids)
+        else:
+            self.assertCountEqual(json_objects_ids, portal_objects_ids)
 
         paths = json_response["path"]
         self.assertEqual(len(paths), 1)
@@ -98,3 +107,15 @@ class ContentChooserTestCase(unittest.TestCase):
         self.request.set("b_size", 1)
         view()
         self.assertEqual(view.nextpage, 2)
+
+    def test_content_with_unicode_description(self):
+        with api.env.adopt_roles(["Manager"]):
+            api.content.create(
+                container=self.portal,
+                type="News Item",
+                id="noticia",
+                title=u"Noticia",
+                description=u"Isto é uma notícias",
+            )
+        view = api.content.get_view(u"content-search", self.cover, self.request)
+        self.assertIn(u"Isto é uma notícias", view())

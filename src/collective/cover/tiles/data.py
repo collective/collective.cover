@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from collective.cover.tiles.base import IPersistentCoverTile
+from copy import copy
 from persistent.dict import PersistentDict
 from plone.namedfile.interfaces import INamedImage
 from plone.tiles.data import PersistentTileDataManager
@@ -47,7 +48,8 @@ class PersistentCoverTileDataManager(PersistentTileDataManager):
         except KeyError:
             pass
 
-        for k, v in data.items():
+        data_copy = copy(data)
+        for k, v in data_copy.items():
             if INamedImage.providedBy(v):
                 mtime_key = "{0}_mtime".format(k)
                 if (

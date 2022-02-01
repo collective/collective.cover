@@ -64,6 +64,7 @@ class BrowserViewsTestCase(unittest.TestCase):
         html = etree.HTML(view())
         # alternate view should show title, description and viewlets
         self.assertEqual(len(html.xpath('.//h1[contains(text(),"My Title")]')), 1)
+        # FIXME: html in Plone 6 is different (<p class="lead">My Description</p>)
         self.assertEqual(
             len(html.xpath('.//div[contains(text(),"My Description")]')), 1
         )

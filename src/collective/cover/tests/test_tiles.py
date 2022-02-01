@@ -23,7 +23,7 @@ class TilesTestCase(unittest.TestCase):
     @unittest.expectedFailure  # FIXME: remove tiles on uninstall
     def test_tiles_removed_on_uninstall(self):
         qi = self.portal["portal_quickinstaller"]
-        qi.uninstallProducts(products=[PROJECTNAME])
+        qi.uninstall_product(PROJECTNAME)
         tiles = self.registry["plone.app.tiles"]
         self.assertNotIn(u"collective.cover.basic", tiles)
         self.assertNotIn(u"collective.cover.carousel", tiles)

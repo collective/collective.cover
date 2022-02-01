@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from collective.cover.config import IS_PLONE_5
 from plone import api
 
 import uuid
@@ -52,9 +51,4 @@ def uuidToCatalogBrain(uuid):
 
 def get_types_use_view_action_in_listings():
     """Helper funtion to deal with API inconsistencies."""
-    if IS_PLONE_5:
-        return api.portal.get_registry_record("plone.types_use_view_action_in_listings")
-    else:
-        portal_properties = api.portal.get_tool(name="portal_properties")
-        site_properties = portal_properties.site_properties
-        return site_properties.getProperty("typesUseViewActionInListings", ())
+    return api.portal.get_registry_record("plone.types_use_view_action_in_listings")

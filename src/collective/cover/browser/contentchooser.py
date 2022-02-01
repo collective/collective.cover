@@ -11,7 +11,7 @@ from plone.registry.interfaces import IRegistry
 from Products.CMFCore.interfaces import IFolderish
 from Products.CMFPlone.browser.navtree import SitemapNavtreeStrategy
 from Products.CMFPlone.PloneBatch import Batch
-from Products.CMFPlone.utils import safe_unicode
+from Products.CMFPlone.utils import safe_text
 from Products.Five.browser import BrowserView
 from zope.browserpage.viewpagetemplatefile import ViewPageTemplateFile
 from zope.component import getUtility
@@ -75,7 +75,7 @@ class ContentSearch(BrowserView):
         catalog_query = {"sort_on": "effective", "sort_order": "descending"}
         catalog_query["portal_type"] = searchable_types
         if query:
-            catalog_query["Title"] = u"{0}*".format(safe_unicode(query))
+            catalog_query["Title"] = u"{0}*".format(safe_text(query))
         results = catalog(**catalog_query)
         self.total_results = len(results)
         start = (page - 1) * b_size
@@ -121,7 +121,7 @@ class SearchItemsBrowserView(BrowserView):
         # the vocabulary returns the values sorted by their translated title
         for term in vocab._terms:
             value = portal_types[term.value].id  # portal_type
-            title = safe_unicode(term.title)  # already translated title
+            title = safe_text(term.title)  # already translated title
             result.append((value, title))
 
         return result
@@ -216,7 +216,6 @@ class SearchItemsBrowserView(BrowserView):
                         normalizer.normalize(brain.review_state or "")
                     ),
                     "title": brain.Title == "" and brain.id or brain.Title,
-                    "icon": self.getIcon(brain).url or "",
                     "is_folderish": brain.is_folderish,
                     "description": brain.Description or "",
                 }

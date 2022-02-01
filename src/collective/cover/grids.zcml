@@ -2,6 +2,5 @@
 
   <utility name="bootstrap3" factory=".grids.Bootstrap3" />
   <utility name="bootstrap2" factory=".grids.Bootstrap2" />
-  <utility name="deco16_grid" factory=".grids.Deco16Grid" />
 
 </configure>

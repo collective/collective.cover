@@ -12,12 +12,14 @@ var rm_button = function(data) {
   return "<i class='tile-remove-item' data-uuid='" + uuid + "'><span class='text'>remove</span></i>";
 };
 
-(function($) {
+!(function($) {
+  "use strict";
 
   /*global jQuery, Galleria */
 
   Galleria.addTheme({
     name: 'cover_theme',
+    version: 1.6,
     author: 'Simples',
     css: '++resource++collective.cover/galleria/theme.css',
     defaults: {
@@ -32,7 +34,7 @@ var rm_button = function(data) {
     },
     init: function(options) {
 
-      Galleria.requires(1.28, 'This version of Classic theme requires Galleria 1.2.8 or later');
+      Galleria.requires(1.4, 'This version of cover_theme theme requires Galleria 1.4 or later');
 
       // cache some stuff
       var touch = Galleria.TOUCH,
@@ -113,5 +115,7 @@ var rm_button = function(data) {
       }
     }
   });
+
+  return Galleria;
 
 }(jQuery));

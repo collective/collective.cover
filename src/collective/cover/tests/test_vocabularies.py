@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from collective.cover.config import IS_PLONE_5
 from collective.cover.controlpanel import ICoverSettings
 from collective.cover.testing import INTEGRATION_TESTING
 from plone.registry.interfaces import IRegistry
@@ -45,11 +44,6 @@ class VocabulariesTestCase(unittest.TestCase):
             "collective.cover.list",
             "collective.cover.richtext",
         ]
-
-        # FIXME: https://github.com/collective/collective.cover/issues/633
-        if IS_PLONE_5:
-            expected.remove("collective.cover.calendar")
-
         self.assertEqual(len(tiles), len(expected))
         for i in expected:
             self.assertIn(i, tiles)
@@ -71,17 +65,6 @@ class VocabulariesTestCase(unittest.TestCase):
             "collective.cover.list",
             "collective.cover.richtext",
         ]
-
-        # FIXME: https://github.com/collective/collective.cover/issues/633
-        if IS_PLONE_5:
-            expected.remove("collective.cover.calendar")
-
-        # XXX: PFG tile is deprecated and will be removed in collective.cover 3
-        from collective.cover.testing import HAS_PFG
-
-        if HAS_PFG and "collective.cover.pfg" not in expected:
-            expected.append("collective.cover.pfg")
-
         self.assertEqual(len(tiles), len(expected))
         for i in expected:
             self.assertIn(i, tiles)
@@ -145,13 +128,11 @@ class VocabulariesTestCase(unittest.TestCase):
 
         # Our default grid system must be in the vocabulary.
         grids = vocabulary(self.portal)
-        self.assertEqual(len(grids), 3)
+        self.assertEqual(len(grids), 2)
         self.assertIn(u"bootstrap3", grids)
         self.assertIn(u"bootstrap2", grids)
-        self.assertIn(u"deco16_grid", grids)
         self.assertEqual(grids.getTerm("bootstrap3").title, u"Bootstrap 3")
         self.assertEqual(grids.getTerm("bootstrap2").title, u"Bootstrap 2")
-        self.assertEqual(grids.getTerm("deco16_grid").title, u"Deco (16 columns)")
 
     def test_image_scales(self):
         from collective.cover.browser.cover import Helper
@@ -160,6 +141,6 @@ class VocabulariesTestCase(unittest.TestCase):
 
         self.assertGreater(len(vocabulary), 0)
         # test against some expected values
-        self.assertIn(u"imagescale_mini", vocabulary)
-        self.assertIn(u"imagescale_preview", vocabulary)
-        self.assertIn(u"imagescale_large", vocabulary)
+        self.assertIn(u"mini 200:200", vocabulary)
+        self.assertIn(u"preview 400:400", vocabulary)
+        self.assertIn(u"large 768:768", vocabulary)

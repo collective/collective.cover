@@ -5,6 +5,7 @@ from collective.cover.tiles.file import FileTile
 from collective.cover.tiles.file import IFileTile
 from plone import api
 from plone.uuid.interfaces import IUUID
+from Products.CMFPlone.utils import safe_text
 
 import six
 import unittest
@@ -62,10 +63,8 @@ class FileTileTestCase(TestTileMixin, unittest.TestCase):
         obj.setDescription(description)
         obj.reindexObject()
         self.tile.populate_with_object(obj)
-        self.assertEqual(six.text_type(title, "utf-8"), self.tile.data.get("title"))
-        self.assertEqual(
-            six.text_type(description, "utf-8"), self.tile.data.get("description")
-        )
+        self.assertEqual(safe_text(title), self.tile.data.get("title"))
+        self.assertEqual(safe_text(description), self.tile.data.get("description"))
         self.assertEqual(self.tile.data.get("uuid"), IUUID(obj))
 
     def test_populate_tile_with_invalid_object(self):

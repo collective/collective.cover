@@ -3,11 +3,11 @@ from collective.cover.testing import ALL_CONTENT_TYPES
 from collective.cover.testing import zptlogo
 from collective.cover.tests.base import TestTileMixin
 from collective.cover.tests.utils import set_image_field
-from collective.cover.tests.utils import today
 from collective.cover.tiles.list import IListTile
 from collective.cover.tiles.list import ListTile
 from mock import Mock
 from plone import api
+from plone.app.event.base import localized_today
 from plone.app.testing import login
 from plone.app.testing import logout
 from plone.app.testing import TEST_USER_NAME
@@ -164,9 +164,11 @@ class ListTileTestCase(TestTileMixin, unittest.TestCase):
             self.assertIn(folder[str(i)], results)
 
         # for an anonymous user, no content is returned
+        from AccessControl import Unauthorized
+
         logout()
-        results = self.tile.results()
-        self.assertEqual(len(results), 0)
+        with self.assertRaises(Unauthorized):
+            results = self.tile.results()
 
         # for the test user, the first 5 objects should be still there
         login(self.portal, TEST_USER_NAME)
@@ -207,7 +209,7 @@ class ListTileTestCase(TestTileMixin, unittest.TestCase):
         event = self.portal["my-event"]
         self.tile.populate_with_object(event)
         rendered = self.tile()
-        start_date = api.portal.get_localized_time(today, long_format=True)
+        start_date = api.portal.get_localized_time(localized_today(), long_format=True)
         self.assertIn(start_date, rendered)
 
     def test_localized_time_is_rendered(self):
@@ -215,7 +217,7 @@ class ListTileTestCase(TestTileMixin, unittest.TestCase):
         self.tile.populate_with_object(event)
         rendered = self.tile()
         expected = api.portal.get_localized_time(
-            today, long_format=True, time_only=False
+            localized_today(), long_format=True, time_only=False
         )
         self.assertIn(expected, rendered)  # u'Jul 15, 2015 01:23 PM'
 
@@ -224,7 +226,7 @@ class ListTileTestCase(TestTileMixin, unittest.TestCase):
         self.tile.set_tile_configuration(tile_conf)
         rendered = self.tile()
         expected = api.portal.get_localized_time(
-            today, long_format=False, time_only=False
+            localized_today(), long_format=False, time_only=False
         )
         self.assertIn(expected, rendered)  # u'Jul 15, 2015
 
@@ -233,7 +235,7 @@ class ListTileTestCase(TestTileMixin, unittest.TestCase):
         self.tile.set_tile_configuration(tile_conf)
         rendered = self.tile()
         expected = api.portal.get_localized_time(
-            today, long_format=False, time_only=True
+            localized_today(), long_format=False, time_only=True
         )
         self.assertIn(expected, rendered)  # u'01:23 PM'
 

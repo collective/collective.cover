@@ -1,5 +1,7 @@
 <?xml version="1.0"?>
-<registry>
+<registry
+    xmlns:i18n="http://xml.zope.org/namespaces/i18n">
+
   <records interface="collective.cover.controlpanel.ICoverSettings" />
 
   <record field="layouts"
@@ -40,7 +42,6 @@
       <element>collective.cover.embed</element>
       <element>collective.cover.file</element>
       <element>collective.cover.list</element>
-      <element>collective.cover.pfg</element>
       <element>collective.cover.richtext</element>
     </value>
   </record>

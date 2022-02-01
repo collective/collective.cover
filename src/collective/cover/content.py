@@ -12,7 +12,7 @@ from plone.app.uuid.utils import uuidToObject
 from plone.dexterity.content import Item
 from plone.indexer import indexer
 from plone.tiles.interfaces import ITileDataManager
-from Products.CMFPlone.utils import safe_unicode
+from Products.CMFPlone.utils import safe_text
 from zope.annotation import IAnnotations
 from zope.component import queryAdapter
 
@@ -45,8 +45,8 @@ class Cover(Item):
         :type layout: list
         :returns: a list of tiles; each tile is described as {id, type}
         """
-        filter = types is not None
-        if filter and isinstance(types, str):
+        filter_tiles = types is not None
+        if filter_tiles and isinstance(types, str):
             types = [types]
 
         if layout is None:
@@ -65,13 +65,13 @@ class Cover(Item):
             assert isinstance(layout, list)  # nosec
 
         tiles = []
-        for e in layout:
-            if e["type"] == "tile":
-                if filter and e["tile-type"] not in types:
+        for item in layout:
+            if item["type"] == "tile":
+                if filter_tiles and item.get("tile-type", False) not in types:
                     continue
-                tiles.append(dict(id=e["id"], type=e["tile-type"]))
-            if "children" in e:
-                tiles.extend(self.get_tiles(types, e["children"]))
+                tiles.append(dict(id=item["id"], type=item["tile-type"]))
+            if "children" in item:
+                tiles.extend(self.get_tiles(types, item["children"]))
         return tiles
 
     def list_tiles(self, types=None):
@@ -157,7 +157,7 @@ class Cover(Item):
         layout_tiles = self.list_tiles()
         annotations = IAnnotations(self)
 
-        for key in annotations:
+        for key in annotations.keys():
             if not key.startswith(ANNOTATION_PREFIXES):
                 continue
 
@@ -184,7 +184,7 @@ def searchableText(obj):
             text_list.append(searchable.SearchableText())
     tiles_text = u" ".join(text_list)
     searchable_text = [
-        safe_unicode(entry)
+        safe_text(entry)
         for entry in (
             obj.id,
             obj.Title(),

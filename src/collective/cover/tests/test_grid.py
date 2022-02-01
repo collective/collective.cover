@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from collective.cover.config import DEFAULT_GRID_SYSTEM
-from collective.cover.config import IS_PLONE_5
 from collective.cover.controlpanel import ICoverSettings
 from collective.cover.testing import INTEGRATION_TESTING
 from plone import api
@@ -43,31 +42,12 @@ class GridTestCase(unittest.TestCase):
         self.view = folder.cover.restrictedTraverse("view")
 
     def test_default_grid(self):
-        if IS_PLONE_5:
-            self.assertEqual(DEFAULT_GRID_SYSTEM, "bootstrap3")
-        else:
-            self.assertEqual(DEFAULT_GRID_SYSTEM, "deco16_grid")
+        self.assertEqual(DEFAULT_GRID_SYSTEM, "bootstrap3")
 
     def _switch_grid_system(self, grid):
         registry = getUtility(IRegistry)
         settings = registry.forInterface(ICoverSettings)
         settings.grid_system = grid
-
-    def test_deco16_grid(self):
-        self._switch_grid_system("deco16_grid")
-
-        document = lxml.html.fromstring(self.view())
-        rows = document.cssselect("#content div.row")
-        cells0 = rows[0].cssselect("div.cell")
-        cells1 = rows[1].cssselect("div.cell")
-        cells2 = rows[2].cssselect("div.cell")
-
-        self.assertTrue(_has_classes(cells0[0], ("width-12", "position-0")))
-        self.assertTrue(_has_classes(cells1[0], ("width-6", "position-0")))
-        self.assertTrue(_has_classes(cells1[1], ("width-6", "position-6")))
-        self.assertTrue(_has_classes(cells2[0], ("width-4", "position-0")))
-        self.assertTrue(_has_classes(cells2[1], ("width-4", "position-4")))
-        self.assertTrue(_has_classes(cells2[2], ("width-4", "position-8")))
 
     def test_bootstrap3_grid(self):
         self._switch_grid_system("bootstrap3")

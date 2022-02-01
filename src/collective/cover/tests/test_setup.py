@@ -1,16 +1,17 @@
 # -*- coding: utf-8 -*-
-from collective.cover.config import IS_PLONE_5
 from collective.cover.config import PROJECTNAME
 from collective.cover.testing import INTEGRATION_TESTING
 from plone import api
 from plone.browserlayer.utils import registered_layers
+from plone.registry.interfaces import IRegistry
+from Products.CMFPlone.interfaces import IBundleRegistry
+from Products.CMFPlone.utils import get_installer
+from zope.component import getUtility
 
 import unittest
 
 
-JS = [
-    "++resource++collective.js.bootstrap/js/bootstrap.min.js",
-]
+JS = "++resource++collective.js.bootstrap/js/bootstrap.min.js"
 
 
 class InstallTestCase(unittest.TestCase):
@@ -18,27 +19,29 @@ class InstallTestCase(unittest.TestCase):
     layer = INTEGRATION_TESTING
 
     def setUp(self):
+        self.request = self.layer["request"]
         self.portal = self.layer["portal"]
-        self.qi = self.portal["portal_quickinstaller"]
+        self.registry = getUtility(IRegistry)
+        self.installer = get_installer(self.portal, self.request)
 
     def test_installed(self):
-        self.assertTrue(self.qi.isProductInstalled(PROJECTNAME))
+        self.assertTrue(self.installer.is_product_installed(PROJECTNAME))
 
     def test_addon_layer(self):
         layers = [layer.getName() for layer in registered_layers()]
         self.assertIn("ICoverLayer", layers)
 
-    @unittest.skipIf(IS_PLONE_5, "No easy way to test this under Plone 5")
-    def test_jsregistry(self):
-        resource_ids = self.portal.portal_javascripts.getResourceIds()
-        for id_ in JS:
-            self.assertIn(id_, resource_ids, "{0} not installed".format(id))
-
     def test_resources_available(self):
-        resources = JS
-        for id_ in resources:
-            res = self.portal.restrictedTraverse(id_)
-            self.assertTrue(res)
+        res = self.portal.restrictedTraverse(JS)
+        self.assertTrue(res)
+
+    def test_jsregistry(self):
+        bundles = self.registry.collectionOfInterface(
+            IBundleRegistry, prefix="plone.bundles"
+        )
+        bundle = bundles["bootstrap"]
+
+        self.assertEqual(bundle.jscompilation, JS)
 
     def test_reinstall_with_changed_registry(self):
         ps = getattr(self.portal, "portal_setup")
@@ -52,45 +55,36 @@ class InstallTestCase(unittest.TestCase):
         policy_map = repository.getPolicyMap()["collective.cover.content"]
         self.assertEqual(policy_map, [u"version_on_revert"])
 
-    @unittest.skipIf(IS_PLONE_5, "Plone 4.3 only")
-    def test_tinymce_linkable(self):
-        tinymce = self.portal["portal_tinymce"]
-        linkable = tinymce.linkable.split("\n")
-        self.assertIn("collective.cover.content", linkable)
-
 
 class UninstallTestCase(unittest.TestCase):
 
     layer = INTEGRATION_TESTING
 
     def setUp(self):
+        self.request = self.layer["request"]
         self.portal = self.layer["portal"]
-        self.qi = self.portal["portal_quickinstaller"]
+        self.registry = getUtility(IRegistry)
+        self.installer = get_installer(self.portal, self.request)
 
         with api.env.adopt_roles(["Manager"]):
-            self.qi.uninstallProducts(products=[PROJECTNAME])
+            self.installer.uninstall_product(PROJECTNAME)
 
     def test_uninstalled(self):
-        self.assertFalse(self.qi.isProductInstalled(PROJECTNAME))
+        self.assertFalse(self.installer.is_product_installed(PROJECTNAME))
 
     def test_addon_layer_removed(self):
         layers = [layer.getName() for layer in registered_layers()]
         self.assertNotIn("ICoverLayer", layers)
 
-    @unittest.skipIf(IS_PLONE_5, "No easy way to test this under Plone 5")
     def test_jsregistry_removed(self):
-        resource_ids = self.portal.portal_javascripts.getResourceIds()
-        for id_ in JS:
-            self.assertNotIn(id_, resource_ids, "{0} not removed".format(id))
+        bundles = self.registry.collectionOfInterface(
+            IBundleRegistry, prefix="plone.bundles"
+        )
+
+        self.assertNotIn("bootstrap", bundles.keys())
 
     @unittest.expectedFailure  # XXX: not pretty sure how to test this
     def test_versioning_policy_removed(self):
         repository = self.portal["portal_repository"]
         policy_map = repository.getPolicyMap()
         self.assertNotIn("collective.cover.content", policy_map)
-
-    @unittest.skipIf(IS_PLONE_5, "Plone 4.3 only")
-    def test_tinymce_linkable_removed(self):
-        tinymce = self.portal["portal_tinymce"]
-        linkable = tinymce.linkable.split("\n")
-        self.assertNotIn("collective.cover.content", linkable)

@@ -5,8 +5,8 @@ from collective.cover.tiles.base import IPersistentCoverTile
 from collective.cover.tiles.base import PersistentCoverTile
 from collective.cover.tiles.configuration import ITilesConfigurationScreen
 from collective.cover.tiles.permissions import ITilesPermissions
-from io import BytesIO
 from plone.tiles.interfaces import ITileDataManager
+from six import StringIO
 from zope.component import getMultiAdapter
 from zope.configuration.xmlconfig import xmlconfig
 
@@ -42,7 +42,7 @@ ZCML = """
 
 class BaseTileTestCase(TestTileMixin, unittest.TestCase):
     def _register_tile(self):
-        xmlconfig(BytesIO(ZCML))
+        xmlconfig(StringIO(ZCML))
 
     def setUp(self):
         super(BaseTileTestCase, self).setUp()

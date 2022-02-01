@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from collective.cover.config import IS_PLONE_5
 from collective.cover.controlpanel import ICoverSettings
 from collective.cover.interfaces import IGridSystem
 from collective.cover.tiles.base import IPersistentCoverTile
@@ -29,19 +28,9 @@ class AvailableLayoutsVocabulary(object):
 @implementer(IVocabularyFactory)
 class AvailableTilesVocabulary(object):
     def __call__(self, context):
-
         registry = getUtility(IRegistry)
         settings = registry.forInterface(ICoverSettings)
         tiles = settings.available_tiles
-
-        # FIXME: https://github.com/collective/collective.cover/issues/633
-        if IS_PLONE_5 and "collective.cover.calendar" in tiles:
-            tiles.remove("collective.cover.calendar")
-
-        # XXX: PFG tile is deprecated and will be removed in collective.cover 3
-        if IS_PLONE_5 and "collective.cover.pfg" in tiles:
-            tiles.remove("collective.cover.pfg")
-
         items = [SimpleTerm(value=i, title=i) for i in tiles]
         return SimpleVocabulary(items)
 
@@ -63,13 +52,6 @@ class EnabledTilesVocabulary(object):
 
     @staticmethod
     def enabled(name):
-        # FIXME: https://github.com/collective/collective.cover/issues/633
-        if IS_PLONE_5 and name == "collective.cover.calendar":
-            return False
-
-        # XXX: PFG tile is deprecated and will be removed in collective.cover 3
-        if IS_PLONE_5 and name == "collective.cover.pfg":
-            return False
 
         tile_type = queryUtility(ITileType, name)
         if tile_type and tile_type.schema:

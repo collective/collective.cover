@@ -4,6 +4,7 @@ from collective.cover.tiles.base import IPersistentCoverTile
 from persistent.dict import PersistentDict
 from plone.app.uuid.utils import uuidToObject
 from plone.namedfile.interfaces import INamedImage
+from plone.namedfile.interfaces import IStableImageScale
 from plone.namedfile.scaling import ImageScale as BaseImageScale
 from plone.namedfile.scaling import ImageScaling as BaseImageScaling
 from plone.namedfile.utils import set_headers
@@ -15,6 +16,7 @@ from Products.CMFPlone.utils import safe_hasattr
 from ZODB.POSException import ConflictError
 from zope.annotation import IAnnotations
 from zope.component import queryMultiAdapter
+from zope.interface import alsoProvides
 from zope.publisher.interfaces import NotFound
 
 import logging
@@ -94,9 +96,13 @@ class ImageScaling(BaseImageScaling):
                 name, _ = name.rsplit(".", 1)
             storage = AnnotationStorage(self.context)
             info = storage.get(name)
-            if info is not None:
-                scale_view = ImageScale(self.context, self.request, **info)
-                return scale_view.__of__(self.context)
+
+            if info is None:
+                raise NotFound(self, name, self.request)
+            scale_view = ImageScale(self.context, self.request, **info)
+            alsoProvides(scale_view, IStableImageScale)
+            return scale_view
+
         else:
             # otherwise `name` must refer to a field...
             if "." in name:
@@ -188,7 +194,7 @@ class ImageScaling(BaseImageScaling):
         if fieldname is None:
             fieldname = IPrimaryFieldInfo(self.context).fieldname
         if scale is not None:
-            available = self.getAvailableSizes(fieldname)
+            available = self.available_sizes
             if scale not in available:
                 return None
             width, height = available[scale]
@@ -200,7 +206,8 @@ class ImageScaling(BaseImageScaling):
             width=width,
             **parameters
         )
+
         if info is not None:
-            info["fieldname"] = fieldname
             scale_view = ImageScale(self.context, self.request, **info)
-            return scale_view.__of__(self.context)
+            alsoProvides(scale_view, IStableImageScale)
+            return scale_view

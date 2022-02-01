@@ -10,6 +10,7 @@ from plone.tiles.data import ANNOTATIONS_KEY_PREFIX as DATA_PREFIX
 
 
 PROJECTNAME = "collective.cover"
+IS_PLONE_5 = api.env.plone_version().startswith("5")
 
 # by default, all cover tiles will be available on layouts
 DEFAULT_AVAILABLE_TILES = [
@@ -35,12 +36,10 @@ DEFAULT_SEARCHABLE_CONTENT_TYPES = [
     "News Item",
 ]
 
-IS_PLONE_5 = api.env.plone_version().startswith("5")
-
-DEFAULT_GRID_SYSTEM = "bootstrap3" if IS_PLONE_5 else "deco16_grid"
+DEFAULT_GRID_SYSTEM = "bootstrap3"
 
 _ = u'[{{"type": "row", "children": [{{"type": "group", "column-size": {size}, "roles": ["Manager"]}}]}}]'
-_SIZE = 12 if IS_PLONE_5 else 16
+_SIZE = 12
 EMPTY_LAYOUT = _.format(size=_SIZE)
 
 # z3c.form.widget.SequenceWidget used for css_class field

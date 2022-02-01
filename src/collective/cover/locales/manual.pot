@@ -117,11 +117,3 @@ msgstr ""
 #: tiles/configure.zcml
 msgid "A tile that shows the body of a content type."
 msgstr ""
-
-#: tiles/configure.zcml
-msgid "FormGen Tile"
-msgstr ""
-
-#: tiles/configure.zcml
-msgid "A tile that shows an embedded Form Folder from Plone FormGen."
-msgstr ""

@@ -3,6 +3,18 @@
   clear: both;
   min-height: 130px;
   margin: 30px 0;
+  .cover-row {
+    padding: 25px 1px !important;
+    border-top: 1px dashed #7a7a7a !important;
+    background-color: #fff !important;
+  }
+  .cover-column {
+
+  }
+  .cover-tile {
+      margin: 25px 20px !important;
+      text-align: center;
+  }
 }
 
 /* bootstrap classes*/
@@ -68,6 +80,14 @@ button.close {
   color: rgb(0, 0, 0);
   text-shadow: 0 1px 0 rgb(255, 255, 255);
 }
+
+.close:hover {
+  color: #fff;
+  opacity: 1;
+  text-shadow: none;
+  font-size: 2rem;
+}
+
 
 .modal {
   position: fixed;
@@ -383,8 +403,15 @@ button.btn::-moz-focus-inner, input[type='submit'].btn::-moz-focus-inner {
     background-color: #000;
   }
   .to-delete {
-    outline: 1px solid red;
+    outline: 2px red dashed;
   }
+}
+.cover-row.to-delete {
+  border-color: transparent !important;
+}
+
+.ui-sortable-helper {
+  opacity: .9;
 }
 
 .add-column {
@@ -481,10 +508,51 @@ button.btn::-moz-focus-inner, input[type='submit'].btn::-moz-focus-inner {
 }
 
 #sidebar {
-  float: left;
+  display: flex;
+  justify-content: center;
   clear: both;
   width: 100%;
   margin-bottom: 20px;
+    ul {
+      display: flex;
+      padding-left: 0;
+    }
+
+  li {
+    
+      display: flex !important;
+      margin: 2px;
+      display: inline-block;
+      text-align: center;
+      
+      a {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 0;
+        border-radius: 5px;
+        text-decoration: none;
+        color: #000;
+        border: 1px solid #cecece;
+        box-shadow: 0 3px 6px 0 #00000029;
+        border-radius: 4px;
+        width: 60px;
+        height: 60px;
+        line-height: 1rem;
+        background-color: #fff;
+      }
+      img {
+        height: 32px;
+        width: 32px;
+        margin: 3px;
+      }
+  } 
+  .layout-actions {
+    a {
+      color: #fff;
+      background-color: #000;
+    }
+  }
 }
 
 /* tiles config */
@@ -555,6 +623,9 @@ button.btn::-moz-focus-inner, input[type='submit'].btn::-moz-focus-inner {
     cursor: move;
   }
 }
+#class-chooser {
+  min-height: 200px !important;
+}
 
 body {
   .cssclasswidget {
@@ -576,13 +647,19 @@ body {
     display: flex;
     overflow-y: scroll;
     flex-direction: column;
-    max-height: 4rem;
+    max-height: 16rem;
+    width: 200px;
     padding: .4rem;
     list-style-type: none !important;
     border: 1px solid #A9A9A9;
     background: #FFF;
     li {
       margin-bottom: .2rem;
+      display: flex;
+      input {
+        height: 19px;
+        margin-right: 5px;
+      }
     }
     input {
       vertical-align: bottom;

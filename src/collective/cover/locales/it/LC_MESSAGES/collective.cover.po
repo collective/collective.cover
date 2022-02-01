@@ -166,10 +166,6 @@ msgstr "Impostazioni di collective.cover"
 msgid "Date"
 msgstr "Data"
 
-#: collective/cover/grids.py:82
-msgid "Deco (16 columns)"
-msgstr ""
-
 #: collective/cover/tiles/basic.py:28
 #: collective/cover/tiles/collection.py:40
 #: collective/cover/tiles/embed.py:26

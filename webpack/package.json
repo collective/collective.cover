@@ -1,6 +1,6 @@
 {
   "name": "cover",
-  "version": "2.1.2",
+  "version": "3.0.0",
   "main": "app/cover.js",
   "scripts": {
     "build": "./node_modules/.bin/webpack -p",
@@ -25,6 +25,7 @@
   "repository": {},
   "license": "GPL-2.0",
   "dependencies": {
-    "sc-recipe-staticresources": "simplesconsultoria/sc.recipe.staticresources#1.1b5"
+    "sc-recipe-staticresources": "simplesconsultoria/sc.recipe.staticresources#1.1b5",
+    "css-loader": "^1.0.0"
   }
 }

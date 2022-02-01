@@ -3,7 +3,6 @@ from AccessControl import Unauthorized
 from collective.cover.config import DEFAULT_GRID_SYSTEM
 from collective.cover.controlpanel import ICoverSettings
 from collective.cover.interfaces import ICover
-from collective.cover.setuphandlers import HAS_RELATIONFIELD
 from collective.cover.testing import INTEGRATION_TESTING
 from plone import api
 from plone.app.dexterity.behaviors.exclfromnav import IExcludeFromNavigation
@@ -56,7 +55,6 @@ class CoverIntegrationTestCase(unittest.TestCase):
     def test_locking_behavior(self):
         self.assertTrue(ILocking.providedBy(self.cover))
 
-    @unittest.skipUnless(HAS_RELATIONFIELD, "Needs plone.app.relationfield")
     def test_relateditems_behavior(self):
         from plone.app.relationfield.behavior import IRelatedItems
 
@@ -89,26 +87,8 @@ class CoverIntegrationTestCase(unittest.TestCase):
         setRoles(self.portal, TEST_USER_ID, ["Manager"])
         layout_edit = self.cover.restrictedTraverse("layoutedit")
         settings = json.loads(layout_edit.layoutmanager_settings())
-        if DEFAULT_GRID_SYSTEM == "deco16_grid":
-            self.assertEqual(settings, {"ncolumns": 16})
-        elif DEFAULT_GRID_SYSTEM == "bootstrap3":
+        if DEFAULT_GRID_SYSTEM == "bootstrap3":
             self.assertEqual(settings, {"ncolumns": 12})
-
-        # Choose different grid.
-        registry = getUtility(IRegistry)
-        cover_settings = registry.forInterface(ICoverSettings)
-        if DEFAULT_GRID_SYSTEM == "deco16_grid":
-            cover_settings.grid_system = "bootstrap3"
-
-            # The number of columns should be different now.
-            settings = json.loads(layout_edit.layoutmanager_settings())
-            self.assertEqual(settings, {"ncolumns": 12})
-        elif DEFAULT_GRID_SYSTEM == "bootstrap3":
-            cover_settings.grid_system = "deco16_grid"
-
-            # The number of columns should be different now.
-            settings = json.loads(layout_edit.layoutmanager_settings())
-            self.assertEqual(settings, {"ncolumns": 16})
 
         # Choose different grid.
         registry = getUtility(IRegistry)

@@ -38,10 +38,6 @@ msgstr ""
 msgid "A tile that shows an Calendar for the site."
 msgstr ""
 
-#: collective/cover/tiles/tiles.zcml:127
-msgid "A tile that shows an embedded Form Folder from Plone FormGen."
-msgstr ""
-
 #: collective/cover/tiles/tiles.zcml:18
 msgid "A tile that shows an image with a link."
 msgstr ""
@@ -163,10 +159,6 @@ msgstr ""
 msgid "Date"
 msgstr ""
 
-#: collective/cover/grids.py:82
-msgid "Deco (16 columns)"
-msgstr ""
-
 #: collective/cover/tiles/basic.py:28
 #: collective/cover/tiles/collection.py:40
 #: collective/cover/tiles/embed.py:26
@@ -227,10 +219,6 @@ msgstr ""
 
 #: collective/cover/tiles/collection.py:83
 msgid "Footer"
-msgstr ""
-
-#: collective/cover/tiles/tiles.zcml:127
-msgid "FormGen Tile"
 msgstr ""
 
 #: collective/cover/tiles/configuration_widgets/datetime.pt:50
@@ -607,11 +595,6 @@ msgstr ""
 #. Default: "List"
 #: collective/cover/tiles/list.py:103
 msgid "msg_short_name_list"
-msgstr ""
-
-#. Default: "FormGen"
-#: collective/cover/tiles/pfg.py:41
-msgid "msg_short_name_pfg"
 msgstr ""
 
 #. Default: "Rich Text"

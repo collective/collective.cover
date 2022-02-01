@@ -1,10 +1,17 @@
 # -*- coding: utf-8 -*-
 from plone.app.blocks.interfaces import IBlocksTransformEnabled
+from plone.registry.interfaces import IRegistry
+from Products.CMFPlone.interfaces.controlpanel import IImagingSchema
 from Products.Five.browser import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zope.component import getUtility
 from zope.interface import implementer
-from zope.schema.interfaces import IVocabularyFactory
+
+
+def get_settings():
+    registry = getUtility(IRegistry)
+    settings = registry.forInterface(IImagingSchema, prefix="plone", check=False)
+    return settings
 
 
 @implementer(IBlocksTransformEnabled)
@@ -60,7 +67,5 @@ class Helper(BrowserView):
     @staticmethod
     def get_image_scales():
         """List all image scales which are available on the site."""
-        factory = getUtility(IVocabularyFactory, "plone.app.vocabularies.ImagesScales")
-        vocabulary = factory(None)
-        # TODO: fix scales order upsteam in plone.app.vocabularies
-        return [term.title for term in vocabulary]
+        settings = get_settings()
+        return settings.allowed_sizes

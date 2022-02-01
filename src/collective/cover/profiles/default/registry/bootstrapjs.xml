@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<registry
+    xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+    i18n:domain="collective.cover">
+
+  <records prefix="plone.bundles/bootstrap"
+           interface='Products.CMFPlone.interfaces.IBundleRegistry'>
+
+    <value key="merge_with">default</value>
+    <value key="enabled">True</value>
+    <value key="depends">plone</value>
+    <value key="jscompilation">++resource++collective.js.bootstrap/js/bootstrap.min.js</value>
+
+    <!-- Please keep this in sync with upgrades.update_last_compilation -->
+    <value key="last_compilation">2021-03-31 15:00:00</value>
+    <value key="compile">False</value>
+  </records>
+
+</registry>

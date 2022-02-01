@@ -6,6 +6,7 @@ from collective.cover.tiles.banner import IBannerTile
 from lxml import etree  # nosec
 from mock import Mock
 from plone.tiles.interfaces import ITileDataManager
+from Products.CMFPlone.utils import safe_text
 
 import six
 import unittest
@@ -62,7 +63,7 @@ class BannerTileTestCase(TestTileMixin, unittest.TestCase):
         obj.setTitle(title)
         obj.reindexObject()
         self.tile.populate_with_object(obj)
-        self.assertEqual(six.text_type(title, "utf-8"), self.tile.data.get("title"))
+        self.assertEqual(safe_text(title), self.tile.data.get("title"))
         self.assertTrue(self.tile.has_image)
         self.assertIsNotNone(self.tile.getRemoteUrl())
 
@@ -89,7 +90,7 @@ class BannerTileTestCase(TestTileMixin, unittest.TestCase):
         obj.setTitle(title)
         obj.reindexObject()
         self.tile.populate_with_object(obj)
-        self.assertEqual(six.text_type(title, "utf-8"), self.tile.data.get("title"))
+        self.assertEqual(safe_text(title), self.tile.data.get("title"))
         self.assertFalse(self.tile.has_image)
         self.assertEqual(self.tile.getRemoteUrl(), "http://plone.org")
 

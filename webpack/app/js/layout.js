@@ -552,6 +552,7 @@ export default class LayoutView {
     $(document).on("click", ".config-tile-link", function(e) {
       e.preventDefault();
       let url = $(this).attr("href");
+      $("#tile-configure").removeClass('hide');
       $('#tile-configure').modal();
       $.ajax({
         type: 'GET',

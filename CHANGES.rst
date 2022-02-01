@@ -3,11 +3,35 @@ Changelog
 
 There's a frood who really knows where his towel is.
 
-2.2.4 (unreleased)
+3.0.0 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
-- Nothing changed yet.
+- Add suport to Python 3.6, 3.7 and 3.8.
+  [pbauer]
 
+- Drop support for Plone 4.x
+  [cleberjsantos]
+
+- Add support to Plone 5.2.
+  [cleberjsantos]
+
+- Drop PFG support
+  [cleberjsantos]
+
+- Fix plone.namedfile scales
+  [cleberjsantos]
+
+- Correction of the visualization of the image scales
+  [cleberjsantos]
+
+- Fix Js registry with new concepts in Plone 5
+  [cleberjsantos]
+
+- Drop Deco grid
+  [cleberjsantos]
+
+- Refactor tests
+  [cleberjsantos]
 
 2.2.3 (2021-02-02)
 ^^^^^^^^^^^^^^^^^^

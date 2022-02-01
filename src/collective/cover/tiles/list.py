@@ -14,6 +14,7 @@ from plone.namedfile.field import NamedBlobImage
 from plone.tiles.interfaces import ITileDataManager
 from plone.tiles.interfaces import ITileType
 from plone.uuid.interfaces import IUUID
+from Products.CMFPlone.utils import safe_text
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zope import schema
 from zope.component import queryUtility
@@ -21,7 +22,6 @@ from zope.interface import implementer
 from zope.schema import getFieldsInOrder
 
 import logging
-import six
 
 
 logger = logging.getLogger(PROJECTNAME)
@@ -135,7 +135,6 @@ class ListTile(PersistentCoverTile):
                         logger.debug(
                             "Non-existent object {0} removed from tile".format(uuid)
                         )  # noqa: E501
-
         return results[: self.limit]
 
     def is_empty(self):
@@ -209,7 +208,7 @@ class ListTile(PersistentCoverTile):
         for uuid in uuids:
             if uuid not in uuids_dict:
                 entry = dict()
-                entry[u"order"] = six.text_type(order)
+                entry[u"order"] = safe_text(order)
                 uuids_dict[uuid] = entry
                 order += 1
 

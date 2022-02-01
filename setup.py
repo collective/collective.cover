@@ -4,7 +4,7 @@ from setuptools import find_packages
 from setuptools import setup
 
 
-version = "2.2.4.dev0"
+version = "3.0.0.dev0"
 description = "A sane, working, editor-friendly way of creating front pages and other composite pages. Working now, for mere mortals."
 long_description = "\n\n".join(
     [
@@ -23,8 +23,7 @@ setup(
         "Development Status :: 5 - Production/Stable",
         "Environment :: Web Environment",
         "Framework :: Plone",
-        "Framework :: Plone :: 4.3",
-        "Framework :: Plone :: 5.1",
+        "Framework :: Plone :: 5.2",
         "Intended Audience :: End Users/Desktop",
         "Intended Audience :: System Administrators",
         "License :: OSI Approved :: GNU General Public License v2 (GPLv2)",
@@ -32,6 +31,10 @@ setup(
         "Programming Language :: JavaScript",
         "Programming Language :: Python",
         "Programming Language :: Python :: 2.7",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
         "Topic :: Office/Business :: News/Diary",
         "Topic :: Software Development :: Libraries :: Python Modules",
     ],
@@ -39,6 +42,11 @@ setup(
     author="Carlos de la Guardia et al.",
     author_email="cguardia@yahoo.com",
     url="https://github.com/collective/collective.cover",
+    project_urls={
+        "PyPI": "https://pypi.python.org/pypi/collective.cover",
+        "Source": "https://github.com/collective/collective.cover",
+        "Tracker": "https://github.com/collective/collective.cover/issues",
+    },
     license="GPLv2",
     packages=find_packages("src"),
     package_dir={"": "src"},
@@ -51,10 +59,9 @@ setup(
         "collective.js.bootstrap",
         "collective.js.galleria",
         "collective.js.jqueryui",
-        "collective.z3cform.datetimewidget",
         "Missing",
-        "plone.api >=1.4.11",
-        "plone.app.blocks >=2.2.1",
+        "plone.api",
+        "plone.app.blocks",
         "plone.app.content",
         "plone.app.contentmenu",
         "plone.app.dexterity",
@@ -66,7 +73,7 @@ setup(
         "plone.app.lockingbehavior",
         "plone.app.registry",
         "plone.app.textfield",
-        "plone.app.tiles >=1.1.0",
+        "plone.app.tiles",
         "plone.app.uuid",
         "plone.app.vocabularies",
         "plone.autoform",
@@ -84,7 +91,7 @@ setup(
         "plone.uuid",
         "plone.z3cform",
         "Products.CMFCore",
-        "Products.CMFPlone >=4.3",
+        "Products.CMFPlone >=5.2",
         "Products.GenericSetup",
         "setuptools",
         "six",
@@ -110,7 +117,7 @@ setup(
             "cssselect",
             "lxml",
             "mock",
-            "plone.api >=1.8.5",
+            "plone.api",
             "plone.app.robotframework",
             "plone.app.testing [robot]",
             "plone.browserlayer",
@@ -119,7 +126,6 @@ setup(
             "robotsuite",
             "testfixtures",
             "transaction",
-            "tzlocal",
         ],
     },
     entry_points="""

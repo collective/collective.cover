@@ -30,7 +30,6 @@ module.exports = makeConfig(
       './app/img/tile-file.png',
       './app/img/tile-generic.png',
       './app/img/tile-list.png',
-      './app/img/tile-pfg.png',
       './app/img/tile-richtext.png',
     );
     config.plugins.push(

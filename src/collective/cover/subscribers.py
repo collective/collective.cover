@@ -1,20 +1,12 @@
 # -*- coding: utf-8 -*-
-from collective.cover.config import IS_PLONE_5
 from collective.cover.controlpanel import ICoverSettings
 from collective.cover.utils import assign_tile_ids
+from plone.app.linkintegrity.handlers import updateReferences
 from plone.registry.interfaces import IRegistry
 from zope.annotation.interfaces import IAnnotations
 from zope.component import getUtility
 
 import json
-
-
-if IS_PLONE_5:
-    from plone.app.linkintegrity.handlers import updateReferences
-else:
-    from plone.app.linkintegrity.handlers import referencedRelationship
-    from plone.app.linkintegrity.references import updateReferences
-    from Products.Archetypes.interfaces import IReferenceable
 
 
 def override_object_annotations(cover, event):
@@ -50,14 +42,7 @@ def update_link_integrity(obj, event):
     """
     refs = obj.get_referenced_objects()
 
-    if IS_PLONE_5:
-        updateReferences(obj, refs)
-    else:
-        # needed by plone.app.linkintegrity under Plone 4.x
-        adapted = IReferenceable(obj, None)
-        if adapted is None:
-            return
-        updateReferences(adapted, referencedRelationship, refs)
+    updateReferences(obj, refs)
 
 
 def assign_id_for_tiles(cover, event):
