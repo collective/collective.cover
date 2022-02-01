@@ -1,17 +1,17 @@
 # -*- coding: utf-8 -*-
-"""Helper functions to create test content and work around API
-inconsistencies among Archetypes and Dexterity.
-"""
+"""Helper functions to create test content."""
 from datetime import timedelta
+from plone import api
 from plone.app.event.base import localized_now
+from plone.app.textfield.value import RichTextValue
+from plone.namedfile.file import NamedBlobFile
+from plone.namedfile.file import NamedBlobImage
 
 import six
 
 
 def create_standard_content_for_tests(portal):
     """Create one instance of each standard content type, at least."""
-    from plone import api
-
     with api.env.adopt_roles(["Manager"]):
         api.content.create(
             container=portal,
@@ -34,7 +34,6 @@ def create_standard_content_for_tests(portal):
             description=u"This document was created for testing purposes",
         )
 
-        # XXX: handle setting text field for both, Archetypes and Dexterity
         set_text_field(obj, u"<p>The quick brown fox jumps over the lazy dog</p>")
         now = localized_now()
         tomorrow = now + timedelta(days=1)
@@ -80,39 +79,19 @@ def create_standard_content_for_tests(portal):
 
 
 def set_image_field(obj, image):
-    """Set image field in object on both, Archetypes and Dexterity."""
-    from plone.namedfile.file import NamedBlobImage
-
-    try:
-        obj.setImage(image)  # Archetypes
-    except AttributeError:
-        # Dexterity
-        data = image if isinstance(image, six.binary_type) else image.getvalue()
-        obj.image = NamedBlobImage(data=data, contentType="image/jpeg")
-    finally:
-        obj.reindexObject()
+    """Set image field in object."""
+    data = image if isinstance(image, six.binary_type) else image.getvalue()
+    obj.image = NamedBlobImage(data=data, contentType="image/jpeg")
+    obj.reindexObject()
 
 
-def set_file_field(obj, file):
-    """Set file field in object on both, Archetypes and Dexterity."""
-    from plone.namedfile.file import NamedBlobFile
-
-    try:
-        obj.setFile(file)  # Archetypes
-    except AttributeError:
-        # Dexterity
-        obj.file = NamedBlobFile(data=file, contentType="text/plain")
-    finally:
-        obj.reindexObject()
+def set_file_field(obj, _file):
+    """Set file field in object."""
+    obj.file = NamedBlobFile(data=_file, contentType="text/plain")
+    obj.reindexObject()
 
 
 def set_text_field(obj, text):
-    """Set text field in object on both, Archetypes and Dexterity."""
-    from plone.app.textfield.value import RichTextValue
-
-    try:
-        obj.setText(text)  # Archetypes
-    except AttributeError:
-        obj.text = RichTextValue(text, "text/html", "text/html")  # Dexterity
-    finally:
-        obj.reindexObject()
+    """Set text field in object."""
+    obj.text = RichTextValue(text, "text/html", "text/html")
+    obj.reindexObject()
