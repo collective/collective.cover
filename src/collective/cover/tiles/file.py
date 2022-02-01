@@ -8,15 +8,11 @@ from plone.tiles.interfaces import ITileDataManager
 from plone.uuid.interfaces import IUUID
 from Products.CMFPlone.utils import safe_text
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
+from Products.MimetypesRegistry.interfaces import MimeTypeException
 from zope import schema
 from zope.interface import implementer
 
 
-try:
-    from Products.MimetypesRegistry.interfaces import MimeTypeException
-except ImportError:
-    # Products.MimetypesRegistry < 2.1
-    from Products.MimetypesRegistry.common import MimeTypeException
 
 
 HTML = """

@@ -24,7 +24,7 @@ class ControlPanelTestCase(unittest.TestCase):
         self.portal = self.layer["portal"]
         self.request = self.layer["request"]
         self.controlpanel = self.portal["portal_controlpanel"]
-        self.qi = get_installer(self.portal, self.request)
+        self.installer = get_installer(self.portal, self.request)
 
     def test_controlpanel_has_view(self):
         request = self.layer["request"]
@@ -46,7 +46,7 @@ class ControlPanelTestCase(unittest.TestCase):
     def test_controlpanel_removed_on_uninstall(self):
 
         with api.env.adopt_roles(["Manager"]):
-            self.qi.uninstall_product(PROJECTNAME)
+            self.installer.uninstall_product(PROJECTNAME)
         actions = [a.id for a in self.controlpanel.listActions()]
         self.assertNotIn("cover", actions)
 
@@ -68,7 +68,7 @@ class RegistryTestCase(unittest.TestCase):
         self.request = self.layer["request"]
         self.registry = getUtility(IRegistry)
         self.settings = self.registry.forInterface(ICoverSettings)
-        self.qi = get_installer(self.portal, self.request)
+        self.installer = get_installer(self.portal, self.request)
 
     def test_sections_record_in_registry(self):
         self.assertTrue(hasattr(self.settings, "layouts"))
@@ -104,7 +104,7 @@ class RegistryTestCase(unittest.TestCase):
 
     def test_records_removed_on_uninstall(self):
         with api.env.adopt_roles(["Manager"]):
-            self.qi.uninstall_product(PROJECTNAME)
+            self.installer.uninstall_product(PROJECTNAME)
 
         BASE_REGISTRY = "collective.cover.controlpanel.ICoverSettings."
         records = [

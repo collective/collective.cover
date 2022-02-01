@@ -6,8 +6,6 @@ Library  ${CURDIR}/LinkIntegrityUtils.py
 
 Suite Setup  Open Test Browser
 Suite Teardown  Close all browsers
-Test Setup  Setup Link Integrity
-Test Teardown  Teardown Link Integrity
 
 *** Variables ***
 

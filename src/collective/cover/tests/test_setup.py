@@ -22,10 +22,10 @@ class InstallTestCase(unittest.TestCase):
         self.request = self.layer["request"]
         self.portal = self.layer["portal"]
         self.registry = getUtility(IRegistry)
-        self.qi = get_installer(self.portal, self.request)
+        self.installer = get_installer(self.portal, self.request)
 
     def test_installed(self):
-        self.assertTrue(self.qi.is_product_installed(PROJECTNAME))
+        self.assertTrue(self.installer.is_product_installed(PROJECTNAME))
 
     def test_addon_layer(self):
         layers = [layer.getName() for layer in registered_layers()]
@@ -64,13 +64,13 @@ class UninstallTestCase(unittest.TestCase):
         self.request = self.layer["request"]
         self.portal = self.layer["portal"]
         self.registry = getUtility(IRegistry)
-        self.qi = get_installer(self.portal, self.request)
+        self.installer = get_installer(self.portal, self.request)
 
         with api.env.adopt_roles(["Manager"]):
-            self.qi.uninstall_product(PROJECTNAME)
+            self.installer.uninstall_product(PROJECTNAME)
 
     def test_uninstalled(self):
-        self.assertFalse(self.qi.is_product_installed(PROJECTNAME))
+        self.assertFalse(self.installer.is_product_installed(PROJECTNAME))
 
     def test_addon_layer_removed(self):
         layers = [layer.getName() for layer in registered_layers()]

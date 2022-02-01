@@ -13,17 +13,9 @@ from plone.app.testing import PloneSandboxLayer
 from plone.testing.zope import WSGI_SERVER
 
 import os
-import pkg_resources
 import random
 import six
 
-
-try:
-    pkg_resources.get_distribution("plone.app.contenttypes")
-except pkg_resources.DistributionNotFound:
-    HAS_PACONTENTYPES = False
-else:
-    HAS_PACONTENTYPES = True
 
 ALL_CONTENT_TYPES = [
     "Collection",
