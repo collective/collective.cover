@@ -1,0 +1,7 @@
+<registry
+    xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+    i18n:domain="collective.cover">
+
+  <records remove="True" prefix="plone.bundles/bootstrap" interface='Products.CMFPlone.interfaces.IBundleRegistry' />
+
+</registry>

@@ -39,7 +39,7 @@ class InstallTestCase(unittest.TestCase):
         bundles = self.registry.collectionOfInterface(
             IBundleRegistry, prefix="plone.bundles"
         )
-        bundle = bundles["bootstrap3"]
+        bundle = bundles["bootstrap"]
 
         self.assertEqual(bundle.jscompilation, JS)
 
@@ -81,7 +81,7 @@ class UninstallTestCase(unittest.TestCase):
             IBundleRegistry, prefix="plone.bundles"
         )
 
-        self.assertNotIn("bootstrap3", bundles.keys())
+        self.assertNotIn("bootstrap", bundles.keys())
 
     @unittest.expectedFailure  # XXX: not pretty sure how to test this
     def test_versioning_policy_removed(self):
