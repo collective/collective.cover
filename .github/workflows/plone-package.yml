@@ -50,9 +50,9 @@ jobs:
                 firefox-version: '92.0'
             - name: Xvfb
               run: Xvfb :99 -screen 0 1280x1024x24 > /dev/null 2>&1 &
-            # - name: Black-Check
-            #   run: |
-            #       tox -r -e black-check
+            - name: Black-Check
+              run: |
+                  tox -r -e black-check
             - name: lint
               run: tox -r -e lint
             - name: Test with tox
