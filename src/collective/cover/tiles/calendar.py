@@ -337,9 +337,7 @@ class CalendarTile(PersistentCoverTile):
     def getReviewStateString(self):
         states = self.calendar_states
         return "".join(
-            map(
-                lambda x: "review_state={0}&amp;".format(self.url_quote_plus(x)), states
-            )
+            map(lambda x: "review_state={0}".format(self.url_quote_plus(x)), states)
         )
 
     def getEventTypes(self):
