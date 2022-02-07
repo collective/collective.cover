@@ -6,6 +6,9 @@ There's a frood who really knows where his towel is.
 3.0.0 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Fix calendar tile in Plone 5.2 (fixes `#633 <https://github.com/collective/collective.cover/issues/633>`_).
+  [wesleybl, pbauer]
+
 - Remove old upgrade steps.
   [wesleybl]
 

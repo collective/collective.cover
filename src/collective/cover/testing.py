@@ -125,7 +125,7 @@ class Fixture(PloneSandboxLayer):
 
         portal_workflow = portal.portal_workflow
         portal_workflow.setChainForPortalTypes(
-            ["Collection"], ["simple_publication_workflow"]
+            ["Collection", "Event"], ["simple_publication_workflow"]
         )
 
 

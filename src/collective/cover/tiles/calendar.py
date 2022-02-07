@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from __future__ import absolute_import
+
 from Acquisition import aq_inner
 from collective.cover import _
 from collective.cover.tiles.base import IPersistentCoverTile
@@ -45,6 +47,8 @@ class CalendarTile(PersistentCoverTile):
         context = aq_inner(self.context)
         self._ts = getToolByName(context, "translation_service")
         self.url_quote_plus = quote_plus
+
+        self.first_weekday = api.portal.get_registry_record("plone.first_weekday")
 
         self.now = localtime()
         self.yearmonth = yearmonth = self.getYearAndMonthToDisplay()
@@ -111,9 +115,8 @@ class CalendarTile(PersistentCoverTile):
         #  [14, 15, 16, 17, 18, 19, 20],
         #  [21, 22, 23, 24, 25, 26, 27],
         #  [28, 29, 30, 31, 0, 0, 0]]
-        first_weekday = api.portal.get_registry_record("plone.first_weekday") + 1
 
-        calendar.setfirstweekday(first_weekday)
+        calendar.setfirstweekday(self.first_weekday)
         daysByWeek = calendar.monthcalendar(year, month)
         weeks = []
 
@@ -307,8 +310,9 @@ class CalendarTile(PersistentCoverTile):
     def getWeekdays(self):
         """Returns a list of Messages for the weekday names."""
         weekdays = []
-        first_weekday = api.portal.get_registry_record("plone.first_weekday") + 1
-        day_numbers = [i % 7 for i in range(first_weekday, first_weekday + 7)]
+        # In TranslationServiceTool, Sunday is 0. So we need to add +1 to first_weekday.
+        first_weekday_ts = self.first_weekday + 1
+        day_numbers = [i % 7 for i in range(first_weekday_ts, first_weekday_ts + 7)]
 
         # list of ordered weekdays as numbers
         for day in day_numbers:
