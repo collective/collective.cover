@@ -7,7 +7,6 @@ import unittest
 
 
 class CalendarTileTestCase(TestTileMixin, unittest.TestCase):
-
     def setUp(self):
         super(CalendarTileTestCase, self).setUp()
         self.tile = CalendarTile(self.cover, self.request)
