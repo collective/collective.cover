@@ -68,10 +68,6 @@ Test Carousel Tile
     Click Element  link=Content tree
     Drag And Drop  xpath=${image_selector2}  css=${tile_selector}
 
-    # HACK: object not being added to tile when dropped; just, try again
-    #       Galleria messing around the DOM?
-    Drag And Drop  xpath=${image_selector2}  css=${tile_selector}
-
     # move to the default view and check tile persisted
     Click Link  link=View
     # Wait Until Page Contains would always work because of the top navigation
