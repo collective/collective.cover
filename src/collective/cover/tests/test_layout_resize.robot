@@ -9,7 +9,7 @@ Suite Teardown  Close all browsers
 *** Variables ***
 
 ${basic_tile_name} =  "collective.cover.basic"
-${size_xpath}  //*[@id="content"]/div[2]/div/div@data-column-size
+${size_xpath}  //*[@id="content"]/div[2]/div/div
 ${text_xpath}  //*[@id="column-size-resize"]/span
 
 *** Test cases ***
@@ -21,7 +21,7 @@ Test Columns-Titles and Resize
     Create Cover  Save-Cover  Test-cover
     Open Layout Tab
     Add Tile  ${basic_tile_name}
-    ${data-size-before}=  Get Element Attribute  xpath=${size_xpath}
+    ${data-size-before}=  Get Element Attribute  xpath=${size_xpath}  data-column-size
     Click Element  css=i.resizer
     Wait until element is visible  id=ui-id-1
     ${data-text-before}=  Get Text  xpath=${text_xpath}
@@ -32,5 +32,5 @@ Test Columns-Titles and Resize
     Save Cover Layout
     Click Link  link=Compose
     Open Layout Tab
-    ${data-size-after}=  Get Element Attribute  xpath=${size_xpath}
+    ${data-size-after}=  Get Element Attribute  xpath=${size_xpath}  data-column-size
     Should Be True  """${data-size-before}""" != """${data-size-after}"""

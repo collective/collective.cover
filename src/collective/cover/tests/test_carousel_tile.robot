@@ -23,7 +23,7 @@ ${autoplay_id}  collective-cover-carousel-autoplay-0
 Get Total Carousel Images
     [Documentation]  Total number of images in carousel is stored in this
     ...              element
-    ${return} =  Get Element Attribute  xpath=//div[@class="galleria-stage"]/div[@class="galleria-counter"]/span[@class="galleria-total"]@innerHTML
+    ${return} =  Get Element Attribute  xpath=//div[@class="galleria-stage"]/div[@class="galleria-counter"]/span[@class="galleria-total"]  innerHTML
     [Return]  ${return}
 
 *** Test cases ***
@@ -162,13 +162,13 @@ Test Carousel Tile
     ### Test Custom URL functionality
     Click Link  link=View
     Wait Until Page Contains Element  xpath=${image_title}
-    ${image_url} =  Get Element Attribute  xpath=.//div[@class='galleria-info-title']/a@href
+    ${image_url} =  Get Element Attribute  xpath=.//div[@class='galleria-info-title']/a  href
     Should Be Equal  ${image_url}  ${PLONE_URL}/my-image/view
 
     # Go to the right
     Click Element  xpath=.//div[@class='galleria-image-nav-right']
     Wait Until Page Contains Element  xpath=${image_title_test}
-    ${image_url} =  Get Element Attribute  xpath=.//div[@class='galleria-info-title']/a@href
+    ${image_url} =  Get Element Attribute  xpath=.//div[@class='galleria-info-title']/a  href
     Should Be Equal  ${image_url}  ${PLONE_URL}/my-image1/view
 
     # Set custom URL
@@ -181,13 +181,13 @@ Test Carousel Tile
 
     Click Link  link=View
     Wait Until Page Contains Element  xpath=${image_title}
-    ${image_url} =  Get Element Attribute  xpath=.//div[@class='galleria-info-title']/a@href
+    ${image_url} =  Get Element Attribute  xpath=.//div[@class='galleria-info-title']/a  href
     Should Be Equal  ${image_url}  ${PLONE_URL}/my-image/view
 
     # Go to the right
     Click Element  xpath=.//div[@class='galleria-image-nav-right']
     Wait Until Page Contains Element  xpath=${image_title_test}
-    ${image_url} =  Get Element Attribute  xpath=.//div[@class='galleria-info-title']/a@href
+    ${image_url} =  Get Element Attribute  xpath=.//div[@class='galleria-info-title']/a  href
     Should Be Equal  ${image_url}  http://www.google.com/
 
     # delete the tile
