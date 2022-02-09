@@ -6,6 +6,9 @@ There's a frood who really knows where his towel is.
 3.0.0 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Fix PicklingError when editing basic tile that contains an image (fixes `#907 <https://github.com/collective/collective.cover/issues/907>`_).
+  [wesleybl]
+
 - Reorganizes the js events register in Compose when we drag content from one tile to
   another, in order to prevent the content from remaining on the source tile.
   [wesleybl]
