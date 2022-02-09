@@ -17,7 +17,6 @@ ${image_title2}  //div[@class="galleria-info-title"]/a[text()='Test image #1']/.
 ${image_title_test}  //div[@class="galleria-info-title"]/a[text()='New Title']/..
 ${tile_selector}  div.tile-container div.tile
 ${autoplay_id}  collective-cover-carousel-autoplay-0
-${edit_link_selector}  a.edit-tile-link
 
 *** Keywords ***
 
@@ -44,9 +43,9 @@ Test Carousel Tile
     Page Should Contain  This carousel is empty; open the content chooser and drag-and-drop some items here.
 
     # Test if we can edit the cover without any content added to it yet
-    Click Link  css=${edit_link_selector}
+    Click Edit Cover
     Wait Until Page Contains  Edit Carousel Tile
-    Click Button  Cancel
+    Click Button  css=${cancel_edit_selector}
 
     # drag&drop an Image
     Open Content Chooser
@@ -112,10 +111,10 @@ Test Carousel Tile
 
     # Set custom Title
     Compose Cover
-    Click Link  css=${edit_link_selector}
+    Click Edit Cover
     Wait Until Page Contains  Edit Carousel Tile
     Input Text  xpath=.//div[contains(@class,"textline-sortable-element")][2]//input[@class='custom-title-input']  New Title
-    Click Button  Save
+    Click Button  css=${save_edit_selector}
     Sleep  2s  Wait for carousel to load
 
     Click Link  link=View
@@ -143,10 +142,10 @@ Test Carousel Tile
 
     # Set custom Description
     Compose Cover
-    Click Link  css=${edit_link_selector}
+    Click Edit Cover
     Wait Until Page Contains  Edit Carousel Tile
     Input Text  xpath=.//div[contains(@class,"textline-sortable-element")][2]//textarea[@class='custom-description-input']  New Description
-    Click Button  Save
+    Click Button  css=${save_edit_selector}
     Sleep  2s  Wait for carousel to load
 
     Click Link  link=View
@@ -174,10 +173,10 @@ Test Carousel Tile
 
     # Set custom URL
     Compose Cover
-    Click Link  css=${edit_link_selector}
+    Click Edit Cover
     Wait Until Page Contains  Edit Carousel Tile
     Input Text  xpath=.//div[contains(@class,"textline-sortable-element")][2]//input[@class='custom-url-input']  http://www.google.com
-    Click Button  Save
+    Click Button  css=${save_edit_selector}
     Sleep  2s  Wait for carousel to load
 
     Click Link  link=View

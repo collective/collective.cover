@@ -18,6 +18,9 @@ ${tile_drop_area_selector} =  div.cover-column
 ${tile_cancel_area_selector} =  div.modal-backdrop
 ${delete_tile_selector} =  button.close
 ${CONTENT_CHOOSER_SELECTOR} =  div#contentchooser-content-search
+${edit_link_selector}  a.edit-tile-link
+${save_edit_selector}  .pattern-modal-buttons input#buttons-save
+${cancel_edit_selector}  .pattern-modal-buttons input#buttons-cancel
 
 *** Keywords ***
 
@@ -25,6 +28,10 @@ Click Add Cover
     Open Add New Menu
     Click Link  css=a#collective-cover-content
     Wait Until Page Contains  Add Cover
+
+Click Edit Cover
+    Click Link  css=${edit_link_selector}
+    Wait Until Element Is Visible  css=.pattern-modal-buttons
 
 Create Cover
     [arguments]  ${title}  ${description}  ${layout}=Empty layout

@@ -14,8 +14,8 @@ ${title}  Törkylempijävongahdus
 ${description}  Albert osti fagotin ja töräytti puhkuvan melodian.
 ${basic_text}  Arnold
 ${text}  Fahrenheit ja Celsius yrjösivät Åsan backgammon-peliin, Volkswagenissa, daiquirin ja ZX81:n yhteisvaikutuksesta.
-${richtext_edit_link_selector}  css=a.edit-tile-link[rel='#pb_2']
-${basic_edit_link_selector}  css=a.edit-tile-link[rel='#pb_3']
+${richtext_edit_link_selector}  css=${edit_link_selector}[rel='#pb_2']
+${basic_edit_link_selector}  css=${edit_link_selector}[rel='#pb_3']
 ${title_field_id}  collective-cover-basic-title
 ${search_field_selector}  id=searchGadget
 ${search_button_selector}  css=.searchButton
@@ -39,7 +39,7 @@ Test RichTextTile is Searchable
     Click Link  ${richtext_edit_link_selector}
     Wait For Condition  return typeof tinyMCE != "undefined" && tinyMCE.activeEditor != null
     Execute Javascript  tinyMCE.activeEditor.setContent("${text}");
-    Click Button  Save
+    Click Button  css=${save_edit_selector}
     Wait Until Page Contains  ${text}
 
     # Add the text to the basic tile
@@ -47,7 +47,7 @@ Test RichTextTile is Searchable
     Click Link  ${basic_edit_link_selector}
     Wait until page contains element  id=${title_field_id}
     Input Text  id=${title_field_id}  ${basic_text}
-    Click Button  Save
+    Click Button  css=${save_edit_selector}
     Wait Until Page Contains  ${basic_text}
 
     # Make a number of searches to verify the index

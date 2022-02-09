@@ -11,7 +11,6 @@ Suite Teardown  Close all browsers
 ${tile_location}  'collective.cover.richtext'
 ${text_sample}  Some text for title
 ${text_other_sample}  This text should never be saved
-${edit_link_selector}  a.edit-tile-link
 
 *** Test cases ***
 
@@ -29,21 +28,21 @@ Test RichText Tile
     Page Should Contain  Please edit the tile to enter some text.
 
     # edit tile but don't save it
-    Click Link  css=${edit_link_selector}
+    Click Edit Cover
     Wait Until Page Contains  Edit Rich Text Tile
     Sleep  1s  Wait for TinyMCE to load
     Wait For Condition  return typeof tinyMCE !== "undefined" && tinyMCE.activeEditor !== null && document.getElementById(tinyMCE.activeEditor.id) !== null
-    Click Button  Cancel
+    Click Button  css=${cancel_edit_selector}
     Wait Until Page Does Not Contain  Edit Rich Text Tile
 
     # check if TinyMCE loads a second time and edit the tile
     # see: https://github.com/collective/collective.cover/issues/543
-    Click Link  css=${edit_link_selector}
+    Click Edit Cover
     Wait Until Page Contains  Edit Rich Text Tile
     Sleep  1s  Wait for TinyMCE to load
     Wait For Condition  return typeof tinyMCE !== "undefined" && tinyMCE.activeEditor !== null && document.getElementById(tinyMCE.activeEditor.id) !== null
     Execute Javascript  tinyMCE.activeEditor.setContent("${text_sample}");
-    Click Button  Save
+    Click Button  css=${save_edit_selector}
     # save via ajax => wait until the tile has been reloaded
     Wait Until Page Does Not Contain  Edit Rich Text Tile
     # check for successful AJAX refresh

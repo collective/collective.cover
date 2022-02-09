@@ -112,12 +112,12 @@ Test List Tile
     # Set options on the Edit screen of the tile.
     # Set a title and set the 'Mandelbrot set' collection as 'more' link.
     Compose Cover
-    Click Link  css=.edit-tile-link
+    Click Edit Cover
     Input Text  id=collective-cover-list-tile_title  Custom List Tile Title
     Click Button  css=.more_link_search_button
     Click Link  css=.results .item-list li a.contenttype-collection
     Input Text  id=collective-cover-list-more_link_text  Custom More Link Text
-    Click Button  Save
+    Click Button  css=${save_edit_selector}
     # Wait until the overlay is closed, otherwise the View link is not clickable.
     Wait Until Element Is Not Visible  css=#exposeMask
     Click Link  link=View

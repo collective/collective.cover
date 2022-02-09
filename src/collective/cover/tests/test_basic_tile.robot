@@ -20,7 +20,6 @@ ${news_item_title}  Test news item
 ${news_item_description}  This news item was created for testing purposes
 ${title_field_id}  collective-cover-basic-title
 ${title_sample}  Some text for title
-${edit_link_selector}  a.edit-tile-link
 ${configure_tile_selector}  a.config-tile-link
 ${datetimewidget_option_datetime_selector}  select#collective-cover-basic-date-format option[value=datetime]
 ${datetimewidget_option_dateonly_selector}  select#collective-cover-basic-date-format option[value=dateonly]
@@ -135,8 +134,8 @@ Test Basic Tile
     Wait Until Page Contains Element  css=div.cover-basic-tile a img
 
     # https://github.com/collective/collective.cover/issues/637
-    Click Link  css=${edit_link_selector}
-    Click Button  Save
+    Click Edit Cover
+    Click Button  css=${save_edit_selector}
     Page Should Not Contain  There were some errors.
 
     # move to the default view and check tile persisted
@@ -176,10 +175,10 @@ Test Basic Tile
 
     # go back to compose view and edit the tile
     Compose Cover
-    Click Link  css=${edit_link_selector}
+    Click Edit Cover
     Wait Until Page Contains  Edit Basic Tile
     Input Text  id=${title_field_id}  ${title_sample}
-    Click Button  Save
+    Click Button  css=${save_edit_selector}
     Wait Until Page Does Not Contain  Edit Basic Tile
 
     # check for successful AJAX refresh

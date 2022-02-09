@@ -13,7 +13,6 @@ ${contentbody_tile_location}  'collective.cover.contentbody'
 ${document_selector}  .ui-draggable .contenttype-document
 ${tile_selector}  div.tile-container div.tile
 ${text_sample}  The quick brown fox jumps over the lazy dog
-${edit_link_selector}  a.edit-tile-link
 ${document_body}  body.portaltype-document
 
 *** Test cases ***
