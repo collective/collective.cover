@@ -20,8 +20,8 @@ def create_standard_content_for_tests(portal):
             description=u"Image gallery of a zoom sequence",
             query=[
                 {
-                    "i": "Type",
-                    "o": "plone.app.querystring.operation.string.is",
+                    "i": "portal_type",
+                    "o": "plone.app.querystring.operation.selection.any",
                     "v": ["Image"],
                 }
             ],
