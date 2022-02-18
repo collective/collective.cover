@@ -196,7 +196,7 @@ class ListTile(PersistentCoverTile):
             # Do not allow adding more objects than the defined limit
             return
 
-        order_list = [int(val.get("order", 0)) for key, val in uuids_dict.items()]
+        order_list = [int(val.get("order", 0)) for val in uuids_dict.values()]
         if len(order_list) == 0:
             # First entry
             order = 0
