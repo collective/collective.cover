@@ -17,7 +17,7 @@ ${title}  Mandelbrot set
 ${title_alternate}  An alternate title for the tile
 ${no_results_msg}  The collection doesn't have any results
 ${related_msg}  Go to related collection
-${more_msg}  More?
+${more_msg}  More…
 
 *** Test cases ***
 
