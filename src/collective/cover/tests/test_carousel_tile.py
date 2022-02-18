@@ -106,7 +106,7 @@ class CarouselTileTestCase(TestTileMixin, unittest.TestCase):
 
         self.assertTrue(isinstance(uuids, dict))
         self.assertTrue(len(uuids) == 1)
-        self.assertTrue(uuids[obj1.UID()]["order"] == 0)
+        self.assertTrue(uuids[obj1.UID()]["order"] == u"0")
 
         # now we add a second image
         obj2 = self.portal["my-image1"]
@@ -117,8 +117,8 @@ class CarouselTileTestCase(TestTileMixin, unittest.TestCase):
 
         self.assertTrue(isinstance(uuids, dict))
         self.assertTrue(len(uuids) == 2)
-        self.assertTrue(uuids[obj1.UID()]["order"] == 0)
-        self.assertTrue(uuids[obj2.UID()]["order"] == 1)
+        self.assertTrue(uuids[obj1.UID()]["order"] == u"0")
+        self.assertTrue(uuids[obj2.UID()]["order"] == u"1")
 
     def test_custom_title(self):
         # we start with an empty tile
@@ -202,9 +202,9 @@ class CarouselTileTestCase(TestTileMixin, unittest.TestCase):
         conv = UUIDSFieldDataConverter(field, widget)
 
         value = {
-            u"uuid1": {u"order": 0},
-            u"uuid2": {u"order": 2},
-            u"uuid3": {u"order": 1},
+            u"uuid1": {u"order": u"0"},
+            u"uuid2": {u"order": u"2"},
+            u"uuid3": {u"order": u"1"},
         }
 
         to_widget = conv.toWidgetValue(value)
