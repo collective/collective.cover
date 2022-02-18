@@ -7,7 +7,9 @@
     <value purge="false" key="default_page_types">
       <element>collective.cover.content</element>
     </value>
-
+    <value purge="false" key="displayed_types">
+      <element>collective.cover.content</element>
+    </value>
   </records>
 
 </registry>
