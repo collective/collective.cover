@@ -6,6 +6,9 @@ There's a frood who really knows where his towel is.
 3.0.0 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Show Cover in navbar.
+  [wesleybl]
+
 - Remove custom message of onbeforeunload popup. Browsers no longer display the custom
   message.
   [wesleybl]

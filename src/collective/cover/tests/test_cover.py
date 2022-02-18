@@ -11,6 +11,7 @@ from plone.app.testing import setRoles
 from plone.app.testing import TEST_USER_ID
 from plone.dexterity.interfaces import IDexterityFTI
 from plone.registry.interfaces import IRegistry
+from Products.CMFPlone.interfaces.controlpanel import INavigationSchema
 from zope.component import createObject
 from zope.component import getUtility
 from zope.component import queryUtility
@@ -147,3 +148,8 @@ class CoverIntegrationTestCase(unittest.TestCase):
             searchableText(self.cover)(),
             u"c1 Lorem ipsum Neque porro 01234 56789",
         )
+
+    def test_cover_in_displayed_types(self):
+        registry = getUtility(IRegistry)
+        settings = registry.forInterface(INavigationSchema, prefix="plone")
+        self.assertTrue("collective.cover.content" in settings.displayed_types)
