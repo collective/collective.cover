@@ -10,6 +10,8 @@ from z3c.form.browser import textlines
 from zope.browserpage.viewpagetemplatefile import ViewPageTemplateFile
 from zope.interface import implementer
 
+import six
+
 
 @implementer(ITextLinesSortableWidget)
 class TextLinesSortableWidget(textlines.TextLinesWidget):
@@ -131,7 +133,7 @@ class TextLinesSortableWidget(textlines.TextLinesWidget):
         results = dict()
         for index, uuid in enumerate(uuids):
             obj = uuidToObject(uuid)
-            results[uuid] = {u"order": safe_text(index)}
+            results[uuid] = {u"order": six.text_type(index)}
             custom_title = self.request.get(
                 "{0}.custom_title.{1}".format(self.name, uuid), ""
             )
