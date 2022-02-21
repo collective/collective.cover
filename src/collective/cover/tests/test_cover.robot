@@ -26,10 +26,3 @@ Update
     Input Text  css=${description_selector}  ${description}
     Click Button  Save
     Page Should Contain  Changes saved
-
-Delete
-    Open Action Menu
-    Log Source
-    Click Link  css=a#plone-contentmenu-actions-delete
-    Click Button  Delete
-    Page Should Contain  Plone site

@@ -55,9 +55,12 @@ Update
 
 Delete
     Open Action Menu
-    Click Link  css=a#delete
-    Click Button  Delete
-    Page Should Contain  Plone site
+    Log Source
+    Click Link  css=a#plone-contentmenu-actions-delete
+    Wait Until Element Is Visible  css=.pattern-modal-buttons
+    Click Button  css=.pattern-modal-buttons input#form-buttons-Delete
+    Element Should Not Be Visible  css=.pattern-modal-buttons
+    Page Should Contain  has been deleted
 
 Open Layout Tab
     [Documentation]  Click on Layout tab and wait until it loads.
