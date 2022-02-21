@@ -33,20 +33,20 @@ Test Content Chooser
 
     # Content Chooser should contain 2 tabs
     Open Content Chooser
-    Page Should Contain  Recent items
-    Page Should Contain  Content tree
+    Page Should Contain  Recent Items
+    Page Should Contain  Content Tree
 
-    # make a search on Recent items
-    Click Element  link=Recent items
+    # make a search on Recent Items
+    Click Element  link=Recent Items
     Input Text  css=#recent input  folder
     # FIXME: we have no result counter in here
     #Wait Until Page Contains  1 Results
     Click Element  css=#recent ${contentchooser_search_clear}
 
-    Click Element  link=Content tree
+    Click Element  link=Content Tree
     Wait Until Page Contains  Plone site
 
-    # make a search on Content tree
+    # make a search on Content Tree
     Input Text  css=#content-trees input  file
     Wait Until Page Contains  1 Results
 

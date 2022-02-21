@@ -49,7 +49,7 @@ Test Carousel Tile
 
     # drag&drop an Image
     Open Content Chooser
-    Click Element  link=Content tree
+    Click Element  link=Content Tree
     Drag And Drop  xpath=${image_selector}  css=${tile_selector}
 
     # move to the default view and check tile persisted
@@ -65,7 +65,7 @@ Test Carousel Tile
     Compose Cover
     Sleep  1s  Wait for carousel to load
     Open Content Chooser
-    Click Element  link=Content tree
+    Click Element  link=Content Tree
     Drag And Drop  xpath=${image_selector2}  css=${tile_selector}
 
     # move to the default view and check tile persisted
@@ -81,7 +81,7 @@ Test Carousel Tile
     Compose Cover
     Sleep  1s  Wait for carousel to load
     Open Content Chooser
-    Click Element  link=Content tree
+    Click Element  link=Content Tree
 
     Drag And Drop  xpath=${document_selector}  css=${tile_selector}
 

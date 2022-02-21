@@ -28,7 +28,7 @@ Test Scaling
 
     Compose Cover
     Open Content Chooser
-    Click Element  link=Content tree
+    Click Element  link=Content Tree
     Drag And Drop  xpath=${image_selector}  css=${tile_selector}
 
     Click Link  link=View
