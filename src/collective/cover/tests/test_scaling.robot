@@ -39,6 +39,7 @@ Test Scaling
     Wait until element is visible  id=buttons-cancel
     Select From List  css=#collective-cover-basic-image-imgsize  listing 16x16
     Click Button  id=buttons-save
+    Wait Until Element Is Not Visible  css=#buttons-save
     Save Cover Layout
 
     Click Link  link=View
@@ -49,6 +50,7 @@ Test Scaling
     Wait until element is visible  id=buttons-cancel
     Select From List  css=#collective-cover-basic-image-imgsize  icon 32x32
     Click Button  id=buttons-save
+    Wait Until Element Is Not Visible  css=#buttons-save
     Save Cover Layout
 
     Click Link  link=View

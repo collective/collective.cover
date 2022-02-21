@@ -39,6 +39,7 @@ Test CSS Classes
     Click Config from Tile  ${tile_class}
     Wait until element is visible  id=buttons-save
     Click Button  id=buttons-save
+    Wait Until Element Is Not Visible  css=#buttons-save
     Save Cover Layout
 
     # go to View page and css remains
@@ -53,6 +54,7 @@ Test CSS Classes
     Click Element  css=.cssclasswidget-overlay
     Wait until element is visible  id=buttons-save
     Click Button  id=buttons-save
+    Wait Until Element Is Not Visible  css=#buttons-save
     Save Cover Layout
 
     # go to View page and check new style
@@ -66,6 +68,7 @@ Test CSS Classes
     Click Element  css=.cssclasswidget-overlay
     Wait until element is visible  id=buttons-save
     Click Button  id=buttons-save
+    Wait Until Element Is Not Visible  css=#buttons-save
     Save Cover Layout
 
     # go to View page and check new style
@@ -79,6 +82,7 @@ Test CSS Classes
     Click Element  css=.cssclasswidget-overlay
     Wait until element is visible  id=buttons-save
     Click Button  id=buttons-save
+    Wait Until Element Is Not Visible  css=#buttons-save
     Save Cover Layout
 
     # go to View page and check new style

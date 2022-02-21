@@ -83,6 +83,7 @@ Test Basic Layout Operations
     # Hide Description
     Click Element  css=#formfield-collective-cover-basic-description .visibility-no
     Click Button  id=buttons-save
+    Wait Until Element Is Not Visible  css=#buttons-save
     # Change row class
     Click Element  css=.config-row-link:nth-child(1)
     Wait until element is visible  id=class-chooser
