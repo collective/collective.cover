@@ -6,6 +6,10 @@ There's a frood who really knows where his towel is.
 3.0.0 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Reorganizes the js events register in Compose when we drag content from one tile to
+  another, in order to prevent the content from remaining on the source tile.
+  [wesleybl]
+
 - In ``PersistentCoverTileDataManager`` set, purge tile after put values into storage to
   prevent old values from being cache, since purge accesses ``tile.data``.
   Also updated the attribute where data is saved for ``self.storage``.

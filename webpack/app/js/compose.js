@@ -147,42 +147,7 @@ export default class ComposeView {
     if ($el.data('init')) {
       return;
     }
-    let onStop = function(e, ui) {
-      let uuids = [];
-      // We iterate over the children of the original $el determined at the top of onMouseOverSortable.
-      $el.children().each(function(index) {
-        let child = $($el.children()[index]);
-        if (child.attr('data-content-uuid') !== undefined) {
-          uuids.push(child.attr('data-content-uuid'));
-        }
-      });
-      let tile = $el.closest('.tile');
-      let tile_type = tile.attr('data-tile-type');
-      let tile_id = tile.attr('id');
-      $.ajax({
-        url: '@@updatelisttilecontent',
-        context: this,
-        data: {
-          'tile-type': tile_type,
-          'tile-id': tile_id,
-          'uuids': uuids
-        },
-        success: function(info) {
-          tile.html(info);
-          tile.trigger('change');
-          this.update();
-          return false;
-        },
-        error: function(XMLHttpRequest, textStatus, errorThrown) {
-          tile.html(textStatus + ': ' + errorThrown);
-          this.update();
-          return false;
-        }
-      });
-    };
-    $el.data('init', true).sortable({
-      stop: onStop.bind(this),
-    });
+    $el.data('init', true).sortable();
   }
   onRemoveClick(e) {
     e.preventDefault();
