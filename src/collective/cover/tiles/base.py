@@ -422,7 +422,7 @@ class PersistentCoverTile(ESIPersistentTile):
         from collective.cover.browser.scaling import AnnotationStorage
 
         storage = AnnotationStorage(self)
-        for key in storage.keys():
+        for key in list(storage):
             try:
                 del storage[key]
             except KeyError:
