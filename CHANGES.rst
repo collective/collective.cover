@@ -6,6 +6,11 @@ There's a frood who really knows where his towel is.
 3.0.0 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- In ``PersistentCoverTileDataManager`` set, purge tile after put values into storage to
+  prevent old values from being cache, since purge accesses ``tile.data``.
+  Also updated the attribute where data is saved for ``self.storage``.
+  [wesleybl]
+
 - Show Cover in navbar.
   [wesleybl]
 
