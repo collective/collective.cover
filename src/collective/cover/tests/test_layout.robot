@@ -121,8 +121,10 @@ Test Basic Layout Operations
     # Categories should be second in order
     Textfield Value Should Be  css=#collective-cover-basic-subjects-order  2
     # Description should be hidden
-    Checkbox Should Not Be Selected  css=#collective-cover-basic-description-visibility-yes
-    Checkbox Should Be Selected  css=#collective-cover-basic-description-visibility-no
+    ${checked_yes} =  Get Element Attribute  css=#collective-cover-basic-description-visibility-yes  checked
+    Should Be Equal  ${checked_yes}  ${None}
+    ${checked_no} =  Get Element Attribute  css=#collective-cover-basic-description-visibility-no  checked
+    Should Be Equal  ${checked_no}  true
     Click Button  id=buttons-cancel
 
 
