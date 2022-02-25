@@ -6,6 +6,10 @@ There's a frood who really knows where his towel is.
 3.0.0 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Remove custom message of onbeforeunload popup. Browsers no longer display the custom
+  message.
+  [wesleybl]
+
 - Apply patch in ``Products.ZCatalog.query.IndexQuery``, to avoid error when clicking on a day with event in the calendar tile.
   [wesleybl]
 

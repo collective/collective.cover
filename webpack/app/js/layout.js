@@ -38,12 +38,9 @@ export default class LayoutView {
     }
   }
   onBeforeUnload(e) {
-    let message = window.form_modified_message ||
-      "Discard changes? If you click OK, any changes you have made will be lost.";
     let save_btn = $('#btn-save');
     if (save_btn.hasClass('modified')) {
-      e.returnValue = message;
-      return message;
+      return true;
     }
   }
   bindEvents() {
