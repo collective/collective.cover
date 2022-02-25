@@ -106,10 +106,10 @@ Test Basic Layout Operations
     # Test row and column classes
     Compose Cover
     Page Should Contain Element  css=.row.tile-shadow
-    Page Should Contain Element  css=.cell.tile-edge
+    Page Should Contain Element  css=.column.tile-edge
     Click Link  link=View
     Page Should Contain Element  css=.row.tile-shadow
-    Page Should Contain Element  css=.cell.tile-edge
+    Page Should Contain Element  css=.column.tile-edge
 
 
     # Reopen Layout and check configuration
