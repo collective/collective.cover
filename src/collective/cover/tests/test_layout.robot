@@ -92,14 +92,14 @@ Test Basic Layout Operations
     Wait until element is visible  id=class-chooser
     Click Button  css=#class-chooser .cssclasswidget
     Click Element  css=.cssclasswidget-tile-shadow
-    Click Element  css=.cssclasswidget-overlay
+    Execute Javascript  var $overlay = $('.cssclasswidget-overlay'); $overlay.click();
     Click Element  css=.ui-dialog:last-child .ui-dialog-titlebar-close
     # Change column class
     Click Element  css=.config-column-link:nth-child(1)
     Wait until element is visible  id=class-chooser
     Click Button  css=#class-chooser .cssclasswidget
     Click Element  css=.cssclasswidget-tile-edge
-    Click Element  css=.cssclasswidget-overlay
+    Execute Javascript  var $overlay = $('.cssclasswidget-overlay'); $overlay.click();
     Click Element  css=.ui-dialog:last-child .ui-dialog-titlebar-close
     Save Cover Layout
 
