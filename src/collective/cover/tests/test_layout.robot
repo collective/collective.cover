@@ -16,7 +16,6 @@ ${tile_class} =  div.cover-tile
 *** Test cases ***
 
 Test Basic Layout Operations
-    [Tags]  Mandelbug
 
     Enable Autologin as  Site Administrator
     Go to Homepage
