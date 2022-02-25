@@ -3,8 +3,10 @@
 Resource  cover.robot
 Library  Remote  ${PLONE_URL}/RobotRemote
 
-Suite Setup  Open Test Browser
-Suite Teardown  Close all browsers
+# We need to use a custom profile to change the disable_beforeunload setting to False.
+# This causes the beforeunload popup to show in tests.
+Suite Setup  Open Test Browser Custom Profile
+Suite Teardown  Close All Browsers Without Beforeunload
 
 *** Variables ***
 
@@ -36,9 +38,10 @@ Test Basic Layout Operations
     Add Row
 
     # trying to leave layout editing without saving must show a warning
-    Choose Cancel On Next Confirmation
+    # In Firefox, It is necessary to set dom.disable_beforeunload to False, so that
+    # the popup is shown. See Keyword 'Open Test Browser Custom Profile'.
     Click Link  link=Compose
-    Confirm Action
+    Handle Alert  action=DISMISS
     # continue editing layout
 
     #add a column in the latest row

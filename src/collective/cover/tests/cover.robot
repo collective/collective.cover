@@ -2,6 +2,7 @@
 
 Resource  plone/app/robotframework/keywords.robot
 Variables  plone/app/testing/interfaces.py
+Library  ${CURDIR}/create_ff_profile.py
 
 *** Variables ***
 
@@ -101,3 +102,14 @@ Compose Cover
 Open Content Chooser
     Click Element  css=div#contentchooser-content-show-button
     Wait Until Element Is Visible  css=${CONTENT_CHOOSER_SELECTOR}
+
+Open Test Browser Custom Profile
+    ${FF_PROFILE_DIR}=  Create FF Profile
+    Set Suite Variable  ${FF_PROFILE_DIR}  ${FF_PROFILE_DIR}
+    Open Test Browser
+
+Close All Browsers Without Beforeunload
+    [Documentation]  Set 'window.onbeforeunload = undefined' to avoid popup when
+    ...              closing the browsers.
+    Execute Javascript  window.onbeforeunload = undefined;
+    Close All Browsers
