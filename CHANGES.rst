@@ -6,6 +6,9 @@ There's a frood who really knows where his towel is.
 3.0.0 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Unlock Cover when editor leaves Compose/Layout tabs (fixes `#916 <https://github.com/collective/collective.cover/issues/916>`_).
+  [wesleybl]
+
 - Fix PicklingError when editing basic tile that contains an image (fixes `#907 <https://github.com/collective/collective.cover/issues/907>`_).
   [wesleybl]
 
