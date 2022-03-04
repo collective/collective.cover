@@ -14,8 +14,8 @@ ${title}  Törkylempijävongahdus
 ${description}  Albert osti fagotin ja töräytti puhkuvan melodian.
 ${basic_text}  Arnold
 ${text}  Fahrenheit ja Celsius yrjösivät Åsan backgammon-peliin, Volkswagenissa, daiquirin ja ZX81:n yhteisvaikutuksesta.
-${richtext_edit_link_selector}  css=${edit_link_selector}[rel='#pb_2']
-${basic_edit_link_selector}  css=${edit_link_selector}[rel='#pb_3']
+${richtext_edit_link_selector}  css=div.tile-container:nth-child(1) > a:nth-child(3)
+${basic_edit_link_selector}  css=div.tile-container:nth-child(2) > a:nth-child(3)
 ${title_field_id}  collective-cover-basic-title
 ${search_field_selector}  id=searchGadget
 ${search_button_selector}  css=.searchButton
