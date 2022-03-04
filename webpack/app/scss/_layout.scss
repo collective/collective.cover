@@ -246,6 +246,11 @@ button.btn::-moz-focus-inner, input[type='submit'].btn::-moz-focus-inner {
     background: #fff;
     box-shadow: 0 0 2px 0 #888;
   }
+  #tiles-list{
+    ul{
+      flex-wrap: wrap;
+    }
+  }
 }
 
 .ui-sortable-placeholder {
