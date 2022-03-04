@@ -44,27 +44,32 @@ class PersistentCoverTileDataManager(PersistentTileDataManager):
         # XXX hack?
         try:
             scale_key = self.key.replace(".data.", ".scale.")
-            del self.annotations[scale_key]
+            del self.storage[scale_key]
         except KeyError:
             pass
 
         data_copy = copy(data)
+        image_modification = False
         for k, v in data_copy.items():
             if INamedImage.providedBy(v):
                 mtime_key = "{0}_mtime".format(k)
                 if (
-                    self.key not in self.annotations
-                    or k not in self.annotations[self.key]
+                    self.key not in self.storage
+                    or k not in self.storage[self.key]
                     or (
-                        self.key in self.annotations
-                        and data[k] != self.annotations[self.key][k]
+                        self.key in self.storage
+                        and data[k] != self.storage[self.key][k]
                     )
                 ):
                     # set modification time of the image
-                    notify(Purge(self.tile))
                     data[mtime_key] = time.time()
+                    image_modification = True
                 else:
-                    data[mtime_key] = self.annotations[self.key].get(mtime_key, None)
+                    data[mtime_key] = self.storage[self.key].get(mtime_key, None)
 
-        self.annotations[self.key] = PersistentDict(data)
+        self.storage[self.key] = PersistentDict(data)
+        if image_modification:
+            # Purge tile after put values into storage to prevent old values from
+            # being cache, since purge accesses "tile.data".
+            notify(Purge(self.tile))
         notify(ObjectModifiedEvent(self.context))

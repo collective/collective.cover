@@ -116,6 +116,15 @@ export default class ContentChooser {
             return false;
           };
           $origin.find('.loading-mask').addClass('show');
+          let uuids = [];
+          let $origin_first_child = $origin.find(">:first-child");
+          // We iterate over the children of the $origin to get the uuids.
+          $origin_first_child.children().each(function(index) {
+            let child = $($origin_first_child.children()[index]);
+            if (child.attr('data-content-uuid') !== undefined) {
+              uuids.push(child.attr('data-content-uuid'));
+            }
+          });
           $.ajax({
             url: '@@movetilecontent',
             data: {
@@ -133,21 +142,40 @@ export default class ContentChooser {
                 $target.attr('data-content-type', draggable_type);
               }
               $.ajax({
-                url: '@@updatetile',
+                url: '@@updatelisttilecontent',
+                context: this,
                 data: {
+                  'tile-type': origin_type,
                   'tile-id': draggable_id,
+                  'uuids': uuids
                 },
                 success: function(info) {
                   $origin.html(info);
-                  $origin.find('.loading-mask').addClass('show');
-                  if (!origin_has_subitem) {
-                    $origin.removeAttr('data-content-uuid');
-                    $origin.removeAttr('data-content-type');
-                  }
-                  move_callback();
-                  if ($target.attr('data-tile-type') === 'collective.cover.carousel') {
-                    new CarouselTile($target);
-                  }
+                  $origin.trigger('change');
+                  $.ajax({
+                    url: '@@updatetile',
+                    data: {
+                      'tile-id': draggable_id,
+                    },
+                    success: function(info) {
+                      $origin.html(info);
+                      $origin.find('.loading-mask').addClass('show');
+                      if (!origin_has_subitem) {
+                        $origin.removeAttr('data-content-uuid');
+                        $origin.removeAttr('data-content-type');
+                      }
+                      move_callback();
+                      if ($target.attr('data-tile-type') === 'collective.cover.carousel') {
+                        new CarouselTile($target);
+                      }
+                      return false;
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                      $origin.html(textStatus + ': ' + errorThrown);
+                      $origin.find('.loading-mask').removeClass('show');
+                      return false;
+                    }
+                  });
                   return false;
                 },
                 error: function(XMLHttpRequest, textStatus, errorThrown) {
