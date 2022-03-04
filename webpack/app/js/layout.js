@@ -1,4 +1,5 @@
 import jss from './vendor/jss.js';
+import { unlockHandler } from './compose.js';
 
 import CSSClassWidget from './cssclasswidget.js';
 
@@ -33,9 +34,7 @@ export default class LayoutView {
     this.bindEvents();
     this.init();
 
-    if (typeof(plone) !== 'undefined') {
-      $(window).unload(plone.UnlockHandler.execute);
-    }
+    window.onunload = unlockHandler;
   }
   onBeforeUnload(e) {
     let save_btn = $('#btn-save');

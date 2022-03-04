@@ -1,5 +1,21 @@
 import ContentChooser from './contentchooser.js';
 
+/**
+ * Send a request to Plone to unlock the current cover when the user leaves the page.
+ * @param  {window#event:unload} e
+ */
+export function unlockHandler(e){
+  let compose_url = $('#contentview-compose a').attr('href');
+  // Keep _authenticator in safe_unlock_url
+  let safe_unlock_url = compose_url.replace(
+    'compose?',
+    '@@plone_lock_operations/safe_unlock?redirect:int=0&'
+  );
+  fetch(safe_unlock_url, {
+    method: 'GET', 
+    keepalive: true,
+  })
+}
 
 export default class ComposeView {
   constructor() {
@@ -7,10 +23,7 @@ export default class ComposeView {
     this.update();
     this.prepareRichText();
     new ContentChooser(this);
-
-    if (typeof(plone) !== 'undefined') {
-      $(window).unload(plone.UnlockHandler.execute);
-    }
+    window.onunload = unlockHandler;
   }
   bindEvents() {
     $(document).on('mouseover', '.sortable-tile', this.onMouseOverSortable.bind(this));
