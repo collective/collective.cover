@@ -12,6 +12,7 @@ from plone.tiles.interfaces import ITileDataManager
 from plone.z3cform.interfaces import IDeferSecurityCheck
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from z3c.form import button
+from z3c.form import form
 from zope.component import getMultiAdapter
 from zope.interface import implementer
 from zope.publisher.interfaces.browser import IBrowserView
@@ -56,10 +57,12 @@ class CustomEditForm(DefaultEditForm):
         # We need to check first for existing content in order not not loose
         # fields that weren't sent with the form
         dataManager = ITileDataManager(tile)
-        old_data = dataManager.get()
-        for item in data:
-            old_data[item] = data[item]
-        dataManager.set(old_data)
+        # Get the current data and apply changes to it.
+        new_data = dataManager.get()
+        form.applyChanges(self, new_data, data)
+        for group in self.groups:
+            form.applyChanges(group, new_data, data)
+        dataManager.set(new_data)
 
         api.portal.show_message(_(u"Tile saved"), self.request, type="info")
 
