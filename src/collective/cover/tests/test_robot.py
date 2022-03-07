@@ -23,7 +23,7 @@ tests = [f for f in files if f.startswith("test_") and f.endswith(".robot")]
 # FIXME: skip RobotFramework tests in Plone 5
 tests = []
 
-noncritical = ["Expected Failure", "Mandelbug", "issue_615"]
+noncritical = ["Expected Failure", "Mandelbug"]
 
 
 def test_suite():

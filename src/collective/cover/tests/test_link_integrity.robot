@@ -17,7 +17,6 @@ ${tile_selector}  div.tile-container div.tile
 *** Test cases ***
 
 Test Link Integrity on Basic Tile
-    [Tags]  issue_615
     Enable Autologin as  Manager
     Go to Homepage
     Create Cover  Title  Description
@@ -41,7 +40,6 @@ Test Link Integrity on Basic Tile
     Click Button  css=${cancel_delete_selector}
 
 Test Link Integrity on RichText Tile
-    [Tags]  issue_615
     Enable Autologin as  Manager
     Go to Homepage
     Create Cover  Title  Description
