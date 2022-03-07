@@ -22,6 +22,7 @@ ${CONTENT_CHOOSER_SELECTOR} =  div#contentchooser-content-search
 ${edit_link_selector}  a.edit-tile-link
 ${save_edit_selector}  .pattern-modal-buttons input#buttons-save
 ${cancel_edit_selector}  .pattern-modal-buttons input#buttons-cancel
+${cancel_delete_selector}  .pattern-modal-buttons input#form-buttons-Cancel
 
 *** Keywords ***
 

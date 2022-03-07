@@ -38,7 +38,7 @@ Test Link Integrity on Basic Tile
     Click Link  link=My document
     Click Delete Action
     Wait Until Page Contains  Potential link breakage
-    Click Button  Cancel
+    Click Button  css=${cancel_delete_selector}
 
 Test Link Integrity on RichText Tile
     [Tags]  issue_615
@@ -62,7 +62,7 @@ Test Link Integrity on RichText Tile
     Click Link  link=My document
     Click Delete Action
     Wait Until Page Contains  Potential link breakage
-    Click Button  Cancel
+    Click Button  css=${cancel_delete_selector}
 
 *** Keywords ***
 
