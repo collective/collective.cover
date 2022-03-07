@@ -51,6 +51,7 @@ Test Carousel Tile
     Open Content Chooser
     Click Element  link=Content Tree
     Drag And Drop  xpath=${image_selector}  css=${tile_selector}
+    Wait For Condition  return jQuery.active == 0
 
     # move to the default view and check tile persisted
     Click Link  link=View
@@ -67,6 +68,7 @@ Test Carousel Tile
     Open Content Chooser
     Click Element  link=Content Tree
     Drag And Drop  xpath=${image_selector2}  css=${tile_selector}
+    Wait For Condition  return jQuery.active == 0
 
     # move to the default view and check tile persisted
     Click Link  link=View
@@ -84,6 +86,7 @@ Test Carousel Tile
     Click Element  link=Content Tree
 
     Drag And Drop  xpath=${document_selector}  css=${tile_selector}
+    Wait For Condition  return jQuery.active == 0
 
     Click Link  link=View
     # We should still have 2 images in the carousel
