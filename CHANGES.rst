@@ -6,6 +6,9 @@ There's a frood who really knows where his towel is.
 3.0.0 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Fix link integrity (fixes `#615 <https://github.com/collective/collective.cover/issues/615>`_).
+  [wesleybl]
+
 - Unlock Cover when editor leaves Compose/Layout tabs (fixes `#916 <https://github.com/collective/collective.cover/issues/916>`_).
   [wesleybl]
 

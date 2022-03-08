@@ -3,8 +3,10 @@ from collective.cover.controlpanel import ICoverSettings
 from collective.cover.utils import assign_tile_ids
 from plone.app.linkintegrity.handlers import updateReferences
 from plone.registry.interfaces import IRegistry
+from z3c.relationfield.relation import RelationValue
 from zope.annotation.interfaces import IAnnotations
 from zope.component import getUtility
+from zope.intid.interfaces import IIntIds
 
 import json
 
@@ -42,7 +44,19 @@ def update_link_integrity(obj, event):
     """
     refs = obj.get_referenced_objects()
 
-    updateReferences(obj, refs)
+    intids = getUtility(IIntIds)
+    getId = intids.getId
+    new_relationships = []
+    for ref in refs:
+        if ref:
+            # When content is referenced as an internal link in a rich text tile,the
+            # 'ref' is a RelationValue. So we don't need to create a new RelationValue.
+            if isinstance(ref, RelationValue):
+                new_relationships.append(ref)
+            else:
+                new_relationships.append(RelationValue(getId(ref)))
+
+    updateReferences(obj, new_relationships)
 
 
 def assign_id_for_tiles(cover, event):
