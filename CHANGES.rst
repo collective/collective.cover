@@ -6,6 +6,10 @@ There's a frood who really knows where his towel is.
 3.0.0 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Add missing dependencies: ``Products.MimetypesRegistry``, ``Products.ZCatalog``,
+  ``persistent``, ``plone.locking``, ``zope.container``, ``zope.traversing``, ``ZODB`` and ``Zope``.
+  [wesleybl]
+
 - Remove unused dependencies: ``plone.app.content``, ``plone.app.jquery``, ``cssselect``, ``testfixtures`` and ``transaction``.
   [wesleybl]
 
