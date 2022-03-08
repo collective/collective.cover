@@ -62,11 +62,9 @@ setup(
         "Missing",
         "plone.api",
         "plone.app.blocks",
-        "plone.app.content",
         "plone.app.contentmenu",
         "plone.app.dexterity",
         "plone.app.iterate",
-        "plone.app.jquery",
         "plone.app.jquerytools",
         "plone.app.layout",
         "plone.app.linkintegrity",
@@ -116,7 +114,6 @@ setup(
             "plone.app.dexterity [relations]",
         ],
         "test": [
-            "cssselect",
             "lxml",
             "mock",
             "plone.api",
@@ -126,8 +123,6 @@ setup(
             "plone.cachepurging",
             "plone.testing",
             "robotsuite",
-            "testfixtures",
-            "transaction",
         ],
     },
     entry_points="""

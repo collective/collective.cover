@@ -6,6 +6,9 @@ There's a frood who really knows where his towel is.
 3.0.0 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Remove unused dependencies: ``plone.app.content``, ``plone.app.jquery``, ``cssselect``, ``testfixtures`` and ``transaction``.
+  [wesleybl]
+
 - Fix link integrity (fixes `#615 <https://github.com/collective/collective.cover/issues/615>`_).
   [wesleybl]
 
