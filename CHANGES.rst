@@ -6,6 +6,9 @@ There's a frood who really knows where his towel is.
 3.0.0 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Shows selected folder path in Content Tree (fixes `#921 <https://github.com/collective/collective.cover/issues/921>`_).
+  [wesleybl]
+
 - Add missing dependencies: ``Products.MimetypesRegistry``, ``Products.ZCatalog``,
   ``persistent``, ``plone.locking``, ``zope.container``, ``zope.traversing``, ``ZODB`` and ``Zope``.
   [wesleybl]

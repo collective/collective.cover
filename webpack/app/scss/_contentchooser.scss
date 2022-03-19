@@ -107,9 +107,10 @@ input[type='text'] {
 
 #content-trees #general_panel {
   padding: 0;
+  display: block;
 }
 
-#contentchooser-content-search-input-container, #contentchooser-content-trees-container, .contentchooser-clear {
+#contentchooser-content-search-input-container, #contentchooser-content-trees-container, a.contentchooser-clear {
   display: inline-block;
 }
 
