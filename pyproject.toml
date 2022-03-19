@@ -1,3 +1,3 @@
 [tool.dependencychecker]
-Zope2 = ['App', 'OFS','Products.Five']
-ignore-packages = ['plone.app.relationfield']
+Zope = ['App', 'OFS','Products.Five', 'ZPublisher']
+ignore-packages = ['plone.basic', 'plone.excludefromnavigation', 'plone.relateditems', 'plone.namefromtitle']
