@@ -119,7 +119,8 @@ Test List Tile
     Input Text  id=collective-cover-list-more_link_text  Custom More Link Text
     Click Button  css=${save_edit_selector}
     # Wait until the overlay is closed, otherwise the View link is not clickable.
-    Wait Until Element Is Not Visible  css=#exposeMask
+    Wait For Condition  return jQuery.active == 0
+    Wait Until Page Contains  Custom List Tile Title
     Click Link  link=View
     Page Should Contain  Custom List Tile Title
     Page Should Contain  Custom More Link Text
