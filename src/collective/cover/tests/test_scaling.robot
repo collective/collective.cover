@@ -30,6 +30,7 @@ Test Scaling
     Open Content Chooser
     Click Element  link=Content Tree
     Drag And Drop  xpath=${image_selector}  css=${tile_selector}
+    Wait For Condition  return jQuery.active == 0
 
     Click Link  link=View
     Page Should Contain Element  xpath=//img[@width=50][@height=50]
