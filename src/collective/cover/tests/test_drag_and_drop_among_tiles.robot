@@ -37,14 +37,19 @@ Test Drag And Drop Among Tiles
     Compose Cover
     Open Content Chooser
     Drag And Drop  css=${image_selector}  css=${basic_tile_selector}
+    Wait For Condition  return jQuery.active == 0
     Wait Until Page Contains Element  css=div.cover-basic-tile a img
     Drag And Drop  css=${basic_tile_selector}  css=${banner_tile_selector}
+    Wait For Condition  return jQuery.active == 0
     Wait Until Page Contains Element  css=div.cover-banner-tile a img
     Drag And Drop  css=${banner_tile_selector}  css=${list_tile_selector}
+    Wait For Condition  return jQuery.active == 0
     Wait Until Page Contains Element  css=div.cover-list-tile a img
     Drag And Drop  css=${list_tile_selector}  css=${banner_tile_selector}
+    Wait For Condition  return jQuery.active == 0
     Wait Until Page Contains Element  css=div.cover-banner-tile a img
     Drag And Drop  css=${banner_tile_selector}  css=${basic_tile_selector}
+    Wait For Condition  return jQuery.active == 0
     Wait Until Page Contains Element  css=div.cover-basic-tile a img
 
     Open Layout Tab
