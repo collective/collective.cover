@@ -33,6 +33,7 @@ Test Locked Cover
     Click Element  css=div#contentchooser-content-show-button
 
     Drag And Drop  css=${document_selector}  css=${tile_selector}
+    Wait For Condition  return jQuery.active == 0
     Page Should Contain  My document
 
     Click Link  link=My Cover

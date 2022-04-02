@@ -16,7 +16,6 @@ ${file_selector}  .ui-draggable .contenttype-file
 ${tile_selector}  div.tile-container div.tile
 ${title_field_id}  collective-cover-banner-title
 ${title_sample}  Some text for title
-${edit_link_selector}  a.edit-tile-link
 
 *** Test cases ***
 
@@ -71,10 +70,10 @@ Test Banner Tile
 
     # go back to compose view and edit the tile
     Compose Cover
-    Click Link  css=${edit_link_selector}
+    Click Edit Cover
     Wait Until Page Contains  Edit Banner Tile
     Input Text  id=${title_field_id}  ${title_sample}
-    Click Button  Save
+    Click Button  css=${save_edit_selector}
     Wait Until Page Does Not Contain  Edit Banner Tile
 
     # check for successful AJAX refresh

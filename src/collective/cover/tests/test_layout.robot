@@ -3,8 +3,10 @@
 Resource  cover.robot
 Library  Remote  ${PLONE_URL}/RobotRemote
 
-Suite Setup  Open Test Browser
-Suite Teardown  Close all browsers
+# We need to use a custom profile to change the disable_beforeunload setting to False.
+# This causes the beforeunload popup to show in tests.
+Suite Setup  Open Test Browser Custom Profile
+Suite Teardown  Close All Browsers Without Beforeunload
 
 *** Variables ***
 
@@ -14,7 +16,6 @@ ${tile_class} =  div.cover-tile
 *** Test cases ***
 
 Test Basic Layout Operations
-    [Tags]  Mandelbug
 
     Enable Autologin as  Site Administrator
     Go to Homepage
@@ -36,9 +37,10 @@ Test Basic Layout Operations
     Add Row
 
     # trying to leave layout editing without saving must show a warning
-    Choose Cancel On Next Confirmation
+    # In Firefox, It is necessary to set dom.disable_beforeunload to False, so that
+    # the popup is shown. See Keyword 'Open Test Browser Custom Profile'.
     Click Link  link=Compose
-    Confirm Action
+    Handle Alert  action=DISMISS
     # continue editing layout
 
     #add a column in the latest row
@@ -83,29 +85,30 @@ Test Basic Layout Operations
     # Hide Description
     Click Element  css=#formfield-collective-cover-basic-description .visibility-no
     Click Button  id=buttons-save
+    Wait Until Element Is Not Visible  css=#buttons-save
     # Change row class
     Click Element  css=.config-row-link:nth-child(1)
     Wait until element is visible  id=class-chooser
     Click Button  css=#class-chooser .cssclasswidget
     Click Element  css=.cssclasswidget-tile-shadow
-    Click Element  css=.cssclasswidget-overlay
+    Execute Javascript  var $overlay = $('.cssclasswidget-overlay'); $overlay.click();
     Click Element  css=.ui-dialog:last-child .ui-dialog-titlebar-close
     # Change column class
     Click Element  css=.config-column-link:nth-child(1)
     Wait until element is visible  id=class-chooser
     Click Button  css=#class-chooser .cssclasswidget
     Click Element  css=.cssclasswidget-tile-edge
-    Click Element  css=.cssclasswidget-overlay
+    Execute Javascript  var $overlay = $('.cssclasswidget-overlay'); $overlay.click();
     Click Element  css=.ui-dialog:last-child .ui-dialog-titlebar-close
     Save Cover Layout
 
     # Test row and column classes
     Compose Cover
     Page Should Contain Element  css=.row.tile-shadow
-    Page Should Contain Element  css=.cell.tile-edge
+    Page Should Contain Element  css=.column.tile-edge
     Click Link  link=View
     Page Should Contain Element  css=.row.tile-shadow
-    Page Should Contain Element  css=.cell.tile-edge
+    Page Should Contain Element  css=.column.tile-edge
 
 
     # Reopen Layout and check configuration
@@ -117,8 +120,10 @@ Test Basic Layout Operations
     # Categories should be second in order
     Textfield Value Should Be  css=#collective-cover-basic-subjects-order  2
     # Description should be hidden
-    Checkbox Should Not Be Selected  css=#collective-cover-basic-description-visibility-yes
-    Checkbox Should Be Selected  css=#collective-cover-basic-description-visibility-no
+    ${checked_yes} =  Get Element Attribute  css=#collective-cover-basic-description-visibility-yes  checked
+    Should Be Equal  ${checked_yes}  ${None}
+    ${checked_no} =  Get Element Attribute  css=#collective-cover-basic-description-visibility-no  checked
+    Should Be Equal  ${checked_no}  true
     Click Button  id=buttons-cancel
 
 

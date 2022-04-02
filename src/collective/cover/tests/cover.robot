@@ -2,6 +2,7 @@
 
 Resource  plone/app/robotframework/keywords.robot
 Variables  plone/app/testing/interfaces.py
+Library  ${CURDIR}/create_ff_profile.py
 
 *** Variables ***
 
@@ -18,6 +19,10 @@ ${tile_drop_area_selector} =  div.cover-column
 ${tile_cancel_area_selector} =  div.modal-backdrop
 ${delete_tile_selector} =  button.close
 ${CONTENT_CHOOSER_SELECTOR} =  div#contentchooser-content-search
+${edit_link_selector}  a.edit-tile-link
+${save_edit_selector}  .pattern-modal-buttons input#buttons-save
+${cancel_edit_selector}  .pattern-modal-buttons input#buttons-cancel
+${cancel_delete_selector}  .pattern-modal-buttons input#form-buttons-Cancel
 
 *** Keywords ***
 
@@ -25,6 +30,10 @@ Click Add Cover
     Open Add New Menu
     Click Link  css=a#collective-cover-content
     Wait Until Page Contains  Add Cover
+
+Click Edit Cover
+    Click Link  css=${edit_link_selector}
+    Wait Until Element Is Visible  css=.pattern-modal-buttons
 
 Create Cover
     [arguments]  ${title}  ${description}  ${layout}=Empty layout
@@ -48,9 +57,12 @@ Update
 
 Delete
     Open Action Menu
-    Click Link  css=a#delete
-    Click Button  Delete
-    Page Should Contain  Plone site
+    Log Source
+    Click Link  css=a#plone-contentmenu-actions-delete
+    Wait Until Element Is Visible  css=.pattern-modal-buttons
+    Click Button  css=.pattern-modal-buttons input#form-buttons-Delete
+    Element Should Not Be Visible  css=.pattern-modal-buttons
+    Page Should Contain  has been deleted
 
 Open Layout Tab
     [Documentation]  Click on Layout tab and wait until it loads.
@@ -91,3 +103,14 @@ Compose Cover
 Open Content Chooser
     Click Element  css=div#contentchooser-content-show-button
     Wait Until Element Is Visible  css=${CONTENT_CHOOSER_SELECTOR}
+
+Open Test Browser Custom Profile
+    ${FF_PROFILE_DIR}=  Create FF Profile
+    Set Suite Variable  ${FF_PROFILE_DIR}  ${FF_PROFILE_DIR}
+    Open Test Browser
+
+Close All Browsers Without Beforeunload
+    [Documentation]  Set 'window.onbeforeunload = undefined' to avoid popup when
+    ...              closing the browsers.
+    Execute Javascript  window.onbeforeunload = undefined;
+    Close All Browsers

@@ -20,9 +20,6 @@ dirname = os.path.dirname(__file__)
 files = os.listdir(dirname)
 tests = [f for f in files if f.startswith("test_") and f.endswith(".robot")]
 
-# FIXME: skip RobotFramework tests in Plone 5
-tests = []
-
 noncritical = ["Expected Failure", "Mandelbug"]
 
 

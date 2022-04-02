@@ -17,14 +17,13 @@ ${image_title2}  //div[@class="galleria-info-title"]/a[text()='Test image #1']/.
 ${image_title_test}  //div[@class="galleria-info-title"]/a[text()='New Title']/..
 ${tile_selector}  div.tile-container div.tile
 ${autoplay_id}  collective-cover-carousel-autoplay-0
-${edit_link_selector}  a.edit-tile-link
 
 *** Keywords ***
 
 Get Total Carousel Images
     [Documentation]  Total number of images in carousel is stored in this
     ...              element
-    ${return} =  Get Element Attribute  xpath=//div[@class="galleria-stage"]/div[@class="galleria-counter"]/span[@class="galleria-total"]@innerHTML
+    ${return} =  Get Element Attribute  xpath=//div[@class="galleria-stage"]/div[@class="galleria-counter"]/span[@class="galleria-total"]  innerHTML
     [Return]  ${return}
 
 *** Test cases ***
@@ -44,14 +43,15 @@ Test Carousel Tile
     Page Should Contain  This carousel is empty; open the content chooser and drag-and-drop some items here.
 
     # Test if we can edit the cover without any content added to it yet
-    Click Link  css=${edit_link_selector}
+    Click Edit Cover
     Wait Until Page Contains  Edit Carousel Tile
-    Click Button  Cancel
+    Click Button  css=${cancel_edit_selector}
 
     # drag&drop an Image
     Open Content Chooser
-    Click Element  link=Content tree
+    Click Element  link=Content Tree
     Drag And Drop  xpath=${image_selector}  css=${tile_selector}
+    Wait For Condition  return jQuery.active == 0
 
     # move to the default view and check tile persisted
     Click Link  link=View
@@ -66,12 +66,9 @@ Test Carousel Tile
     Compose Cover
     Sleep  1s  Wait for carousel to load
     Open Content Chooser
-    Click Element  link=Content tree
+    Click Element  link=Content Tree
     Drag And Drop  xpath=${image_selector2}  css=${tile_selector}
-
-    # HACK: object not being added to tile when dropped; just, try again
-    #       Galleria messing around the DOM?
-    Drag And Drop  xpath=${image_selector2}  css=${tile_selector}
+    Wait For Condition  return jQuery.active == 0
 
     # move to the default view and check tile persisted
     Click Link  link=View
@@ -86,9 +83,10 @@ Test Carousel Tile
     Compose Cover
     Sleep  1s  Wait for carousel to load
     Open Content Chooser
-    Click Element  link=Content tree
+    Click Element  link=Content Tree
 
     Drag And Drop  xpath=${document_selector}  css=${tile_selector}
+    Wait For Condition  return jQuery.active == 0
 
     Click Link  link=View
     # We should still have 2 images in the carousel
@@ -112,10 +110,10 @@ Test Carousel Tile
 
     # Set custom Title
     Compose Cover
-    Click Link  css=${edit_link_selector}
+    Click Edit Cover
     Wait Until Page Contains  Edit Carousel Tile
     Input Text  xpath=.//div[contains(@class,"textline-sortable-element")][2]//input[@class='custom-title-input']  New Title
-    Click Button  Save
+    Click Button  css=${save_edit_selector}
     Sleep  2s  Wait for carousel to load
 
     Click Link  link=View
@@ -143,10 +141,10 @@ Test Carousel Tile
 
     # Set custom Description
     Compose Cover
-    Click Link  css=${edit_link_selector}
+    Click Edit Cover
     Wait Until Page Contains  Edit Carousel Tile
     Input Text  xpath=.//div[contains(@class,"textline-sortable-element")][2]//textarea[@class='custom-description-input']  New Description
-    Click Button  Save
+    Click Button  css=${save_edit_selector}
     Sleep  2s  Wait for carousel to load
 
     Click Link  link=View
@@ -163,32 +161,32 @@ Test Carousel Tile
     ### Test Custom URL functionality
     Click Link  link=View
     Wait Until Page Contains Element  xpath=${image_title}
-    ${image_url} =  Get Element Attribute  xpath=.//div[@class='galleria-info-title']/a@href
+    ${image_url} =  Get Element Attribute  xpath=.//div[@class='galleria-info-title']/a  href
     Should Be Equal  ${image_url}  ${PLONE_URL}/my-image/view
 
     # Go to the right
     Click Element  xpath=.//div[@class='galleria-image-nav-right']
     Wait Until Page Contains Element  xpath=${image_title_test}
-    ${image_url} =  Get Element Attribute  xpath=.//div[@class='galleria-info-title']/a@href
+    ${image_url} =  Get Element Attribute  xpath=.//div[@class='galleria-info-title']/a  href
     Should Be Equal  ${image_url}  ${PLONE_URL}/my-image1/view
 
     # Set custom URL
     Compose Cover
-    Click Link  css=${edit_link_selector}
+    Click Edit Cover
     Wait Until Page Contains  Edit Carousel Tile
     Input Text  xpath=.//div[contains(@class,"textline-sortable-element")][2]//input[@class='custom-url-input']  http://www.google.com
-    Click Button  Save
+    Click Button  css=${save_edit_selector}
     Sleep  2s  Wait for carousel to load
 
     Click Link  link=View
     Wait Until Page Contains Element  xpath=${image_title}
-    ${image_url} =  Get Element Attribute  xpath=.//div[@class='galleria-info-title']/a@href
+    ${image_url} =  Get Element Attribute  xpath=.//div[@class='galleria-info-title']/a  href
     Should Be Equal  ${image_url}  ${PLONE_URL}/my-image/view
 
     # Go to the right
     Click Element  xpath=.//div[@class='galleria-image-nav-right']
     Wait Until Page Contains Element  xpath=${image_title_test}
-    ${image_url} =  Get Element Attribute  xpath=.//div[@class='galleria-info-title']/a@href
+    ${image_url} =  Get Element Attribute  xpath=.//div[@class='galleria-info-title']/a  href
     Should Be Equal  ${image_url}  http://www.google.com/
 
     # delete the tile

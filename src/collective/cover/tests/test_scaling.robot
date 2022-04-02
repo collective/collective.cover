@@ -28,8 +28,9 @@ Test Scaling
 
     Compose Cover
     Open Content Chooser
-    Click Element  link=Content tree
+    Click Element  link=Content Tree
     Drag And Drop  xpath=${image_selector}  css=${tile_selector}
+    Wait For Condition  return jQuery.active == 0
 
     Click Link  link=View
     Page Should Contain Element  xpath=//img[@width=50][@height=50]
@@ -37,8 +38,9 @@ Test Scaling
     Open Layout Tab
     Click Config from Tile  ${tile_class}
     Wait until element is visible  id=buttons-cancel
-    Select From List  css=#collective-cover-basic-image-imgsize  listing 16x16
+    Select From List By Value  css=#collective-cover-basic-image-imgsize  listing 16:16
     Click Button  id=buttons-save
+    Wait Until Element Is Not Visible  css=#buttons-save
     Save Cover Layout
 
     Click Link  link=View
@@ -47,8 +49,9 @@ Test Scaling
     Open Layout Tab
     Click Config from Tile  ${tile_class}
     Wait until element is visible  id=buttons-cancel
-    Select From List  css=#collective-cover-basic-image-imgsize  icon 32x32
+    Select From List By Value  css=#collective-cover-basic-image-imgsize  icon 32:32
     Click Button  id=buttons-save
+    Wait Until Element Is Not Visible  css=#buttons-save
     Save Cover Layout
 
     Click Link  link=View

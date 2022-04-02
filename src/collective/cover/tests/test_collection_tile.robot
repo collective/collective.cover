@@ -15,10 +15,9 @@ ${tile_header_selector}  div.tile-header h2
 ${title_field_id}  collective-cover-collection-header
 ${title}  Mandelbrot set
 ${title_alternate}  An alternate title for the tile
-${edit_link_selector}  a.edit-tile-link
 ${no_results_msg}  The collection doesn't have any results
 ${related_msg}  Go to related collection
-${more_msg}  More?
+${more_msg}  More…
 
 *** Test cases ***
 
@@ -60,10 +59,10 @@ Test Collection Tile
     # go back to compose view and edit the tile
     Compose Cover
     Wait Until Element Contains  css=${tile_header_selector}  ${title}
-    Click Link  css=${edit_link_selector}
+    Click Edit Cover
     Wait Until Page Contains  Edit Collection Tile
     Input Text  id=${title_field_id}  ${title_alternate}
-    Click Button  Save
+    Click Button  css=${save_edit_selector}
     Wait Until Page Does Not Contain  Edit Collection Tile
 
     # check for successful AJAX refresh

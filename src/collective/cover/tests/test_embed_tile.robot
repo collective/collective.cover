@@ -13,7 +13,6 @@ ${embed_selector}  ul#item-list li.ui-draggable
 ${tile_selector}  div.tile-container div.tile
 ${title_field_id}  collective-cover-embed-title
 ${title_sample}  Some text for title
-${edit_link_selector}  a.edit-tile-link
 
 *** Test cases ***
 
@@ -33,10 +32,10 @@ Test Embed Tile
 
     # go back to compose view and edit the tile
     Compose Cover
-    Click Link  css=${edit_link_selector}
+    Click Edit Cover
     Wait Until Page Contains  Edit Embedding Tile
     Input Text  id=${title_field_id}  ${title_sample}
-    Click Button  Save
+    Click Button  css=${save_edit_selector}
     Wait Until Page Does Not Contain  Edit Embedding Tile
     # check successful AJAX refresh
     Wait Until Page Contains  ${title_sample}

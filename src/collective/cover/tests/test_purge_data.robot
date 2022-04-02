@@ -12,7 +12,6 @@ Suite Teardown  Close all browsers
 ${basic_tile_location}  'collective.cover.basic'
 ${title_field_id}  collective-cover-basic-title
 ${title_sample}  Some text for title
-${edit_link_selector}  a.edit-tile-link
 
 *** Test cases ***
 
@@ -31,12 +30,12 @@ Test Purge Data
 
     # keep edit url and compose url for later use
     ${compose_url} =  Get Location
-    ${edit_url} =  Get Element Attribute  css=${edit_link_selector}@href
+    ${edit_url} =  Get Element Attribute  css=${edit_link_selector}  href
 
-    Click Link  css=${edit_link_selector}
+    Click Edit Cover
     Wait Until Page Contains  Edit Basic Tile
     Input Text  id=${title_field_id}  ${title_sample}
-    Click Button  Save
+    Click Button  css=${save_edit_selector}
 
     # check for successful AJAX refresh
     Wait Until Page Contains  ${title_sample}
