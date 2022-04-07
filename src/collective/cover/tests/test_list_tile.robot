@@ -95,6 +95,9 @@ Test List Tile
     Drag And Drop By Offset  css=${first_item}  0  580
     Sleep  2s  Wait for reordering to occur
 
+    # Ensures sorting will be saved even after page relead.
+    Reload Page
+
     # ensure that the reordering is reflected in the DOM
     ${first_item_title} =  Get Text  css=${first_item} h2
     ${last_item_title} =  Get Text  css=${last_item} h2
