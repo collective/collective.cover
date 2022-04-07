@@ -22,7 +22,7 @@ Update
     [arguments]  ${title}  ${description}
 
     Click Link  link=Edit
-    Sleep  1s  wait for unlock to work
+    Sleep  2s  wait for unlock to work
     Input Text  css=${title_selector}  ${title}
     Input Text  css=${description_selector}  ${description}
     Click Button  Save
