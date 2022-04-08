@@ -39,7 +39,6 @@ Create Cover
     [arguments]  ${title}  ${description}  ${layout}=Empty layout
 
     Click Add Cover
-    # deal with delays caused by plone4.csrffixes
     Input Text For Sure  css=${title_selector}  ${title}
     Input Text  css=${description_selector}  ${description}
     Select From List  css=${layout_selector}  ${layout}
