@@ -324,67 +324,6 @@ export default class ContentChooser {
       }
     }));
   }
-  // XXX replace this with jquery ajax
-  send(o) {
-    let x, t, w = window,
-      c = 0;
-
-    // Default settings
-    o.scope = o.scope || this;
-    o.success_scope = o.success_scope || o.scope;
-    o.error_scope = o.error_scope || o.scope;
-    o.async = o.async === false ? false : true;
-    o.data = o.data || '';
-
-    function get(s) {
-      x = 0;
-
-      try {
-        x = new ActiveXObject(s);
-      } catch (ex) {}
-
-      return x;
-    }
-
-    x = w.XMLHttpRequest ? new XMLHttpRequest() : get('Microsoft.XMLHTTP') || get('Msxml2.XMLHTTP');
-
-    if (x) {
-      if (x.overrideMimeType) {
-        x.overrideMimeType(o.content_type);
-      }
-
-      x.open(o.type || (o.data ? 'POST' : 'GET'), o.url, o.async);
-
-      if (o.content_type) {
-        x.setRequestHeader('Content-Type', o.content_type);
-      }
-
-      x.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-
-      x.send(o.data);
-
-      let ready = function() {
-        if (!o.async || x.readyState == 4 || c++ > 10000) {
-          if (o.success && c < 10000 && x.status == 200) {
-            o.success.call(o.success_scope, '' + x.responseText, x, o);
-          } else if (o.error) {
-            o.error.call(o.error_scope, c > 10000 ? 'TIMED_OUT' : 'GENERAL', x, o);
-          }
-          x = null;
-        } else {
-          w.setTimeout(ready, 10);
-        }
-      };
-
-      // Syncronous request
-      if (!o.async) {
-        return ready();
-      }
-
-      // Wait for response, onReadyStateChange can not be used since it leaks memory in IE
-      t = w.setTimeout(ready, 10);
-    }
-  }
   getAbsolutePath() {
     let loc = window.location;
     let pathName = loc.pathname.substring(0, loc.pathname.lastIndexOf('/') + 1);
@@ -430,10 +369,9 @@ export default class ContentChooser {
 
     $('#ajax-spinner').show();
 
-    // XXX - replace this with jquery ajax
-    this.send({
+    $.ajax({
       url: path + '/' + method,
-      content_type: 'application/x-www-form-urlencoded',
+      mimeType: 'application/x-www-form-urlencoded',
       type: 'POST',
       data: data,
       success: function(text) {
