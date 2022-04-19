@@ -160,7 +160,52 @@ export default class ComposeView {
     if ($el.data('init')) {
       return;
     }
-    $el.data('init', true).sortable();
+    let onStop = function(e, ui) {
+      // This function saves the position of the content in the tile.
+
+      /* This function is called when a sort of an content occurs. Even when the
+      content is dropped on another tile, this function is called. But when the content
+      is dropped on another tile, the ContentChooser's dropped function should be taken
+      care of. So we use the test below to make sure we do something here, only if the
+      content is dropped on the tile it was originally on.*/
+      if ($('.loading-mask.show').length != 0) {
+        return
+      }
+      let uuids = [];
+      // We iterate over the children of the original $el determined at the top of onMouseOverSortable.
+      $el.children().each(function(index) {
+        let child = $($el.children()[index]);
+        if (child.attr('data-content-uuid') !== undefined) {
+          uuids.push(child.attr('data-content-uuid'));
+        }
+      });
+      let tile = $el.closest('.tile');
+      let tile_type = tile.attr('data-tile-type');
+      let tile_id = tile.attr('id');
+      $.ajax({
+        url: '@@updatelisttilecontent',
+        context: this,
+        data: {
+          'tile-type': tile_type,
+          'tile-id': tile_id,
+          'uuids': uuids
+        },
+        success: function(info) {
+          tile.html(info);
+          tile.trigger('change');
+          this.update();
+          return false;
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+          tile.html(textStatus + ': ' + errorThrown);
+          this.update();
+          return false;
+        }
+      });
+    };
+    $el.data('init', true).sortable({
+      stop: onStop.bind(this),
+    });
   }
   onRemoveClick(e) {
     e.preventDefault();
