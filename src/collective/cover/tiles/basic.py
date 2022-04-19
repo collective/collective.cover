@@ -51,7 +51,7 @@ class IBasicTile(IPersistentCoverTile):
         description=_(
             u"help_alt_text",
             default=u"Provides a textual alternative to non-text content in web pages.",
-        ),  # noqa E501
+        ),
         required=False,
     )
 

@@ -134,7 +134,7 @@ class ListTile(PersistentCoverTile):
                         self.remove_item(uuid)
                         logger.debug(
                             "Non-existent object {0} removed from tile".format(uuid)
-                        )  # noqa: E501
+                        )
         return results[: self.limit]
 
     def is_empty(self):
