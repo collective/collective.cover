@@ -147,8 +147,9 @@
       permission="zope2.View"
       />
 
-  <browser:resourceDirectory
+  <plone:static
       name="collective.cover"
+      type="plone"
       directory="static"
       />
 

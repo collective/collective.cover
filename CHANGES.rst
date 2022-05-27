@@ -6,6 +6,9 @@ There's a frood who really knows where his towel is.
 3.0.0 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Use plone resource instead of browser resource.
+  [wesleybl]
+
 - Remove javascript customization that was making ajax calls synchronous.
   [wesleybl]
 

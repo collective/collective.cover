@@ -13,13 +13,12 @@ module.exports = makeConfig(
   `${__dirname}/../src/collective/cover/browser/static`,
 
   //publicPath
-  '++resource++collective.cover/',
+  '++plone++collective.cover/',
 
   //callback
   function(config, options) {
     config.entry.unshift(
       './app/img/dot.png',
-      './app/img/frontpage_icon.png',
       './app/img/tile-banner.png',
       './app/img/tile-basic.png',
       './app/img/tile-calendar.png',
