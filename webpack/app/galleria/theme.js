@@ -21,7 +21,7 @@ var rm_button = function(data) {
     name: 'cover_theme',
     version: 1.6,
     author: 'Simples',
-    css: '++resource++collective.cover/galleria/theme.css',
+    css: '/++plone++collective.cover/galleria/theme.css',
     defaults: {
       transition: 'slide',
       transition_speed: 500,

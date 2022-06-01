@@ -7,7 +7,7 @@ export default class CarouselTile {
     this.initGalleria();
   }
   initGalleria() {
-    Galleria.loadTheme('++resource++collective.cover/galleria/theme.js');
+    Galleria.loadTheme('/++plone++collective.cover/galleria/theme.js');
     Galleria.run(this.$tile);
     var options = {
       height: parseFloat(this.$tile.attr('data-image-ratio'))

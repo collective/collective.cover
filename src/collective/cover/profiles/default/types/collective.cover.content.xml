@@ -6,7 +6,7 @@
   <!-- Basic metadata -->
   <property name="title" i18n:translate="">Cover</property>
   <property name="description" i18n:translate="">A cover page.</property>
-  <property name="content_icon">++resource++collective.cover/img/frontpage_icon.png</property>
+  <property name="content_icon"></property>
   <property name="factory">collective.cover.content</property>
   <property name="global_allow">True</property>
   <property name="filter_content_types">False</property>

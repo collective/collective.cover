@@ -45,7 +45,7 @@
     height: 20px;
 
     background: #000;
-    background: url('++resource++collective.galleria/classic-loader.gif') no-repeat 2px 2px;
+    background: url('/++plone++collective.js.galleria/images/classic-loader.gif') no-repeat 2px 2px;
 }
 
 .galleria-info
@@ -277,7 +277,7 @@
 .galleria-image-nav-left,
 .galleria-image-nav-right
 {
-    background-image: url('++resource++collective.galleria/classic-map.png');
+    background-image: url('/++plone++collective.js.galleria/images/classic-map.png');
     background-repeat: no-repeat;
 }
 
@@ -309,7 +309,7 @@
     cursor: pointer;
 
     opacity: .5;
-    background: url('++resource++collective.cover/img/dot.png') no-repeat 0 0;
+    background: url('/++plone++collective.cover/img/dot.png') no-repeat 0 0;
 
     *display: inline;
 }

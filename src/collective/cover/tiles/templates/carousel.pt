@@ -6,7 +6,7 @@
 
 <head>
   <link rel="stylesheet" type="text/css"
-      tal:attributes="href string:${context/@@plone_portal_state/portal_url}/++resource++collective.cover/galleria/theme.css" />
+      tal:attributes="href string:${context/@@plone_portal_state/portal_url}/++plone++collective.cover/galleria/theme.css" />
 </head>
 
 <body tal:define="is_empty view/is_empty">
