@@ -116,13 +116,6 @@ Edit your buildout.cfg and add the following to it:
     eggs =
         collective.cover
 
-    [versions]
-    ...
-    collective.js.bootstrap = 2.3.1.1
-    plone.app.blocks = 4.2.0
-    plone.app.tiles = 3.1.0
-    plone.tiles = 2.1
-
 If you want to use the relation field you must use the ``[relations]`` extra in your buildout configuration.
 
 .. code-block:: ini
@@ -131,13 +124,6 @@ If you want to use the relation field you must use the ``[relations]`` extra in 
     ...
     eggs =
         collective.cover [relations]
-
-If you want to use a newer release of ``collective.js.bootstrap``, you will need to update ``plone.app.jquery``:
-
-.. code-block:: ini
-
-    [versions]
-    plone.app.jquery = 1.8.3
 
 After updating the configuration you need to run ''bin/buildout'', which will
 take care of updating your system.
