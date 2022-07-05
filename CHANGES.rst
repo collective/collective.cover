@@ -6,6 +6,9 @@ There's a frood who really knows where his towel is.
 3.0.0 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Fix error when clicking on a folder in Content Tree.
+  [idgserpro]
+
 - Fix error when clearing content chooser input (fixes `#942 <https://github.com/collective/collective.cover/issues/942>`_).
   [wesleybl]
 

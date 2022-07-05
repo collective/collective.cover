@@ -374,7 +374,7 @@ export default class ContentChooser {
       mimeType: 'application/x-www-form-urlencoded',
       type: 'POST',
       data: data,
-      success: function(text) {
+      success: text => {
         $('#ajax-spinner').hide();
         let html = '';
         let data = $.parseJSON(text);
