@@ -127,6 +127,29 @@ Test Basic Layout Operations
     Click Button  id=buttons-cancel
 
 
+Test Layout Scroll
+    # Test if we can scroll on the Layout tab, so that the
+    # portal's footer appears on the screen.
+    # For the test to be effective, we need to add titles, until the footer
+    # disappears from the screen. In the current situation, we need to add
+    # 4 tiles. In the future, it may be necessary to change this number,
+    # depending on the height of the elements on the screen.
+
+    Enable Autologin as  Site Administrator
+    Go to Homepage
+    Create Cover  Title  Description
+
+    Open Layout Tab
+    Add Tile  ${basic_tile_name}
+    Add Tile  ${basic_tile_name}
+    Add Tile  ${basic_tile_name}
+    Add Tile  ${basic_tile_name}
+    Set Selenium Speed  0.5 seconds
+    Execute Javascript  window.scroll(0, 2000)
+    Click Element  css=body
+    Execute Javascript  window.scroll(0, 2000)
+    Scroll Element Into View  css=.actions-site_actions
+
 
 *** Keywords ***
 
