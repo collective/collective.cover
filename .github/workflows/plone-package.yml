@@ -31,8 +31,6 @@ jobs:
               uses: actions/setup-python@v2
               with:
                   python-version: ${{ matrix.python-version }}
-            - name: Install system libraries
-              run: sudo apt-get install libxml2-dev libxslt1-dev libjpeg-dev
             - name: setup buildout cache
               run: |
                   mkdir -p ~/buildout-cache/{eggs,downloads}
