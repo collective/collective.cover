@@ -19,6 +19,7 @@ eggs/
 htmlcov/
 include/
 lib/
+lib64
 library-settings.txt
 local
 local.cfg

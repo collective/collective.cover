@@ -6,6 +6,9 @@ There's a frood who really knows where his towel is.
 3.0.0 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Drop suport to Python 3.6.
+  [wesleybl]
+
 - Use plone resource instead of browser resource.
   [wesleybl]
 
@@ -407,7 +410,7 @@ There's a frood who really knows where his towel is.
 
 
 1.1b1 (2016-03-31)
-^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^
 
 .. Warning::
     This release removes some packages from the list of dependencies.
