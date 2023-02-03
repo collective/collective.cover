@@ -28,7 +28,7 @@ jobs:
                   #restore-keys: |
                   #  ${{ runner.os }}-tox-
             - name: Set up Python ${{ matrix.python-version }}
-              uses: actions/setup-python@v2
+              uses: actions/setup-python@v4
               with:
                   python-version: ${{ matrix.python-version }}
             - name: setup buildout cache
@@ -55,7 +55,7 @@ jobs:
                 DISPLAY: :99
                 PLONE-VERSION: ${{ matrix.plone-version }}
                 PYTHON-VERSION: ${{ matrix.python-version }}
-            - uses: actions/upload-artifact@v2
+            - uses: actions/upload-artifact@v3
               if: failure()
               with:
                 name: ${{ matrix.python-version }}-${{ matrix.plone-version }}
@@ -63,6 +63,6 @@ jobs:
             - name: "Coverage report"
               run: tox -r -e coverage-report
             - name: "Upload coverage to Codecov"
-              uses: "codecov/codecov-action@v2"
+              uses: "codecov/codecov-action@v3"
               with:
                 fail_ci_if_error: true
