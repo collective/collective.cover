@@ -137,6 +137,8 @@ Test Basic Tile
     Click Edit Cover
     Click Button  css=${save_edit_selector}
     Page Should Not Contain  There were some errors.
+    Wait For Condition  return jQuery.active == 0
+    Wait Until Page Contains  Tile saved
 
     # move to the default view and check tile persisted
     Click Link  link=View
@@ -179,7 +181,8 @@ Test Basic Tile
     Wait Until Page Contains  Edit Basic Tile
     Input Text  id=${title_field_id}  ${title_sample}
     Click Button  css=${save_edit_selector}
-    Wait Until Page Does Not Contain  Edit Basic Tile
+    Wait For Condition  return jQuery.active == 0
+    Wait Until Page Contains  Tile saved
 
     # check for successful AJAX refresh
     Wait Until Page Contains  ${title_sample}
