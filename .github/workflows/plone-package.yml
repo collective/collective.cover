@@ -28,11 +28,9 @@ jobs:
                   #restore-keys: |
                   #  ${{ runner.os }}-tox-
             - name: Set up Python ${{ matrix.python-version }}
-              uses: actions/setup-python@v2
+              uses: actions/setup-python@v4
               with:
                   python-version: ${{ matrix.python-version }}
-            - name: Install system libraries
-              run: sudo apt-get install libxml2-dev libxslt1-dev libjpeg-dev
             - name: setup buildout cache
               run: |
                   mkdir -p ~/buildout-cache/{eggs,downloads}
@@ -47,14 +45,9 @@ jobs:
             - name: Install Firefox
               uses: browser-actions/setup-firefox@latest
               with:
-                firefox-version: '92.0'
+                firefox-version: '102.2.0esr'
             - name: Xvfb
               run: Xvfb :99 -screen 0 1280x1024x24 > /dev/null 2>&1 &
-            - name: Black-Check
-              run: |
-                  tox -r -e black-check
-            - name: lint
-              run: tox -r -e lint
             - name: Test with tox
               run: |
                   tox -r
@@ -62,7 +55,7 @@ jobs:
                 DISPLAY: :99
                 PLONE-VERSION: ${{ matrix.plone-version }}
                 PYTHON-VERSION: ${{ matrix.python-version }}
-            - uses: actions/upload-artifact@v2
+            - uses: actions/upload-artifact@v3
               if: failure()
               with:
                 name: ${{ matrix.python-version }}-${{ matrix.plone-version }}
@@ -70,6 +63,6 @@ jobs:
             - name: "Coverage report"
               run: tox -r -e coverage-report
             - name: "Upload coverage to Codecov"
-              uses: "codecov/codecov-action@v2"
+              uses: "codecov/codecov-action@v3"
               with:
                 fail_ci_if_error: true
