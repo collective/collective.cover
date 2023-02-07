@@ -27,3 +27,4 @@ Update
     Input Text  css=${description_selector}  ${description}
     Click Button  Save
     Page Should Contain  Changes saved
+    Sleep  2s  wait for unlock to work
