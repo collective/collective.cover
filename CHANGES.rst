@@ -6,6 +6,9 @@ There's a frood who really knows where his towel is.
 3.0.0 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Fix layout scroll - impossible to save.
+  [idgserpro]
+
 - Remove patch in ``Products.ZCatalog.query.IndexQuery``. ``Products.ZCatalog`` 5.4 fix bug when search parameter is a record.
   [wesleybl]
 

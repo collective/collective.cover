@@ -53,11 +53,13 @@ export default class LayoutView {
         if (!fixed) {
           fixed = true;
           $('#sidebar').addClass("fixed");
+          $('.layout').addClass("sidebar-fixed");
         }
       } else {
         if (fixed) {
           fixed = false;
           $('#sidebar').removeClass("fixed");
+          $('.layout').removeClass("sidebar-fixed");
         }
       }
     });
