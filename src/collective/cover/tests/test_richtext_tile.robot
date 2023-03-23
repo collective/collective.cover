@@ -39,9 +39,7 @@ Test RichText Tile
     # see: https://github.com/collective/collective.cover/issues/543
     Click Edit Cover
     Wait Until Page Contains  Edit Rich Text Tile
-    Sleep  1s  Wait for TinyMCE to load
-    Wait For Condition  return typeof tinyMCE !== "undefined" && tinyMCE.activeEditor !== null && document.getElementById(tinyMCE.activeEditor.id) !== null
-    Execute Javascript  tinyMCE.activeEditor.setContent("${text_sample}");
+    Input RichText  ${text_sample}
     Click Button  css=${save_edit_selector}
     # save via ajax => wait until the tile has been reloaded
     Wait Until Page Does Not Contain  Edit Rich Text Tile

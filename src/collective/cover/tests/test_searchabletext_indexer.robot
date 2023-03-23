@@ -37,9 +37,7 @@ Test RichTextTile is Searchable
     # Add the text to the richtext tile
     Compose Cover
     Click Link  ${richtext_edit_link_selector}
-    Wait For Condition  return typeof tinyMCE !== "undefined" && tinyMCE.activeEditor !== null && document.getElementById(tinyMCE.activeEditor.id) !== null
-    Wait For Condition  return jQuery.active == 0
-    Execute Javascript  tinyMCE.activeEditor.setContent("${text}");
+    Input RichText  ${text}
     Click Button  css=${save_edit_selector}
     Wait Until Page Contains  ${text}
 

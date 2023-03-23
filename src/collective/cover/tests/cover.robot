@@ -113,3 +113,10 @@ Close All Browsers Without Beforeunload
     ...              closing the browsers.
     Execute Javascript  window.onbeforeunload = undefined;
     Close All Browsers
+
+Input RichText
+  [Documentation]  Wait Tinymce initialize and input text in active editor.
+  [Arguments]  ${input}
+  Wait For Condition  return tinymce.activeEditor.initialized === true
+  Execute Javascript  tinyMCE.activeEditor.setContent('${input}');
+  Wait For Condition  return tinymce.activeEditor.getContent().includes('${input}')
