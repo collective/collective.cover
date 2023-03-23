@@ -231,7 +231,7 @@ export default class ContentChooser {
     );
     this.filterOnKeyUp();
     $('#contentchooser-content-search #recent .item-list').on('scroll', this.onRecentScroll.bind(this));
-    $(document).on('click', '#recent .contentchooser-clear', function(e) {
+    $(document).on('click', '#recent .contentchooser-clear', e => {
       $(e.currentTarget).prev().children('input').val('');
       let url = $('#contentchooser-content-search-button').attr('data-url');
       this.ajaxSearchRequest.push($.ajax({
@@ -244,9 +244,9 @@ export default class ContentChooser {
       }));
       return false;
     });
-    $(document).on('click', '#content-trees .contentchooser-clear', function(e) {
+    $(document).on('click', '#content-trees .contentchooser-clear', e => {
       $(e.currentTarget).prev().children('input').val('');
-      this.getFolderContents(portal_url, '@@jsonbytype');
+      this.getFolderContents(this.portal_url, '@@jsonbytype');
       return false;
     });
     $('#contentchooser-content-search-button').click(function(e) {

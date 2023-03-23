@@ -10,6 +10,7 @@ Suite Teardown  Close all browsers
 
 ${basic_tile_location}  'collective.cover.basic'
 ${file_selector}  .ui-draggable .contenttype-file
+${document_selector}  a[title="This document was created for testing purposes : /my-document"]
 ${contentchooser_search_selector}  FIXME
 ${contentchooser_search_clear}  a.contentchooser-clear
 ${contentchooser_close}  div.close
@@ -38,10 +39,11 @@ Test Content Chooser
 
     # make a search on Recent Items
     Click Element  link=Recent Items
-    Input Text  css=#recent input  folder
-    # FIXME: we have no result counter in here
-    #Wait Until Page Contains  1 Results
+    Input Text  css=#recent input  My file
+    Wait Until Page Contains  1 Results
     Click Element  css=#recent ${contentchooser_search_clear}
+    Page Should Not Contain  1 Results
+    Page Should Contain Element  css=${document_selector}
 
     Click Element  link=Content Tree
     Wait Until Page Contains  Plone site
@@ -52,6 +54,8 @@ Test Content Chooser
 
     # navigate the tree
     Click Element  css=#content-trees ${contentchooser_search_clear}
+    Page Should Not Contain  1 Results
+    Page Should Contain Element  css=${document_selector}
     Input Text  css=#content-trees input  file
     Wait Until Page Contains  1 Results
     Page Should Contain Element  css=${file_selector}
