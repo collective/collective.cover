@@ -69,8 +69,6 @@ Edit RichText Tile
 
     Click Edit Cover
     Wait Until Page Contains  Edit Rich Text Tile
-    Sleep  1s  Wait for TinyMCE to load
-    Wait For Condition  return typeof tinyMCE !== "undefined" && tinyMCE.activeEditor !== null && document.getElementById(tinyMCE.activeEditor.id) !== null
-    Execute Javascript  tinyMCE.activeEditor.setContent('${html}');
+    Input RichText  ${html}
     Click Button  css=${save_edit_selector}
     Wait Until Page Does Not Contain  Edit Rich Text Tile
