@@ -6,6 +6,9 @@ There's a frood who really knows where his towel is.
 3.0.0 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Improve content chooser search input layout.
+  [wesleybl]
+
 - Fix layout scroll - impossible to save.
   [idgserpro]
 

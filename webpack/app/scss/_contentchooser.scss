@@ -97,7 +97,8 @@ input[type='text'] {
     width: 100%;
     min-width: 12em;
     height: 16px;
-    padding-top: 1px;
+    padding-bottom: 10px;
+    padding-top: 10px;
     color: #888;
     border: 0 solid;
     background: transparent;
@@ -116,11 +117,14 @@ input[type='text'] {
 
 #contentchooser-content-search-input-container, #contentchooser-content-trees-container {
   width: 80%;
+  &.input {
+    padding-right: 24px;
+  }
 }
 
-.contentchooser-clear {
-  height: 13px;
+.ui-icon.contentchooser-clear {
   margin-left: -25px;
+  background-position: -80px -126px;
 }
 
 #more-link-field {
@@ -140,4 +144,8 @@ input[type='text'] {
   button {
     padding: 0 .5em;
   }
+}
+
+.filter-count{
+  margin-left:10px;
 }
