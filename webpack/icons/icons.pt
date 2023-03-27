@@ -1,0 +1,6 @@
+<tal:block define="isAnon context/@@plone_portal_state/anonymous" condition="not: isAnon">
+<% for (let css in htmlWebpackPlugin.files.css) {
+  if (htmlWebpackPlugin.files.css[css].includes('/icons-')) {%>
+  <link rel="stylesheet" tal:attributes="href <%= 'string:${view/site_url}/' + htmlWebpackPlugin.files.css[css] %>" />
+<% }} %>
+</tal:block>

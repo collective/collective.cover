@@ -1,0 +1,19 @@
+.icon-compose.toolbar-menu-icon::before,
+.icon-layoutedit.toolbar-menu-icon::before,
+.contenttype-collective-cover-content::before
+{
+  font-family: $icomoon-font-family !important;
+}
+
+.icon-layoutedit.toolbar-menu-icon::before {
+  content: $icon-layout !important;
+}
+
+.icon-compose.toolbar-menu-icon::before {
+  content: $icon-compose !important;
+}
+
+.contenttype-collective-cover-content::before{
+  content: $icon-cover !important;
+  font-size: 12px !important;
+}

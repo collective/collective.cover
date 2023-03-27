@@ -1,5 +1,6 @@
 const makeConfig = require('sc-recipe-staticresources');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 
 module.exports = makeConfig(
@@ -37,6 +38,29 @@ module.exports = makeConfig(
         to: 'galleria',
         flatten: true
       }]),
+    );
+
+    // We need two entries, to generate two output files. One for viewlet
+    // loaded only on Cover type and one for icon viewlet, which is loaded on
+    // all content types.
+    config.entry = {
+      cover: config.entry,
+      icons: ['./icons/icons.scss'],
+    };
+    config.output.filename = `[name]-${options.gitHash}.js`
+    config.plugins = config.plugins.map(plugin => {
+      if (plugin.filename === `${options.shortName}-${options.gitHash}.css`) {
+        plugin.filename=`[name]-${options.gitHash}.css`;
+      }
+      return plugin
+    });
+    config.plugins.push(
+      new HtmlWebpackPlugin({
+        inject: false,
+        filename: 'icons.pt',
+        template: 'icons/icons.pt',
+        publicPath: options.publicPath,
+      })
     );
   },
 );

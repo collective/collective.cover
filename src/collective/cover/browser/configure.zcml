@@ -163,4 +163,14 @@
       layer="collective.cover.interfaces.ICoverLayer"
       />
 
+  <browser:viewlet
+      name="collective.cover.icons"
+      for="*"
+      manager="plone.app.layout.viewlets.interfaces.IHtmlHead"
+      class=".ResourcesViewlet"
+      template="static/icons.pt"
+      permission="zope2.Public"
+      layer="collective.cover.interfaces.ICoverLayer"
+      />
+
 </configure>
