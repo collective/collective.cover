@@ -1,6 +1,8 @@
-<% for (let css in htmlWebpackPlugin.files.css) { %>
+<% for (let css in htmlWebpackPlugin.files.css) {
+  if (htmlWebpackPlugin.files.css[css].includes('/cover-')) {%>
   <link rel="stylesheet" tal:attributes="href <%= 'string:${view/site_url}/' + htmlWebpackPlugin.files.css[css] %>" />
-<% } %>
-<% for (let js in htmlWebpackPlugin.files.js) { %>
+<% }} %>
+<% for (let js in htmlWebpackPlugin.files.js) {
+  if (htmlWebpackPlugin.files.js[js].includes('/cover-')) {%>
   <script defer tal:attributes="src <%= 'string:${view/site_url}/' + htmlWebpackPlugin.files.js[js] %>"></script>
-<% } %>
+<% }} %>
