@@ -3,7 +3,7 @@ Changelog
 
 There's a frood who really knows where his towel is.
 
-3.0.0 (unreleased)
+3.0.0 (2023-03-29)
 ^^^^^^^^^^^^^^^^^^
 
 - Adds icons for the Cover content type and for the Compose and Layout tabs.
