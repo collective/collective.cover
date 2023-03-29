@@ -1,7 +1,10 @@
-include *.cfg
 include *.rst
+include *.txt
+
+exclude *.cfg cover.png *.yml tox.ini .editorconfig .eslintrc .*project
 
 graft src
 graft docs
 
 global-exclude *.pyc
+recursive-exclude webpack *

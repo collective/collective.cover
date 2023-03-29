@@ -1,3 +1,6 @@
 [tool.dependencychecker]
 Zope = ['App', 'OFS','Products.Five', 'ZPublisher']
 ignore-packages = ['plone.basic', 'plone.excludefromnavigation', 'plone.relateditems', 'plone.namefromtitle']
+
+[tool.check-manifest]
+ignore= 'src/collective/cover/browser/static/*'
