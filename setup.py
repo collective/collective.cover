@@ -4,7 +4,7 @@ from setuptools import find_packages
 from setuptools import setup
 
 
-version = "3.0.0"
+version = "3.0.1.dev0"
 description = "A sane, working, editor-friendly way of creating front pages and other composite pages. Working now, for mere mortals."
 long_description = "\n\n".join(
     [
