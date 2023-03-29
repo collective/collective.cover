@@ -1,7 +1,8 @@
 include *.rst
 include *.txt
+include cover.png
 
-exclude *.cfg cover.png *.yml tox.ini .editorconfig .eslintrc .*project
+exclude *.cfg *.yml tox.ini .editorconfig .eslintrc .*project
 
 graft src
 graft docs
